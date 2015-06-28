@@ -1,5 +1,5 @@
 bin
-./config
+config
 ./folklore
 graphics
 ./Lindenmayer

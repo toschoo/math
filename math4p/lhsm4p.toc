@@ -44,66 +44,66 @@
 \contentsline {section}{\numberline {6.6}Binomial Coefficients are Integers}{236}
 \contentsline {section}{\numberline {6.7}Euler's Totient Function}{247}
 \contentsline {section}{\numberline {6.8}How many Fractions?}{263}
-\contentsline {chapter}{\numberline {7}Real Numbers}{273}
-\contentsline {section}{\numberline {7.1}$\sqrt {2}$}{273}
-\contentsline {section}{\numberline {7.2}$\Phi $}{273}
-\contentsline {section}{\numberline {7.3}$\pi $}{273}
-\contentsline {section}{\numberline {7.4}$e$}{273}
-\contentsline {section}{\numberline {7.5}$\gamma $}{273}
-\contentsline {section}{\numberline {7.6}Arithmetic with Real Numbers}{273}
-\contentsline {section}{\numberline {7.7}Representation of Real Numbers}{273}
-\contentsline {section}{\numberline {7.8}$\mathbb {R}$}{273}
-\contentsline {section}{\numberline {7.9}Real Factorials}{273}
-\contentsline {section}{\numberline {7.10}Real Binomial Coefficients}{273}
-\contentsline {section}{\numberline {7.11}The Continuum}{273}
-\contentsline {section}{\numberline {7.12}Review of the Number Zoo}{273}
-\contentsline {part}{\numberline {II}Algebra and Geometry}{275}
-\contentsline {chapter}{\numberline {8}Polynomials}{277}
-\contentsline {section}{\numberline {8.1}Numeral Systems}{277}
-\contentsline {section}{\numberline {8.2}The Algebra of Polynomials}{277}
-\contentsline {section}{\numberline {8.3}Factoring Polynomials}{277}
-\contentsline {section}{\numberline {8.4}Polynomials and Binomial Coefficients}{277}
-\contentsline {section}{\numberline {8.5}Polygonal Numbers}{277}
-\contentsline {section}{\numberline {8.6}The Difference Engine}{282}
-\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{283}
-\contentsline {section}{\numberline {9.1}Relations}{283}
-\contentsline {section}{\numberline {9.2}Equivalence Classes}{283}
-\contentsline {section}{\numberline {9.3}Functions}{283}
-\contentsline {section}{\numberline {9.4}Visual Functions}{283}
-\contentsline {section}{\numberline {9.5}Trigonometry}{283}
-\contentsline {section}{\numberline {9.6}Conic Sections}{283}
-\contentsline {section}{\numberline {9.7}Algebra and Geometry}{283}
-\contentsline {chapter}{\numberline {10}Linear Algebra}{285}
-\contentsline {chapter}{\numberline {11}Quadratics, Cubics and Quartics}{287}
-\contentsline {section}{\numberline {11.1}Quadratic Equations}{287}
-\contentsline {section}{\numberline {11.2}Complex Numbers}{287}
-\contentsline {section}{\numberline {11.3}The complex Plane}{287}
-\contentsline {section}{\numberline {11.4}Gaussian Integers}{287}
-\contentsline {section}{\numberline {11.5}Hypercomplex Numbers}{287}
-\contentsline {section}{\numberline {11.6}The fundamental Theorem of Algebra}{287}
-\contentsline {section}{\numberline {11.7}Cubics and Quartics}{287}
-\contentsline {section}{\numberline {11.8}Quintics}{287}
-\contentsline {section}{\numberline {11.9}Higher Degrees}{287}
-\contentsline {chapter}{\numberline {12}Euclid and beyond}{289}
-\contentsline {section}{\numberline {12.1}Euclid's Geometry}{289}
-\contentsline {section}{\numberline {12.2}The Parallel Postulate}{289}
-\contentsline {section}{\numberline {12.3}Non-Euclidian Geometries}{289}
-\contentsline {section}{\numberline {12.4}Lost in Hilbert Space}{289}
-\contentsline {section}{\numberline {12.5}Geometry and Relativity}{289}
-\contentsline {section}{\numberline {12.6}Projective Geometry}{289}
-\contentsline {section}{\numberline {12.7}Graph Theory}{289}
-\contentsline {section}{\numberline {12.8}Topology}{289}
-\contentsline {part}{\numberline {III}Analysis}{291}
-\contentsline {chapter}{\numberline {13}The Calculus}{293}
-\contentsline {section}{\numberline {13.1}The Method of Exhaustion}{293}
-\contentsline {section}{\numberline {13.2}Area below a Curve}{293}
-\contentsline {section}{\numberline {13.3}Basic Rules of Integration}{293}
-\contentsline {section}{\numberline {13.4}Minima, Maxima and Slopes}{293}
-\contentsline {section}{\numberline {13.5}Basic Rules of Derivation}{293}
-\contentsline {section}{\numberline {13.6}The fundamental Theorem of the Calculus}{293}
-\contentsline {section}{\numberline {13.7}More Rules}{293}
-\contentsline {chapter}{\numberline {14}Curve Sketching}{295}
-\contentsline {chapter}{\numberline {15}Advanced Function Analysis}{297}
-\contentsline {chapter}{\numberline {16}Generating Functions}{299}
-\contentsline {chapter}{\numberline {17}Applied Mathematics}{301}
-\contentsline {chapter}{\numberline {18}Prospects}{303}
+\contentsline {chapter}{\numberline {7}Real Numbers}{277}
+\contentsline {section}{\numberline {7.1}$\sqrt {2}$}{277}
+\contentsline {section}{\numberline {7.2}$\Phi $}{277}
+\contentsline {section}{\numberline {7.3}$\pi $}{277}
+\contentsline {section}{\numberline {7.4}$e$}{277}
+\contentsline {section}{\numberline {7.5}$\gamma $}{277}
+\contentsline {section}{\numberline {7.6}Arithmetic with Real Numbers}{277}
+\contentsline {section}{\numberline {7.7}Representation of Real Numbers}{277}
+\contentsline {section}{\numberline {7.8}$\mathbb {R}$}{277}
+\contentsline {section}{\numberline {7.9}Real Factorials}{277}
+\contentsline {section}{\numberline {7.10}Real Binomial Coefficients}{277}
+\contentsline {section}{\numberline {7.11}The Continuum}{277}
+\contentsline {section}{\numberline {7.12}Review of the Number Zoo}{277}
+\contentsline {part}{\numberline {II}Algebra and Geometry}{279}
+\contentsline {chapter}{\numberline {8}Polynomials}{281}
+\contentsline {section}{\numberline {8.1}Numeral Systems}{281}
+\contentsline {section}{\numberline {8.2}The Algebra of Polynomials}{281}
+\contentsline {section}{\numberline {8.3}Factoring Polynomials}{281}
+\contentsline {section}{\numberline {8.4}Polynomials and Binomial Coefficients}{281}
+\contentsline {section}{\numberline {8.5}Polygonal Numbers}{281}
+\contentsline {section}{\numberline {8.6}The Difference Engine}{286}
+\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{287}
+\contentsline {section}{\numberline {9.1}Relations}{287}
+\contentsline {section}{\numberline {9.2}Equivalence Classes}{287}
+\contentsline {section}{\numberline {9.3}Functions}{287}
+\contentsline {section}{\numberline {9.4}Visual Functions}{287}
+\contentsline {section}{\numberline {9.5}Trigonometry}{287}
+\contentsline {section}{\numberline {9.6}Conic Sections}{287}
+\contentsline {section}{\numberline {9.7}Algebra and Geometry}{287}
+\contentsline {chapter}{\numberline {10}Linear Algebra}{289}
+\contentsline {chapter}{\numberline {11}Quadratics, Cubics and Quartics}{291}
+\contentsline {section}{\numberline {11.1}Quadratic Equations}{291}
+\contentsline {section}{\numberline {11.2}Complex Numbers}{291}
+\contentsline {section}{\numberline {11.3}The complex Plane}{291}
+\contentsline {section}{\numberline {11.4}Gaussian Integers}{291}
+\contentsline {section}{\numberline {11.5}Hypercomplex Numbers}{291}
+\contentsline {section}{\numberline {11.6}The fundamental Theorem of Algebra}{291}
+\contentsline {section}{\numberline {11.7}Cubics and Quartics}{291}
+\contentsline {section}{\numberline {11.8}Quintics}{291}
+\contentsline {section}{\numberline {11.9}Higher Degrees}{291}
+\contentsline {chapter}{\numberline {12}Euclid and beyond}{293}
+\contentsline {section}{\numberline {12.1}Euclid's Geometry}{293}
+\contentsline {section}{\numberline {12.2}The Parallel Postulate}{293}
+\contentsline {section}{\numberline {12.3}Non-Euclidian Geometries}{293}
+\contentsline {section}{\numberline {12.4}Lost in Hilbert Space}{293}
+\contentsline {section}{\numberline {12.5}Geometry and Relativity}{293}
+\contentsline {section}{\numberline {12.6}Projective Geometry}{293}
+\contentsline {section}{\numberline {12.7}Graph Theory}{293}
+\contentsline {section}{\numberline {12.8}Topology}{293}
+\contentsline {part}{\numberline {III}Analysis}{295}
+\contentsline {chapter}{\numberline {13}The Calculus}{297}
+\contentsline {section}{\numberline {13.1}The Method of Exhaustion}{297}
+\contentsline {section}{\numberline {13.2}Area below a Curve}{297}
+\contentsline {section}{\numberline {13.3}Basic Rules of Integration}{297}
+\contentsline {section}{\numberline {13.4}Minima, Maxima and Slopes}{297}
+\contentsline {section}{\numberline {13.5}Basic Rules of Derivation}{297}
+\contentsline {section}{\numberline {13.6}The fundamental Theorem of the Calculus}{297}
+\contentsline {section}{\numberline {13.7}More Rules}{297}
+\contentsline {chapter}{\numberline {14}Curve Sketching}{299}
+\contentsline {chapter}{\numberline {15}Advanced Function Analysis}{301}
+\contentsline {chapter}{\numberline {16}Generating Functions}{303}
+\contentsline {chapter}{\numberline {17}Applied Mathematics}{305}
+\contentsline {chapter}{\numberline {18}Prospects}{307}

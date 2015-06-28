@@ -25343,7 +25343,7 @@ I would like to suggest
 a way to compare two sets.
 To compare the size of two sets, $A$ and $B$, 
 we create a third set,
-which consists of pairs of numbers $(a,b)$,
+which consists of pairs $(a,b)$,
 such that $a\in A$ and $b \in B$.
 The sets are equal, if and only if
 every $a \in A$ appears exactly once
@@ -25359,7 +25359,7 @@ appear, then $A$ is greater than $B$.
 
 Furthermore, I suggest a way of counting a set $A$.
 We count a set by creating a new set
-that consists of pairs of numbers $(a,n)$,
+that consists of pairs $(a,n)$,
 such that $a \in A$ and $n \in \mathbb{N}$.
 For $n$, we start with 0 and, for each element
 in $A$, we increase $n$ by 1 before we put it
@@ -25391,7 +25391,8 @@ into the new set, like this:
 
 The greatest number $n$, we find in the pairs
 of this set is the number of elements in $A$.
-Let us see if we can count the negative numbers.
+Let us see if we can count the negative numbers
+in this manner.
 We count them by creating the set 
 $\lbrace (-1,1), (-2,2), (-3,3), \dots\rbrace$.
 Do we ever run out of negative or natural numbers?
@@ -25480,7 +25481,7 @@ the process of going \ensuremath{\Varid{up}} and \ensuremath{\Varid{down}} in
 diagonal lines infitely adding the number of each
 cell he crossed to the sequence.
 
-The sequence is evolving as follows:
+The sequence evolves as follows:
 Cantor starts with $\frac{1}{1}$, adds $\frac{2}{1}$,
 applies rule \ensuremath{\Varid{up}} and adds $\frac{1}{2}$,
 goes to the right, adds $\frac{1}{3}$ and
@@ -25612,7 +25613,7 @@ we see
  \dots
 \] 
 
-When we bring all fractions into canonical form,
+When we reduce all fractions to canonical form,
 we see a lot of repetitions:
 
 \[
@@ -25725,24 +25726,28 @@ Indeed, there appears to be a lot of room
 for new numbers, once we are dealing with
 infinity.
 This led the great David Hilbert to the
-analogy of the hotel, wich is today 
+analogy of the hotel, which is today 
 named after him \term{Hilbert's Hotel}.
 In this analogy, there is a hotel with the
 uncommon property of having infinitely
-many rooms. This hotel will never have
-a problem with overbooking.
+many rooms. This hotel will never run
+out of rooms for new guests.
 If a new guest arrives and there are
 already infinitely many guests,
 the manager just asks the guests
 to move one room up, \ie\ the guest
 currently in room 1 moves to room 2,
 the guest in room 2 moves to room 3
-and so on. Since there are infinitely
+and so on. 
+At the end of the process,
+room 1 is free for the new arriving guest.
+Since there are infinitely
 many rooms, there is no guest,
-even if there are infinitely many guests already,
+even though there are infinitely many guests already,
 who would not find a room with a room number
 one greater than his previous room number.
-This holds for any number of finitely many
+
+This approach works for any number of finitely many
 guests arriving.
 But even when infinitely many new guests arrive,
 the manager, still, has resources.
@@ -25923,6 +25928,7 @@ corresponds to a \term{binary tree} of the form
 
 \end{tikzpicture}
 \end{center}
+\ignore{$}
 
 When you have a closer look at the tree,
 you see that the kids of each node
@@ -25936,9 +25942,9 @@ are $\frac{1}{1+1}$ and $\frac{1+1}{1}$.
 The kids of $\frac{3}{2}$ are
 $\frac{3}{3+2}$ and $\frac{3+2}{2}$.
 
-We can define this easily in Haskell.
+We can easily create this tree in Haskell.
 First, we need a data type to represent
-the binary tree:
+the tree:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -25967,8 +25973,7 @@ The data type is parametrised,
 so we define a specialised data type
 \ensuremath{\Conid{Tree}\;\Conid{Ratio}} and the type synonym
 \ensuremath{\Conid{CalWiTree}} referring to this type.
-
-We can now easily create the binary tree above with:
+Now we create the tree with:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -25978,7 +25983,7 @@ We can now easily create the binary tree above with:
 \column{26}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{38}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{calWiTree}\mathbin{::}\Conid{Integer}\to \Conid{Ratio}\to \Conid{CalWiTree}{}\<[E]%
+\>[3]{}\Varid{calWiTree}\mathbin{::}\Conid{Zahl}\to \Conid{Ratio}\to \Conid{CalWiTree}{}\<[E]%
 \\
 \>[3]{}\Varid{calWiTree}\;\mathrm{1}\;\Varid{r}{}\<[26]%
 \>[26]{}\mathrel{=}\Conid{Node}\;\Varid{r}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
@@ -25994,15 +25999,15 @@ We can now easily create the binary tree above with:
 \end{minipage}
 
 The function takes two arguments,
-an \ensuremath{\Conid{Integer}} and a \ensuremath{\Conid{Ratio}}.
+a \ensuremath{\Conid{Zahl}} and a \ensuremath{\Conid{Ratio}}.
 The \ensuremath{\Conid{Ratio}} is the starting point
-and the \ensuremath{\Conid{Integer}} is the number of levels
+and the \ensuremath{\Conid{Zahl}} is the number of generations
 we want to create.
 Often we do not want the function to create
 the entire sequence -- for that a lot of patience
 and memory resources would be necessary --
-but only a tiny part of the tree.
-In this case, we set the \ensuremath{\Conid{Integer}} to $i\ge 1$.
+but only a tiny part of it.
+In this case, we set the \ensuremath{\Conid{Zahl}} to $i\ge 1$.
 If $i$ reaches 1, we create the current node
 without kids.
 If we want the function to create the entire
@@ -26021,21 +26026,22 @@ are equivalent.
 We do so by creating an algorithm that 
 converts the tree to the sequence.
 
-We may be tempted to do so with a typical
+We may be tempted to do this with a typical
 recursive function that converts the current node
 into a member of the sequence and adds it to
 the partial sequence that results from recursively
-call the function on the left and the right kid.
+calling the function on the left and the right kid.
 This approach, however, is \term{depth-first}.
 The resulting sequences would follow the branches
 of the tree. It would create partial sequences
-like for instance: 
+like, for instance, 
 $\frac{1}{1},
  \frac{1}{2},
  \frac{1}{3},
- \frac{1}{4}$ and so on.
+ \frac{1}{4},
+ \dots$
 But what we need is partial sequences
-that cover generation for generation, \ie\
+that cover generation by generation, \ie\
 $\frac{1}{1},
  \frac{1}{2},
  \frac{2}{1},
@@ -26062,7 +26068,7 @@ of subsequences corresponding to tree generations:
 \column{32E}{@{}l@{}}%
 \column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{getKids}\mathbin{::}\Conid{Int}\to \Conid{Tree}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{getKids}\mathbin{::}\Conid{Natural}\to \Conid{Tree}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{getKids}\;\mathrm{1}\;{}\<[14]%
 \>[14]{}(\Conid{Node}\;\Varid{r}\;{}\<[23]%
@@ -26089,7 +26095,7 @@ of subsequences corresponding to tree generations:
 \end{minipage}
 
 The function receives two arguments,
-an \ensuremath{\Conid{Int}}, which determines the generation we want to get,
+a \ensuremath{\Conid{Natural}}, which determines the generation we want to obtain,
 and the tree on which we are operating.
 If the generation is 1, we just give back the data
 of the current node.
@@ -26097,17 +26103,15 @@ Otherwise, we distinguish two cases:
 If the current node has no kids, then the result 
 is the empty list. This indicates that we have
 exhausted the current (finite) tree.
-Otherwise, we advance recursively on the first kid 
-and on the tail of the list of kids.
+Otherwise, we advance recursively on the head and tail
+of the list of kids.
 Decisive is that we do not add anything 
 to the resulting sequence, before we have reached
 the intended depth $n$.
 This way, the function produces a sequence
 containing all kids on level $n$.
 We now just apply \ensuremath{\Varid{getKids}} to all
-generations in the tree.
-We know that we are ready, 
-when \ensuremath{\Varid{getKids}} does not produce new elements anymore:
+generations in the tree:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -26117,16 +26121,10 @@ when \ensuremath{\Varid{getKids}} does not produce new elements anymore:
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{19}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{calWiTree2Seq}\mathbin{::}\Conid{CalwiTree}\to [\mskip1.5mu \Conid{Rational}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{calWiTree2Seq}\;{}\<[19]%
-\>[19]{}(\Conid{Node}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]){}\<[34]%
-\>[34]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{calWiTree2Seq}\;\Varid{t}\mathord{@}(\Conid{Node}\;\anonymous \;\Varid{kids}){}\<[34]%
-\>[34]{}\mathrel{=}\Varid{go}\;\mathrm{1}{}\<[E]%
+\>[3]{}\Varid{calWiTree2Seq}\;\Varid{t}\mathrel{=}\Varid{go}\;\mathrm{1}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\mathrel{=}{}\<[19]%
@@ -26143,14 +26141,14 @@ when \ensuremath{\Varid{getKids}} does not produce new elements anymore:
 \end{minipage}
 
 We have shown that there is a simple algorithm
-to generate the tree; we also have shown
+to generate the tree and 
 that there is a simple algorithm to convert
 the tree into the sequence.
-Tree and sequence, hence, can be generated
-by simple means and they are equivalent.
 The latter aspect is quite useful,
-because it allows us to prove some crucial properties
-on the tree, which is much simpler than proving them
+since it means that tree and sequence are equivalent.
+This allows us to prove some crucial properties
+of the sequence using the tree,
+which is much simpler than proving them
 on the sequence directly.
 
 Already a quick glance at the tree
@@ -26204,48 +26202,51 @@ The fractions that actually have 1 in
 numerator or denominator, however,
 will necessarily lead to a fraction
 whose numerator and denominator are coprime
-to each other, since no number $n$
-shares any divisor with $n+1$ but 1.
+to each other, since no number $n$, except $n=1$,
+shares any divisor with $n+1$.
 Since we start the tree with 
 $\frac{1}{1}$, the whole tree can only contain
 fractions in canonical form.\qed 
 
-The proof of the second property is perhaps
-a bit more subtle.
-We prove by contradiction.
-Let us assume that there is a fraction 
-that does not appear in the tree. 
-Then, there is one such fraction that has
-the smallest numerator and the smallest denominator.
+We prove the second property by contradiction.
+Let us assume that there are fractions 
+that do not appear in the tree. 
+Then, there are fractions with 
+the smallest denominator and, among those,
+there is one with the smallest denominator.
 Let $\frac{n}{d}$ be this fraction.
 If $n>d$, then $\frac{n-d}{d}$ cannot appear either, since,
 $\frac{n}{d}$ would be its right kid.
 But that is a contradiction to our assumption that
-$\frac{n}{d}$ was the nonappearing fraction 
-with the smallest numerator, but, obviously, $n-d$
+$\frac{n}{d}$ was the nonappearing fraction
+with the smallest numerator among those fractions
+with denominator $d$, but, obviously, $n-d$
 is an even smaller numerator.
 If $n<d$, then $\frac{n}{d-n}$ cannot appear either, since,
 $\frac{n}{d}$ would be its left kid.
 But that again is a contradiction, since the denominator
-is smaller than the denominator of the fraction 
-we assumed to be the one with the smallest denominator.
-The only way to solve our contradiction is
+is smaller than the denominator of one of the fractions 
+we assumed to be those with the smallest denominator.
+The only way to solve this dilemma is
 to assume that $n$ and $d$ are equal.
 Then, indeed, $\frac{n-d}{d} = 0$ and
 $\frac{n}{n-d} = \bot$ would not be in the tree.
-But we start with $\frac{1}{1}$, not with 0 or $\bot$.\qed
+But such a fraction with $n=d$ is irrelevant,
+since it reduces to $\frac{1}{1}$, 
+which already is in the tree.\qed
 
 To prove the third property, we first observe
-that 1 appears at the top and only at the top.
+that 1 is the root of the tree. 
 Since any fraction below 1 is either
 $\frac{n}{n+d}$ or $\frac{n+d}{d}$,
 there cannot be a fraction with $n=d$.
-With this out of the way we can argue 
-as for the second property:
-we assume there is a fraction that appears
+With this out of the way, we can argue 
+as we did for the second property:
+we assume there are fractions that appear
 more than once.
-From all these fractions, there is one
-with the smallest numerator and denominator.
+From all these fractions, there is a group 
+that shares the smallest denominator and,
+among this group, one with the smallest numerator.
 But this fraction is then either the left kid
 of two fractions of the form $\frac{n}{d-n}$,
 making the denominator of these fractions even smaller,
@@ -26261,8 +26262,8 @@ $\frac{n}{n+d}$ or $\frac{n+d}{d}$.
 Since, except for the root node, we never have
 $n=d$, no node derived from one of those fractions
 can ever equal one derived from the other.
-That is to say that the fact that two fraction
-derived from such nodes were equal, would mean that
+To say that two fractions
+derived from such nodes are equal, would mean that
 we could have two numbers $n$ and $d$, such that
 $n=n+d$ and $d=n+d$. That would only work if
 $n=0$ and $d=0$. But that case cannot occur.\qed
@@ -26278,13 +26279,11 @@ There is a simple, yet quite exciting way
 to compute which is the $n^{th}$ fraction.
 The key is to realise that we are dealing
 with a structure, namely a binary tree, 
-that includes a binary decision.
-For any given fraction in the tree,
-$\frac{n}{d}$, its left kid is smaller
-than that fraction and its right kid
-is greater.
+that stores sequences of binary decisions.
+At any given node in the tree,
+we can go either right or left.
 We could, therefore, describe 
-the $n^{th}$ position as a navigation
+the $n^{th}$ position as a trajectory
 through the tree, where at each node,
 we take a binary decision:
 going right or going left.
@@ -26297,7 +26296,6 @@ Here is a function that,
 given a natural number $n$,
 returns the fraction in the Calkin-Wilf sequence
 at position $n$:
-
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -26333,7 +26331,7 @@ for the first number 1, we want position 1.
 If we have exhausted the binary number,
 the result is just $r$, the rational number we pass
 to \ensuremath{\Varid{go}}. Otherwise, we distinguish two cases:
-the head of the binary number is 0 or 1.
+the head of the binary number being 0 or 1.
 If it is zero, we follow the left branch,
 which has the fraction $\frac{n}{n+d}$
 at its top; if it is 1, we follow 
@@ -26364,14 +26362,10 @@ without deviating through the tree:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{calwis}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{calwis}\mathrel{=}\Varid{go}\;\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\mathrel{=}\Varid{calwiR}\;\Varid{n}\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
+\>[3]{}\Varid{calwis}\mathrel{=}\Varid{map}\;\Varid{calwiR}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -26398,7 +26392,7 @@ described above around:
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;(\Conid{Q}\;\mathrm{0}\;\Varid{d}){}\<[24]%
+\>[12]{}\Varid{go}\;(\Conid{Q}\;\mathrm{0}\;\anonymous ){}\<[24]%
 \>[24]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
 \>[12]{}\Varid{go}\;(\Conid{Q}\;\Varid{n}\;\Varid{d}){}\<[24]%
@@ -26412,7 +26406,7 @@ described above around:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Here, we do exactly the opposite.
+Here we do exactly the opposite.
 We look at the fraction and, if $n\ge d$,
 then we add 1 to the digits of the 
 resulting binary number, otherwise,
@@ -26438,23 +26432,438 @@ which leads to the list \ensuremath{\mathrm{1}\mathbin{:}\mathrm{0}\mathbin{:}\m
 This evaluated and reversed is \ensuremath{\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1}},
 which, converted to decimal representation, is 25.
 
+Surprisingly or not, the Calkin-Wilf sequence
+is not completely new. A part of it was already studied
+in the $19^{th}$ century by 
+German mathematician Moritz Stern (1807 -- 1894),
+successor of Gauss at the university of Göttingen
+and professor of Bernhard Riemann.
+The numerators of the Calkin-Wilf sequence correspond to 
+\term{Stern's diatomic sequence}.
+Using the Calkin-Wilf sequence,
+we can produce Stern's sequence with the function
 
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{stern}\mathbin{::}[\mskip1.5mu \Conid{Natural}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{stern}\mathrel{=}\Varid{map}\;\Varid{numerator}\;\Varid{calwis}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{numerator}\;(\Conid{Q}\;\Varid{n}\;\anonymous )\mathrel{=}\Varid{n}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 
-\ignore{
-next function?
-Stern Sequence and its meaning
-  => There are a lot of things about Stern's sequence, see:
-     https://oeis.org/A002487
-  - fusc
-    an interesting property of fusc is fusc 19 == fusc 25
-    because: binary 19 = 10011 and 25 = 11001
-    that is, for binary numbers: fusc n = fusc (reverse n) 
-  - The number of odd binomial coefficients of the form 
-    choose (n-r) r for 0 <= 2r <= n
-  - The number of ways of writing n as a sum of powers of 2
-    in which each power appears at most twice
-    "hyperbinary representations of n"
-}
+\ensuremath{\Varid{take}\;\mathrm{32}\;\Varid{stern}} shows:
+
+\[
+  1,1,2,1,3,2,3,1,4,3,5,2,5,3,4,1,5,4,7,3,8,5,7,2,7,5,8,3,7,4,5,1,
+\]
+
+which is equal to the output produced by 
+mapping the following function onto \ensuremath{[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fusc}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{fusc}\;\mathrm{0}{}\<[11]%
+\>[11]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{fusc}\;\mathrm{1}{}\<[11]%
+\>[11]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\Varid{fusc}\;\Varid{n}{}\<[11]%
+\>[11]{}\mid \Varid{even}\;\Varid{n}{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\Varid{fusc}\;(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2}){}\<[E]%
+\\
+\>[11]{}\mid \Varid{otherwise}{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\mathbf{let}\;\Varid{k}\mathrel{=}(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\\
+\>[27]{}\mathbf{in}\;\Varid{fusc}\;\Varid{k}\mathbin{+}\Varid{fusc}\;(\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+From the definition of the \ensuremath{\Varid{fusc}} function,
+we can read some of the many properties
+of Stern's sequence.
+First, an even number has the same value
+as half of that number, for instance
+\ensuremath{\Varid{fusc}\;\mathrm{3}} is 2 and so is \ensuremath{\Varid{fusc}\;\mathrm{6}},
+\ensuremath{\Varid{fusc}\;\mathrm{12}}, \ensuremath{\Varid{fusc}\;\mathrm{24}} and so on.
+We immediately see that for any power of 2,
+\ensuremath{\Varid{fusc}} equals \ensuremath{\Varid{fusc}\;\mathrm{1}}, which is 1;
+\ensuremath{\Varid{map}\;\Varid{fusc}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{8},\mathrm{16},\mathrm{32},\mathrm{64},\mathrm{128},\mathrm{256}\mskip1.5mu]}, hence,
+gives \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
+
+Of course, \ensuremath{\Varid{fusc}\;\Varid{n}} is the numerator
+of the $n^{th}$ fraction in the Calwin-Wilf sequence.
+The fraction at position 25, 
+as we have seen using \ensuremath{\Varid{calwiR}}, is $\frac{7}{5}$.
+\ensuremath{\Varid{fusc}\;\mathrm{25}} (as well as \ensuremath{\Varid{fusc}\;\mathrm{50}}, \ensuremath{\Varid{fusc}\;\mathrm{100}},
+\ensuremath{\Varid{fusc}\;\mathrm{200}}, \etc) is 7.
+
+An amazing property of \ensuremath{\Varid{fusc}},
+found by the great Edsgar Dijkstra, is related
+to the binary representation
+of its argument, namely
+that two numbers, whose binary representations
+are reverses of each other,
+have the same \ensuremath{\Varid{fusc}} result.
+25, for instance, is 11001.
+When we reverse this sequence, we get 10011,
+which, in decimal representation, is 19 and
+we have \ensuremath{\Varid{fusc}\;\mathrm{19}\mathrel{=}\Varid{fusc}\;\mathrm{25}\mathrel{=}\mathrm{7}}.
+Dijkstra's argument is closely related
+to his algorithm, which is different
+from ours:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{36E}{@{}l@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fuscd}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{fuscd}\;\Varid{n}\mathrel{=}\Varid{ewd}\;\Varid{n}\;\mathrm{1}\;\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ewd}\;\mathrm{0}\;\anonymous \;\Varid{b}\mathrel{=}\Varid{b}{}\<[E]%
+\\
+\>[12]{}\Varid{ewd}\;\Varid{m}\;\Varid{a}\;\Varid{b}{}\<[23]%
+\>[23]{}\mid \Varid{even}\;\Varid{m}{}\<[36]%
+\>[36]{}\mathrel{=}{}\<[36E]%
+\>[39]{}\Varid{ewd}\;(\Varid{m}\mathbin{\Varid{`div`}}\mathrm{2})\;(\Varid{a}\mathbin{+}\Varid{b})\;\Varid{b}{}\<[E]%
+\\
+\>[23]{}\mid \Varid{otherwise}{}\<[36]%
+\>[36]{}\mathrel{=}{}\<[36E]%
+\>[39]{}\Varid{ewd}\;((\Varid{m}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2})\;\Varid{a}\;(\Varid{b}\mathbin{+}\Varid{a}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The final result is stored in \ensuremath{\Varid{b}},
+which is returned when \ensuremath{\Varid{n}}, by subsequently
+halving, if the intermediate result is even,
+and reducing by one and halving, if it is odd,
+reaches 0. \ensuremath{\Varid{b}}, initially 0,
+carries the value of sums of \ensuremath{\Varid{a}} and \ensuremath{\Varid{b}}.
+The variable \ensuremath{\Varid{a}} and \ensuremath{\Varid{b}}, hence, carry the intermediate
+results for  
+\ensuremath{\Varid{a}\mathrel{=}\Varid{fusc}\;(\Varid{k}\mathbin{+}\mathrm{1})} and \ensuremath{\Varid{b}\mathrel{=}\Varid{fusc}\;\Varid{k}}.
+Compare the \ensuremath{\Varid{even}} and \ensuremath{\Varid{odd}} branches
+in Dijkstra's algorithm with the branches
+in our more ``Haskellish'' implementation.
+
+Dijkstra proposes to represent the two variables
+\ensuremath{\Varid{a}} and \ensuremath{\Varid{b}} by a single variable \ensuremath{\Varid{k}}. 
+We then have two variables,
+one running from $n$ down to zero and
+the other running from zero upwards
+until $n$ reaches zero.
+Here is a piece of code to show this behaviour:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{34E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fuscd2}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{fuscd2}\;\Varid{n}\mathrel{=}\Varid{ewd}\;\Varid{n}\;\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ewd}\;\mathrm{0}\;\Varid{k}\mathrel{=}\Varid{k}{}\<[E]%
+\\
+\>[12]{}\Varid{ewd}\;\Varid{m}\;\Varid{k}{}\<[21]%
+\>[21]{}\mid \Varid{even}\;\Varid{m}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[34E]%
+\>[37]{}\Varid{ewd}\;(\Varid{m}\mathbin{\Varid{`div`}}\mathrm{2})\;(\mathrm{2}\mathbin{*}\Varid{k}){}\<[E]%
+\\
+\>[21]{}\mid \Varid{otherwise}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[34E]%
+\>[37]{}\Varid{ewd}\;((\Varid{m}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2})\;(\mathrm{2}\mathbin{*}\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+When we reach the base case \ensuremath{\Varid{ewd}\;\mathrm{0}\;\Varid{k}}, $k$ is the binary reverse
+of $n$, \eg\ \ensuremath{\Varid{fuscd2}\;\mathrm{25}} is 19 and \ensuremath{\Varid{fuscd2}\;\mathrm{19}} is 25.
+
+For the Calwin-Wilf tree this means that,
+when we have two trajectories through the tree,
+where each step after the root node
+is the opposite of the simultaneous step
+of the other one, we arrive at two fractions
+with the same numerator.
+The trajectory defined by the binary sequence
+$1,1,0,0,1$ leads, first, to the root node $\frac{1}{1}$,
+then through 
+$\frac{2}{1}$,
+$\frac{2}{3}$ and
+$\frac{2}{5}$ to
+$\frac{7}{5}$.
+The reverse of this sequence, $1,0,0,1,1$ leads,
+first, to the root node $\frac{1}{1}$ and then through
+$\frac{1}{2}$,
+$\frac{1}{3}$ and
+$\frac{4}{3}$ to
+$\frac{7}{3}$.
+
+At this occasion, as we are already looking at the tree,
+we should inspect the generation containing 
+$\frac{7}{3}$ and 
+$\frac{7}{5}$ a bit further.
+There are two more fractions with numerator 7,
+namely 
+$\frac{7}{2}$ and
+$\frac{7}{4}$.
+What is their position in the sequence?
+\ensuremath{\Varid{calwiP}\;(\Conid{Q}\;\mathrm{7}\;\mathrm{2})} is 23 and \ensuremath{\Varid{calwiP}\;(\Conid{Q}\;\mathrm{7}\;\mathrm{4})} is 29.
+In binary representation 23 is \ensuremath{\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}} and 29
+is its reverse \ensuremath{\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1}}.
+Compare the binary representations of 23 and 25:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+25 & 1 & 1 & 0 & 0 & 1\\\hline
+23 & 1 & 0 & 1 & 1 & 1
+\end{tabular}
+\end{center}
+
+We see that, in 29, all digits in 25, but the
+most and least significant ones,
+are inverted. The same is true for 19 and 29:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+19 & 1 & 0 & 0 & 1 & 1\\\hline
+29 & 1 & 1 & 1 & 0 & 1
+\end{tabular}
+\end{center}
+
+Therefore, we have, and this is also a result by Dijkstra,
+\ensuremath{\Varid{fusc}\;\mathrm{19}\mathrel{=}\Varid{fusc}\;\mathrm{23}\mathrel{=}\Varid{fusc}\;\mathrm{25}\mathrel{=}\Varid{fusc}\;\mathrm{29}\mathrel{=}\mathrm{7}}.
+
+Even further, we see that there are also 4 fractions
+in this generation where 7 appears in the denominator,
+and, for each denominator of the fractions with 7 in the numerator,
+there is also a fraction with this number in the numerator.
+When we examine these fractions closer,
+we see that each fraction in the generation has its 
+multiplicative inverse in this same generation.
+When we pair up the fractions with their inverses, we get:
+
+\[
+\left(\frac{1}{5}, \frac{5}{1}\right),
+\left(\frac{5}{4}, \frac{4}{5}\right),
+\left(\frac{4}{7}, \frac{7}{4}\right),
+\left(\frac{7}{3}, \frac{3}{7}\right),
+\left(\frac{3}{8}, \frac{8}{3}\right),
+\left(\frac{8}{5}, \frac{5}{8}\right),
+\left(\frac{5}{7}, \frac{7}{5}\right),
+\left(\frac{7}{2}, \frac{2}{7}\right).
+\]
+
+Indeed, the product of the fractions 
+in each generation in the tree
+is 1. You can try this out with
+the simple function 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{genprod}\mathbin{::}\Conid{Natural}\to \Conid{CalwiTree}\to \Conid{Rational}{}\<[E]%
+\\
+\>[3]{}\Varid{genprod}\;\Varid{n}\;\Varid{t}\mathrel{=}\Varid{product}\;(\Varid{getKids}\;\Varid{n}\;\Varid{t}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+A sequence with so many nice properties,
+one might feel to say with some poetic fervour,
+cannot be meaningless. 
+Isn't there anything in the (more or less) real world
+that these numbers would actually count?
+It turns out there is.
+There are in fact many things the Stern sequence actually does count.
+Just to mention two things:
+It counts odd binomial coefficients of the form
+$\binom{n-r}{r}, 0 \le 2r \le n$.
+That is the odd numbers in the first half of the lines $n-r$
+in Pascal's triangle.
+This would translate to a function 
+creating a sequence of numbers of the form
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{oddCos}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Natural}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{oddCos}\;\Varid{n}\mathrel{=}\Varid{filter}\;\Varid{odd}\;[\mskip1.5mu \Varid{choose}\;(\Varid{n}\mathbin{-}\Varid{r})\;\Varid{r}\mid \Varid{r}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2})\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\ensuremath{\Varid{fusc}\;(\Varid{n}\mathbin{+}\mathrm{1})} is exactly the size of that sequence.
+For instance:
+\ensuremath{\Varid{oddCos}\;\mathrm{5}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{6}} is 2;
+\ensuremath{\Varid{oddCos}\;\mathrm{6}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{7}} is 3;
+\ensuremath{\Varid{oddCos}\;\mathrm{7}} is \ensuremath{[\mskip1.5mu \mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{8}}, which is a power of 2, is 1;
+\ensuremath{\Varid{oddCos}\;\mathrm{8}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{7},\mathrm{15},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{9}} is 1;
+\ensuremath{\Varid{oddCos}\;\mathrm{9}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{21},\mathrm{5}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{10}} is 3.
+
+Moritz Stern arrived at his sequence,
+when studying ways to represent numbers as
+powers of 2. Any number can be written
+as such a sum and most number even in various ways.
+For instance, $2 = 2^0 + 2^0$,
+$3 = 2^0 + 2^1 = 2^0 + 2^0 + 2^0$,
+$4 = 2^1 + 2^1 = 2^0 + 2^0 + 2^1$,
+$5 = 2^0 + 2^2 = 2^0 + 2^1 + 2^1$
+and so on.
+Stern focussed on so called \term{hyperbinary} systems,
+that is sums of powers of 2, where any power appears
+at most twice.
+For instance, $3 = 2^0 + 2^1$ is such a system,
+but $3 = 2^0 + 2^0 + 2^0$ is not.
+Stern's sequence counts the number of ways
+this is possible for any number $n-1$. In other words, 
+\ensuremath{\Varid{fusc}\;(\Varid{n}\mathbin{+}\mathrm{1})} is exactly the number of hyperbinary systems
+for $n$.
+For 3, as an example, there is only one way
+and \ensuremath{\Varid{fusc}\;\mathrm{4}} is 1;
+for 4, there are 3 such systems:
+$2^0 + 2^0 + 2^1$, $2^1 + 2^1$ and $2^2$ and
+\ensuremath{\Varid{fusc}\;\mathrm{5}} is 3;
+for 5, there are only 2 such systems:
+$2^0 + 2^1 + 2^1$ and $2^0 + 2^2$ and
+\ensuremath{\Varid{fusc}\;\mathrm{6}} is 2.
+
+Finding all hyperbinary systems for a number $n$
+is quite an interesting problem in its own right.
+A brute-force and, hence, inefficient algorithm
+could apply the following logic.
+We first find all powers of 2 less than or equal to $n$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pows2}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Natural}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{pows2}\;\Varid{n}\mathrel{=}\Varid{takeWhile}\;(\leq \Varid{n})\;[\mskip1.5mu \mathrm{2}\mathbin{\uparrow}\Varid{x}\mid \Varid{x}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We then create all permutations of this set
+and try to build sums with these permutations 
+that equal $n$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{hyperbin}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu [\mskip1.5mu \Conid{Natural}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{hyperbin}\;\Varid{n}\mathrel{=}\Varid{nub}\;(\Varid{go}\mathbin{\$}\Varid{perms}\mathbin{\$}\Varid{pows2}\;\Varid{n}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{pss}\mathrel{=}\Varid{filter}\;{}\<[29]%
+\>[29]{}(\lambda \Varid{k}\to \Varid{sum}\;\Varid{k}\equiv \Varid{n})\;{}\<[E]%
+\\
+\>[29]{}[\mskip1.5mu \Varid{sort}\;(\Varid{sums}\;\mathrm{0}\;\Varid{ps}\;\Varid{ps})\mid \Varid{ps}\leftarrow \Varid{pss}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{sums}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\;[\mskip1.5mu \mskip1.5mu]{}\<[30]%
+\>[30]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{sums}\;\Varid{s}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{ds}{}\<[30]%
+\>[30]{}\mathrel{=}\Varid{sums}\;\Varid{s}\;\Varid{ds}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{sums}\;\Varid{s}\;(\Varid{p}\mathbin{:}\Varid{ps})\;\Varid{ds}{}\<[30]%
+\>[30]{}\mid \Varid{s}\mathbin{+}\Varid{p}\mathbin{>}\Varid{n}{}\<[44]%
+\>[44]{}\mathrel{=}\Varid{sums}\;\Varid{s}\;\Varid{ds}\;\Varid{ps}{}\<[E]%
+\\
+\>[30]{}\mid \Varid{s}\mathbin{+}\Varid{p}\equiv \Varid{n}{}\<[44]%
+\>[44]{}\mathrel{=}[\mskip1.5mu \Varid{p}\mskip1.5mu]{}\<[E]%
+\\
+\>[30]{}\mid \Varid{otherwise}{}\<[44]%
+\>[44]{}\mathrel{=}\Varid{p}\mathbin{:}\Varid{sums}\;(\Varid{s}\mathbin{+}\Varid{p})\;\Varid{ps}\;\Varid{ds}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note that we pass the available pool of powers of 2 $\le n$
+twice to \ensuremath{\Varid{sums}}. When the first instance is exhausted or
+$s + p > n$, we start to use the second instance of the pool.
+This reflects the fact that we are allowed to use every number
+twice.
+If the sum $s+p$ equals $n$, we have found a valid
+hyperbinary system.
+Otherwise, if $s+p < n$, we continue adding the current power
+to the result set.
+In \ensuremath{\Varid{go}}, we try \ensuremath{\Varid{sums}} on all permutations of the powers
+filtering the resulting sets for which \ensuremath{\Varid{sum}} equals $n$.
+We sort each list to be able to recognise duplicates and
+to remove them with \ensuremath{\Varid{nub}}.
 
 \chapter{Real Numbers} % c06
 \section{$\sqrt{2}$}
