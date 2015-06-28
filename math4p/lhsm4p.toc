@@ -1,0 +1,109 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{7}
+\contentsline {chapter}{\numberline {2}Brief Introduction to Haskell}{9}
+\contentsline {part}{\numberline {I}Arithmetic and Combinatorics}{11}
+\contentsline {chapter}{\numberline {3}Natural Numbers}{13}
+\contentsline {section}{\numberline {3.1}What are numbers and what should they be?}{13}
+\contentsline {section}{\numberline {3.2}Peano Numbers}{15}
+\contentsline {section}{\numberline {3.3}Decimal Numbers}{17}
+\contentsline {section}{\numberline {3.4}Multiplication}{28}
+\contentsline {section}{\numberline {3.5}Division and the Greatest Common Divisor}{33}
+\contentsline {section}{\numberline {3.6}Powers, Roots and Logarithms}{39}
+\contentsline {section}{\numberline {3.7}Numbers as Strings}{48}
+\contentsline {section}{\numberline {3.8}$\mathbb {N}$}{54}
+\contentsline {section}{\numberline {3.9}Abstract Algebra}{55}
+\contentsline {chapter}{\numberline {4}Induction, Series, Sets and Combinatorics}{61}
+\contentsline {section}{\numberline {4.1}Logistics}{61}
+\contentsline {section}{\numberline {4.2}Induction}{65}
+\contentsline {section}{\numberline {4.3}The Fibonacci Sequence}{69}
+\contentsline {section}{\numberline {4.4}Factorial}{72}
+\contentsline {section}{\numberline {4.5}Random Permutations}{78}
+\contentsline {section}{\numberline {4.6}Binomial Coefficients}{83}
+\contentsline {section}{\numberline {4.7}Combinatorial Problems with Sets}{92}
+\contentsline {section}{\numberline {4.8}Stirling Numbers}{102}
+\contentsline {section}{\numberline {4.9}Eulerian Numbers}{115}
+\contentsline {chapter}{\numberline {5}Primes}{123}
+\contentsline {section}{\numberline {5.1}Gaps}{123}
+\contentsline {section}{\numberline {5.2}Finding Primes}{125}
+\contentsline {section}{\numberline {5.3}The fundamental Theorem of Arithmetic}{130}
+\contentsline {section}{\numberline {5.4}Factoring}{134}
+\contentsline {section}{\numberline {5.5}Factoring Factorials}{139}
+\contentsline {section}{\numberline {5.6}Arithmetic modulo a Prime}{141}
+\contentsline {section}{\numberline {5.7}Congruence}{153}
+\contentsline {section}{\numberline {5.8}Quadratic Residues}{159}
+\contentsline {section}{\numberline {5.9}Generators and Subgroups}{171}
+\contentsline {section}{\numberline {5.10}Primality Tests}{178}
+\contentsline {section}{\numberline {5.11}Primes in Cryptography}{187}
+\contentsline {section}{\numberline {5.12}Open Problems}{197}
+\contentsline {chapter}{\numberline {6}The Inverse Element}{207}
+\contentsline {section}{\numberline {6.1}Inverse Elements}{207}
+\contentsline {section}{\numberline {6.2}$\mathbb {Z}$}{211}
+\contentsline {section}{\numberline {6.3}Negative Binomial Coefficients}{215}
+\contentsline {section}{\numberline {6.4}$\mathbb {Q}$}{228}
+\contentsline {section}{\numberline {6.5}Zeno's Paradox}{231}
+\contentsline {section}{\numberline {6.6}Binomial Coefficients are Integers}{236}
+\contentsline {section}{\numberline {6.7}Euler's Totient Function}{247}
+\contentsline {section}{\numberline {6.8}How many Fractions?}{263}
+\contentsline {chapter}{\numberline {7}Real Numbers}{273}
+\contentsline {section}{\numberline {7.1}$\sqrt {2}$}{273}
+\contentsline {section}{\numberline {7.2}$\Phi $}{273}
+\contentsline {section}{\numberline {7.3}$\pi $}{273}
+\contentsline {section}{\numberline {7.4}$e$}{273}
+\contentsline {section}{\numberline {7.5}$\gamma $}{273}
+\contentsline {section}{\numberline {7.6}Arithmetic with Real Numbers}{273}
+\contentsline {section}{\numberline {7.7}Representation of Real Numbers}{273}
+\contentsline {section}{\numberline {7.8}$\mathbb {R}$}{273}
+\contentsline {section}{\numberline {7.9}Real Factorials}{273}
+\contentsline {section}{\numberline {7.10}Real Binomial Coefficients}{273}
+\contentsline {section}{\numberline {7.11}The Continuum}{273}
+\contentsline {section}{\numberline {7.12}Review of the Number Zoo}{273}
+\contentsline {part}{\numberline {II}Algebra and Geometry}{275}
+\contentsline {chapter}{\numberline {8}Polynomials}{277}
+\contentsline {section}{\numberline {8.1}Numeral Systems}{277}
+\contentsline {section}{\numberline {8.2}The Algebra of Polynomials}{277}
+\contentsline {section}{\numberline {8.3}Factoring Polynomials}{277}
+\contentsline {section}{\numberline {8.4}Polynomials and Binomial Coefficients}{277}
+\contentsline {section}{\numberline {8.5}Polygonal Numbers}{277}
+\contentsline {section}{\numberline {8.6}The Difference Engine}{282}
+\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{283}
+\contentsline {section}{\numberline {9.1}Relations}{283}
+\contentsline {section}{\numberline {9.2}Equivalence Classes}{283}
+\contentsline {section}{\numberline {9.3}Functions}{283}
+\contentsline {section}{\numberline {9.4}Visual Functions}{283}
+\contentsline {section}{\numberline {9.5}Trigonometry}{283}
+\contentsline {section}{\numberline {9.6}Conic Sections}{283}
+\contentsline {section}{\numberline {9.7}Algebra and Geometry}{283}
+\contentsline {chapter}{\numberline {10}Linear Algebra}{285}
+\contentsline {chapter}{\numberline {11}Quadratics, Cubics and Quartics}{287}
+\contentsline {section}{\numberline {11.1}Quadratic Equations}{287}
+\contentsline {section}{\numberline {11.2}Complex Numbers}{287}
+\contentsline {section}{\numberline {11.3}The complex Plane}{287}
+\contentsline {section}{\numberline {11.4}Gaussian Integers}{287}
+\contentsline {section}{\numberline {11.5}Hypercomplex Numbers}{287}
+\contentsline {section}{\numberline {11.6}The fundamental Theorem of Algebra}{287}
+\contentsline {section}{\numberline {11.7}Cubics and Quartics}{287}
+\contentsline {section}{\numberline {11.8}Quintics}{287}
+\contentsline {section}{\numberline {11.9}Higher Degrees}{287}
+\contentsline {chapter}{\numberline {12}Euclid and beyond}{289}
+\contentsline {section}{\numberline {12.1}Euclid's Geometry}{289}
+\contentsline {section}{\numberline {12.2}The Parallel Postulate}{289}
+\contentsline {section}{\numberline {12.3}Non-Euclidian Geometries}{289}
+\contentsline {section}{\numberline {12.4}Lost in Hilbert Space}{289}
+\contentsline {section}{\numberline {12.5}Geometry and Relativity}{289}
+\contentsline {section}{\numberline {12.6}Projective Geometry}{289}
+\contentsline {section}{\numberline {12.7}Graph Theory}{289}
+\contentsline {section}{\numberline {12.8}Topology}{289}
+\contentsline {part}{\numberline {III}Analysis}{291}
+\contentsline {chapter}{\numberline {13}The Calculus}{293}
+\contentsline {section}{\numberline {13.1}The Method of Exhaustion}{293}
+\contentsline {section}{\numberline {13.2}Area below a Curve}{293}
+\contentsline {section}{\numberline {13.3}Basic Rules of Integration}{293}
+\contentsline {section}{\numberline {13.4}Minima, Maxima and Slopes}{293}
+\contentsline {section}{\numberline {13.5}Basic Rules of Derivation}{293}
+\contentsline {section}{\numberline {13.6}The fundamental Theorem of the Calculus}{293}
+\contentsline {section}{\numberline {13.7}More Rules}{293}
+\contentsline {chapter}{\numberline {14}Curve Sketching}{295}
+\contentsline {chapter}{\numberline {15}Advanced Function Analysis}{297}
+\contentsline {chapter}{\numberline {16}Generating Functions}{299}
+\contentsline {chapter}{\numberline {17}Applied Mathematics}{301}
+\contentsline {chapter}{\numberline {18}Prospects}{303}

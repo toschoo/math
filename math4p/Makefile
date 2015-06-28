@@ -1,0 +1,151 @@
+GHC  = ghc -O2 -Wall $(INC) --make
+WARN = -Wall \
+       -fno-warn-missing-signatures 
+       # -fno-warn-unused-do-bind \
+       #-fwarn-name-shadowing \
+       #-fwarn-incomplete-patterns
+STAT = -prof -auto-all -caf-all -fforce-recomp
+CMD  = --make
+
+OUTDIR   = bin
+DOC      = doc
+SRC	 = src
+ALL	 = cmds.tex \
+	   src/c02/numbers.lhs \
+	   src/c02/intro.lhs \
+	   src/c02/Peano.lhs \
+	   src/c02/Types.lhs \
+	   src/c02/Multi.lhs \
+	   src/c02/Div.lhs \
+	   src/c02/Log.lhs \
+	   src/c02/Strings.lhs \
+	   src/c02/Natural.lhs \
+	   src/c02/Group.lhs \
+	   src/c03/induction.lhs \
+	   src/c03/sorter.lhs \
+	   src/c03/fib.lhs \
+	   src/c03/Fact.lhs \
+	   src/c03/Random.lhs \
+	   src/c03/Binom.lhs \
+	   src/c03/Set.lhs \
+	   src/c03/Stirling.lhs \
+	   src/c03/Eulerian.lhs \
+	   src/c04/primes.lhs \
+	   src/c04/Gaps.lhs \
+	   src/c04/Sieves.lhs \
+	   src/c04/Fundamental.lhs \
+	   src/c04/Factor.lhs \
+	   src/c04/FacFac.lhs \
+	   src/c04/Modular.lhs \
+	   src/c04/Congruence.lhs \
+	   src/c04/Residues.lhs \
+	   src/c04/Gen.lhs \
+	   src/c04/Tests.lhs \
+	   src/c04/Crypto.lhs \
+	   src/c04/Unsolved.lhs \
+	   src/c05/inverse.lhs \
+	   src/c05/Invel.lhs \
+	   src/c05/Zahl.lhs \
+	   src/c05/NegBinom.lhs \
+	   src/c05/Quoz.lhs \
+	   src/c05/Zeno.lhs \
+	   src/c05/BinomInt.lhs \
+	   src/c05/Totient.lhs \
+	   src/c05/Cantor1.lhs \
+	   src/c06/real.lhs \
+	   src/c07/poly.lhs \
+	   src/c07/Gnomon.lhs \
+	   src/c08/relfun.lhs \
+	   src/c10/quadratics.lhs \
+	   src/c11/euclid.lhs \
+	   src/c13/calculus.lhs
+
+INC = -isrc/c02 \
+      -isrc/c03 \
+      -isrc/c04 \
+      -isrc/c05 \
+      -isrc/c06 \
+      -isrc/c07 \
+      -iscratchpad
+
+toTex = lhs2TeX --poly
+
+m4p.pdf:	m4p.tex $(ALL) 
+		$(toTex) m4p.tex > lhsm4p.tex
+		pdflatex lhsm4p.tex
+		pdflatex lhsm4p.tex
+		mv lhsm4p.pdf m4p.pdf
+
+nums.pdf:	nums.tex $(ALL)
+		$(toTex) nums.tex > lhsnums.tex
+		pdflatex lhsnums.tex
+		pdflatex lhsnums.tex
+		mv lhsnums.pdf nums.pdf
+
+induc.pdf:	induc.tex $(ALL)
+		$(toTex) induc.tex > lhsinduc.tex
+		pdflatex lhsinduc.tex
+		pdflatex lhsinduc.tex
+		mv lhsinduc.pdf induc.pdf
+
+primes.pdf:	primes.tex $(ALL)
+		$(toTex) primes.tex > lhsprimes.tex
+		pdflatex lhsprimes.tex
+		pdflatex lhsprimes.tex
+		mv lhsprimes.pdf primes.pdf
+
+inverse.pdf:	inverse.tex $(ALL)
+		$(toTex) inverse.tex > lhsinverse.tex
+		pdflatex lhsinverse.tex
+		pdflatex lhsinverse.tex
+		mv lhsinverse.pdf inverse.pdf
+
+m4p:		m4p.pdf
+
+nums:		nums.pdf
+
+induc:		induc.pdf
+
+primes:		primes.pdf
+
+inverse:	inverse.pdf
+
+SUITE = test/suite
+
+suite:	$(SUITE)/tstNum  \
+	$(SUITE)/tstNat  \
+	$(SUITE)/tstZahl \
+	$(SUITE)/tstRat
+
+run:	suite
+	$(SUITE)/tstNum
+	$(SUITE)/tstNat
+	$(SUITE)/tstZahl
+	$(SUITE)/tstRat
+	
+$(SUITE)/tstNum:	$(ALL) $(SUITE)/tstNum.hs
+			$(GHC) $(SUITE)/tstNum
+	
+$(SUITE)/tstRat:	$(ALL) $(SUITE)/tstRat.hs
+			$(GHC) $(SUITE)/tstRat
+	
+$(SUITE)/tstNat:	$(ALL) $(SUITE)/tstNat.hs
+			$(GHC) $(SUITE)/tstNat
+	
+$(SUITE)/tstZahl:	$(ALL) $(SUITE)/tstZahl.hs
+			$(GHC) $(SUITE)/tstZahl
+
+clean:
+	rm -f src/*/*.hi
+	rm -f src/*/*.o
+	rm -f *.o
+	rm -f *.hi
+	rm -f bin/*
+	rm -f test/suite/*.hi
+	rm -f test/suite/*.o
+	rm -f test/suite/tstNum
+	rm -f test/suite/tstNat
+	rm -f test/suite/tstRat
+	rm -f test/suite/tstZahl
+	rm -f scratchpad/*.hi
+	rm -f scratchpad/*.o

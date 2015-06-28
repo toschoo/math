@@ -1,0 +1,43 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{5}
+\contentsline {chapter}{\numberline {2}Brief Introduction to Haskell}{7}
+\contentsline {chapter}{\numberline {3}Numbers}{9}
+\contentsline {section}{\numberline {3.1}What are numbers and what should they be?}{9}
+\contentsline {section}{\numberline {3.2}Peano Numbers}{11}
+\contentsline {section}{\numberline {3.3}Decimal Numbers}{13}
+\contentsline {section}{\numberline {3.4}Multiplication}{24}
+\contentsline {section}{\numberline {3.5}Division and the Greatest Common Divisor}{28}
+\contentsline {section}{\numberline {3.6}Powers, Roots and Logarithms}{34}
+\contentsline {section}{\numberline {3.7}Numbers as Strings}{43}
+\contentsline {section}{\numberline {3.8}Natural Numbers}{47}
+\contentsline {section}{\numberline {3.9}Abstract Algebra}{49}
+\contentsline {chapter}{\numberline {4}Induction, Series and Combinatorics}{53}
+\contentsline {section}{\numberline {4.1}Logistics}{53}
+\contentsline {section}{\numberline {4.2}Induction}{57}
+\contentsline {section}{\numberline {4.3}The Fibonacci Sequence}{61}
+\contentsline {section}{\numberline {4.4}Factorial}{64}
+\contentsline {section}{\numberline {4.5}Binomial Coefficients}{70}
+\contentsline {section}{\numberline {4.6}Combinatorial problems with sets}{79}
+\contentsline {section}{\numberline {4.7}Stirling Numbers}{89}
+\contentsline {chapter}{\numberline {5}Primes}{103}
+\contentsline {chapter}{\numberline {6}The Inverse Element}{105}
+\contentsline {chapter}{\numberline {7}Real Numbers}{107}
+\contentsline {chapter}{\numberline {8}Polynomials}{109}
+\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{111}
+\contentsline {chapter}{\numberline {10}Linear Algebra}{113}
+\contentsline {chapter}{\numberline {11}Quadratics, Cubics and Quartics}{115}
+\contentsline {section}{\numberline {11.1}Quadratic Equations}{115}
+\contentsline {section}{\numberline {11.2}Real Numbers}{115}
+\contentsline {section}{\numberline {11.3}Complex Numbers}{115}
+\contentsline {section}{\numberline {11.4}Generating Functions}{115}
+\contentsline {section}{\numberline {11.5}Cubic Equations}{115}
+\contentsline {section}{\numberline {11.6}Quartic Equations}{115}
+\contentsline {section}{\numberline {11.7}Revisiting Fields}{115}
+\contentsline {chapter}{\numberline {12}Trigonometry}{117}
+\contentsline {chapter}{\numberline {13}Euclid and beyond}{119}
+\contentsline {chapter}{\numberline {14}Calculus}{121}
+\contentsline {section}{\numberline {14.1}Rates of Change}{121}
+\contentsline {section}{\numberline {14.2}Derivatives}{121}
+\contentsline {section}{\numberline {14.3}Integrals}{121}
+\contentsline {chapter}{\numberline {15}Generating Functions}{123}
+\contentsline {chapter}{\numberline {16}Prospects}{125}

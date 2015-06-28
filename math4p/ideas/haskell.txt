@@ -1,0 +1,8 @@
+Axiomatische Systeme:
+- Strings
+- Mu
+- GEB Arithmetik
+- Spiel mit simplem 2-Spieler-Algorithmus
+- Integer + Infinity:
+  data Zahl = Infinity | Fin Integer
+

@@ -1,0 +1,84 @@
+%% =======================================================
+%% (c) Tobias Schoofs
+%% =======================================================
+%% Math 4 Programmers
+%% =======================================================
+
+% Plain Style
+\documentclass{scrbook}
+
+% Springer Style
+%\documentclass[envcountsame]{llncs}
+
+%include lhs2TeX.fmt
+%include lhs2TeX.sty
+
+\include{cmds}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\title {Math for Programmers}
+\author {Tobias Schoofs}
+% \institute {
+% \email{tobias.schoofs@@gmx.net}
+% }
+\maketitle
+\tableofcontents
+
+\chapter{Introduction} % c00
+
+\chapter{Brief Introduction to Haskell} % c01
+
+% -------------------------------------------------------------------------
+\part{Arithmetic and Combinatorics}
+% -------------------------------------------------------------------------
+
+\chapter{Natural Numbers} % c02
+%include src/c02/numbers.lhs 
+
+\chapter{Induction, Series, Sets and Combinatorics}\label{chap:series} % c03
+%include src/c03/induction.lhs 
+
+\chapter{Primes} % c04
+%include src/c04/primes.lhs 
+
+\chapter{The Inverse Element} % c05
+%include src/c05/inverse.lhs
+
+\chapter{Real Numbers} % c06
+%include src/c06/real.lhs
+
+% -------------------------------------------------------------------------
+\part{Algebra and Geometry}
+% -------------------------------------------------------------------------
+
+\chapter{Polynomials} % c07
+%include src/c07/poly.lhs
+
+\chapter{Relations, Functions and the Cartesian Plane} % c08
+%include src/c08/relfun.lhs
+
+\chapter{Linear Algebra} % c09
+
+\chapter{Quadratics, Cubics and Quartics} % c10
+%include src/c10/quadratics.lhs
+
+\chapter{Euclid and beyond} % c11
+%include src/c11/euclid.lhs
+
+% -------------------------------------------------------------------------
+\part{Analysis}
+% -------------------------------------------------------------------------
+
+\chapter{The Calculus} % c12
+%include src/c13/calculus.lhs
+
+\chapter{Curve Sketching} % c13
+\chapter{Advanced Function Analysis} % c14
+\chapter{Generating Functions} % c15
+\chapter{Applied Mathematics} % c16
+\chapter{Prospects} % c17
+
+\end{document}

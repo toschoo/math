@@ -1,0 +1,2 @@
+- binExp in sets does not make sense; division by 2 with remainder is much more effective
+- then we do not need to introduce it twice (Stirling)

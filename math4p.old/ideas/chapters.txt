@@ -1,0 +1,66 @@
+Chapter  1 - Natural Numbers
+             Section 1 - Peano Numbers
+             Section 2 - Decimal Numbers
+             Section 3 - Natural Numbers
+
+Chapter  2 - Working with Natural Numbers
+             Section 1 - Logistics
+             Section 2 - Induction
+             Section 3 - Permutations and Factorials
+             Section 4 - Binomial Coefficients
+             Section 5 - Primes
+
+Chapter  3 - Fractions
+             Section 1 - [Motivating Example]
+             Section 2 - Representing Fractions
+             Section 3 - Computing with Fractions
+             Section 4 - Difference between NN and Fractions
+             
+Chapter  4 - Negative Numbers
+             Section 1 - [Motivating Example]
+             Section 2 - Representing Negative Numbers
+
+Chapter  5 - Number Systems
+             Section 1 - Binary Numbers
+             Section 2 - Hexadecimal Numbers
+             Section 3 - Numbers as Polynomials
+
+Chapter  6 - Polynomials
+             Section 1 - Representing Polynomials
+             Section 2 - Binomials
+             Section 3 - Factoring Polynomials
+             Section 4 - Applying Polynomials
+             Section 5 - [Examples]
+
+Chapter  7 - Functions and the Cartesian Plane
+             Section 1 - Functions
+             Section 2 - The Cartesian Plane
+             Section 3 - Distance and Slope
+             Section 4 - Trigonometry
+             Section 5 - Trigonometry Examples
+             Section 6 - Conic Sections
+ 
+Chapter  8 - Solving Equations
+             Section 1 - Linear Equations
+             Section 2 - Vectors and Matrices
+             Section 3 - Gaussian Elimination
+             Section 4 - Completing the Square
+             Section 5 - Cubics and Quartics
+             Section 6 - [Examples]
+
+Chapter  9 - Galois
+             Section 1 - Solving Polynomials
+
+Chapter 10 - The Familiy of Numbers
+             Section 1 - Number Fields
+             Section 2 - Complex Numbers
+             Section 3 - Hypercomplex Numbers
+             Section 4 - Non-algebraic Numbers
+
+Chapter 11 - Analysis
+             Section 1 - [Motivating Example]
+             Section 2 - Limits
+             Section 3 - Rate of Change
+             Section 4 - Differentiation Rules
+             Section 5 - Integrals
+             Section 6 - ...

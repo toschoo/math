@@ -1,0 +1,88 @@
+%% =======================================================
+%% (c) Tobias Schoofs
+%% =======================================================
+%% Math 4 Programmers
+%% =======================================================
+
+% Plain Style
+\documentclass{scrbook}
+
+% Springer Style
+%\documentclass[envcountsame]{llncs}
+
+%include lhs2TeX.fmt
+%include lhs2TeX.sty
+
+\usepackage[pdftex]{graphicx}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc} 
+%\usepackage[T1]{fontenc} 
+\usepackage[portuguese, english]{babel}
+\usepackage{amsfonts}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+
+\usepackage{siunitx}
+
+\long\def\ignore#1{}
+
+\newcommand{\acronym}[1]{\textsc{#1}}
+
+\newcommand{\term}[1]{\textit{#1}}
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\viz}{\textit{viz.}}
+
+\newcommand{\haskell}[1]{{\ttfamily #1}}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\title {Math for Programmers}
+\author {Tobias Schoofs}
+% \institute {
+% \email{tobias.schoofs@@gmx.net}
+% }
+\maketitle
+
+\chapter{Introduction}
+
+\chapter{Brief Introduction to Haskell}
+
+\chapter{Numbers}
+%include src/c02/numbers.lhs 
+
+\chapter{Induction, Series and Combinatorics}\label{chap:series}
+%include src/c03/induction.lhs 
+
+\chapter{Primes}
+
+\chapter{Fractions}
+
+\chapter{Negative Numbers}
+%include src/c06/negnum.lhs
+
+\chapter{Number Systems}
+%include src/c07/nsystems.lhs
+
+\chapter{Polynomials}
+
+\chapter{Functions and the Cartesian Plane}
+
+\chapter{Linear Equations}
+
+\chapter{Quadratics, Cubics and Quartics}
+%include src/c11/quadratics.lhs
+
+\chapter{Galois}
+
+\chapter{Calculus}
+%include src/c13/calculus.lhs
+
+\end{document}

@@ -1,0 +1,54 @@
+%% =======================================================
+%% (c) Tobias Schoofs
+%% =======================================================
+%% Commands 4 Programmers
+%% =======================================================
+
+%include lhs2TeX.fmt
+%include lhs2TeX.sty
+
+\usepackage[pdftex]{graphicx}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc} 
+\usepackage{tabto}
+%\usepackage[T1]{fontenc} 
+\usepackage[portuguese, english]{babel}
+\usepackage{amsfonts}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+
+\usepackage{siunitx}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\usetikzlibrary{graphs,graphdrawing,arrows.meta}
+\usetikzlibrary{graphs} % graphdrawing,arrows.meta}
+%\usegdlibrary{trees}
+
+\long\def\ignore#1{}
+
+\newcommand{\acronym}[1]{\textsc{#1}}
+
+\newcommand{\term}[1]{\textit{#1}}
+\newcommand{\latin}[1]{\textit{#1}}
+\newcommand{\speech}[1]{\textit{#1}}
+
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\viz}{\textit{viz.}}
+
+\newcommand{\haskell}[1]{{\ttfamily #1}}
+
+\newcommand{\Rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\DeclareRobustCommand{\stirlingOne}{\genfrac[]{0pt}{}}
+\DeclareRobustCommand{\stirlingTwo}{\genfrac\{\}{0pt}{}}
+\DeclareRobustCommand{\eulerianOne}{\genfrac<>{0pt}{}}
+\newcommand{\eulerianTwo}[2]{\left\langle\!\!\left\langle{#1 \atop #2}\right\rangle\!\!\right\rangle}
+
+
+% \renewcommand{\gcd}{\textsc{gcd}}
