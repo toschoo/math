@@ -1,7 +1,6 @@
-./bin
+bin
 ./config
 ./folklore
-./graphics
+graphics
 ./Lindenmayer
-./math4p.old
 ./soe
