@@ -1008,7 +1008,7 @@ as we have seen using |calwiR|, is $\frac{7}{5}$.
 |fusc 200|, \etc) is 7.
 
 An amazing property of |fusc|,
-found by the great Edsgar Dijkstra, is related
+found by Edsgar Dijkstra, is related
 to the binary representation
 of its argument, namely
 that two numbers, whose binary representations
@@ -1038,16 +1038,29 @@ halving, if the intermediate result is even,
 and reducing by one and halving, if it is odd,
 reaches 0. |b|, initially 0,
 carries the value of sums of |a| and |b|.
-The variable |a| and |b|, hence, carry the intermediate
-results for  
-|a = fusc (k+1)| and |b = fusc k|.
-Compare the |even| and |odd| branches
-in Dijkstra's algorithm with the branches
-in our more ``Haskellish'' implementation.
+If we never enter the |odd| branch,
+the result would be 0.
+If |n| is a power of 2, then we would enter
+the |odd| branch only once, namely,
+when we reach $m=1$.
+The result then is 1.
+Every time, we enter the |odd| branch,
+$b$ is incremented by the current value of $a$.
+The only chance of $a$ to increase beyond 1, however, is 
+for the evaluation to enter the |odd| branch at least once.
 
 Dijkstra proposes to represent the two variables
-|a| and |b| by a single variable |k|. 
-We then have two variables,
+|a| and |b| by a single variable |k|, initialised to 0.
+We would represent the sum $a+b$ for the |even| branch as $2k$;
+note that, without having entered 
+the |odd| branch at least once, this would
+not change the value of $k=0$. 
+In the |odd| branch, we would represent the sum as $2k+1$,
+leading, at its first occurence, to 1.
+Afterwards, the value starts to change also
+in the |even| branch.
+ 
+We, hence, have two variables,
 one running from $n$ down to zero and
 the other running from zero upwards
 until $n$ reaches zero.
@@ -1107,9 +1120,9 @@ Compare the binary representations of 23 and 25:
 \end{tabular}
 \end{center}
 
-We see that, in 29, all digits in 25, but the
+We see that 23 is 25 with all digits, but the
 most and least significant ones,
-are inverted. The same is true for 19 and 29:
+inverted. The same is true for 19 and 29:
 
 \begin{center}
 \begin{tabular}{||c||c||c||c||c||c||}
@@ -1118,16 +1131,24 @@ are inverted. The same is true for 19 and 29:
 \end{tabular}
 \end{center}
 
-Therefore, we have, and this is also a result by Dijkstra,
+Therefore, we have 
 |fusc 19 = fusc 23 = fusc 25 = fusc 29 = 7|.
+Interestingly, Dijkstra arrives at the same result
+describing the |fuscd| algorithm as a state automaton
+and the binary number as a string of the language
+it is processing.
+We could then say that the Calkin-Wilf tree
+is a model that gives meaning to this language.
 
-Even further, we see that there are also 4 fractions
-in this generation where 7 appears in the denominator,
+We see, even further, that there are 4 fractions
+in that generation where 7 appears in the denominator,
 and, for each denominator of the fractions with 7 in the numerator,
 there is also a fraction with this number in the numerator.
-When we examine these fractions closer,
-we see that each fraction in the generation has its 
-multiplicative inverse in this same generation.
+That is, for each of these four fraction,
+the generation also contains its multiplicative inverse.
+When we examine the generation closer,
+we see that this holds in fact for all fractions
+in that generation. 
 When we pair up the fractions with their inverses, we get:
 
 \[

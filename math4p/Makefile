@@ -56,8 +56,9 @@ ALL	 = cmds.tex \
 	   src/c07/poly.lhs \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
-	   src/c10/quadratics.lhs \
-	   src/c11/euclid.lhs \
+	   src/c10/complex.lhs \
+	   src/c11/quadratics.lhs \
+	   src/c12/euclid.lhs \
 	   src/c13/calculus.lhs
 
 INC = -isrc/c02 \

@@ -74,36 +74,40 @@
 \contentsline {section}{\numberline {9.6}Conic Sections}{287}
 \contentsline {section}{\numberline {9.7}Algebra and Geometry}{287}
 \contentsline {chapter}{\numberline {10}Linear Algebra}{289}
-\contentsline {chapter}{\numberline {11}Quadratics, Cubics and Quartics}{291}
-\contentsline {section}{\numberline {11.1}Quadratic Equations}{291}
-\contentsline {section}{\numberline {11.2}Complex Numbers}{291}
-\contentsline {section}{\numberline {11.3}The complex Plane}{291}
-\contentsline {section}{\numberline {11.4}Gaussian Integers}{291}
+\contentsline {chapter}{\numberline {11}Complex Numbers}{291}
+\contentsline {section}{\numberline {11.1}Complex Numbers}{291}
+\contentsline {section}{\numberline {11.2}The complex Plane}{291}
+\contentsline {section}{\numberline {11.3}Gaussian Integers}{291}
+\contentsline {section}{\numberline {11.4}...}{291}
 \contentsline {section}{\numberline {11.5}Hypercomplex Numbers}{291}
-\contentsline {section}{\numberline {11.6}The fundamental Theorem of Algebra}{291}
-\contentsline {section}{\numberline {11.7}Cubics and Quartics}{291}
-\contentsline {section}{\numberline {11.8}Quintics}{291}
-\contentsline {section}{\numberline {11.9}Higher Degrees}{291}
-\contentsline {chapter}{\numberline {12}Euclid and beyond}{293}
-\contentsline {section}{\numberline {12.1}Euclid's Geometry}{293}
-\contentsline {section}{\numberline {12.2}The Parallel Postulate}{293}
-\contentsline {section}{\numberline {12.3}Non-Euclidian Geometries}{293}
-\contentsline {section}{\numberline {12.4}Lost in Hilbert Space}{293}
-\contentsline {section}{\numberline {12.5}Geometry and Relativity}{293}
-\contentsline {section}{\numberline {12.6}Projective Geometry}{293}
-\contentsline {section}{\numberline {12.7}Graph Theory}{293}
-\contentsline {section}{\numberline {12.8}Topology}{293}
-\contentsline {part}{\numberline {III}Analysis}{295}
-\contentsline {chapter}{\numberline {13}The Calculus}{297}
-\contentsline {section}{\numberline {13.1}The Method of Exhaustion}{297}
-\contentsline {section}{\numberline {13.2}Area below a Curve}{297}
-\contentsline {section}{\numberline {13.3}Basic Rules of Integration}{297}
-\contentsline {section}{\numberline {13.4}Minima, Maxima and Slopes}{297}
-\contentsline {section}{\numberline {13.5}Basic Rules of Derivation}{297}
-\contentsline {section}{\numberline {13.6}The fundamental Theorem of the Calculus}{297}
-\contentsline {section}{\numberline {13.7}More Rules}{297}
-\contentsline {chapter}{\numberline {14}Curve Sketching}{299}
-\contentsline {chapter}{\numberline {15}Advanced Function Analysis}{301}
-\contentsline {chapter}{\numberline {16}Generating Functions}{303}
-\contentsline {chapter}{\numberline {17}Applied Mathematics}{305}
-\contentsline {chapter}{\numberline {18}Prospects}{307}
+\contentsline {chapter}{\numberline {12}Quadratics, Cubics and Quartics}{293}
+\contentsline {section}{\numberline {12.1}Quadratic Equations}{293}
+\contentsline {section}{\numberline {12.2}The fundamental Theorem of Algebra}{293}
+\contentsline {section}{\numberline {12.3}Cubics and Quartics}{293}
+\contentsline {section}{\numberline {12.4}Quintics}{293}
+\contentsline {section}{\numberline {12.5}Galois Theory}{293}
+\contentsline {section}{\numberline {12.6}Field Theory}{293}
+\contentsline {section}{\numberline {12.7}Category Theory}{293}
+\contentsline {chapter}{\numberline {13}Euclid and beyond}{295}
+\contentsline {section}{\numberline {13.1}Euclid's Geometry}{295}
+\contentsline {section}{\numberline {13.2}The Parallel Postulate}{295}
+\contentsline {section}{\numberline {13.3}Non-Euclidian Geometries}{295}
+\contentsline {section}{\numberline {13.4}Lost in Hilbert Space}{295}
+\contentsline {section}{\numberline {13.5}Geometry and Relativity}{295}
+\contentsline {section}{\numberline {13.6}Projective Geometry}{295}
+\contentsline {section}{\numberline {13.7}Graph Theory}{295}
+\contentsline {section}{\numberline {13.8}Topology}{295}
+\contentsline {part}{\numberline {III}Analysis}{297}
+\contentsline {chapter}{\numberline {14}The Calculus}{299}
+\contentsline {section}{\numberline {14.1}The Method of Exhaustion}{299}
+\contentsline {section}{\numberline {14.2}Area below a Curve}{299}
+\contentsline {section}{\numberline {14.3}Basic Rules of Integration}{299}
+\contentsline {section}{\numberline {14.4}Minima, Maxima and Slopes}{299}
+\contentsline {section}{\numberline {14.5}Basic Rules of Derivation}{299}
+\contentsline {section}{\numberline {14.6}The fundamental Theorem of the Calculus}{299}
+\contentsline {section}{\numberline {14.7}More Rules}{299}
+\contentsline {chapter}{\numberline {15}Curve Sketching}{301}
+\contentsline {chapter}{\numberline {16}Advanced Function Analysis}{303}
+\contentsline {chapter}{\numberline {17}Generating Functions}{305}
+\contentsline {chapter}{\numberline {18}Applied Mathematics}{307}
+\contentsline {chapter}{\numberline {19}Prospects}{309}
