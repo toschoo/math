@@ -16,7 +16,7 @@ According to this philosophy everything is One,
 undivisible, motionless, eternal, everywhere and nowhere.
 That we actually see motion, distinguish and divide
 things around us, that everything ``in this world'' is volatile
-and that everything has its pace, is either here or there,
+and that everything has its place, is either here or there,
 is, according to Parmenides, just an illusion.
 
 Plato discusses the philosophy of Parmenides in one
@@ -30,12 +30,12 @@ It was the main inspiration for the late-ancient
 \term{neoplatonism} and, for many centuries,
 it shaped the interpretation of ancient philosophy
 by medieval thinkers.
-Scholars today, however, are not sure anymore
+Scholars today, however, are not so sure anymore
 what the meaning of this dialog may be.
 Some see in it a critical discussion of 
 the theory of forms, others hold it is a collection
-of exercises for the students of Plato's academy,
-and again others consider the dialog as highly ironic
+of exercises for students of Plato's academy,
+and again others consider the dialog as highly ironic,
 actually criticising Parmenides and other philosophers
 for using terms that they know from everyday life 
 in a context where the ideas associated with this terms
@@ -63,17 +63,17 @@ that is behind of what we can perceive directly with our senses.
 Be that as it may,
 we are here much more interested in the math
 in Zeno's paradoxes.
-The most famous of these paradoxes is the race
+The most famous one is the race
 of Achilles and the tortoise.
 Achilles gives the tortoise a lead of, say, hundred meters.
-The question, now, is when Achilles will actually catch up with
+The question now is when Achilles will actually catch up with
 the tortoise. Zeno says: never, for it is impossible.
 To catch up, he must reach a point where the tortoise has been
 shortly before. But when he gets there, the tortoise is already
 ahead. Perhaps just a few metres, but definitely ahead.
 So, again, to reach that point, Achilles will need some time.
-When he reaches the point where the tortoise was a second before,
-the tortoise is already a bit further. 
+When he reaches the point where the tortoise has been a second before,
+the same is already a bit further. 
 To reach that point, Achilles again needs some time
 and in this time the tortoise again makes some progress
 and so it goes on and on. 
@@ -187,7 +187,7 @@ appears to be one of those deceptions that are so common
 for small numbers, which often behave very differently
 from greater numbers.
 
-But let us stop moaning, what actually is the rule
+But let us stop moaning. What actually is the rule
 for $n=3$? After the next step, we would have
 
 \[
@@ -304,7 +304,7 @@ This suggests the general form
 
 which would nicely explain why we overlooked
 the division in the numerator for the case $n=2$,
-since, here, $n-1 = 1$ and a division of anything
+since, here, $n-1 = 1$ and anything
 divided by 1 is just that anything.
 
 It, again, does not appear to be too difficult to prove
@@ -326,7 +326,7 @@ in the numerator
 \frac{n^{k+1} - n}{n-1}.
 \]
 
-We now add 1 represented as the fraction of $\frac{n-1}{n-1}$:
+We now add 1 represented as the fraction $\frac{n-1}{n-1}$:
 
 \[
 \frac{n^{k+1} - n}{n-1} + \frac{n-1}{n-1},

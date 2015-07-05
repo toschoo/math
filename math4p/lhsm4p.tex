@@ -26523,7 +26523,7 @@ as we have seen using \ensuremath{\Varid{calwiR}}, is $\frac{7}{5}$.
 \ensuremath{\Varid{fusc}\;\mathrm{200}}, \etc) is 7.
 
 An amazing property of \ensuremath{\Varid{fusc}},
-found by the great Edsgar Dijkstra, is related
+found by Edsgar Dijkstra, is related
 to the binary representation
 of its argument, namely
 that two numbers, whose binary representations
@@ -26576,16 +26576,29 @@ halving, if the intermediate result is even,
 and reducing by one and halving, if it is odd,
 reaches 0. \ensuremath{\Varid{b}}, initially 0,
 carries the value of sums of \ensuremath{\Varid{a}} and \ensuremath{\Varid{b}}.
-The variable \ensuremath{\Varid{a}} and \ensuremath{\Varid{b}}, hence, carry the intermediate
-results for  
-\ensuremath{\Varid{a}\mathrel{=}\Varid{fusc}\;(\Varid{k}\mathbin{+}\mathrm{1})} and \ensuremath{\Varid{b}\mathrel{=}\Varid{fusc}\;\Varid{k}}.
-Compare the \ensuremath{\Varid{even}} and \ensuremath{\Varid{odd}} branches
-in Dijkstra's algorithm with the branches
-in our more ``Haskellish'' implementation.
+If we never enter the \ensuremath{\Varid{odd}} branch,
+the result would be 0.
+If \ensuremath{\Varid{n}} is a power of 2, then we would enter
+the \ensuremath{\Varid{odd}} branch only once, namely,
+when we reach $m=1$.
+The result then is 1.
+Every time, we enter the \ensuremath{\Varid{odd}} branch,
+$b$ is incremented by the current value of $a$.
+The only chance of $a$ to increase beyond 1, however, is 
+for the evaluation to enter the \ensuremath{\Varid{odd}} branch at least once.
 
 Dijkstra proposes to represent the two variables
-\ensuremath{\Varid{a}} and \ensuremath{\Varid{b}} by a single variable \ensuremath{\Varid{k}}. 
-We then have two variables,
+\ensuremath{\Varid{a}} and \ensuremath{\Varid{b}} by a single variable \ensuremath{\Varid{k}}, initialised to 0.
+We would represent the sum $a+b$ for the \ensuremath{\Varid{even}} branch as $2k$;
+note that, without having entered 
+the \ensuremath{\Varid{odd}} branch at least once, this would
+not change the value of $k=0$. 
+In the \ensuremath{\Varid{odd}} branch, we would represent the sum as $2k+1$,
+leading, at its first occurence, to 1.
+Afterwards, the value starts to change also
+in the \ensuremath{\Varid{even}} branch.
+ 
+We, hence, have two variables,
 one running from $n$ down to zero and
 the other running from zero upwards
 until $n$ reaches zero.
@@ -26668,9 +26681,9 @@ Compare the binary representations of 23 and 25:
 \end{tabular}
 \end{center}
 
-We see that, in 29, all digits in 25, but the
+We see that 23 is 25 with all digits, but the
 most and least significant ones,
-are inverted. The same is true for 19 and 29:
+inverted. The same is true for 19 and 29:
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -26679,16 +26692,24 @@ are inverted. The same is true for 19 and 29:
 \end{tabular}
 \end{center}
 
-Therefore, we have, and this is also a result by Dijkstra,
+Therefore, we have 
 \ensuremath{\Varid{fusc}\;\mathrm{19}\mathrel{=}\Varid{fusc}\;\mathrm{23}\mathrel{=}\Varid{fusc}\;\mathrm{25}\mathrel{=}\Varid{fusc}\;\mathrm{29}\mathrel{=}\mathrm{7}}.
+Interestingly, Dijkstra arrives at the same result
+describing the \ensuremath{\Varid{fuscd}} algorithm as a state automaton
+and the binary number as a string of the language
+it is processing.
+We could then say that the Calkin-Wilf tree
+is a model that gives meaning to this language.
 
-Even further, we see that there are also 4 fractions
-in this generation where 7 appears in the denominator,
+We see, even further, that there are 4 fractions
+in that generation where 7 appears in the denominator,
 and, for each denominator of the fractions with 7 in the numerator,
 there is also a fraction with this number in the numerator.
-When we examine these fractions closer,
-we see that each fraction in the generation has its 
-multiplicative inverse in this same generation.
+That is, for each of these four fraction,
+the generation also contains its multiplicative inverse.
+When we examine the generation closer,
+we see that this holds in fact for all fractions
+in that generation. 
 When we pair up the fractions with their inverses, we get:
 
 \[
@@ -27402,8 +27423,10 @@ which was generated using the function
 \chapter{Linear Algebra} % c09
 
 \chapter{Complex Numbers} % c10
+\section{i}
 \section{Complex Numbers}
 \section{The complex Plane}
+\section{$\mathbb{C}$}
 \section{Gaussian Integers}
 \section{...}
 \section{Hypercomplex Numbers}
@@ -27420,7 +27443,10 @@ which was generated using the function
 \section{Category Theory}
 % Riemann's Hypothesis?
 
-\chapter{Euclid and beyond} % c12
+\chapter{Elliptic Curves} % c12
+ 
+
+\chapter{Euclid and beyond} % c13
 \section{Euclid's Geometry}
 \section{The Parallel Postulate}
 \section{Non-Euclidian Geometries}
@@ -27435,7 +27461,7 @@ which was generated using the function
 \part{Analysis}
 % -------------------------------------------------------------------------
 
-\chapter{The Calculus} % c12
+\chapter{The Calculus} % c14
 \section{The Method of Exhaustion}
 \section{Area below a Curve}
 \section{Basic Rules of Integration}

@@ -58,8 +58,9 @@ ALL	 = cmds.tex \
 	   src/c08/relfun.lhs \
 	   src/c10/complex.lhs \
 	   src/c11/quadratics.lhs \
-	   src/c12/euclid.lhs \
-	   src/c13/calculus.lhs
+	   src/c12/elliptic.lhs \
+	   src/c13/euclid.lhs \
+	   src/c14/calculus.lhs
 
 INC = -isrc/c02 \
       -isrc/c03 \

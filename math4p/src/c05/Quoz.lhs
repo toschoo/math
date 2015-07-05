@@ -112,7 +112,7 @@ This is the implementation of the logic already described before:
 we convert a fraction to the common denominator
 defined by the $lcm$ of both denominators
 and multiply the numerators by the number
-we would have to multiply the denominator with
+we would have to multiply the denominator by
 to get the $lcm$, which trivially is the $lcm$ divided by
 the denominator:
 $lcm(dx,dy) = dx \times \frac{lcm(dx,dy)}{dx}$.

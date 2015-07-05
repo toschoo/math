@@ -11,23 +11,22 @@ such that $a \cdot a' = e$, where $e$ is
 the neutral element of that group.
 We have already met some groups, permutation groups
 and finite groups of modular arithmetic.
-We will now look at the groups that are 
-probably more common, namely the groups over the
-infinite sets $\mathbb{Z}$ of the integers and
-$\mathbb{Q}$ of the rationals.
+We will now look at infinite groups, namely 
+the additive group over $\mathbb{Z}$, the integers, and
+the multiplicative group over $\mathbb{Q}$, the rationals.
 
 As you may have guessed already,
-the inverse element of any element of a natural
+the inverse element of a natural
 number $n$ in the additive group over integers 
 is the \term{negation} of $n$, $-n$.
-It is easy to see that $n$ plus its inversion,
+It is easy to see that $n$ plus its inverse,
 $-n$, is just $0$, the neutral element of addition:
 $n + (-n) = n - n = 0$.
 Since it is, of course, also true
 that $-n + n = n - n = 0$,
 the inverse element of a negative number $-n$
 is its positive counterpart $n$.
-With the law for double negation, $-(-n) = n$,
+With the law of double negation, $-(-n) = n$,
 that is the negation of the negation of $n$ is $n$,
 the formula $n + (-n) = 0$ 
 is universally true for both
@@ -42,20 +41,17 @@ any equation of the form
 $a + x = b$ in the additive group of $\mathbb{Z}$.
 We just add the inverse of $a$ to both sides
 of the equation: $a + (-a) + x = b + (-a)$,
-which of course is $a - a + x = b - a$
-from which we easily conclude $x = b - a$. 
+which, of course, is $x = b - 1$.
 Without negative numbers, there were equations
 we could not solve in this way, for instance
 $4 + x = 3$. We had gaps, so to speak,
 in our additive equations. But now,
-in the extended group, there are no such
+in the group over integers, there are no such
 gaps anymore: we just add the inverse of 4
-on both sides and get $4 - 4 + x = 3 - 4$,
-which is $x = 3 - 4 = -1$.
+on both sides and get $x = 3 - 4 = -1$.
 
-What is the inverse element of 
-the infinite multiplicative group 
-containing the natural numbers?
+What is the inverse element of integers
+in the multiplicative group?
 Well, in this group, it must still hold
 that $a \cdot a' = e$, where $\cdot$ is multiplication
 and $e$, the neutral element, is unity.
@@ -76,11 +72,11 @@ The left-hand side reduces to $1x = x$
 and we have $x = \frac{b}{a}$.
 As we have already seen in finite groups,
 prime numbers simply ``disappear'' with fractions,
-since we can now reach them with multiplition,
+since we can now reach them with multiplication,
 for instance: $3x = 5$ is equivalent to
-$x = \frac{5}{3} = 1\frac{2}{3}$.
+$x = \frac{5}{3}$.
 
-Now we want to go on and create a field
+Let us go on and build something bigger: a field
 consisting of addition and multiplication
 where the distributive law holds.
 We already know that the distributive law
@@ -133,7 +129,7 @@ as
 The $\gcd$ of 6 and 9 is 3,
 the product $6 \times 9$ = 54
 and $54 / 3 = 18$.
-So, $lcm(6,9) = 18$ and we have:
+So, we have:
 
 \[
 \frac{1 \times \frac{18}{6} + 2 \times \frac{18}{9}}{lcm(6,9) = 18} =
@@ -146,7 +142,7 @@ multiplying the respective other denominator
 to numerator and denominator of both fractions.
 However, when we do this, we have to operate
 with greater numbers and, at the end, reduce
-the fractions to their canonical form, which is
+the fractions to their \term{canonical form}, which is
 
 \begin{equation}
 \frac{a}{b} = \frac{a/\gcd(a,b)}{b/\gcd(a,b)}.
@@ -159,7 +155,7 @@ For the example, this would mean
 \frac{9}{54} + \frac{12}{54} = \frac{21}{54}.
 \]
 
-Now, we reduce to the canonical form:
+Now, we reduce to canonical form:
 
 \[
 \frac{21/\gcd(21,54)}{54/\gcd(21,54)}, 
@@ -226,9 +222,6 @@ We now see clearly that this should be the negation,
 The inverse of $-(2 \times 3)$, however, is just
 $2 \times 3$ and that is 6.
 Therefore: $-2 \times -3 + 2 \times 3 = 12$.
-As you see,
-negation, even though appearingly simple, may be quite subtle,
-in particular when we come to ask: why?
 
 So, what happens if we multiply negative numbers
 and fractions? 
@@ -238,16 +231,14 @@ We, hence, would say, according to the rules
 derived above, that $\frac{-1}{n}$ is the 
 additive inverse of $\frac{1}{n}$. 
 What about $\frac{1}{-n}$?
-Instead of writing
-$\frac{1}{-n}$, we could write
-$1 \times \frac{1}{-n}$ and, hence,
-$\frac{1}{1} \times \frac{1}{-n}$
-and now we can move the minus sign arround,
-as we did before: $\frac{1}{-1} \times \frac{1}{n}$.
-Since a fraction is nothing but the multiplication
-with the inverse, we can change $\frac{1}{-1}$ to
-$\frac{-1}{1}$ and now we can just move it back:
-$\frac{-1}{1} \times \frac{1}{n} = \frac{-1}{n} = -\frac{1}{n}$.
+This should be the multiplicative inverse of $-n$,
+such that $-n \times \frac{1}{-n} = 1$.
+We again can move the minus sign around
+to get $-1 \times n \times \frac{1}{-n}$ 
+leading to $-1 \times \frac{n}{-n} = 1$.
+Dividing $n$ on both sides gives 
+$-1 \times \frac{1}{-n} = \frac{1}{n}$ and
+multiplying $-1$ gives $\frac{1}{-n} = \frac{-1}{n}$.
 In other words,
 a fraction with a minus sign in it,
 independently of where it appears,
@@ -279,10 +270,8 @@ and fractions, namely exponentiation.
 
 From the table above, we see immediately
 that products with an even number of negative
-numbers is positive -- a fact that we already
+numbers are positive -- a fact that we already
 used when discussing prime numbers.
-Furthermore, a negative number multiplied
-by itself is positive as well.
 In general, any number raised to an
 even exponent is positive independent of that number
 being positive or negative.
@@ -290,7 +279,7 @@ being positive or negative.
 This leads to a difficulty with the 
 root operation, since even roots may have
 two different results: a positive number
-or its inverse. For instance, $\sqrt{4}$
+or its additive inverse. For instance, $\sqrt{4}$
 could be 2 and $-2$. 
 Even further, the operation cannot be applied
 to a negative number: $\sqrt{-1}$ has no

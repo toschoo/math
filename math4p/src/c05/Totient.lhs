@@ -44,7 +44,7 @@ all proper fractions for one denominator,
 
 |fracs1 6|, for instance, gives:
 
-|[1 % 6,1 % 3,1 % 2,2 % 3,5 % 6]|,
+|[Q 1 6,Q 1 3,Q 1 2,Q 2 3,Q 5 6]|,
 
 which is easier to read in mathematical notation:
 
@@ -199,7 +199,7 @@ minus the cardinality of the intersection of the two sets.
 Proof: The intersection of two sets $S1$ and $S2$
 contains all elements that are both in $S1$ and $S2$.
 The union of two sets contains all elements of $S1$ and
-$S2$. But those elements that are in both sets,
+$S2$. But those elements that are in both sets
 will appear only once in the union, since this is
 the definition of the very notion of \term{set}.
 We can therefore first build a collection of
@@ -235,6 +235,10 @@ general case:
 where $\bigcup$ is the union operator for $n$ sets,
 where $n$ is not necessarily 2.
 It, hence, does for $\cup$ what $\sum$ does for $+$.
+Systems of such operators that are applied to 
+an arbitrary number of operands are called
+$\sigma$-algebras. But, for the time being,
+that is just a fancy word.
 
 The next fundamental theorem states
 that the sum of the divisors of a number $n$
@@ -313,7 +317,7 @@ In other words, these lists together
 contain all numbers $1\dots 12$
 partitioned according to their greatest common divisor
 with $n=12$.
-Note that the lists necessarily contain 
+Note that the lists together necessarily contain 
 all the numbers in the range
 $1\dots n$, since, either a number does not have
 common divisors with $n$, then it is in the first
@@ -327,8 +331,8 @@ since no number $m$ would, on one occasion,
 have a |gcd| $d_1$ with $n$ and, on another,
 a distinct |gcd| $d_2$ with the same $n$.
 It either shares $d_1$ as greatest common divisor with $n$
-or divisor $d_2$,
-it, hence, is either in set $S_{d_1}$ or 
+or divisor $d_2$.
+It, hence, is either in set $S_{d_1}$ or 
 in set $S_{d_2}$.
 
 But there is more. The set for divisor 2
@@ -520,6 +524,7 @@ obtain the totient number of $n$:
 \end{code}
 \end{minipage}
 
+\ignore{
 This algorithm, however, is less efficient
 than the original one implemented with the |tot| function.
 Though computing the remainder is less complex
@@ -527,12 +532,13 @@ in computation than computing the $\gcd$, which calls the
 remainder several times,
 we now have a lot of recursion steps, 
 when computing big numbers, before we get to the base cases.
+}
 
 Another property of the totient function is
 multiplicity of totients of coprimes, that is
 
 \begin{equation}
-\varphi(a)\times\varphi(b) = \varphi(ab), if \gcd(a,b) = 1.
+\varphi(a)\times\varphi(b) = \varphi(ab), \text{if} \gcd(a,b) = 1.
 \end{equation}
 
 For instance, the coprimes of 3 are 1 and 2;
@@ -570,7 +576,7 @@ combinations of all elements of $A$ and $B$,
 $\varphi(ab)$ must be $\varphi(a) \times \varphi(b)$.
 
 To illustrate that, we can create all the combinations
-of $a$s and $b$s and then apply the chinese remainder
+of $a$s and $b$s and then apply the Chinese remainder
 on all of them.
 First we create all combinations of $a$s and $b$s:
 
@@ -827,15 +833,15 @@ has either size $\varphi(n)$ or a size
 that divides $\varphi(n)$.
 But for sure, for any coprime $a$ the group
 is at most $\varphi(n)$, since there are only
-$\varphi(n)$ elements in the group of coprimes of $n$.
+$\varphi(n)$ elements in the group.
 
 For the example 12, the groups are all trivial.
 The coprimes of 12 are 1, 5, 7 and 11.
 1 establishes the trivial group $\lbrace 1\rbrace$.
 5 is in the likewise trivial group $\lbrace 1,5\rbrace$,
-since $5^2 = 25$ and, hence, $5^2 \equiv 1 \pmod{24}$.
-Since $7^2 = 49 \equiv 1 \pmod{24}$, the group of
-7 is also trivial. Finally, since $11^2 = 121 \equiv 1 \pmod{24}$,
+since $5^2 = 25$ and, hence, $5^2 \equiv 1 \pmod{12}$.
+Since $7^2 = 49 \equiv 1 \pmod{12}$, the group of
+7 is also trivial. Finally, since $11^2 = 121 \equiv 1 \pmod{12}$,
 11 is in a trivial group as well.
 
 A more interesting case is 14.
@@ -885,7 +891,7 @@ to define it in Haskell:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  lambda :: Integer -> Integer
+  lambda :: Natural -> Natural
   lambda  2 = tot 2
   lambda  4 = tot 4
   lambda  n  | twopower   n  = (tot n) `div` 2 
@@ -926,7 +932,8 @@ is defined as
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  twopower :: Integer -> Bool
+  twopower :: Natural -> Bool
+  twopower  1 = True
   twopower  2 = True
   twopower  n  | even n     = twopower (n `div` 2)
                | otherwise  = False
@@ -940,7 +947,7 @@ The function |primepower| is defined as
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  primepower :: Integer -> Bool
+  primepower :: Natural -> Bool
   primepower n = length (nub $ trialfact n) == 1
 \end{code}
 \end{minipage}
@@ -1010,7 +1017,6 @@ An example for a number that is not a primepower
 nor twice a primepower is 20.
 The factorisation of 20 is $\lbrace 2,2,5\rbrace$.
 We compute the primepowers resulting in $\lbrace 4,5\rbrace$.
-Now we have the primepowers 4 and 5.
 When we map $\lambda$ on them, we should
 get $\lambda(4) = \varphi(4) = 2$ and
 $\lambda(5) = \varphi(5) = 4$.
@@ -1058,12 +1064,11 @@ is a consequence of the Chinese Remainder theorem
 and the very notion of the |lcm|. 
 We know that, 
 if $x \equiv 1 \pmod{n}$, then also $x \equiv 1 \pmod{mn}$.
-However, if we have $x \equiv 1 \pmod{n}$ and
-$x \equiv 1 \pmod{m}$, then $mn$ is not necessarily
+However, $mn$ is not necessarily
 the first multiple of $n$ and $m$ that establishes
 the congruence. Any number that is a multiple of both,
-$n$ and $m$, would have the same effect.
-This number, however, is $lcm(m,n)$.
+$n$ and $m$, would have the same effect and the first number
+that is a multiple of both is $lcm(m,n)$.
 
 The totient number of twice the power of an odd prime,
 $2p^k$,
@@ -1146,13 +1151,14 @@ and $1$:
 2^{2k-2}-2^k+1.
 \]
 
-When we factor $2^k$ out of the the first term:
+We can factor $2^k$ out of the the first two terms:
 
 \[
 2^k(2^{k-2}-1)+1,
 \]
 
-we clearly see that the first term is divided by $2^k$ and, thus,
+and see clearly that the first remaining term 
+is divided by $2^k$ and, thus,
 disappears modulo $2^k$. We are left with 1 and this shows
 that $m_1$ is its own inverse.
 
@@ -1226,9 +1232,10 @@ for each pair of members of the group $c$ and $d$,
 there is one number $x$ in the group, such that
 $xc = d$.
 $m_1$, however, is not member of the group
-and if $m_1$ multiplied by $c$
+and, if $m_1$ multiplied by $c$
 resulted in another member $d$, then we would
-have the impossible case that $c$ is $d$ for 
+have the impossible case that $d$ is the result 
+of multiplications of $c$ for 
 two different numbers: $m_1$ and $x$.
 Therefore, no number in $m_1G$ can possibly equal
 any number in $G$.
@@ -1249,7 +1256,7 @@ A corollary of this
 simple but important argument is that
 the order of any subgroup of a group of
 coprimes must divide the number of coprimes.
-This simple but important argument extends
+This extends
 the proof of Lagrange's theorem for prime groups
 to composite groups. We will extend it even further
 in the future. For the moment, however,

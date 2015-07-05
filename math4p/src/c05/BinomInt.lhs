@@ -9,12 +9,14 @@ where
 }
 
 To prove that binomial coefficients are integers
-is quite easy, when we restrict our argument
-to coefficients with 
+is quite easy. 
+We will make our argument for
+coefficients of the form
 $1 \le k \le n$ in $\binom{n}{k}$. 
 For cases outside of this range,
 the coefficients are defined as 1 for $k=0$,
 and as 0 for $k > n$.
+So, there is nothing to prove in these cases.
 
 We have the equation
 
@@ -47,7 +49,9 @@ for $k \le \frac{n}{2}$.
 We first handle the trivial case
 $k=1$. Here, we have $\frac{n}{1!=1}$,
 which, trivially, is an integer.
-Note that for this case the falling factorial
+Note that, for this case, the falling factorial,
+which is defined as the product of the
+consecutive numbers $n$ to $n-k+1$, 
 is just $n$, since $n-1+1 = n$.
 
 For $k=2$, we have
@@ -90,7 +94,7 @@ then $n-1$ must have been and then it must
 have been divisible by 3 and 2.
 In consequence, even though the numbers
 are not consecutive anymore,
-the divisibility argument, still holds.
+the divisibility argument still holds.
 
 This is how the induction argument works:
 for any $k+1$, we have $k+1$ consecutive
@@ -120,7 +124,7 @@ With $k=4$ we have the fraction
 \]
 
 There are four consecutive numbers in the numerator,
-one of which must divide 4. We divide this number
+one of which must be divided by 4. We divide this number
 by 4 and the problem is reduced to the case $k=3$.
 Again, the numbers are not consecutive anymore.
 But if the number that we reduce by dividing by 4
@@ -146,8 +150,8 @@ We now have the choice to either cancel 2
 in the numerator and 2 in the denominator
 or to divide 10 by 2 in the numerator and
 cancel 2 in the denominator.
-Since, in the base case, we would do the latter,
-we would divide 10 by 2 and obtain
+If we choose the latter,
+we divide 10 by 2 and obtain
 $\frac{11\times 5 \times 3 \times 2}{1} = 11 \times 5 \times 3 \times 2$,
 which is $55 \times 6 = 330$.
 
@@ -163,8 +167,8 @@ of the numerator tends towards the prime
 factors of the binomial coefficient.
 We know that finding the prime factors
 is a very hard problem.
-But could there not be a way 
-to shortcut the way to the binomial coefficient
+But could there not be a 
+shortcut to the binomial coefficient
 by using prime factors?
 
 It turns out there is.
@@ -276,7 +280,7 @@ The link is the following theorem:
 
 where the $a$s and $b$s are the coefficients
 in the representation of $n$ and $k$ 
-in base $p$, hence:
+in base $p$:
 
 \begin{equation}
 n = a_rp^r + a_{r-1}p^{r-1} + \dots + a_1p + a_0
@@ -338,11 +342,11 @@ This formula leads to a
 cyclic repetition of denominators of the form
 
 \[
-sp + t - 1, sp + t - 2, \dots, sp + t - t = sp.
+sp + t - 1, sp + t - 2, \dots, sp + t - t.
 \]
 
 We have to be careful with the denominators
-of the form $sp$, since, modulo $p$,
+of the form $sp + t - t = sp$, since, modulo $p$,
 they are just zero and the corresponding
 fraction is thus undefined.
 But before we get into it, 
@@ -426,7 +430,7 @@ Since $X$ is the product with the first
 $k \bmod p$ factors cut off and
 the number of factors in the entire product is $k$,
 the number of the remaining factors 
-is divided by $p$.
+is a multiple of $p$.
 These factors fall into $\frac{k}{p}$ groups
 each of which contains 
 in the numerator and the denominator
@@ -500,7 +504,7 @@ and see by this simple trick of black magic that the result is
 \]
 
 Unfortunately, there are very few scholars left
-who would accept magic as a proof and so
+who would accept magic as proof and so
 we must continue with the abstract reasoning.
 Note again that we have taken the first $t=k \bmod p$ terms
 out in the previous step. The denominators 
@@ -608,7 +612,7 @@ We need to prove that
 \binom{n}{k} \equiv \prod_{i=0}^{r}{\binom{a_i}{b_i}} \pmod{p},
 \end{equation}
 
-where $a$s and $b$s are the coefficients in the
+where the $a$s and $b$s are the coefficients in the
 representation of $n$ and $k$ base $p$.
 We now calculate $u,v,s$ and $t$, as we have done
 before, as 
@@ -731,7 +735,7 @@ However, we can improve on this.
 There are cases we can decide 
 immediately without going through 
 the whole process.
-Consider a prime $p <= n-k$.
+Consider a prime $p \le n-k$.
 Since the numerator in the computation
 of the binomial coefficient
 runs from $n\dots (n-k+1)$,
@@ -860,7 +864,7 @@ that makes |choose3| much more efficient than the fraction.
 In general, we can say that |choose3| is more efficient,
 whenever $\frac{n}{2\ln{}n} + 1 < k < n - \frac{n}{2\ln{}n} - 1$.
 For the specific example of $n=1000000$, 
-|choose3| is more efficient for $k$s
+|choose3| is more efficient for 
 $36192 < k < 963807$. 
 
 The fact underlying the algorithm,

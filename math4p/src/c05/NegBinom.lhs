@@ -28,7 +28,7 @@ such as the multiplication of sums.
 The second basic approach is not to look
 for applications, but to investigate
 the formalism asking ``what happens,
-when we change the formalism?''
+when we change it?''
 This may appear much less interesting
 at the first sight, since there is no
 obvious use case for such an altered
@@ -100,7 +100,7 @@ coefficients:
 \begin{minipage}{\textwidth}
 \begin{code}
   chooseNeg :: Zahl -> Natural -> Zahl
-  chooseNeg n k  | n >= 0 && k >= 0  =  choose (z2n n) k
+  chooseNeg n k  | n >= 0 && k >= 0  =  Pos (choose (z2n n) k)
                  | n == k            =  1
                  | k == 0            =  1
                  | k == 1            =  n
@@ -230,11 +230,6 @@ It turns out that the coefficients for $n=-2$ are
 which is a beautiful result.
 If we go on this way, we will reproduce the values observed above
 using |chooseNeg|.
-Let us just repeat one more result, namely that of -3,
-which, as well, is very nice:
-
-|map (chooseNeg (-3)) [0..9]|\\
-|[1,-3,6,-10,15,-21,28,-36,45,-55]|.
 
 Now, what about negative $k$s?
 There is no direct way to implement something like |chooseNeg|
@@ -294,12 +289,12 @@ which is $0 - 1 = -1$.
 Again, for $n=-1$, we get a sequence
 of alternating negative and positive ones.
 
-For $\binom{-2}{k}$, we get results:
-$\binom{-2}{-2} = 1$. Then, $\binom{-2}{-3}$
+For $\binom{-2}{k}$, we get 
+$\binom{-2}{-2} = 1$, $\binom{-2}{-3}$
 is $\binom{-1}{-2} - \binom{-2}{-2} = -1 - 1 = -2$.
 $\binom{-2}{-4}$ then is 
 $\binom{-1}{-3} - \binom{-2}{-3} = 1 - (-2) = 3$.
-The next coefficint is 
+The next coefficient is 
 $\binom{-2}{-5} = \binom{-1}{-4} - \binom{-2}{-3}$,
 which is $-1 - 3 = -4$ and so on.
 The binomial coefficients for -2 with negative $k$s,
@@ -323,13 +318,13 @@ rule as
                   | k == 0     = 1
                   | n == 0     = 0
                   | n >  0 && k < 0   = 0
-                  | n >  0 && k >= 0  = choose n k
+                  | n >  0 && k >= 0  = Pos (choose (z2n n) (z2n k)
                   | k <  0     = pascalBack (n+1) (k+1)  - pascalBack n (k+1)
                   | otherwise  = pascalBack (n+1) k      - pascalBack n (k-1)
 \end{code}
 \end{minipage}
 
-We fist handle the trivial cases
+We first handle the trivial cases
 $n=k$, $k=0$ and $n=0$.
 When $n > 0$ and $k < 0$, the coefficient is 0.
 For $n$ and $k$ both greater 0,
@@ -365,7 +360,7 @@ Looking at the numbers of negative $n$s,
 I have the strange feeling that I already
 saw those sequences somewhere.
 But where? These are definitely not the rows
-to Pascal's triangle, but perhaps something else?
+of Pascal's triangle, but perhaps something else?
 Let us look at the triangle once again:
 
 \begin{tabular}{l c c c c c c c c c c c c c c c c c c c c}
@@ -542,6 +537,7 @@ If we do this stepwise, this looks like
 (using brackets to indicate what remains within
 the sum):
 
+\begin{minipage}{\textwidth}
 \[
 n[(n-1)(n-2)\dots (n-k+1) + (n-1)(n-2)\dots (n-k+2)k]
 \]
@@ -554,6 +550,7 @@ n(n-1)[(n-2)\dots (n-k+1) + (n-2)\dots (n-k+2)k]
 \[
 n(n-1)\dots(n-k+2)[n-k+1+k].
 \]
+\end{minipage}
 
 The remaining sum can now be simplified:
 $n-k+1+k = n+1$ and with this 
@@ -594,7 +591,7 @@ without any effect on the coefficients themselves.
 
 We could, of course go on by trying out
 this formula with concrete numbers $a$ and $b$.
-It appears promising, however, to choose a 
+It appears much more promising, however, to choose a 
 symbolic approach manipulating strings of the form
 |"a"| and |"b"|.
 The idea is to use string operations to simulate
@@ -646,7 +643,7 @@ We then can formulate the distributive law as
 \begin{minipage}{\textwidth}
 \begin{code}
   combN :: Sym -> [Sym] -> [Sym]
-  combN x zs = map (comb x) zs
+  combN x = map (comb x)
 \end{code}
 \end{minipage}
 
@@ -734,7 +731,7 @@ To simplify a complete list, we compare all
 symbols in the lists and consolidate
 symbols with equal strings resulting
 in lists of the type |(Natural,Sym)|,
-where the natural numbers counts the ocurrences
+where the natural number counts the ocurrences
 of that symbol in the list:
 
 \begin{minipage}{\textwidth}
@@ -757,13 +754,13 @@ of that symbol in the list:
 
 We start by first transforming all symbols
 into the canonical form sorting their strings.
-Then we sort the list of symbols themselves.
+Then we sort the list of symbols itself.
 The idea is that all strings of the same kind
 are listed in a row, such that we can easily
 count them.
 But, of course, we do not want to have the
 negative and positive symbols separated,
-we want all symbols with the string in a row,
+we want all symbols with the same string in a row,
 independently of these symbols being positive
 or negative.
 We have to implement this notion of comparison
@@ -784,9 +781,10 @@ We now |go| through the list of symbols sorted
 in this sense of comparison
 and check on the first and the second of the remaining list
 on each step.
-If the signedness of first and second are equal, we
-increment $n$, when there strings are equal,
-and we store |(n,x)|, |x| the head of the list,
+If the signedness of first and second are equal
+and their strings are equal, we
+increment $n$
+and store |(n,x)|, |x| the head of the list,
 whenever they differ
 starting the rest of the list with $n=1$.
 Otherwise, when the signs are not equal,

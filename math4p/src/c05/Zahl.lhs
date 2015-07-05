@@ -94,16 +94,9 @@ first two lines. When |a| and |b| have
 the same sign, we need to compare |a| and
 |b| themselves to decide which number 
 is greater than the other.
-If the sign differs, we can immediately decide:
+If the sign differs, we can immediately decide
 that the one with the negative sign 
-is smaller. It may be strange
-that we mention this characteristic
-quite late in our discussion of integers.
-Indeed, until now we have discussed
-aspects of inverses. It is only now
-that we see this fact that,
-appears so natural,
-for our everyday life. 
+is smaller. 
 
 |Signed| is also an instance of |Enum|:
 
@@ -119,7 +112,7 @@ for our everyday life.
 
 With this definition some more semantics
 comes in. We explicitly define that,
-converting an integer greater zero,
+converting an integer greater or equal to zero,
 we use the |Pos| constructor; converting
 an integer less than zero, we use
 the |Neg| constructor.
@@ -134,11 +127,12 @@ Now we come ot arithmetic, first addition:
   instance (Ord a, Num a) => Num (Signed a) where
     (Pos a)  +  (Pos b)  = Pos  (a + b)
     (Neg a)  +  (Neg b)  = neg0 (a + b)
-    (Pos a)  +  (Neg b)  | a >=  b   = Pos  (a - b)
+    (Pos a)  +  (Neg b)  | a >   b   = Pos  (a - b)
                          | a <   b   = Neg  (b - a)
-    (Neg a)  +  (Pos b)  | a >   b   = Neg  (a - b)
                          | a ==  b   = Pos  0
+    (Neg a)  +  (Pos b)  | a >   b   = Neg  (a - b)
                          | a <   b   = Pos  (b - a)
+                         | a ==  b   = Pos  0
 \end{code}
 \end{minipage}
 
@@ -150,7 +144,13 @@ The addition of a negative and a positive number
 results in a difference, which may be positive
 or negative depending on which number is greater:
 the negative or the positive one.
-Subtraction:
+
+We define subtraction in terms
+of addition:
+subtracting a positive number |b| from any number |a|
+is the same as adding the negation of |b| to |a|.
+Vice versa, subtracting a negative number |b|
+is the same as adding a postive number.
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -159,12 +159,6 @@ Subtraction:
 \end{code}
 \end{minipage}
 
-We just define subtraction in terms
-of addition:
-subtracting a positive number |b| from any number |a|
-is the same as adding the negation of |b| to |a|.
-Vice versa, subtracting a negative number |b|
-is the same as adding a postive number.
 Multiplication:
 
 \begin{minipage}{\textwidth}
@@ -247,7 +241,7 @@ is easy: we return a positive quotient and a positive remainder.
 When both numbers are negative,
 the quotient is postive and the remainder is negative.
 Indeed, when we have the equation $a = qb + r$
-and both, $a$ and $b$ are negative,
+and both, $a$ and $b$, are negative,
 then a postive $q$ will bring $b$ close to $a$.
 With $a=-5$ and $b=-2$, for instance, the quotient would be 2:
 $2 \times -2 = -4$. Now, what do we have to add to $-4$ 

@@ -87,6 +87,26 @@ but countable. Calling |count| on it,
 we will never get a final answer.
 But we will have a partial result at any given step.
 
+What about all the integers?
+There should be twice as much as natural numbers, right?
+Let us see. We first create a set to count the 
+natural numbers:
+
+\[
+\lbrace(1,1),(2,2),(3,3),\dots\rbrace
+\]
+
+Then we insert a negative number before or behind
+each positive number:
+
+\[
+\lbrace(1,1),(-1,2),(2,3),(-2,4),(3,5),(-3,6),\dots\rbrace
+\]
+
+Again, it appears that we do not run out of natural numbers
+to count all the integers. The set of integers,
+hence, has cardinality $\aleph_0$ too.
+
 What about fractions?
 On the first sight, fractions look very different.
 There are infinitely many of them between
@@ -289,19 +309,19 @@ leading to the sequence
  \dots
 \]
 
-But now we see that we can enumerate, that is count
+But now we see that we can enumerate, that is count,
 the fractions creating the sequence
 
 \[
- \left(1,\frac{1}{1}\right),
- \left(2,\frac{2}{1}\right), 
- \left(3,\frac{1}{2}\right), 
- \left(4,\frac{1}{3}\right), 
- \left(5,\frac{3}{1}\right), 
- \left(6,\frac{4}{1}\right), 
- \left(7,\frac{3}{2}\right), 
- \left(8,\frac{2}{3}\right), 
- \left(9,\frac{1}{4}\right), 
+ \left(\frac{1}{1},1\right),
+ \left(\frac{2}{1},2\right), 
+ \left(\frac{1}{2},3\right), 
+ \left(\frac{1}{3},4\right), 
+ \left(\frac{3}{1},5\right), 
+ \left(\frac{4}{1},6\right), 
+ \left(\frac{3}{2},7\right), 
+ \left(\frac{2}{3},8\right), 
+ \left(\frac{1}{4},9\right), 
  \dots
 \]
 
@@ -340,14 +360,14 @@ its additive inverse, resulting in
 the sequence:
 
 \[
- \left(1,\frac{1}{1}\right),
- \left(2,-\frac{1}{1}\right),
- \left(3,\frac{2}{1}\right), 
- \left(4,-\frac{2}{1}\right), 
- \left(5,\frac{1}{2}\right), 
- \left(6,-\frac{1}{2}\right), 
- \left(7,\frac{1}{3}\right), 
- \left(8,-\frac{1}{3}\right), 
+ \left(\frac{1}{1},1\right),
+ \left(-\frac{1}{1},2\right),
+ \left(\frac{2}{1},3\right), 
+ \left(-\frac{2}{1},4\right), 
+ \left(\frac{1}{2},5\right), 
+ \left(-\frac{1}{2},6\right), 
+ \left(\frac{1}{3},7\right), 
+ \left(-\frac{1}{3},8\right), 
  \dots
 \]
 
@@ -372,7 +392,7 @@ At the end of the process,
 room 1 is free for the new arriving guest.
 Since there are infinitely
 many rooms, there is no guest,
-even though there are infinitely many guests already,
+even though there are infinitely many of them already,
 who would not find a room with a room number
 one greater than his previous room number.
 
@@ -557,7 +577,6 @@ corresponds to a \term{binary tree} of the form
 
 \end{tikzpicture}
 \end{center}
-\ignore{$}
 
 When you have a closer look at the tree,
 you see that the kids of each node
@@ -622,7 +641,7 @@ If $i\neq 1$,
 we create a node with |r| as data and 
 the kids resulting from calling |calWiTree| on
 $\frac{n}{n+d}$ and $\frac{n+d}{d}$
-with $i$ reduced by 1.
+with $i$ decremented by 1.
 
 This shows that there is a very simple algorithm
 to generate the tree.
@@ -633,9 +652,9 @@ We do so by creating an algorithm that
 converts the tree to the sequence.
 
 We may be tempted to do this with a typical
-recursive function that converts the current node
-into a member of the sequence and adds it to
-the partial sequence that results from recursively
+recursive function that does something with the current node
+and then adds the result of the operation to
+the partial sequences that result from recursively
 calling the function on the left and the right kid.
 This approach, however, is \term{depth-first}.
 The resulting sequences would follow the branches
@@ -706,7 +725,7 @@ We have shown that there is a simple algorithm
 to generate the tree and 
 that there is a simple algorithm to convert
 the tree into the sequence.
-The latter aspect is quite useful,
+The latter is quite useful,
 since it means that tree and sequence are equivalent.
 This allows us to prove some crucial properties
 of the sequence using the tree,
@@ -722,7 +741,7 @@ This, of course, is just a consquence
 of the generating algorithm.
 We also see that the integers are all
 in the right-most branch, which equals
-the first first column in Cantor's table.
+the first column in Cantor's table.
 The left-most branch equals the first row
 in Cantor's table: it contains all fractions
 with 1 in the numerator.
@@ -773,11 +792,11 @@ fractions in canonical form.\qed
 We prove the second property by contradiction.
 Let us assume that there are fractions 
 that do not appear in the tree. 
-Then, there are fractions with 
+Then, there is a number of fractions that have
 the smallest denominator and, among those,
-there is one with the smallest denominator.
+there is one with the smallest numerator.
 Let $\frac{n}{d}$ be this fraction.
-If $n>d$, then $\frac{n-d}{d}$ cannot appear either, since,
+If $n>d$, then $\frac{n-d}{d}$ cannot appear either, since
 $\frac{n}{d}$ would be its right kid.
 But that is a contradiction to our assumption that
 $\frac{n}{d}$ was the nonappearing fraction
@@ -814,7 +833,7 @@ of two fractions of the form $\frac{n}{d-n}$,
 making the denominator of these fractions even smaller,
 or the right kid of two fractions of the form
 $\frac{n-d}{d}$, making the numerator of these fractions
-even smaller. In both cases with arrive at a contradiction.\qed
+even smaller. In both cases we arrive at a contradiction.\qed
 
 We can also prove directly -- but the argument 
 may be more subtle or, which is the same,
@@ -869,14 +888,15 @@ at position $n$:
 \end{code}
 \end{minipage}
 
-We start by converting $n$ to binary format.
+We start by converting $n$ to binary format
+(\ie\ a list of 0s and 1s).
 Then we call |go| starting with 0, since,
 for the first number 1, we want position 1.
 If we have exhausted the binary number,
 the result is just $r$, the rational number we pass
 to |go|. Otherwise, we distinguish two cases:
 the head of the binary number being 0 or 1.
-If it is zero, we follow the left branch,
+If it is 0, we follow the left branch,
 which has the fraction $\frac{n}{n+d}$
 at its top; if it is 1, we follow 
 the right branch with the fraction $\frac{n+d}{d}$.
@@ -923,7 +943,6 @@ described above around:
 \end{code}
 \end{minipage}
 
-Here we do exactly the opposite.
 We look at the fraction and, if $n\ge d$,
 then we add 1 to the digits of the 
 resulting binary number, otherwise,
@@ -1201,13 +1220,13 @@ For instance:
 |oddCos 5| is |[1,3]| and |fusc 6| is 2;
 |oddCos 6| is |[1,5,1]| and |fusc 7| is 3;
 |oddCos 7| is |[1]| and |fusc 8|, which is a power of 2, is 1;
-|oddCos 8| is |[1,7,15,1]| and |fusc 9| is 1;
+|oddCos 8| is |[1,7,15,1]| and |fusc 9| is 4;
 |oddCos 9| is |[1,21,5]| and |fusc 10| is 3.
 
 Moritz Stern arrived at his sequence,
 when studying ways to represent numbers as
 powers of 2. Any number can be written
-as such a sum and most number even in various ways.
+as such a sum and most numbers even in various ways.
 For instance, $2 = 2^0 + 2^0$,
 $3 = 2^0 + 2^1 = 2^0 + 2^0 + 2^0$,
 $4 = 2^1 + 2^1 = 2^0 + 2^0 + 2^1$,
