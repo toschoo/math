@@ -43,7 +43,7 @@
 \contentsline {section}{\numberline {6.5}Zeno's Paradox}{231}
 \contentsline {section}{\numberline {6.6}Binomial Coefficients are Integers}{236}
 \contentsline {section}{\numberline {6.7}Euler's Totient Function}{247}
-\contentsline {section}{\numberline {6.8}How many Fractions?}{263}
+\contentsline {section}{\numberline {6.8}How many Fractions?}{262}
 \contentsline {chapter}{\numberline {7}Real Numbers}{277}
 \contentsline {section}{\numberline {7.1}$\sqrt {2}$}{277}
 \contentsline {section}{\numberline {7.2}$\Phi $}{277}

@@ -19916,23 +19916,22 @@ such that $a \cdot a' = e$, where $e$ is
 the neutral element of that group.
 We have already met some groups, permutation groups
 and finite groups of modular arithmetic.
-We will now look at the groups that are 
-probably more common, namely the groups over the
-infinite sets $\mathbb{Z}$ of the integers and
-$\mathbb{Q}$ of the rationals.
+We will now look at infinite groups, namely 
+the additive group over $\mathbb{Z}$, the integers, and
+the multiplicative group over $\mathbb{Q}$, the rationals.
 
 As you may have guessed already,
-the inverse element of any element of a natural
+the inverse element of a natural
 number $n$ in the additive group over integers 
 is the \term{negation} of $n$, $-n$.
-It is easy to see that $n$ plus its inversion,
+It is easy to see that $n$ plus its inverse,
 $-n$, is just $0$, the neutral element of addition:
 $n + (-n) = n - n = 0$.
 Since it is, of course, also true
 that $-n + n = n - n = 0$,
 the inverse element of a negative number $-n$
 is its positive counterpart $n$.
-With the law for double negation, $-(-n) = n$,
+With the law of double negation, $-(-n) = n$,
 that is the negation of the negation of $n$ is $n$,
 the formula $n + (-n) = 0$ 
 is universally true for both
@@ -19947,20 +19946,17 @@ any equation of the form
 $a + x = b$ in the additive group of $\mathbb{Z}$.
 We just add the inverse of $a$ to both sides
 of the equation: $a + (-a) + x = b + (-a)$,
-which of course is $a - a + x = b - a$
-from which we easily conclude $x = b - a$. 
+which, of course, is $x = b - 1$.
 Without negative numbers, there were equations
 we could not solve in this way, for instance
 $4 + x = 3$. We had gaps, so to speak,
 in our additive equations. But now,
-in the extended group, there are no such
+in the group over integers, there are no such
 gaps anymore: we just add the inverse of 4
-on both sides and get $4 - 4 + x = 3 - 4$,
-which is $x = 3 - 4 = -1$.
+on both sides and get $x = 3 - 4 = -1$.
 
-What is the inverse element of 
-the infinite multiplicative group 
-containing the natural numbers?
+What is the inverse element of integers
+in the multiplicative group?
 Well, in this group, it must still hold
 that $a \cdot a' = e$, where $\cdot$ is multiplication
 and $e$, the neutral element, is unity.
@@ -19981,11 +19977,11 @@ The left-hand side reduces to $1x = x$
 and we have $x = \frac{b}{a}$.
 As we have already seen in finite groups,
 prime numbers simply ``disappear'' with fractions,
-since we can now reach them with multiplition,
+since we can now reach them with multiplication,
 for instance: $3x = 5$ is equivalent to
-$x = \frac{5}{3} = 1\frac{2}{3}$.
+$x = \frac{5}{3}$.
 
-Now we want to go on and create a field
+Let us go on and build something bigger: a field
 consisting of addition and multiplication
 where the distributive law holds.
 We already know that the distributive law
@@ -20038,7 +20034,7 @@ as
 The $\gcd$ of 6 and 9 is 3,
 the product $6 \times 9$ = 54
 and $54 / 3 = 18$.
-So, $lcm(6,9) = 18$ and we have:
+So, we have:
 
 \[
 \frac{1 \times \frac{18}{6} + 2 \times \frac{18}{9}}{lcm(6,9) = 18} =
@@ -20051,7 +20047,7 @@ multiplying the respective other denominator
 to numerator and denominator of both fractions.
 However, when we do this, we have to operate
 with greater numbers and, at the end, reduce
-the fractions to their canonical form, which is
+the fractions to their \term{canonical form}, which is
 
 \begin{equation}
 \frac{a}{b} = \frac{a/\gcd(a,b)}{b/\gcd(a,b)}.
@@ -20064,7 +20060,7 @@ For the example, this would mean
 \frac{9}{54} + \frac{12}{54} = \frac{21}{54}.
 \]
 
-Now, we reduce to the canonical form:
+Now, we reduce to canonical form:
 
 \[
 \frac{21/\gcd(21,54)}{54/\gcd(21,54)}, 
@@ -20131,9 +20127,6 @@ We now see clearly that this should be the negation,
 The inverse of $-(2 \times 3)$, however, is just
 $2 \times 3$ and that is 6.
 Therefore: $-2 \times -3 + 2 \times 3 = 12$.
-As you see,
-negation, even though appearingly simple, may be quite subtle,
-in particular when we come to ask: why?
 
 So, what happens if we multiply negative numbers
 and fractions? 
@@ -20143,16 +20136,14 @@ We, hence, would say, according to the rules
 derived above, that $\frac{-1}{n}$ is the 
 additive inverse of $\frac{1}{n}$. 
 What about $\frac{1}{-n}$?
-Instead of writing
-$\frac{1}{-n}$, we could write
-$1 \times \frac{1}{-n}$ and, hence,
-$\frac{1}{1} \times \frac{1}{-n}$
-and now we can move the minus sign arround,
-as we did before: $\frac{1}{-1} \times \frac{1}{n}$.
-Since a fraction is nothing but the multiplication
-with the inverse, we can change $\frac{1}{-1}$ to
-$\frac{-1}{1}$ and now we can just move it back:
-$\frac{-1}{1} \times \frac{1}{n} = \frac{-1}{n} = -\frac{1}{n}$.
+This should be the multiplicative inverse of $-n$,
+such that $-n \times \frac{1}{-n} = 1$.
+We again can move the minus sign around
+to get $-1 \times n \times \frac{1}{-n}$ 
+leading to $-1 \times \frac{n}{-n} = 1$.
+Dividing $n$ on both sides gives 
+$-1 \times \frac{1}{-n} = \frac{1}{n}$ and
+multiplying $-1$ gives $\frac{1}{-n} = \frac{-1}{n}$.
 In other words,
 a fraction with a minus sign in it,
 independently of where it appears,
@@ -20184,10 +20175,8 @@ and fractions, namely exponentiation.
 
 From the table above, we see immediately
 that products with an even number of negative
-numbers is positive -- a fact that we already
+numbers are positive -- a fact that we already
 used when discussing prime numbers.
-Furthermore, a negative number multiplied
-by itself is positive as well.
 In general, any number raised to an
 even exponent is positive independent of that number
 being positive or negative.
@@ -20195,7 +20184,7 @@ being positive or negative.
 This leads to a difficulty with the 
 root operation, since even roots may have
 two different results: a positive number
-or its inverse. For instance, $\sqrt{4}$
+or its additive inverse. For instance, $\sqrt{4}$
 could be 2 and $-2$. 
 Even further, the operation cannot be applied
 to a negative number: $\sqrt{-1}$ has no
@@ -20458,16 +20447,9 @@ first two lines. When \ensuremath{\Varid{a}} and \ensuremath{\Varid{b}} have
 the same sign, we need to compare \ensuremath{\Varid{a}} and
 \ensuremath{\Varid{b}} themselves to decide which number 
 is greater than the other.
-If the sign differs, we can immediately decide:
+If the sign differs, we can immediately decide
 that the one with the negative sign 
-is smaller. It may be strange
-that we mention this characteristic
-quite late in our discussion of integers.
-Indeed, until now we have discussed
-aspects of inverses. It is only now
-that we see this fact that,
-appears so natural,
-for our everyday life. 
+is smaller. 
 
 \ensuremath{\Conid{Signed}} is also an instance of \ensuremath{\Conid{Enum}}:
 
@@ -20507,7 +20489,7 @@ for our everyday life.
 
 With this definition some more semantics
 comes in. We explicitly define that,
-converting an integer greater zero,
+converting an integer greater or equal to zero,
 we use the \ensuremath{\Conid{Pos}} constructor; converting
 an integer less than zero, we use
 the \ensuremath{\Conid{Neg}} constructor.
@@ -20551,7 +20533,7 @@ Now we come ot arithmetic, first addition:
 \>[5]{}(\Conid{Pos}\;\Varid{a}){}\<[14]%
 \>[14]{}\mathbin{+}{}\<[14E]%
 \>[17]{}(\Conid{Neg}\;\Varid{b}){}\<[26]%
-\>[26]{}\mid \Varid{a}\geq {}\<[34]%
+\>[26]{}\mid \Varid{a}\mathbin{>}{}\<[34]%
 \>[34]{}\Varid{b}{}\<[38]%
 \>[38]{}\mathrel{=}\Conid{Pos}\;{}\<[45]%
 \>[45]{}(\Varid{a}\mathbin{-}\Varid{b}){}\<[E]%
@@ -20560,6 +20542,11 @@ Now we come ot arithmetic, first addition:
 \>[34]{}\Varid{b}{}\<[38]%
 \>[38]{}\mathrel{=}\Conid{Neg}\;{}\<[45]%
 \>[45]{}(\Varid{b}\mathbin{-}\Varid{a}){}\<[E]%
+\\
+\>[26]{}\mid \Varid{a}\equiv {}\<[34]%
+\>[34]{}\Varid{b}{}\<[38]%
+\>[38]{}\mathrel{=}\Conid{Pos}\;{}\<[45]%
+\>[45]{}\mathrm{0}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}(\Conid{Neg}\;\Varid{a}){}\<[14]%
@@ -20570,15 +20557,15 @@ Now we come ot arithmetic, first addition:
 \>[38]{}\mathrel{=}\Conid{Neg}\;{}\<[45]%
 \>[45]{}(\Varid{a}\mathbin{-}\Varid{b}){}\<[E]%
 \\
-\>[26]{}\mid \Varid{a}\equiv {}\<[34]%
-\>[34]{}\Varid{b}{}\<[38]%
-\>[38]{}\mathrel{=}\Conid{Pos}\;{}\<[45]%
-\>[45]{}\mathrm{0}{}\<[E]%
-\\
 \>[26]{}\mid \Varid{a}\mathbin{<}{}\<[34]%
 \>[34]{}\Varid{b}{}\<[38]%
 \>[38]{}\mathrel{=}\Conid{Pos}\;{}\<[45]%
 \>[45]{}(\Varid{b}\mathbin{-}\Varid{a}){}\<[E]%
+\\
+\>[26]{}\mid \Varid{a}\equiv {}\<[34]%
+\>[34]{}\Varid{b}{}\<[38]%
+\>[38]{}\mathrel{=}\Conid{Pos}\;{}\<[45]%
+\>[45]{}\mathrm{0}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -20592,7 +20579,13 @@ The addition of a negative and a positive number
 results in a difference, which may be positive
 or negative depending on which number is greater:
 the negative or the positive one.
-Subtraction:
+
+We define subtraction in terms
+of addition:
+subtracting a positive number \ensuremath{\Varid{b}} from any number \ensuremath{\Varid{a}}
+is the same as adding the negation of \ensuremath{\Varid{b}} to \ensuremath{\Varid{a}}.
+Vice versa, subtracting a negative number \ensuremath{\Varid{b}}
+is the same as adding a postive number.
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -20611,12 +20604,6 @@ Subtraction:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-We just define subtraction in terms
-of addition:
-subtracting a positive number \ensuremath{\Varid{b}} from any number \ensuremath{\Varid{a}}
-is the same as adding the negation of \ensuremath{\Varid{b}} to \ensuremath{\Varid{a}}.
-Vice versa, subtracting a negative number \ensuremath{\Varid{b}}
-is the same as adding a postive number.
 Multiplication:
 
 \begin{minipage}{\textwidth}
@@ -20827,7 +20814,7 @@ is easy: we return a positive quotient and a positive remainder.
 When both numbers are negative,
 the quotient is postive and the remainder is negative.
 Indeed, when we have the equation $a = qb + r$
-and both, $a$ and $b$ are negative,
+and both, $a$ and $b$, are negative,
 then a postive $q$ will bring $b$ close to $a$.
 With $a=-5$ and $b=-2$, for instance, the quotient would be 2:
 $2 \times -2 = -4$. Now, what do we have to add to $-4$ 
@@ -20917,7 +20904,7 @@ such as the multiplication of sums.
 The second basic approach is not to look
 for applications, but to investigate
 the formalism asking ``what happens,
-when we change the formalism?''
+when we change it?''
 This may appear much less interesting
 at the first sight, since there is no
 obvious use case for such an altered
@@ -21025,7 +21012,7 @@ coefficients:
 \>[3]{}\Varid{chooseNeg}\;\Varid{n}\;\Varid{k}{}\<[18]%
 \>[18]{}\mid \Varid{n}\geq \mathrm{0}\mathrel{\wedge}\Varid{k}\geq \mathrm{0}{}\<[38]%
 \>[38]{}\mathrel{=}{}\<[38E]%
-\>[41]{}\Varid{choose}\;(\Varid{z2n}\;\Varid{n})\;\Varid{k}{}\<[E]%
+\>[41]{}\Conid{Pos}\;(\Varid{choose}\;(\Varid{z2n}\;\Varid{n})\;\Varid{k}){}\<[E]%
 \\
 \>[18]{}\mid \Varid{n}\equiv \Varid{k}{}\<[38]%
 \>[38]{}\mathrel{=}{}\<[38E]%
@@ -21169,11 +21156,6 @@ It turns out that the coefficients for $n=-2$ are
 which is a beautiful result.
 If we go on this way, we will reproduce the values observed above
 using \ensuremath{\Varid{chooseNeg}}.
-Let us just repeat one more result, namely that of -3,
-which, as well, is very nice:
-
-\ensuremath{\Varid{map}\;(\Varid{chooseNeg}\;(\mathbin{-}\mathrm{3}))\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{9}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathbin{-}\mathrm{3},\mathrm{6},\mathbin{-}\mathrm{10},\mathrm{15},\mathbin{-}\mathrm{21},\mathrm{28},\mathbin{-}\mathrm{36},\mathrm{45},\mathbin{-}\mathrm{55}\mskip1.5mu]}.
 
 Now, what about negative $k$s?
 There is no direct way to implement something like \ensuremath{\Varid{chooseNeg}}
@@ -21233,12 +21215,12 @@ which is $0 - 1 = -1$.
 Again, for $n=-1$, we get a sequence
 of alternating negative and positive ones.
 
-For $\binom{-2}{k}$, we get results:
-$\binom{-2}{-2} = 1$. Then, $\binom{-2}{-3}$
+For $\binom{-2}{k}$, we get 
+$\binom{-2}{-2} = 1$, $\binom{-2}{-3}$
 is $\binom{-1}{-2} - \binom{-2}{-2} = -1 - 1 = -2$.
 $\binom{-2}{-4}$ then is 
 $\binom{-1}{-3} - \binom{-2}{-3} = 1 - (-2) = 3$.
-The next coefficint is 
+The next coefficient is 
 $\binom{-2}{-5} = \binom{-1}{-4} - \binom{-2}{-3}$,
 which is $-1 - 3 = -4$ and so on.
 The binomial coefficients for -2 with negative $k$s,
@@ -21285,7 +21267,7 @@ rule as
 \\
 \>[19]{}\mid \Varid{n}\mathbin{>}{}\<[26]%
 \>[26]{}\mathrm{0}\mathrel{\wedge}\Varid{k}\geq \mathrm{0}{}\<[39]%
-\>[39]{}\mathrel{=}\Varid{choose}\;\Varid{n}\;\Varid{k}{}\<[E]%
+\>[39]{}\mathrel{=}\Conid{Pos}\;(\Varid{choose}\;(\Varid{z2n}\;\Varid{n})\;(\Varid{z2n}\;\Varid{k}){}\<[E]%
 \\
 \>[19]{}\mid \Varid{k}\mathbin{<}{}\<[26]%
 \>[26]{}\mathrm{0}{}\<[32]%
@@ -21300,7 +21282,7 @@ rule as
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-We fist handle the trivial cases
+We first handle the trivial cases
 $n=k$, $k=0$ and $n=0$.
 When $n > 0$ and $k < 0$, the coefficient is 0.
 For $n$ and $k$ both greater 0,
@@ -21336,7 +21318,7 @@ Looking at the numbers of negative $n$s,
 I have the strange feeling that I already
 saw those sequences somewhere.
 But where? These are definitely not the rows
-to Pascal's triangle, but perhaps something else?
+of Pascal's triangle, but perhaps something else?
 Let us look at the triangle once again:
 
 \begin{tabular}{l c c c c c c c c c c c c c c c c c c c c}
@@ -21513,6 +21495,7 @@ If we do this stepwise, this looks like
 (using brackets to indicate what remains within
 the sum):
 
+\begin{minipage}{\textwidth}
 \[
 n[(n-1)(n-2)\dots (n-k+1) + (n-1)(n-2)\dots (n-k+2)k]
 \]
@@ -21525,6 +21508,7 @@ n(n-1)[(n-2)\dots (n-k+1) + (n-2)\dots (n-k+2)k]
 \[
 n(n-1)\dots(n-k+2)[n-k+1+k].
 \]
+\end{minipage}
 
 The remaining sum can now be simplified:
 $n-k+1+k = n+1$ and with this 
@@ -21565,7 +21549,7 @@ without any effect on the coefficients themselves.
 
 We could, of course go on by trying out
 this formula with concrete numbers $a$ and $b$.
-It appears promising, however, to choose a 
+It appears much more promising, however, to choose a 
 symbolic approach manipulating strings of the form
 \ensuremath{\text{\tt \char34 a\char34}} and \ensuremath{\text{\tt \char34 b\char34}}.
 The idea is to use string operations to simulate
@@ -21667,7 +21651,7 @@ We then can formulate the distributive law as
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{combN}\mathbin{::}\Conid{Sym}\to [\mskip1.5mu \Conid{Sym}\mskip1.5mu]\to [\mskip1.5mu \Conid{Sym}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{combN}\;\Varid{x}\;\Varid{zs}\mathrel{=}\Varid{map}\;(\Varid{comb}\;\Varid{x})\;\Varid{zs}{}\<[E]%
+\>[3]{}\Varid{combN}\;\Varid{x}\mathrel{=}\Varid{map}\;(\Varid{comb}\;\Varid{x}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -21804,7 +21788,7 @@ To simplify a complete list, we compare all
 symbols in the lists and consolidate
 symbols with equal strings resulting
 in lists of the type \ensuremath{(\Conid{Natural},\Conid{Sym})},
-where the natural numbers counts the ocurrences
+where the natural number counts the ocurrences
 of that symbol in the list:
 
 \begin{minipage}{\textwidth}
@@ -21874,13 +21858,13 @@ of that symbol in the list:
 
 We start by first transforming all symbols
 into the canonical form sorting their strings.
-Then we sort the list of symbols themselves.
+Then we sort the list of symbols itself.
 The idea is that all strings of the same kind
 are listed in a row, such that we can easily
 count them.
 But, of course, we do not want to have the
 negative and positive symbols separated,
-we want all symbols with the string in a row,
+we want all symbols with the same string in a row,
 independently of these symbols being positive
 or negative.
 We have to implement this notion of comparison
@@ -21926,9 +21910,10 @@ We now \ensuremath{\Varid{go}} through the list of symbols sorted
 in this sense of comparison
 and check on the first and the second of the remaining list
 on each step.
-If the signedness of first and second are equal, we
-increment $n$, when there strings are equal,
-and we store \ensuremath{(\Varid{n},\Varid{x})}, \ensuremath{\Varid{x}} the head of the list,
+If the signedness of first and second are equal
+and their strings are equal, we
+increment $n$
+and store \ensuremath{(\Varid{n},\Varid{x})}, \ensuremath{\Varid{x}} the head of the list,
 whenever they differ
 starting the rest of the list with $n=1$.
 Otherwise, when the signs are not equal,
@@ -22340,7 +22325,7 @@ This is the implementation of the logic already described before:
 we convert a fraction to the common denominator
 defined by the $lcm$ of both denominators
 and multiply the numerators by the number
-we would have to multiply the denominator with
+we would have to multiply the denominator by
 to get the $lcm$, which trivially is the $lcm$ divided by
 the denominator:
 $lcm(dx,dy) = dx \times \frac{lcm(dx,dy)}{dx}$.
@@ -22584,7 +22569,7 @@ According to this philosophy everything is One,
 undivisible, motionless, eternal, everywhere and nowhere.
 That we actually see motion, distinguish and divide
 things around us, that everything ``in this world'' is volatile
-and that everything has its pace, is either here or there,
+and that everything has its place, is either here or there,
 is, according to Parmenides, just an illusion.
 
 Plato discusses the philosophy of Parmenides in one
@@ -22598,12 +22583,12 @@ It was the main inspiration for the late-ancient
 \term{neoplatonism} and, for many centuries,
 it shaped the interpretation of ancient philosophy
 by medieval thinkers.
-Scholars today, however, are not sure anymore
+Scholars today, however, are not so sure anymore
 what the meaning of this dialog may be.
 Some see in it a critical discussion of 
 the theory of forms, others hold it is a collection
-of exercises for the students of Plato's academy,
-and again others consider the dialog as highly ironic
+of exercises for students of Plato's academy,
+and again others consider the dialog as highly ironic,
 actually criticising Parmenides and other philosophers
 for using terms that they know from everyday life 
 in a context where the ideas associated with this terms
@@ -22631,17 +22616,17 @@ that is behind of what we can perceive directly with our senses.
 Be that as it may,
 we are here much more interested in the math
 in Zeno's paradoxes.
-The most famous of these paradoxes is the race
+The most famous one is the race
 of Achilles and the tortoise.
 Achilles gives the tortoise a lead of, say, hundred meters.
-The question, now, is when Achilles will actually catch up with
+The question now is when Achilles will actually catch up with
 the tortoise. Zeno says: never, for it is impossible.
 To catch up, he must reach a point where the tortoise has been
 shortly before. But when he gets there, the tortoise is already
 ahead. Perhaps just a few metres, but definitely ahead.
 So, again, to reach that point, Achilles will need some time.
-When he reaches the point where the tortoise was a second before,
-the tortoise is already a bit further. 
+When he reaches the point where the tortoise has been a second before,
+the same is already a bit further. 
 To reach that point, Achilles again needs some time
 and in this time the tortoise again makes some progress
 and so it goes on and on. 
@@ -22755,7 +22740,7 @@ appears to be one of those deceptions that are so common
 for small numbers, which often behave very differently
 from greater numbers.
 
-But let us stop moaning, what actually is the rule
+But let us stop moaning. What actually is the rule
 for $n=3$? After the next step, we would have
 
 \[
@@ -22872,7 +22857,7 @@ This suggests the general form
 
 which would nicely explain why we overlooked
 the division in the numerator for the case $n=2$,
-since, here, $n-1 = 1$ and a division of anything
+since, here, $n-1 = 1$ and anything
 divided by 1 is just that anything.
 
 It, again, does not appear to be too difficult to prove
@@ -22894,7 +22879,7 @@ in the numerator
 \frac{n^{k+1} - n}{n-1}.
 \]
 
-We now add 1 represented as the fraction of $\frac{n-1}{n-1}$:
+We now add 1 represented as the fraction $\frac{n-1}{n-1}$:
 
 \[
 \frac{n^{k+1} - n}{n-1} + \frac{n-1}{n-1},
@@ -22939,12 +22924,14 @@ which is the desired result
 }
 
 To prove that binomial coefficients are integers
-is quite easy, when we restrict our argument
-to coefficients with 
+is quite easy. 
+We will make our argument for
+coefficients of the form
 $1 \le k \le n$ in $\binom{n}{k}$. 
 For cases outside of this range,
 the coefficients are defined as 1 for $k=0$,
 and as 0 for $k > n$.
+So, there is nothing to prove in these cases.
 
 We have the equation
 
@@ -22977,7 +22964,9 @@ for $k \le \frac{n}{2}$.
 We first handle the trivial case
 $k=1$. Here, we have $\frac{n}{1!=1}$,
 which, trivially, is an integer.
-Note that for this case the falling factorial
+Note that, for this case, the falling factorial,
+which is defined as the product of the
+consecutive numbers $n$ to $n-k+1$, 
 is just $n$, since $n-1+1 = n$.
 
 For $k=2$, we have
@@ -23020,7 +23009,7 @@ then $n-1$ must have been and then it must
 have been divisible by 3 and 2.
 In consequence, even though the numbers
 are not consecutive anymore,
-the divisibility argument, still holds.
+the divisibility argument still holds.
 
 This is how the induction argument works:
 for any $k+1$, we have $k+1$ consecutive
@@ -23050,7 +23039,7 @@ With $k=4$ we have the fraction
 \]
 
 There are four consecutive numbers in the numerator,
-one of which must divide 4. We divide this number
+one of which must be divided by 4. We divide this number
 by 4 and the problem is reduced to the case $k=3$.
 Again, the numbers are not consecutive anymore.
 But if the number that we reduce by dividing by 4
@@ -23076,8 +23065,8 @@ We now have the choice to either cancel 2
 in the numerator and 2 in the denominator
 or to divide 10 by 2 in the numerator and
 cancel 2 in the denominator.
-Since, in the base case, we would do the latter,
-we would divide 10 by 2 and obtain
+If we choose the latter,
+we divide 10 by 2 and obtain
 $\frac{11\times 5 \times 3 \times 2}{1} = 11 \times 5 \times 3 \times 2$,
 which is $55 \times 6 = 330$.
 
@@ -23093,8 +23082,8 @@ of the numerator tends towards the prime
 factors of the binomial coefficient.
 We know that finding the prime factors
 is a very hard problem.
-But could there not be a way 
-to shortcut the way to the binomial coefficient
+But could there not be a 
+shortcut to the binomial coefficient
 by using prime factors?
 
 It turns out there is.
@@ -23206,7 +23195,7 @@ The link is the following theorem:
 
 where the $a$s and $b$s are the coefficients
 in the representation of $n$ and $k$ 
-in base $p$, hence:
+in base $p$:
 
 \begin{equation}
 n = a_rp^r + a_{r-1}p^{r-1} + \dots + a_1p + a_0
@@ -23268,11 +23257,11 @@ This formula leads to a
 cyclic repetition of denominators of the form
 
 \[
-sp + t - 1, sp + t - 2, \dots, sp + t - t = sp.
+sp + t - 1, sp + t - 2, \dots, sp + t - t.
 \]
 
 We have to be careful with the denominators
-of the form $sp$, since, modulo $p$,
+of the form $sp + t - t = sp$, since, modulo $p$,
 they are just zero and the corresponding
 fraction is thus undefined.
 But before we get into it, 
@@ -23356,7 +23345,7 @@ Since $X$ is the product with the first
 $k \bmod p$ factors cut off and
 the number of factors in the entire product is $k$,
 the number of the remaining factors 
-is divided by $p$.
+is a multiple of $p$.
 These factors fall into $\frac{k}{p}$ groups
 each of which contains 
 in the numerator and the denominator
@@ -23430,7 +23419,7 @@ and see by this simple trick of black magic that the result is
 \]
 
 Unfortunately, there are very few scholars left
-who would accept magic as a proof and so
+who would accept magic as proof and so
 we must continue with the abstract reasoning.
 Note again that we have taken the first $t=k \bmod p$ terms
 out in the previous step. The denominators 
@@ -23538,7 +23527,7 @@ We need to prove that
 \binom{n}{k} \equiv \prod_{i=0}^{r}{\binom{a_i}{b_i}} \pmod{p},
 \end{equation}
 
-where $a$s and $b$s are the coefficients in the
+where the $a$s and $b$s are the coefficients in the
 representation of $n$ and $k$ base $p$.
 We now calculate $u,v,s$ and $t$, as we have done
 before, as 
@@ -23686,7 +23675,7 @@ However, we can improve on this.
 There are cases we can decide 
 immediately without going through 
 the whole process.
-Consider a prime $p <= n-k$.
+Consider a prime $p \le n-k$.
 Since the numerator in the computation
 of the binomial coefficient
 runs from $n\dots (n-k+1)$,
@@ -23860,7 +23849,7 @@ that makes \ensuremath{\Varid{choose3}} much more efficient than the fraction.
 In general, we can say that \ensuremath{\Varid{choose3}} is more efficient,
 whenever $\frac{n}{2\ln{}n} + 1 < k < n - \frac{n}{2\ln{}n} - 1$.
 For the specific example of $n=1000000$, 
-\ensuremath{\Varid{choose3}} is more efficient for $k$s
+\ensuremath{\Varid{choose3}} is more efficient for 
 $36192 < k < 963807$. 
 
 The fact underlying the algorithm,
@@ -23953,7 +23942,7 @@ all proper fractions for one denominator,
 
 \ensuremath{\Varid{fracs1}\;\mathrm{6}}, for instance, gives:
 
-\ensuremath{[\mskip1.5mu \mathrm{1}\mathbin{\%}\mathrm{6},\mathrm{1}\mathbin{\%}\mathrm{3},\mathrm{1}\mathbin{\%}\mathrm{2},\mathrm{2}\mathbin{\%}\mathrm{3},\mathrm{5}\mathbin{\%}\mathrm{6}\mskip1.5mu]},
+\ensuremath{[\mskip1.5mu \Conid{Q}\;\mathrm{1}\;\mathrm{6},\Conid{Q}\;\mathrm{1}\;\mathrm{3},\Conid{Q}\;\mathrm{1}\;\mathrm{2},\Conid{Q}\;\mathrm{2}\;\mathrm{3},\Conid{Q}\;\mathrm{5}\;\mathrm{6}\mskip1.5mu]},
 
 which is easier to read in mathematical notation:
 
@@ -24129,7 +24118,7 @@ minus the cardinality of the intersection of the two sets.
 Proof: The intersection of two sets $S1$ and $S2$
 contains all elements that are both in $S1$ and $S2$.
 The union of two sets contains all elements of $S1$ and
-$S2$. But those elements that are in both sets,
+$S2$. But those elements that are in both sets
 will appear only once in the union, since this is
 the definition of the very notion of \term{set}.
 We can therefore first build a collection of
@@ -24165,6 +24154,10 @@ general case:
 where $\bigcup$ is the union operator for $n$ sets,
 where $n$ is not necessarily 2.
 It, hence, does for $\cup$ what $\sum$ does for $+$.
+Systems of such operators that are applied to 
+an arbitrary number of operands are called
+$\sigma$-algebras. But, for the time being,
+that is just a fancy word.
 
 The next fundamental theorem states
 that the sum of the divisors of a number $n$
@@ -24250,7 +24243,7 @@ In other words, these lists together
 contain all numbers $1\dots 12$
 partitioned according to their greatest common divisor
 with $n=12$.
-Note that the lists necessarily contain 
+Note that the lists together necessarily contain 
 all the numbers in the range
 $1\dots n$, since, either a number does not have
 common divisors with $n$, then it is in the first
@@ -24264,8 +24257,8 @@ since no number $m$ would, on one occasion,
 have a \ensuremath{\Varid{gcd}} $d_1$ with $n$ and, on another,
 a distinct \ensuremath{\Varid{gcd}} $d_2$ with the same $n$.
 It either shares $d_1$ as greatest common divisor with $n$
-or divisor $d_2$,
-it, hence, is either in set $S_{d_1}$ or 
+or divisor $d_2$.
+It, hence, is either in set $S_{d_1}$ or 
 in set $S_{d_2}$.
 
 But there is more. The set for divisor 2
@@ -24473,6 +24466,7 @@ obtain the totient number of $n$:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+\ignore{
 This algorithm, however, is less efficient
 than the original one implemented with the \ensuremath{\Varid{tot}} function.
 Though computing the remainder is less complex
@@ -24480,12 +24474,13 @@ in computation than computing the $\gcd$, which calls the
 remainder several times,
 we now have a lot of recursion steps, 
 when computing big numbers, before we get to the base cases.
+}
 
 Another property of the totient function is
 multiplicity of totients of coprimes, that is
 
 \begin{equation}
-\varphi(a)\times\varphi(b) = \varphi(ab), if \gcd(a,b) = 1.
+\varphi(a)\times\varphi(b) = \varphi(ab), \text{if} \gcd(a,b) = 1.
 \end{equation}
 
 For instance, the coprimes of 3 are 1 and 2;
@@ -24523,7 +24518,7 @@ combinations of all elements of $A$ and $B$,
 $\varphi(ab)$ must be $\varphi(a) \times \varphi(b)$.
 
 To illustrate that, we can create all the combinations
-of $a$s and $b$s and then apply the chinese remainder
+of $a$s and $b$s and then apply the Chinese remainder
 on all of them.
 First we create all combinations of $a$s and $b$s:
 
@@ -24820,15 +24815,15 @@ has either size $\varphi(n)$ or a size
 that divides $\varphi(n)$.
 But for sure, for any coprime $a$ the group
 is at most $\varphi(n)$, since there are only
-$\varphi(n)$ elements in the group of coprimes of $n$.
+$\varphi(n)$ elements in the group.
 
 For the example 12, the groups are all trivial.
 The coprimes of 12 are 1, 5, 7 and 11.
 1 establishes the trivial group $\lbrace 1\rbrace$.
 5 is in the likewise trivial group $\lbrace 1,5\rbrace$,
-since $5^2 = 25$ and, hence, $5^2 \equiv 1 \pmod{24}$.
-Since $7^2 = 49 \equiv 1 \pmod{24}$, the group of
-7 is also trivial. Finally, since $11^2 = 121 \equiv 1 \pmod{24}$,
+since $5^2 = 25$ and, hence, $5^2 \equiv 1 \pmod{12}$.
+Since $7^2 = 49 \equiv 1 \pmod{12}$, the group of
+7 is also trivial. Finally, since $11^2 = 121 \equiv 1 \pmod{12}$,
 11 is in a trivial group as well.
 
 A more interesting case is 14.
@@ -24888,7 +24883,7 @@ to define it in Haskell:
 \column{30}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{33}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{lambda}\mathbin{::}\Conid{Integer}\to \Conid{Integer}{}\<[E]%
+\>[3]{}\Varid{lambda}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
 \\
 \>[3]{}\Varid{lambda}\;{}\<[11]%
 \>[11]{}\mathrm{2}\mathrel{=}\Varid{tot}\;\mathrm{2}{}\<[E]%
@@ -24956,7 +24951,10 @@ is defined as
 \column{16}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{29}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{twopower}\mathbin{::}\Conid{Integer}\to \Conid{Bool}{}\<[E]%
+\>[3]{}\Varid{twopower}\mathbin{::}\Conid{Natural}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{twopower}\;{}\<[13]%
+\>[13]{}\mathrm{1}\mathrel{=}\Conid{True}{}\<[E]%
 \\
 \>[3]{}\Varid{twopower}\;{}\<[13]%
 \>[13]{}\mathrm{2}\mathrel{=}\Conid{True}{}\<[E]%
@@ -24984,7 +24982,7 @@ The function \ensuremath{\Varid{primepower}} is defined as
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{primepower}\mathbin{::}\Conid{Integer}\to \Conid{Bool}{}\<[E]%
+\>[3]{}\Varid{primepower}\mathbin{::}\Conid{Natural}\to \Conid{Bool}{}\<[E]%
 \\
 \>[3]{}\Varid{primepower}\;\Varid{n}\mathrel{=}\Varid{length}\;(\Varid{nub}\mathbin{\$}\Varid{trialfact}\;\Varid{n})\equiv \mathrm{1}{}\<[E]%
 \ColumnHook
@@ -25057,7 +25055,6 @@ An example for a number that is not a primepower
 nor twice a primepower is 20.
 The factorisation of 20 is $\lbrace 2,2,5\rbrace$.
 We compute the primepowers resulting in $\lbrace 4,5\rbrace$.
-Now we have the primepowers 4 and 5.
 When we map $\lambda$ on them, we should
 get $\lambda(4) = \varphi(4) = 2$ and
 $\lambda(5) = \varphi(5) = 4$.
@@ -25105,12 +25102,11 @@ is a consequence of the Chinese Remainder theorem
 and the very notion of the \ensuremath{\Varid{lcm}}. 
 We know that, 
 if $x \equiv 1 \pmod{n}$, then also $x \equiv 1 \pmod{mn}$.
-However, if we have $x \equiv 1 \pmod{n}$ and
-$x \equiv 1 \pmod{m}$, then $mn$ is not necessarily
+However, $mn$ is not necessarily
 the first multiple of $n$ and $m$ that establishes
 the congruence. Any number that is a multiple of both,
-$n$ and $m$, would have the same effect.
-This number, however, is $lcm(m,n)$.
+$n$ and $m$, would have the same effect and the first number
+that is a multiple of both is $lcm(m,n)$.
 
 The totient number of twice the power of an odd prime,
 $2p^k$,
@@ -25193,13 +25189,14 @@ and $1$:
 2^{2k-2}-2^k+1.
 \]
 
-When we factor $2^k$ out of the the first term:
+We can factor $2^k$ out of the the first two terms:
 
 \[
 2^k(2^{k-2}-1)+1,
 \]
 
-we clearly see that the first term is divided by $2^k$ and, thus,
+and see clearly that the first remaining term 
+is divided by $2^k$ and, thus,
 disappears modulo $2^k$. We are left with 1 and this shows
 that $m_1$ is its own inverse.
 
@@ -25273,9 +25270,10 @@ for each pair of members of the group $c$ and $d$,
 there is one number $x$ in the group, such that
 $xc = d$.
 $m_1$, however, is not member of the group
-and if $m_1$ multiplied by $c$
+and, if $m_1$ multiplied by $c$
 resulted in another member $d$, then we would
-have the impossible case that $c$ is $d$ for 
+have the impossible case that $d$ is the result 
+of multiplications of $c$ for 
 two different numbers: $m_1$ and $x$.
 Therefore, no number in $m_1G$ can possibly equal
 any number in $G$.
@@ -25296,7 +25294,7 @@ A corollary of this
 simple but important argument is that
 the order of any subgroup of a group of
 coprimes must divide the number of coprimes.
-This simple but important argument extends
+This extends
 the proof of Lagrange's theorem for prime groups
 to composite groups. We will extend it even further
 in the future. For the moment, however,
@@ -25417,6 +25415,26 @@ A set with this cardinality is infinite,
 but countable. Calling \ensuremath{\Varid{count}} on it,
 we will never get a final answer.
 But we will have a partial result at any given step.
+
+What about all the integers?
+There should be twice as much as natural numbers, right?
+Let us see. We first create a set to count the 
+natural numbers:
+
+\[
+\lbrace(1,1),(2,2),(3,3),\dots\rbrace
+\]
+
+Then we insert a negative number before or behind
+each positive number:
+
+\[
+\lbrace(1,1),(-1,2),(2,3),(-2,4),(3,5),(-3,6),\dots\rbrace
+\]
+
+Again, it appears that we do not run out of natural numbers
+to count all the integers. The set of integers,
+hence, has cardinality $\aleph_0$ too.
 
 What about fractions?
 On the first sight, fractions look very different.
@@ -25660,19 +25678,19 @@ leading to the sequence
  \dots
 \]
 
-But now we see that we can enumerate, that is count
+But now we see that we can enumerate, that is count,
 the fractions creating the sequence
 
 \[
- \left(1,\frac{1}{1}\right),
- \left(2,\frac{2}{1}\right), 
- \left(3,\frac{1}{2}\right), 
- \left(4,\frac{1}{3}\right), 
- \left(5,\frac{3}{1}\right), 
- \left(6,\frac{4}{1}\right), 
- \left(7,\frac{3}{2}\right), 
- \left(8,\frac{2}{3}\right), 
- \left(9,\frac{1}{4}\right), 
+ \left(\frac{1}{1},1\right),
+ \left(\frac{2}{1},2\right), 
+ \left(\frac{1}{2},3\right), 
+ \left(\frac{1}{3},4\right), 
+ \left(\frac{3}{1},5\right), 
+ \left(\frac{4}{1},6\right), 
+ \left(\frac{3}{2},7\right), 
+ \left(\frac{2}{3},8\right), 
+ \left(\frac{1}{4},9\right), 
  \dots
 \]
 
@@ -25711,14 +25729,14 @@ its additive inverse, resulting in
 the sequence:
 
 \[
- \left(1,\frac{1}{1}\right),
- \left(2,-\frac{1}{1}\right),
- \left(3,\frac{2}{1}\right), 
- \left(4,-\frac{2}{1}\right), 
- \left(5,\frac{1}{2}\right), 
- \left(6,-\frac{1}{2}\right), 
- \left(7,\frac{1}{3}\right), 
- \left(8,-\frac{1}{3}\right), 
+ \left(\frac{1}{1},1\right),
+ \left(-\frac{1}{1},2\right),
+ \left(\frac{2}{1},3\right), 
+ \left(-\frac{2}{1},4\right), 
+ \left(\frac{1}{2},5\right), 
+ \left(-\frac{1}{2},6\right), 
+ \left(\frac{1}{3},7\right), 
+ \left(-\frac{1}{3},8\right), 
  \dots
 \]
 
@@ -25743,7 +25761,7 @@ At the end of the process,
 room 1 is free for the new arriving guest.
 Since there are infinitely
 many rooms, there is no guest,
-even though there are infinitely many guests already,
+even though there are infinitely many of them already,
 who would not find a room with a room number
 one greater than his previous room number.
 
@@ -25928,7 +25946,6 @@ corresponds to a \term{binary tree} of the form
 
 \end{tikzpicture}
 \end{center}
-\ignore{$}
 
 When you have a closer look at the tree,
 you see that the kids of each node
@@ -26016,7 +26033,7 @@ If $i\neq 1$,
 we create a node with \ensuremath{\Varid{r}} as data and 
 the kids resulting from calling \ensuremath{\Varid{calWiTree}} on
 $\frac{n}{n+d}$ and $\frac{n+d}{d}$
-with $i$ reduced by 1.
+with $i$ decremented by 1.
 
 This shows that there is a very simple algorithm
 to generate the tree.
@@ -26027,9 +26044,9 @@ We do so by creating an algorithm that
 converts the tree to the sequence.
 
 We may be tempted to do this with a typical
-recursive function that converts the current node
-into a member of the sequence and adds it to
-the partial sequence that results from recursively
+recursive function that does something with the current node
+and then adds the result of the operation to
+the partial sequences that result from recursively
 calling the function on the left and the right kid.
 This approach, however, is \term{depth-first}.
 The resulting sequences would follow the branches
@@ -26144,7 +26161,7 @@ We have shown that there is a simple algorithm
 to generate the tree and 
 that there is a simple algorithm to convert
 the tree into the sequence.
-The latter aspect is quite useful,
+The latter is quite useful,
 since it means that tree and sequence are equivalent.
 This allows us to prove some crucial properties
 of the sequence using the tree,
@@ -26160,7 +26177,7 @@ This, of course, is just a consquence
 of the generating algorithm.
 We also see that the integers are all
 in the right-most branch, which equals
-the first first column in Cantor's table.
+the first column in Cantor's table.
 The left-most branch equals the first row
 in Cantor's table: it contains all fractions
 with 1 in the numerator.
@@ -26211,11 +26228,11 @@ fractions in canonical form.\qed
 We prove the second property by contradiction.
 Let us assume that there are fractions 
 that do not appear in the tree. 
-Then, there are fractions with 
+Then, there is a number of fractions that have
 the smallest denominator and, among those,
-there is one with the smallest denominator.
+there is one with the smallest numerator.
 Let $\frac{n}{d}$ be this fraction.
-If $n>d$, then $\frac{n-d}{d}$ cannot appear either, since,
+If $n>d$, then $\frac{n-d}{d}$ cannot appear either, since
 $\frac{n}{d}$ would be its right kid.
 But that is a contradiction to our assumption that
 $\frac{n}{d}$ was the nonappearing fraction
@@ -26252,7 +26269,7 @@ of two fractions of the form $\frac{n}{d-n}$,
 making the denominator of these fractions even smaller,
 or the right kid of two fractions of the form
 $\frac{n-d}{d}$, making the numerator of these fractions
-even smaller. In both cases with arrive at a contradiction.\qed
+even smaller. In both cases we arrive at a contradiction.\qed
 
 We can also prove directly -- but the argument 
 may be more subtle or, which is the same,
@@ -26325,14 +26342,15 @@ at position $n$:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-We start by converting $n$ to binary format.
+We start by converting $n$ to binary format
+(\ie\ a list of 0s and 1s).
 Then we call \ensuremath{\Varid{go}} starting with 0, since,
 for the first number 1, we want position 1.
 If we have exhausted the binary number,
 the result is just $r$, the rational number we pass
 to \ensuremath{\Varid{go}}. Otherwise, we distinguish two cases:
 the head of the binary number being 0 or 1.
-If it is zero, we follow the left branch,
+If it is 0, we follow the left branch,
 which has the fraction $\frac{n}{n+d}$
 at its top; if it is 1, we follow 
 the right branch with the fraction $\frac{n+d}{d}$.
@@ -26406,7 +26424,6 @@ described above around:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Here we do exactly the opposite.
 We look at the fraction and, if $n\ge d$,
 then we add 1 to the digits of the 
 resulting binary number, otherwise,
@@ -26776,13 +26793,13 @@ For instance:
 \ensuremath{\Varid{oddCos}\;\mathrm{5}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{6}} is 2;
 \ensuremath{\Varid{oddCos}\;\mathrm{6}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{7}} is 3;
 \ensuremath{\Varid{oddCos}\;\mathrm{7}} is \ensuremath{[\mskip1.5mu \mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{8}}, which is a power of 2, is 1;
-\ensuremath{\Varid{oddCos}\;\mathrm{8}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{7},\mathrm{15},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{9}} is 1;
+\ensuremath{\Varid{oddCos}\;\mathrm{8}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{7},\mathrm{15},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{9}} is 4;
 \ensuremath{\Varid{oddCos}\;\mathrm{9}} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{21},\mathrm{5}\mskip1.5mu]} and \ensuremath{\Varid{fusc}\;\mathrm{10}} is 3.
 
 Moritz Stern arrived at his sequence,
 when studying ways to represent numbers as
 powers of 2. Any number can be written
-as such a sum and most number even in various ways.
+as such a sum and most numbers even in various ways.
 For instance, $2 = 2^0 + 2^0$,
 $3 = 2^0 + 2^1 = 2^0 + 2^0 + 2^0$,
 $4 = 2^1 + 2^1 = 2^0 + 2^0 + 2^1$,

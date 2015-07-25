@@ -53,6 +53,11 @@ ALL	 = cmds.tex \
 	   src/c05/Totient.lhs \
 	   src/c05/Cantor1.lhs \
 	   src/c06/real.lhs \
+	   src/c06/Sqrt2.lhs \
+	   src/c06/Phi.lhs \
+	   src/c06/Pi.lhs \
+	   src/c06/E.lhs \
+	   src/c06/Gamma.lhs \
 	   src/c07/poly.lhs \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
@@ -102,6 +107,12 @@ inverse.pdf:	inverse.tex $(ALL)
 		pdflatex lhsinverse.tex
 		mv lhsinverse.pdf inverse.pdf
 
+continuum.pdf:	continuum.tex $(ALL)
+		$(toTex) continuum.tex > lhscontinuum.tex
+		pdflatex lhscontinuum.tex
+		pdflatex lhscontinuum.tex
+		mv lhscontinuum.pdf continuum.pdf
+
 m4p:		m4p.pdf
 
 nums:		nums.pdf
@@ -111,6 +122,8 @@ induc:		induc.pdf
 primes:		primes.pdf
 
 inverse:	inverse.pdf
+
+continuum:	continuum.pdf
 
 SUITE = test/suite
 
