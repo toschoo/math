@@ -208,6 +208,87 @@ it is not a rational number either.
 But, if $\sqrt{2}$ is not a rational number,
 a number that can be represented as the fraction
 of two integers, what the heck is it then?
+
+There are several methods approximate that number.
+The simplest and oldest is the \term{Babylonian} method,
+also called \term{Heron's} method for Heron of Alexandria,
+a Greek mathematician of the first century who lived in 
+Alexandria.
+
+The idea of Heron's method, basically, is to
+iteratively approximate the real value starting with a guess.
+We can use the root algorithm defined in the first chapter
+to generate a guess or start with some arbitrary value.
+This value, $x$, if it is not an integer,
+is either slightly too big or too small,
+\ie\ we either have $xx > a$ or $xx < a$.
+So, on each step, we improve a bit on the value
+by taking the average of $x$ and its counterpart $a/x$.
+If $xx > a$, then $a/x < x$ and, if $xx < a$, then $a/x > x$.
+The average of $x$ and $a/x$ is calculated as
+$(x+a/x)/2$. The result is used as guess for the next step.
+The more iterations of this kind we do,
+the better is the approximation. In Haskell:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{heron}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{heron}\;\Varid{n}\;\Varid{s}\mathrel{=}\mathbf{let}\;\Varid{a}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{n}\;\mathbf{in}\;\Varid{go}\;\Varid{s}\;\Varid{a}\;(\Varid{a}\mathbin{/}\mathrm{2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{a}\;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{a}\;((\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\Varid{x})\mathbin{/}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function takes two arguments.
+The first is the number whose square root we want to calculate
+and the second is the number of iterations.
+We then call \ensuremath{\Varid{go}} with $s$, the number of iterations,
+$a$, the \ensuremath{\Conid{Double}} representation of $n$ and our first guess
+$a/2$.
+
+In \ensuremath{\Varid{go}}, if we have reached $i=0$, we yield the result $x$.
+Otherwise, we call \ensuremath{\Varid{go}} again with $i-1$, $a$ and 
+the average of $x$ and $a/x$.
+
+Let us compute $\sqrt{2}$ following this approach for, say,
+five iterations. We first have
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{go}\;\mathrm{5}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\Varid{go}\;\mathrm{4}\;\mathrm{2}\;((\mathrm{1}\mathbin{+}\mathrm{2})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{4}\;\mathrm{2}\;\mathrm{1.5}\mathrel{=}\Varid{go}\;\mathrm{3}\;\mathrm{2}\;((\mathrm{1.5}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.5})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{3}\;\mathrm{2}\;\mathrm{1.416666}\mathrel{=}\Varid{go}\;\mathrm{2}\;\mathrm{2}\;((\mathrm{1.416666}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.416666})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{2}\;\mathrm{2}\;\mathrm{1.414215}\mathrel{=}\Varid{go}\;\mathrm{1}\;\mathrm{2}\;((\mathrm{1.414215}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414215})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\Varid{go}\;\mathrm{0}\;\mathrm{2}\;((\mathrm{1.414213}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414213})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\mathrm{1.414213}}.
+\end{minipage}
+
+Note that we do not show the complete \ensuremath{\Conid{Double}} value,
+but only the first six digits. The results of the last two
+steps, therefore, are identical. They differ, in fact, at the
+twelfth digit: 
+$1.4142135623746899$ (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{4}}) versus
+$1.414213562373095$  (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{5}}). 
+The result of \ensuremath{(\Varid{heron}\;\mathrm{2}\;\mathrm{5})\mathbin{\uparrow}\mathrm{2}} is fairly close to 2: $1.9999999999999996$.
+It will not get any closer using \ensuremath{\Conid{Double}} representation.
+
+
 \section{$\Phi$}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(

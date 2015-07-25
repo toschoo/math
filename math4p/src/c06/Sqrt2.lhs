@@ -85,3 +85,67 @@ it is not a rational number either.
 But, if $\sqrt{2}$ is not a rational number,
 a number that can be represented as the fraction
 of two integers, what the heck is it then?
+
+There are several methods approximate that number.
+The simplest and oldest is the \term{Babylonian} method,
+also called \term{Heron's} method for Heron of Alexandria,
+a Greek mathematician of the first century who lived in 
+Alexandria.
+
+The idea of Heron's method, basically, is to
+iteratively approximate the real value starting with a guess.
+We can use the root algorithm defined in the first chapter
+to generate a guess or start with some arbitrary value.
+This value, $x$, if it is not an integer,
+is either slightly too big or too small,
+\ie\ we either have $xx > a$ or $xx < a$.
+So, on each step, we improve a bit on the value
+by taking the average of $x$ and its counterpart $a/x$.
+If $xx > a$, then $a/x < x$ and, if $xx < a$, then $a/x > x$.
+The average of $x$ and $a/x$ is calculated as
+$(x+a/x)/2$. The result is used as guess for the next step.
+The more iterations of this kind we do,
+the better is the approximation. In Haskell:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  heron :: Natural -> Natural -> Double
+  heron n s = let a   = fromIntegral n in go s a (a/2)
+    where  go 0 _ x   = x
+           go i a x   = go (i-1) a ((x + a/x)/2)
+\end{code}
+\end{minipage}
+
+The function takes two arguments.
+The first is the number whose square root we want to calculate
+and the second is the number of iterations.
+We then call |go| with $s$, the number of iterations,
+$a$, the |Double| representation of $n$ and our first guess
+$a/2$.
+
+In |go|, if we have reached $i=0$, we yield the result $x$.
+Otherwise, we call |go| again with $i-1$, $a$ and 
+the average of $x$ and $a/x$.
+
+Let us compute $\sqrt{2}$ following this approach for, say,
+five iterations. We first have
+
+\begin{minipage}{\textwidth}
+|go 5 2 1        = go 4 2 ((1 + 2)/2)|\\
+|go 4 2 1.5      = go 3 2 ((1.5 + 2/1.5) / 2)|\\
+|go 3 2 1.416666 = go 2 2 ((1.416666 + 2 / 1.416666)/2)|\\
+|go 2 2 1.414215 = go 1 2 ((1.414215 + 2 / 1.414215)/2)|\\
+|go 1 2 1.414213 = go 0 2 ((1.414213 + 2 / 1.414213)/2)|\\
+|go 1 2 1.414213 = 1.414213|.
+\end{minipage}
+
+Note that we do not show the complete |Double| value,
+but only the first six digits. The results of the last two
+steps, therefore, are identical. They differ, in fact, at the
+twelfth digit: 
+$1.4142135623746899$ (|heron 2 4|) versus
+$1.414213562373095$  (|heron 2 5|). 
+The result of |(heron 2 5)^2| is fairly close to 2: $1.9999999999999996$.
+It will not get any closer using |Double| representation.
+
+
