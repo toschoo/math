@@ -59,6 +59,8 @@ ALL	 = cmds.tex \
 	   src/c06/E.lhs \
 	   src/c06/Gamma.lhs \
 	   src/c07/poly.lhs \
+	   src/c07/PartialF.lhs \
+	   src/c07/ClosedFib.lhs \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
 	   src/c10/complex.lhs \

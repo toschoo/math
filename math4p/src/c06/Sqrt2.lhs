@@ -26,8 +26,8 @@ apparently, their existence came as a great surprise
 to Greek mathematicians.
 
 The first step of our investigations into
-this kind of numbers, is to show that they \term{exists},
-\ie\, there are contexts where they arise naturally.
+this kind of numbers, is to show that they \term{exist},
+\ie, there are contexts where they arise naturally.
 To start, we will assume that they are not necessary.
 We assume that all numbers are either natural,
 integral or fractional.
@@ -36,7 +36,7 @@ $+,-,\times$ and $/$, applied on two natural numbers,
 results either in another natural number, a negative number
 or a fraction. We could therefore suspect
 that the result of any operation is a rational number,
-\ie\ an integeger or a fraction.
+\ie\ an integer or a fraction.
 
 What about $\sqrt{2}$, the square root of 2?
 Let us assume that $\sqrt{2}$ is as well a fraction.
@@ -77,7 +77,7 @@ of $q^n$ is just $q^n$. They are coprime to each other.
 The fraction in equation \ref{eq:sqrt2_4}, thus,
 cannot be an integer.
 There is only one way for such a fraction to
-result in an integer, \viz\, when it is an integer itself.
+result in an integer, \viz, when it is an integer itself.
 From this follows that,
 if the root of an integer is not an integer itself,
 it is not a rational number either.
@@ -145,7 +145,19 @@ steps, therefore, are identical. They differ, in fact, at the
 twelfth digit: 
 $1.4142135623746899$ (|heron 2 4|) versus
 $1.414213562373095$  (|heron 2 5|). 
-The result of |(heron 2 5)^2| is fairly close to 2: $1.9999999999999996$.
+Note that the result of five iterations has one digit less
+than that of four iterations.
+This is because that after the last digit, 5,
+the digit 0 follows and then the \term{precision} of 
+the Double number type is exhausted.
+\term{Irrational} numbers, this is the designation of
+the type of numbers we are talking about, 
+consist of infinitely many digits. 
+Therefore, the last digit in the number presented above
+is in fact not the last digit of the number. 
+With slightly higher precision, we would see that the number
+continues like $03\dots$
+
+The result of |(heron 2 5)^2| is fairly close to 2: 
+$1.9999999999999996$.
 It will not get any closer using |Double| representation.
-
-

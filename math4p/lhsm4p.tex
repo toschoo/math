@@ -26905,10 +26905,346 @@ to remove them with \ensuremath{\Varid{nub}}.
 
 \chapter{Real Numbers} % c06
 \section{$\sqrt{2}$}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Sqrt2}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+Until now, we have looked at \term{discrete} numbers,
+that is numbers that are nicely separated from each other
+so that we can write them down unmistakebly
+and always know of which number we are currently talking.
+Now we enter a completely different universe.
+The universe of continuous numbers that cannot be
+written down in a finite number of steps.
+The representation of these numbers consists of
+infinitely many elements and, therefore, we will never
+be able to write the number down completely
+with all its elements.
+We may give a finite formula 
+that describes how to compute the specific number,
+but we will never see the whole number written down.
+Those numbers are known since antiquity and,
+apparently, their existence came as a great surprise
+to Greek mathematicians.
+
+The first step of our investigations into
+this kind of numbers, is to show that they \term{exist},
+\ie, there are contexts where they arise naturally.
+To start, we will assume that they are not necessary.
+We assume that all numbers are either natural,
+integral or fractional.
+Indeed, any of the fundamental arithmetic operations,
+$+,-,\times$ and $/$, applied on two natural numbers,
+results either in another natural number, a negative number
+or a fraction. We could therefore suspect
+that the result of any operation is a rational number,
+\ie\ an integer or a fraction.
+
+What about $\sqrt{2}$, the square root of 2?
+Let us assume that $\sqrt{2}$ is as well a fraction.
+Then we have two integers $n$ and $d$,
+coprime to each other, such that
+
+\begin{equation}
+\sqrt{2} = \frac{n}{d}
+\end{equation}
+
+and
+
+\begin{equation}
+2 = \left(\frac{n}{d}\right)^2 = \frac{n^2}{d^2}.
+\end{equation}
+
+Any number can be represented as a product of primes.
+If $p_1p_2\dots p_n$ is the prime factorsiation of $n$
+and $q_1q_2\dots q_d$ is that of $d$,
+we can write:
+
+\begin{equation}
+\sqrt{2} = \frac{p_1p_2\dots p_n}{q_1q_2\dots q_d}.
+\end{equation}
+
+It follows that 
+
+\begin{equation}\label{eq:sqrt2_4}
+2 = \frac{p_1^2p_2^2\dots p_n^2}{q_1^2q_2^2\dots q_d^2}.
+\end{equation}
+
+As we know from the previous chapter,
+two different prime numbers $p$ and $q$ squared 
+(or raised to any integer)
+do not result in two numbers that share factors.
+The factorisation of $p^n$ is just $p^n$ and that
+of $q^n$ is just $q^n$. They are coprime to each other.
+The fraction in equation \ref{eq:sqrt2_4}, thus,
+cannot be an integer.
+There is only one way for such a fraction to
+result in an integer, \viz, when it is an integer itself.
+From this follows that,
+if the root of an integer is not an integer itself,
+it is not a rational number either.
+
+But, if $\sqrt{2}$ is not a rational number,
+a number that can be represented as the fraction
+of two integers, what the heck is it then?
+
+There are several methods approximate that number.
+The simplest and oldest is the \term{Babylonian} method,
+also called \term{Heron's} method for Heron of Alexandria,
+a Greek mathematician of the first century who lived in 
+Alexandria.
+
+The idea of Heron's method, basically, is to
+iteratively approximate the real value starting with a guess.
+We can use the root algorithm defined in the first chapter
+to generate a guess or start with some arbitrary value.
+This value, $x$, if it is not an integer,
+is either slightly too big or too small,
+\ie\ we either have $xx > a$ or $xx < a$.
+So, on each step, we improve a bit on the value
+by taking the average of $x$ and its counterpart $a/x$.
+If $xx > a$, then $a/x < x$ and, if $xx < a$, then $a/x > x$.
+The average of $x$ and $a/x$ is calculated as
+$(x+a/x)/2$. The result is used as guess for the next step.
+The more iterations of this kind we do,
+the better is the approximation. In Haskell:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{heron}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{heron}\;\Varid{n}\;\Varid{s}\mathrel{=}\mathbf{let}\;\Varid{a}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{n}\;\mathbf{in}\;\Varid{go}\;\Varid{s}\;\Varid{a}\;(\Varid{a}\mathbin{/}\mathrm{2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{a}\;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{a}\;((\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\Varid{x})\mathbin{/}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function takes two arguments.
+The first is the number whose square root we want to calculate
+and the second is the number of iterations.
+We then call \ensuremath{\Varid{go}} with $s$, the number of iterations,
+$a$, the \ensuremath{\Conid{Double}} representation of $n$ and our first guess
+$a/2$.
+
+In \ensuremath{\Varid{go}}, if we have reached $i=0$, we yield the result $x$.
+Otherwise, we call \ensuremath{\Varid{go}} again with $i-1$, $a$ and 
+the average of $x$ and $a/x$.
+
+Let us compute $\sqrt{2}$ following this approach for, say,
+five iterations. We first have
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{go}\;\mathrm{5}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\Varid{go}\;\mathrm{4}\;\mathrm{2}\;((\mathrm{1}\mathbin{+}\mathrm{2})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{4}\;\mathrm{2}\;\mathrm{1.5}\mathrel{=}\Varid{go}\;\mathrm{3}\;\mathrm{2}\;((\mathrm{1.5}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.5})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{3}\;\mathrm{2}\;\mathrm{1.416666}\mathrel{=}\Varid{go}\;\mathrm{2}\;\mathrm{2}\;((\mathrm{1.416666}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.416666})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{2}\;\mathrm{2}\;\mathrm{1.414215}\mathrel{=}\Varid{go}\;\mathrm{1}\;\mathrm{2}\;((\mathrm{1.414215}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414215})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\Varid{go}\;\mathrm{0}\;\mathrm{2}\;((\mathrm{1.414213}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414213})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\mathrm{1.414213}}.
+\end{minipage}
+
+Note that we do not show the complete \ensuremath{\Conid{Double}} value,
+but only the first six digits. The results of the last two
+steps, therefore, are identical. They differ, in fact, at the
+twelfth digit: 
+$1.4142135623746899$ (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{4}}) versus
+$1.414213562373095$  (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{5}}). 
+Note that the result of five iterations has one digit less
+than that of four iterations.
+This is because that after the last digit, 5,
+the digit 0 follows and then the \term{precision} of 
+the Double number type is exhausted.
+\term{Irrational} numbers, this is the designation of
+the type of numbers we are talking about, 
+consist of infinitely many digits. 
+Therefore, the last digit in the number presented above
+is in fact not the last digit of the number. 
+With slightly higher precision, we would see that the number
+continues like $03\dots$
+
+The result of \ensuremath{(\Varid{heron}\;\mathrm{2}\;\mathrm{5})\mathbin{\uparrow}\mathrm{2}} is fairly close to 2: 
+$1.9999999999999996$.
+It will not get any closer using \ensuremath{\Conid{Double}} representation.
 \section{$\Phi$}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Phi}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+Another interesting irrational number
+is $\tau$ or $\Phi$,
+known as the \term{divine proportion} or \term{golden ratio}.
+The golden ratio is the relation of two quantities,
+such that the greater relates to the lesser
+such as the sum of both to the greater.
+This may sound confusing, so here are two symbolic
+representations:
+
+\begin{equation}
+\frac{a}{b} = \frac{a+b}{a}.
+\end{equation}
+
+In this equation, $a$ is the greater number
+and $b$ the lesser. The equation states
+that the relation of $a$ to $b$ equals the relation
+of $a+b$ to $a$.
+Alternative we can say
+
+\begin{equation}\label{eq:phi_2}
+\frac{b}{a} = \frac{a}{b-a}.
+\end{equation}
+
+Here $b$ is the sum of the two quantities
+and $a$ is the greater one.
+The equation states that the relation
+of $b$ to $a$ is the same as the relation
+of $a$ to $b-a$, which, of course, is
+then the smaller quantity.
+
+The golden ratio is known since antiquity.
+The symbol $\Phi$ is a homage to ancient Greek
+sculptor and painter Phidias (480 -- 430 \acronym{bc}).
+Its first heyday after antiquity had 
+the divine proportion during Renaissance and then
+again in the $18^{th}$ and $19^{th}$ centuries.
+Up to our times, artists, writers and mathematicians 
+have repeatedly called the golden ratio as
+especially pleasing. But, here, of course,
+we will refrain from aesthetical judgements
+outside the realm of mathematics.
+
+From equation \ref{eq:phi_2} we can derive
+the numerical value of $\Phi$ in the form
+$\frac{\Phi}{1}$.
+For any value $a\neq 1$, we can calculate $b$
+as $a\Phi$.
+The derivation uses some algebraic methods
+that will study more closely in the next part,
+especially \term{completing the square}.
+As such this section is an algebra teaser.
+
+We start by setting $\Phi = \frac{b}{a}$
+with $a = 1$.
+We then have on the left side of the equation
+$\Phi = \frac{b}{1} = b$.
+On the right-hand side, we have
+$\frac{a=1}{\Phi - 1}$:
+
+\begin{equation}\label{eq:phi_2}
+\Phi = \frac{1}{\Phi - 1}.
+\end{equation}
+
+
+
 \section{$\pi$}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Pi}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
 \section{$e$}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{E}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
 \section{$\gamma$}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Gamma}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
 \section{Arithmetic with Real Numbers}
 \section{Representation of Real Numbers} % natural numbers and fractions
 \section{$\mathbb{R}$}
@@ -26926,507 +27262,24 @@ to remove them with \ensuremath{\Varid{nub}}.
 \section{The Algebra of Polynomials}
 \section{Factoring Polynomials}
 \section{Polynomials and Binomial Coefficients}
-\section{Polygonal Numbers}
+\section{The Method of partial Fractions}
+\ignore{
+http://www.purplemath.com/modules/partfrac.htm
+}
+\section{The Difference Engine}
+\section{The closed Form of the Fibonacci Sequence}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Gnomon}{}\<[E]%
+\>[B]{}\mathbf{module}\;\Conid{ClosedFib}{}\<[E]%
 \\
 \>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Binom}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 }
-
-This section is all about numerology.
-There are a lot of relations between numbers
-and number sequences that often appear
-to have a deeper meaning.
-Indeed, there is a long tradition of
-relating mathematics and religion since
-antiquity and, in modern times,
-especially in the renaissance, relating
-mathematics and magic.
-At the same time, this section reverts
-to natural numbers again.
-During the previous chapter, we repeatedly
-had to ``cheat'' in order to represent
-problems concerning natural numbers by
-using numbers out of this realm 
-such as negative numbers and fractions.
-We now do the opposite: we use these number types
-to look back on natural numbers.
-We do this with much more self-confidence,
-since now we own these numbers with all rights. 
-
-We start with binomial coefficients of the form
-$\binom{n}{2}$, at which we have already looked
-in the previous section. Here, again, the sequence
-of these coefficients generated with
-\ensuremath{\Varid{map}\;(\mathbin{`\Varid{choose}`}\mathrm{2})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}:
-
-\[
-0,1,3,6,10,15,21,28,36,45,\dots
-\]
-
-You will at once recognise that the numbers
-can be described recursively as
-
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{f}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{f}\;\mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[B]{}\Varid{f}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{+}\Varid{f}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-
-That is each number $n$ is the result for the previous number
-plus $n$. In consequence, the difference between numbers
-increases per number by one: $1-0=1$, $3-1=2$, $6-3=3$,
-$10-6=4$ and so on.
-
-You may remember that this is also the sequence resulting
-from the Little Gauss, \ie\ the sum of all numbers up to $n$:
-$0 = 0$, $1 = 0 + 1$, $3 = 1 + 2$, $6=1+2+3$, $10=1+2+3+6$, \etc\
-The Little Gauss formula is $\frac{n(n+1)}{2}$, which of course
-is just the definition of $\binom{n+1}{2}$.
-
-These numbers are also called the \term{triangular} numbers and
-constitute the second kind of the polygonal numbers with the 
-first kind of these numbers being just the counting numbers.
-While the counting numbers are generated by sums of 1s:
-
-\[
-1 + 1 + 1 + 1 + 1 + \dots = 1,2,3,4,5\dots
-\]
-
-the triangular numbers are generated by summing counting numbers:
-
-\[
-1 + 2 + 3 + 4 + 5 + \dots = 1,3,6,10,15\dots
-\]
-
-The name \term{triangular} numbers stems from the fact
-that they show the number of minimal components, so called
-\term{gnomons} (from Greek: ``the one who knows''), 
-needed to build triangles. When we represent a gnomon
-as a dot, we can show the configurations described by
-the first six triangular numbers as:
-
-\begin{minipage}{\textwidth}
-\begin{center}
-\begin{tabbing}\tt
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}\\
-\tt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~~~~~~~~~~~~\char46{}~\char46{}\\
-\tt ~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~~~~~~~~~~\char46{}~\char46{}~~~~~~~~~~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~~~~~~~~~~\char46{}~~~~~~~~\char46{}~\char46{}~~~~~~~~\char46{}~\char46{}~\char46{}~~~~~~~~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~~\char46{}~~~~~~\char46{}~\char46{}~~~~~~\char46{}~\char46{}~\char46{}~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~\char46{}~~~~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}
-\end{tabbing}
-\end{center}
-\end{minipage}
-
-But triangular numbers -- like most of the number sequences
-we will look at in this sections --
-also have a relation to practical applications.
-Triangular numbers are a solution to the \term{handshake}
-problem. This problem asks how many handshakes there are
-in a room with $n$ people, if everyone shakes hands with everyone.
-This is the same as to ask
-how many peer-to-peer connections are needed 
-to connect $n$ people.
-The solution is $\Delta_{n-1}$, the $(n-1)^{th}$ triangular number.
-
-For 1 person, we have $\Delta_0$ handshakes, that is
-1 person shakes hands with nobody.
-For 2 persons, there is $\Delta_1$, \ie\ one handshake.
-For 3 persons, there are $\Delta_2$, three handshakes. 
-For 4 persons, there are $\Delta_3$, six handshakes and so on.
-This solution is not too surprising.
-The question is basically, how many pairs one can build from $n$
-objects. This is similar to the question answered by 
-binomial coefficients, namely, how many ways are there
-to choose $k$ things out of $n$, with $k=2$.
-Indeed, saying that the solution is $\Delta_{n-1}$,
-just says that the solution is $\binom{n}{2}$.
-
-For 3 persons, $A$, $B$ and $C$, there are $\Delta_2 = 3$ handshakes,
-namely: $(A,B)$, $(A,C)$ and $(B,C)$. 
-We do not count duplications like $(B,A)$, since,
-for counting the handshakes, it is the same to say 
-$A$ shakes hands with $B$ or $B$ shakes hands with $A$.
-
-To make the proof complete, we consider $n=3$, 
-the case we have just shown, as the base case
-that clearly shows that $h_n = \Delta_{n-1}$,
-where $h_n$ is the number of handshakes with $n$ persons. 
-Then we have to show that
-
-\begin{equation}
-h_{n+1} = h_{n} + n. 
-\end{equation}
-
-We assume that $n$ persons have already shaken hands
-leading to $h_n$ handshakes. Now, there is one more person
-who will have to shake hands with all others.
-There are $n$ persons, so the new person has to shake
-$n$ more hands. There are thus $n$ handshakes more
-than in the previous configuration. \qed
-
-Since triangular numbers are equal to the binomial
-coefficients with $k=2$, we can implement
-triangular numbers simply as
-
-\begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{triangle}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{triangle}\;\Varid{n}\mathrel{=}\Varid{choose}\;(\Varid{n}\mathbin{+}\mathrm{1})\;\mathrm{2}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\end{minipage}
-
-We could also use a recursive definition 
-of the form \ensuremath{\Varid{triangle}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{+}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1})},
-but, as we know, the closed form is much more efficient
-in terms of computational complexity.
-The recursive form, however, is promising,
-since it points to a generalisation.
-By complicating the implementation only a little bit more,
-we could also write: \ensuremath{\Varid{triangle}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{+}\mathrm{1}\mathbin{*}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1})}.
-Counting numbers could then be represented,
-admittedly a bit combersome, by means of 
-triangular numbers like
-\ensuremath{\Varid{counting}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{+}\mathrm{0}\mathbin{*}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1})}.
-In other words, we can define a function
-that generates both, counting numbers and
-triangular numbers, by means of triangular numbers:
-
-\begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{ngon}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{ngon}\;\Varid{m}\;\Varid{n}{}\<[13]%
-\>[13]{}\mathrel{=}\Varid{n}\mathbin{+}\Varid{m}\mathbin{*}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\end{minipage}
-
-where $m$ for triangular numbers would be 1
-and for counting numbers $m$ would be 0:
-
-\begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{counting}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{counting}\mathrel{=}\Varid{ngon}\;\mathrm{0}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\end{minipage}
-
-These acrobatics may appear somewhat artificial.
-However, observe the differences between numbers
-in the resulting sequences:
-the difference between counting numbers is constant;
-every number is one greater than its predecessor.
-The difference between triangular numbers, however,
-is not constant. It increases with each number by 1.
-This corresponds neatly with the value of $m$.
-The interesting question now is of course
-what \ensuremath{\Varid{ngon}} gives for $m > 1$.
-We start with \ensuremath{\Varid{map}\;(\Varid{ngon}\;\mathrm{2})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}:
-
-\[
-1,4,9,16,25,36,49,64,81,100\dots
-\]
-
-To our surprise, we see the square numbers!
-The following \acronym{ascii} art
-illustrates the gnomons of the squares:
-
-\begin{minipage}{\textwidth}
-\begin{center}
-\begin{tabbing}\tt
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~~~~~~~~~~~~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~~~~~~~~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~~~~~~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}\\
-\tt ~\char46{}~~~~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~~~~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}~\char46{}
-\end{tabbing}
-\end{center}
-\end{minipage}
-
-To build the $n$th square,
-we need $n$ gnomons plus two triangles
-of the order $n-1$.
-When we look at the third square,
-we could cut it through along one of the diagonals
-consisting of 3 gnomons.
-When we look at the diagonal from the left-bottom corner
-to the right-top corner,
-there is on the left-upper side of that diagonal
-a triangle looking to the left-upper corner
-consisting of three gnomons and another one
-equally consisting of three gnomons
-on the right-lower side facing the right-lower corner, 
-like this:
-
-\begin{minipage}{\textwidth}
-\begin{center}
-\begin{tabbing}\tt
-~\char46{}~\char46{}~~~~~\char46{}~\\
-\tt ~\char46{}~~~~~\char46{}~~~~~~~~\\
-\tt ~~~~~\char46{}~~~~~~\char46{}\\
-\tt ~~~~~~~~~~\char46{}~\char46{}
-\end{tabbing}
-\end{center}
-\end{minipage}
-
-We turn the triangles around by $90^{\circ}$
-to make them more visible:
-
-\begin{minipage}{\textwidth}
-\begin{center}
-\begin{tabbing}\tt
-~~\char46{}~~~~~~\char46{}~\\
-\tt ~\char46{}~\char46{}~~~\char46{}~~~~~~~~\\
-\tt ~~~~~\char46{}~~~~~\char46{}~\\
-\tt ~~~~~~~~~~\char46{}~\char46{}
-\end{tabbing}
-\end{center}
-\end{minipage}
-
-The two triangles are of type $\Delta_{n-1}$,
-\ie\ $\Delta_2 = 3$. The diagonal consists
-of $n=3$ gnomons and that is $2 \times 3 + 3 = 9$.
-When we repeat this procedure with the next square,
-we see on each side of the diagonal a
-$\Delta_3$ triangle consisting of 6 gnomons
-and the diagonal itself consists of 4 gnomons.
-We, hence, have $2 \times 6 + 4 = 16$ gnomons.
-
-We can perhaps prove the fact 
-much easier directly
-by algebraic manipulation.
-We want to establish the following equation:
-
-\begin{equation}
-n^2 = n+2\Delta_{n-1}.
-\end{equation}
-
-This is the same as
-$2 \times \frac{n(n-1)}{2} + n$,
-since $\Delta_{n-1} = \binom{n}{2} = \frac{n(n-1)}{2}$.
-We multiply by 2, which cancels out the denominator,
-and get $n(n-1) = n^2 - n$. Now, we add $n$, 
-which just leads to $n^2 - n + n = n^2$,
-which is the desired result.\qed
-
-We could do this also the other way round,
-asking for the square of $n+1$.
-We then have the triangular number $\frac{n(n+1)}{2}$.
-We multipy 2 and add $n+1$: 
-$n(n+1) + n + 1 = n^2 + n + n + 1 = n^2 + 2n + 1$,
-which can be reduced to $(n+1)^2$ according to the
-binomial theorem and again is the desired result.\qed
-
-So, we define:
-
-\begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{square}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{square}\mathrel{=}\Varid{ngon}\;\mathrm{2}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\end{minipage}
-
-What about the differences between the squares?
-We observe:
-$4-1 = 3$,
-$9-4 = 5$,
-$16-9 = 7$,
-$25-16 = 9$ and so on.
-In other words, the difference between the squares
-increases by 2.
-
-The next sequence is \ensuremath{\Varid{map}\;(\Varid{ngon}\;\mathrm{3})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}: 
-
-\[
-1,5,12,22,35,51,70,92,117,145\dots
-\]
-
-These are the pentagonal numbers
-characterised by gnomons as:
-
-\begin{minipage}{\textwidth}
-\begin{center}
-\begin{tabbing}\tt
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~~~~~~~~~~~~\\
-\tt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\char46{}~~~\char46{}~~~~~\\
-\tt ~~~~~~~~~~~~~~~~~~~\char46{}~~~~~~~~~~~\char46{}~~\char46{}~\char46{}~~\char46{}~~~\\
-\tt ~~~~~~~~~~~~~~~~~\char46{}~~~\char46{}~~~~~~~\char46{}~~\char46{}~~~~~\char46{}~~\char46{}~\\
-\tt ~~~~~~~~\char46{}~~~~~~\char46{}~~\char46{}~\char46{}~~\char46{}~~~~~~\char46{}~~\char46{}~\char46{}~\char46{}~~\char46{}~~\\
-\tt ~~~~~~\char46{}~~~\char46{}~~~~~\char46{}~~~~~\char46{}~~~~~~~~\char46{}~~~~~~~\char46{}~~~~\\
-\tt ~\char46{}~~~~~\char46{}~\char46{}~~~~~~~\char46{}~\char46{}~\char46{}~~~~~~~~~~\char46{}~\char46{}~\char46{}~\char46{}~~~~~
-\end{tabbing}
-\end{center}
-\end{minipage}
-
-The differences between pentagonal numbers are:
-$5-1 = 4$,
-$12-5 = 7$,
-$22-12 = 10$,
-$35-22 = 13$ and so on.
-The difference increases by 3.
-
-We can go on like this for quite a while.
-Here are some more number sequences for
-two-dimensional forms:
-
-The hexagonal numbers, \ensuremath{\Varid{map}\;(\Varid{ngon}\;\mathrm{4})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}:
-
-\[
-1,6,15,28,45,66,91,120,153,190\dots,
-\]
-
-with the difference increasing by 4,
-the heptagonal numbers, \ensuremath{\Varid{map}\;(\Varid{ngon}\;\mathrm{5})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}:
-
-\[
-1,7,18,34,55,81,112,148,189,235\dots,
-\]
-
-with the difference increasing by 5,
-and the octagonal numbers, \ensuremath{\Varid{map}\;(\Varid{ngon}\;\mathrm{6})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]}:
-
-\[
-1,8,21,40,65,96,133,176,225,280\dots,
-\]
-
-where the difference increases by 6.
-
-Of course, this game becomes boring after a while
-and we should try to vary a bit.
-We could for example add other things than $n$,
-in \ensuremath{\Varid{ngon}} like, for instance \ensuremath{\mathrm{1}\mathbin{+}\Varid{m}\mathbin{*}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1})}
-and so forth. Here is the first of such sequences:
-
-\[
-1,7,19,37,61,91,127,169,217,271\dots
-\]
-
-which was generated using the function
-
-\begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{hex}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{hex}\;\Varid{n}\mathrel{=}\mathrm{1}\mathbin{+}\mathrm{6}\mathbin{*}\Varid{triangle}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\end{minipage}
-
-
-\ignore{
-- Mention how the differences vary:
-  triangular: +1 
-  squares: +2
-  pentagonal: +3
-  hex: +6
-- hex: hex n = 3n^2 - 3n + 1. hex (n+1) = 3n^2 + 3n + 1!
-- what about 3-dimensional figures -> hex, hexsum
-- show forms
-- Platonic solids and Kepler
-- Platonic numbers
-}
-
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{hexsum}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{hexsum}\;\mathrm{1}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{hexsum}\;\Varid{n}\mathrel{=}\Varid{hex}\;\Varid{n}\mathbin{+}\Varid{hexsum}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{tetra}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{tetra}\;\Varid{n}\mathrel{=}\Varid{withRatio}\;\Varid{n}\mathbin{\$}\lambda \Varid{x}\to (\Varid{x}\mathbin{\uparrow}\mathrm{3}\mathbin{+}\mathrm{3}\mathbin{*}\Varid{x}\mathbin{\uparrow}\mathrm{2}\mathbin{+}\mathrm{2}\mathbin{*}\Varid{x})\mathbin{/}\mathrm{6}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{pyr}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{pyr}\;\Varid{n}\mathrel{=}\Varid{tetra}\;\Varid{n}\mathbin{+}\Varid{tetra}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{pyr2}\;\Varid{n}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\mbox{\onelinecomment  tetrahedal}{}\<[E]%
-\\
-\>[3]{}\Varid{pyr2}\;\Varid{n}\mathrel{=}\Varid{choose}\;(\Varid{n}\mathbin{+}\mathrm{2})\;\mathrm{3}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{octa}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\mbox{\onelinecomment  octahedral}{}\<[E]%
-\\
-\>[3]{}\Varid{octa}\;\Varid{n}\mathrel{=}\Varid{withRatio}\;\Varid{n}\mathbin{\$}\lambda \Varid{x}\to (\mathrm{2}\mathbin{*}\Varid{n}\mathbin{\uparrow}\mathrm{3}\mathbin{+}\Varid{n})\mathbin{/}\mathrm{3}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{ico}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\mbox{\onelinecomment  icosahedral}{}\<[E]%
-\\
-\>[3]{}\Varid{ico}\;\Varid{n}\mathrel{=}\Varid{withRatio}\;\Varid{n}\mathbin{\$}\lambda \Varid{x}\to (\mathrm{5}\mathbin{*}\Varid{n}\mathbin{\uparrow}\mathrm{3}\mathbin{-}\mathrm{5}\mathbin{*}\Varid{n}\mathbin{\uparrow}\mathrm{2}\mathbin{+}\mathrm{2}\mathbin{*}\Varid{n})\mathbin{/}\mathrm{2}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{dode}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\mbox{\onelinecomment  dodecahedral}{}\<[E]%
-\\
-\>[3]{}\Varid{dode}\;\Varid{n}\mathrel{=}\Varid{choose}\;(\mathrm{3}\mathbin{*}\Varid{n})\;\mathrm{3}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{withRatio}\mathbin{::}(\Conid{Quoz}\to \Conid{Quoz})\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{withRatio}\;\Varid{f}\mathrel{=}\Varid{fromIntegral}\mathbin{\circ}\Varid{floor}\mathbin{\circ}\Varid{f}\mathbin{\circ}\Varid{fromIntegral}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
-\section{The Difference Engine}
 
 \chapter{Relations, Functions and the Cartesian Plane} % c08
 \section{Relations}

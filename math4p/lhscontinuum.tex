@@ -149,8 +149,8 @@ apparently, their existence came as a great surprise
 to Greek mathematicians.
 
 The first step of our investigations into
-this kind of numbers, is to show that they \term{exists},
-\ie\, there are contexts where they arise naturally.
+this kind of numbers, is to show that they \term{exist},
+\ie, there are contexts where they arise naturally.
 To start, we will assume that they are not necessary.
 We assume that all numbers are either natural,
 integral or fractional.
@@ -159,7 +159,7 @@ $+,-,\times$ and $/$, applied on two natural numbers,
 results either in another natural number, a negative number
 or a fraction. We could therefore suspect
 that the result of any operation is a rational number,
-\ie\ an integeger or a fraction.
+\ie\ an integer or a fraction.
 
 What about $\sqrt{2}$, the square root of 2?
 Let us assume that $\sqrt{2}$ is as well a fraction.
@@ -200,7 +200,7 @@ of $q^n$ is just $q^n$. They are coprime to each other.
 The fraction in equation \ref{eq:sqrt2_4}, thus,
 cannot be an integer.
 There is only one way for such a fraction to
-result in an integer, \viz\, when it is an integer itself.
+result in an integer, \viz, when it is an integer itself.
 From this follows that,
 if the root of an integer is not an integer itself,
 it is not a rational number either.
@@ -285,10 +285,22 @@ steps, therefore, are identical. They differ, in fact, at the
 twelfth digit: 
 $1.4142135623746899$ (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{4}}) versus
 $1.414213562373095$  (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{5}}). 
-The result of \ensuremath{(\Varid{heron}\;\mathrm{2}\;\mathrm{5})\mathbin{\uparrow}\mathrm{2}} is fairly close to 2: $1.9999999999999996$.
+Note that the result of five iterations has one digit less
+than that of four iterations.
+This is because that after the last digit, 5,
+the digit 0 follows and then the \term{precision} of 
+the Double number type is exhausted.
+\term{Irrational} numbers, this is the designation of
+the type of numbers we are talking about, 
+consist of infinitely many digits. 
+Therefore, the last digit in the number presented above
+is in fact not the last digit of the number. 
+With slightly higher precision, we would see that the number
+continues like $03\dots$
+
+The result of \ensuremath{(\Varid{heron}\;\mathrm{2}\;\mathrm{5})\mathbin{\uparrow}\mathrm{2}} is fairly close to 2: 
+$1.9999999999999996$.
 It will not get any closer using \ensuremath{\Conid{Double}} representation.
-
-
 \section{$\Phi$}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -309,6 +321,188 @@ It will not get any closer using \ensuremath{\Conid{Double}} representation.
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 }
+
+Another interesting irrational number
+is $\tau$ or $\Phi$,
+known as the \term{divine proportion} or \term{golden ratio}.
+The golden ratio is the relation of two quantities,
+such that the greater relates to the lesser
+as the sum of both to the greater.
+This may sound confusing, so here are two symbolic
+representations:
+
+\begin{equation}
+\frac{a}{b} = \frac{a+b}{a}.
+\end{equation}
+
+In this equation, $a$ is the greater number
+and $b$ the lesser. The equation states
+that the relation of $a$ to $b$ equals the relation
+of $a+b$ to $a$.
+Alternatively we can say
+
+\begin{equation}\label{eq:phi_2}
+\frac{b}{a} = \frac{a}{b-a}.
+\end{equation}
+
+Here $b$ is the sum of the two quantities
+and $a$ is the greater one.
+The equation states that the relation
+of $b$ to $a$ is the same as the relation
+of $a$ to $b-a$, which, of course, is
+then the smaller quantity.
+
+The golden ratio is known since antiquity.
+The symbol $\Phi$ is an homage to ancient Greek
+sculptor and painter Phidias (480 -- 430 \acronym{bc}).
+Its first heyday after antiquity had 
+the divine proportion during Renaissance and then
+again in the $18^{th}$ and $19^{th}$ centuries.
+Up to our times, artists, writers and mathematicians 
+have repeatedly called the golden ratio 
+especially pleasing. But, here, of course,
+we will refrain from aesthetical judgements
+outside the realm of mathematics.
+
+From equation \ref{eq:phi_2} we can derive
+the numerical value of $\Phi$ in the form
+$\frac{\Phi}{1}$.
+We can then calculate $b$,
+for any value $a$,
+as $a\Phi$.
+The derivation uses some algebraic methods,
+which we will study more closely in the next part,
+especially \term{completing the square}.
+As such this section is also an algebra teaser.
+
+We start by setting $\Phi = \frac{b}{a}$
+with $a = 1$.
+We then have on the left side of the equation
+$\Phi = \frac{b}{1} = b$.
+On the right-hand side, we have
+$\frac{a=1}{\Phi - 1}$:
+
+\begin{equation}
+\Phi = \frac{1}{\Phi - 1}.
+\end{equation}
+
+Multiplying both sides by $\Phi - 1$,
+we get 
+
+\begin{equation}
+\Phi^2 - \Phi = 1.
+\end{equation}
+
+This is a quadratic equation and,
+with some phantasy, we can even
+recognise the fragment of a binomial formula on the
+left side. A complete binomial formula would be
+
+\begin{equation}
+(a-b)^2 = a^2-2ab+b^2.
+\end{equation}
+
+We try to pattern match the fragment above
+such that $\Phi^2$ is $a^2$ and $-\Phi$
+is $-2ab$. That would mean that the last term,
+$b^2$ would correspond to the square half of the number
+that is multiplied by $\Phi$ to yield $-\Phi$.
+$-\Phi$ can be seen as $-1 \times \Phi$.
+Half of that number is $-\frac{1}{2}$.
+That squared is $\frac{1}{4}$.
+So, if we add $\frac{1}{4}$ to both sides of the equation,
+we would end up with a complete binomial formula on 
+the left side:
+
+\begin{equation}
+\Phi^2 - \Phi + \frac{1}{4} = 1 + \frac{1}{4} = \frac{5}{4}.
+\end{equation}
+
+We can apply the binomial theorem on the left side and get
+
+\begin{equation}
+\left(\Phi - \frac{1}{2}\right)^2 = \frac{5}{4}.
+\end{equation}
+
+Now we take the square root:
+
+\begin{equation}
+\Phi - \frac{1}{2} = \frac{\pm\sqrt{5}}{2}.
+\end{equation}
+
+Note that the $\pm$ in front of $\sqrt{5}$
+reflects the fact that the square root
+of 5 (or any other number) may be positive
+or negative. Both solutions are possible.
+However, since we are looking for a positive
+relation, we only consider the positive solution
+and ignore the other one. We can therefore simplify to
+
+\begin{equation}
+\Phi - \frac{1}{2} = \frac{\sqrt{5}}{2}.
+\end{equation}
+
+Finally, we add $\frac{1}{2}$ to both sides:
+
+\begin{equation}
+\Phi = \frac{1+\sqrt{5}}{2}
+\end{equation}
+
+and voilá that is $\Phi$.
+The numerical value is approximately
+$1.618033988749895$.
+We can define it as a constant in Haskell as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{phi}\mathbin{::}\Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{phi}\mathrel{=}\mathrm{0.5}\mathbin{*}(\mathrm{1}\mathbin{+}\Varid{sqrt}\;\mathrm{5}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We can now define a function that, for any given $a$,
+yields $b$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{golden}\mathbin{::}\Conid{Double}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{golden}\;\Varid{a}\mathrel{=}\Varid{a}\mathbin{*}\Varid{phi}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\ensuremath{\Varid{golden}\;\mathrm{1}}, of course is just $\Phi$, \ie\ 
+$1.618033988749895$.
+\ensuremath{\Varid{golden}\;\mathrm{2}} is twice that value, namely $3.23606797749979$.
+Furthermore, we can state that
+\ensuremath{\mathrm{2}\mathbin{/}(\Varid{golden}\;\mathrm{2}\mathbin{-}\mathrm{2})}, which is $\frac{a}{b-a}$, is
+approximately the same, namely, again, an approximation
+to $\Phi$.
+
+That is very nice. But there is more to come.
+$\Phi$, in fact, is intimately connected to the Fibonacci Sequence,
+as we will se in the next chapter.
+
+
+
+
+
+
+
+
 
 \section{$\pi$}
 \ignore{

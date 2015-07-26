@@ -2,6 +2,8 @@
 \section{The Algebra of Polynomials}
 \section{Factoring Polynomials}
 \section{Polynomials and Binomial Coefficients}
-\section{Polygonal Numbers}
-%include Gnomon.lhs
+\section{The Method of partial Fractions}
+%include PartialF.lhs
 \section{The Difference Engine}
+\section{The closed Form of the Fibonacci Sequence}
+%include ClosedFib.lhs

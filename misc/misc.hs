@@ -1,5 +1,8 @@
 import Data.Ratio
 
+---------------------------------------------------------------------------
+-- Zeno's paradox
+---------------------------------------------------------------------------
 zeno :: Integer -> Integer -> Ratio Integer
 zeno n k = go 1
   where go i | i > k     = (0 % 1)
@@ -17,3 +20,15 @@ testZeno2 l k = go 2 1
                | j == k    = go (i+1) 1
                | zeno  i j == 
                  zeno2 i j = go i (j+1)
+
+---------------------------------------------------------------------------
+-- Heron's paradox
+---------------------------------------------------------------------------
+heron :: Integer -> Int -> Double
+heron n s = let a = fromIntegral n
+             in go s a (a/2)
+  where go 0 _ x = x
+        go i a x = go (i-1) a ((x + a/x)/2)
+
+heron2 :: Double -> Double -> Double
+heron2 n x = (x + n/x) / 2
