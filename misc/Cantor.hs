@@ -5,7 +5,9 @@ where
   import Data.List (nub,sort)
   import Debug.Trace (trace)
   import Binom
+  import Prime
   import Perm
+  -- import Fib
 
   ------------------------------------------------------------------------
   -- Convert from dec to any
@@ -35,6 +37,17 @@ where
   ------------------------------------------------------------------------
   fromBinary :: [Int] -> Integer
   fromBinary = fromBaseN 2
+
+  ------------------------------------------------------------------------
+  -- Invert the interior bits
+  ------------------------------------------------------------------------
+  binverse :: [Int] -> [Int]
+  binverse [] = []
+  binverse bs = head bs : go (tail bs)
+    where go []  = []
+          go [x] = [x]
+          go (0:xs) = 1 : go xs
+          go (1:xs) = 0 : go xs
 
   ------------------------------------------------------------------------
   -- Helper for working with numerator and denominator
@@ -170,6 +183,16 @@ where
           ewd a b | even a    = ewd (a `div` 2) (2*b) 
                   | otherwise = ewd ((a-1) `div` 2) (2*b+1)
 
+  ------------------------------------------------------------------------
+  -- fusc with alternating 1s and 0s is
+  --      fib (number of bits)
+  ------------------------------------------------------------------------
+  fibfusc :: Int -> Bool
+  fibfusc i = let b = reverse (1 : concat (take i $ repeat [0,1]))
+                  n = fromBinary b
+                  l = fromIntegral (length b) + 1
+               in fi l == fusc n
+
 
   bfusc :: [Int] -> [Int]
   bfusc = reverse . go . reverse
@@ -192,6 +215,26 @@ where
   badd (0:as) (1:bs) = 1:badd as bs 
   badd (1:as) (0:bs) = 1:badd as bs
   badd (1:as) (1:bs) = 0:(badd (inc as) bs)
+
+  ------------------------------------------------------------------------
+  -- Find first generation of occurence of numerator n
+  ------------------------------------------------------------------------
+  oriGen :: CalwiTree -> Integer -> Int
+  oriGen t n = go 1
+    where go i | chk i     = i
+               | otherwise = go (i+1)
+          chk i = case filter (==n) $ map numerator (getKids i t) of
+                    [] -> False
+                    _  -> True
+
+  ------------------------------------------------------------------------
+  -- Find all positions of numerator n in binary, zeros dropped
+  ------------------------------------------------------------------------
+  binsOf :: Integer -> [[Int]]
+  binsOf n = map fst $ filter isN [(toB x, calwiR x) | x <- [1..]]
+    where isN x = n == numerator (snd x)
+          toB  = reverse . dropWhile (==0) . reverse . toBinary
+               
   
   ------------------------------------------------------------------------
   -- Odd binary coefficients
@@ -203,7 +246,7 @@ where
   -- Hyperbinary systems
   ------------------------------------------------------------------------
   hyperbin :: Integer -> [[Integer]]
-  hyperbin n = let p1   = takeWhile (<=n) pows2
+  hyperbin n = let p1   = takeWhile (<=n) powers2
                    pool = perms p1
                 in nub (go pool)
     where go pss = filter (\k -> sum k == n) [sort (sums n 0 ps ps) | ps <- pss]
@@ -215,6 +258,6 @@ where
                      | s + p == n = [p]
                      | otherwise  = p : sums n (s+p) ps ds
   
-  pows2 :: [Integer]
-  pows2 = map (2^) [0..]
+  powers2 :: [Integer]
+  powers2 = map (2^) [0..]
 

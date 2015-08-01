@@ -2,6 +2,7 @@ module Complex
 where
 
   import Prime
+  import Data.Ratio
 
   data Complex a = Complex a a
 
@@ -24,6 +25,12 @@ where
           negate = undefined -- ?
           fromInteger i = Complex (fromInteger i) 0
 
+  instance (Fractional a) => Fractional (Complex a) where 
+    (/) = cdiv
+    fromRational r = let n = fromIntegral $ numerator   r
+                         d = fromIntegral $ denominator r 
+                      in Complex (n/d) 0
+
   infix |+
   (|+) = Complex
   
@@ -37,13 +44,19 @@ where
   mul (Complex rx ix) (Complex ry iy) = Complex (rx * ry - ix * iy)
                                                 (rx * iy + ry * ix)
 
-  div :: (Num a, Fractional a) => Complex a -> Complex a -> Complex a
-  div (Complex rx ix) (Complex ry iy) = 
-       Complex ((rx*ry + ix*iy) / (ry^2 + iy^2))
-               ((ix*ry - rx*iy) / (ry^2 + iy^2))
+  cdiv :: (Num a, Fractional a) => Complex a -> Complex a -> Complex a
+  cdiv (Complex rx ix) (Complex ry iy) = 
+        Complex ((rx*ry + ix*iy) / (ry^2 + iy^2))
+                ((ix*ry - rx*iy) / (ry^2 + iy^2))
 
   conjugate :: (Num a) => Complex a -> Complex a
   conjugate (Complex r i) = Complex r (-i)
+
+  unity :: (Num a) => Complex a
+  unity = Complex 1 0
+
+  zero :: (Num a) => Complex a
+  zero = Complex 0 0 
 
   ------------------------------------------------------------------------- 
   -- Gaussian Integer

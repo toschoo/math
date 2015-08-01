@@ -1,4 +1,4 @@
-module Binom
+module Fib
 where
 
   import           Data.List (intercalate,sort)
