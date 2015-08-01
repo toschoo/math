@@ -957,12 +957,14 @@ we know it is a left kid.
 When we call this function on $\frac{7}{5}$,
 we see the steps:
 
+\begin{minipage}{\textwidth}
 |go (Q 7 5) = 1 : go (2 % 5)|\\
 |go (Q 2 5) = 0 : go (2 % 3)|\\
 |go (Q 2 3) = 0 : go (2 % 1)|\\
 |go (Q 2 1) = 1 : go (1 % 1)|\\
 |go (Q 1 1) = 1 : go (0 % 1)|\\
 |go (Q 0 1) = []|,
+\end{minipage}
 
 which leads to the list |1:0:0:1:1:[]|.
 This evaluated and reversed is |1,1,0,0,1|,
@@ -990,11 +992,21 @@ we can produce Stern's sequence with the function
 |take 32 stern| shows:
 
 \[
-  1,1,2,1,3,2,3,1,4,3,5,2,5,3,4,1,5,4,7,3,8,5,7,2,7,5,8,3,7,4,5,1,
+  1,1,2,1,3,2,3,1,4,3,5,2,5,3,4,1,5,4,7,3,8,5,7,2,7,5,8,3,7,4,5,1.
 \]
 
-which is equal to the output produced by 
-mapping the following function onto |[1..32]|:
+Mapping |denominator| defined as |denominator (Q _ d) = d|
+on the Calkin-Wilf sequence would give a very similar result:
+the Stern sequence one ahead, \ie:
+
+\[
+  1,2,1,3,2,3,1,4,3,5,2,5,3,4,1,5,4,7,3,8,5,7,2,7,5,8,3,7,4,5,1,6.
+\]
+
+Edsgar Dijkstra, the great pioneer of the art of computer programming,
+studied this sequence not knowing that it has been studied before. 
+He called it the \term{fusc} sequence and generated it with
+the function
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -1009,94 +1021,86 @@ mapping the following function onto |[1..32]|:
 
 From the definition of the |fusc| function,
 we can read some of the many properties
-of Stern's sequence.
+of Stern's sequence (and the Calkin-Wilf tree).
 First, an even number has the same value
 as half of that number, for instance
 |fusc 3| is 2 and so is |fusc 6|,
 |fusc 12|, |fusc 24| and so on.
-We immediately see that for any power of 2,
-|fusc| equals |fusc 1|, which is 1;
-|map fusc [2,4,8,16,32,64,128,256]|, hence,
-gives |[1,1,1,1,1,1,1,1]|.
+Even numbers in binary format
+end on zeros. For instance,
+3 in binary notation is 11.
+$2 \times 3$ is 110,
+$2 \times 6$ is 1100,
+$2 \times 12$ is 11000 and so on.
+Such numbers indicate that after having
+reached the number before the trail of zeros
+at the end, we go down in a straight line
+following the left branch of that node.
+Since, in the left path, the numerator
+never changes, the result of 
+$fusc(n)$ equals the result of $fusc(2n)$.
 
-Of course, |fusc n| is the numerator
-of the $n^{th}$ fraction in the Calwin-Wilf sequence.
-The fraction at position 25, 
-as we have seen using |calwiR|, is $\frac{7}{5}$.
-|fusc 25| (as well as |fusc 50|, |fusc 100|,
-|fusc 200|, \etc) is 7.
+We also see that for any power of 2,
+|fusc| equals |fusc 1|, which is 1;
+|map fusc| |[2,4,8,16,32,| |64,128,256]|, hence,
+gives |[1,1,1,1,1,1,1,1]|.
+Note that, looking at the Calkin-Wilf tree,
+this is immediate obvious, since powers of 2
+in binary representation are numbers of the form
+$1,10,100,1000,\dots$
+Those numbers indicate that 
+we navigate through the tree in a straight line
+following the left branch of the root node $\frac{1}{1}$.
+
+The |fusc| result of powers of two minus one ($1,11,111,1111,\dots$),
+again, equals the number of digits of this number in binary form.
+This is the right outer branch
+of the tree with the integers.
+
+Powers of two plus one ($1,11,101,1001,\dots$), also,
+have a |fusc| result that equals the number of digits
+in the binary representation of that number.
+The numbers of these type are the immediate neighbours
+of the powers of two in the left outer branch of the tree,
+for instance 
+$\frac{3}{2},
+ \frac{4}{3},
+ \frac{5}{4},
+ \frac{6}{5}, \dots$
+
+What about numbers with an alternating sequence
+of 1s and 2s, like 101010101?
+Those numbers are not in the outer branches
+and not even close to them. Indeed, they 
+tend to the horizontal centre of the tree.
+The first 1 leads to node $\frac{1}{1}$.
+We now go left, that is,
+we add the numerator to the denominator leading
+to $\frac{1}{2}$; we then add the denominator
+to the numerator leading to $\frac{3}{2}$;
+then we add the numerator to the denominator again
+leading to $\frac{3}{5}$ 
+and so we go on and obtain the fractions
+$\frac{8}{5},
+ \frac{8}{13},
+ \frac{21}{13},
+ \frac{21}{34},
+ \frac{55}{34},\dots$
+Do you see the point?
+All the numerators and denominators are Fibonacci numbers!
+Well, what we did above,
+adding the two numbers we obtained before,
+is just the recipe
+to create the Fibonacci numbers.
 
 An amazing property of |fusc|,
-found by Edsgar Dijkstra, is related
-to the binary representation
-of its argument, namely
-that two numbers, whose binary representations
-are reverses of each other,
-have the same |fusc| result.
+found by Dijkstra, is the fact that
+two numbers whose binary representations
+are the reverse of each other
+have the same |fusc| result. 
 25, for instance, is 11001.
-When we reverse this sequence, we get 10011,
-which, in decimal representation, is 19 and
-we have |fusc 19 = fusc 25 = 7|.
-Dijkstra's argument is closely related
-to his algorithm, which is different
-from ours:
-
-\begin{minipage}{\textwidth}
-\begin{code}
-  fuscd :: Natural -> Natural
-  fuscd n = ewd n 1 0
-    where  ewd 0 _ b = b
-           ewd m a b  | even m     =  ewd (m `div` 2) (a+b) b
-                      | otherwise  =  ewd ((m-1) `div` 2) a (b+a)
-\end{code}
-\end{minipage}
-
-The final result is stored in |b|,
-which is returned when |n|, by subsequently
-halving, if the intermediate result is even,
-and reducing by one and halving, if it is odd,
-reaches 0. |b|, initially 0,
-carries the value of sums of |a| and |b|.
-If we never enter the |odd| branch,
-the result would be 0.
-If |n| is a power of 2, then we would enter
-the |odd| branch only once, namely,
-when we reach $m=1$.
-The result then is 1.
-Every time, we enter the |odd| branch,
-$b$ is incremented by the current value of $a$.
-The only chance of $a$ to increase beyond 1, however, is 
-for the evaluation to enter the |odd| branch at least once.
-
-Dijkstra proposes to represent the two variables
-|a| and |b| by a single variable |k|, initialised to 0.
-We would represent the sum $a+b$ for the |even| branch as $2k$;
-note that, without having entered 
-the |odd| branch at least once, this would
-not change the value of $k=0$. 
-In the |odd| branch, we would represent the sum as $2k+1$,
-leading, at its first occurence, to 1.
-Afterwards, the value starts to change also
-in the |even| branch.
- 
-We, hence, have two variables,
-one running from $n$ down to zero and
-the other running from zero upwards
-until $n$ reaches zero.
-Here is a piece of code to show this behaviour:
-
-\begin{minipage}{\textwidth}
-\begin{code}
-  fuscd2 :: Natural -> Natural
-  fuscd2 n = ewd n 0
-    where  ewd 0 k = k
-           ewd m k  | even m     =  ewd (m `div` 2) (2*k)
-                    | otherwise  =  ewd ((m-1) `div` 2) (2*k+1)
-\end{code}
-\end{minipage}
-
-When we reach the base case |ewd 0 k|, $k$ is the binary reverse
-of $n$, \eg\ |fuscd2 25| is 19 and |fuscd2 19| is 25.
+The reverse, 10011, is 19,
+and |fusc 19 = fusc 25 = 7|.
 
 For the Calwin-Wilf tree this means that,
 when we have two trajectories through the tree,
@@ -1118,57 +1122,139 @@ $\frac{1}{3}$ and
 $\frac{4}{3}$ to
 $\frac{7}{3}$.
 
-At this occasion, as we are already looking at the tree,
-we should inspect the generation containing 
-$\frac{7}{3}$ and 
-$\frac{7}{5}$ a bit further.
-There are two more fractions with numerator 7,
-namely 
-$\frac{7}{2}$ and
-$\frac{7}{4}$.
-What is their position in the sequence?
-|calwiP (Q 7 2)| is 23 and |calwiP (Q 7 4)| is 29.
-In binary representation 23 is |1,0,1,1,1| and 29
-is its reverse |1,1,1,0,1|.
-Compare the binary representations of 23 and 25:
+A similar is true for two numbers,
+whose binary sequences can be transformed
+into one another by inverting the inner bits.
+For instance, 11001, 25, can be transformed into
+10111, inverting all bits, but the first and the last ones.
+10111 is 23 and |fusc 19 = fusc 23 = fusc 25|.
+What about the bit inverse of 19?
+That is 11101, the reverse of 10111 and 29 in decimal notation.
+Therefore |fusc 19 = fusc 23 = fusc 25 = fusc 29|.
 
-\begin{center}
-\begin{tabular}{||c||c||c||c||c||c||}
-25 & 1 & 1 & 0 & 0 & 1\\\hline
-23 & 1 & 0 & 1 & 1 & 1
-\end{tabular}
-\end{center}
+We can reformulate this result in terms of group theory.
+We have three basic transformations $i$, the identity,
+$\rho$, the reverse, and $\beta$, the bit inverse.
+We add one more transformations, the composition of
+$\rho$ and $\beta$, $\rho\beta$.
+The operation defined over this set is function composition.
+We see that the identity is part of the set;
+for each transformation, its inverse is in the set, too,
+because $\rho \cdot \rho = i$, $\beta \cdot \beta = i$ and
+$\rho\beta \cdot \rho\beta = i$.
+To illustrate the logic of this group with the numbers above,
+we define it on the base string 19, which is 10011:
 
-We see that 23 is 25 with all digits, but the
-most and least significant ones,
-inverted. The same is true for 19 and 29:
+$i = 10011$\\
+$\rho = 11001$\\
+$\beta = 11101$\\
+$\rho\beta = 10111$.
 
-\begin{center}
-\begin{tabular}{||c||c||c||c||c||c||}
-19 & 1 & 0 & 0 & 1 & 1\\\hline
-29 & 1 & 1 & 1 & 0 & 1
-\end{tabular}
-\end{center}
+Now we can play around and see that we will
+never generate a string that is not already 
+in the group:
 
-Therefore, we have 
-|fusc 19 = fusc 23 = fusc 25 = fusc 29 = 7|.
-Interestingly, Dijkstra arrives at the same result
-describing the |fuscd| algorithm as a state automaton
-and the binary number as a string of the language
-it is processing.
-We could then say that the Calkin-Wilf tree
+$\rho  \cdot i     = 11001$\\
+$\rho  \cdot \rho  = i = 10011$\\
+$\beta \cdot \beta = i = 10011$\\
+$\rho  \cdot \beta = \rho\beta = 10111$\\
+$\beta \cdot \rho  = \rho\beta = 10111$\\
+$\rho\beta \cdot \rho  = \beta = 11101$\\
+$\rho\beta \cdot \beta = \rho  = 11001$\\
+$\rho\beta \cdot \rho\beta = i = 10011$\\
+$\dots$
+
+All elements of one group are in the same generation
+of the Calkin-Wilf tree,
+since they all have the same number of digits.
+Numbers with a symmetric binary representation,
+such that $\rho = i$, lead to groups with only 
+two distinguishable members, for instance
+$fusc(2^n+1) = fusc(2^{n+1}-1)$.
+The same is true for numbers with a binary representation
+such that $\rho = \beta$, for instance, 
+101011 = 110101.
+
+There are infinitely many numbers
+with the same |fusc| result.
+Most of these numbers have trailing zeros
+and, as such, are in the long shadow thrown 
+by one of the original odd numbers with the same result.
+One example of such a shadow is the outer left branch,
+which maintains the numerator of the root node $\frac{1}{1}$
+and also maintains the leading 1 in the binary representation
+of its positions. 
+Any original number is in a group 
+consisting of reversion and bit inversion.
+The first case of fraction $\frac{1}{1}$ is trivial.
+Its position is 1, which, in binary notation, is 1.
+This binary string, trivially, equals 
+its reverse and bit inverse.
+
+How many ``original'' numbers in this sense are there
+for a given |fusc| result $n$?
+The answer is simple if we consider two facts:
+1. The fractions in the Calkin-Wilf tree are in
+canonical form, \ie\ numerator and denominator
+do not share divisors and
+2. Any position number whose binary representation
+ends with 1, points to a right kid and, for all fractions
+$\frac{n}{d}$ that are right kids:
+$n > d$.
+In other words, the number of original numbers
+for $fusc(n)$ is $\varphi(n)$, the totient number of $n$.
+For 7, for instance, there are six such numbers:
+19, 23, 25, 29, 65 and 127.
+For 8, there are only four such numbers:
+21, 27, 129 and 255.
+
+Furthermore, those numbers appear in groups
+with 2 or 4 members, depending on the properties 
+of the binary representation. The number of such groups,
+hence, is $\frac{\varphi(n)}{2k}$, where $k$ is some integer.
+For 7 $k=3$, since there are two groups,
+one containing 4 elements, the other containing 2.
+For 8 $k=2$, since there are two groups, both containing 2 elements.
+
+The last group is the one consisting of
+binary numbers with $n$ bits, \ie\ $2^{n-1}+1$ and $2^n-1$.
+The other groups appear in generations of the Calkin-Wilf tree
+before the generation with that final group.
+For 7, the generation of the group
+with four members is the fifth generation and
+the generation with the final group is of course the seventh generation.
+In other cases,
+the groups can be many generations apart.
+The numerator 55, for instance, appears for the first time
+in generation 10, namely in the fraction $\frac{55}{34}$
+(both Fibonacci numbers).
+This is far off from generation 55 
+with the group consisting of $\frac{55}{1}$ and $\frac{55}{54}$.
+
+Interestingly, Dijkstra was not aware of the relation
+of the |fusc| algorithm to the Stern sequence and
+the Calkin-Wilf tree was not even around at that time.
+Dijkstra describes |fusc| as a state automaton that
+defines a language consisting of strings of 1s and 0s.
+The input to this automaton would be a string consisting of 1s and 0s;
+the parsing result would be a number, 
+namely the result of |fusc|.
+We could now say that the Calkin-Wilf tree
 is a model that gives meaning to this language.
 
-We see, even further, that there are 4 fractions
-in that generation where 7 appears in the denominator,
-and, for each denominator of the fractions with 7 in the numerator,
-there is also a fraction with this number in the numerator.
-That is, for each of these four fraction,
-the generation also contains its multiplicative inverse.
-When we examine the generation closer,
-we see that this holds in fact for all fractions
-in that generation. 
-When we pair up the fractions with their inverses, we get:
+A final remark relates to the product of one generation in the tree.
+Each generation consists of fractions 
+whose numerators and denominators were created
+by adding the numerators and denominators 
+of the fractions of the previous generation.
+We start with the fraction $\frac{1}{1}$.
+In consequence, in any generation, 
+there is for any fraction $\frac{n}{d}$ 
+a fraction $\frac{d}{n}$.
+The fractions in the fifth generation for example,
+the one containing the fractions 
+at positions 19, 23, 25 and 29 of the Calkin-Wilf sequence,
+can be paired up in the following way:
 
 \[
 \left(\frac{1}{5}, \frac{5}{1}\right),
@@ -1181,9 +1267,10 @@ When we pair up the fractions with their inverses, we get:
 \left(\frac{7}{2}, \frac{2}{7}\right).
 \]
 
-Indeed, the product of the fractions 
-in each generation in the tree
-is 1. You can try this out with
+The product of each pair is 1.
+The product of all fractions 
+in one generation is therefore 1 as well.
+You can try this out with
 the simple function 
 
 \begin{minipage}{\textwidth}
