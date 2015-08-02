@@ -1004,7 +1004,7 @@ the Stern sequence one ahead, \ie:
 \]
 
 Edsgar Dijkstra, the great pioneer of the art of computer programming,
-studied this sequence not knowing that it has been studied before. 
+studied this sequence not knowing that it had already been studied before. 
 He called it the \term{fusc} sequence and generated it with
 the function
 
@@ -1032,10 +1032,11 @@ end on zeros. For instance,
 $2 \times 3$ is 110,
 $2 \times 6$ is 1100,
 $2 \times 12$ is 11000 and so on.
-Such numbers indicate that after having
+The binary format clearly indicates that, after having
 reached the number before the trail of zeros
 at the end, we go down in a straight line
-following the left branch of that node.
+following the left branch of that node
+in the Calkin-Wilf tree.
 Since, in the left path, the numerator
 never changes, the result of 
 $fusc(n)$ equals the result of $fusc(2n)$.
@@ -1052,15 +1053,15 @@ Those numbers indicate that
 we navigate through the tree in a straight line
 following the left branch of the root node $\frac{1}{1}$.
 
-The |fusc| result of powers of two minus one ($1,11,111,1111,\dots$),
-again, equals the number of digits of this number in binary form.
+The |fusc| result of powers of two minus one ($1,11,111,1111,\dots$)
+equals the number of digits of this number in binary form.
 This is the right outer branch
 of the tree with the integers.
 
-Powers of two plus one ($1,11,101,1001,\dots$), also,
-have a |fusc| result that equals the number of digits
+The |fusc| result of powers of two plus one ($1,11,101,1001,\dots$)
+also equals the number of digits
 in the binary representation of that number.
-The numbers of these type are the immediate neighbours
+These numerators appear in the immediate neighbours
 of the powers of two in the left outer branch of the tree,
 for instance 
 $\frac{3}{2},
@@ -1089,7 +1090,8 @@ $\frac{8}{5},
 Do you see the point?
 All the numerators and denominators are Fibonacci numbers!
 Well, what we did above,
-adding the two numbers we obtained before,
+adding the two numbers we obtained before
+starting with the pair $(1,1)$,
 is just the recipe
 to create the Fibonacci numbers.
 
@@ -1126,7 +1128,7 @@ A similar is true for two numbers,
 whose binary sequences can be transformed
 into one another by inverting the inner bits.
 For instance, 11001, 25, can be transformed into
-10111, inverting all bits, but the first and the last ones.
+10111, inverting all bits, but the first and the last one.
 10111 is 23 and |fusc 19 = fusc 23 = fusc 25|.
 What about the bit inverse of 19?
 That is 11101, the reverse of 10111 and 29 in decimal notation.
@@ -1135,20 +1137,20 @@ Therefore |fusc 19 = fusc 23 = fusc 25 = fusc 29|.
 We can reformulate this result in terms of group theory.
 We have three basic transformations $i$, the identity,
 $\rho$, the reverse, and $\beta$, the bit inverse.
-We add one more transformations, the composition of
-$\rho$ and $\beta$, $\rho\beta$.
+We add one more transformation, the composition of
+$\rho$ and $\beta$ and call it $\sigma = \rho \cdot \beta$.
 The operation defined over this set is function composition.
 We see that the identity is part of the set;
 for each transformation, its inverse is in the set, too,
 because $\rho \cdot \rho = i$, $\beta \cdot \beta = i$ and
-$\rho\beta \cdot \rho\beta = i$.
+$\sigma \cdot \sigma = i$.
 To illustrate the logic of this group with the numbers above,
 we define it on the base string 19, which is 10011:
 
 $i = 10011$\\
 $\rho = 11001$\\
 $\beta = 11101$\\
-$\rho\beta = 10111$.
+$\sigma = 10111$.
 
 Now we can play around and see that we will
 never generate a string that is not already 
@@ -1157,11 +1159,11 @@ in the group:
 $\rho  \cdot i     = 11001$\\
 $\rho  \cdot \rho  = i = 10011$\\
 $\beta \cdot \beta = i = 10011$\\
-$\rho  \cdot \beta = \rho\beta = 10111$\\
-$\beta \cdot \rho  = \rho\beta = 10111$\\
-$\rho\beta \cdot \rho  = \beta = 11101$\\
-$\rho\beta \cdot \beta = \rho  = 11001$\\
-$\rho\beta \cdot \rho\beta = i = 10011$\\
+$\sigma \cdot \sigma = i = 10011$\\
+$\rho  \cdot \beta = \sigma = 10111$\\
+$\beta \cdot \rho  = \sigma = 10111$\\
+$\sigma \cdot \rho  = \beta = 11101$\\
+$\sigma \cdot \beta = \rho  = 11001$\\
 $\dots$
 
 All elements of one group are in the same generation
@@ -1186,10 +1188,6 @@ and also maintains the leading 1 in the binary representation
 of its positions. 
 Any original number is in a group 
 consisting of reversion and bit inversion.
-The first case of fraction $\frac{1}{1}$ is trivial.
-Its position is 1, which, in binary notation, is 1.
-This binary string, trivially, equals 
-its reverse and bit inverse.
 
 How many ``original'' numbers in this sense are there
 for a given |fusc| result $n$?
@@ -1203,18 +1201,23 @@ $\frac{n}{d}$ that are right kids:
 $n > d$.
 In other words, the number of original numbers
 for $fusc(n)$ is $\varphi(n)$, the totient number of $n$.
-For 7, for instance, there are six such numbers:
+The denominators of the original fractions are 
+the coprimes.
+The numerator 7, for instance, appears in six positions:
 19, 23, 25, 29, 65 and 127.
-For 8, there are only four such numbers:
+The denominators of the fractions at those positions are
+3, 2, 5, 4, 6 and 1.
+For numerator 8, there are only four such numbers:
 21, 27, 129 and 255.
+The denominators are 5, 3, 7 and 1.
 
 Furthermore, those numbers appear in groups
 with 2 or 4 members, depending on the properties 
 of the binary representation. The number of such groups,
 hence, is $\frac{\varphi(n)}{2k}$, where $k$ is some integer.
-For 7 $k=3$, since there are two groups,
+For 7: $k=3$, since there are two groups,
 one containing 4 elements, the other containing 2.
-For 8 $k=2$, since there are two groups, both containing 2 elements.
+For 8: $k=2$, since there are two groups, both containing 2 elements.
 
 The last group is the one consisting of
 binary numbers with $n$ bits, \ie\ $2^{n-1}+1$ and $2^n-1$.
@@ -1232,15 +1235,15 @@ This is far off from generation 55
 with the group consisting of $\frac{55}{1}$ and $\frac{55}{54}$.
 
 Interestingly, Dijkstra was not aware of the relation
-of the |fusc| algorithm to the Stern sequence and
+of the |fusc| algorithm to the Stern sequence, and
 the Calkin-Wilf tree was not even around at that time.
 Dijkstra describes |fusc| as a state automaton that
-defines a language consisting of strings of 1s and 0s.
-The input to this automaton would be a string consisting of 1s and 0s;
-the parsing result would be a number, 
+parses strings consisting of 1s and 0s.
+The parsing result would be a number, 
 namely the result of |fusc|.
 We could now say that the Calkin-Wilf tree
-is a model that gives meaning to this language.
+is a model that gives meaning to the strings
+in terms of trajectories through the tree.
 
 A final remark relates to the product of one generation in the tree.
 Each generation consists of fractions 
@@ -1253,7 +1256,7 @@ there is for any fraction $\frac{n}{d}$
 a fraction $\frac{d}{n}$.
 The fractions in the fifth generation for example,
 the one containing the fractions 
-at positions 19, 23, 25 and 29 of the Calkin-Wilf sequence,
+at positions 19, 23, 25 and 29 in the Calkin-Wilf sequence,
 can be paired up in the following way:
 
 \[
@@ -1286,7 +1289,7 @@ cannot be meaningless.
 Isn't there anything in the (more or less) real world
 that these numbers would actually count?
 It turns out there is.
-There are in fact many things the Stern sequence actually does count.
+There are in fact many things the Stern sequence actually counts.
 Just to mention two things:
 It counts odd binomial coefficients of the form
 $\binom{n-r}{r}, 0 \le 2r \le n$.
@@ -1351,7 +1354,7 @@ We first find all powers of 2 less than or equal to $n$:
 \end{minipage}
 
 We then create all permutations of this set
-and try to build sums with these permutations 
+and try to build sums 
 that equal $n$:
 
 \begin{minipage}{\textwidth}
@@ -1380,5 +1383,6 @@ Otherwise, if $s+p < n$, we continue adding the current power
 to the result set.
 In |go|, we try |sums| on all permutations of the powers
 filtering the resulting sets for which |sum| equals $n$.
-We sort each list to be able to recognise duplicates and
+We sort each list to make lists with equal elements equal 
+and to, thus, be able to recognise duplicates and
 to remove them with |nub|.

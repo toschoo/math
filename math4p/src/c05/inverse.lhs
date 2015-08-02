@@ -4,6 +4,7 @@
 %include Zahl.lhs
 \section{Negative Binomial Coefficients}
 %include NegBinom.lhs
+\section{Diophantine Equations}
 \section{$\mathbb{Q}$}
 %include Quoz.lhs
 \section{Zeno's Paradox}

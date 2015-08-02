@@ -115,6 +115,12 @@ continuum.pdf:	continuum.tex $(ALL)
 		pdflatex lhscontinuum.tex
 		mv lhscontinuum.pdf continuum.pdf
 
+poly.pdf:	poly.tex $(ALL)
+		$(toTex) poly.tex > lhspoly.tex
+		pdflatex lhspoly.tex
+		pdflatex lhspoly.tex
+		mv lhspoly.pdf poly.pdf
+
 m4p:		m4p.pdf
 
 nums:		nums.pdf
@@ -126,6 +132,8 @@ primes:		primes.pdf
 inverse:	inverse.pdf
 
 continuum:	continuum.pdf
+
+poly:		poly.pdf
 
 SUITE = test/suite
 
