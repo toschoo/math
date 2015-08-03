@@ -6783,13 +6783,13 @@ Those numbers indicate that
 we navigate through the tree in a straight line
 following the left branch of the root node $\frac{1}{1}$.
 
-The \ensuremath{\Varid{fusc}} result of powers of two minus one ($1,11,111,1111,\dots$)
-equals the number of digits of this number in binary form.
+The \ensuremath{\Varid{fusc}} results of powers of two minus one ($1,11,111,1111,\dots$)
+equal the number of digits of this number in binary form.
 This is the right outer branch
 of the tree with the integers.
 
-The \ensuremath{\Varid{fusc}} result of powers of two plus one ($1,11,101,1001,\dots$)
-also equals the number of digits
+The \ensuremath{\Varid{fusc}} results of powers of two plus one ($1,11,101,1001,\dots$)
+also equal the number of digits
 in the binary representation of that number.
 These numerators appear in the immediate neighbours
 of the powers of two in the left outer branch of the tree,
@@ -6800,7 +6800,7 @@ $\frac{3}{2},
  \frac{6}{5}, \dots$
 
 What about numbers with an alternating sequence
-of 1s and 2s, like 101010101?
+of 1s and 0s, like 101010101?
 Those numbers are not in the outer branches
 and not even close to them. Indeed, they 
 tend to the horizontal centre of the tree.
@@ -6869,7 +6869,7 @@ We have three basic transformations $i$, the identity,
 $\rho$, the reverse, and $\beta$, the bit inverse.
 We add one more transformation, the composition of
 $\rho$ and $\beta$ and call it $\sigma = \rho \cdot \beta$.
-The operation defined over this set is function composition.
+The operation defined over this set is composition.
 We see that the identity is part of the set;
 for each transformation, its inverse is in the set, too,
 because $\rho \cdot \rho = i$, $\beta \cdot \beta = i$ and
@@ -6905,7 +6905,7 @@ two distinguishable members, for instance
 $fusc(2^n+1) = fusc(2^{n+1}-1)$.
 The same is true for numbers with a binary representation
 such that $\rho = \beta$, for instance, 
-101011 = 110101.
+101011 (43) = 110101 (53) and $fusc(43) = fusc(53) = 13$.
 
 There are infinitely many numbers
 with the same \ensuremath{\Varid{fusc}} result.
@@ -6915,39 +6915,53 @@ by one of the original odd numbers with the same result.
 One example of such a shadow is the outer left branch,
 which maintains the numerator of the root node $\frac{1}{1}$
 and also maintains the leading 1 in the binary representation
-of its positions. 
-Any original number is in a group 
-consisting of reversion and bit inversion.
+of its positions, merely adding more and more 0s to it.
 
 How many ``original'' numbers in this sense are there
 for a given \ensuremath{\Varid{fusc}} result $n$?
 The answer is simple if we consider two facts:
 1. The fractions in the Calkin-Wilf tree are in
 canonical form, \ie\ numerator and denominator
-do not share divisors and
+do not share divisors, and
 2. Any position number whose binary representation
 ends with 1, points to a right kid and, for all fractions
 $\frac{n}{d}$ that are right kids:
-$n > d$.
+$n > d$. Binary numbers, however, that end with 0,
+point to a left kid and, therefore, $n < d$.
 In other words, the number of original numbers
-for $fusc(n)$ is $\varphi(n)$, the totient number of $n$.
+for a given numerator $n$ is $\varphi(n)$, the totient number of $n$.
 The denominators of the original fractions are 
-the coprimes.
+the coprimes of $n$.
+
 The numerator 7, for instance, appears in six positions:
 19, 23, 25, 29, 65 and 127.
 The denominators of the fractions at those positions are
 3, 2, 5, 4, 6 and 1.
 For numerator 8, there are only four such numbers:
 21, 27, 129 and 255.
-The denominators are 5, 3, 7 and 1.
+The denominators at those positions are 5, 3, 7 and 1.
+Note that 21 in binary format is 10101, 
+which is its own reverse,
+and 27 is the bit inverse of 21, namely 11011,
+which also is its own reverse.
 
 Furthermore, those numbers appear in groups
 with 2 or 4 members, depending on the properties 
 of the binary representation. The number of such groups,
-hence, is $\frac{\varphi(n)}{2k}$, where $k$ is some integer.
+hence, is $\frac{\varphi(n)}{k}$, 
+where $k$ is some integer that divides $\varphi(n)$.
 For 7: $k=3$, since there are two groups,
 one containing 4 elements, the other containing 2.
-For 8: $k=2$, since there are two groups, both containing 2 elements.
+For 8: $k=2$, since there are two groups, 
+both containing 2 elements.
+
+\ignore{
+The $k$ values for the numbers 1-20 are
+
+1,1,2,2,2,2,3,2,3,2,5,2,4,6,4,4,5,6,4,4
+
+which, up to my knowledge, is not a known integer sequence.
+}
 
 The last group is the one consisting of
 binary numbers with $n$ bits, \ie\ $2^{n-1}+1$ and $2^n-1$.

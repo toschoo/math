@@ -234,7 +234,20 @@ where
   binsOf n = map fst $ filter isN [(toB x, calwiR x) | x <- [1..]]
     where isN x = n == numerator (snd x)
           toB  = reverse . dropWhile (==0) . reverse . toBinary
-               
+
+  ------------------------------------------------------------------------
+  -- Number of groups for n in fusc(n)
+  ------------------------------------------------------------------------
+  noFuscGroups :: Integer -> Int
+  noFuscGroups n = length $ nub $  map length $ 
+                      nub $ take (fromIntegral n*2) $ binsOf n
+
+  ------------------------------------------------------------------------
+  -- ks in no of groups = phi(n)/k
+  ------------------------------------------------------------------------
+  kFuscGroups :: Integer -> Integer -- (Integer,Integer)
+  kFuscGroups n = let g = fromIntegral $ noFuscGroups n
+                   in (tot n) `div` g -- (tot n,g) 
   
   ------------------------------------------------------------------------
   -- Odd binary coefficients
