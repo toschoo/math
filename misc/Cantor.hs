@@ -2,7 +2,9 @@ module Cantor
 where
 
   import Data.Ratio
-  import Data.List (nub,sort)
+  import Data.List (nub,sort,(\\))
+  import Data.Tree 
+  import Data.Tree.Pretty (drawVerticalTree)
   import Debug.Trace (trace)
   import Binom
   import Prime
@@ -76,9 +78,6 @@ where
   ------------------------------------------------------------------------
   -- Calwi Tree
   ------------------------------------------------------------------------
-  data Tree a = Node a [Tree a]
-    deriving (Eq,Show)
-
   type CalwiTree = Tree Rational
 
   ------------------------------------------------------------------------
@@ -144,6 +143,24 @@ where
                   in if n == 0 then []
                                else if n >= d then 1 : go ((n - d) % d)
                                               else 0 : go (n % (d-n))
+
+  ------------------------------------------------------------------------
+  -- Calwi to Pretty Tree
+  ------------------------------------------------------------------------
+  pretty :: CalwiTree -> Tree String
+  pretty (Node r ks) = Node (show r) (map pretty ks)
+
+  ------------------------------------------------------------------------
+  -- Draw Calwi subtree
+  ------------------------------------------------------------------------
+  drawCalwi :: Int -> Rational -> String
+  drawCalwi g = drawVerticalTree . pretty . calwiTree g
+
+  ------------------------------------------------------------------------
+  -- Print Calwi subtree
+  ------------------------------------------------------------------------
+  printCalwi :: Int -> Rational -> IO ()
+  printCalwi g = putStrLn . drawCalwi g
 
   ------------------------------------------------------------------------
   -- Calkin-Wilf Sequence
@@ -216,6 +233,71 @@ where
   badd (1:as) (0:bs) = 1:badd as bs
   badd (1:as) (1:bs) = 0:(badd (inc as) bs)
 
+  
+  ------------------------------------------------------------------------
+  -- Extract transformation group from list
+  ------------------------------------------------------------------------
+  exGroup :: [[Int]] -> [[Int]]
+  exGroup [] = []
+  exGroup xs = let h = head xs
+                   b = binverse h
+                in [h,reverse h, b, reverse b]
+
+  ------------------------------------------------------------------------
+  -- Find positions of all fractions with n as numerator
+  ------------------------------------------------------------------------
+  unfusc :: Integer -> [Integer]
+  unfusc n = [calwiP (n%d) | d <- [1..n], gcd n d == 1] 
+
+  ------------------------------------------------------------------------
+  -- Find positions of all fractions with n as numerator in one generation
+  ------------------------------------------------------------------------
+  unfuscGen :: Integer -> Int -> [Integer]
+  unfuscGen n g = filter (\p -> length (toBinary p) == g) $ unfusc n 
+
+  ------------------------------------------------------------------------
+  -- Example: 10th generation of 55
+  ------------------------------------------------------------------------
+  ten55 :: [[Int]]
+  ten55 = [[1,1,0,0,1,0,1,1,1,1],
+           [1,0,1,1,1,0,0,1,1,1],
+           [1,1,1,1,0,1,0,0,1,1],
+           [1,0,0,1,1,0,0,0,1,1],
+           [1,1,1,0,0,1,1,1,0,1],
+           [1,0,0,0,1,0,1,1,0,1],
+           [1,1,0,0,0,1,1,0,0,1],
+           [1,0,1,1,0,1,0,0,0,1]]
+
+  ------------------------------------------------------------------------
+  -- list all fractions in a trajectory
+  ------------------------------------------------------------------------
+  trajectory :: [Int] -> [(Integer,Integer)]
+  trajectory = go (0,1) 
+    where go n [] = [n]
+          go (n,d) (1:bs) = (n,d) : go (n+d,d) bs
+          go (n,d) (0:bs) = (n,d) : go (n,d+n) bs
+
+  ------------------------------------------------------------------------
+  -- Try to bridge 2 groups
+  ------------------------------------------------------------------------
+  bridge :: ([Int] -> [Int]) -> [[Int]] -> [[Int]] -> Bool
+  bridge t g1 g2 = let g1' = map t g1
+                    in sort g1' == sort g2
+
+  ------------------------------------------------------------------------
+  -- Some tests
+  ------------------------------------------------------------------------
+  swapbits :: [Int] -> [Int] -- nope
+  swapbits [] = []
+  swapbits [x] = [x]
+  swapbits (x:y:zs) = y:swapbits (x:zs)
+
+  swapInner :: [Int] -> [Int]
+  swapInner [] = []
+  swapInner (x:zs) = case reverse zs of
+                       []     -> [x]
+                       (y:zs') -> x:reverse (y:swapbits zs')
+  
   ------------------------------------------------------------------------
   -- Find first generation of occurence of numerator n
   ------------------------------------------------------------------------

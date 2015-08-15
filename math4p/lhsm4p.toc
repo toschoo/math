@@ -66,7 +66,8 @@
 \contentsline {section}{\numberline {8.4}Polynomials and Binomial Coefficients}{287}
 \contentsline {section}{\numberline {8.5}The Method of partial Fractions}{287}
 \contentsline {section}{\numberline {8.6}The Difference Engine}{287}
-\contentsline {section}{\numberline {8.7}The closed Form of the Fibonacci Sequence}{287}
+\contentsline {section}{\numberline {8.7}More Series}{287}
+\contentsline {section}{\numberline {8.8}The closed Form of the Fibonacci Sequence}{287}
 \contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{289}
 \contentsline {section}{\numberline {9.1}Relations}{289}
 \contentsline {section}{\numberline {9.2}Equivalence Classes}{289}

@@ -170,3 +170,97 @@ where
   -- - any sum x+y in U is in U
   -- - any sum 0+x in U
   -------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.1
+  -------------------------------------------------------------------------
+  -- if (v_1,...,v_n) spans V, so does (v_1-v_2,v_2-v_3,...,v_n)
+  -- That a list of vectors u spans V 
+  -- means that for every v in V, v is in u.
+  -- To show that v is in u, we have to find scalars a_1..a_n in F,
+  -- such that v in (a_1(v_1-v_2) + a_2(v_2-v_3) + ... + a_3v_n).
+  -- We multiply that equation out and obtain
+  -- a_1v_1-a_1v_2 + a_2v_2-a_2v_3 + ... a_nv_n
+  -- and rearrange the terms as
+  -- a_1v_1 + (a_2 - a_1)v2 + (a_3 - a_2)v3 + ... + (a_n-a_(n-1))v_n)
+  -- This, however, shows that we could have chosen scalars b_1..b_n
+  -- such that b_1 = a_1, b_2 = a_2-a_1, ... or
+  --                      a_2 = b_2+a_1, ...
+  --------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.2
+  -------------------------------------------------------------------------
+  -- if (v_1,...,v_n) is linearly independent in V, so is 
+  --    (v_1-v_2,v_2-v_3,...,v_(n-1)-v_n,v_n)
+  -- That a list of vectors is linearly independent in V means
+  -- that the only choice for scalars a_1,a_2,...,a_n, such that 
+  -- (av_1,av_2,...,av_n) = 0 is
+  -- a_1 = a_2 = ... = a_n = 0. 
+  -- Now consider the list (v_1-v_2,v_2-v_3,...,v_(n-1)-v_n,v_n)
+  -- and some list of scalars a_1,a_2,...,a_n, such that
+  -- a_1(v_1-v_2) + a_2(v_2-v_3) + ... + a_(n-1)(v_(n-1)-v_n) + a_nv_n = 0.
+  -- We again rearrange the equation to
+  -- a_1v_1 + (a_2-a_1)v_2 + (a_3-a_2)v_3 + ... + (a_n - a_(n-1))v_n = 0.
+  -- It follows:
+  -- 1) a_1 = 0
+  -- 2) a_2 - a_1 = 0
+  -- 3) a_3 - a_2 = 0
+  -- ...
+  -- Substitute 1 in 2:
+  -- a_2 - 0 = 0
+  -- a_2     = 0
+  --
+  -- Substitute 2 in 3 and so on and you get a_1 = a_2 = ... = a_n = 0.
+  -- Hence, the list is linearly independent.
+  -------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.3
+  -------------------------------------------------------------------------
+  -- If (v_1,...,v_n) is linearly independent in V and for w in V
+  --    (v_1+w,v_2+w,...,v_n+w) is linearly dependent, then
+  --    w in span(v_1,...,v_n)
+  -- That (v_1+w,v_2+w,...v_n+w) is lineary dependent means that
+  -- it does not equal (v_1,...,v_n). w, hence, is not 0.
+  -- There is a choice for a_1,a_2,...,a_n, 
+  -- other than a_1 = a_2 = ... = a_n = 0, such that
+  -- a_1(v_1+w) + a_2(v_2+w) + ... + a_n(v_n+w) = 0.
+  -- a_1v_1 + a_2v_2 + ... + a_nv_n + (a1+a_2+...+a_n)w = 0
+  -- a_1v_1 + a_2v_2 + ... + a_nv_n = -(a1+a_2+...+a_n)w 
+  -- (a_1v_1 + a_2v_2 + ... + a_nv_n) / -(a_1+a_2+...+a_n) = w
+  -- (v_1/-(a_2+...+a_n)) + (v_2/-(a_1+a_3+...+a_n)) + ... + (v_n/-(a_1+...a_(n-1)) = w
+  -- set b_1 = 1/-(a_2+...+ a_n), b_2 = 1/-(a_1+_a_3 + ... + a_n),
+  --     ...
+  --     b_n = 1/-(a_1+...+a_(n-1)) and we see that w is in span(v_1,...,v_n):
+  -- b_1v_1 + b_2v_2 + ... b_nv_n = w.
+  -------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.4
+  -------------------------------------------------------------------------
+  -- Is the set {0} ++ P_m(F) a subspace of P(F)?
+  -- No. Because it is not closed under addition.
+  -- Example: m = 2
+  -- p1 = ax^2 + bx + c
+  -- p2 = -ax^2 + dx + e
+  -- p1+p2 = (b+d)x + c + e, which hase degree < m
+  -------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.5
+  -------------------------------------------------------------------------
+  -- F^infinity is infinite dimensional
+  -- We have a list of vectors ((1,0,...), (0,1,0,...), (0,0,1,0,...))
+  -- that is linearly independent.
+  -- The length of any linearly independent list of vectors 
+  -- in a finite dimensional vector space is <= any spanning list
+  -- of that vector space. However, the list above is infinite.
+  -------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------
+  -- Exercises 2.6
+  -------------------------------------------------------------------------
+  -- By fundamental theorem of algebra.
+  -------------------------------------------------------------------------
+  

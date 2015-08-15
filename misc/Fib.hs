@@ -12,6 +12,9 @@ where
   phi :: Double
   phi = 0.5 * (1 + sqrt 5)
 
+  phi' :: Double
+  phi' = 1 - phi
+
   golden :: Double -> Double
   golden a = phi*a
 
@@ -23,3 +26,9 @@ where
   fi :: Integer -> Integer
   fi n = round (phi^n'/sqrt 5)
     where n' = fromIntegral n
+
+  g :: Double -> Double
+  g x = x / (1 - x - x^2)
+
+  g' :: Double -> Double
+  g' x = (1/(sqrt 5)) * (1/(1-x*phi) - 1/(1-x*phi'))

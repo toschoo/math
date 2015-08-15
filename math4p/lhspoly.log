@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  1 AUG 2015 20:23
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  9 AUG 2015 18:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1133,22 +1133,25 @@ Chapter 1.
 
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./lhspoly.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 29010 strings out of 493304
- 673258 string characters out of 6139872
- 821784 words of memory out of 5000000
+ 29009 strings out of 493304
+ 673254 string characters out of 6139872
+ 827784 words of memory out of 5000000
  31912 multiletter control sequences out of 15000+600000
  11191 words of font info for 44 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 70i,7n,80p,10414b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on lhspoly.pdf (1 page, 22239 bytes).
+ 70i,8n,80p,10414b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on lhspoly.pdf (2 pages, 50975 bytes).
 PDF statistics:
- 19 PDF objects out of 1000 (max. 8388607)
- 13 compressed objects within 1 object stream
+ 34 PDF objects out of 1000 (max. 8388607)
+ 24 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
