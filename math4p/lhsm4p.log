@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  15 AUG 2015 13:54
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  16 AUG 2015 18:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -4340,87 +4340,87 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \openout3 = `lhsm4p.ptb'.
 
-
+ [283] [284]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [283]
-[284] [285
-
-
-] [286]
-Chapter 8.
-[287
+ [285]
+[286] [287
 
 
 ] [288]
-Chapter 9.
+Chapter 8.
 [289
 
 
-] [290
+] [290]
+Chapter 9.
+[291
+
+
+] [292
 
 
 ]
 Chapter 10.
-[291] [292
-
-
-]
-Chapter 11.
 [293] [294
 
 
 ]
-Chapter 12.
+Chapter 11.
 [295] [296
 
 
 ]
-Chapter 13.
+Chapter 12.
 [297] [298
 
 
 ]
-Chapter 14.
+Chapter 13.
 [299] [300
 
 
-] [301] [302]
+]
+Chapter 14.
+[301] [302
+
+
+] [303] [304]
 Chapter 15.
-[303
+[305
 
 
-] [304
+] [306
 
 
 ]
 Chapter 16.
-[305] [306
-
-
-]
-Chapter 17.
 [307] [308
 
 
 ]
-Chapter 18.
+Chapter 17.
 [309] [310
 
 
 ]
-Chapter 19.
+Chapter 18.
 [311] [312
 
 
 ]
+Chapter 19.
+[313] [314
+
+
+]
 Chapter 20.
-[313] (./lhsm4p.aux) ) 
+[315] (./lhsm4p.aux) ) 
 Here is how much of TeX's memory you used:
- 30863 strings out of 493304
- 704589 string characters out of 6139872
+ 30874 strings out of 493304
+ 704779 string characters out of 6139872
  841936 words of memory out of 5000000
- 33727 multiletter control sequences out of 15000+600000
+ 33738 multiletter control sequences out of 15000+600000
  25854 words of font info for 99 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,17n,103p,10413b,1699s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4446,10 +4446,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsm4p.pdf (313 pages, 1130203 bytes).
+Output written on lhsm4p.pdf (315 pages, 1135139 bytes).
 PDF statistics:
- 1110 PDF objects out of 1200 (max. 8388607)
- 764 compressed objects within 8 object streams
+ 1116 PDF objects out of 1200 (max. 8388607)
+ 768 compressed objects within 8 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

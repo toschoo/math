@@ -291,4 +291,36 @@ where
     where go x d | x == n = 0
                  | even x = 1/d    + go (x+1) (d+2)
                  | odd  x = (-1)/d + go (x+1) (d+2) 
+
+  ------------------------------------------------------------------------
+  -- Euler Product
+  ------------------------------------------------------------------------
+  eup :: Int -> Double
+  eup i = 4 * (foldl' eufac 1.0 $ take i $ drop 1 allprimes)
+    where eufac :: Double -> Integer -> Double
+          eufac r p = let k | p `rem` 4 == 1 = p-1
+                            | p `rem` 4 == 3 = p+1
+                          n = fromIntegral p
+                          d = fromIntegral k
+                       in r * (n/d)
   
+  ------------------------------------------------------------------------
+  -- Another nice formula: sum of fractions of squares
+  ------------------------------------------------------------------------
+  pisq6 :: Int -> Double
+  pisq6 i = sqrt (6 * (go 1))
+    where go n | n == i    = 0
+               | otherwise = let d = fromIntegral n
+                              in 1/(d^2) + go (n+1)
+  
+  ------------------------------------------------------------------------
+  -- Nilakantha (converges after ~ 35 to 3.14159)
+  ------------------------------------------------------------------------
+  nilak :: Int -> Double
+  nilak i | even i    = go (i+1) 2 3 4
+          | otherwise = go i     2 3 4
+    where go 0 _ _ _ = 3
+          go n a b c = let k | even n    = -4
+                             | otherwise =  4
+                        in (k/(a*b*c)) + go (n-1) c (c+1) (c+2)
+
