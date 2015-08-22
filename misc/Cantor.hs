@@ -278,6 +278,23 @@ where
           go (n,d) (0:bs) = (n,d) : go (n,d+n) bs
 
   ------------------------------------------------------------------------
+  -- greatest common vertex (is it always 2?)
+  ------------------------------------------------------------------------
+  gcv :: [[Int]] -> Int
+  gcv = go (-1) 
+    where go _ []  = 0
+          go m [x] = m
+          go m (h:x:xs) = let m0 = cmp 0 h x 
+                              m' | m == -1 || m0 < m = m0
+                                 | otherwise         = m
+                           in go m' (x:xs)
+          cmp l [] [] = l
+          cmp _ [] _  = error "not the same generation" 
+          cmp _ _ []  = error "not the same generation" 
+          cmp l (a:as) (b:bs) | a == b    = cmp (l+1) as bs
+                              | otherwise = l
+                           
+  ------------------------------------------------------------------------
   -- Try to bridge 2 groups
   ------------------------------------------------------------------------
   bridge :: ([Int] -> [Int]) -> [[Int]] -> [[Int]] -> Bool

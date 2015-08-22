@@ -7,6 +7,7 @@ where
   import Prime
   import Debug.Trace (trace)
   import Data.List (nub,sort,delete,(\\))
+  import Group
 
   ring :: Integer -> [Integer]
   ring p = map (`rem` p) [1..p-1]
@@ -26,9 +27,9 @@ where
                                                   (a2 `rem` n)
 
   instance Num Module where
-    a + b = op add a b
-    a - b = op sub a b
-    a * b = op mul a b
+    a + b = op_ add a b
+    a - b = op_ sub a b
+    a * b = op_ mul a b
     negate (Module a1 n) = Module (-a1) n
     abs    (Module a1 n) = Module (abs a1) n
     signum (Module a1 n) = Module (signum a1) n
@@ -55,8 +56,14 @@ where
                          b = denominator r
                       in tomod b a
 
-  op :: (Module -> Module -> Module) -> Module -> Module -> Module
-  op = withGuard 
+  instance Group Module where
+    op = op_ mul
+    idty = 1
+    inv = minv
+    group (Module n _) = map (tomod n) [1..n-1]
+
+  op_ :: (Module -> Module -> Module) -> Module -> Module -> Module
+  op_ = withGuard 
 
   withGuard :: (Module -> Module -> r) -> Module -> Module -> r
   withGuard f x@(Module a1 n) 
@@ -89,6 +96,9 @@ where
   inverse :: Integer -> Integer -> Integer
   inverse a p = let k = fst $ snd $ xgcd a p 
                  in if k < 0 then k + p else k
+
+  minv :: Module -> Module
+  minv (Module n a) = tomod n $ inverse a n
 
   -- show examples !
   inverses :: Integer -> [(Integer,Integer)]
