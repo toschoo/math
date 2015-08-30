@@ -255,11 +255,20 @@ where
   e = e_ 17
 
   e_ :: Integer -> Double
-  e_ p = 1 + sum (map (\n -> 1/(dfac n)) [1..p])
+  e_ p = 1 + sum [1/(dfac n) | n <- [1..p]]
     where dfac = fromInteger . fac
 
   e__ :: Double -> Double
   e__ n = (1 + 1/n)**n
+
+  stirfac :: Integer -> Integer
+  stirfac i = ceiling $ (sqrt (2*pi*n)) * (n/e)^i
+    where n = fromIntegral i
+
+  devfac :: Integer -> Double
+  devfac i = (sum [100 * (d x) / dfac x  | x <- [1..i]]) / (fromIntegral i)
+    where d x  = fromIntegral (fac x - stirfac x)
+          dfac = fromIntegral . fac
 
   ------------------------------------------------------------------------
   -- Euler-Mascheroni
@@ -287,10 +296,11 @@ where
     where go x d = ((-1.0)**x) * (1/d) : go (x+1) (d+2)
 
   leipi :: Int -> Double
-  leipi n = 4 * go 0 1
-    where go x d | x == n = 0
-                 | even x = 1/d    + go (x+1) (d+2)
-                 | odd  x = (-1)/d + go (x+1) (d+2) 
+  leipi i = 4 * go 0 1
+    where go n d | n == i = 0
+                 | otherwise = let x | even n    = 1
+                                     | otherwise = -1 
+                                in x/d + go (n+1) (d+2)
 
   ------------------------------------------------------------------------
   -- Euler Product
@@ -312,6 +322,14 @@ where
     where go n | n == i    = 0
                | otherwise = let d = fromIntegral n
                               in 1/(d^2) + go (n+1)
+  
+  ------------------------------------------------------------------------
+  -- Viète Product, converges after 10
+  ------------------------------------------------------------------------
+  vietep :: Int -> Double
+  vietep i = 2 / (go 0 (sqrt 2))
+    where go n t | n == i = 1
+                 | otherwise = (t/2) * go (n+1) (sqrt (2+t))
   
   ------------------------------------------------------------------------
   -- Nilakantha (converges after ~ 35 to 3.14159)

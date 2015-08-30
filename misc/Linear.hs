@@ -32,8 +32,16 @@ where
   smul :: (Num a) => a -> [a] -> [a]
   smul a xs = map (a*) xs
 
+  infix 8 *-
+  (*-) :: (Num a) => a -> [a] -> [a]
+  (*-) = smul
+
   dotp :: (Num a) => [a] -> [a] -> [a]
   dotp xs ys = [x*y | (x,y) <- zip xs ys]
+
+  infix 9 -*-
+  (-*-) :: (Num a) => [a] -> [a] -> [a]
+  (-*-) = dotp
 
   lcombine :: (Num a) => [a] -> [[a]] -> [a]
   lcombine as xss = foldl' addV (zero as) [a `smul` xs | (a,xs) <- zip as xss]
@@ -53,6 +61,10 @@ where
                      | otherwise = 
                        M [map sum [dotp x z | z <- zs] | x <- xs]
     where zs = col2row ys
+
+  infix 9 |*|
+  (|*|) :: (Num a) => Matrix a -> Matrix a -> Matrix a
+  (|*|) = mulM
 
   col2row :: [[a]] -> [[a]]
   col2row []     = []

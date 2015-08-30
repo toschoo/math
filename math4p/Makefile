@@ -63,6 +63,7 @@ ALL	 = cmds.tex \
 	   src/c07/ClosedFib.lhs \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
+	   src/c09/linear.lhs \
 	   src/c10/complex.lhs \
 	   src/c11/quadratics.lhs \
 	   src/c12/elliptic.lhs \
