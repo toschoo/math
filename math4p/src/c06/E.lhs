@@ -129,10 +129,90 @@ to a value that does not change with greater
 arguments at |Double| precision, such that 
 |e_ 17 == e_ 18 == e_ 19 ==| $\dots$
 
+The fact that $e$ is related to the factorial
+may led to the suspicion that it also appears
+directly in a formula related with factorials. 
+There, indeed, is a formula derived by Stirling
+who we already know to approximate the value
+of $n!$ without the need to go through all
+the steps of the recursive definition.
+Stirling's formula is as follows:
+
+\begin{equation}
+n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n.
+\end{equation}
+
+This formula is nice already because of the fact
+that $e$ and $\pi$ appear together to compute
+the result of an important function.
+How precise is the approximation?
+To answer this question, we first implement
+Stirling's formula:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  stirfac :: Integer -> Integer
+  stirfac i = ceiling $ (sqrt (2*pi*n)) * (n/e)^i
+    where n = fromIntegral i
+\end{code}
+\end{minipage}
+
+Then we define a function to compute the difference
+|difac n = fac n - stirfac n|.
+The result for the first 15 numbers is
+
+\[
+0,0,0,0,1,9,59,417,3343,30104,301174,3314113,39781324,517289459,7243645800.
+\]
+
+For the first numbers, the difference is 0. Indeed:
+
+\begin{align*}
+1! && = && stirfac(1) && = && 1\\
+2! && = && stirfac(2) && = && 2\\
+3! && = && stirfac(3) && = && 6\\
+4! && = && stirfac(4) && = && 24
+\end{align*}
+
+Then, the functions start to disagree,
+for instance $5! = 120 \neq stirfac(5) = 119$.
+The difference grows rapidly and reaches more
+than 3 million with $12!$. But what is the deviation
+in relation to the real value?
+We define the function 
+|100 * (fromIntegral $ difac n) / (fromIntegral $ fac n)|
+to obtain the difference in terms of a percentage
+of the real value. We see starting from 5
+(where the first difference occurs):
+
+\[
+0.8333,
+1.25,
+1.1706,
+1.0342,
+0.9212,
+0.8295,
+0.7545,
+0.6918,
+0.6388,
+0.5933,
+0.5539,\dots
+\]
+
+For the first numbers is of course 0.
+Then, for 5, the value jumps up to $0.8333\%$,
+climbs even higher to $1.25\%$ and then starts
+to descrease slowly.
+At 42 the deviation falls below $0.2\%$.
+At 84, it falls below $0.1\%$ and keeps falling.
+Even though the difference appears big
+in terms of absolute numbers, the percentage
+quickly shrinks and, for some problems, may
+even be neglible.
+
+
 \ignore{
 - a lot of uses
-- mention natural logarithm and its application to prime distribution
-- Stirling's factorial approximation
 - Normal distribution
 - representation as continued fractions
 }

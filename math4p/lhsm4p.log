@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  30 AUG 2015 13:11
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  5 SEP 2015 20:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1137,13 +1137,13 @@ Overfull \hbox (2.79828pt too wide) detected at line 89
  []
 
 
-Overfull \hbox (2.79828pt too wide) detected at line 90
-\OT1/cmr/m/n/10.95 10.11. 
+Overfull \hbox (2.79828pt too wide) detected at line 100
+\OT1/cmr/m/n/10.95 11.10. 
  []
 
 
 Overfull \hbox (2.79828pt too wide) detected at line 101
-\OT1/cmr/m/n/10.95 11.10. 
+\OT1/cmr/m/n/10.95 11.11. 
  []
 
 [5])
@@ -3926,7 +3926,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22186.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22185.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3940,7 +3940,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22186.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22185.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3954,9 +3954,12 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22186.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22185.
 
-[228]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [228]
 \openout3 = `lhsm4p.ptb'.
 
 \openout3 = `lhsm4p.ptb'.
@@ -3974,7 +3977,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22233.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22232.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3988,7 +3991,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22233.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22232.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4002,7 +4005,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22233.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22232.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -4029,7 +4032,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22435.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22434.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4043,7 +4046,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22435.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22434.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4057,81 +4060,81 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22435.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22434.
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  $[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22369--22436
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22368--22435
  [][][][][][][][][]$ 
  []
 
@@ -4146,11 +4149,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-[231] [232] [233] [234] [235] [236] [237]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [238]
-[239] [240] [241] [242] [243] [244]
+[231] [232] [233] [234] [235] [236] [237] [238] [239] [240] [241] [242]
+[243] [244]
 \openout3 = `lhsm4p.ptb'.
 
 
@@ -4168,7 +4168,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-Underfull \vbox (badness 1038) has occurred while \output is active []
+Underfull \vbox (badness 1168) has occurred while \output is active []
 
  [247]
 \openout3 = `lhsm4p.ptb'.
@@ -4363,87 +4363,88 @@ Underfull \vbox (badness 1502) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-[286]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[286] [287] [288]
+\openout3 = `lhsm4p.ptb'.
 
- [287]
-[288] [289
+\openout3 = `lhsm4p.ptb'.
 
-
-] [290]
-Chapter 8.
-[291
+ [289] [290] [291
 
 
 ] [292]
-Chapter 9.
+Chapter 8.
 [293
 
 
-] [294
+] [294]
+Chapter 9.
+[295
+
+
+] [296
 
 
 ]
 Chapter 10.
-[295] [296
-
-
-]
-Chapter 11.
 [297] [298
 
 
 ]
-Chapter 12.
+Chapter 11.
 [299] [300
 
 
 ]
-Chapter 13.
+Chapter 12.
 [301] [302
 
 
 ]
-Chapter 14.
+Chapter 13.
 [303] [304
 
 
-] [305] [306]
+]
+Chapter 14.
+[305] [306
+
+
+] [307] [308]
 Chapter 15.
-[307
+[309
 
 
-] [308
+] [310
 
 
 ]
 Chapter 16.
-[309] [310
-
-
-]
-Chapter 17.
 [311] [312
 
 
 ]
-Chapter 18.
+Chapter 17.
 [313] [314
 
 
 ]
-Chapter 19.
+Chapter 18.
 [315] [316
 
 
 ]
+Chapter 19.
+[317] [318
+
+
+]
 Chapter 20.
-[317] (./lhsm4p.aux) ) 
+[319] (./lhsm4p.aux) ) 
 Here is how much of TeX's memory you used:
- 30875 strings out of 493304
- 704787 string characters out of 6139872
+ 30876 strings out of 493304
+ 704795 string characters out of 6139872
  841936 words of memory out of 5000000
- 33739 multiletter control sequences out of 15000+600000
+ 33740 multiletter control sequences out of 15000+600000
  25854 words of font info for 99 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,17n,103p,10413b,1699s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4469,10 +4470,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsm4p.pdf (317 pages, 1142141 bytes).
+Output written on lhsm4p.pdf (319 pages, 1150766 bytes).
 PDF statistics:
- 1122 PDF objects out of 1200 (max. 8388607)
- 772 compressed objects within 8 object streams
+ 1129 PDF objects out of 1200 (max. 8388607)
+ 777 compressed objects within 8 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

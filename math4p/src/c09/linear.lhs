@@ -1,11 +1,10 @@
-\section{Linear Equations}
-\section{Gaussian Elimination}
-\section{Determinants}
 \section{Vectors}
 \section{Vector Spaces}
-\section{Linear Maps}
+\section{Linear Maps and Operators}
 \section{Operators}
 \section{Eigenvalues}
+\section{Inner Products and Operators}
 \section{Polynomials and Vector Spaces}
-\section{Real Vector Spaces}
-\section{Determinants revisited}
+\section{Determinants}
+\section{Clustering Algorithms}
+\section{Support Vector Machines}

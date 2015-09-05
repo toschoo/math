@@ -5,6 +5,6 @@
 \section{The Method of partial Fractions}
 %include PartialF.lhs
 \section{The Difference Engine}
-\section{More Series}
+\section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 %include ClosedFib.lhs

@@ -4,11 +4,11 @@
 %include Zahl.lhs
 \section{Negative Binomial Coefficients}
 %include NegBinom.lhs
-\section{Diophantine Equations}
 \section{$\mathbb{Q}$}
 %include Quoz.lhs
 \section{Zeno's Paradox}
 %include Zeno.lhs
+\section{Linear Equations} % including diophantine equations
 \section{Binomial Coefficients are Integers}
 %include BinomInt.lhs
 \section{Euler's Totient Function} % Carmichael Theorem

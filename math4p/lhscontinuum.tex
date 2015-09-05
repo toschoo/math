@@ -1033,10 +1033,100 @@ to a value that does not change with greater
 arguments at \ensuremath{\Conid{Double}} precision, such that 
 \ensuremath{\Varid{e\char95 }\;\mathrm{17}\equiv \Varid{e\char95 }\;\mathrm{18}\equiv \Varid{e\char95 }\;\mathrm{19}\equiv } $\dots$
 
+The fact that $e$ is related to the factorial
+may led to the suspicion that it also appears
+directly in a formula related with factorials. 
+There, indeed, is a formula derived by Stirling
+who we already know to approximate the value
+of $n!$ without the need to go through all
+the steps of the recursive definition.
+Stirling's formula is as follows:
+
+\begin{equation}
+n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n.
+\end{equation}
+
+This formula is nice already because of the fact
+that $e$ and $\pi$ appear together to compute
+the result of an important function.
+How precise is the approximation?
+To answer this question, we first implement
+Stirling's formula:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{stirfac}\mathbin{::}\Conid{Integer}\to \Conid{Integer}{}\<[E]%
+\\
+\>[3]{}\Varid{stirfac}\;\Varid{i}\mathrel{=}\Varid{ceiling}\mathbin{\$}(\Varid{sqrt}\;(\mathrm{2}\mathbin{*}\Varid{pi}\mathbin{*}\Varid{n}))\mathbin{*}(\Varid{n}\mathbin{/}\Varid{e})\mathbin{\uparrow}\Varid{i}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{n}\mathrel{=}\Varid{fromIntegral}\;\Varid{i}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Then we define a function to compute the difference
+\ensuremath{\Varid{difac}\;\Varid{n}\mathrel{=}\Varid{fac}\;\Varid{n}\mathbin{-}\Varid{stirfac}\;\Varid{n}}.
+The result for the first 15 numbers is
+
+\[
+0,0,0,0,1,9,59,417,3343,30104,301174,3314113,39781324,517289459,7243645800.
+\]
+
+For the first numbers, the difference is 0. Indeed:
+
+\begin{align*}
+1! && = && stirfac(1) && = && 1\\
+2! && = && stirfac(2) && = && 2\\
+3! && = && stirfac(3) && = && 6\\
+4! && = && stirfac(4) && = && 24
+\end{align*}
+
+Then, the functions start to disagree,
+for instance $5! = 120 \neq stirfac(5) = 119$.
+The difference grows rapidly and reaches more
+than 3 million with $12!$. But what is the deviation
+in relation to the real value?
+We define the function 
+\ensuremath{\mathrm{100}\mathbin{*}(\Varid{fromIntegral}\mathbin{\$}\Varid{difac}\;\Varid{n})\mathbin{/}(\Varid{fromIntegral}\mathbin{\$}\Varid{fac}\;\Varid{n})}
+to obtain the difference in terms of a percentage
+of the real value. We see starting from 5
+(where the first difference occurs):
+
+\[
+0.8333,
+1.25,
+1.1706,
+1.0342,
+0.9212,
+0.8295,
+0.7545,
+0.6918,
+0.6388,
+0.5933,
+0.5539,\dots
+\]
+
+For the first numbers is of course 0.
+Then, for 5, the value jumps up to $0.8333\%$,
+climbs even higher to $1.25\%$ and then starts
+to descrease slowly.
+At 42 the deviation falls below $0.2\%$.
+At 84, it falls below $0.1\%$ and keeps falling.
+Even though the difference appears big
+in terms of absolute numbers, the percentage
+quickly shrinks and, for some problems, may
+even be neglible.
+
+
 \ignore{
 - a lot of uses
-- mention natural logarithm and its application to prime distribution
-- Stirling's factorial approximation
 - Normal distribution
 - representation as continued fractions
 }
