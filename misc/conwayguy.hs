@@ -270,6 +270,20 @@ where
     where d x  = fromIntegral (fac x - stirfac x)
           dfac = fromIntegral . fac
 
+  contfrac :: [Rational] -> Double
+  contfrac [] = 0
+  contfrac (i:is) = n + 1 / (contfrac is)
+    where n = fromRational i
+
+  engelexp :: [Integer]
+  engelexp = 2:1:go 1
+    where go n = (2*n):1:1:go(n+1)
+
+  fastexp :: [Rational]
+  fastexp = 1:(1%2):go 1
+    where go n = (16*n-4):(4*n+1):go (n+1)
+
+
   ------------------------------------------------------------------------
   -- Euler-Mascheroni
   ------------------------------------------------------------------------

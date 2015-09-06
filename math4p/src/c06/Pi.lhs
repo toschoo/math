@@ -8,9 +8,7 @@ where
 }
 
 $\pi$ is probably the most famous 
-irrational number. We, therefore,
-do not need much of an explanation
-to introduce that number. 
+irrational number. 
 $\pi$ emerged in antique mathematics
 in studying the circle.
 $\pi$ expresses the relation between
@@ -56,7 +54,7 @@ its perimeter, the sum of all its sides is
 $1+1+1+1 = 4$ and, as we can see clearly
 in the picture above, the perimeter
 is greater than that of the circle.
-4, hence, is an upper bound for the perimeter
+4, hence, is an upper bound for the circumference
 of the circle with perimeter 1.
 A lower bound would then be given
 by a square inscribed in the circle,
@@ -146,7 +144,7 @@ In modern times, mathematicians started to search
 for approximations by other means than geometry,
 in particular by infinite series. One of the first series
 was discovered by Indian mathematician Nilakantha Somayaji
-(1444 -- 1544) in the $15^{th}$ century. It goes like
+(1444 -- 1544). It goes like
 
 \begin{equation}
   \pi = 3 + \frac{4}{2\times 3 \times 4} -
@@ -173,7 +171,8 @@ Here we use a negative term, whenever $n$,
 the counter for the step we are performing,
 is even. Since, with this approach, an even number
 of steps would produce a bad approximation, 
-for $i$ even, we perform $i+1$, and odd number
+we perform, for $i$ even, $i+1$
+and hence an odd number
 of steps.
 This way, the series converges to 3.14159
 after about 35 steps, \ie\ |nilak 35| is
@@ -261,7 +260,7 @@ prime factors. The probability of a number
 being divisible by a given prime $p$ is $\frac{1}{p}$,
 since every $p^{th}$ number is divisible by $p$.
 For two independently chosen number, the
-probability that both are not divisible by prime $p$
+probability that both are divisible by prime $p$
 is therefore $\frac{1}{p} \times \frac{1}{p} = \frac{1}{p^2}$.
 The reversed probability that both are not divisible
 by that prime, hence, is $1-\frac{1}{p^2}$.
@@ -284,4 +283,4 @@ the equation
 
 and with this $\pi$ appears as a constant in
 number theory expressing the probability
-of two randomly chosen number being coprimes.
+of two randomly chosen numbers being coprime to each other.

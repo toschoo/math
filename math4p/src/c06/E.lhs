@@ -19,7 +19,7 @@ Johann Bernoulli (1667 -- 1748) who worked mainly
 in calculus and tutored famous mathematicians like 
 Guillaume L'Hôpital, but whose greatest contribution
 to the history of math was perhaps to recognise 
-the enornous talent of another of his pupils named
+the enormous talent of another of his pupils named
 Leonhard Euler. 
 
 His brother Jacob Bernoulli (1655 -- 1705),
@@ -57,9 +57,9 @@ in our account. After one year, the account would then be
 $1.5 + \frac{1.5*50}{100} = 1.5 + \frac{75}{100} = 1.5 + 0.75 = 2.25$.
 
 Another way to see this is that the initial value 
-is multiplied with 1.5 (the initial value plus the interest) twice:
+is multiplied by 1.5 (the initial value plus the interest) twice:
 $1 \times 1.5 \times 1.5 = 1 \times 1.5^2 = 2.25$.
-If reduce the period even further, say, to three months,
+When we reduce the period even further, say, to three months,
 then we had $1.25^4 \approx 2.4414$. On a monthly base,
 we would get $(1+\frac{1}{12})^{12} \approx 2.613$.
 On a daily basis, we would have 
@@ -93,12 +93,12 @@ for the first written appearance
 of concepts related to it in 1618,
 Napier's number.
 It is a pity that its first mentioning
-was not the year 1828.
+was not in the year 1828.
 But who knows -- perhaps in some rare
 Maya calendar the year 1618 
 actually is the year 1828.
 
-An alternative way to approach it
+An alternative way to approach $e$
 that converges much faster than the closed form above
 is the following:
 
@@ -123,7 +123,7 @@ We can implement this equation in Haskell as
 \end{minipage}
 
 After some experiments with this function,
-we see that,
+we see that
 it converges already after 17 recursions
 to a value that does not change with greater
 arguments at |Double| precision, such that 
@@ -131,21 +131,22 @@ arguments at |Double| precision, such that
 
 The fact that $e$ is related to the factorial
 may led to the suspicion that it also appears
-directly in a formula related with factorials. 
-There, indeed, is a formula derived by Stirling
-who we already know to approximate the value
+directly in a formula related to factorials. 
+There, indeed, is a formula derived by James Stirling
+who we already know for the Stirling numbers.
+This formula approximates the value
 of $n!$ without the need to go through all
-the steps of the recursive definition.
+the steps of the recursive definition of the factorial.
 Stirling's formula is as follows:
 
 \begin{equation}
 n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n.
 \end{equation}
 
-This formula is nice already because of the fact
+This equation is nice already because of the fact
 that $e$ and $\pi$ appear together to compute
 the result of an important function.
-How precise is the approximation?
+But how precise is the approximation?
 To answer this question, we first implement
 Stirling's formula:
 
@@ -156,6 +157,9 @@ Stirling's formula:
     where n = fromIntegral i
 \end{code}
 \end{minipage}
+
+Note that we \emph{ceil} the value, instead of
+round it just to the next integer value.
 
 Then we define a function to compute the difference
 |difac n = fac n - stirfac n|.
@@ -199,8 +203,8 @@ of the real value. We see starting from 5
 0.5539,\dots
 \]
 
-For the first numbers is of course 0.
-Then, for 5, the value jumps up to $0.8333\%$,
+For 5, the value jumps up to $0.8333\%$
+(before it was just 0 of course),
 climbs even higher to $1.25\%$ and then starts
 to descrease slowly.
 At 42 the deviation falls below $0.2\%$.
@@ -210,14 +214,91 @@ in terms of absolute numbers, the percentage
 quickly shrinks and, for some problems, may
 even be neglible.
 
+A completely different way to approximate $e$
+is by \term{continued fractions}.
+Continued fractions are infinite fractions,
+where each denominator is again a fraction.
+For instance:
 
-\ignore{
-- a lot of uses
-- Normal distribution
-- representation as continued fractions
-}
+\begin{equation}
+  e =  1 + \frac{1}{
+         1 + \frac{1}{
+           2 + \frac{1}{
+             1 + \frac{1}{
+               1 + \frac{1}{
+                 4 + \frac{1}{\dots}}}}}}
+\end{equation}
 
+A more readable representation of continued fractions
+is by sequences of the denominator like:
 
+\begin{equation}
+e = [2;1,2,1,1,4,1,1,6,1,1,8,1,1,\dots]
+\end{equation}
 
+where the first number is separated by a semicolon
+to highlight the fact that it is not a denominator,
+but an integral number added to the fraction that follows.
+We can capture this very nicely in Haskell,
+using just a list of integers.
+However, in some cases we might have a fraction
+with numerators other than 1.
+An elegant way to represent this case is by
+using fractions instead of integers.
+We would then represent $\frac{2}{a + \dots}$
+as $\frac{1}{\frac{1}{2}a + \dots}$.
+Here is an implementation:
 
+\begin{minipage}{\textwidth}
+\begin{code}
+  contfrac :: [Quoz] -> Double
+  contfrac [] = 0
+  contfrac (i:is) = n + 1 / (contfrac is)
+    where n = fromRational i
+\end{code}
+\end{minipage}
 
+For |contfrac [2,1,2,1,1,4,1,1,6]| we get 2.7183,
+which is not bad, but not yet too close to $e$. 
+With |[2,1,2,1,1,4,1,1,6,1,1,8,1,1,10]| we get 2.718281828,
+which is pretty close.
+
+Examining the sequence a bit further, we see
+that is has a regular structure.
+We can generate it by means of the \term{Engel expansion}
+named for Friedrich Engel (1861 -- 1941), 
+a German mathematician who worked close with the great
+Norwegian algebraist Sophus Lie (1842 -- 1899).
+The Engel expansion can be implemented as follows:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  engelexp :: [Integer]
+  engelexp = 2:1:go 1
+    where go n = (2*n):1:1:go(n+1)
+\end{code}
+\end{minipage}
+
+The following fraction, however, conoverges
+must faster than the Engel expansion:
+$[1,\frac{1}{2},12,5,28,9,44,13]$.
+Note that we take advantage of the datatype |Quoz|
+to represent a numerator that is not 1.
+This sequence can be generated by means of 
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fastexp :: [Quoz]
+  fastexp = 1:(1%2):go 1
+    where go n = (16*n-4):(4*n+1):go (n+1)
+\end{code}
+\end{minipage}
+
+This fraction converges already after 7 steps
+to the value 2.718281828: 
+
+|contfrac (take 7 fastexp)|. 
+
+The area of mathematics where $e$ is really at home
+is analysis and its vast areas of application, 
+which we will study in the third part of this series.

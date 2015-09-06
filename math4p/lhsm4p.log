@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  5 SEP 2015 20:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  6 SEP 2015 19:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1131,26 +1131,28 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 107.
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 
-] (./lhsm4p.toc [3] [4]
-Overfull \hbox (2.79828pt too wide) detected at line 89
-\OT1/cmr/m/n/10.95 10.10. 
- []
+] (./lhsm4p.toc [3]
+Underfull \vbox (badness 1117) has occurred while \output is active []
 
-
-Overfull \hbox (2.79828pt too wide) detected at line 100
+ [4]
+Overfull \hbox (2.79828pt too wide) detected at line 98
 \OT1/cmr/m/n/10.95 11.10. 
  []
 
 
-Overfull \hbox (2.79828pt too wide) detected at line 101
+Overfull \hbox (2.79828pt too wide) detected at line 99
 \OT1/cmr/m/n/10.95 11.11. 
  []
 
-[5])
+
+Underfull \vbox (badness 1122) has occurred while \output is active []
+
+ [5])
 \tf@toc=\write5
 \openout5 = `lhsm4p.toc'.
 
- [6]
+
+[6]
 Chapter 1.
 [7
 
@@ -4354,92 +4356,98 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [283] [284]
 \openout3 = `lhsm4p.ptb'.
 
-
-Underfull \vbox (badness 1502) has occurred while \output is active []
-
  [285]
 \openout3 = `lhsm4p.ptb'.
 
 \openout3 = `lhsm4p.ptb'.
 
+ [286] [287]
+\openout3 = `lhsm4p.ptb'.
 
-[286] [287] [288]
+ [288]
+\openout3 = `lhsm4p.ptb'.
+
+ [289]
 \openout3 = `lhsm4p.ptb'.
 
 \openout3 = `lhsm4p.ptb'.
 
- [289] [290] [291
+ [290]
+\openout3 = `lhsm4p.ptb'.
+
+ [291] [292
 
 
-] [292]
+]
+[293] [294]
 Chapter 8.
-[293
-
-
-] [294]
-Chapter 9.
 [295
 
 
-] [296
+] [296]
+Chapter 9.
+[297
+
+
+] [298
 
 
 ]
 Chapter 10.
-[297] [298
-
-
-]
-Chapter 11.
 [299] [300
 
 
 ]
-Chapter 12.
+Chapter 11.
 [301] [302
 
 
 ]
-Chapter 13.
+Chapter 12.
 [303] [304
 
 
 ]
-Chapter 14.
+Chapter 13.
 [305] [306
 
 
-] [307] [308]
+]
+Chapter 14.
+[307] [308
+
+
+] [309] [310]
 Chapter 15.
-[309
+[311
 
 
-] [310
+] [312
 
 
 ]
 Chapter 16.
-[311] [312
-
-
-]
-Chapter 17.
 [313] [314
 
 
 ]
-Chapter 18.
+Chapter 17.
 [315] [316
 
 
 ]
-Chapter 19.
+Chapter 18.
 [317] [318
 
 
 ]
+Chapter 19.
+[319] [320
+
+
+]
 Chapter 20.
-[319] (./lhsm4p.aux) ) 
+[321] (./lhsm4p.aux) ) 
 Here is how much of TeX's memory you used:
  30876 strings out of 493304
  704795 string characters out of 6139872
@@ -4470,10 +4478,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsm4p.pdf (319 pages, 1150766 bytes).
+Output written on lhsm4p.pdf (321 pages, 1154586 bytes).
 PDF statistics:
- 1129 PDF objects out of 1200 (max. 8388607)
- 777 compressed objects within 8 object streams
+ 1135 PDF objects out of 1200 (max. 8388607)
+ 781 compressed objects within 8 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
