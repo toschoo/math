@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  6 SEP 2015 19:55
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  12 SEP 2015 20:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -4361,98 +4361,119 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 \openout3 = `lhsm4p.ptb'.
 
- [286] [287]
-\openout3 = `lhsm4p.ptb'.
-
- [288]
-\openout3 = `lhsm4p.ptb'.
-
- [289]
+ [286] [287] [288]
 \openout3 = `lhsm4p.ptb'.
 
 \openout3 = `lhsm4p.ptb'.
 
- [290]
 \openout3 = `lhsm4p.ptb'.
 
- [291] [292
+ [289] [290]
+\openout3 = `lhsm4p.ptb'.
+
+\openout3 = `lhsm4p.ptb'.
+
+\openout3 = `lhsm4p.ptb'.
 
 
-]
-[293] [294]
+NOTE: coordinate (0Y0.0e0],3Y0.0e0]) has been dropped because it is unbounded (
+in y). (see also unbounded coords=jump). 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [291]
+\openout3 = `lhsm4p.ptb'.
+
+
+[292]
+\openout3 = `lhsm4p.ptb'.
+
+ [293]
+\openout3 = `lhsm4p.ptb'.
+
+\openout3 = `lhsm4p.ptb'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [294]
+[295] [296
+
+
+] [297] [298]
 Chapter 8.
-[295
+[299
 
 
-] [296]
+] [300]
 Chapter 9.
-[297
+[301
 
 
-] [298
+] [302
 
 
 ]
 Chapter 10.
-[299] [300
-
-
-]
-Chapter 11.
-[301] [302
-
-
-]
-Chapter 12.
 [303] [304
 
 
 ]
-Chapter 13.
+Chapter 11.
 [305] [306
 
 
 ]
-Chapter 14.
+Chapter 12.
 [307] [308
 
 
-] [309] [310]
+]
+Chapter 13.
+[309] [310
+
+
+]
+Chapter 14.
+[311] [312
+
+
+] [313] [314]
 Chapter 15.
-[311
+[315
 
 
-] [312
+] [316
 
 
 ]
 Chapter 16.
-[313] [314
-
-
-]
-Chapter 17.
-[315] [316
-
-
-]
-Chapter 18.
 [317] [318
 
 
 ]
-Chapter 19.
+Chapter 17.
 [319] [320
 
 
 ]
+Chapter 18.
+[321] [322
+
+
+]
+Chapter 19.
+[323] [324
+
+
+]
 Chapter 20.
-[321] (./lhsm4p.aux) ) 
+[325] (./lhsm4p.aux) ) 
 Here is how much of TeX's memory you used:
- 30876 strings out of 493304
- 704795 string characters out of 6139872
- 841936 words of memory out of 5000000
- 33740 multiletter control sequences out of 15000+600000
+ 30887 strings out of 493304
+ 705003 string characters out of 6139872
+ 843962 words of memory out of 5000000
+ 33751 multiletter control sequences out of 15000+600000
  25854 words of font info for 99 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,17n,103p,10413b,1699s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4478,10 +4499,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsm4p.pdf (321 pages, 1154586 bytes).
+Output written on lhsm4p.pdf (325 pages, 1164175 bytes).
 PDF statistics:
- 1135 PDF objects out of 1200 (max. 8388607)
- 781 compressed objects within 8 object streams
+ 1149 PDF objects out of 1200 (max. 8388607)
+ 791 compressed objects within 8 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

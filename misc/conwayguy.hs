@@ -291,9 +291,27 @@ where
   gamma_ n = let d = fromIntegral n
               in sum [1/k | k <- [1.0..d]] - log d
 
+  pquoz :: Integer -> [Double]
+  pquoz n = let ps = map fromIntegral (takeWhile (<n) allprimes)
+                d  = fromIntegral n
+             in [d/p | p <- ps]
+
+  pquozavg :: Integer -> Double
+  pquozavg n = let qs = pquoz n
+                   ns = map (fromIntegral . ceiling) qs
+                   ds = [n - q | (n,q) <- zip ns qs]
+                in (sum ds) / (fromIntegral $ length ds)
+
   gamma :: Double
   gamma = gamma_ 250000
+
+  harmonatural :: Integer -> Double
+  harmonatural n = harmonic n - ln n
+    where ln = log . fromIntegral
  
+  ------------------------------------------------------------------------
+  -- Poussin
+  ------------------------------------------------------------------------
   poussin :: Integer -> Double
   poussin n = let ps = map fromIntegral (takeWhile (< n) allprimes)
                   d  = fromIntegral n

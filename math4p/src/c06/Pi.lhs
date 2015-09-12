@@ -9,9 +9,9 @@ where
 
 $\pi$ is probably the most famous 
 irrational number. 
-$\pi$ emerged in antique mathematics
-in studying the circle.
-$\pi$ expresses the relation between
+It emerged in antique mathematics
+in studying the circle where
+it expresses the relation between
 the diameter (depicted in red in the
 image below) and the circumference
 (depicted in black):
@@ -52,7 +52,7 @@ perimeter 1:
 Since the square has side length 1,
 its perimeter, the sum of all its sides is
 $1+1+1+1 = 4$ and, as we can see clearly
-in the picture above, the perimeter
+in the picture above, this perimeter
 is greater than that of the circle.
 4, hence, is an upper bound for the circumference
 of the circle with perimeter 1.
@@ -107,8 +107,14 @@ which is
 1 = \sqrt{2}b.
 \end{equation}
 
-$b$, the side length of the green square,
-hence, is $\frac{1}{\sqrt{2}}$, which is
+Dividing both sides by $\sqrt{2}$, 
+we get 
+
+\begin{equation}
+b = \frac{1}{\sqrt{2}},
+\end{equation}
+
+the side length of the green square, which is
 approximately 0.707. The perimeter of
 the inner square is thus $4 \times 0.707$,
 which is approximately 2.828.
@@ -119,7 +125,7 @@ There is room for a lot of numbers between
 2.828 and 4. The method was therefore extended
 by choosing polygons with more than four sides
 to come closer to the real value of $\pi$.
-The antique record holder for approximating $\pi$
+The ancient record holder for approximating $\pi$
 is Archimedes who started off with a hexagon,
 which is easy to construct with compass and ruler:
 
@@ -201,6 +207,8 @@ very nice recursive function:
 \end{code}
 \end{minipage}
 
+The approximation 3.14159 is reached with |vietep 10|.
+
 There are many other series, 
 some focusing on early convergence,
 others on beauty.
@@ -250,7 +258,12 @@ for the special case $s=2$:
 \end{equation}
 
 Euler showed that, for the special case $s=2$,
-$\zeta$ is $\frac{\pi^2}{6}$. 
+$\zeta(s)$ converges to $\frac{\pi^2}{6}$; in fact, for any $n$,
+$n$ a multiple of 2, $\zeta(n)$
+converges to some fraction of a power of $\pi$,
+\eg\ $\zeta(4)$ approaches $\frac{\pi^4}{90}$,
+$\zeta(6)$ approaches $\frac{\pi^6}{945}$ and so on.
+
 This is surprising, because the zeta function
 is not related to circles, but to number theory.
 It appears for example, when calculating the
@@ -259,10 +272,10 @@ Two numbers are coprime if they do not share
 prime factors. The probability of a number
 being divisible by a given prime $p$ is $\frac{1}{p}$,
 since every $p^{th}$ number is divisible by $p$.
-For two independently chosen number, the
+For two independently chosen numbers, the
 probability that both are divisible by prime $p$
 is therefore $\frac{1}{p} \times \frac{1}{p} = \frac{1}{p^2}$.
-The reversed probability that both are not divisible
+The reverse probability that both are not divisible
 by that prime, hence, is $1-\frac{1}{p^2}$.
 The probablitiy that there is no prime at all
 that divides both is then

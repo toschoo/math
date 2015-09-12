@@ -40,14 +40,12 @@ then the smaller quantity.
 The golden ratio is known since antiquity.
 The symbol $\Phi$ is an homage to ancient Greek
 sculptor and painter Phidias (480 -- 430 \acronym{bc}).
-Its first heyday after antiquity had 
-the divine proportion during Renaissance and then
-again in the $18^{th}$ and $19^{th}$ centuries.
+Its first heyday after antiquity was
+during Renaissance and then it was again
+extremely popular in the $18^{th}$ and $19^{th}$ centuries.
 Up to our times, artists, writers and mathematicians 
 have repeatedly called the golden ratio 
-especially pleasing. But, here, of course,
-we will refrain from aesthetical judgements
-outside the realm of mathematics.
+especially pleasing. 
 
 From equation \ref{eq:phi_2} we can derive
 the numerical value of $\Phi$ in the form
@@ -79,7 +77,7 @@ we get
 \end{equation}
 
 This is a quadratic equation and,
-with some phantasy, we can even
+with some phantasy, we even
 recognise the fragment of a binomial formula on the
 left side. A complete binomial formula would be
 
@@ -135,7 +133,7 @@ Finally, we add $\frac{1}{2}$ to both sides:
 
 and voilá that is $\Phi$.
 The numerical value is approximately
-$1.618033988749895$.
+\num{1.618033988749895}.
 We can define it as a constant in Haskell as
 
 \begin{minipage}{\textwidth}
@@ -155,16 +153,16 @@ yields $b$:
 \end{code}
 \end{minipage}
 
-|golden 1|, of course is just $\Phi$, \ie\ 
-$1.618033988749895$.
-|golden 2| is twice that value, namely $3.23606797749979$.
+|golden 1|, of course, is just $\Phi$, \ie\ 
+\num{1.618033988749895}.
+|golden 2| is twice that value, namely \num{3.23606797749979}.
 Furthermore, we can state that
 |2 / (golden 2 - 2)|, which is $\frac{a}{b-a}$, is
-approximately the same, namely, again, an approximation
-to $\Phi$.
+again an approximation
+of $\Phi$.
 
 That is very nice. But there is more to come.
-$\Phi$, in fact, is intimately connected to the Fibonacci Sequence,
+$\Phi$, in fact, is intimately connected to the Fibonacci sequence,
 as we will se in the next chapter.
 
 
