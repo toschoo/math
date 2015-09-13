@@ -297,7 +297,7 @@ where
              in [d/p | p <- ps]
 
   pquozavg :: Integer -> Double
-  pquozavg n = let qs = pquoz n
+  pquozavg n = let qs = {- filter (\q -> ceiling q /= floor q) $ -} pquoz n
                    ns = map (fromIntegral . ceiling) qs
                    ds = [n - q | (n,q) <- zip ns qs]
                 in (sum ds) / (fromIntegral $ length ds)
@@ -319,6 +319,24 @@ where
                   ns = map (fromIntegral . ceiling) qs
                   ds = [x - y | x <- ns, y <- qs]
                in sum ds / fromIntegral (length ds) 
+ 
+  ------------------------------------------------------------------------
+  -- Dirichlet
+  ------------------------------------------------------------------------
+  divsupn :: Integer -> [[Integer]]
+  divsupn n = map divs [1..n]
+
+  ndivs :: Integer -> [Int]
+  ndivs = map length . divsupn
+
+  sumndivs :: Integer -> Int
+  sumndivs = sum . ndivs
+
+  dirichlet :: Integer -> Double
+  dirichlet n = s / l
+    where ds = ndivs n
+          l  = fromIntegral $ length ds
+          s  = fromIntegral $ sum ds
 
   ------------------------------------------------------------------------
   -- Leibniz Series

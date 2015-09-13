@@ -974,7 +974,8 @@ Surprisingly or not, the Calkin-Wilf sequence
 is not completely new. A part of it was already studied
 in the $19^{th}$ century by 
 German mathematician Moritz Stern (1807 -- 1894),
-successor of Gauss at the university of Göttingen
+successor of the early deceased sucessor of Gauss
+at the University of Göttingen, Lejeune-Dirichlet, 
 and professor of Bernhard Riemann.
 The numerators of the Calkin-Wilf sequence correspond to 
 \term{Stern's diatomic sequence}.

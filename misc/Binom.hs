@@ -95,10 +95,9 @@ where
   pascalRule1 n k = choose n k + choose n (k+1)
 
   harmonic :: Integer -> Double
-  harmonic n = go 1.0
-    where go i | i >  n'   = 0.0
-               | otherwise = 1.0 / i + go (i+1.0)
-          n' = fromIntegral n
+  harmonic 1 = 1
+  harmonic n = 1/d + harmonic (n-1)
+    where d = fromIntegral n
 
   phi :: Double
   phi = 0.5 * (1 + sqrt 5)
