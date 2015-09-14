@@ -96,18 +96,17 @@ Alexandria.
 
 The idea of Heron's method, basically, is to
 iteratively approximate the real value starting with a guess.
-We can start with some arbitrary value --
-a good starting point, however, 
-comes out of the root algorithm defined in the first chapter.
-If $\sqrt{n}$ is not an integer, then our start value
-is either slightly too big or too small,
-\ie\ we either have $xx > n$ or $xx < n$.
+We can start with some arbitrary value.
+If the first guess, say $g$, does not equal $\sqrt{n}$, 
+\ie\ $gg \neq n$, then $g$
+is either slightly too big or too small.
+We either have $gg > n$ or $gg < n$.
 So, on each step, we improve a bit on the value
-by taking the average of $x$ and its counterpart $n/x$.
-If $xx > n$, then clearly $n/x < x$ and, 
-if $xx < n$, then $n/x > x$.
-The average of $x$ and $a/x$ is calculated as
-$(x+a/x)/2$. The result is used as guess for the next round.
+by taking the average of $g$ and its counterpart $n/g$.
+If $gg > n$, then clearly $n/g < g$ and, 
+if $gg < n$, then $n/g > g$.
+The average of $g$ and $a/g$ is calculated as
+$(g+a/g)/2$. The result is used as input for the next round.
 The more iterations of this kind we do,
 the better is the approximation. In Haskell:
 
@@ -116,13 +115,14 @@ the better is the approximation. In Haskell:
   heron :: Natural -> Natural -> Double
   heron n s = let a   = fromIntegral n in go s a (a/2)
     where  go 0 _ x   = x
-           go i a x   = go (i-1) a ((x + a/x)/2)
+           go i a x   |  xx = a     = x
+                      |  otherwise  = go (i-1) a ((x + a/x)/2)
 \end{code}
 \end{minipage}
 
 The function takes two arguments.
 The first is the number whose square root we want to calculate
-and the second is the number of iterations.
+and the second is the number of iterations we want to do.
 We then call |go| with $s$, the number of iterations,
 $a$, the |Double| representation of $n$, and our first guess
 $a/2$.

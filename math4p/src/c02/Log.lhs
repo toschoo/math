@@ -115,7 +115,8 @@ could be implemented as follows:
 From |power|, we can go on further,
 introducing an operator that operates on powers,
 and, indeed, there is Knuth's \term{up-arrow} notation:
-$a \uparrow\uparrow b = a^{b^{b^{\dots}}}$.
+$a \uparrow\uparrow b = a^{b^{b^{\dots}}}$, which
+indicates that we raise $a$ $b$ times to the $b^{th}$ power. 
 When we have defined this, 
 we can go on by introducing even more arrows:
 $a \uparrow\uparrow\uparrow b = a(\uparrow\uparrow (b \uparrow\uparrow (b \dots)))$
@@ -138,14 +139,17 @@ of $c$ to base $a$.
 
 Both these functions are again asymmetric
 in that any power of two natural numbers $a^b$
-results in a natural number.
-Not all natural numbers $c$, however,
+results in a natural number, but
+not all natural numbers $c$
 have a natural numbered root $a$
 or a natural numbered logarithm $b$ to base $a$.
-For natural numbers, we should therefore
-define these algorithms with a remainder,
-as we did for division.
+It is possible to define natural numbered 
+approximations to the precise results.
+But, since we will not make any use of such functions,
+we will not implement them here.
+We come back to root and log algorithms later.
 
+\ignore{
 A word of caution:
 The algorithms to follow are not canonical 
 like multiplication or division with remainder.
@@ -575,49 +579,53 @@ With greater bases,
 each step of the algorithm will again be costly,
 since each time we have to calculate the power
 of that base.
+}
 
 There are three bases whose logarithms are
 particularly interesting:
 the logarithm base 10 ($\log_{10}$)
 is intersting when we are working in the decimal
-number system.
+system.
 The logarithm base 2 ($\log_2$)
 is interesting,
-when working with the binary number system,
-but also for many other mathematical objects,
+when working with the binary system,
+but also in many areas where binarity plays a role,
 some of which we will explore later.
 Then there is the logarithm to the base $e$ ($\log_e$),
 the so called \term{natural logarithm}.
 This number $e$, which is approximately 2.71828,
 is one of the most curious mathematical objects.
 It appears again and again in apparently unrelated 
-problem areas such as number theory, series of fractions, calculus
-and so on. It, especially, loves to appear,
+problem areas such as number theory, calculus
+and statistics. It especially loves to appear,
 when you least expect it.
 We have no means to express this number 
 with natural numbers, so we have to come back to it later
 to define it properly.
 
-The logarithms with these bases are often shortened.
 Unfortunately, there are different shorthands
+for these logarithms
 in different contexts.
 Computer scientists would write the binary logarithm
 $\log$, because it is the most common in their field.
 This shorthand, however, usually means the natural logarithm
 in most math publications and even many programming
-language, including Haskell, use the symbol $\log$
+languages, including Haskell, use the symbol $\log$
 for $\log_e$.
 To make it worse, in many engineering disciplines,
 $\log_{10}$ is considered the most common logarithm
 and, accordingly, $\log$ is considered to mean $\log_{10}$.
-There is an \acronym{iso} standard, which, apparently,
-nobody is following, that gives the following
-convention: $\log_2 = lb$, $\log_e = ln$ and $\log_{10} = lg$.
+There is an \acronym{iso} standard, which apparently isn't
+followed by anybody, that gives the following
+reasonableconvention: 
+$\log_2 = lb$, $\log_e = ln$ and $\log_{10} = lg$.
 But even these shorthands are often confused.
 The best way, therefore, appears to be
-the explicit use the symbols.
+to use explicit symbols with subscripts.
 
-Logarithms adhere to very interesting arithmetic rules.
+Logarithms adhere to very interesting arithmetic rules
+that often reduce computational complexity in dealing
+with huge numbers.
 The logarithm (base $b$) of the product of two numbers
 equals the sum of the logarithm (base $b$) of these numbers:
 $\log_b(n \times m) = \log_b(n) + \log_b(m)$.
