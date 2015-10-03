@@ -15534,25 +15534,35 @@ $(n-1) \equiv -1 \pmod{n}$.\qed
 
 Let us come back to the first supplement,
 which claims that -1 is a residue of an odd prime
-only if that prime is congruent 1 modulo 4.
-We distinguish two cases: 
-$p = 1$ and $p = 3$ both modulo 4.
-We do not have to consider 2, since 2 is not an odd prime
-and no odd prime will ever leave the remainder 2 
-divided by 4.
+if and only if that prime is congruent 1 modulo 4.
+Any number not divided by 4
+is either 1, 2 or 3 modulo 4.
+Since we are dealing only with odd primes,
+we can ignore the case 2, because
+no odd number will ever leave the remainder 2
+divided by 4. That does only happen with even
+numbers not divided by 4, like 6, 10, 14, \etc\
+We, hence, distinguish two cases: 
+$p \equiv 1$ and $p \equiv 3$ both modulo 4.
+We first prove that an odd prime
+$p \equiv 1 \pmod{4}$ has residue -1 and then
+that an odd prime $p \equiv 3 \pmod{4}$
+does not have residue -1.
 
-$p \equiv 1 \pmod{4}$ implies that
-$(p - 1) \equiv 0 \pmod{4}$.
-That $p - 1$ is divisible by 4 also implies
+We start with the observation that
+$p \equiv 1 \pmod{4}$ implies 
+$(p - 1) \equiv 0 \pmod{4}$, \ie\ that
+$p-1$ is divisible by 4.
+This, in its turn, implies
 that we can group the remainders $1\dots p-1$
-into 2 sets with the same number of elements
-and this number being even.
+into two sets with the same even number of elements.
 The remainders of the prime 5, for example,
 are $1,2,3,4$ and we can group them into
 $\lbrace\lbrace 1,2\rbrace, \lbrace 3,4\rbrace\rbrace$.
-For the more interesting case 13, these groups would be
+For 13, these groups would be
 $\lbrace\lbrace 1,2,3,4,5,6\rbrace, \lbrace 7,8,9,10,11,12\rbrace\rbrace$.
-We can rewrite the second group in terms of negative congruences:
+
+Now we rewrite the second group in terms of negative congruences:
 
 \[
 \lbrace\lbrace 1,2,3,4,5,6\rbrace, 
@@ -15570,12 +15580,18 @@ To compute the factorial of $p-1$,
 we could first multiply the members of each pair:
 $\lbrace -1, -4, -9, -16, -25, -36\rbrace$.
 It is essential to realise 
-that the number of negative signs is even.
+that the number of negative signs is even because
+the number of elements of each group is even.
 They, hence, cancel out on multiplication.
 This would be the same as squaring 
 the members of the first group (1 to 6)
 before multiplying them:
 $\lbrace 1, 4, 9, 16, 25, 36\rbrace$.
+We can do this the other way round as well:
+first, we multiply the two halfs out,
+creating the factorial for each group,
+and then multiply the two equal results, 
+which is the same as squaring one of the results. 
 In other words,
 if $p \equiv 1 \pmod{4}$, then 
 
@@ -15588,8 +15604,8 @@ is a formal description of what we did above.
 We split the numbers $1\dots p-1$ into halves:
 $1\dots \frac{p-1}{2}$ and $-\frac{p-1}{2} \dots -1$,
 computed the factorial of each half and then
-multiplied the results, which, of course, are equal
-and are, hence, multiplying them is equivalent to squaring.
+multiplied the results, which of course are equal
+and multiplying them is thus equivalent to squaring.
 
 For a prime $p$ with the residue -1, there must be one number
 $a$, such that
@@ -15597,8 +15613,9 @@ $a^2 \equiv -1 \pmod{p}$.
 The equation above shows that 
 $(\frac{p-1}{2})!^2$ is actually $(p-1)!$,
 which, according to Wilson's theorem, is $-1 \pmod{p}$.
-$a$, therefore, is $\frac{p-1}{2}!$, which squared
+$\frac{p-1}{2}!$, which squared
 is $(p-1)!$ and, according to Wilsons' theorem, -1.
+$\frac{p-1}{2}!$ is therefore such a number $a$. 
 This, as shown above, is the case,
 if we can split the sequence of numbers $1\dots p-1$
 into two halves with an even number of members each.
@@ -15606,8 +15623,9 @@ This, however, is only possible for an odd prime $p$,
 if $p-1 \equiv 0 \pmod{4}$,
 which implies that $p \equiv 1 \pmod{4}$.\qed
 
-We now will strengthen the argument that primes of the form
-$p \equiv 3 \pmod{4}$ do not have the residue -1.
+We will now show that primes of the form
+$p \equiv 3 \pmod{4}$ do not have the residue -1
+to complete the proof.
 Let us assume there is a number $a$,
 such that $a^2 \equiv -1 \pmod{p}$ and 
 $p \equiv 3 \pmod{4}$.
@@ -15624,14 +15642,16 @@ and raise both sides to the power of $\frac{p-1}{2}$:
 a^{2\frac{p-1}{2}} \equiv -1^{\frac{p-1}{2}} \pmod{p}.
 \end{equation}
 
-This gives:
+This can be simplified to
 
 \begin{equation}
 a^{p-1} \equiv -1^{\frac{p-1}{2}} \pmod{p}.
 \end{equation} 
 
 Note that $p-1$ is even (since $p$ is an odd prime).
-But, since it is not divisisble by 4, $(p-1)/2$ is odd.
+But, since it is not divisisble by 4,
+since otherwise $p \equiv 1 \pmod{4}$, 
+$(p-1)/2$ must be odd.
 An example is $p = 7$, for which $(p-1)/2 = 3$.
 -1 raised to an odd power, however, is -1
 and therefore we have:
@@ -15648,8 +15668,11 @@ a^{p-1} \equiv 1 \pmod{p}
 \end{equation}
 
 There is only one $p$ for which both equations
-are true at the same time, namely 2, since $2-1=1$.
-But we are looking at odd primes.
+are true at the same time, namely 2:
+$a^1 \equiv 1 \pmod{2}$. This is actually true
+for any odd $a$.
+
+But we are looking at odd primes and 2 is not an odd prime.
 Therefore, one of the equations must be wrong.
 Since we know for sure that Fermat's theorem is true,
 the wrong one must be \ref{eqRes_wrong1}.
@@ -15675,15 +15698,14 @@ They are all one off numbers divisible by 8:
 \end{align*}
 
 The second supplement indeed states
-that $\pm 2$ is resiude of an odd prime $p$
-only if $p \equiv \pm 1 \pmod{8}$.
+that $\pm 2$ is residue of an odd prime $p$
+if and only if $p \equiv \pm 1 \pmod{8}$.
 
 We will not prove this theorem here.
-Instead, we will look at some more general rules.
-First: is there a general criterion
-to decide quickly whether a number is residue of an odd prime?
-It turns out there is: \term{Euler's Criterion},
-which states that if $p$ is an odd prime,
+Instead, we will look at a general criterion
+to decide quickly whether a number is residue of an odd prime,
+namely \term{Euler's Criterion},
+which states that, if $p$ is an odd prime,
 then:
 
 \begin{align}
@@ -15761,8 +15783,10 @@ $4 \times 5 \equiv 6 \pmod{7}$.
 
 When we compute the factorial,
 we multiply these pairs out, each of which gives $a$.
-So, the factorial is $a \times a \times \dots \times a$
-or $a^{\frac{p-1}{2}}$:
+So, 
+the factorial is $a \times a \times \dots \times a$ and,
+since there are $(p-1)/2$ such pairs,
+$a^{\frac{p-1}{2}}$:
 
 \begin{equation}
   (p-1)! \equiv a^{\frac{p-a}{2}} \pmod{p}.
@@ -15822,7 +15846,8 @@ We, hence, could write:
 That would mean that, to make the first factor 0,
 $x^2$ must be 1 modulo $p$ and, to make the second factor 0,
 $x^2$ must be -1 modulo $p$.
-Let us have a closer look at the first factor. We want:
+Squaring an integer, however, does never yield a negative number.
+So, let us look at the first factor. We want:
 
 \[
 x^{2^{\frac{p-1}{2}}} \equiv 1 \pmod{p}.
@@ -15836,7 +15861,7 @@ x^{p-1} \equiv 1 \pmod{p},
 
 which is just Fermat again.
 We, thus, can derive Euler's criterion
-directly from Fermat and that proves that 
+directly from Fermat and that proves that, 
 if $a$ is a quadratic residue of $p$, 
 we always have
 $a^{\frac{p-1}{2}} \equiv 1 \pmod{p}$.\qed
@@ -16002,14 +16027,10 @@ when Gauss finally proved it in the \term{Disquisitiones}.
 Gauss called the theorem the \term{Golden Rule}
 and, interestingly, the \term{fundamental theorem of arithmetic}
 highlighting the value he attached to it.
-
-Many more proofs have been devised since Gauss' first one.
-Gauss himself provided seven other proofs
-in the course of his life.
+During his life he provided eight different proofs.
+Many more proofs have been devised since Gauss.
 According to the \term{Book}, 
 there were 196 different proofs in the year \num{2000}.
-The proofs, even if there are many,
-are more complex than the proofs presented so far.
 We will not go through them here.
 \section{Generators and Subgroups}
 \ignore{
@@ -27083,18 +27104,17 @@ Alexandria.
 
 The idea of Heron's method, basically, is to
 iteratively approximate the real value starting with a guess.
-We can start with some arbitrary value --
-a good starting point, however, 
-comes out of the root algorithm defined in the first chapter.
-If $\sqrt{n}$ is not an integer, then our start value
-is either slightly too big or too small,
-\ie\ we either have $xx > n$ or $xx < n$.
+We can start with some arbitrary value.
+If the first guess, say $g$, does not equal $\sqrt{n}$, 
+\ie\ $gg \neq n$, then $g$
+is either slightly too big or too small.
+We either have $gg > n$ or $gg < n$.
 So, on each step, we improve a bit on the value
-by taking the average of $x$ and its counterpart $n/x$.
-If $xx > n$, then clearly $n/x < x$ and, 
-if $xx < n$, then $n/x > x$.
-The average of $x$ and $a/x$ is calculated as
-$(x+a/x)/2$. The result is used as guess for the next round.
+by taking the average of $g$ and its counterpart $n/g$.
+If $gg > n$, then clearly $n/g < g$ and, 
+if $gg < n$, then $n/g > g$.
+The average of $g$ and $a/g$ is calculated as
+$(g+a/g)/2$. The result is used as input for the next round.
 The more iterations of this kind we do,
 the better is the approximation. In Haskell:
 
@@ -27106,6 +27126,8 @@ the better is the approximation. In Haskell:
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{heron}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Double}{}\<[E]%
 \\
@@ -27118,7 +27140,13 @@ the better is the approximation. In Haskell:
 \>[23]{}\mathrel{=}\Varid{x}{}\<[E]%
 \\
 \>[12]{}\Varid{go}\;\Varid{i}\;\Varid{a}\;\Varid{x}{}\<[23]%
-\>[23]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{a}\;((\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\Varid{x})\mathbin{/}\mathrm{2}){}\<[E]%
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{xx}\mathrel{=}\Varid{a}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{a}\;((\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\Varid{x})\mathbin{/}\mathrm{2}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -27126,7 +27154,7 @@ the better is the approximation. In Haskell:
 
 The function takes two arguments.
 The first is the number whose square root we want to calculate
-and the second is the number of iterations.
+and the second is the number of iterations we want to do.
 We then call \ensuremath{\Varid{go}} with $s$, the number of iterations,
 $a$, the \ensuremath{\Conid{Double}} representation of $n$, and our first guess
 $a/2$.
