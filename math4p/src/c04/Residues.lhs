@@ -650,20 +650,44 @@ We, hence, could write:
 That would mean that, to make the first factor 0,
 $x^2$ must be 1 modulo $p$ and, to make the second factor 0,
 $x^2$ must be -1 modulo $p$.
-Squaring an integer, however, does never yield a negative number.
-So, let us look at the first factor. We want:
+We, hence, want either:
 
-\[
-x^{2^{\frac{p-1}{2}}} \equiv 1 \pmod{p}.
-\]
+\begin{equation}\label{eq:ResEu1} 
+x^{2^{\frac{p-1}{2}}} \equiv 1 \pmod{p}
+\end{equation} 
+
+or
+
+\begin{equation}\label{eq:ResEu2} 
+x^{2^{\frac{p-1}{2}}} \equiv -1 \pmod{p}
+\end{equation} 
 
 Since $x^{a^b}$ is just $x^{ab}$, we can simplify to:
 
-\[
+\begin{equation} 
 x^{p-1} \equiv 1 \pmod{p},
-\]
+\end{equation} 
 
-which is just Fermat again.
+for equation \ref{eq:ResEu1} and
+
+\begin{equation} 
+x^{p-1} \equiv -1 \pmod{p},
+\end{equation} 
+
+for equation \ref{eq:ResEu2}.
+The second result contradicts Fermat as already seen above
+and, thus, cannot be the case.
+One may be tempted to say immediately that the second factor
+cannot be 0, since then we would have $x^2 = -1$, which
+cannot be true for any integer $x$.
+With modular arithmetic, however, this is not true.
+A counterexample is $2^2 = 4$, which is -1 modulo 5.
+We therefore need the reference to Fermat's little theorem
+to actually show that equation \ref{eq:ResEu2} leads to
+a contradiction with a proven theorem.
+
+The simplification of equation \ref{eq:ResEu1}, however, 
+just yields the little theorem.
 We, thus, can derive Euler's criterion
 directly from Fermat and that proves that, 
 if $a$ is a quadratic residue of $p$, 

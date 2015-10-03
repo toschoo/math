@@ -7,7 +7,7 @@ where
   import Prime
   import Debug.Trace (trace)
   import Data.List (nub,sort,delete,(\\))
-  import Group
+  import Group hiding (mul)
 
   ring :: Integer -> [Integer]
   ring p = map (`rem` p) [1..p-1]
@@ -171,7 +171,7 @@ where
                      in a `rem` p == 1
 
   residues :: Integer -> [Integer]
-  residues n = sort $ nub $ map (\x -> (x^2) `mod` n) [0..n-1]
+  residues n = sort $ nub [(x^2) `rem` n | x <-  [0..n-1]]
 
   countResidues :: Integer -> Int
   countResidues = length . residues
