@@ -59,25 +59,20 @@ where
              | otherwise = let (x,e) = borrow (10*a) b
                             in (x,e+1)
 
-  size :: Integer -> Integer
-  size a | a < 1  = 0
-         | a < 10 = 1
-         | otherwise = 1 + size (a `div` 10)
-      
-
   rdiv :: Integer -> RealN -> RealN -> RealN
-  rdiv n r1@(R a e1) r2@(R b e2) | e1 < e2 = rdiv n (blowup e2 r1) r2 
-                                 | a  < b && e1 == e2 = rdiv n (blowup (e2+1) r1) r2
-                                 | otherwise = let n' = max n e1 
-                                                   q = go n' a b 
-                                                in (R q n') -- (R q $ e1 - e2 + e)
-    where go i x y | i == 0 = 0
-                   | otherwise = case x `quotRem` y of
-                                   (q,0) -> 10^i * q
-                                   (q,r) -> let (r',e) = borrow r y
-                                                z      = go (i-e) r' y 
-                                             in trace (show q ++ "," ++ show r' ++ "," ++ show e) $ 
-                                                10^i * q + z -- 3 / 2 = 10^18 * 1 + 5 
+  rdiv n r1@(R a e1) r2@(R b e2) | e1 < e2 = 
+                                   rdiv n (blowup e2 r1) r2
+                                 | a  < b && e1 == e2 = 
+                                   rdiv n (blowup (e2+1) r1) r2
+                                 | otherwise = 
+                                   simplify (R (go n a b) (e1 - e2 + n))
+    where go 0 x y = 0 
+          go i x y = case x `quotRem` y of
+                       (q,0) -> 10^i * q
+                       (q,r) -> let (r',e) = borrow r y
+                                    q'     = 10^i * q
+                                 in if e > i then q' 
+                                             else q' + go (i-e) r' y
  
   r2d :: RealN -> Double
   r2d (R a e) = (fromIntegral a) / 10^e -- (e-1)
