@@ -54,9 +54,10 @@ where
   instance Real RealN where
     toRational (R r e) = undefined
 
-  pump :: Integer -> Integer -> Integer
-  pump a b | a `div` b > 0 = a
-           | otherwise = pump (10*a) b
+  borrow :: Integer -> Integer -> (Integer,Integer)
+  borrow a b | a > b     = (a,0)
+             | otherwise = let (x,e) = borrow (10*a) b
+                            in (x,e+1)
 
   size :: Integer -> Integer
   size a | a < 1  = 0
@@ -65,16 +66,21 @@ where
       
 
   rdiv :: Integer -> RealN -> RealN -> RealN
-  rdiv n (R a e1) (R b e2) = let (q,e) = go n a b 0 
-                              in simplify (R q $ e1 - e2 + e)
-    where go i x y e | i == 0 = (0,e)
-                     | otherwise = case x `quotRem` y of
-                                    (q,0) -> (q,e)
-                                    (q,r) -> let r' = pump r y
-                                                 i' | e == 0 = n + size q
-                                                    | otherwise = i
-                                                 (z,e') = go (i'-1) r' y (e+1)
-                                              in (10^i' * q + z,e') 
+  rdiv n r1@(R a e1) r2@(R b e2) | e1 < e2 = rdiv n (blowup e2 r1) r2 
+                                 | a  < b && e1 == e2 = rdiv n (blowup (e2+1) r1) r2
+                                 | otherwise = let n' = max n e1 
+                                                   q = go n' a b 
+                                                in (R q n') -- (R q $ e1 - e2 + e)
+    where go i x y | i == 0 = 0
+                   | otherwise = case x `quotRem` y of
+                                   (q,0) -> 10^i * q
+                                   (q,r) -> let (r',e) = borrow r y
+                                                z      = go (i-e) r' y 
+                                             in trace (show q ++ "," ++ show r' ++ "," ++ show e) $ 
+                                                10^i * q + z -- 3 / 2 = 10^18 * 1 + 5 
  
   r2d :: RealN -> Double
   r2d (R a e) = (fromIntegral a) / 10^e -- (e-1)
+
+  r2R :: RealN -> Rational
+  r2R (R a e) = a % (10^e)

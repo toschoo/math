@@ -1,4 +1,4 @@
-module Numbers
+module ConwayGuy
 where
 
   import Data.List (foldl',nub,group)
@@ -271,7 +271,8 @@ where
           dfac = fromIntegral . fac
 
   contfrac :: [Rational] -> Double
-  contfrac [] = 0
+  contfrac []  = 1
+  contfrac [i] = fromRational i 
   contfrac (i:is) = n + 1 / (contfrac is)
     where n = fromRational i
 

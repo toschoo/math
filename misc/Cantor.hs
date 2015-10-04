@@ -9,6 +9,8 @@ where
   import Binom
   import Prime
   import Perm
+  import ConwayGuy
+  import Real
   -- import Fib
 
   ------------------------------------------------------------------------
@@ -373,3 +375,41 @@ where
   powers2 :: [Integer]
   powers2 = map (2^) [0..]
 
+  --------------------------------------------------------------------------
+  -- Stern-Brocot
+  --------------------------------------------------------------------------
+  type SterBroc = Tree [Integer]
+
+  ------------------------------------------------------------------------
+  -- Create tree
+  ------------------------------------------------------------------------
+  sterbroc  :: Int -> [Integer] -> SterBroc
+  sterbroc  i r | i == 0    = Node r []
+                | otherwise = let rr = reverse r
+                                  h  = tail rr
+                                  s  = length h
+                                  l  = head rr
+                                  k1 = reverse (l+1 : h)
+                                  k2 = reverse (2 : l-1 : h)
+                               in if odd s then Node r [sterbroc (i-1) k1,sterbroc (i-1) k2] 
+                                           else Node r [sterbroc (i-1) k2,sterbroc (i-1) k1]
+
+  ------------------------------------------------------------------------
+  -- Continued fractions to Real
+  ------------------------------------------------------------------------
+  ints2rs :: [Integer] -> [Rational]
+  ints2rs = map (\i -> i%1)
+
+  sterbroc2r :: SterBroc -> Tree [Rational]
+  sterbroc2r = fmap ints2rs
+
+  sterbroc2d :: SterBroc -> Tree RealN
+  sterbroc2d = fmap (contfrac2 . ints2rs)
+
+  contfrac2 :: [Rational] -> RealN
+  contfrac2 []  = 1
+  contfrac2 [i] = fromRational i 
+  contfrac2 (i:is) = n + 1 / (contfrac2 is)
+    where n = fromRational i
+
+  
