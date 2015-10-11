@@ -1,5 +1,6 @@
-\section{Vectors and Vector Spaces}
-\section{Clustering Algorithms}
+\section{Vectors}
+\section{Vector Spaces}
+\section{Clustering}
 \section{Linear Maps and Operators}
 \section{Eigenvalues}
 \section{Inner Products and their Operators}

@@ -58,6 +58,7 @@ ALL	 = cmds.tex \
 	   src/c06/Pi.lhs \
 	   src/c06/E.lhs \
 	   src/c06/Gamma.lhs \
+	   src/c06/Real.lhs \
 	   src/c07/poly.lhs \
 	   src/c07/PartialF.lhs \
 	   src/c07/ClosedFib.lhs \
@@ -141,13 +142,15 @@ SUITE = test/suite
 suite:	$(SUITE)/tstNum  \
 	$(SUITE)/tstNat  \
 	$(SUITE)/tstZahl \
-	$(SUITE)/tstRat
+	$(SUITE)/tstRat  \
+	$(SUITE)/tstReal 
 
 run:	suite
 	$(SUITE)/tstNum
 	$(SUITE)/tstNat
 	$(SUITE)/tstZahl
 	$(SUITE)/tstRat
+	$(SUITE)/tstReal
 	
 $(SUITE)/tstNum:	$(ALL) $(SUITE)/tstNum.hs
 			$(GHC) $(SUITE)/tstNum
@@ -160,6 +163,9 @@ $(SUITE)/tstNat:	$(ALL) $(SUITE)/tstNat.hs
 	
 $(SUITE)/tstZahl:	$(ALL) $(SUITE)/tstZahl.hs
 			$(GHC) $(SUITE)/tstZahl
+	
+$(SUITE)/tstReal:	$(ALL) $(SUITE)/tstReal.hs
+			$(GHC) $(SUITE)/tstReal
 
 clean:
 	rm -f src/*/*.hi

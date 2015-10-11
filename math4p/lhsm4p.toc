@@ -34,7 +34,7 @@
 \contentsline {section}{\numberline {5.9}Generators and Subgroups}{165}
 \contentsline {section}{\numberline {5.10}Primality Tests}{172}
 \contentsline {section}{\numberline {5.11}Primes in Cryptography}{181}
-\contentsline {section}{\numberline {5.12}Open Problems}{191}
+\contentsline {section}{\numberline {5.12}Open Problems}{192}
 \contentsline {chapter}{\numberline {6}The Inverse Element}{201}
 \contentsline {section}{\numberline {6.1}Inverse Elements}{201}
 \contentsline {section}{\numberline {6.2}$\mathbb {Z}$}{205}
@@ -78,12 +78,12 @@
 \contentsline {chapter}{\numberline {10}Linear Algebra}{297}
 \contentsline {section}{\numberline {10.1}Vectors}{297}
 \contentsline {section}{\numberline {10.2}Vector Spaces}{297}
-\contentsline {section}{\numberline {10.3}Linear Maps and Operators}{297}
-\contentsline {section}{\numberline {10.4}Eigenvalues}{297}
-\contentsline {section}{\numberline {10.5}Inner Products and their Operators}{297}
-\contentsline {section}{\numberline {10.6}Polynomials and Vector Spaces}{297}
-\contentsline {section}{\numberline {10.7}Determinants}{297}
-\contentsline {section}{\numberline {10.8}Clustering Algorithms}{297}
+\contentsline {section}{\numberline {10.3}Clustering}{297}
+\contentsline {section}{\numberline {10.4}Linear Maps and Operators}{297}
+\contentsline {section}{\numberline {10.5}Eigenvalues}{297}
+\contentsline {section}{\numberline {10.6}Inner Products and their Operators}{297}
+\contentsline {section}{\numberline {10.7}Polynomials and Vector Spaces}{297}
+\contentsline {section}{\numberline {10.8}Determinants}{297}
 \contentsline {section}{\numberline {10.9}Support Vector Machines}{297}
 \contentsline {chapter}{\numberline {11}Complex Numbers}{299}
 \contentsline {section}{\numberline {11.1}i}{299}

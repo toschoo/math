@@ -119,7 +119,7 @@ and increment $q$ by one:
   quotRem a [One]   = (a,zero)
   quotRem a b       = go a zero
     where go r q  | r `cmp` b == LT  = (q,r)
-                  | otherwise        =  go (r `sub` b) (next q)
+                  | otherwise        =  go (r `sub2` b) (next q)
 \end{code}
 \end{minipage}
 
