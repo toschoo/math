@@ -20,7 +20,7 @@ A na\"ive implementation of multiplication, hence, is:
   mul [Zero] _  = [Zero]
   mul a [One]   = a
   mul [One] b   = b
-  mul a     b   = a `add` (a `mul` (prev b))
+  mul a     b   = a `add2` (a `mul` (prev b))
 \end{code}
 \end{minipage}
 

@@ -58,6 +58,7 @@ ALL	 = cmds.tex \
 	   src/c06/Pi.lhs \
 	   src/c06/E.lhs \
 	   src/c06/Gamma.lhs \
+	   src/c06/Realrep.lhs \
 	   src/c06/Real.lhs \
 	   src/c07/poly.lhs \
 	   src/c07/PartialF.lhs \
@@ -179,5 +180,6 @@ clean:
 	rm -f test/suite/tstNat
 	rm -f test/suite/tstRat
 	rm -f test/suite/tstZahl
+	rm -f test/suite/tstReal
 	rm -f scratchpad/*.hi
 	rm -f scratchpad/*.o

@@ -1718,10 +1718,584 @@ of two really large numbers. In 2003, it has been shown
 that the denominator of such a fraction must be greater
 than $10^{242080}$. 
 A number big enough, for my taste, to speak of \speech{irrational}.
-\section{Representation of Real Numbers} % natural numbers and fractions
-%inlcude Realrep.lhs
+\section{Representation of Real Numbers}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+The set of real numbers $\mathbb{R}$ is
+the union of the rational and the irrational numbers.
+When we write real numbers on paper,
+we use the decimal notation.
+A number in decimal notation corresponds to 
+an ordinary integer terminated by a dot
+called the decimal point;
+this integer corresponds to the part of the real number
+greater 1 or 0 of course.
+After the dot a stream of digits follows,
+which is not necessarily a number in the common sense,
+since it may start with zeros, \eg\ 0.0001.
+In fact, one could say that the part after the dot
+corresponds to a a reversed integer,
+since the zero following this number
+have no impact on the value of the whole expression,
+\ie\ $0.10 = 0.1$.
+
+Any rational number can be expressed in this system.
+An integer corresponds just to the part before the dot:
+$1.0 = 1$. A fraction like $\frac{1}{2}$ is written
+as 0.5. We will later look at 
+how this is computed concretely.
+Rationals in decimal notation can be easily identified:
+all numbers in decimal notation with a finite part
+after the dot are rational: 
+0.25 is $\frac{1}{4}$,
+0.75 is $\frac{3}{4}$,
+0.2  is $\frac{1}{5}$ and so on.
+
+There are some rational numbers that are infinite.
+For example, $\frac{1}{3}$ is $0.333333\dots$,
+which we encode as $0.\overline{3}$.
+Such periodic decimals are easy to convert
+to fractions. We just have to multiply them
+by a power of 10, such that there is a part
+greater 0 before the decimal point and
+that the first number
+of the the repeating period is aligned to it.
+For $0.\overline{3}$, 
+this is just $10\times 0.\overline{3} = 3.\overline{3}$.
+For $0.1\overline{6}$,
+it would be $10\times 0.1\overline{6} = 1.\overline{6}$.
+For $0.\overline{09}$,
+it would be $10^2\times 0.\overline{09} = 9.\overline{09}$.
+We then subtract the original number from the result.
+If the original number is $x$, we now have 
+$10^nx - x = (10^n-1)x$.
+For $x=0.\overline{3}$ this is $9x$;
+for $x=0.1\overline{6}$ this, too, is $9x$ and
+for $x=0.\overline{09}$ this is $99x$.
+The results are 3, 1.5 and 9 respectively.
+We now build a fraction of this result as numerator
+and the factor (9 or 99) in the denominator.
+Hence, $0.\overline{3} = \frac{3}{9} = \frac{1}{3}$,
+$0.1\overline{6} = \frac{1.5}{9} = \frac{3}{18} = \frac{1}{6}$ and
+$0.\overline{09} = \frac{9}{99} = \frac{1}{11}$.
+
+A curiosity resulting from this calculations
+is that $9\times 1/3 = 3$ and 
+$9 \times 0.\overline{3} = 2.\overline{9}$
+are actually the same! A correct implementation
+must take this into account.
+Try it with Haskell, you will see that
+\ensuremath{\mathrm{9}\mathbin{*}\mathrm{0.3333333333333333}} is indeed 3.
+It will not work if you forget a three.
+The precision of the \ensuremath{\Conid{Double}} number type is 16
+digits after the decimal point. With only 15 threes,
+the result will be 2.9999999999999997.
+
+Irrational numbers in the decimal notation
+have infinite many digits after the decimal point.
+With this said, it is obvious that we cannot
+represent irrational numbers in this system.
+We can of course represent any number by some
+kind of formula like $\sqrt{5}$ and do some
+math in this way such as $\frac{1+\sqrt{5}}{2}$,
+\etc\ But often, when we are dealing with
+applied mathematics, such formulas are not
+very useful. We need an explicit number.
+But, unfortunately or not, we have only
+limited resources in paper, brainpower and
+time. That is, at some point we have to 
+abandon the calculations and work with what
+can be achieved with the limited resources
+we have at our disposal.
+
+The point in time at which we take
+the decision that we now have calculated
+enough is the measure for the precision
+of the real number type in question.
+On paper, we would hence say that we
+write only a limited number of digits
+after the decimal point. In most day-to-day
+situations where real numbers play a role,
+like in dealing with money, cooking,
+medication or travelling distances,
+we calculate up to one or two decimal places.
+Prices, for instances are often given 
+as 4.99 or something, but hardly 4.998.
+Recipes would tell that we need 2.5 pounds
+or whatever of something, using one decimal place.
+One would say that it is about 1.5km 
+to somewhere, but hardly that it is 1.49km.
+In other areas, especially in science 
+much more precision is needed.
+We therefore need a flexible datatype.
+
+A nice and clean format to represent
+real numbers uses two integers or,
+as the following definition,
+two natural numbers:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{RealN}\mathrel{=}\Conid{R}\;\Conid{Natural}\;\Conid{Natural}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The first number represents the integral part.
+You will remember that a number is a list
+of digits where every digit is multiplied
+by a power of ten according to the place
+of the digit. The digit, counted from the right,
+is multiplied by $10^0=1$. The second is 
+multiplied by $10^1$, the third by $10^2$
+and so on. The digit multiplied by $10^0$,
+is the last digit before the decimal point.
+If we wanted to push it to the right
+of the decimal point, we would need
+to reduce the exponent. So, we multiplied it
+not by $10^0$, but by $10^{-1}$ to push it
+to the first decimal place.
+This is the function of the second number
+in the datatype above.
+It represents the value of the 
+least significant bit in terms of
+the exponent to which we have to raise 10 
+to obtain the number represented by this datatype.
+Since our datatype uses a natural number,
+we have to negate it to find the exponent we need.
+
+For instance, the number \ensuremath{\Conid{R}\;\mathrm{25}\;\mathrm{2}}
+corresponds to $25\times 10^{-2}$,
+which we can reduce stepwise to
+$2.5 \times 10^{-1}$ and $0.25 \times 10^0$.
+A meaningful way to show this datatype would
+therefore be:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Show}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\tt \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+There are obviously many ways to represent the same
+number with this number type. 
+1, for instance, can be represented as
+
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1}\;\mathrm{0}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{10}\;\mathrm{1}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{100}\;\mathrm{2}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1000}\;\mathrm{3}}\\
+$\dots$
+
+To keap numbers as concise as possible, we define a function
+to simplify numbers with redundant zeros:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{simplify}\mathbin{::}\Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{simplify}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mid \Varid{e}\mathbin{>}\mathrm{0}\mathrel{\wedge}{}\<[E]%
+\\
+\>[3]{}\hsindent{19}{}\<[22]%
+\>[22]{}\Varid{a}\mathbin{\Varid{`rem`}}\mathrm{10}\equiv \mathrm{0}\mathrel{=}\Varid{simplify}\;(\Conid{R}\;(\Varid{a}\mathbin{\Varid{`div`}}\mathrm{10})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
+\\
+\>[3]{}\hsindent{17}{}\<[20]%
+\>[20]{}\mid \Varid{otherwise}{}\<[38]%
+\>[38]{}\mathrel{=}\Conid{R}\;\Varid{a}\;\Varid{e}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+As long as the exponent is greater 0 and the base $a$
+is divisible by 10, we reduce the exponent by one
+and divide a by 10. In other words, we remove unnecessary
+zeros.
+The following constructor uses \ensuremath{\Varid{simplify}} to create
+clean real numbers:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{real}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{real}\;\Varid{i}\;\Varid{e}\mathrel{=}\Varid{simplify}\;(\Conid{R}\;\Varid{i}\;\Varid{e}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 \section{$\mathbb{R}$}
-%inlcude Real.lhs
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Ratio}\;((\mathbin{\%}),\Varid{numerator},\Varid{denominator}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}\;\Varid{hiding}\;(\Varid{rdiv},(\mathbin{\%})){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Debug}.Trace}\;(\Varid{trace}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Eq}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\equiv \Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[33]%
+\>[33]{}\mid \Varid{e1}\equiv \Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\equiv \Varid{b}{}\<[E]%
+\\
+\>[33]{}\mid \Varid{e1}\mathbin{>}{}\<[41]%
+\>[41]{}\Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{r1}\equiv \Varid{blowup}\;\Varid{e1}\;\Varid{r2}{}\<[E]%
+\\
+\>[33]{}\mid \Varid{e1}\mathbin{<}{}\<[41]%
+\>[41]{}\Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{blowup}\;\Varid{e2}\;\Varid{r1}\equiv \Varid{r2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{blowup}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{blowup}\;{}\<[11]%
+\>[11]{}\Varid{i}\;(\Conid{R}\;\Varid{r}\;\Varid{e}){}\<[22]%
+\>[22]{}\mid \Varid{i}\equiv \Varid{e}{}\<[32]%
+\>[32]{}\mathrel{=}\Conid{R}\;\Varid{r}\;\Varid{e}{}\<[E]%
+\\
+\>[22]{}\mid \Varid{e}\mathbin{<}{}\<[29]%
+\>[29]{}\Varid{i}{}\<[32]%
+\>[32]{}\mathrel{=}\Varid{blowup}\;\Varid{i}\;(\Conid{R}\;(\mathrm{10}\mathbin{*}\Varid{r})\;(\Varid{e}\mathbin{+}\mathrm{1})){}\<[E]%
+\\
+\>[22]{}\mid \Varid{e}\mathbin{>}{}\<[29]%
+\>[29]{}\Varid{i}{}\<[32]%
+\>[32]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 cannot~blowup~down\char34}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{50}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Ord}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{compare}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[38]%
+\>[38]{}\mid \Varid{e1}\equiv \Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\\
+\>[38]{}\mid \Varid{e1}\mathbin{>}{}\<[46]%
+\>[46]{}\Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;\Varid{r1}\;(\Varid{blowup}\;\Varid{e1}\;\Varid{r2}){}\<[E]%
+\\
+\>[38]{}\mid \Varid{e1}\mathbin{<}{}\<[46]%
+\>[46]{}\Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{26E}{@{}l@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{35E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{57}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Num}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{+}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[26]%
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b})\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
+\>[35]{}\Varid{e2}{}\<[35E]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{otherwise}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e2}\mathbin{-}\Varid{e1})\mathbin{+}\Varid{b})\;\Varid{e2}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{-}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[26]%
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}\mathrel{\wedge}{}\<[E]%
+\\
+\>[29]{}\Varid{a}{}\<[32]%
+\>[32]{}\geq \Varid{b}{}\<[40]%
+\>[40]{}\mathrel{=}\Conid{R}\;(\Varid{a}\mathbin{-}\Varid{b})\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 subtraction~beyond~zero!\char34}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
+\>[35]{}\Varid{e2}{}\<[35E]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{-}(\Conid{R}\;(\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}){}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{otherwise}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}(\Conid{R}\;(\Varid{a}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e2}\mathbin{-}\Varid{e1}))\;\Varid{e2})\mathbin{-}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{*}(\Conid{R}\;\Varid{b}\;\Varid{e2})\mathrel{=}\Varid{real}\;(\Varid{a}\mathbin{*}\Varid{b})\;(\Varid{e1}\mathbin{+}\Varid{e2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{negate}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}\mbox{\onelinecomment  we cannot negate natural numbers}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{abs}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{signum}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{fromInteger}\;\Varid{i}{}\<[21]%
+\>[21]{}\mathrel{=}\Conid{R}\;(\Varid{fromIntegral}\;\Varid{i})\;\mathrm{0}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\mathbf{instance}\;\Conid{Fractional}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\mathbin{/})\mathrel{=}\Varid{rdiv}\;\mathrm{17}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{fromRational}\;\Varid{r}\mathrel{=}{}\<[23]%
+\>[23]{}(\Conid{R}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{numerator}\;{}\<[54]%
+\>[54]{}\Varid{r})\;\mathrm{0})\mathbin{/}{}\<[E]%
+\\
+\>[23]{}(\Conid{R}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{denominator}\;\Varid{r})\;\mathrm{0}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\mathbf{instance}\;\Conid{Real}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{toRational}\;(\Conid{R}\;\Varid{r}\;\Varid{e})\mathrel{=}\Varid{i}\mathbin{\%}(\mathrm{10}\mathbin{\uparrow}\Varid{x}){}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\mathbf{where}\;{}\<[14]%
+\>[14]{}\Varid{i}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{r}\mathbin{::}\Conid{Integer}{}\<[E]%
+\\
+\>[14]{}\Varid{x}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{e}\mathbin{::}\Conid{Integer}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{roundr}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[21]%
+\>[21]{}\mid \Varid{n}\geq \Varid{e}{}\<[34]%
+\>[34]{}\mathrel{=}\Conid{R}\;\Varid{a}\;\Varid{e}{}\<[E]%
+\\
+\>[21]{}\mid \Varid{otherwise}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[37]%
+\>[37]{}\mathbf{let}\;{}\<[42]%
+\>[42]{}\Varid{b}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\mathbin{\Varid{`div`}}\mathrm{10}{}\<[E]%
+\\
+\>[42]{}\Varid{l}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\mathbin{-}\mathrm{10}\mathbin{*}\Varid{b}{}\<[E]%
+\\
+\>[42]{}\Varid{d}{}\<[45]%
+\>[45]{}\mid \Varid{l}\mathbin{<}\mathrm{5}{}\<[57]%
+\>[57]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[45]{}\mid \Varid{otherwise}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[37]{}\mathbf{in}\;\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;(\Varid{b}\mathbin{+}\Varid{d})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{borrow}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to (\Conid{Natural},\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{borrow}\;\Varid{a}\;\Varid{b}{}\<[15]%
+\>[15]{}\mid \Varid{a}\mathbin{>}\Varid{b}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}(\Varid{a},\mathrm{0}){}\<[E]%
+\\
+\>[15]{}\mid \Varid{otherwise}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\mathbf{let}\;(\Varid{x},\Varid{e})\mathrel{=}\Varid{borrow}\;(\mathrm{10}\mathbin{*}\Varid{a})\;\Varid{b}{}\<[E]%
+\\
+\>[31]{}\mathbf{in}\;(\Varid{x},\Varid{e}\mathbin{+}\mathrm{1}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{rdiv}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{rdiv}\;\Varid{n}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[35]%
+\>[35]{}\mid {}\<[35E]%
+\>[38]{}\Varid{e1}\mathbin{<}\Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[35E]%
+\>[38]{}\Varid{a}{}\<[41]%
+\>[41]{}\mathbin{<}\Varid{b}\mathrel{\wedge}\Varid{e1}\equiv \Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;(\Varid{e2}\mathbin{+}\mathrm{1})\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[35E]%
+\>[38]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{simplify}\;(\Conid{R}\;(\Varid{go}\;\Varid{n}\;\Varid{a}\;\Varid{b})\;(\Varid{e1}\mathbin{-}\Varid{e2}\mathbin{+}\Varid{n})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\anonymous \mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}\;\Varid{y}\mathrel{=}\mathbf{case}\;\Varid{x}\mathbin{`\Varid{quotRem}`}\Varid{y}\;\mathbf{of}{}\<[E]%
+\\
+\>[12]{}\hsindent{13}{}\<[25]%
+\>[25]{}(\Varid{q},\mathrm{0})\to \mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[12]{}\hsindent{13}{}\<[25]%
+\>[25]{}(\Varid{q},\Varid{r})\to \mathbf{let}\;{}\<[39]%
+\>[39]{}(\Varid{r'},\Varid{e}){}\<[47]%
+\>[47]{}\mathrel{=}\Varid{borrow}\;\Varid{r}\;\Varid{y}{}\<[E]%
+\\
+\>[39]{}\Varid{q'}{}\<[47]%
+\>[47]{}\mathrel{=}\mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[25]{}\hsindent{9}{}\<[34]%
+\>[34]{}\mathbf{in}\;\mathbf{if}\;\Varid{e}\mathbin{>}\Varid{i}\;{}\<[47]%
+\>[47]{}\mathbf{then}\;\Varid{q'}{}\<[E]%
+\\
+\>[47]{}\mathbf{else}\;\Varid{q'}\mathbin{+}\Varid{go}\;(\Varid{i}\mathbin{-}\Varid{e})\;\Varid{r'}\;\Varid{y}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{r2d}\mathbin{::}\Conid{RealN}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{r2d}\;\Varid{r}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[18]%
+\>[18]{}\mid \Varid{e}\mathbin{>}\mathrm{17}{}\<[31]%
+\>[31]{}\mathrel{=}\Varid{r2d}\;(\Varid{roundr}\;\mathrm{17}\;\Varid{r}){}\<[E]%
+\\
+\>[18]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}(\Varid{fromIntegral}\;\Varid{a})\mathbin{/}\mathrm{10}\mathbin{\uparrow}\Varid{e}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{r2R}\mathbin{::}\Conid{RealN}\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{r2R}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{ratio}\;\Varid{a}\;(\mathrm{10}\mathbin{\uparrow}\Varid{e}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \section{The Stern-Brocot Tree} 
 \section{Real Factorials}
 \section{Real Binomial Coefficients}

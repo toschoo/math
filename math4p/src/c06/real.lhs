@@ -8,10 +8,10 @@
 %include E.lhs
 \section{$\gamma$}
 %include Gamma.lhs
-\section{Representation of Real Numbers} % natural numbers and fractions
-%inlcude Realrep.lhs
+\section{Representation of Real Numbers}
+%include Realrep.lhs
 \section{$\mathbb{R}$}
-%inlcude Real.lhs
+%include Real.lhs
 \section{The Stern-Brocot Tree} 
 \section{Real Factorials}
 \section{Real Binomial Coefficients}

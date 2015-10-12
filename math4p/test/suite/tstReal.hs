@@ -15,7 +15,7 @@ where
   import Real hiding (rdiv)
 
   tol,tol5 :: Double
-  tol  = 1/10^10
+  tol  = 1/10^12
   tol5 = 1/10000
 
   prpIntDiv :: Integer -> Integer -> Bool
@@ -26,6 +26,17 @@ where
 
   prpRealDoubleDiv :: Double  -> Double  -> Bool
   prpRealDoubleDiv = withRealDoubles ddiv
+
+  -- The rules a / b * b = a and a * b / b = a
+  --     do not hold with doubles
+  prpJustDoubles :: Double -> Double -> Bool
+  prpJustDoubles x y | x < 0.000001 = prpJustDoubles 0.1 y
+                     | y < 0.000001 = prpJustDoubles x 0.1
+                     | otherwise    =
+                       let q = x / y
+                           p = x * y
+                        in q * y == x && p / y == x
+    
   
   ndiv :: Natural -> Natural -> Bool
   ndiv x 0 = ndiv x 1
@@ -46,10 +57,12 @@ where
 
   ddiv :: Double -> Double -> Bool
   ddiv x 0 = ddiv x 1
-  ddiv x y = let a = real (fromIntegral $ round (10^16 * x)) 16
-                 b = real (fromIntegral $ round (10^16 * y)) 16
+  ddiv x y = let a = real (fromIntegral $ round (10^17 * x)) 17
+                 b = real (fromIntegral $ round (10^17 * y)) 17
                  r = r2d (a / b)
-              in r > (x/y) - tol && r < (x/y) + tol
+                 t = r > (x/y) - tol && r < (x/y) + tol
+              in if not t then trace (show r ++ ": " ++ show x ++ "/" ++ show y ++ "=" ++ show (x/y)) t
+                          else t
                  
   withInts :: (Natural -> Natural -> Bool) -> Integer -> Integer -> Bool
   withInts f a b = let x = if abs a >= 1000 then 999 else abs a
@@ -71,9 +84,9 @@ where
   withRealDoubles f 0 b = withRealDoubles f 1.23456 b
   withRealDoubles f a 0 = withRealDoubles f a 1.23456
   withRealDoubles f a b | abs a >= 1000000 = withRealDoubles f (a/10) b 
-                        | abs a <  0.00001 = withRealDoubles f 1 b
+                        | abs a <  0.1     = withRealDoubles f 1 b
                         | abs b >= 1000000 = withRealDoubles f a (b/10)
-                        | abs b <  0.00001 = withRealDoubles f a 1 -- (b*10) 
+                        | abs b <  0.1     = withRealDoubles f a 1 
                         | otherwise        = f (abs a) (abs b)
 
   withIntsP :: (Integer -> Integer -> Bool) -> Integer -> Integer -> Property
@@ -117,7 +130,8 @@ where
   checkAll = do
     let good = "OK. All Tests passed."
     let bad  = "Bad. Some Tests failed."
-    r <- deepCheck prpIntDiv    ?>
+    r <- -- deepCheck prpJustDoubles
+         deepCheck prpIntDiv    ?>
          deepCheck prpDoubleDiv ?>
          deepCheck prpRealDoubleDiv -- ?>
     case r of

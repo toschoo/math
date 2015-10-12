@@ -47,7 +47,7 @@ where
     fromInteger i   = R i 0
 
   instance Fractional RealN where
-    (/) = rdiv 17
+    (/) = rdiv 20 
     fromRational r = (R (numerator   r) 0) / 
                      (R (denominator r) 0)
 
@@ -58,6 +58,18 @@ where
   borrow a b | a > b     = (a,0)
              | otherwise = let (x,e) = borrow (10*a) b
                             in (x,e+1)
+
+  roundr :: Integer -> RealN -> RealN
+  roundr n (R a e) | n >= e    = R a e
+                   | otherwise = let b = a `div` 10
+                                     l = a - 10*b
+                                     d | l < 5     = 0
+                                       | otherwise = 1
+                                  in roundr n (R (b+d) (e-1))
+
+  least :: Integer -> Integer
+  least n | n < 10 = n
+          | otherwise = n - 10 * (n `div` 10)
 
   rdiv :: Integer -> RealN -> RealN -> RealN
   rdiv n r1@(R a e1) r2@(R b e2) | e1 < e2 = 
