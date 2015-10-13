@@ -12,6 +12,7 @@ where
 
   import Natural
   import Zahl
+  import Realrep
   import Real hiding (rdiv)
 
   tol,tol5 :: Double
@@ -42,8 +43,8 @@ where
   ndiv x 0 = ndiv x 1
   ndiv x y = let a = real x 0
                  b = real y 0
-                 c = (fromIntegral x) :: Double
-                 d = fromIntegral y
+                 c = fromIntegral x :: Double
+                 d = fromIntegral y :: Double
                  r = r2d (a/b)
                  p = c/d
               in r > p - tol && r < p + tol

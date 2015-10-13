@@ -180,7 +180,8 @@ to simplify numbers with redundant zeros:
 \begin{minipage}{\textwidth}
 \begin{code}
   simplify :: RealN -> RealN
-  simplify (R a e) | e > 0 &&
+  simplify (R 0 _) = R 0 0
+  simplify (R a e) | e > 0  &&
                      a `rem` 10 == 0 = simplify (R (a `div` 10) (e-1))
                    | otherwise       = R a e
 \end{code}

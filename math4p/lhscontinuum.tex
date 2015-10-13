@@ -1933,11 +1933,16 @@ to simplify numbers with redundant zeros:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{20}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{29E}{@{}l@{}}%
 \column{38}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{simplify}\mathbin{::}\Conid{RealN}\to \Conid{RealN}{}\<[E]%
 \\
-\>[3]{}\Varid{simplify}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mid \Varid{e}\mathbin{>}\mathrm{0}\mathrel{\wedge}{}\<[E]%
+\>[3]{}\Varid{simplify}\;(\Conid{R}\;\mathrm{0}\;\anonymous )\mathrel{=}\Conid{R}\;\mathrm{0}\;\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{simplify}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mid \Varid{e}\mathbin{>}\mathrm{0}{}\<[29]%
+\>[29]{}\mathrel{\wedge}{}\<[29E]%
 \\
 \>[3]{}\hsindent{19}{}\<[22]%
 \>[22]{}\Varid{a}\mathbin{\Varid{`rem`}}\mathrm{10}\equiv \mathrm{0}\mathrel{=}\Varid{simplify}\;(\Conid{R}\;(\Varid{a}\mathbin{\Varid{`div`}}\mathrm{10})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
@@ -1988,6 +1993,9 @@ clean real numbers:
 \>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Ratio}\;((\mathbin{\%}),\Varid{numerator},\Varid{denominator}){}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{Quoz}\;\Varid{hiding}\;(\Varid{rdiv},(\mathbin{\%})){}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
@@ -2000,6 +2008,10 @@ clean real numbers:
 \)\par\noindent\endgroup\resethooks
 }
 
+We now define how to check two real numbers
+for equality:
+
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -2026,34 +2038,47 @@ clean real numbers:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
+If the exponents are equal, then we 
+trivially compare the coefficients.
+Otherwise, we first expand the number
+with the smaller exponent using \ensuremath{\Varid{blowup}}:
+
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{11}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{22}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{blowup}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
 \\
 \>[3]{}\Varid{blowup}\;{}\<[11]%
 \>[11]{}\Varid{i}\;(\Conid{R}\;\Varid{r}\;\Varid{e}){}\<[22]%
-\>[22]{}\mid \Varid{i}\equiv \Varid{e}{}\<[32]%
-\>[32]{}\mathrel{=}\Conid{R}\;\Varid{r}\;\Varid{e}{}\<[E]%
+\>[22]{}\mid \Varid{i}\leq \Varid{e}{}\<[35]%
+\>[35]{}\mathrel{=}\Conid{R}\;\Varid{r}\;\Varid{e}{}\<[E]%
 \\
-\>[22]{}\mid \Varid{e}\mathbin{<}{}\<[29]%
-\>[29]{}\Varid{i}{}\<[32]%
-\>[32]{}\mathrel{=}\Varid{blowup}\;\Varid{i}\;(\Conid{R}\;(\mathrm{10}\mathbin{*}\Varid{r})\;(\Varid{e}\mathbin{+}\mathrm{1})){}\<[E]%
-\\
-\>[22]{}\mid \Varid{e}\mathbin{>}{}\<[29]%
-\>[29]{}\Varid{i}{}\<[32]%
-\>[32]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 cannot~blowup~down\char34}{}\<[E]%
+\>[22]{}\mid \Varid{otherwise}{}\<[35]%
+\>[35]{}\mathrel{=}\Conid{R}\;(\Varid{r}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{i}\mathbin{-}\Varid{e}))\;\Varid{i}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
+That is simple! If the target \ensuremath{\Varid{i}} is greater
+than the current exponent of the number,
+we just multiply the coefficient by
+10 raised to the difference of the target exponent
+and the current exponent and make the target the new
+exponent. Otherwise, nothing changes.
+
+We continue with comparison,
+which follows exactly the same logic:
+
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -2080,42 +2105,24 @@ clean real numbers:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
+Now we make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Num}}:
+
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{26}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{26E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{28E}{@{}l@{}}%
 \column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{32}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{35}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{35E}{@{}l@{}}%
-\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{57}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\mathbf{instance}\;\Conid{Num}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
 \\
@@ -2123,11 +2130,11 @@ clean real numbers:
 \>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{+}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[26]%
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
-\>[40]{}\mathrel{=}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b})\;\Varid{e1}{}\<[E]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b})\;\Varid{e1}{}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
-\>[35]{}\Varid{e2}{}\<[35E]%
+\>[35]{}\Varid{e2}{}\<[40]%
 \>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}{}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
@@ -2141,7 +2148,7 @@ clean real numbers:
 \\
 \>[29]{}\Varid{a}{}\<[32]%
 \>[32]{}\geq \Varid{b}{}\<[40]%
-\>[40]{}\mathrel{=}\Conid{R}\;(\Varid{a}\mathbin{-}\Varid{b})\;\Varid{e1}{}\<[E]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{-}\Varid{b})\;\Varid{e1}{}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
@@ -2149,7 +2156,7 @@ clean real numbers:
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
-\>[35]{}\Varid{e2}{}\<[35E]%
+\>[35]{}\Varid{e2}{}\<[40]%
 \>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{-}(\Conid{R}\;(\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}){}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
@@ -2177,7 +2184,49 @@ clean real numbers:
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{fromInteger}\;\Varid{i}{}\<[21]%
 \>[21]{}\mathrel{=}\Conid{R}\;(\Varid{fromIntegral}\;\Varid{i})\;\mathrm{0}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Addition is again the same logic.
+For two numbers with equal exponents,
+we just add the coefficients.
+If the exponents differ, 
+we first convert the smaller number
+to the greater exponent.
+
+For subtraction, note that we define \ensuremath{\Conid{RealN}}
+like numbers before without negatives. To consider
+signedness, we still have to use the datatype 
+\ensuremath{\Conid{Signed}\;\Conid{RealN}}.
+Consequently, we have to rule out the case
+where the first number is smaller than the second one.
+
+Multiplication is interesting.
+We multiply two real numbers
+by multiplying the coefficients and
+adding the exponents.
+We have already seen this logic, when defining
+the natural number type.
+Some simple examples may convince you that this
+is the right way to go.
+$1 \times 0.1$, for instance, is 0.1.
+In terms of our \ensuremath{\Conid{RealN}} type, this corresponds to
+\ensuremath{(\Conid{R}\;\mathrm{1}\;\mathrm{0})\mathbin{*}(\Conid{R}\;\mathrm{1}\;\mathrm{1})\equiv (\Conid{R}\;(\mathrm{1}\mathbin{*}\mathrm{1})\;(\mathrm{0}\mathbin{+}\mathrm{1})}.
+
+The next task is to make \ensuremath{\Conid{RealN}} instance of
+\ensuremath{\Conid{Fractional}}: 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\mathbf{instance}\;\Conid{Fractional}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
@@ -2189,7 +2238,174 @@ clean real numbers:
 \>[54]{}\Varid{r})\;\mathrm{0})\mathbin{/}{}\<[E]%
 \\
 \>[23]{}(\Conid{R}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{denominator}\;\Varid{r})\;\mathrm{0}){}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The method \ensuremath{\Varid{fromRational}} is quite simple.
+We just create two real numbers, 
+the numerator of the original fraction and its denominator,
+and the we divide them. What we need to do this,
+of course, is division.
+Division, as usual, is a bit more
+complicated than the other arithmetic operations.
+We define it as follows:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{22E}{@{}l@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{rdiv}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{rdiv}\;\Varid{n}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[35]%
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{e1}\mathbin{<}\Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{a}{}\<[41]%
+\>[41]{}\mathbin{<}\Varid{b}\mathrel{\wedge}\Varid{e1}\equiv \Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;(\Varid{e2}\mathbin{+}\mathrm{1})\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{simplify}\;(\Conid{R}\;(\Varid{go}\;\Varid{n}\;\Varid{a}\;\Varid{b})\;(\Varid{e1}\mathbin{-}\Varid{e2}\mathbin{+}\Varid{n})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}\;\Varid{y}{}\<[22]%
+\>[22]{}\mid {}\<[22E]%
+\>[25]{}\Varid{i}\leq \mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[22]{}\mid {}\<[22E]%
+\>[25]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[25]{}\mathbf{case}\;\Varid{x}\mathbin{`\Varid{quotRem}`}\Varid{y}\;\mathbf{of}{}\<[E]%
+\\
+\>[25]{}\hsindent{1}{}\<[26]%
+\>[26]{}(\Varid{q},\mathrm{0})\to \mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[25]{}\hsindent{1}{}\<[26]%
+\>[26]{}(\Varid{q},\Varid{r})\to \mathbf{let}\;{}\<[40]%
+\>[40]{}(\Varid{r'},\Varid{e}){}\<[48]%
+\>[48]{}\mathrel{=}\Varid{borrow}\;\Varid{r}\;\Varid{y}{}\<[E]%
+\\
+\>[40]{}\Varid{q'}{}\<[48]%
+\>[48]{}\mathrel{=}\mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[26]{}\hsindent{9}{}\<[35]%
+\>[35]{}\mathbf{in}\;\mathbf{if}\;\Varid{e}\mathbin{>}\Varid{i}\;{}\<[48]%
+\>[48]{}\mathbf{then}\;\Varid{q'}{}\<[E]%
+\\
+\>[48]{}\mathbf{else}\;\Varid{q'}\mathbin{+}\Varid{go}\;(\Varid{i}\mathbin{-}\Varid{e})\;\Varid{r'}\;\Varid{y}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\ensuremath{\Varid{rdiv}} has one more argument 
+than the arithmetic operations seen before.
+This additional argument, $n$, defines the
+precision of the result.
+This is necessary, because, as we will see,
+the number of iterations
+the function has to perform depends on the
+precision the result is expected to have.
+
+If the first number is smaller than the second,
+either because its exponent or its
+coefficient is smaller, we blow it up
+so that it is at least the same size.
+Then we calculate the new coefficient
+by means of \ensuremath{\Varid{go}} and the new exponent as
+the difference of the first and the second exponent
+plus the expected precision.
+Note that division has the inverse effect on the size
+of the exponents as multiplication.
+When we look again at the example 1 and 0.1,
+we have $1 / 0.1 = 10$, which translates to
+\ensuremath{(\Conid{R}\;\mathrm{1}\;\mathrm{0})\mathbin{/}(\Conid{R}\;\mathrm{1}\;\mathrm{1})\mathrel{=}\Conid{R}\;(\mathrm{1}\mathbin{/}\mathrm{1})\;(\mathrm{0}\mathbin{-}\mathrm{1})}, which
+of course is the same as \ensuremath{\Conid{R}\;\mathrm{10}\;\mathrm{0}}.
+
+The inner function \ensuremath{\Varid{go}} proceeds until \ensuremath{\Varid{i}},
+which initially is \ensuremath{\Varid{n}}, becomes 0 or smaller.
+In each step, we divide \ensuremath{\Varid{x}}, initially the coefficient
+of the first number, and \ensuremath{\Varid{y}}, the coefficient of the
+second number. If the result leaves no remainder,
+we are done. We just raise \ensuremath{\Varid{q}} to the power of 
+the step in question. Otherwise, we continue
+dividing the remainder \ensuremath{\Varid{r}} by \ensuremath{\Varid{y}}. But before
+we continue, we borrow from \ensuremath{\Varid{y}}, that is,
+we increase \ensuremath{\Varid{r}} until it is at least \ensuremath{\Varid{y}}.
+\ensuremath{\Varid{i}} is then decremented by the number of zeros
+we borrowed this way.
+If we run out of \ensuremath{\Varid{i}}, so to speak, that is
+if $e > i$, then we terminate with \ensuremath{\Varid{q}} raised
+to the current step.
+
+\ensuremath{\Varid{borrow}} is just the same as \ensuremath{\Varid{blowup}} applied
+to two natural numbers:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{borrow}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to (\Conid{Natural},\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{borrow}\;\Varid{a}\;\Varid{b}{}\<[15]%
+\>[15]{}\mid \Varid{a}\geq \Varid{b}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}(\Varid{a},\mathrm{0}){}\<[E]%
+\\
+\>[15]{}\mid \Varid{otherwise}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\mathbf{let}\;(\Varid{x},\Varid{e})\mathrel{=}\Varid{borrow}\;(\mathrm{10}\mathbin{*}\Varid{a})\;\Varid{b}\;\mathbf{in}\;(\Varid{x},\Varid{e}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We now make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Real}}.
+We need to define just one method, namely
+how to convert \ensuremath{\Conid{RealN}} to \ensuremath{\Conid{Rational}}, which
+we do just by creating a fraction with 
+the coefficient of the real number in the numerator
+and 10 raised to the exponent in the denominator.
+The rest is done by the \ensuremath{\Conid{Rational}} number type:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\mathbf{instance}\;\Conid{Real}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
@@ -2202,7 +2418,80 @@ clean real numbers:
 \\
 \>[14]{}\Varid{x}{}\<[17]%
 \>[17]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{e}\mathbin{::}\Conid{Integer}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We further add a function to convert
+real numbers to our \ensuremath{\Conid{Ratio}} type:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{r2R}\mathbin{::}\Conid{RealN}\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{r2R}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{ratio}\;\Varid{a}\;(\mathrm{10}\mathbin{\uparrow}\Varid{e}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We also add a function to convert our real number type
+to the standard \ensuremath{\Conid{Double}} type:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{r2d}\mathbin{::}\Conid{RealN}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{r2d}\;\Varid{r}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[18]%
+\>[18]{}\mid \Varid{e}\mathbin{>}\mathrm{16}{}\<[31]%
+\>[31]{}\mathrel{=}\Varid{r2d}\;(\Varid{roundr}\;\mathrm{16}\;\Varid{r}){}\<[E]%
+\\
+\>[18]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}(\Varid{fromIntegral}\;\Varid{a})\mathbin{/}\mathrm{10}\mathbin{\uparrow}\Varid{e}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+An inconvenience is that we have to round 
+a number given in our number type so it fits
+into a \ensuremath{\Conid{Double}}.
+For this, we assume that the \ensuremath{\Conid{Double}} has a precision
+of 16 decimal digits. This is not quite true.
+The \ensuremath{\Conid{Double}} type has room for 16 digits.
+But if the first digits after the decimal point 
+are zeros, the \ensuremath{\Conid{Double}} type will present this
+as a number raised to a negative exponent, just
+as we do with our real type. In this case,
+the \ensuremath{\Conid{Double}} type may have a much higher precision
+than 16. For our purpose, however, this is not too
+relevant. 
+
+So, here is how we round: 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{57}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{roundr}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
 \\
 \>[3]{}\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[21]%
@@ -2225,77 +2514,39 @@ clean real numbers:
 \>[45]{}\mid \Varid{otherwise}\mathrel{=}\mathrm{1}{}\<[E]%
 \\
 \>[37]{}\mathbf{in}\;\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;(\Varid{b}\mathbin{+}\Varid{d})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{borrow}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to (\Conid{Natural},\Conid{Natural}){}\<[E]%
-\\
-\>[3]{}\Varid{borrow}\;\Varid{a}\;\Varid{b}{}\<[15]%
-\>[15]{}\mid \Varid{a}\mathbin{>}\Varid{b}{}\<[28]%
-\>[28]{}\mathrel{=}{}\<[28E]%
-\>[31]{}(\Varid{a},\mathrm{0}){}\<[E]%
-\\
-\>[15]{}\mid \Varid{otherwise}{}\<[28]%
-\>[28]{}\mathrel{=}{}\<[28E]%
-\>[31]{}\mathbf{let}\;(\Varid{x},\Varid{e})\mathrel{=}\Varid{borrow}\;(\mathrm{10}\mathbin{*}\Varid{a})\;\Varid{b}{}\<[E]%
-\\
-\>[31]{}\mathbf{in}\;(\Varid{x},\Varid{e}\mathbin{+}\mathrm{1}){}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{rdiv}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
-\\
-\>[3]{}\Varid{rdiv}\;\Varid{n}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[35]%
-\>[35]{}\mid {}\<[35E]%
-\>[38]{}\Varid{e1}\mathbin{<}\Varid{e2}\mathrel{=}{}\<[E]%
-\\
-\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
-\\
-\>[35]{}\mid {}\<[35E]%
-\>[38]{}\Varid{a}{}\<[41]%
-\>[41]{}\mathbin{<}\Varid{b}\mathrel{\wedge}\Varid{e1}\equiv \Varid{e2}\mathrel{=}{}\<[E]%
-\\
-\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;(\Varid{e2}\mathbin{+}\mathrm{1})\;\Varid{r1})\;\Varid{r2}{}\<[E]%
-\\
-\>[35]{}\mid {}\<[35E]%
-\>[38]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
-\\
-\>[38]{}\Varid{simplify}\;(\Conid{R}\;(\Varid{go}\;\Varid{n}\;\Varid{a}\;\Varid{b})\;(\Varid{e1}\mathbin{-}\Varid{e2}\mathbin{+}\Varid{n})){}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\anonymous \mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}\;\Varid{y}\mathrel{=}\mathbf{case}\;\Varid{x}\mathbin{`\Varid{quotRem}`}\Varid{y}\;\mathbf{of}{}\<[E]%
-\\
-\>[12]{}\hsindent{13}{}\<[25]%
-\>[25]{}(\Varid{q},\mathrm{0})\to \mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
-\\
-\>[12]{}\hsindent{13}{}\<[25]%
-\>[25]{}(\Varid{q},\Varid{r})\to \mathbf{let}\;{}\<[39]%
-\>[39]{}(\Varid{r'},\Varid{e}){}\<[47]%
-\>[47]{}\mathrel{=}\Varid{borrow}\;\Varid{r}\;\Varid{y}{}\<[E]%
-\\
-\>[39]{}\Varid{q'}{}\<[47]%
-\>[47]{}\mathrel{=}\mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
-\\
-\>[25]{}\hsindent{9}{}\<[34]%
-\>[34]{}\mathbf{in}\;\mathbf{if}\;\Varid{e}\mathbin{>}\Varid{i}\;{}\<[47]%
-\>[47]{}\mathbf{then}\;\Varid{q'}{}\<[E]%
-\\
-\>[47]{}\mathbf{else}\;\Varid{q'}\mathbin{+}\Varid{go}\;(\Varid{i}\mathbin{-}\Varid{e})\;\Varid{r'}\;\Varid{y}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{r2d}\mathbin{::}\Conid{RealN}\to \Conid{Double}{}\<[E]%
-\\
-\>[3]{}\Varid{r2d}\;\Varid{r}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[18]%
-\>[18]{}\mid \Varid{e}\mathbin{>}\mathrm{17}{}\<[31]%
-\>[31]{}\mathrel{=}\Varid{r2d}\;(\Varid{roundr}\;\mathrm{17}\;\Varid{r}){}\<[E]%
-\\
-\>[18]{}\mid \Varid{otherwise}{}\<[31]%
-\>[31]{}\mathrel{=}(\Varid{fromIntegral}\;\Varid{a})\mathbin{/}\mathrm{10}\mathbin{\uparrow}\Varid{e}{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{r2R}\mathbin{::}\Conid{RealN}\to \Conid{Ratio}{}\<[E]%
-\\
-\>[3]{}\Varid{r2R}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{ratio}\;\Varid{a}\;(\mathrm{10}\mathbin{\uparrow}\Varid{e}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+That is, we first get the least significant digit \ensuremath{\Varid{l}} as
+$l = a - 10 * (div~a~10)$, where, if \ensuremath{\Varid{div}} is the Euclidian division,
+the last digit of $a$ remains.
+If the last digit is less than 5, we just drop it off.
+Otherwise, we add 1 to the whole number.
+If we now define
+
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1}\;\mathrm{0}}\\
+\ensuremath{\Varid{three}\mathrel{=}\Conid{R}\;\mathrm{3}\;\mathrm{0}}\\
+\ensuremath{\Varid{third}\mathrel{=}\Varid{one}\mathbin{/}\Varid{three}},
+
+then \ensuremath{\Varid{roundr}\;\mathrm{16}\;(\Varid{three}\mathbin{*}\Varid{third})} yields 1, as desired.
+
+Finally, we define
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{SReal}\mathrel{=}\Conid{Signed}\;\Conid{RealN}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+and have a fulfledged real number datatype.
 \section{The Stern-Brocot Tree} 
 \section{Real Factorials}
 \section{Real Binomial Coefficients}
