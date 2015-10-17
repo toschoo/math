@@ -52,7 +52,7 @@ where
                      (R (denominator r) 0)
 
   instance Real RealN where
-    toRational (R r e) = undefined
+    toRational (R r e) = r % (10^e)
 
   borrow :: Integer -> Integer -> (Integer,Integer)
   borrow a b | a > b     = (a,0)

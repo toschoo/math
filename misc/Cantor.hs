@@ -2,7 +2,7 @@ module Cantor
 where
 
   import Data.Ratio
-  import Data.List (nub,sort,(\\))
+  import Data.List (nub,sort,sortBy,(\\))
   import Data.Tree 
   import Data.Tree.Pretty (drawVerticalTree)
   import Debug.Trace (trace)
@@ -235,7 +235,6 @@ where
   badd (1:as) (0:bs) = 1:badd as bs
   badd (1:as) (1:bs) = 0:(badd (inc as) bs)
 
-  
   ------------------------------------------------------------------------
   -- Extract transformation group from list
   ------------------------------------------------------------------------
@@ -381,18 +380,38 @@ where
   type SterBroc = Tree [Integer]
 
   ------------------------------------------------------------------------
-  -- Create tree
+  -- Create tree: sterbroc n [0,1]
   ------------------------------------------------------------------------
   sterbroc  :: Int -> [Integer] -> SterBroc
   sterbroc  i r | i == 0    = Node r []
-                | otherwise = let rr = reverse r
-                                  h  = tail rr
-                                  s  = length h
-                                  l  = head rr
-                                  k1 = reverse (l+1 : h)
-                                  k2 = reverse (2 : l-1 : h)
-                               in if odd s then Node r [sterbroc (i-1) k1,sterbroc (i-1) k2] 
-                                           else Node r [sterbroc (i-1) k2,sterbroc (i-1) k1]
+                | otherwise =  let (k1,k2) = sterbrockids r
+                                in Node r [sterbroc (i-1) k1,sterbroc (i-1) k2]
+
+  sterbrockids :: [Integer] -> ([Integer],[Integer])
+  sterbrockids r  = let h  = init r
+                        l  = last r
+                        s  = length h
+                        k1 = h++[l+1]
+                        k2 = h++[l-1,2]
+                      in if odd s then (k1,k2) else (k2,k1)
+
+  ------------------------------------------------------------------------
+  -- a bit more complicated
+  ------------------------------------------------------------------------
+  {- let rr = reverse r
+         h  = tail rr
+         s  = length h
+         l  = head rr
+         k1 = reverse (l+1 : h)
+         k2 = reverse (2 : l-1 : h) 
+      in if odd s then Node r [sterbroc (i-1) k1,sterbroc (i-1) k2] 
+           else Node r [sterbroc (i-1) k2,sterbroc (i-1) k1] -}
+
+  ------------------------------------------------------------------------
+  -- Invert a rational 
+  ------------------------------------------------------------------------
+  invert :: Rational -> Rational
+  invert r = denominator r % numerator r
 
   ------------------------------------------------------------------------
   -- Continued fractions to Real
@@ -412,4 +431,59 @@ where
   contfrac2 (i:is) = n + 1 / (contfrac2 is)
     where n = fromRational i
 
-  
+  contfracr :: [Rational] -> Rational
+  contfracr []  = 1
+  contfracr [i] = i 
+  contfracr (i:is) = i + (invert $ contfracr is)
+
+  sterbrocTree :: Int -> Tree Rational
+  sterbrocTree i = fmap (contfracr . ints2rs) $ sterbroc i [0,1]
+
+  -------------------------------------------------------------------------
+  -- Approximate a real number
+  -------------------------------------------------------------------------
+  approx :: Int -> Double -> [Rational]
+  approx i d = go i [0,1] 
+    where go 0 _ = []
+          go n r = let r' = contfracr (map toRational r) 
+                       d' = (fromIntegral $ numerator r') / 
+                            (fromIntegral $ denominator r')
+                       (k1,k2) = sterbrockids r
+                    in if d' == d then [r']
+                                  else if d' < d then r':go (n-1) k2
+                                                 else r':go (n-1) k1
+                                 
+  -------------------------------------------------------------------------
+  -- Calkin Wilf <-> Stern Brocat
+  -------------------------------------------------------------------------
+  getSterbrocKids :: Int -> CalwiTree -> [Rational]
+  getSterbrocKids = tree2tree
+
+  getCalwiKids :: Int -> Tree Rational -> [Rational]
+  getCalwiKids = tree2tree
+
+  tree2tree :: Int -> Tree a -> [a]
+  tree2tree n = bitreverse . getKids n
+
+  bitreverse :: [a] -> [a]
+  bitreverse xs = go 0 xs $ idxbitrev xs
+    where go _ _ [] = []
+          go i zs (p:ps) = zs!!p : go (i+1) zs ps
+
+  idxbitrev :: [a] -> [Int]
+  idxbitrev xs =  let l  = length xs
+                      l' = fromIntegral l
+                      x  = round $ logBase 2 (fromIntegral l)
+                   in [fromInteger (brev x i) | i <- [0..l'-1]]
+    where brev x = fromBinary . cleanz . reverse . fillup x 0 . toBinary
+
+  fillup :: Int -> Int -> [Int] -> [Int]
+  fillup i z is | length is == i = is
+                | otherwise      = fillup i z (z:is)
+
+  cleanz :: [Int] -> [Int]
+  cleanz []  = []
+  cleanz [0] = [0]
+  cleanz (0:is) = cleanz is
+  cleanz is     = is
+          
