@@ -2548,6 +2548,290 @@ Finally, we define
 
 and have a fulfledged real number datatype.
 \section{The Stern-Brocot Tree} 
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{SternBrocot}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+Achille Brocot (1817 -- 1878) was part of a clockmaker dynasty
+in Paris started by his father and continuing after his death.
+The Brocots had a strong emphasis on engineering
+and innovated clockmaking with the aim to reduce production cost
+without equivalent degradation in quality.
+The constant enginieering work manifests in a considerable
+number of patents hold by family members. The most productive,
+in terms of engineering, however, was Achille, who improved
+many of his father's inventions and developed his own ones.
+He also introduced a novelty to mathematics, which , surprisingly,
+is of not only of practical use, but also of theorectical value.
+
+In clockmaking, as in machine construction in general,
+determining the ratio of components to each other,
+for instance, gear ratios, is a very frequent task.
+As often in practice, those ratios are not nice and clean,
+but very odd numbers with many decimal digits.
+Brocot developed a way to easily approximate such numbers
+with arbitrary precision. In the process, he developed a method
+to approximate irrational numbers with arbitrary precision
+and -- yet another way to list all rational numbers.
+
+Brocot's method can be described in terms 
+of finite continued fractions. Recall that we can
+represent continued fractions as lists of the form
+
+\[
+[n;a,b,c,\dots]
+\]
+
+to encode continued fractions of the form
+
+\[
+n + \frac{1}{a+\frac{1}{b+\frac{1}{c+\dots}}}.
+\]
+
+In contrast to continued fractions we have seen so far,
+we now look at finite continued fractions that actually
+result in a rational number. The process to compute
+such a continued fraction can be captured in Haskell as:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{contfracr}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}[\mskip1.5mu \mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}[\mskip1.5mu \Varid{i}\mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\Varid{i}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}(\Varid{i}\mathbin{:}\Varid{is}){}\<[22]%
+\>[22]{}\mathrel{=}\Varid{i}\mathbin{+}(\Varid{invert}\mathbin{\$}\Varid{contfracr}\;\Varid{is}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here, \ensuremath{\Varid{invert}} is a function to create the multiplicative
+invert of a fraction, \ie\ $invert(\frac{n}{d} = \frac{d}{n}$
+or in Haskell:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{invert}\mathbin{::}\Conid{Ratio}\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{invert}\;(\Conid{Q}\;\Varid{n}\;\Varid{d})\mathrel{=}\Conid{Q}\;\Varid{d}\;\Varid{n}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+As you will see immediately, 
+the expression \ensuremath{(\Varid{invert}\mathbin{\$}\Varid{contfracr}\;\Varid{is})},
+corresponds to 
+
+\[
+\frac{1}{\text{\textit{contfracr is}}}.
+\]
+
+The definition above, hence, creates a continued
+fraction that terminates with the last
+element in the list.
+
+Now we introduce a simple rule to create
+from any continued fraction given in list notation
+two new continued fractions:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{brocotkids}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to ([\mskip1.5mu \Conid{Ratio}\mskip1.5mu],[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\Varid{brocotkids}\;\Varid{r}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\mathbf{let}\;{}\<[25]%
+\>[25]{}\Varid{h}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{init}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{l}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{last}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{s}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{length}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{k1}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{h}\plus [\mskip1.5mu \Varid{l}\mathbin{+}\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\Varid{k2}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{h}\plus [\mskip1.5mu \Varid{l}\mathbin{-}\mathrm{1},\mathrm{2}\mskip1.5mu]{}\<[E]%
+\\
+\>[20]{}\mathbf{in}\;\mathbf{if}\;\Varid{even}\;\Varid{s}\;\mathbf{then}\;(\Varid{k1},\Varid{k2})\;\mathbf{else}\;(\Varid{k2},\Varid{k1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This function yields two lists, $k_1$ and $k_2$.
+The order in which these numbers are returned depends
+on the parity of the length of the list.
+
+$k_1$ and $k_2$ are computed as 
+the initial part of the input list,
+to which, in the case of $k_1$, one number is added,
+namely the last element of the input list plus 1,
+or, in the case of $k_2$, two numbers are added, namely
+the last element minus 1 and 2. 
+For the initial list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}, for instance,
+which is just 1,
+$k_1$ is \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{2}\mskip1.5mu]}, which is $\frac{1}{2}$, and
+$k_2$ is \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{2}\mskip1.5mu]}, which is $\frac{1}{\frac{1}{2}} = 2$.
+
+When we look at the paritiy of 
+the length of the input list,
+we see that $k_1$ has the same parity as the input list 
+and $k_2$ has the opposite parity.
+In particular, if the input list is even,
+then $k_1$ is even and $k_2$ is odd; if it is odd,
+then $k_1$ is odd and $k_2$ is even.
+$k_1$ simply substitutes
+the last element of the input list by this element
+incremented by 1, \ie\ a greater element.
+
+Now, we see for an even list like \ensuremath{[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]} that there is an 
+integer, $a$, to which the inverse of the second number,
+$b$ is added. If $b$ grows, then the overall result shrinks.
+The structure of an odd list is like \ensuremath{[\mskip1.5mu \Varid{a},\Varid{b},\Varid{c}\mskip1.5mu]}.
+Again, the integer $a$ is added to the inverse of
+what follows in the list.
+But this time, if $c$ grows, the inverse of $c$,
+$\frac{1}{c}$, shrinks and, as such, the value of
+$\frac{1}{b+1/c}$ grows.
+Therefore, if the number of elements is even,
+the value of $k1$ is less than the value of the input list
+and, if it is odd, then the value is greater.
+You can easily convince yourself that, for $k_2$,
+this is exactly the other way round.
+In consequence, the left list returned by \ensuremath{\Varid{brocotkids}}
+is always smaller than the input and the reft one is greater.
+
+Using this function, we can now approximate any real number.
+The idea is that, if the current continued fraction
+results in a number greater than the fraction, we
+continue with the left kid; if it is smaller,
+we continue with the right kid. Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{approx}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{approx}\;\Varid{i}\;\Varid{d}\mathrel{=}\Varid{go}\;\Varid{i}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous {}\<[20]%
+\>[20]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{j}\;\Varid{r}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[23]%
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}(\Conid{R}\;\Varid{n}\;\Varid{d})\mathrel{=}\Varid{contfracr}\;\Varid{r}{}\<[E]%
+\\
+\>[28]{}\Varid{d'}\mathrel{=}(\Varid{fromIntegral}\;\Varid{n})\mathbin{/}(\Varid{fromIntegral}\;\Varid{d}){}\<[E]%
+\\
+\>[28]{}(\Varid{k1},\Varid{k2})\mathrel{=}\Varid{brocotkids}\;\Varid{r}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;\mathbf{if}\;\Varid{d'}\equiv \Varid{d}\;{}\<[38]%
+\>[38]{}\mathbf{then}\;[\mskip1.5mu \Conid{R}\;\Varid{n}\;\Varid{d}\mskip1.5mu]{}\<[E]%
+\\
+\>[38]{}\mathbf{else}\;\mathbf{if}\;\Varid{d'}\mathbin{<}\Varid{d}\;{}\<[54]%
+\>[54]{}\mathbf{then}\;\Varid{r'}\mathbin{:}\Varid{go}\;(\Varid{j}\mathbin{-}\mathrm{1})\;\Varid{k2}{}\<[E]%
+\\
+\>[54]{}\mathbf{else}\;\Varid{r'}\mathbin{:}\Varid{go}\;(\Varid{j}\mathbin{-}\mathrm{1})\;\Varid{k1}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+ 
+This function takes two arguments.
+The first, a natural number, defines the number of steps we want to do.
+The second is the real number we want to approximate.
+We start the internal \ensuremath{\Varid{go}} with $i$ and the list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}.
+In \ensuremath{\Varid{go}}, as long as $j > 0$, 
+we compute the rational number that corresponds to the input list;
+then we compute the corresponding real number.
+If the found number equals the input (\ie\ the input is rational),
+we are done. Otherwise, if it less then the input, we continue with $k2$;
+it is greater, we continue with $k1$.
+
+The function yields the compete trajectory, 
+not only the last rational, which is the best approximation found.
+The result of \ensuremath{\Varid{approx}\;\mathrm{10}\;\Varid{pi}}, for instance is:
+
+\[
+1,2,3,4,\frac{7}{2},
+\frac{10}{3},
+\frac{13}{4},
+\frac{16}{5},
+\frac{19}{6},
+\frac{22}{7}.
+\]
+
+The last fraction $\frac{22}{7}$ is approximately
+3.142857, which still a bit away from 3.141592.
+We reach 3.1415 with \ensuremath{\Varid{approx}\;\mathrm{25}\;\Varid{pi}}, for which 
+the last fraction is $\frac{333}{106}$, which is
+3.141509. This way, we can approximate $\pi$ as
+close as we wish.
+
 \section{Real Factorials}
 \section{Real Binomial Coefficients}
 \section{The Continuum}

@@ -60,6 +60,7 @@ ALL	 = cmds.tex \
 	   src/c06/Gamma.lhs \
 	   src/c06/Realrep.lhs \
 	   src/c06/Real.lhs \
+	   src/c06/SternBrocot.lhs \
 	   src/c07/poly.lhs \
 	   src/c07/PartialF.lhs \
 	   src/c07/ClosedFib.lhs \

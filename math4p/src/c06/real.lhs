@@ -13,6 +13,7 @@
 \section{$\mathbb{R}$}
 %include Real.lhs
 \section{The Stern-Brocot Tree} 
+%include SternBrocot.lhs
 \section{Real Factorials}
 \section{Real Binomial Coefficients}
 \section{The Continuum}
