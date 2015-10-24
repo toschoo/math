@@ -454,7 +454,7 @@ where
                                                  else r':go (n-1) k1
                                  
   -------------------------------------------------------------------------
-  -- Calkin Wilf <-> Stern Brocat
+  -- Calkin Wilf <-> Stern Brocot
   -------------------------------------------------------------------------
   getSterbrocKids :: Int -> CalwiTree -> [Rational]
   getSterbrocKids = tree2tree

@@ -34,9 +34,9 @@ where
 
   main :: IO ()
   main = do
-    img <- GD.newImage (2000,1000)
+    img <- GD.newImage (1500,1000) -- should be defined by command line!
     GD.fillImage white img
-    let reg = stdRegion img (1930,930)
+    let reg = stdRegion img (1430,930)
     let gr  = stdGraph reg{regBase = (35,35)}
     os <- getArgs
     case os of
@@ -44,6 +44,7 @@ where
                "7"   -> seven  gr
                "8.1" -> eight1 gr
                "8.2" -> eight2 gr
+               "sb7" -> sterb7 gr
                _     -> seven  gr
       _   -> seven gr
 
@@ -54,6 +55,12 @@ where
     let gr3 = markN t5 red   gr2
     drawGraph 10 gr3
     savePng "seven.png" gr3
+
+  sterb7 :: Graph -> IO ()
+  sterb7 gr0 = do
+    let gr = tree2graph gr0 5 $ {- numerator <$> -} sterbrocTree 12
+    drawGraph 12 gr
+    savePng "sterb7.png" gr
 
   eight1 :: Graph -> IO ()
   eight1 gr0 = do
