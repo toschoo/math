@@ -278,3 +278,13 @@ where
   eu2Tri :: Integer -> [[Integer]]
   eu2Tri n = map row [1..n]
     where row k = map (eulerian2 k) [0..k-1]
+
+  -------------------------------------------------------------------------
+  -- Powersets
+  -------------------------------------------------------------------------
+  powset :: (Eq a) => [a] -> [[a]]
+  powset xs = go xs [[]]
+    where go [] rs = rs
+          go (y:ys) rs = go ys (ins y rs)
+          ins y [] = []
+          ins y (s:ss) = (y:s):s:ins y ss

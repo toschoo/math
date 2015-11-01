@@ -181,16 +181,15 @@ to simplify numbers with redundant zeros:
 \begin{code}
   simplify :: RealN -> RealN
   simplify (R 0 _) = R 0 0
-  simplify (R a e) | e > 0  &&
-                     a `rem` 10 == 0 = simplify (R (a `div` 10) (e-1))
-                   | otherwise       = R a e
+  simplify (R a e)  |  e > 0  &&
+                       a `rem` 10 == 0  =  simplify (R (a `div` 10) (e-1))
+                    |  otherwise        =  R a e
 \end{code}
 \end{minipage}
 
 As long as the exponent is greater 0 and the base $a$
 is divisible by 10, we reduce the exponent by one
-and divide a by 10. In other words, we remove unnecessary
-zeros.
+and divide $a$ by 10. In other words, we remove unnecessary zeros.
 The following constructor uses |simplify| to create
 clean real numbers:
 

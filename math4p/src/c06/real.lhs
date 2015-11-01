@@ -14,7 +14,7 @@
 %include Real.lhs
 \section{The Stern-Brocot Tree} 
 %include SternBrocot.lhs
+\section{p-adic Numbers} 
 \section{Real Factorials}
-\section{Real Binomial Coefficients}
 \section{The Continuum}
 \section{Review of the Number Zoo}

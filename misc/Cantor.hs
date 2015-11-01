@@ -11,7 +11,6 @@ where
   import Perm
   import ConwayGuy
   import Real
-  -- import Fib
 
   ------------------------------------------------------------------------
   -- Convert from dec to any
@@ -385,7 +384,8 @@ where
   sterbroc  :: Int -> [Integer] -> SterBroc
   sterbroc  i r | i == 0    = Node r []
                 | otherwise =  let (k1,k2) = sterbrockids r
-                                in Node r [sterbroc (i-1) k1,sterbroc (i-1) k2]
+                                in Node r [sterbroc (i-1) k1,
+                                           sterbroc (i-1) k2]
 
   sterbrockids :: [Integer] -> ([Integer],[Integer])
   sterbrockids r  = let h  = init r
@@ -394,18 +394,6 @@ where
                         k1 = h++[l+1]
                         k2 = h++[l-1,2]
                       in if odd s then (k1,k2) else (k2,k1)
-
-  ------------------------------------------------------------------------
-  -- a bit more complicated
-  ------------------------------------------------------------------------
-  {- let rr = reverse r
-         h  = tail rr
-         s  = length h
-         l  = head rr
-         k1 = reverse (l+1 : h)
-         k2 = reverse (2 : l-1 : h) 
-      in if odd s then Node r [sterbroc (i-1) k1,sterbroc (i-1) k2] 
-           else Node r [sterbroc (i-1) k2,sterbroc (i-1) k1] -}
 
   ------------------------------------------------------------------------
   -- Invert a rational 
@@ -436,8 +424,11 @@ where
   contfracr [i] = i 
   contfracr (i:is) = i + (invert $ contfracr is)
 
+  contfraci :: [Integer] -> Rational
+  contfraci = contfracr . ints2rs
+  
   sterbrocTree :: Int -> Tree Rational
-  sterbrocTree i = fmap (contfracr . ints2rs) $ sterbroc i [0,1]
+  sterbrocTree i = fmap contfraci $ sterbroc i [0,1]
 
   -------------------------------------------------------------------------
   -- Approximate a real number
@@ -466,9 +457,9 @@ where
   tree2tree n = bitreverse . getKids n
 
   bitreverse :: [a] -> [a]
-  bitreverse xs = go 0 xs $ idxbitrev xs
-    where go _ _ [] = []
-          go i zs (p:ps) = zs!!p : go (i+1) zs ps
+  bitreverse xs = go xs $ idxbitrev xs
+    where go _ []      = []
+          go zs (p:ps) = zs!!p : go zs ps
 
   idxbitrev :: [a] -> [Int]
   idxbitrev xs =  let l  = length xs
@@ -486,4 +477,55 @@ where
   cleanz [0] = [0]
   cleanz (0:is) = cleanz is
   cleanz is     = is
-          
+
+  -------------------------------------------------------------------------
+  -- Stern Brocot Sequence
+  -------------------------------------------------------------------------
+  enumQSB :: [Rational]
+  enumQSB = go 1 $ sterbrocTree (-1) 
+    where go i t = getKids i t ++ go (i+1) t
+
+  -------------------------------------------------------------------------
+  -- Farey Sequence
+  -------------------------------------------------------------------------
+  fareyNumerators :: [Integer]
+  fareyNumerators = map numerator enumQSB
+
+  farey2 :: Integer -> [Rational]
+  farey2 n = sort (nub $ filter (<= 1) $ 
+                         concatMap (\x -> map (x%) [1..n]) [0..n])
+
+  farey :: Integer -> [Rational]
+  farey n = 0%1 : sort (go 1 $ sterbrocTree (-1))
+    where go k t = let g = getKids k t
+                       l = filter fltr g
+                    in if null l then l else l++go (k+1) t
+          fltr k = k <= 1%1 && n >= denominator k 
+
+  nxtFarey :: Integer -> [Rational] -> [Rational]
+  nxtFarey n []  = []
+  nxtFarey n [r] = [r]
+  nxtFarey n (a:b:rs) | denominator a + denominator b == n = 
+                        nxtFarey n (a:x:b:rs)
+                      | otherwise = a:nxtFarey n (b:rs)
+    where x = let n1 = numerator a
+                  n2 = numerator b
+                  d1 = denominator a
+                  d2 = denominator b
+               in (n1+n2) % (d1+d2)
+
+  -------------------------------------------------------------------------
+  -- Stern-Brocot with mediants
+  -------------------------------------------------------------------------
+  mSterbroctree :: Int -> Integer -> Integer -> Integer -> 
+                                     Integer -> Rational -> Tree Rational
+  mSterbroctree 0 _ _ _ _ r = Node r []
+  mSterbroctree n a b c d r = let rn = numerator r
+                                  rd = denominator r
+                                  k1 = (a+rn)%(b+rd)
+                                  k2 = (c+rn)%(d+rd)
+                               in if k1 < k2
+                                    then Node r [mSterbroctree (n-1) a b rn rd k1,
+                                                 mSterbroctree (n-1) c d rn rd k2]
+                                    else Node r [mSterbroctree (n-1) c d rn rd k2,
+                                                 mSterbroctree (n-1) a b rn rd k1]

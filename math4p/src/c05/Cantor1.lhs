@@ -446,10 +446,6 @@ sequence. The beginning of the sequence is
 The sequence, as we will show in a minute,
 corresponds to a \term{binary tree} of the form
 
-\newcommand{\connect}[2]{
-  \draw [-,color=black] (#1) to (#2)
-}
-
 \begin{center}
 \begin{tikzpicture}
 % root
