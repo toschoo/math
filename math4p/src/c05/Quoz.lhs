@@ -4,7 +4,7 @@ module Quoz
 where
   import Natural
   import Zahl
-  import Data.Ratio (numerator, denominator)
+  import qualified Data.Ratio as R (numerator, denominator)
   import Debug.Trace (trace)
 \end{code}
 }
@@ -79,6 +79,19 @@ of numerator and denominator.
 If numerator and denominator are coprime,
 the |gcd| is just 1 and the numbers 
 are not changed at all.
+
+Useful would be to have access functions
+for numerator and denominator. We define them
+straight forward as
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  numerator :: Ratio -> Natural
+  numerator (Q n _) = n
+  denominator :: Ratio -> Natural
+  denominator (Q _ d) = d
+\end{code}
+\end{minipage}
 
 We now make |Ratio| an instance of |Ord|:
 
@@ -212,8 +225,8 @@ then is
 \begin{code}
   instance Fractional Ratio where
     (/)             = rdiv
-    fromRational r  = Q  (fromIntegral $ numerator r) 
-                         (fromIntegral $ denominator r)
+    fromRational r  = Q  (fromIntegral $ R.numerator r) 
+                         (fromIntegral $ R.denominator r)
 \end{code}
 \end{minipage}
 

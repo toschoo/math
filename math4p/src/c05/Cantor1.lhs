@@ -2,7 +2,12 @@
 \begin{code}
 module Cantor1
 where
+  import Data.List (nub,sort)
+  import Data.Tree
+  import Fact
+  import Binom
   import Natural
+  import Zahl
   import Quoz
 \end{code}
 }
@@ -54,7 +59,7 @@ into the new set, like this:
   count :: [a] -> [(a,Natural)]
   count = go 0
     where  go _ []     = []
-           go n (x:xs) = (x,n+1) go (n+1) xs
+           go n (x:xs) = (x,n+1) : go (n+1) xs
 \end{code}
 \end{minipage}
 
@@ -592,9 +597,6 @@ the tree:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  data Tree a = Node a [Tree a]
-    deriving (Eq, Show)
-
   type CalWiTree = Tree Ratio
 \end{code}
 \end{minipage}
@@ -709,7 +711,7 @@ generations in the tree:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  calWiTree2Seq :: CalwiTree -> [Rational]
+  calWiTree2Seq :: CalWiTree -> [Ratio]
   calWiTree2Seq t = go 1
     where go n =  case getKids n t of
                   []  -> []
@@ -874,9 +876,30 @@ given a natural number $n$,
 returns the fraction in the Calkin-Wilf sequence
 at position $n$:
 
+\ignore{
+\begin{code}
+  toBaseN :: Natural -> Natural -> [Int]
+  toBaseN b = reverse . go
+    where go x =   case x `quotRem` b of
+                   (0, r) -> [fromIntegral r]
+                   (q, r) -> (fromIntegral r) : go q
+
+  fromBaseN :: Natural -> [Int] -> Natural
+  fromBaseN b = go 0 . map fromIntegral . reverse
+    where  go _ []     = 0
+           go x (r:rs) = r*(b^x) + go (x+1) rs 
+
+  toBinary :: Natural -> [Int]
+  toBinary = toBaseN 2
+
+  fromBinary :: [Int] -> Natural
+  fromBinary = fromBaseN 2
+\end{code}
+}
+
 \begin{minipage}{\textwidth}
 \begin{code}
-  calwiR :: Natural -> Rational
+  calwiR :: Natural -> Ratio
   calwiR = go (0 % 1) . toBinary 
     where  go r []              = r
            go r@(Q n d) (0:xs)  = go (n % (n+d)) xs
@@ -1289,7 +1312,7 @@ the simple function
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  genprod :: Natural -> CalwiTree -> Rational
+  genprod :: Natural -> CalWiTree -> Ratio
   genprod n t = product (getKids n t)
 \end{code}
 \end{minipage}

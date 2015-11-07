@@ -2,8 +2,13 @@
 \begin{code}
 module SternBrocot
 where
+  import Data.List (sort,nub)
+  import Data.Tree
+  import Cantor1
   import Natural
+  import Zahl
   import Quoz
+  import Realrep
   import Real
 \end{code}
 }
@@ -11,14 +16,16 @@ where
 Achille Brocot (1817 -- 1878) was part of a clockmaker dynasty
 in Paris started by his father and continuing after his death.
 The Brocots had a strong emphasis on engineering
-and innovated clockmaking with the aim to reduce production cost
+and, under the pressure of cheap low-quality imports
+mainly from the USA, 
+innovated clockmaking with the aim to reduce production cost
 without equivalent degradation in quality.
 The constant engineering work manifested in a considerable
 number of patents hold by family members. The most productive,
 in terms of engineering, however, was Achille who improved
 many of his father's inventions and developed new ones.
 He also introduced a novelty to mathematics, which, surprisingly,
-has not only practical, but also theorectical value.
+has not only practical, but also theoretical value.
 
 In clockmaking, as in machine construction in general,
 determining the ratio of components to each other,
@@ -26,9 +33,10 @@ for instance, gear ratios, is a very frequent task.
 As often in practice, those ratios are not nice and clean,
 but very odd numbers with many decimal digits.
 Brocot developed a way to easily approximate such numbers
-with arbitrary precision. In the process, he developed a method
-to approximate irrational numbers with arbitrary precision
-and -- yet another way to list all rational numbers.
+with arbitrary precision and, in consequence, to approximate
+any real number with arbitrary precision.
+In the process, he developed yet another way 
+to list all rational numbers.
 
 Brocot's method can be described in terms 
 of finite continued fractions. Recall that we can
@@ -99,14 +107,11 @@ two new continued fractions:
 \end{minipage}
 
 This function yields two lists, $k_1$ and $k_2$.
-The order in which these numbers are returned depends
-on the parity of the length of the list.
-
-$k_1$ and $k_2$ are computed as 
+They are computed as 
 the initial part of the input list,
-to which, in the case of $k_1$, one number is added,
+to which, in the case of $k_1$, one number is appended,
 namely the last element of the input list plus 1,
-or, in the case of $k_2$, two numbers are added, namely
+or, in the case of $k_2$, two numbers are appended, namely
 the last element minus 1 and 2. 
 For the input list |[0,1]|, 
 which is just 1,
@@ -114,16 +119,13 @@ for instance,
 $k_1$ is |[0,2]|, which is $\frac{1}{2}$, and
 $k_2$ is |[0,0,2]|, which is $\frac{1}{\frac{1}{2}} = 2$.
 
-When we look at the paritiy of 
-the length of the input list,
+When we compare the paritiy of 
+the length of the lists,
 we see that $k_1$ has the same parity as the input list 
 and $k_2$ has the opposite parity.
 In particular, if the input list is even,
 then $k_1$ is even and $k_2$ is odd; if it is odd,
 then $k_1$ is odd and $k_2$ is even.
-$k_1$ simply substitutes
-the last element of the input list by this element
-incremented by 1, \ie\ a greater element.
 
 Now, we see for an even list like |[a,b]| that there is an 
 integer, $a$, to which the inverse of the second number,
@@ -137,10 +139,12 @@ $\frac{1}{b+1/c}$ grows.
 Therefore, if the number of elements is even,
 the value of $k_1$ is less than the value of the input list
 and, if it is odd, then the value is greater.
-You can easily convince yourself that, for $k_2$,
+You can easily convince yourself that for $k_2$
 this is exactly the other way round.
-In consequence, the left list returned by |brocotkids|
-is always smaller than the input and the right one is greater.
+In consequence, the numerical value of 
+the left list returned by |brocotkids|
+is always smaller than that of the input list
+and that of the right one is greater.
 
 Using this function, we can now approximate any real number.
 The idea is that, if the current continued fraction
@@ -152,13 +156,14 @@ we continue with the right kid. Here is an implementation:
 \begin{code}
   approx :: Natural -> RealN -> [Ratio]
   approx i d = go i [0,1] 
-    where  go 0 _  = []
-           go j r  =  let  (R n d) = contfracr r 
-                           d' = (fromIntegral n) / (fromIntegral d)
+    where  go :: Natural -> [Ratio] -> [Ratio]
+           go 0 _  = []
+           go j r  =  let  k@(Q a b) = contfracr r 
+                           d' = (fromIntegral a) / (fromIntegral b)
                            (k1,k2) = brocotkids r
-                      in if d' == d  then [R n d]
-                                     else if d' < d  then  r':go (j-1) k2
-                                                     else  r':go (j-1) k1
+                      in if d' == d  then [Q a b]
+                                     else if d' < d  then  k:go (j-1) k2
+                                                     else  k:go (j-1) k1
 \end{code}
 \end{minipage}
  
@@ -192,8 +197,8 @@ The result of |approx 10 pi|, for instance is:
 The last fraction $\frac{22}{7}$ is approximately
 3.142857, which still is a bit away from 3.141592.
 We reach 3.1415 with |approx 25 pi|, for which 
-the last fraction is $\frac{333}{106}$, which is
-3.141509. This way, we can come as close to $\pi$ as we wish.
+the last fraction is $\frac{333}{106} = 3.141509$. 
+This way, we can come as close to $\pi$ as we wish.
 
 Since, with the |brocotkids| function, we always
 create two follow-ups for the input list,
@@ -233,12 +238,12 @@ labled with fractions:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  sterbrocTree :: Int -> Tree Quoz
+  sterbrocTree :: Zahl -> Tree Ratio
   sterbrocTree i = fmap contfracr (sterbroc i [0,1])
 \end{code}
 \end{minipage}
 
-For the first five generations, this tree is
+For the first five generations of this tree are
 
 \begin{center}
 \begin{tikzpicture}
@@ -433,12 +438,12 @@ The $4^{th}$ generation of the Stern-Brocot tree is\\
 \frac{4}{1}.
 \]
 
-We see that only some fractions changed their place
+We see that only some fractions changed their places
 and the changes are all direct swaps, such that
 the second position in the Calkin-Wilf tree changed with
 the fifth position and
 the fourth position changed with the seventh position.
-The other position, the first, third, sixth and eighth,
+The other positions, the first, third, sixth and eighth,
 remain in their place. We could describe this in 
 cyclic notation, using indexes from 0 -- 7 
 for the eight positions:
@@ -453,10 +458,10 @@ we represent the generations as arrays with indexes 0 -- 7:
 \begin{center}
 \begingroup
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{||c||c||c||c||c||c||c||c||}\hline
-0             & 1             & 2             & 3             & 4             & 5             & 6             & 7 \\\hline\hline
-$\frac{1}{4}$ & $\frac{4}{3}$ & $\frac{3}{5}$ & $\frac{5}{2}$ & $\frac{2}{5}$ & $\frac{5}{3}$ & $\frac{3}{4}$ & $\frac{4}{1}$\\\hline
-$\frac{1}{4}$ & $\frac{2}{5}$ & $\frac{3}{5}$ & $\frac{3}{4}$ & $\frac{4}{3}$ & $\frac{5}{3}$ & $\frac{5}{2}$ & $\frac{4}{1}$\\\hline
+\begin{tabular}{||c||c||c||c||c||c||c||c||c||}\hline
+             & 0             & 1             & 2             & 3             & 4             & 5             & 6             & 7 \\\hline\hline
+Calkin-Wilf  & $\frac{1}{4}$ & $\frac{4}{3}$ & $\frac{3}{5}$ & $\frac{5}{2}$ & $\frac{2}{5}$ & $\frac{5}{3}$ & $\frac{3}{4}$ & $\frac{4}{1}$\\\hline
+Stern-Brocot & $\frac{1}{4}$ & $\frac{2}{5}$ & $\frac{3}{5}$ & $\frac{3}{4}$ & $\frac{4}{3}$ & $\frac{5}{3}$ & $\frac{5}{2}$ & $\frac{4}{1}$\\\hline
 \end{tabular}
 \endgroup
 \end{center}
@@ -491,16 +496,18 @@ Let us try to implement the bit-reversal permutation.
 First we implement the bit-reverse of the indexes.
 To do so, we first need to convert the decimal index
 into a binary number; then we add zeros in front of all
-binary numbers that are shorter, in terms of a string
-of digits, than the greatest number; then we simply
+binary numbers that are shorter
+than the greatest number; then we simply
 reverse the lists of binary digits, remove the leading
 zeros and convert back to decimal numbers.
 This can be nicely expressed by the function
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  bitrev :: Int -> [Int] -> [Int]
-  bitrev x = fromBinary . cleanz . reverse . fillup x 0 . toBinary
+  bitrev :: Int -> Int -> Int
+  bitrev x =  fromIntegral . fromBinary       . 
+              cleanz .  reverse . fillup x 0  . 
+              toBinary . fromIntegral
 \end{code}
 \end{minipage}
 
@@ -539,7 +546,7 @@ a bit reversal of the indexes of any set |[a]| as:
 \begin{minipage}{\textwidth}
 \begin{code}
   idxbitrev :: [a] -> [Int]
-  idxbitrev xs =  let  l  = length xs
+  idxbitrev xs =  let  l  = fromIntegral $ length xs
                        x  = round $ logBase 2 (fromIntegral l)
                   in  [bitrev x i | i <- [0..l-1]]
 \end{code}
@@ -603,14 +610,14 @@ $\frac{1}{4},
 
 Since the generations of the Stern-Brocot tree
 are nothing but permutations of the Calkin-Wilf tree, we
-obviously, can derive a sequence from the Stern-Brocot tree
+can derive a sequence from the Stern-Brocot tree
 that lists all rational numbers.
 We create this sequence in exaclty the same way
 we did for the CalkinWilf tree, namely
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  enumQsb :: [Quoz]
+  enumQsb :: [Ratio]
   enumQsb = go 1 $ sterbrocTree (-1) 
     where go i t = getKids i t ++ go (i+1) t
 \end{code}
@@ -620,14 +627,14 @@ The numerators of the sequence derived in this way
 from the Calkin-Wilf tree equal the well-known Stern sequence.
 Is there another well-known sequence that is equivalent
 to the numerators of the Stern-Brocot tree sequence?
-Let us ask the On-line Encyclopedy with the first segment
+Let us ask the On-line Encyclopedia with the first segment
 of that sequence generated by |map numerator (take 20 enumQsb)|:
 
 \[
 1,1,2,1,2,3,3,1,2,3,3,4,5,5,4,1,2,3,3,4,5,5,4,5,7.
 \]
 
-The Encyclopedy tells us that this is the numerators of
+The Encyclopedia tells us that this is the numerators of
 the \term{Farey sequence}.
 This sequence, named for British geologist 
 John Farey (1766 -- 1826), has a lot of remarkable properties.
@@ -640,12 +647,12 @@ $F_3$ contains $0,\frac{1}{3},\frac{2}{3},1$ and so on.
 
 A direct way to implement this could be to combine all numbers
 from $0\dots n$ in the numerator with all numbers $1\dots n$
-in the denominator that are smaller 1 and to sort and |nub|
+in the denominator that are smaller than 1 and to sort and |nub|
 the resulting list, like this:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  farey2 :: Natural -> [Quoz]
+  farey2 :: Natural -> [Ratio]
   farey2 n = sort (nub $  filter (<= 1) $ 
                           concatMap (\x -> map (x%) [1..n]) [0..n])
 \end{code}
@@ -658,19 +665,19 @@ of this section, is the following:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  farey :: Natural -> [Quoz]
-  farey n = 0%1 : sort (go 1 $ sterbrocTree (-1))
+  farey :: Natural -> [Ratio]
+  farey n = 0 : sort (go 1 $ sterbrocTree (-1))
     where  go k t  =  let  g = getKids k t
                            l = filter fltr g
                       in if null l then l else l++go (k+1) t
            fltr k  =  k <= 1 && n >= denominator k 
 \end{code}
-\end{minipage}
+\end{minipage}\ignore{$}
 
 Here, we iterate over the generations of the Stern-Brocot tree
-removing the fractions that are greater 1 or have a denominator
+removing the fractions that are greater than 1 or have a denominator
 greater n. When we do not get results anymore, \ie\ all denominators
-are greater $n$, we are done.
+are greater than $n$, we are done.
 
 Let us try this algorithm on some numbers:
 
@@ -724,13 +731,16 @@ $\frac{4}{6}$ and
 $\frac{5}{6}$.
 The fractions $\frac{2}{6}\dots\frac{4}{6}$, however,
 are not in canonical form, since the numerators $2\dots 4$ 
-all share divisors with 6. Therefore, only those fractions
-remain for which the numerator does not share divisors
-whith $n$. There are, as we know, $\varphi(n)$ such numerators.
+all share divisors with 6. 
+Since there are $\varphi(n)$ numerators
+that do not share divisors with $n$,
+there are only $\varphi(n)$ fractions less than 1
+whith $n$ in the denominator. 
 
-Another property is that, for two consecutive fractions,
+Another property is that, for two consecutive fractions
+in the Farey sequence,
 $\frac{a}{b}$ and $\frac{c}{d}$,
-in a Farey sequence, the cross products
+the cross products
 $ad$ and $cb$ are consecutive integers.
 In again $F_6$, 
 for the fractions $\frac{1}{6}$ and $\frac{1}{5}$,
@@ -799,7 +809,7 @@ We can implement this as
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  nxtFarey :: Natural -> [Quoz] -> [Quoz]
+  nxtFarey :: Natural -> [Ratio] -> [Ratio]
   nxtFarey n []   = []
   nxtFarey n [r]  = [r]
   nxtFarey n (a:b:rs)  |  denominator a + 
@@ -819,16 +829,17 @@ by means of mediant fractions. The outer fractions,
 in this algorithm are the predecessors of the current node,
 namely the direct predecessor and either the predecessor
 of the predecessor or the sibling of that node.
-For instace, the second node in the third generation
+For instance, the second node in the third generation
 is $\frac{2}{3}$. Its kids are 
 $\frac{3}{5}$ and $\frac{3}{4}$.
-$\frac{3}{5}$ is $\frac{2+1}{3+2}$;
+$\frac{3}{5}$ is $\frac{2+1}{3+2}$ and, thus,
+the sum of $\frac{2}{3}$ and its predecessor;
 $\frac{4}{3}$, however, is $\frac{2+1}{3+1}$
-and, hence, the predecessor of the predecessor
-of $\frac{2}{3}$.
+and, hence, the sum of the $\frac{2}{3}$ 
+and the predecessor of its predecessor.
 
-The question now is how to bootstrap this algorithm.
-The root node, of course, does not have predecessors.
+The question now is how to bootstrap this algorithm,
+since the root node does not have predecessors.
 For this case, we imagine two predecessors, namely
 the fractions $\frac{0}{1}$ and $\frac{1}{0}$,
 the latter of which, of course, is not a proper fraction.
@@ -843,7 +854,7 @@ We implement this as
 \begin{minipage}{\textwidth}
 \begin{code}
   mSterbroctree :: Zahl ->  Natural -> Natural -> 
-                            Natural -> Natural -> Quoz -> Tree Quoz
+                            Natural -> Natural -> Ratio -> Tree Ratio
   mSterbroctree 0 _ _ _ _ r  =  Node r []
   mSterbroctree n a b c d r  =  let  rn  = numerator r
                                      rd  = denominator r

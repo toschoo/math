@@ -3,7 +3,8 @@
 module Real
 where
   import Natural
-  import Data.Ratio ((%), numerator,denominator)
+  import Data.Ratio ((%))
+  import qualified Data.Ratio as R (numerator,denominator)
   import Zahl
   import Quoz hiding (rdiv, (%))
   import Realrep
@@ -109,8 +110,8 @@ The next task is to make |RealN| instance of
 \begin{code}
   instance Fractional RealN where
     (/) = rdiv 17 
-    fromRational r =  (R (fromIntegral $ numerator   r) 0) / 
-                      (R (fromIntegral $ denominator r) 0)
+    fromRational r =  (R (fromIntegral $ R.numerator   r) 0) / 
+                      (R (fromIntegral $ R.denominator r) 0)
 \end{code}
 \end{minipage}
 

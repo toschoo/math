@@ -2,6 +2,8 @@
 \begin{code}
 module Binom
 where
+  import Natural
+  import Fact
 \end{code}
 }
 
@@ -717,7 +719,7 @@ So, let us implement the first option:
               |  2*k > n    = choose n (n-k)
               |  otherwise  = go 1 1
     where go m i  | i > k      = m
-                  | otherwise  = go (m * (n - k + i)) `div` i) (i+1)
+                  | otherwise  = go (m * (n - k + i) `div` i) (i+1)
 \end{code}
 
 The implementation is straight forward.
