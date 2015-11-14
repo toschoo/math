@@ -2,7 +2,8 @@ module Elliptic
 where
 
   import Prelude hiding (mod)
-  import Modular hiding (add)
+  import Modular hiding (add,mul)
+  import Cantor (toBinary)
 
   -------------------------------------------------------------------------
   -- Point with Identity
@@ -25,6 +26,14 @@ where
   point c (x,y) = P (x `mod` p, y `mod` p)
     where p = curM c 
 
+  xco :: Point -> Integer
+  xco O = error "O has no coordinates"
+  xco (P (x,_)) = x
+
+  yco :: Point -> Integer
+  yco O = error "O has no coordinates"
+  yco (P (_,y)) = y
+
   -------------------------------------------------------------------------
   -- Curve: coefficients a and b and modulo p (for prime numbers)
   --        y^2 == x^3 + ax + b
@@ -36,24 +45,68 @@ where
     deriving (Show,Eq)
 
   -------------------------------------------------------------------------
-  -- Get y for x; perhaps better returning 3 ys?
+  -- Get y for x
   -------------------------------------------------------------------------
-  curveY :: Curve -> Integer -> Integer
-  curveY c x = let a = curA c
-                   b = curB c
-                   p = curM c
-                   r = (x^3 + a*x + b) `mod` p
-                   y = round (sqrt $ fromIntegral r)
-                in y `mod` p
+  curveY :: Curve -> Integer -> Maybe Integer
+  curveY c x = let r = curveY'2 c x
+                in if isSqrM r p then Just (findRoot c r)
+                                 else Nothing
+    where p = curM c
+
+  -------------------------------------------------------------------------
+  -- Get y^2 for x
+  -------------------------------------------------------------------------
+  curveY'2 :: Curve -> Integer -> Integer
+  curveY'2 c = f
+    where a = curA c
+          b = curB c
+          p = curM c
+          f x = (x^3 + a*x + b) `mod` p
+
+  -------------------------------------------------------------------------
+  -- Find a point on the curve
+  -------------------------------------------------------------------------
+  findPoint :: Curve -> Point
+  findPoint c = let (x,y') = head $ filter (isSqrM p . snd) [
+                                                      (x,f x) | x <- [1..]]
+                 in point c (x,findRoot c y')
+    where a = curA c
+          b = curB c
+          p = curM c
+          f x = (x^3 + a*x + b) `mod` p
+
+  -------------------------------------------------------------------------
+  -- Find the root of a quadratic residue
+  -------------------------------------------------------------------------
+  findRoot :: Curve -> Integer -> Integer
+  findRoot c q = go 1
+    where p = curM c
+          go x | (x^2) `mod` p == q = x
+               | otherwise          = go (x+1) 
+
+  -------------------------------------------------------------------------
+  -- Ordinary test whether a number is a perfect square
+  -------------------------------------------------------------------------
+  isSqr :: Integer -> Bool
+  isSqr 1 = True
+  isSqr x = x `elem` [z^2 | z <- [1..x `div` 2]] 
+
+  -------------------------------------------------------------------------
+  -- Test whether a number is quadratic residue of p
+  -------------------------------------------------------------------------
+  isSqrM :: Integer -> Integer -> Bool
+  isSqrM 0 _ = True
+  isSqrM n p = legendre n p == 1
 
   -------------------------------------------------------------------------
   -- Check if point is on the curve
-  --       We are not yet checking for the 3rd y...
   -------------------------------------------------------------------------
   oncurve :: Curve -> Point -> Bool
   oncurve _ O     = True
-  oncurve c (P (x,y)) = let z = curveY c x
-                         in y == z || y == inverse z p
+  oncurve c (P (x,y)) = case curveY c x of
+                          Nothing -> False
+                          Just z  -> y == z   || y == inverse z p ||
+                                     y == p-z || y == inverse (p-z) p
     where p = curM c
                     
   -------------------------------------------------------------------------
@@ -80,13 +133,26 @@ where
           p = curM c
 
   -------------------------------------------------------------------------
-  -- Multiplication of points
+  -- Multiplication of points (naiv)
+  -------------------------------------------------------------------------
+  mul1 :: Curve -> Integer -> Point -> Point
+  mul1 _ _ O = O
+  mul1 _ 0 _ = error "multiplication by 0"
+  mul1 c n p = go n p
+    where go 1 q = q
+          go i q = go (i-1) (add c p q)
+
+  -------------------------------------------------------------------------
+  -- Multiplication of points (double-and-add)
   -------------------------------------------------------------------------
   mul :: Curve -> Integer -> Point -> Point
   mul _ _ O = O
-  mul c n p = go n p
-    where go 1 q = q
-          go i q = go (i-1) (add c p q)
+  mul _ 0 _ = error "multiplication by 0"
+  mul c n p = go (tail $ toBinary n) p
+    where go [] q     = q
+          go (i:is) q = let q' = add c q q
+                         in if i == 0 then go is q'
+                                      else go is (add c q' p)
 
   -------------------------------------------------------------------------
   -- The inverse of a point (x,y) is (x,-y) mod p
@@ -113,8 +179,16 @@ where
   -------------------------------------------------------------------------
   -- Order of the subgroup generated by point q
   -------------------------------------------------------------------------
-  gorder :: Curve -> Point -> Int
-  gorder c = length . gen c 
+  gorder :: Curve -> Point -> Integer
+  gorder c = fromIntegral . length . gen c 
+
+  -------------------------------------------------------------------------
+  -- Primitive elements of c
+  -------------------------------------------------------------------------
+  primitives :: Curve -> Point -> [Point]
+  primitives c g = let h = gen c g 
+                       o = maximum (map (gorder c) h)
+                    in [q | q <- h, gorder c q == o]
 
   --------------------------------------------------------------
   -- Test
