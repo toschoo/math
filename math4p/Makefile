@@ -67,9 +67,9 @@ ALL	 = cmds.tex \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
 	   src/c09/linear.lhs \
-	   src/c10/complex.lhs \
-	   src/c11/quadratics.lhs \
-	   src/c12/elliptic.lhs \
+	   src/c10/elliptic.lhs \
+	   src/c11/complex.lhs \
+	   src/c12/quadratics.lhs \
 	   src/c13/euclid.lhs \
 	   src/c14/calculus.lhs
 

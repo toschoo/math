@@ -32,7 +32,10 @@ where
     (d,qa) <- ecdhInit ps
     sfp ("Alice: private key is " ++ show d)
     writeChan och qa
-    qb <- readChan ich
+    qb <- readChan ich -- check if (x,y) is on the curve 
+                       -- or even better: reduce y to a 1 or 0 bit:
+                       -- just send (x,0) (e.g. plus/minus root).
+                       -- check order (do no accept small order!)
     let k = mul c d qb
     sfp ("Alice: common key is " ++ show k)
     -- send bob a secret
@@ -80,7 +83,7 @@ where
     boch <- newChan
     m    <- newMVar ()
     let sfp = put m
-    let ecdhp = ECDHP (Curve 2 2 17) (P (5,1))
+    let ecdhp = ECDHP (Curve 2 2 17) (P 5 1)
     void $ forkIO (eve sfp aich aoch bich boch)
     void $ forkIO (alice ecdhp sfp aich aoch)
     void $ forkIO (bob   ecdhp sfp bich boch)
@@ -93,8 +96,8 @@ where
   sfRead ch p = (ecdhDecrypt p) <$> readChan ch
 
   ecdhEncrypt :: Point -> Integer -> Point
-  ecdhEncrypt (P (x,y)) m = P (xor (x+y) m,0)
+  ecdhEncrypt (P x y) m = P (xor (x+y) m) 0
 
   ecdhDecrypt :: Point -> Point -> Integer
-  ecdhDecrypt (P (x,y)) (P (m,_)) = xor (x+y) m
+  ecdhDecrypt (P x y) (P m _) = xor (x+y) m
      

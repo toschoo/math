@@ -43,8 +43,8 @@
 \contentsline {section}{\numberline {6.5}Zeno's Paradox}{225}
 \contentsline {section}{\numberline {6.6}Linear Equations}{230}
 \contentsline {section}{\numberline {6.7}Binomial Coefficients are Integers}{230}
-\contentsline {section}{\numberline {6.8}Euler's Totient Function}{241}
-\contentsline {section}{\numberline {6.9}How many Fractions?}{256}
+\contentsline {section}{\numberline {6.8}Euler's Totient Function}{242}
+\contentsline {section}{\numberline {6.9}How many Fractions?}{257}
 \contentsline {chapter}{\numberline {7}Real Numbers}{273}
 \contentsline {section}{\numberline {7.1}$\sqrt {2}$}{273}
 \contentsline {section}{\numberline {7.2}$\Phi $}{275}
@@ -87,27 +87,38 @@
 \contentsline {section}{\numberline {10.8}Polynomials and Vector Spaces}{313}
 \contentsline {section}{\numberline {10.9}Determinants}{313}
 \contentsline {section}{\numberline {10.10}Support Vector Machines}{313}
-\contentsline {chapter}{\numberline {11}Complex Numbers}{315}
-\contentsline {section}{\numberline {11.1}i}{315}
-\contentsline {section}{\numberline {11.2}Complex Numbers}{315}
-\contentsline {section}{\numberline {11.3}The complex Plane}{315}
-\contentsline {section}{\numberline {11.4}Polar Form}{315}
-\contentsline {section}{\numberline {11.5}$\mathbb {C}$}{315}
-\contentsline {section}{\numberline {11.6}Gaussian Integers}{315}
-\contentsline {section}{\numberline {11.7}...}{315}
-\contentsline {section}{\numberline {11.8}Complex Vector Spaces}{315}
-\contentsline {section}{\numberline {11.9}...}{315}
-\contentsline {section}{\numberline {11.10}Quantum Mechanics}{315}
-\contentsline {section}{\numberline {11.11}Hypercomplex Numbers}{315}
-\contentsline {chapter}{\numberline {12}Quadratics, Cubics and Quartics}{317}
-\contentsline {section}{\numberline {12.1}Quadratic Equations}{317}
-\contentsline {section}{\numberline {12.2}The fundamental Theorem of Algebra}{317}
-\contentsline {section}{\numberline {12.3}Cubics and Quartics}{317}
-\contentsline {section}{\numberline {12.4}Quintics}{317}
-\contentsline {section}{\numberline {12.5}Galois Theory}{317}
-\contentsline {section}{\numberline {12.6}Field Theory}{317}
-\contentsline {section}{\numberline {12.7}Category Theory}{317}
-\contentsline {chapter}{\numberline {13}Elliptic Curves}{319}
+\contentsline {chapter}{\numberline {11}Elliptic Curves}{315}
+\contentsline {section}{\numberline {11.1}Weierstrass Equations}{315}
+\contentsline {section}{\numberline {11.2}Geometry Intuition}{315}
+\contentsline {section}{\numberline {11.3}Point Addition}{315}
+\contentsline {section}{\numberline {11.4}Projective Geometry}{315}
+\contentsline {section}{\numberline {11.5}Identity and Inverse}{315}
+\contentsline {section}{\numberline {11.6}Multiplication}{315}
+\contentsline {section}{\numberline {11.7}EC Crypto Systems}{315}
+\contentsline {section}{\numberline {11.8}Cryptoanalysis}{315}
+\contentsline {section}{\numberline {11.9}Mr. Frobenius}{315}
+\contentsline {section}{\numberline {11.10}Mr. Schoof}{315}
+\contentsline {section}{\numberline {11.11}EC in Practice}{315}
+\contentsline {chapter}{\numberline {12}Complex Numbers}{317}
+\contentsline {section}{\numberline {12.1}i}{317}
+\contentsline {section}{\numberline {12.2}Complex Numbers}{317}
+\contentsline {section}{\numberline {12.3}The complex Plane}{317}
+\contentsline {section}{\numberline {12.4}Polar Form}{317}
+\contentsline {section}{\numberline {12.5}$\mathbb {C}$}{317}
+\contentsline {section}{\numberline {12.6}Gaussian Integers}{317}
+\contentsline {section}{\numberline {12.7}...}{317}
+\contentsline {section}{\numberline {12.8}Complex Vector Spaces}{317}
+\contentsline {section}{\numberline {12.9}...}{317}
+\contentsline {section}{\numberline {12.10}Quantum Mechanics}{317}
+\contentsline {section}{\numberline {12.11}Hypercomplex Numbers}{317}
+\contentsline {chapter}{\numberline {13}Quadratics, Cubics and Quartics}{319}
+\contentsline {section}{\numberline {13.1}Quadratic Equations}{319}
+\contentsline {section}{\numberline {13.2}The fundamental Theorem of Algebra}{319}
+\contentsline {section}{\numberline {13.3}Cubics and Quartics}{319}
+\contentsline {section}{\numberline {13.4}Quintics}{319}
+\contentsline {section}{\numberline {13.5}Galois Theory}{319}
+\contentsline {section}{\numberline {13.6}Field Theory}{319}
+\contentsline {section}{\numberline {13.7}Category Theory}{319}
 \contentsline {chapter}{\numberline {14}Euclid and beyond}{321}
 \contentsline {section}{\numberline {14.1}Euclid's Geometry}{321}
 \contentsline {section}{\numberline {14.2}The Parallel Postulate}{321}
