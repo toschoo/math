@@ -1,5 +1,5 @@
-\section{Weierstrass Equations} 
 \section{Geometry Intuition} 
+%include ECGeometry.lhs
 \section{Point Addition} 
 \section{Projective Geometry} 
 \section{Identity and Inverse} 

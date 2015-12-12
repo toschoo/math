@@ -462,18 +462,17 @@ the function $\frac{1}{\ln(n)}$,
 which looks like this:
 
 \begin{center}
-\begin{tikzpicture}[trim axis left]
-\begin{axis}[
-  domain=1:10,
-  samples=100,
-  % enlarge x limits=true,
-  ymin=0,ymax=10,
-  xmin=1.2,xmax=10,
-  %grid=both,
-  %axis equal,
-  no markers]
-\addplot +[thick] {1/ln(x)};
-\end{axis}
+\begin{tikzpicture}%[trim axis left]
+\draw [<->] (0,5.3) -- (0,0) -- (5.3,0);
+\draw (0.5,-0.1) -- (0.5,0.1);
+\node at (0.5,-0.2) [below left] {1};
+\draw[
+  teal,
+  domain=1.1:9.9,
+  samples=250,
+  scale=0.5,
+  variable=\x]
+  plot (\x, {1/ln(\x)});
 \end{tikzpicture}
 \end{center}
 

@@ -88,17 +88,16 @@
 \contentsline {section}{\numberline {10.9}Determinants}{313}
 \contentsline {section}{\numberline {10.10}Support Vector Machines}{313}
 \contentsline {chapter}{\numberline {11}Elliptic Curves}{315}
-\contentsline {section}{\numberline {11.1}Weierstrass Equations}{315}
-\contentsline {section}{\numberline {11.2}Geometry Intuition}{315}
-\contentsline {section}{\numberline {11.3}Point Addition}{315}
-\contentsline {section}{\numberline {11.4}Projective Geometry}{315}
-\contentsline {section}{\numberline {11.5}Identity and Inverse}{315}
-\contentsline {section}{\numberline {11.6}Multiplication}{315}
-\contentsline {section}{\numberline {11.7}EC Crypto Systems}{315}
-\contentsline {section}{\numberline {11.8}Cryptoanalysis}{315}
-\contentsline {section}{\numberline {11.9}Mr. Frobenius}{315}
-\contentsline {section}{\numberline {11.10}Mr. Schoof}{315}
-\contentsline {section}{\numberline {11.11}EC in Practice}{315}
+\contentsline {section}{\numberline {11.1}Geometry Intuition}{315}
+\contentsline {section}{\numberline {11.2}Point Addition}{316}
+\contentsline {section}{\numberline {11.3}Projective Geometry}{316}
+\contentsline {section}{\numberline {11.4}Identity and Inverse}{316}
+\contentsline {section}{\numberline {11.5}Multiplication}{316}
+\contentsline {section}{\numberline {11.6}EC Crypto Systems}{316}
+\contentsline {section}{\numberline {11.7}Cryptoanalysis}{316}
+\contentsline {section}{\numberline {11.8}Mr. Frobenius}{316}
+\contentsline {section}{\numberline {11.9}Mr. Schoof}{316}
+\contentsline {section}{\numberline {11.10}EC in Practice}{316}
 \contentsline {chapter}{\numberline {12}Complex Numbers}{317}
 \contentsline {section}{\numberline {12.1}i}{317}
 \contentsline {section}{\numberline {12.2}Complex Numbers}{317}

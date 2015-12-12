@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  6 DEC 2015 20:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  7 DEC 2015 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1142,21 +1142,16 @@ Overfull \hbox (2.79828pt too wide) detected at line 100
  []
 
 
-Overfull \hbox (2.79828pt too wide) detected at line 101
-\OT1/cmr/m/n/10.95 11.11. 
+Overfull \hbox (2.79828pt too wide) detected at line 111
+\OT1/cmr/m/n/10.95 12.10. 
  []
 
 
 Overfull \hbox (2.79828pt too wide) detected at line 112
-\OT1/cmr/m/n/10.95 12.10. 
- []
-
-[5]
-Overfull \hbox (2.79828pt too wide) detected at line 113
 \OT1/cmr/m/n/10.95 12.11. 
  []
 
-)
+[5])
 \tf@toc=\write5
 \openout5 = `lhsm4p.toc'.
 
@@ -3104,10 +3099,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-[197]
-NOTE: coordinate (1Y1.0e0],4Y0.0e0]) has been dropped because it is unbounded (
-in y). (see also unbounded coords=jump). 
-[198] [199] [200]
+[197] [198] [199] [200]
 Chapter 6.
 [201
 
@@ -3170,7 +3162,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [212]
-Overfull \hbox (14.41966pt too wide) in paragraph at lines 21384--21396
+Overfull \hbox (14.41966pt too wide) in paragraph at lines 21383--21395
 [][] 
  []
 
@@ -3191,7 +3183,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21614.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21613.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3205,7 +3197,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21614.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21613.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -3227,7 +3219,35 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21700.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21699.
+
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 21699.
+
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 21699.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3269,39 +3289,25 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21701.
-
-
-Class scrbook Warning: Usage of deprecated font command `\tt'!
-(scrbook)              You should note, that in 1994 font command `\tt' has
-(scrbook)              been defined for compatiblitiy to Script 2.0 only.
-(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
-(scrbook)              shouldn't use such commands any longer and within
-(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
-(scrbook)              See `fntguide.pdf' for more information about
-(scrbook)              recommended font commands.
-(scrbook)              Note also, that KOMA-Script will remove the definition
-(scrbook)              of `\tt' anytime until release of about version 3.20.
-(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21701.
-
-
-Class scrbook Warning: Usage of deprecated font command `\tt'!
-(scrbook)              You should note, that in 1994 font command `\tt' has
-(scrbook)              been defined for compatiblitiy to Script 2.0 only.
-(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
-(scrbook)              shouldn't use such commands any longer and within
-(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
-(scrbook)              See `fntguide.pdf' for more information about
-(scrbook)              recommended font commands.
-(scrbook)              Note also, that KOMA-Script will remove the definition
-(scrbook)              of `\tt' anytime until release of about version 3.20.
-(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21701.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21700.
 
 \openout3 = `lhsm4p.ptb'.
 
 \openout3 = `lhsm4p.ptb'.
+
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 21742.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3316,20 +3322,6 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
 (scrbook)              by `\normalfont \ttfamily ' on input line 21743.
-
-
-Class scrbook Warning: Usage of deprecated font command `\tt'!
-(scrbook)              You should note, that in 1994 font command `\tt' has
-(scrbook)              been defined for compatiblitiy to Script 2.0 only.
-(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
-(scrbook)              shouldn't use such commands any longer and within
-(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
-(scrbook)              See `fntguide.pdf' for more information about
-(scrbook)              recommended font commands.
-(scrbook)              Note also, that KOMA-Script will remove the definition
-(scrbook)              of `\tt' anytime until release of about version 3.20.
-(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21744.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -3349,7 +3341,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21817.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21816.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3363,9 +3355,23 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21817.
+(scrbook)              by `\normalfont \ttfamily ' on input line 21816.
 
 \openout3 = `lhsm4p.ptb'.
+
+
+Class scrbook Warning: Usage of deprecated font command `\tt'!
+(scrbook)              You should note, that in 1994 font command `\tt' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\tt' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrbook)              by `\normalfont \ttfamily ' on input line 21843.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3381,24 +3387,10 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
 (scrbook)              by `\normalfont \ttfamily ' on input line 21844.
 
-
-Class scrbook Warning: Usage of deprecated font command `\tt'!
-(scrbook)              You should note, that in 1994 font command `\tt' has
-(scrbook)              been defined for compatiblitiy to Script 2.0 only.
-(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
-(scrbook)              shouldn't use such commands any longer and within
-(scrbook)              KOMA-Script usage of `\tt' is definitely deprecated.
-(scrbook)              See `fntguide.pdf' for more information about
-(scrbook)              recommended font commands.
-(scrbook)              Note also, that KOMA-Script will remove the definition
-(scrbook)              of `\tt' anytime until release of about version 3.20.
-(scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 21845.
-
 \openout3 = `lhsm4p.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21854--21918
+Underfull \hbox (badness 10000) in paragraph at lines 21853--21917
 
  []
 
@@ -3423,7 +3415,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22024.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22023.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3437,7 +3429,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22024.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22023.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3451,7 +3443,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22028.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22027.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3465,7 +3457,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22028.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22027.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3479,7 +3471,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22030.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22029.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3493,7 +3485,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22030.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22029.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3507,7 +3499,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22030.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22029.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3521,7 +3513,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22032.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22031.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3535,7 +3527,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22032.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22031.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3549,7 +3541,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22032.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22031.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3563,7 +3555,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22032.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22031.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3577,7 +3569,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22041.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22040.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3591,7 +3583,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22041.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22040.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3605,7 +3597,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22044.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22043.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3619,7 +3611,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22044.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22043.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3633,7 +3625,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22046.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22045.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3647,7 +3639,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22046.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22045.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3661,7 +3653,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22046.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22045.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3675,7 +3667,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22048.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22047.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3689,7 +3681,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22048.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22047.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3703,7 +3695,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22048.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22047.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3717,7 +3709,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22048.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22047.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -3735,7 +3727,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22058.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22057.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3749,7 +3741,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22058.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22057.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3763,7 +3755,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22061.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22060.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3777,7 +3769,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22061.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22060.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3791,7 +3783,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22063.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22062.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3805,7 +3797,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22063.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22062.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3819,7 +3811,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22063.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22062.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3833,7 +3825,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22065.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22064.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3847,7 +3839,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22065.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22064.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3861,7 +3853,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22065.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22064.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3875,7 +3867,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22065.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22064.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -3902,7 +3894,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22245.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22244.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3916,7 +3908,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22245.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22244.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3930,7 +3922,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22245.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22244.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -3953,7 +3945,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22292.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22291.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3967,7 +3959,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22292.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22291.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -3981,7 +3973,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22292.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22291.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -4010,7 +4002,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22516.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22515.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4024,7 +4016,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22516.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22515.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4038,81 +4030,81 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 22516.
+(scrbook)              by `\normalfont \ttfamily ' on input line 22515.
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  $[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][] 
  []
 
 
-Overfull \hbox (6.88437pt too wide) in paragraph at lines 22450--22517
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 22449--22516
  [][][][][][][][][]$ 
  []
 
@@ -4157,7 +4149,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-Overfull \hbox (2.71973pt too wide) in paragraph at lines 24128--24132
+Overfull \hbox (2.71973pt too wide) in paragraph at lines 24127--24131
 [][] 
  []
 
@@ -4194,7 +4186,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 24814.
+(scrbook)              by `\normalfont \ttfamily ' on input line 24813.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4208,7 +4200,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 24814.
+(scrbook)              by `\normalfont \ttfamily ' on input line 24813.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4222,13 +4214,13 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 24814.
+(scrbook)              by `\normalfont \ttfamily ' on input line 24813.
 
 [250] [251]
 \openout3 = `lhsm4p.ptb'.
 
 
-Overfull \hbox (2.53668pt too wide) in paragraph at lines 25001--25012
+Overfull \hbox (2.53668pt too wide) in paragraph at lines 25000--25011
 \OT1/cmr/m/n/10.95 since $\OML/cmm/m/it/10.95 '\OT1/cmr/m/n/10.95 (8) = 4$, and
  $\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/n/10.95 (8) = 2$. We gen-er-ate the groups 
 with $[] ([] 8) ([] 8)$
@@ -4402,7 +4394,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4416,7 +4408,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4430,7 +4422,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4444,7 +4436,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4458,7 +4450,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4472,7 +4464,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 28900.
+(scrbook)              by `\normalfont \ttfamily ' on input line 28899.
 
 \openout3 = `lhsm4p.ptb'.
 
@@ -4503,7 +4495,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 29185.
+(scrbook)              by `\normalfont \ttfamily ' on input line 29184.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4517,7 +4509,7 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 29185.
+(scrbook)              by `\normalfont \ttfamily ' on input line 29184.
 
 
 Class scrbook Warning: Usage of deprecated font command `\tt'!
@@ -4531,77 +4523,77 @@ Class scrbook Warning: Usage of deprecated font command `\tt'!
 (scrbook)              Note also, that KOMA-Script will remove the definition
 (scrbook)              of `\tt' anytime until release of about version 3.20.
 (scrbook)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrbook)              by `\normalfont \ttfamily ' on input line 29185.
+(scrbook)              by `\normalfont \ttfamily ' on input line 29184.
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  $[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 29110--29186
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 29109--29185
  [][][][][][][][][]$ 
  []
 
@@ -4665,7 +4657,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 \openout3 = `lhsm4p.ptb'.
 
 
-Overfull \hbox (3.25443pt too wide) in paragraph at lines 30332--30340
+Overfull \hbox (3.25443pt too wide) in paragraph at lines 30331--30339
 \OT1/cmr/m/n/10.95 see the cor-re-spond-ing gen-er-a-tion from the Stern-Brocot
  tree. Let $\OT1/cmr/m/it/10.95 t [] [] \OT1/cmr/m/n/10.95 ([]1) (1 %
  []
@@ -4716,12 +4708,16 @@ Chapter 10.
 
 ]
 Chapter 11.
-[315] [316
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-]
+ [315]
+[316]
 Chapter 12.
-[317] [318
+[317
+
+
+] [318
 
 
 ]
@@ -4766,13 +4762,13 @@ Chapter 19.
 Chapter 20.
 [335] (./lhsm4p.aux) ) 
 Here is how much of TeX's memory you used:
- 30899 strings out of 493304
- 705174 string characters out of 6139872
- 844138 words of memory out of 5000000
- 33763 multiletter control sequences out of 15000+600000
+ 33438 strings out of 493304
+ 758058 string characters out of 6139872
+ 963984 words of memory out of 5000000
+ 36302 multiletter control sequences out of 15000+600000
  25854 words of font info for 99 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 70i,17n,103p,10413b,1699s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,17n,103p,10413b,1713s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.
@@ -4795,7 +4791,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsm4p.pdf (335 pages, 1202713 bytes).
+Output written on lhsm4p.pdf (335 pages, 1221122 bytes).
 PDF statistics:
  1181 PDF objects out of 1200 (max. 8388607)
  812 compressed objects within 9 object streams
