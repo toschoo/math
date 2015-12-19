@@ -248,67 +248,67 @@ For the first five generations of this tree are
 \begin{center}
 \begin{tikzpicture}
 % root
-\node (A1) at ( 7,  0) {$\frac{1}{1}$};
+\node (A1) at ( 6,  0) {$\frac{1}{1}$};
 
 % first level
-\node (A2) at ( 5,-1 ) {$\frac{1}{2}$};
+\node (A2) at ( 3,-1 ) {$\frac{1}{2}$};
 \node (A3) at ( 9,-1 ) {$\frac{2}{1}$};
 
 % kids of A2
-\node (A4) at ( 4,-2 ) {$\frac{1}{3}$};
-\node (A5) at ( 6,-2 ) {$\frac{2}{3}$};
+\node (A4) at (1.5,-2 ) {$\frac{1}{3}$};
+\node (A5) at (4.5,-2 ) {$\frac{2}{3}$};
 
 % kids of A3
-\node (A6) at ( 8,-2 ) {$\frac{3}{2}$};
-\node (A7) at (10,-2 ) {$\frac{3}{1}$};
+\node (A6) at ( 7.5,-2 ) {$\frac{3}{2}$};
+\node (A7) at (10.5,-2 ) {$\frac{3}{1}$};
 
 % kids of A4
-\node (A8) at ( 3  ,-3 ) {$\frac{1}{4}$};
-\node (A9) at ( 4.2,-3 ) {$\frac{2}{5}$};
+\node (A8) at (0.75,-3 ) {$\frac{1}{4}$};
+\node (A9) at (2.25,-3 ) {$\frac{2}{5}$};
 
 % kids of A5
-\node (A10) at ( 5.2,-3 ) {$\frac{3}{5}$};
-\node (A11) at ( 6.5,-3 ) {$\frac{3}{4}$};
+\node (A10) at (3.75,-3 ) {$\frac{3}{5}$};
+\node (A11) at (5.25,-3 ) {$\frac{3}{4}$};
 
 % kids of A6
-\node (A12) at ( 7.5,-3 ) {$\frac{4}{3}$};
-\node (A13) at ( 8.5,-3 ) {$\frac{5}{3}$};
+\node (A12) at (6.75,-3 ) {$\frac{4}{3}$};
+\node (A13) at (8.25,-3 ) {$\frac{5}{3}$};
 
 % kids of A7
-\node (A14) at ( 9.5,-3 ) {$\frac{5}{2}$};
-\node (A15) at (11  ,-3 ) {$\frac{4}{1}$};
+\node (A14) at ( 9.75,-3 ) {$\frac{5}{2}$};
+\node (A15) at (11.25,-3 ) {$\frac{4}{1}$};
 
 % kids of A8
-\node (A16) at ( 2  ,-4 ) {$\frac{1}{5}$};
-\node (A17) at ( 2.6,-4 ) {$\frac{2}{7}$};
+\node (A16) at (0.375,-4 ) {$\frac{1}{5}$};
+\node (A17) at (1.125,-4 ) {$\frac{2}{7}$};
 
 % kids of A9
-\node (A18) at ( 3.3,-4 ) {$\frac{3}{8}$};
-\node (A19) at ( 3.9,-4 ) {$\frac{3}{7}$};
+\node (A18) at (1.875,-4 ) {$\frac{3}{8}$};
+\node (A19) at (2.625,-4 ) {$\frac{3}{7}$};
 
 % kids of A10
-\node (A20) at ( 4.7,-4 ) {$\frac{4}{7}$};
-\node (A21) at ( 5.3,-4 ) {$\frac{5}{8}$};
+\node (A20) at (3.375,-4 ) {$\frac{4}{7}$};
+\node (A21) at (4.125,-4 ) {$\frac{5}{8}$};
 
 % kids of A11
-\node (A22) at ( 6.1,-4 ) {$\frac{5}{7}$};
-\node (A23) at ( 6.7,-4 ) {$\frac{4}{5}$};
+\node (A22) at (4.875,-4 ) {$\frac{5}{7}$};
+\node (A23) at (5.625,-4 ) {$\frac{4}{5}$};
 
 % kids of A12
-\node (A24) at ( 7.3,-4 ) {$\frac{5}{4}$};
-\node (A25) at ( 7.9,-4 ) {$\frac{7}{5}$};
+\node (A24) at (6.375,-4 ) {$\frac{5}{4}$};
+\node (A25) at (7.125,-4 ) {$\frac{7}{5}$};
 
 % kids of A13
-\node (A26) at ( 8.7,-4 ) {$\frac{8}{5}$};
-\node (A27) at ( 9.3,-4 ) {$\frac{7}{4}$};
+\node (A26) at (7.875,-4 ) {$\frac{8}{5}$};
+\node (A27) at (8.625,-4 ) {$\frac{7}{4}$};
 
 % kids of A14
-\node (A28) at (10.1,-4 ) {$\frac{7}{3}$};
-\node (A29) at (10.6,-4 ) {$\frac{8}{3}$};
+\node (A28) at ( 9.375,-4 ) {$\frac{7}{3}$};
+\node (A29) at (10.125,-4 ) {$\frac{8}{3}$};
 
 % kids of A15
-\node (A30) at (11.4,-4 ) {$\frac{7}{2}$};
-\node (A31) at (12  ,-4 ) {$\frac{5}{1}$};
+\node (A30) at (10.875,-4 ) {$\frac{7}{2}$};
+\node (A31) at (11.625,-4 ) {$\frac{5}{1}$};
 
 % connect root
 \connect {A1} {A2};
@@ -372,10 +372,6 @@ For the first five generations of this tree are
 
 \end{tikzpicture}
 \end{center}
-
-%\begin{center}
-%\includegraphics[width=\textwidth]{src/c06/sterb7}
-%\end{center}
 
 As you can see at once, this tree has many properties
 in common with the Calkin-Wilf tree.
