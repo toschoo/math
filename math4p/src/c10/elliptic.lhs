@@ -1,6 +1,5 @@
 \section{Geometry Intuition} 
 %include ECGeometry.lhs
-\section{Point Addition} 
 \section{Projective Geometry} 
 \section{EC modulo a Prime} 
 \section{EC Crypto Systems} 

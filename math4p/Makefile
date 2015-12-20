@@ -126,6 +126,12 @@ poly.pdf:	poly.tex $(ALL)
 		pdflatex lhspoly.tex
 		mv lhspoly.pdf poly.pdf
 
+elliptic.pdf:	elliptic.tex $(ALL)
+		$(toTex) elliptic.tex > lhselliptic.tex
+		pdflatex lhselliptic.tex
+		pdflatex lhselliptic.tex
+		mv lhselliptic.pdf elliptic.pdf
+
 m4p:		m4p.pdf
 
 nums:		nums.pdf
@@ -139,6 +145,8 @@ inverse:	inverse.pdf
 continuum:	continuum.pdf
 
 poly:		poly.pdf
+
+elliptic:	elliptic.pdf
 
 SUITE = test/suite
 

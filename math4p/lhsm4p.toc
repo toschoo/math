@@ -89,55 +89,54 @@
 \contentsline {section}{\numberline {10.10}Support Vector Machines}{313}
 \contentsline {chapter}{\numberline {11}Elliptic Curves}{315}
 \contentsline {section}{\numberline {11.1}Geometry Intuition}{315}
-\contentsline {section}{\numberline {11.2}Point Addition}{316}
-\contentsline {section}{\numberline {11.3}Projective Geometry}{316}
-\contentsline {section}{\numberline {11.4}EC modulo a Prime}{316}
-\contentsline {section}{\numberline {11.5}EC Crypto Systems}{316}
-\contentsline {section}{\numberline {11.6}Cryptoanalysis}{316}
-\contentsline {section}{\numberline {11.7}Mr. Frobenius}{316}
-\contentsline {section}{\numberline {11.8}Mr. Schoof}{316}
-\contentsline {section}{\numberline {11.9}Mr. Elkies and Mr. Aktin}{316}
-\contentsline {section}{\numberline {11.10}EC in Practice}{316}
-\contentsline {chapter}{\numberline {12}Complex Numbers}{317}
-\contentsline {section}{\numberline {12.1}i}{317}
-\contentsline {section}{\numberline {12.2}Complex Numbers}{317}
-\contentsline {section}{\numberline {12.3}The complex Plane}{317}
-\contentsline {section}{\numberline {12.4}Polar Form}{317}
-\contentsline {section}{\numberline {12.5}$\mathbb {C}$}{317}
-\contentsline {section}{\numberline {12.6}Gaussian Integers}{317}
-\contentsline {section}{\numberline {12.7}...}{317}
-\contentsline {section}{\numberline {12.8}Complex Vector Spaces}{317}
-\contentsline {section}{\numberline {12.9}...}{317}
-\contentsline {section}{\numberline {12.10}Quantum Mechanics}{317}
-\contentsline {section}{\numberline {12.11}Hypercomplex Numbers}{317}
-\contentsline {chapter}{\numberline {13}Quadratics, Cubics and Quartics}{319}
-\contentsline {section}{\numberline {13.1}Quadratic Equations}{319}
-\contentsline {section}{\numberline {13.2}The fundamental Theorem of Algebra}{319}
-\contentsline {section}{\numberline {13.3}Cubics and Quartics}{319}
-\contentsline {section}{\numberline {13.4}Quintics}{319}
-\contentsline {section}{\numberline {13.5}Galois Theory}{319}
-\contentsline {section}{\numberline {13.6}Field Theory}{319}
-\contentsline {section}{\numberline {13.7}Category Theory}{319}
-\contentsline {chapter}{\numberline {14}Euclid and beyond}{321}
-\contentsline {section}{\numberline {14.1}Euclid's Geometry}{321}
-\contentsline {section}{\numberline {14.2}The Parallel Postulate}{321}
-\contentsline {section}{\numberline {14.3}Non-Euclidian Geometries}{321}
-\contentsline {section}{\numberline {14.4}Lost in Hilbert Space}{321}
-\contentsline {section}{\numberline {14.5}Geometry and Relativity}{321}
-\contentsline {section}{\numberline {14.6}Projective Geometry}{321}
-\contentsline {section}{\numberline {14.7}Graph Theory}{321}
-\contentsline {section}{\numberline {14.8}Topology}{321}
-\contentsline {part}{\numberline {III}Analysis}{323}
-\contentsline {chapter}{\numberline {15}The Calculus}{325}
-\contentsline {section}{\numberline {15.1}The Method of Exhaustion}{325}
-\contentsline {section}{\numberline {15.2}Area below a Curve}{325}
-\contentsline {section}{\numberline {15.3}Basic Rules of Integration}{325}
-\contentsline {section}{\numberline {15.4}Minima, Maxima and Slopes}{325}
-\contentsline {section}{\numberline {15.5}Basic Rules of Derivation}{325}
-\contentsline {section}{\numberline {15.6}The fundamental Theorem of the Calculus}{325}
-\contentsline {section}{\numberline {15.7}More Rules}{325}
-\contentsline {chapter}{\numberline {16}Curve Sketching}{327}
-\contentsline {chapter}{\numberline {17}Advanced Function Analysis}{329}
-\contentsline {chapter}{\numberline {18}Generating Functions}{331}
-\contentsline {chapter}{\numberline {19}Applied Mathematics}{333}
-\contentsline {chapter}{\numberline {20}Prospects}{335}
+\contentsline {section}{\numberline {11.2}Projective Geometry}{319}
+\contentsline {section}{\numberline {11.3}EC modulo a Prime}{319}
+\contentsline {section}{\numberline {11.4}EC Crypto Systems}{319}
+\contentsline {section}{\numberline {11.5}Cryptoanalysis}{319}
+\contentsline {section}{\numberline {11.6}Mr. Frobenius}{319}
+\contentsline {section}{\numberline {11.7}Mr. Schoof}{319}
+\contentsline {section}{\numberline {11.8}Mr. Elkies and Mr. Aktin}{319}
+\contentsline {section}{\numberline {11.9}EC in Practice}{319}
+\contentsline {chapter}{\numberline {12}Complex Numbers}{321}
+\contentsline {section}{\numberline {12.1}i}{321}
+\contentsline {section}{\numberline {12.2}Complex Numbers}{321}
+\contentsline {section}{\numberline {12.3}The complex Plane}{321}
+\contentsline {section}{\numberline {12.4}Polar Form}{321}
+\contentsline {section}{\numberline {12.5}$\mathbb {C}$}{321}
+\contentsline {section}{\numberline {12.6}Gaussian Integers}{321}
+\contentsline {section}{\numberline {12.7}...}{321}
+\contentsline {section}{\numberline {12.8}Complex Vector Spaces}{321}
+\contentsline {section}{\numberline {12.9}...}{321}
+\contentsline {section}{\numberline {12.10}Quantum Mechanics}{321}
+\contentsline {section}{\numberline {12.11}Hypercomplex Numbers}{321}
+\contentsline {chapter}{\numberline {13}Quadratics, Cubics and Quartics}{323}
+\contentsline {section}{\numberline {13.1}Quadratic Equations}{323}
+\contentsline {section}{\numberline {13.2}The fundamental Theorem of Algebra}{323}
+\contentsline {section}{\numberline {13.3}Cubics and Quartics}{323}
+\contentsline {section}{\numberline {13.4}Quintics}{323}
+\contentsline {section}{\numberline {13.5}Galois Theory}{323}
+\contentsline {section}{\numberline {13.6}Field Theory}{323}
+\contentsline {section}{\numberline {13.7}Category Theory}{323}
+\contentsline {chapter}{\numberline {14}Euclid and beyond}{325}
+\contentsline {section}{\numberline {14.1}Euclid's Geometry}{325}
+\contentsline {section}{\numberline {14.2}The Parallel Postulate}{325}
+\contentsline {section}{\numberline {14.3}Non-Euclidian Geometries}{325}
+\contentsline {section}{\numberline {14.4}Lost in Hilbert Space}{325}
+\contentsline {section}{\numberline {14.5}Geometry and Relativity}{325}
+\contentsline {section}{\numberline {14.6}Projective Geometry}{325}
+\contentsline {section}{\numberline {14.7}Graph Theory}{325}
+\contentsline {section}{\numberline {14.8}Topology}{325}
+\contentsline {part}{\numberline {III}Analysis}{327}
+\contentsline {chapter}{\numberline {15}The Calculus}{329}
+\contentsline {section}{\numberline {15.1}The Method of Exhaustion}{329}
+\contentsline {section}{\numberline {15.2}Area below a Curve}{329}
+\contentsline {section}{\numberline {15.3}Basic Rules of Integration}{329}
+\contentsline {section}{\numberline {15.4}Minima, Maxima and Slopes}{329}
+\contentsline {section}{\numberline {15.5}Basic Rules of Derivation}{329}
+\contentsline {section}{\numberline {15.6}The fundamental Theorem of the Calculus}{329}
+\contentsline {section}{\numberline {15.7}More Rules}{329}
+\contentsline {chapter}{\numberline {16}Curve Sketching}{331}
+\contentsline {chapter}{\numberline {17}Advanced Function Analysis}{333}
+\contentsline {chapter}{\numberline {18}Generating Functions}{335}
+\contentsline {chapter}{\numberline {19}Applied Mathematics}{337}
+\contentsline {chapter}{\numberline {20}Prospects}{339}
