@@ -151,9 +151,9 @@ where
               let t1 =          (y2-y1) `mod` p
                   t2 = inverse ((x2-x1) `mod` p) p
                in (t1 * t2) `mod` p
-          xr = (l^2 - x1 - x2) `mod` p
-          yr = (l*(x1-xr)- y1) `mod` p
-       in point c (xr, yr)
+          xr = (l^2 - x1 - x2) `mod` p 
+          yr = (l*(xr-x1) + y1) `mod` p -- (l*(x1-xr)+y1
+       in point c (xr, -yr)             -- yr
       where a = curA c
 
   -------------------------------------------------------------------------

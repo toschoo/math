@@ -21,6 +21,14 @@ where
           u = 2*ceiling s
 
   -------------------------------------------------------------------------
+  -- Find cardinality without Schoof
+  -------------------------------------------------------------------------
+  preschoof :: Curve -> Point -> Integer
+  preschoof c p = go 1 
+    where go t | mul c t p == O = t
+               | otherwise      = go (t+1)
+  
+  -------------------------------------------------------------------------
   -- Schoof's Algorithm: The logic
   -------------------------------------------------------------------------
   schoof0 :: Curve -> Point -> IO Integer
@@ -30,24 +38,22 @@ where
     -- fro^2 - t*fro + q = O where
     --
     -- fro^2 = (x^q^2, y^q^2)
-    -- t*fro = (t*x^q,t*y^q)
-    -- q     = (q*x,q*y)
+    -- t*fro = mul c t (x^q,y^q)
+    -- q     = mul c q (x,y)
     -- 
     let q   = curM c
-    -- in fact: we don't need the frobenius here
-    -- if we compute modulo q
-    -- let pf  = frob   q q p
-    -- let pf2 = frobmn 2 1 q p
-    let qp  = mul2 c q q p  -- this is q
-    let tp  = add2 c q p qp -- this is p+q (assumption: we don't need frobenius) 
+    let pf  = frob       q p
+    let pf2 = frobmn 2 1 q p
+    let qp  = mul2 c 1 q p   -- the problem: we need a modulus: which one?
+    let tp  = add2 c 1 pf2 qp 
     putStrLn "==============================================="
     putStrLn ("q   is " ++ show q)
     putStrLn ("qp  is " ++ show qp)
-    -- putStrLn ("Frobenius   of " ++ show p ++ " is " ++ show pf)
-    -- putStrLn ("Frobenius^2 of " ++ show p ++ " is " ++ show pf2)
+    putStrLn ("Frobenius   of " ++ show p ++ " is " ++ show pf)
+    putStrLn ("Frobenius^2 of " ++ show p ++ " is " ++ show pf2)
     putStrLn ("We are searching for t, such that t*pf = " ++ show tp)
     putStrLn "We test with limit 100..."
-    let t = go 100 1 q tp p
+    let t = go 100 1 q tp pf
     putStrLn ("t = " ++ show t)
     let e = q + 1 - t 
     putStrLn ("e = " ++ show e)

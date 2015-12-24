@@ -152,6 +152,9 @@ $P + Q = R$.
 The meaning of this operation is indicated by
 the lines:
 
+% ------------------------------------------------------------------------
+% Point Addition (distinct points)
+% ------------------------------------------------------------------------
 \begin{center}
 \begin{tikzpicture}
    \draw [<->] (-4,0) -- (4,0);
@@ -191,59 +194,259 @@ That point is $R$, the result of $P + Q$.
 You see that this operation has in fact nothing to do
 with arithmetic addition. It is an arbitrary construction
 to relate three different points.
+Nevertheless, it is carefully designed to give rise
+to a group based on this operation, as we will see later.
 
-The straight line is defined as:
+For the moment, our main question is how can we
+compute $R$ from $P$ and $Q$. We start by computing
+the straight line. A straight line is defined by
+a formula of the form
 
 \begin{equation}
-l = mx + c,
+y = mx + c,
 \end{equation}
 
 where $m$ is the slope and $c$ the $y$-intercept.
+What we need to do now is to find the third point,
+$R'$, which, like $P$ and $Q$, lies on both,
+the straight line and the elliptic curve.
+To find such a point, we set the two formulas
+equal. Since an elliptic curve is defined as
 
-\begin{equation}
-m = \frac{y_Q - y_P}{x_Q - x_P} 
+\begin{equation}  
+y^2 = x^3 + ax + b, 
+\end{equation}  
+
+we can derive
+
+\begin{equation}  
+(mx + c)^2 = x^3 + ax + b.
 \end{equation}
 
-\begin{equation}
-c = y_P - mx_P
+By subtracting $(mx+c)^2$ on both sides,
+we get 
+
+\begin{equation}  
+x^3 + ax + b - (mx + c)^2 = 0.
 \end{equation}
 
-Now we set the two formulas equal:
+Using the binomial theorem 
+we can expand this to
 
 \begin{equation}  
-(mx + c)^2 = x^3 + ax + b, 
-\end{equation}  
+x^3 - m^2x^2 - 2mxc - c^2 + ax + b = 0.
+\end{equation}
 
-which is equivalent to
-
-\begin{equation}  
-x^3 + ax + b - (mx + c)^2 = 0
-\end{equation}  
-
-We know already that $x_P$ and $x_Q$ are intersections and,
-therefore, know that $x - x_P$ and $x - x_Q$ are factors
-of the polynomial above.
-We postulate that $x - x_R$ is also a factor and, hence,
-get
+We know already two points, where this equation is fulfilled,
+namely $x_P$ and $x_Q$. We also know that these values
+are roots of the above equation. We can hence use them for
+factoring that equation into $(x-x_P)(x-x_Q)\Psi$,
+where $\Psi$ is yet another factor. But we know even more.
+We just have to look at the sketch above to see that there
+are three roots and, hence, three factors. The third root
+is at $x_{R'}$, so we can conclude that 
 
 \begin{equation}  
-x^3 + ax + b - (mx + c)^2 = (x - x_P)(x - x_Q)(x - x_R), 
-\end{equation}  
+x^3 - m^2x^2 - 2mxc - c^2 + ax + b = (x-x_P)(x-x_Q)(x-x_{R'}).
+\end{equation}
 
-which is the same as
+From here it is quite simple. 
+We just apply the trick of the 
+\emph{opposite sum of the roots}
+and get
+
+\begin{equation}  
+m^2 = x_P + x_Q + x_{R'},
+\end{equation}
+
+which we can easily transform to obtain
+
+\begin{equation}  
+x_{R'} = m^2 - x_P - x_Q. 
+\end{equation}
+
+Since $R$, the point we are finally looking for,
+is the reflection of $R'$ across the $x$-axis,
+we have $x_{R} = x_{R'}$, \ie\ the points have
+the same the $x$-coordinate.
+
+Computing $y_{R'}$ is again quite simple.
+We use the straight line for this. 
+Since it is a straight line, the $y$-values
+increase at a constant rate. So, we compute
+the value it should increase on the segment
+between $x_P$ and $x_R$, which is
+$m(x_R - x_P)$ and add this to the 
+already known $y$-value at point $P$:
+
+\begin{equation}
+y_{R'} = y_P + m(x_R - x_P).
+\end{equation}
+
+But hold on! This is $y_{R'}$. 
+What we are looking for is $y_R$,
+the reflection of $y_{R'}$ across the
+$x$-axis. 
+But that is simply  $(x,-y)$. 
+Alternatively, we can compute that 
+value directly by rearranging the 
+equation to
+
+\begin{equation}
+y_R = m(x_P - x_R)-y_P.
+\end{equation}
+
+The final piece missing now is the slope,
+which we are using all the time.
+The slope, as we know, can be expressed
+as a fraction:
+
+\begin{equation}
+m = \frac{y_Q - y_P}{x_Q - x_P}.
+\end{equation}
+
+With this equation, however,
+we get into trouble. Everything is fine,
+when we assume that we add two distinct
+points $P$ and $Q$. But if we had
+$P = Q$, \ie\ if we want to add a point
+to itself, then the denominator of
+the above fraction becomes negative.
+That, clearly, is to be avoided.
+
+To avoid that, we use, instead of a secant line
+that intersects the curve, the tangent line at
+point $P$, which, as we already know, measures 
+the slope of the curve at $P$.
+Geometrically, this corresponds to the following sketch:
+
+% ------------------------------------------------------------------------
+% Point Doubling
+% ------------------------------------------------------------------------
+\begin{center}
+\begin{tikzpicture}
+   \draw [<->] (-4,0) -- (4,0);
+   \draw [<->] (0,-4) -- (0,4);
+   \draw [teal, 
+          scale=0.75,domain=-1.769292354238631:3.5,variable=\x,smooth,samples=250]
+       plot ({\x}, {sqrt(\x*\x*\x - 2*\x + 2)});
+   \draw [teal, 
+          scale=0.75,domain=-1.769292354238631:3.5,variable=\x,smooth,samples=250]
+       plot ({\x}, {-sqrt(\x*\x*\x - 2*\x + 2)});
+   \draw [red,fill=red] (-0.9,1.25) circle (1.5pt);
+   \node [red,font=\small,anchor=south east] (p) at (-1.2,0.9) {P};
+   \draw [gray, 
+          scale=0.75,domain=-4.5:3.5,variable=\x,smooth,samples=15]
+         plot ({\x}, {0.7*\x+2.5});
+   \draw [red,fill=red] (2.17,-3.42) circle (1.5pt);
+   \node [red,font=\small,anchor=south west] (q) at (2.2,-3.4) {R};
+   \draw [dotted] (2.17,-3.9) -- (2.17,3.9);
+   \draw [black,fill=black] (2.17,3.42) circle (1.5pt);
+   \node [black,font=\small,anchor=north west] (q) at (2.2,3.5) {R'};
+\end{tikzpicture}
+\end{center}
+
+Here, we draw the tangent line in P.
+Where the tangent line intersects the curve again,
+we draw the helper point $R'$ and reflect it across
+the $x$-axis to obtain the point $R = P+P = 2P$.
+
+As you hopefully remember, the slope of a curve 
+at a given point can be calculated with the derivative of that curve.
+We will apply that derivative trick to get the tangent line
+at $P$. This task, however, is a bit more difficult than
+for the trivial cases we have seen so far.
+Until now, we have seen derivatives of simple functions
+of the form $f(x) = x^2$, whose derivative is $f'(x) = 2x$
+and so on. Now, we have the equation
+
+\begin{equation}
+y^2 = x^3 + ax + b.
+\end{equation}
+
+We can interpret this equation as an application of
+two different functions. The first function, say, $g$,
+is $g(x) = x^3 + ax + b$. The second function, $f$, is
+$f(x) = \sqrt{x} = x^{\frac{1}{2}}$.
+
+For such cases, we have the \term{chain rule},
+which we will discuss more thoroughly in part 3.
+The chain rule states that the derivative of
+the composition of two functions is
+
+\begin{equation}
+(f \circ g)' = (f' \circ g) \times g'.
+\end{equation}
+
+That is, the derivative of the composition 
+of two functions $f$ and $g$ is the composition
+of the derivative of $f$ and $g$ times the
+derivative of $g$. So, let us figure out 
+what the derivatives of our $f$ and $g$ are. 
+The derivative of $g$ is easy:
 
 \[
-x^3 + (x_P + x_Q + x_R)x^2 + (x_Px_Q + x_Px_R + x_Qx_R)x - x_Px_Qx_R.
+g'(x) = 3x^2 + a
 \]
 
-We can derive
+A bit more difficult is $f'$. If $f(x) = x^\frac{1}{2}$,
+then $f'$ is
+
+\[
+\frac{1}{2}x^{\frac{1}{2}-1} = 
+\frac{1}{2}x^{-\frac{1}{2}}  =
+\frac{x^{-\frac{1}{2}}}{2},
+\]
+
+which is 
+
+\[
+f'(x) = \frac{1}{2x^{\frac{1}{2}}}. 
+\]
+
+Now, we apply this to the result of $g(x)$.
+The result of $g(x)$ is $y^2$. 
+If we plug $y^2$ into the equation above,
+we get 
+
+\[
+\frac{1}{2y^{2\times\frac{1}{2}}} = \frac{1}{2y}.
+\]
+
+This, we now multipy by $g'$ and finally get 
+
+\[
+\frac{3x^2 + a}{2y}.
+\]
+
+When we use this formula for $x=x_P$,
+we get the formula to compute $m$:
 
 \begin{equation}
--m^2 = -x_P - x_Q - x_R
+m = \frac{3x_P^2 + a}{2y_P}.
 \end{equation}
 
-and, hence:
+So, we finally have an addition formula
+that covers both cases, $P \neq Q$ and $P = Q$:
 
 \begin{equation}
-x_R = m^2 -x_P - x_Q.
+x_R = \begin{cases}
+        m^2 - x_P - x_Q & \textrm{if $x_P \neq x_Q$}\\
+        m^2 - 2x_P      & \textrm{otherwise}
+      \end{cases}
+\end{equation}
+
+and
+
+\begin{equation}
+y_R = m(x_P-x_R) - y_P,
+\end{equation}
+
+where
+
+\begin{equation}
+m = \begin{cases}
+      \frac{y_Q - y_P}{x_Q - x_P} & \textrm{if  $x_P \neq x_Q$}\\[10pt]
+      \frac{3x_P^2 + a}{2y_P}     & \textrm{otherwise}.
+    \end{cases}
 \end{equation}
