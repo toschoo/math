@@ -6,5 +6,6 @@
 \section{Quintics}
 \section{Galois Theory}
 \section{Field Theory}
+\section{Postmodern Algebra}
 \section{Category Theory}
 % Riemann's Hypothesis?
