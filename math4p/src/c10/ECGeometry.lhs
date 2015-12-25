@@ -8,8 +8,8 @@ where
 Before we go on with more theoretical topics,
 let us examine another application of the quite
 abstract theory of algebra we have studied
-in the previous chapter, namely 
-elliptic curves cryptography. It should be
+in the previous chapters, namely 
+elliptic curve cryptography. It should be
 mentioned that linear algebra is by far 
 not the only topic relevant in this context.
 In fact, important aspects of the theory
@@ -22,17 +22,17 @@ Elliptic Curves (\acronym{ec}) provide the mathematical
 background for variants of public key cryptography.
 This kind of cryptography is being developed
 since the eighties, but it took a while until it
-was accepted by industry. 
-It is the main public key cryptographic scheme today.
+was accepted by the industry. 
+Today, however, it is the 
+main public key cryptography scheme around.
 Its acceptance was accelerated by the smartphone boom.
 In smartphones and other devices with restricited
 resources, classic cryptographic schemes are not
 very practical. Their drawback is
 the computational overhead resulting from key size.
-Many cryptoanalytical attacks on classic
-cryptography are known that force cryptographers
-to use huge keys. To achieve 128-bit security 
-with \acronym{rsa}, we need keys with at least
+Cryptoanalytic attacks forced classic schemes
+to be used with huge keys. To achieve 128-bit security 
+with \acronym{rsa}, for instance, we need keys with at least
 \num{3072} bits. The same level of security
 can be reached with \acronym{ec} cryptography, 
 according to known attacks today,
@@ -47,12 +47,12 @@ of mathematics like number theory
 in classic cryptography,
 but from many different branches.
 This has huge impact on cryptoanalysis.
-Hidden attacks may linger around 
+Hidden attacks may lurk
 in apparently remote fields of mathematics
 that we did not account for.
 However, the theory surrounding \acronym{ec}
 is very well understood today and, as said,
-it is the mainline cryptography today.
+it is the mainline cryptography approach today.
 
 Second, the basic means, especially the group
 we need for public key cryptography, are
@@ -60,7 +60,7 @@ much more ``engineered'' than in classic
 cryptography. Classic schemes are based
 mainly on modular arithmetic, which was
 well known centuries before anyone thought
-of cryptography. The groups found in modular
+of this use case. The groups found in modular
 arithmetic, in particular the multiplicative
 group, was then used to define cryptographic tools.
 In elliptic curves, there are no such groups
@@ -88,7 +88,7 @@ He studied polynomials of the form
 \end{equation}
 
 which is said to be in \emph{Weierstrass form}.
-Obviously, we can easily transform this equation
+We can easily transform this equation
 into a form that looks more like something that
 can be computed, namely:
 
@@ -101,8 +101,6 @@ at least not in $\mathbb{R}$, since there is not exactly
 one $y$ for each $x$. When the expression $x^3 + ax + b$
 becomes negative, there is, in the world of real numbers, 
 no solution for the right-hand side of the equation.
-That is, there is no $y$ for $x$ that cause that expression
-to be negative.
 
 This is quite obvious, when we look at the geometric
 interpretation of that polynomial. It looks -- more or less --
@@ -127,16 +125,16 @@ completely separated from the ``tail'' on the right;
 it may, in other cases, be less clearly distinguished
 from the tail on the right, forming just a tiny bulge in the tail.
 
-Anyhow, the point is that the curve ``ends'' on the left-hand side
-for some $x < 0$. More precisely, it ends where $x^3$, for a negative
-value, becomes greater than $ax + b$, because, then, the whole 
-expression becomes negative and there is no real square root for it
-anymore.
+In any case, the curve ``ends'' on the left-hand side
+for some $x < 0$. More precisely, it ends where 
+the absolute value of $x^3$, for a negative
+value, becomes greater than $ax + b$. Then, the whole 
+expression becomes negative and no real square root corresponds to it.
 
 We will now start to construct a group on this kind of curves.
 We call it an \emph{additional group}, but be aware that this
 is not addition in the sense of the arithmetic operation.
-It has nothing to do with that! Is a way to combine points
+It has nothing to do with that! It is a way to combine points
 with each other that can be captured in a  -- more or less -- 
 simple formula. We will start by giving a geometric interpretation
 of this operation. This will help getting an intuition.
@@ -149,8 +147,6 @@ with three points $P$, $Q$ and $R$,
 all coloured in red.
 These points are in the relation
 $P + Q = R$.
-The meaning of this operation is indicated by
-the lines:
 
 % ------------------------------------------------------------------------
 % Point Addition (distinct points)
@@ -184,8 +180,9 @@ When adding two points $P$ and $Q$ on an elliptic curve,
 we draw a straight line through them (the grey one).
 From the nature of the elliptic curve, it is obvious
 that the straight line will meet the curve once again.
-At that cross point, we draw a helper point, $R'$.
-Then we draw another line (the dotted one) that goes
+At that intersection, we draw a helper point, $R'$.
+The we reflect this point across the $x$-axis, \ie
+we draw another line (the dotted one) that goes
 straight up crossing $R'$. This line will meet the curve
 again, namely at a point with the same $x$ coordinate,
 but with the inverse of the $y$ coordinate $-y$.
@@ -193,7 +190,7 @@ That point is $R$, the result of $P + Q$.
 
 You see that this operation has in fact nothing to do
 with arithmetic addition. It is an arbitrary construction
-to relate three different points.
+to relate three points.
 Nevertheless, it is carefully designed to give rise
 to a group based on this operation, as we will see later.
 
@@ -217,14 +214,13 @@ equal. Since an elliptic curve is defined as
 y^2 = x^3 + ax + b, 
 \end{equation}  
 
-we can derive
+we can say
 
 \begin{equation}  
 (mx + c)^2 = x^3 + ax + b.
 \end{equation}
 
-By subtracting $(mx+c)^2$ on both sides,
-we get 
+By subtracting $(mx+c)^2$ from both sides, we get
 
 \begin{equation}  
 x^3 + ax + b - (mx + c)^2 = 0.
@@ -237,14 +233,14 @@ we can expand this to
 x^3 - m^2x^2 - 2mxc - c^2 + ax + b = 0.
 \end{equation}
 
-We know already two points, where this equation is fulfilled,
-namely $x_P$ and $x_Q$. We also know that these values
+We already know two points, where this equation is fulfilled,
+namely $x_P$ and $x_Q$. This means that these values
 are roots of the above equation. We can hence use them for
 factoring that equation into $(x-x_P)(x-x_Q)\Psi$,
 where $\Psi$ is yet another factor. But we know even more.
 We just have to look at the sketch above to see that there
-are three roots and, hence, three factors. The third root
-is at $x_{R'}$, so we can conclude that 
+are three roots and, hence, three factors. 
+We, therefore, have $\Psi = x - x_{R'}$ and conclude that
 
 \begin{equation}  
 x^3 - m^2x^2 - 2mxc - c^2 + ax + b = (x-x_P)(x-x_Q)(x-x_{R'}).
@@ -259,7 +255,7 @@ and get
 m^2 = x_P + x_Q + x_{R'},
 \end{equation}
 
-which we can easily transform to obtain
+which we can easily transform to 
 
 \begin{equation}  
 x_{R'} = m^2 - x_P - x_Q. 
@@ -268,13 +264,13 @@ x_{R'} = m^2 - x_P - x_Q.
 Since $R$, the point we are finally looking for,
 is the reflection of $R'$ across the $x$-axis,
 we have $x_{R} = x_{R'}$, \ie\ the points have
-the same the $x$-coordinate.
+the same $x$-coordinate.
 
 Computing $y_{R'}$ is again quite simple.
-We use the straight line for this. 
-Since it is a straight line, the $y$-values
+The points $P$ and $R'$ are on the same 
+straight line. The $y$-values on a straight line
 increase at a constant rate. So, we compute
-the value it should increase on the segment
+the value $y$ should grow travelling on the segment
 between $x_P$ and $x_R$, which is
 $m(x_R - x_P)$ and add this to the 
 already known $y$-value at point $P$:
@@ -283,11 +279,9 @@ already known $y$-value at point $P$:
 y_{R'} = y_P + m(x_R - x_P).
 \end{equation}
 
-But hold on! This is $y_{R'}$. 
-What we are looking for is $y_R$,
-the reflection of $y_{R'}$ across the
-$x$-axis. 
-But that is simply  $(x,-y)$. 
+Now we compute $y_R$, the $y$-coordinate
+of the reflections of $R'$ across the $x$-axis,
+which is simply $-y$. 
 Alternatively, we can compute that 
 value directly by rearranging the 
 equation to
@@ -296,10 +290,8 @@ equation to
 y_R = m(x_P - x_R)-y_P.
 \end{equation}
 
-The final piece missing now is the slope,
-which we are using all the time.
-The slope, as we know, can be expressed
-as a fraction:
+The final piece missing now is the slope, $m$,
+which can  be expressed as a fraction:
 
 \begin{equation}
 m = \frac{y_Q - y_P}{x_Q - x_P}.
@@ -308,7 +300,7 @@ m = \frac{y_Q - y_P}{x_Q - x_P}.
 With this equation, however,
 we get into trouble. Everything is fine,
 when we assume that we add two distinct
-points $P$ and $Q$. But if we had
+points $P$ and $Q$. But if we have
 $P = Q$, \ie\ if we want to add a point
 to itself, then the denominator of
 the above fraction becomes negative.
@@ -346,19 +338,19 @@ Geometrically, this corresponds to the following sketch:
 \end{tikzpicture}
 \end{center}
 
-Here, we draw the tangent line in P.
+Here, we draw the tangent line at $P$.
 Where the tangent line intersects the curve again,
-we draw the helper point $R'$ and reflect it across
-the $x$-axis to obtain the point $R = P+P = 2P$.
+we draw the helper point $R'$. We reflect it across
+the $x$-axis and obtain the point $R = P+P = 2P$.
 
 As you hopefully remember, the slope of a curve 
 at a given point can be calculated with the derivative of that curve.
 We will apply that derivative trick to get the tangent line
 at $P$. This task, however, is a bit more difficult than
 for the trivial cases we have seen so far.
-Until now, we have seen derivatives of simple functions
-of the form $f(x) = x^2$, whose derivative is $f'(x) = 2x$
-and so on. Now, we have the equation
+Until now, we have seen derivatives of simple functions like
+$f(x) = x^2$, whose derivative is $f'(x) = 2x$.
+Now, we have the equation
 
 \begin{equation}
 y^2 = x^3 + ax + b.
@@ -379,9 +371,9 @@ the composition of two functions is
 \end{equation}
 
 That is, the derivative of the composition 
-of two functions $f$ and $g$ is the composition
-of the derivative of $f$ and $g$ times the
-derivative of $g$. So, let us figure out 
+of two functions $f$ and $g$ is 
+the derivative of $f$ applied on $g$ times the
+derivative of $g$. Let us figure out 
 what the derivatives of our $f$ and $g$ are. 
 The derivative of $g$ is easy:
 
@@ -390,22 +382,17 @@ g'(x) = 3x^2 + a
 \]
 
 A bit more difficult is $f'$. If $f(x) = x^\frac{1}{2}$,
-then $f'$ is
+then 
 
 \[
+f'(x) = 
 \frac{1}{2}x^{\frac{1}{2}-1} = 
 \frac{1}{2}x^{-\frac{1}{2}}  =
-\frac{x^{-\frac{1}{2}}}{2},
+\frac{1}{2x^{\frac{1}{2}}}. 
 \]
 
-which is 
-
-\[
-f'(x) = \frac{1}{2x^{\frac{1}{2}}}. 
-\]
-
-Now, we apply this to the result of $g(x)$.
-The result of $g(x)$ is $y^2$. 
+Now, we apply this to the result of $g(x)$,
+which we can elegantly present as $y^2$. 
 If we plug $y^2$ into the equation above,
 we get 
 
@@ -413,7 +400,7 @@ we get
 \frac{1}{2y^{2\times\frac{1}{2}}} = \frac{1}{2y}.
 \]
 
-This, we now multipy by $g'$ and finally get 
+We now multipy this by $g'$ and get 
 
 \[
 \frac{3x^2 + a}{2y}.
