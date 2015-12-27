@@ -3,6 +3,7 @@
 \section{Projective Geometry} 
 %include ECProjective.lhs
 \section{EC modulo a Prime} 
+\section{The EC Discrete Logarithm Problem} 
 \section{EC Crypto Systems} 
 \section{Cryptoanalysis} 
 \section{Mr. Frobenius} 
