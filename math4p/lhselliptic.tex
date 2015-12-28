@@ -1004,6 +1004,946 @@ But leaving reflection out, the subsequent addition of
 a point $P$ would give raise to a sequence like
 $P,2P,P,2P,P,\dots$, which, certainly, is not a group.
 \section{EC modulo a Prime} 
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{ECModulo}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prelude}\;\Varid{hiding}\;(\Varid{mod}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{System}.Random}\;(\Varid{randomRIO}){}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prime}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Modular}\;\Varid{hiding}\;(\Varid{add},\Varid{mul},\Varid{mDiv}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Numerals}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+It was already indicated that the geometry exercises
+in the previous sections had the sole purpose of giving
+an intuition. EC Cryptography does not take place
+in continuous curves. It does take place in modular arithmetic
+with integers and, hence, in a discrete world. 
+This is a disruptive turning point,
+since we cannot plot a curve and search for a point
+in the Cartesian plane anymore. As we will see
+examining points of a curve modulo some number
+these points are not located on anything even close to the curves
+we saw in the previous section.
+One could say that we adopt the algebra of elliptic curves,
+but not the geometry.
+
+Let us start with a data type.
+We define a elliptic curve as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{Curve}\mathrel{=}\Conid{Curve}\;\{\mskip1.5mu {}\<[E]%
+\\
+\>[3]{}\hsindent{15}{}\<[18]%
+\>[18]{}\Varid{curA}\mathbin{::}\Conid{Natural},{}\<[E]%
+\\
+\>[3]{}\hsindent{15}{}\<[18]%
+\>[18]{}\Varid{curB}\mathbin{::}\Conid{Natural},{}\<[E]%
+\\
+\>[3]{}\hsindent{15}{}\<[18]%
+\>[18]{}\Varid{curM}\mathbin{::}\Conid{Natural}\mskip1.5mu\}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{deriving}\;(\Conid{Show},\Conid{Eq}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This type describes a curve in terms of its coefficient
+$a$ and $b$ and in terms of the modulo.
+When we only consider curves of the form
+
+\begin{equation}
+y^2 = x^3 + ax + b,
+\end{equation}
+
+the type provides a sufficient definition of such curves.
+There are other curves, though, for instance this one:
+
+\begin{equation}
+y^2 = x^2 + ax^2 + bx + c,
+\end{equation}
+
+but we do not consider them in this humble introduction.
+
+For the modulo, either a (huge) prime is used
+or a (huge) power of 2. Again, we do not consider
+powers of 2. 
+
+Now we define the notion of ``point'':
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{Point}\mathrel{=}\Conid{O}\mid \Conid{P}\;\Conid{Natural}\;\Conid{Natural}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+and an instance of \ensuremath{\Conid{Show}} to get a more
+pleasant visualiation of points:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Show}\;\Conid{Point}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{show}\;\Conid{O}{}\<[18]%
+\>[18]{}\mathrel{=}\text{\tt \char34 O\char34}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{show}\;(\Conid{P}\;\Varid{x}\;\Varid{y})\mathrel{=}\text{\tt \char34 (\char34}\plus \Varid{show}\;\Varid{x}\plus \text{\tt \char34 ,\char34}\plus \Varid{show}\;\Varid{y}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note that we explicitly define $\mathcal{O}$,
+the identity, to which we will have to refer
+explicitly in addition and other operations
+on points later. We already refer to the identity
+in the implementation of \ensuremath{\Conid{Eq}} here below:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Eq}\;\Conid{Point}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{P}\;{}\<[9]%
+\>[9]{}\Varid{px}\;\Varid{py})\equiv (\Conid{P}\;{}\<[23]%
+\>[23]{}\Varid{qx}\;\Varid{qy})\mathrel{=}\Varid{px}\equiv \Varid{qx}\mathrel{\wedge}\Varid{py}\equiv \Varid{qy}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Conid{O}\equiv \Conid{O}{}\<[13]%
+\>[13]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\anonymous \equiv \anonymous {}\<[13]%
+\>[13]{}\mathrel{=}\Conid{False}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We also define convenience getters for the 
+point coordinates:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{xco}\mathbin{::}\Conid{Point}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{xco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\tt \char34 O~has~no~coordinates\char34}{}\<[E]%
+\\
+\>[3]{}\Varid{xco}\;(\Conid{P}\;{}\<[11]%
+\>[11]{}\Varid{x}\;\anonymous )\mathrel{=}\Varid{x}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{yco}\mathbin{::}\Conid{Point}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{yco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\tt \char34 O~has~no~coordinates\char34}{}\<[E]%
+\\
+\>[3]{}\Varid{yco}\;(\Conid{P}\;\anonymous \;\Varid{y})\mathrel{=}\Varid{y}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+To be sure that the points we create are modulo $p$,
+we define a convenient creator function:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{point}\mathbin{::}\Conid{Curve}\to (\Conid{Natural},\Conid{Natural})\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{point}\;\Varid{c}\;(\Varid{x},\Varid{y})\mathrel{=}\Conid{P}\;(\Varid{x}\mathbin{\Varid{`mod`}}\Varid{p})\;(\Varid{y}\mathbin{\Varid{`mod`}}\Varid{p}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{p}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note that we use our \ensuremath{\Varid{mod}} function defined in
+section on modular arithmetic in the Prime chapter.
+
+Now, we would like to have a function that
+gives us the $y$-coordinate of the point 
+with a given $x$-coordinate. In the continuous
+universe that would be quite easy.
+It is a bit complicated in modular arithmetics.
+We start with a function that gives us $y^2$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{15E}{@{}l@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{curveY'2}\mathbin{::}\Conid{Curve}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{curveY'2}\;\Varid{c}\;\Varid{x}\mathrel{=}(\Varid{x}\mathbin{\uparrow}\mathrm{3}\mathbin{+}\Varid{a}\mathbin{*}\Varid{x}\mathbin{+}\Varid{b})\mathbin{\Varid{`mod`}}\Varid{p}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{a}{}\<[15]%
+\>[15]{}\mathrel{=}{}\<[15E]%
+\>[18]{}\Varid{curA}\;\Varid{c}{}\<[E]%
+\\
+\>[12]{}\Varid{b}{}\<[15]%
+\>[15]{}\mathrel{=}{}\<[15E]%
+\>[18]{}\Varid{curB}\;\Varid{c}{}\<[E]%
+\\
+\>[12]{}\Varid{p}{}\<[15]%
+\>[15]{}\mathrel{=}{}\<[15E]%
+\>[18]{}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+That is neat and simple.
+We just plug the given $x$-value into
+the right-hand side of the curve equation
+and get $y^2$ back. But, now, how to compute $y$?
+In the continuous universe, we would just call
+$\sqrt{y^2}$. But we are in modular arithmetic
+and $y^2$ is not necessarily a perfect square,
+but a quadratic residue, which may or may not
+be a perfect square. Here are as a reminder
+of that topic the residues of the prime 17:
+
+\[
+0, 1, 2, 4, 8, 9, 13, 15, 16.
+\]
+
+Those are nine numbers, which was to be expected,
+since, for any prime modulo $p$, there are 
+$\frac{p+1}{2}$ residues and $\frac{p-1}{2}$ nonresidues.
+Of these nine numbers, only five, namely
+0, 1, 4, 9 and 16, are perfect square. 
+For those it is quite easy to compute the root.
+It is just the regular square root.
+For the others, however, it is quite hard.
+The problem is closely related to the 
+Discrete Logarithm Problem (\acronym{dlp}),
+which is hard enough to provide the setting
+for most public key cryptographic schemes
+around today. Anyway, we have to live with it
+for the moment and implement a searching algorithm
+that is fine for small modulos, but infeasible in
+practice:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{findRoot}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{findRoot}\;\Varid{p}\;\Varid{q}\mathrel{=}\Varid{go}\;\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{x}{}\<[18]%
+\>[18]{}\mid \Varid{x}\mathbin{>}\Varid{p}{}\<[39]%
+\>[39]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~found!\char34}{}\<[E]%
+\\
+\>[18]{}\mid (\Varid{x}\mathbin{\uparrow}\mathrm{2})\mathbin{\Varid{`mod`}}\Varid{p}\equiv \Varid{q}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[18]{}\mid \Varid{otherwise}{}\<[39]%
+\>[39]{}\mathrel{=}\Varid{go}\;(\Varid{x}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Basically, we just go through all numbers 
+from 0 to $p-1$, until we find one that squared
+yields $q$, the residue in question.
+If we do not find such a number, 
+we terminate with an error.
+If we map \ensuremath{\Varid{findRoot}} on the residues of 17,
+\ensuremath{\Varid{map}\;(\Varid{findRoot}\;\mathrm{17})\;(\Varid{residues}\;\mathrm{17})}, we see:
+
+\[
+0, 1, 6, 2, 5, 3, 8, 7, 4.
+\]
+
+Some numbers are not surprising at all.
+0 is of course the root of 0 and so is
+1 of 1, 2 of 4, 3 of 9 and 4 of 16.
+But who had thought that 6 is the root
+of 2, 8 that of 13 or 7 that of 15?
+
+With the help of this root finder,
+we can now implement a function 
+that gives us $y$ for $x$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{curveY}\mathbin{::}\Conid{Curve}\to \Conid{Natural}\to \Conid{Maybe}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{curveY}\;\Varid{c}\;\Varid{x}\mathrel{=}{}\<[17]%
+\>[17]{}\mathbf{let}\;\Varid{r}\mathrel{=}\Varid{curveY'2}\;\Varid{c}\;\Varid{x}{}\<[E]%
+\\
+\>[17]{}\mathbf{in}\;\mathbf{if}\;\Varid{isSqrM}\;\Varid{r}\;\Varid{p}\;{}\<[35]%
+\>[35]{}\mathbf{then}\;{}\<[41]%
+\>[41]{}\Conid{Just}\;(\Varid{findRoot}\;\Varid{p}\;\Varid{r}){}\<[E]%
+\\
+\>[35]{}\mathbf{else}\;{}\<[41]%
+\>[41]{}\Conid{Nothing}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{p}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We have inserted a safety belt in this function.
+Before we go into \ensuremath{\Varid{findRoot}}, which may cause an error,
+when there does not exist a root to the number in question,
+we check if it is a residue at all.
+If it is, we are confident to find a root and just
+return the result of \ensuremath{\Varid{findRoot}}. Otherwise,
+we return \ensuremath{\Conid{Nothing}}, meaning that there the curve is
+not defined at this specific $x$.
+Here is the test for $r$ being a residue
+using the Legendre symbol:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{isSqrM}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{isSqrM}\;\mathrm{0}\;\anonymous {}\<[15]%
+\>[15]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\Varid{isSqrM}\;\Varid{n}\;\Varid{p}{}\<[15]%
+\>[15]{}\mathrel{=}\Varid{legendre}\;\Varid{n}\;\Varid{p}\equiv \mathrm{1}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Based on these functions,
+we can define other useful tools.
+A function that verifies wether a given point
+is on the curve:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{22E}{@{}l@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{oncurve}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{oncurve}\;\anonymous \;\Conid{O}{}\<[22]%
+\>[22]{}\mathrel{=}{}\<[22E]%
+\>[25]{}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\Varid{oncurve}\;\Varid{c}\;(\Conid{P}\;\Varid{x}\;\Varid{y}){}\<[22]%
+\>[22]{}\mathrel{=}{}\<[22E]%
+\>[25]{}\mathbf{case}\;{}\<[31]%
+\>[31]{}\Varid{curveY}\;\Varid{c}\;\Varid{x}\;\mathbf{of}{}\<[E]%
+\\
+\>[31]{}\Conid{Nothing}{}\<[40]%
+\>[40]{}\to \Conid{False}{}\<[E]%
+\\
+\>[31]{}\Conid{Just}\;\Varid{z}{}\<[40]%
+\>[40]{}\to {}\<[44]%
+\>[44]{}\Varid{y}\equiv \Varid{z}\mathrel{\vee}\Varid{y}\equiv \Varid{p}\mathbin{-}\Varid{z}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{p}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives a curve and a point.
+It determines the $y$-coordinate for the $x$-coordinate
+of the point. If no $y$-coordinate is found,
+the point is certainly not on the curve.
+Otherwise, if the $y$ we found is the same 
+as the one of the point, then the point is on the curve. 
+If the value we found is $-y$, 
+that is to say, $p-y$, then the point is also on the curve,
+because $p-y$ is the additive inverse of $y$ in the group
+and, if the point $(x,-y)$ is on the curve, then 
+$(x,y)$, the inverse of the point, is also in on the curve.
+Note that, when we say ``a point is on the curve'', 
+we effectively say ``the point is in the group''. 
+But be careful: we are here referring to two different groups.
+The group of integers modulo $p$ and the group of points
+that ``are on the curve''.
+
+The function \ensuremath{\Varid{oncurve}} is not very efficient,
+since it needs the root to calculate the result of \ensuremath{\Varid{curveY}}.
+A more efficient version is this one:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{oncurve'2}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{oncurve'2}\;\anonymous \;\Conid{O}{}\<[24]%
+\>[24]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\Varid{oncurve'2}\;\Varid{c}\;(\Conid{P}\;\Varid{x}\;\Varid{y}){}\<[24]%
+\>[24]{}\mathrel{=}{}\<[27]%
+\>[27]{}\mathbf{let}\;{}\<[32]%
+\>[32]{}\Varid{z}\mathrel{=}\Varid{curveY'2}\;\Varid{c}\;\Varid{x}{}\<[E]%
+\\
+\>[27]{}\mathbf{in}\;{}\<[32]%
+\>[32]{}(\Varid{y}\mathbin{\uparrow}\mathrm{2}){}\<[41]%
+\>[41]{}\mathbin{\Varid{`mod`}}\Varid{p}\equiv \Varid{z}\mathrel{\vee}{}\<[E]%
+\\
+\>[32]{}(\Varid{p}\mathbin{-}\Varid{y})\mathbin{\uparrow}\mathrm{2}{}\<[41]%
+\>[41]{}\mathbin{\Varid{`mod`}}\Varid{p}\equiv \Varid{z}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{p}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+As we are already dealing with inverses,
+here are two functions, one finding
+the inverse of a point and the other
+testing if a point is the inverse of the other: 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pinverse}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{pinverse}\;\anonymous \;\Conid{O}{}\<[23]%
+\>[23]{}\mathrel{=}\Conid{O}{}\<[E]%
+\\
+\>[3]{}\Varid{pinverse}\;\Varid{c}\;(\Conid{P}\;\Varid{x}\;\Varid{y}){}\<[23]%
+\>[23]{}\mathrel{=}\Varid{point}\;\Varid{c}\;(\Varid{x},\mathbin{-}\Varid{y}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{isInverse}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{Point}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{isInverse}\;\anonymous \;\Conid{O}\;\Conid{O}{}\<[20]%
+\>[20]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\Varid{isInverse}\;\Varid{c}\;\Varid{p}\;\Varid{q}{}\<[20]%
+\>[20]{}\mathrel{=}\Varid{q}\equiv \Varid{pinverse}\;\Varid{c}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Another useful tool would be one to find us a point
+on the curve. There are two ways to do it:
+deterministic and random.
+We start with the deterministic function that would
+basically through all number from 0 to $p-1$ and stop,
+whenever there is $y$ for this $x$, such that $(x,y)$
+is on the curve:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{findPoint}\mathbin{::}\Conid{Curve}\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{findPoint}\;\Varid{c}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\mathbf{let}\;{}\<[24]%
+\>[24]{}(\Varid{x},\Varid{y'})\mathrel{=}\Varid{hf}\;[\mskip1.5mu (\Varid{x},\Varid{curveY'2}\;\Varid{c}\;\Varid{x})\mid \Varid{x}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[19]{}\mathbf{in}\;{}\<[24]%
+\>[24]{}\Varid{point}\;\Varid{c}\;(\Varid{x},\Varid{findRoot}\;\Varid{p}\;\Varid{y'}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{hf}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{head}\mathbin{\circ}\Varid{filter}\;(\Varid{ism}\;\Varid{p}\mathbin{\circ}\Varid{snd}){}\<[E]%
+\\
+\>[12]{}\Varid{p}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{curM}\;\Varid{c}{}\<[E]%
+\\
+\>[12]{}\Varid{ism}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{flip}\;\Varid{isSqrM}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function generates tuples of the form
+$(x, y^2)$ and filters those where $y^2$ is
+indeed a residue of $p$. The first of the resulting list
+is returned and laziness saves us from going
+through literally all possible $x$.
+This is a very useful tool to get started
+with a curve, but it is a bit boring,
+because it would always yield the same point.
+Randomness would make that more exciting
+giving us different points. Here is a 
+function that yields a random point on a
+given curve:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{randomPoint}\mathbin{::}\Conid{Curve}\to \Conid{IO}\;\Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{randomPoint}\;\Varid{c}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{x}\leftarrow \Varid{randomRIO}\;(\mathrm{1},\Varid{p}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{y'}\mathrel{=}\Varid{curveY'2}\;\Varid{c}\;\Varid{x}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{if}\;\Varid{isSqrM}\;\Varid{y'}\;\Varid{p}\;{}\<[21]%
+\>[21]{}\mathbf{then}\;{}\<[27]%
+\>[27]{}\Varid{return}\;(\Varid{point}\;\Varid{c}\;(\Varid{x},\Varid{findRoot}\;\Varid{p}\;\Varid{y'})){}\<[E]%
+\\
+\>[21]{}\mathbf{else}\;{}\<[27]%
+\>[27]{}\Varid{randomPoint}\;\Varid{c}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{p}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The code is straight forward.
+First we generate a random number $x$ 
+in the range $1\dots p-1$.
+Then we determine $y^2$ and, if this is a residue,
+we return the point consisting of $x$ and $y$.
+Otherwise, if it is not a residue, we start all over again.
+
+Let us take a break here and look at some points
+in a real curve. We start by defining a curve for
+experiments:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{c1}\mathbin{::}\Conid{Curve}{}\<[E]%
+\\
+\>[3]{}\Varid{c1}\mathrel{=}\Conid{Curve}\;\mathrm{2}\;\mathrm{2}\;\mathrm{17}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This corresponds to the curve 
+
+\[
+y^2 \equiv x^3 + 2x + 2 \pmod{17}.
+\]
+
+We call \ensuremath{\Varid{mapM}\;(\mathbin{\char92 \char95 }\to \Varid{randomPoint}\;\Varid{c1})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{5}\mskip1.5mu]},
+generating five random points.
+We may see the points
+
+\[
+(10,6), (5,1), (6,3), (3,1), (13,7)
+\]
+
+(or any other selection of points.
+This list is completely random!)
+As expected, we see points with integer
+coordinates in the range $0\dots 16$.
+Let us generate some more points of that curve
+and have a look where those points are located in 
+the Cartesian plane.
+
+\begin{center}
+\begin{tikzpicture}
+   \draw [->] (0,0) -- (6,0);
+   \draw [->] (0,0) -- (0,6);
+
+   \draw [teal,fill=teal] (2.5,1.5) circle (1.5pt);
+   \draw [teal,fill=teal] (1.25,0.25) circle (1.5pt);
+   \draw [teal,fill=teal] (1.5,0.75) circle (1.5pt);
+   \draw [teal,fill=teal] (1.5,0.25) circle (1.5pt);
+   \draw [teal,fill=teal] (3.25,1.75) circle (1.5pt);
+
+
+   \draw [teal,fill=teal] (2.25,0.25) circle (1.5pt);
+   \draw [teal,fill=teal] (1.75,1.5) circle (1.5pt);
+   \draw [teal,fill=teal] (4,3.25) circle (1.5pt);
+   \draw [teal,fill=teal] (3.25,2.5) circle (1.5pt);
+   \draw [teal,fill=teal] (0,2.75) circle (1.5pt);
+\end{tikzpicture}
+\end{center}
+
+As already said: that does not look like 
+an elliptic curve at all. It does not look completely
+random either -- with the exception perhaps of that outlier
+on the $y$-axis, the point $(0,11)$.
+To have the complete picture, however, we need
+all points on that curve. 
+How can we get them? Right! With a generator!
+Where do we get a generator? We first have to implement
+the group operation addition.
+So let us get on with it. Here is addition:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{30E}{@{}l@{}}%
+\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{34E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{55}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{65}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{add}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{Point}\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{add}\;\anonymous \;\anonymous \;\Varid{p}\;\Conid{O}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{p}{}\<[E]%
+\\
+\>[3]{}\Varid{add}\;\anonymous \;\anonymous \;\Conid{O}\;\Varid{p}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{p}{}\<[E]%
+\\
+\>[3]{}\Varid{add}\;\Varid{c}\;\Varid{p}\mathord{@}(\Conid{P}\;\Varid{x1}\;\Varid{y1})\;\Varid{q}\mathord{@}(\Conid{P}\;\Varid{x2}\;\Varid{y2}){}\<[34]%
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{isInverse}\;\Varid{c}\;\Varid{p}\;\Varid{q}{}\<[55]%
+\>[55]{}\mathrel{=}\Conid{O}{}\<[E]%
+\\
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{otherwise}{}\<[55]%
+\>[55]{}\mathrel{=}{}\<[E]%
+\\
+\>[37]{}\mathbf{let}\;{}\<[42]%
+\>[42]{}\Varid{xr}\mathrel{=}(\Varid{l}\mathbin{\uparrow}\mathrm{2}\mathbin{-}\Varid{x1}\mathbin{-}\Varid{x2}){}\<[65]%
+\>[65]{}\mathbin{\Varid{`mod`}}\Varid{m}{}\<[E]%
+\\
+\>[42]{}\Varid{yr}\mathrel{=}(\Varid{l}\mathbin{*}(\Varid{xr}\mathbin{-}\Varid{x1})\mathbin{+}\Varid{y1}){}\<[65]%
+\>[65]{}\mathbin{\Varid{`mod`}}\Varid{m}{}\<[E]%
+\\
+\>[37]{}\mathbf{in}\;\Varid{point}\;\Varid{c}\;(\Varid{xr},\mathbin{-}\Varid{yr}){}\<[E]%
+\\
+\>[3]{}\hsindent{4}{}\<[7]%
+\>[7]{}\mathbf{where}\;{}\<[14]%
+\>[14]{}\Varid{a}\mathrel{=}\Varid{curA}\;\Varid{c}{}\<[E]%
+\\
+\>[14]{}\Varid{m}\mathrel{=}\Varid{curM}\;\Varid{c}{}\<[E]%
+\\
+\>[14]{}\Varid{l}{}\<[17]%
+\>[17]{}\mid {}\<[17E]%
+\>[20]{}\Varid{x1}\equiv \Varid{x2}{}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\\
+\>[20]{}\mathbf{let}\;{}\<[25]%
+\>[25]{}\Varid{t1}{}\<[29]%
+\>[29]{}\mathrel{=}(\mathrm{3}\mathbin{*}\Varid{x1}\mathbin{\uparrow}\mathrm{2}\mathbin{+}\Varid{a}){}\<[48]%
+\>[48]{}\mathbin{\Varid{`mod`}}\Varid{m}{}\<[E]%
+\\
+\>[25]{}\Varid{t2}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{inverse}\;((\mathrm{2}\mathbin{*}\Varid{y1}){}\<[48]%
+\>[48]{}\mathbin{\Varid{`mod`}}\Varid{m})\;\Varid{m}{}\<[E]%
+\\
+\>[20]{}\mathbf{in}\;{}\<[25]%
+\>[25]{}\Varid{t1}\mathbin{*}\Varid{t2}{}\<[E]%
+\\
+\>[17]{}\mid {}\<[17E]%
+\>[20]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[20]{}\mathbf{let}\;{}\<[25]%
+\>[25]{}\Varid{t1}{}\<[29]%
+\>[29]{}\mathrel{=}{}\<[42]%
+\>[42]{}(\Varid{y2}\mathbin{-}\Varid{y1})\mathbin{\Varid{`mod`}}\Varid{m}{}\<[E]%
+\\
+\>[25]{}\Varid{t2}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{inverse}\;({}\<[42]%
+\>[42]{}(\Varid{x2}\mathbin{-}\Varid{x1})\mathbin{\Varid{`mod`}}\Varid{m})\;\Varid{m}{}\<[E]%
+\\
+\>[20]{}\mathbf{in}\;{}\<[25]%
+\>[25]{}(\Varid{t1}\mathbin{*}\Varid{t2})\mathbin{\Varid{`mod`}}\Varid{m}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We start with the base cases where 
+one of the points is $\mathcal{O}$,
+the identity of the group of the curve.
+The result of addition in this case is just
+the other point. Then we handle two points,
+none of which is the identity.
+If one is the inverse of the other,
+then the result is just $\mathcal{O}$.
+All these cases, as already mentioned
+in the previous section, must be explicitly
+handled in our implementation. There is no
+direct way that would produce the result.
+After all, this is a highly ``engineered'' group.
+
+Now, we are finally in the ``regular'' case,
+where none of the points is the identity and
+the points are not the inverses of each other.
+In this case -- we just apply the formula
+we have learnt before. However, it looks a bit different.
+This is, because we are now in the discrete
+universe of modular arithmetic. 
+The main difference, however, is that, 
+instead of dividing points, we multiply them
+by the modular inverse of the denominator.
+The modulus for this operation is the prime number
+we use for the curve.
+
+It should be mentioned that to compute the slope
+of the line $l$, we distinguish the cases 
+$p = q$ (point doubling) and $p \neq q$ by
+just comparing the $x$-coordinate ignoring
+the $y$-coordinate. We can do this, because
+we already have checked the one point being
+the inverse of the other. Since the inverse
+of a point $(x,y)$ is its reflection across
+the $x$-axis $(x,-y)$, and there, for sure,
+is no other point with that $x$-coordinate,
+it would be redundant to check the $y$-coordinate
+once again.
+
+What do points look like, when we add them up?
+We just choose one point from the list above.
+What about the first two, $(10,6)$ 
+and $(5,1)$? We add them
+calling \ensuremath{\Varid{add}\;\Varid{c1}\;(\Conid{P}\;\mathrm{10}\;\mathrm{6})\;(\Conid{P}\;\mathrm{5}\;\mathrm{1})} and get
+
+\[
+(3,1).
+\] 
+
+There is really nothing that would suggest
+any similarity to ordinary arithmetic addition.
+So, how could we use addition to generate the
+whole group? Since we are dealing with an
+additive group (according to this strange
+definition of addition), we can pick a primitive
+element, a generator, and add it successivley
+to itself. But what is a primitive element
+of the group of our curve $c1$? Well,
+I happen to know that the order of that group
+is 19. Since 19 is a prime number and
+since we are talking about groups, Lagrange's theorem
+applies, \ie\ the order of subgroups must divide
+the order of the main group. Therefore,
+all members of the group are either member
+of a trivial subgroup (that contains only 1 element)
+or generators of the main group. Since the sole element
+in the trivial group must be the identity $\mathcal{O}$,
+all member of the group are generators.
+We, hence, can pick any point and generate the whole
+group from it. Here is a generator function:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gen}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to [\mskip1.5mu \Conid{Point}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{gen}\;\Varid{c}\;\Varid{p}\mathrel{=}\Varid{go}\;\Varid{p}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Conid{O}\mathrel{=}[\mskip1.5mu \Conid{O}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{r}\mathrel{=}\Varid{r}\mathbin{:}\Varid{go}\;(\Varid{add}\;\Varid{c}\;\Varid{r}\;\Varid{p}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We call it like \ensuremath{\Varid{gen}\;\Varid{c1}\;(\Conid{P}\;\mathrm{10}\;\mathrm{6})} and get
+
+\[
+(10,6),(16,13),(7,6),(0,11),(3,16),(5,16),(6,3),
+\]\[
+(9,16),(13,7),(13,10),(9,1),(6,14),(5,1),(3,1),\\
+\]\[
+(0,6),(7,11),(16,4),(10,11),O,
+\]
+
+which are 19 points and, hence, the entire group
+of the curve $c1$.
+Do we get a clearer picture when we put all 
+these points on the Cartesian plane? Not really:
+
+\begin{center}
+\begin{tikzpicture}
+   \draw [->] (0,0) -- (6,0);
+   \draw [->] (0,0) -- (0,6);
+
+   \draw [teal,fill=teal] (2.5 ,1.5 ) circle (1.5pt);
+   \draw [teal,fill=teal] (4   ,3.25) circle (1.5pt);
+   \draw [teal,fill=teal] (3.5 ,3   ) circle (1.5pt);
+   \draw [teal,fill=teal] (0   ,2.75) circle (1.5pt);
+   \draw [teal,fill=teal] (0.75,4   ) circle (1.5pt);
+   \draw [teal,fill=teal] (1.25,4   ) circle (1.5pt);
+   \draw [teal,fill=teal] (1.5 ,0.75) circle (1.5pt);
+
+   \draw [teal,fill=teal] (2.25,4   ) circle (1.5pt);
+   \draw [teal,fill=teal] (3.25,1.75) circle (1.5pt);
+   \draw [teal,fill=teal] (3.25,2.5 ) circle (1.5pt);
+   \draw [teal,fill=teal] (2.25,0.25) circle (1.5pt);
+   \draw [teal,fill=teal] (1.5 ,3.5 ) circle (1.5pt);
+   \draw [teal,fill=teal] (1.25,0.75) circle (1.5pt);
+   \draw [teal,fill=teal] (0.75,0.75) circle (1.5pt);
+
+   \draw [teal,fill=teal] (0   ,1.5 ) circle (1.5pt);
+   \draw [teal,fill=teal] (1.75,3.75) circle (1.5pt);
+   \draw [teal,fill=teal] (4   ,1   ) circle (1.5pt);
+   \draw [teal,fill=teal] (2.5 ,3.75) circle (1.5pt);
+
+\end{tikzpicture}
+\end{center}
+
+So, let us forget about geometry for a while.
+We are dealing with modular arithmetic related
+to a construction that we happen to call a curve.
+There is no secret geometry behind it.
 \section{The EC Discrete Logarithm Problem} 
 \section{EC Crypto Systems} 
 \section{Cryptoanalysis} 

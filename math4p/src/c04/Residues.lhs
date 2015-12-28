@@ -35,7 +35,7 @@ The following function does that:
 
 \begin{minipage}{\textwidth}\begin{code}
   residues :: Natural -> [Natural]
-  residues n = sort $ nub $ map (\x -> (x^2) `rem` n) [0..n-1]
+  residues n = sort (nub [(x^2) `rem` n | x <- [0..n-1]])
 \end{code}\end{minipage}
 
 |residues| finds all residues modulo |n|

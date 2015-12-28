@@ -85,10 +85,9 @@ where
   findPoint :: Curve -> Point
   findPoint c = let (x,y') = hf [(x, curveY'2 c x) | x <- [1..]]
                  in point c (x,findRoot p y')
-    where a = curA c
-          b = curB c
-          p = curM c
-          hf = head . filter (isSqrM p . snd) 
+    where p   = curM c
+          hf  = head . filter (ism p . snd) 
+          ism = flip isSqrM
 
   -------------------------------------------------------------------------
   -- Find the root of a quadratic residue
@@ -123,11 +122,19 @@ where
   -- Check if point is on the curve
   -------------------------------------------------------------------------
   oncurve :: Curve -> Point -> Bool
-  oncurve _ O     = True
+  oncurve _ O       = True
   oncurve c (P x y) = case curveY c x of
                         Nothing -> False
-                        Just z  -> y == z   || y == inverse z p ||
-                                   y == p-z || y == inverse (p-z) p
+                        Just z  -> y == z || y == p-z 
+    where p = curM c
+
+  -------------------------------------------------------------------------
+  -- This one is more efficient: it does not need the root
+  -------------------------------------------------------------------------
+  oncurve2 :: Curve -> Point -> Bool
+  oncurve2 _ O       = True
+  oncurve2 c (P x y) = let z = curveY'2 c x 
+                        in (y^2) `mod` p == z || (p-y)^2 `mod` p == z 
     where p = curM c
                     
   -------------------------------------------------------------------------
@@ -235,9 +242,9 @@ where
   randomPoint :: Curve -> IO Point
   randomPoint c = do
     x <- randomRIO (1,p-1)
-    case curveY c x of
-      Nothing -> randomPoint c
-      Just y  -> return (P x y)
+    let y' = curveY'2 c x
+    if isSqrM y' p then return (point c (x,findRoot p y'))
+                   else randomPoint c
     where p = curM c
 
   --------------------------------------------------------------
