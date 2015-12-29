@@ -5,7 +5,10 @@
 \section{EC modulo a Prime} 
 %include ECModulo.lhs
 \section{The EC Discrete Logarithm Problem} 
-\section{EC Crypto Systems} 
+%include ECDLP.lhs
+\section{EC Diffie-Hellman} 
+\section{EC Integrated Encryption Scheme} 
+\section{EC Digital Signature Algorithm} 
 \section{Cryptoanalysis} 
 \section{Mr. Frobenius} 
 \section{Mr. Schoof} 

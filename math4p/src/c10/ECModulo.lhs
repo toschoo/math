@@ -6,27 +6,26 @@ where
   import System.Random (randomRIO)
 
   import Prime
-  import Modular hiding (add,mul,mDiv)
-  import Numerals
+  import Modular hiding (add,mul,mDiv,mod)
 \end{code}
 }
 
 It was already indicated that the geometry exercises
 in the previous sections had the sole purpose of giving
 an intuition. EC Cryptography does not take place
-in continuous curves. It does take place in modular arithmetic
+in the continuous universe. It does take place in modular arithmetic
 with integers and, hence, in a discrete world. 
 This is a disruptive turning point,
 since we cannot plot a curve and search for a point
 in the Cartesian plane anymore. As we will see
 examining points of a curve modulo some number
 these points are not located on anything even close to the curves
-we saw in the previous section.
+we saw in the previous sections.
 One could say that we adopt the algebra of elliptic curves,
-but not the geometry.
+but drop the geometry.
 
 Let us start with a data type.
-We define a elliptic curve as
+We define an elliptic curve as
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -39,23 +38,23 @@ We define a elliptic curve as
 \end{minipage}
 
 This type describes a curve in terms of its coefficient
-$a$ and $b$ and in terms of the modulo.
-When we only consider curves of the form
+$a$ and $b$ and in terms of the modulus.
+When we consider only curves of the form
 
 \begin{equation}
 y^2 = x^3 + ax + b,
 \end{equation}
 
-the type provides a sufficient definition of such curves.
+the definition given by the type is sufficient.
 There are other curves, though, for instance this one:
 
 \begin{equation}
-y^2 = x^2 + ax^2 + bx + c,
+y^2 = x^3 + ax^2 + bx + c,
 \end{equation}
 
 but we do not consider them in this humble introduction.
 
-For the modulo, either a (huge) prime is used
+For the modulus, either a (huge) prime is used
 or a (huge) power of 2. Again, we do not consider
 powers of 2. 
 
@@ -64,11 +63,12 @@ Now we define the notion of ``point'':
 \begin{minipage}{\textwidth}
 \begin{code}
   data Point = O | P Natural Natural 
+    deriving (Eq)
 \end{code}
 \end{minipage}
 
-and an instance of |Show| to get a more
-pleasant visualiation of points:
+and make it an instance of |Show| to get a more
+pleasant visualiation:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -81,17 +81,7 @@ pleasant visualiation of points:
 Note that we explicitly define $\mathcal{O}$,
 the identity, to which we will have to refer
 explicitly in addition and other operations
-on points later. We already refer to the identity
-in the implementation of |Eq| here below:
-
-\begin{minipage}{\textwidth}
-\begin{code}
-  instance Eq Point where
-    (P  px py) == (P  qx qy) = px == qx && py == qy
-    O == O  = True
-    _ == _  = False
-\end{code}
-\end{minipage}
+on points later. 
 
 We also define convenience getters for the 
 point coordinates:
@@ -122,11 +112,20 @@ we define a convenient creator function:
 Note that we use our |mod| function defined in
 section on modular arithmetic in the Prime chapter.
 
-Now, we would like to have a function that
+\ignore{
+\begin{code}
+  mod :: Natural -> Natural -> Natural
+  mod x n  | x < 0      = n - ((-x) `rem` n) 
+           | otherwise  = x `rem` n
+
+\end{code}
+}
+
+Now we would like to have a function that
 gives us the $y$-coordinate of the point 
 with a given $x$-coordinate. In the continuous
 universe that would be quite easy.
-It is a bit complicated in modular arithmetics.
+It is a bit complicated in modular arithmetic.
 We start with a function that gives us $y^2$:
 
 \begin{minipage}{\textwidth}
@@ -147,18 +146,18 @@ In the continuous universe, we would just call
 $\sqrt{y^2}$. But we are in modular arithmetic
 and $y^2$ is not necessarily a perfect square,
 but a quadratic residue, which may or may not
-be a perfect square. Here are as a reminder
-of that topic the residues of the prime 17:
+be a perfect square. Here are as an example
+the residues of prime 17:
 
 \[
 0, 1, 2, 4, 8, 9, 13, 15, 16.
 \]
 
 Those are nine numbers, which was to be expected,
-since, for any prime modulo $p$, there are 
+since, for any prime modulus $p$, there are 
 $\frac{p+1}{2}$ residues and $\frac{p-1}{2}$ nonresidues.
 Of these nine numbers, only five, namely
-0, 1, 4, 9 and 16, are perfect square. 
+0, 1, 4, 9 and 16, are perfect squares.
 For those it is quite easy to compute the root.
 It is just the regular square root.
 For the others, however, it is quite hard.
@@ -168,7 +167,7 @@ which is hard enough to provide the setting
 for most public key cryptographic schemes
 around today. Anyway, we have to live with it
 for the moment and implement a searching algorithm
-that is fine for small modulos, but infeasible in
+that is fine for small modulus, but infeasible in
 practice:
 
 \begin{minipage}{\textwidth}
@@ -214,13 +213,13 @@ that gives us $y$ for $x$:
 \end{minipage}
 
 We have inserted a safety belt in this function.
-Before we go into |findRoot|, which may cause an error,
-when there does not exist a root to the number in question,
+Before we go into |findRoot|, which may cause an error
+when there is no root for the number in question,
 we check if it is a residue at all.
 If it is, we are confident to find a root and just
 return the result of |findRoot|. Otherwise,
-we return |Nothing|, meaning that there the curve is
-not defined at this specific $x$.
+we return |Nothing|, meaning that the curve is
+not defined for this specific $x$.
 Here is the test for $r$ being a residue
 using the Legendre symbol:
 
@@ -302,8 +301,8 @@ Another useful tool would be one to find us a point
 on the curve. There are two ways to do it:
 deterministic and random.
 We start with the deterministic function that would
-basically through all number from 0 to $p-1$ and stop,
-whenever there is $y$ for this $x$, such that $(x,y)$
+basically go through all number from 0 to $p-1$ and stop,
+whenever there is a $y$ for this $x$, such that $(x,y)$
 is on the curve:
 
 \begin{minipage}{\textwidth}
@@ -374,18 +373,16 @@ We may see the points
 (10,6), (5,1), (6,3), (3,1), (13,7)
 \]
 
-(or any other selection of points.
-This list is completely random!)
+(or any other selection of points. It is a \textbf{random} list!)
 As expected, we see points with integer
 coordinates in the range $0\dots 16$.
-Let us generate some more points of that curve
-and have a look where those points are located in 
+Let us look where those points are located in 
 the Cartesian plane.
 
 \begin{center}
 \begin{tikzpicture}
-   \draw [->] (0,0) -- (6,0);
-   \draw [->] (0,0) -- (0,6);
+   \draw [->] (0,0) -- (5,0);
+   \draw [->] (0,0) -- (0,4);
 
    \draw [teal,fill=teal] (2.5,1.5) circle (1.5pt);
    \draw [teal,fill=teal] (1.25,0.25) circle (1.5pt);
@@ -393,24 +390,18 @@ the Cartesian plane.
    \draw [teal,fill=teal] (1.5,0.25) circle (1.5pt);
    \draw [teal,fill=teal] (3.25,1.75) circle (1.5pt);
 
-
-   \draw [teal,fill=teal] (2.25,0.25) circle (1.5pt);
-   \draw [teal,fill=teal] (1.75,1.5) circle (1.5pt);
-   \draw [teal,fill=teal] (4,3.25) circle (1.5pt);
-   \draw [teal,fill=teal] (3.25,2.5) circle (1.5pt);
-   \draw [teal,fill=teal] (0,2.75) circle (1.5pt);
 \end{tikzpicture}
 \end{center}
 
 As already said: that does not look like 
 an elliptic curve at all. It does not look completely
-random either -- with the exception perhaps of that outlier
-on the $y$-axis, the point $(0,11)$.
+random either.
 To have the complete picture, however, we need
 all points on that curve. 
 How can we get them? Right! With a generator!
-Where do we get a generator? We first have to implement
-the group operation addition.
+Where do we get a generator? 
+One way is trial and error.
+But for that we need the group operation.
 So let us get on with it. Here is addition:
 
 \begin{minipage}{\textwidth}
@@ -423,15 +414,15 @@ So let us get on with it. Here is addition:
                                     let  xr = (l^2 - x1 - x2)   `mod` m
                                          yr = (l*(xr-x1) + y1)  `mod` m
                                     in point c (xr, -yr)             
-      where  a = curA c
-             m = curM c
-             l  |  x1 == x2  = 
-                   let  t1  = (3*x1^2 + a)     `mod` m
-                        t2  = inverse ((2*y1)  `mod` m) m
-                   in   t1 * t2
-                |  otherwise = 
-                   let  t1  =            (y2-y1) `mod` m
-                        t2  = inverse (  (x2-x1) `mod` m) m
+      where  a                = curA c
+             m                = curM c
+             l  |  x1 == x2   = 
+                   let  t1    = (3*x1^2 + a)     `mod` m
+                        t2    = inverse ((2*y1)  `mod` m) m
+                   in   (t1 * t2) `mod` m
+                |  otherwise  = 
+                   let  t1    =            (y2-y1) `mod` m
+                        t2    = inverse (  (x2-x1) `mod` m) m
                    in   (t1 * t2) `mod` m
 \end{code}
 \end{minipage}
@@ -440,7 +431,7 @@ We start with the base cases where
 one of the points is $\mathcal{O}$,
 the identity of the group of the curve.
 The result of addition in this case is just
-the other point. Then we handle two points,
+the other point. Then we handle two points
 none of which is the identity.
 If one is the inverse of the other,
 then the result is just $\mathcal{O}$.
@@ -455,32 +446,33 @@ where none of the points is the identity and
 the points are not the inverses of each other.
 In this case -- we just apply the formula
 we have learnt before. However, it looks a bit different.
-This is, because we are now in the discrete
+This is because we are now in the discrete
 universe of modular arithmetic. 
-The main difference, however, is that, 
-instead of dividing points, we multiply them
+The main difference is that, 
+instead of dividing coordinates, we multiply them
 by the modular inverse of the denominator.
-The modulus for this operation is the prime number
-we use for the curve.
+We are here dealing with the group of integers
+modulo the prime we use for the curve.
 
 It should be mentioned that to compute the slope
 of the line $l$, we distinguish the cases 
 $p = q$ (point doubling) and $p \neq q$ by
-just comparing the $x$-coordinate ignoring
-the $y$-coordinate. We can do this, because
-we already have checked the one point being
+just comparing the $x$-coordinates ignoring
+the $y$-coordinates. We can do this, because
+we already have checked one point being
 the inverse of the other. Since the inverse
 of a point $(x,y)$ is its reflection across
-the $x$-axis $(x,-y)$, and there, for sure,
+the $x$-axis $(x,-y)$ and there, for sure,
 is no other point with that $x$-coordinate,
 it would be redundant to check the $y$-coordinate
 once again.
 
 What do points look like, when we add them up?
-We just choose one point from the list above.
+Let us take two points from the list above.
 What about the first two, $(10,6)$ 
 and $(5,1)$? We add them
-calling |add c1 (P 10 6) (P 5 1)| and get
+calling\\
+|add c1 (P 10 6) (P 5 1)| and get
 
 \[
 (3,1).
@@ -488,7 +480,8 @@ calling |add c1 (P 10 6) (P 5 1)| and get
 
 There is really nothing that would suggest
 any similarity to ordinary arithmetic addition.
-So, how could we use addition to generate the
+
+How can we use addition to generate the
 whole group? Since we are dealing with an
 additive group (according to this strange
 definition of addition), we can pick a primitive
@@ -501,10 +494,11 @@ since we are talking about groups, Lagrange's theorem
 applies, \ie\ the order of subgroups must divide
 the order of the main group. Therefore,
 all members of the group are either member
-of a trivial subgroup (that contains only 1 element)
+of a trivial subgroup (which contains only one element,
+namely the identity)
 or generators of the main group. Since the sole element
 in the trivial group must be the identity $\mathcal{O}$,
-all member of the group are generators.
+all other members of the group must be generators.
 We, hence, can pick any point and generate the whole
 group from it. Here is a generator function:
 
@@ -529,6 +523,29 @@ We call it like |gen c1 (P 10 6)| and get
 
 which are 19 points and, hence, the entire group
 of the curve $c1$.
+
+Note that the final point is the identity.
+This is exactly the same behaviour as we saw
+for multiplicative groups modulo a prime.
+For instance, 3 is a generator of the group
+modulo 7. We saw that 
+$3^1 \equiv 3$,
+$3^2 \equiv 2$,
+$3^3 \equiv 6$,
+$3^4 \equiv 4$,
+$3^5 \equiv 5$ and
+$3^6 \equiv 1$ all $\pmod{7}$.
+ 
+The last but one point in the list is the inverse
+of the point we started with. In the integer case,
+there was nothing obvious that pointed to the fact
+that 5 is the inverse of 3 modulo 7. With the points
+above, however, it is immediately clear, since,
+as you can see, the penultimate point is $(10,11)$.
+It has the same $x$-coordinate as $(10,6)$ and the
+$y$-coordinate is $-y$ of the original point, because
+$17-6 = 11$. 11, hence, is $-6$ modulo 17.
+
 Do we get a clearer picture when we put all 
 these points on the Cartesian plane? Not really:
 
@@ -564,4 +581,4 @@ these points on the Cartesian plane? Not really:
 So, let us forget about geometry for a while.
 We are dealing with modular arithmetic related
 to a construction that we happen to call a curve.
-There is no secret geometry behind it.
+There is no more secret geometry behind it.
