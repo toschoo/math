@@ -188,9 +188,9 @@ a bit clearer:
 % Desargues' Theorem
 % ------------------------------------------------------------------------
 \begin{center}
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=1.5]
    \draw [gray,fill=gray] (0,5) -- (1,3) -- (2,4) -- (0,5);
-   \draw [gray,fill=gray] (3,4.37) -- (1.6,3.05) -- (3.5,3.85) -- (3,4.37);
+   \draw [gray,fill=gray] (3,4.357) -- (1.6,3.05) -- (3.5,3.85) -- (3,4.357);
 
    \node [gray,font=\tiny,anchor=east] (a) at (0,5) {A};
    \node [gray,font=\tiny,anchor=east] (b) at (1,3) {B};
@@ -200,12 +200,17 @@ a bit clearer:
    \node [gray,font=\tiny ,anchor=north] (b2) at (1.6,3.05) {$B\prime$};
    \node [gray,font=\tiny ,anchor=west] (c2) at (3.5,3.85) {$C\prime$};
 
-   \draw [gray] (1.6,3.05) -- (0,1.54);
-   \draw [gray] (1,3) -- (1.8,1.4); 
+   \draw [gray] (1,3) -- (1.5,2); 
    \draw [gray] (1,3) -- (0,2);
-   \draw [gray] (1.6,3.05) -- (0,2.37);
    \draw [gray] (2,4) -- (6,2);
-   \draw [gray] (3.5,3.85) -- (5.6,1.75);
+   \draw [gray] (1.6,3.05) -- (0.475,2);
+   \draw [gray] (1.6,3.05) -- (0,2.376);
+   \draw [gray] (3.5,3.85) -- (5.324,2);
+
+   \draw [red] (1.175,2.65) circle (1.5pt);
+   \draw [red] (0.65 ,2.65) circle (1.5pt); 
+   \draw [red] (4.68 ,2.65) circle (1.5pt); % there must be some (rounding?) mistake
+                                            % the point is (4.676,2.662).
 
    \draw [red,fill=red] (7,3.5) circle (1.5pt);
    \node [red,font=\small,anchor=north west] (o) at (7,3.5) {O};
@@ -219,11 +224,10 @@ a bit clearer:
 \end{tikzpicture}
 \end{center}
 
-The red elements capture the precondition of the theorem:
+The dotted lines capture the theorem's precondition:
 corresponding vertices of the triangles 
-lie on lines that intersect
-in one point $O$.
-The gray lines extend the sides of the triangle and
+lie on lines that intersect in one point $O$.
+The gray lines extend the sides of the triangles and
 the pairs of corresponding sides all intersect, each side
 with its corresponding side, on the same line $l$.
 
@@ -241,14 +245,16 @@ with one edge of the other triangle,
 for instance $\overline{AA\prime}$ or $\overline{BB\prime}$,
 also lie in a plane, otherwise we could not draw these lines.
 But that means that $A$ and $A\prime$, $B$ and $B\prime$ and
-$C$ and $C\prime$ lie in the same plane. 
-So the lines $\overline{AB}$ and $\overline{A\prime B\prime}$
+$C$ and $C\prime$ as well as $O$ all lie in the same plane. 
+Therefore the lines $\overline{AB}$ and $\overline{A\prime B\prime}$
 must meet somewhere. 
 Since the triangles are in separate planes, the two planes
-must meet somewhere too and there, where they meet, there must
-be the intersection of those lines. Two planes, however,
-meet in a line and on that line it must be where all those
-lines intersect. That line must be $l$.
+must meet somewhere too and there, 
+where the planes meet, there must
+be the intersection of all those lines. Two planes, however,
+meet in a line and, since they have exactly one line in common, 
+it must be on that line where all the other lines
+itersect. 
 
 Note that this proof works with reasoning according to the logic
 of plane and space alone, which makes it concise and elegant,
