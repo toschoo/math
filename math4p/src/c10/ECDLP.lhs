@@ -169,3 +169,45 @@ We, hence, would compute $P+P$ for 0, starting with the tail of |[1,0,1]|.
 This is $2P$. Then we compute $2P+2P+P$ for 1,
 which is $5P$.
 
+If you wonder why that works, just consider
+the representation of a number in terms of
+powers of 2 multiplied by a number $k$.
+Then we have
+
+\[
+k(a_r2^r + a_{r-1}2^{r-1} + \dots + a_02^0),
+\]
+
+where, for $i \in {0\dots r}$, $a_i \in {0,1}$.
+Multiplying this out, we get
+
+\[
+a_r2^rk + a_{r-1}2^{r-1}k + \dots + a_02^0k.
+\]
+
+Obviously, from step to step, that is from plus sign
+to plus sign, $k$ doubles. Ignoring the coefficients $a_i$
+for a moment, that would look for the concrete number
+$10011_2 = 19_{10}$ like
+
+\[
+16k + 8k + 4k + 2k + k.
+\]
+
+Doubling would in this case generate the number $16k$.
+Now, we eliminate all terms with coefficient $a_i = 0$,
+which are $8k$ and $4k$. We are left with
+
+\[
+16k + 2k + k.
+\]
+
+The value we now add to $16k$ corresponds exactly
+to the value of $k$ we would add with |mul|. For the example,
+we would add one $k$ processing the last but one digit.
+This $k$ is now part of the intermediate result that
+goes into the processing of the last digit, $2q+k$.
+Processing the last digit, we double the previous result,
+obtaining $4q+2k$ and, since the last digit is also 1,
+we add $k$ again. We, hence, get three ``extra'' $k$s,
+which we add to the overall doubling result 16.
