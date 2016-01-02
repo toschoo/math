@@ -177,13 +177,42 @@ where
   -- Multiplication of points (double-and-add)
   -------------------------------------------------------------------------
   mul :: Curve -> Integer -> Point -> Point
+  mul _ 0 _ = O
   mul _ _ O = O
-  mul _ 0 _ = error "multiplication by 0"
   mul c n p = go (tail $ toBinary n) p
     where go [] q     = q
           go (i:is) q = let q' = add c q q
                          in if i == 0 then go is q'
                                       else go is (add c q' p)
+
+  mulx :: Curve -> Integer -> Point -> Point
+  mulx _ 0 _ = O
+  mulx _ _ O = O
+  mulx c n p = foldl da p (tail $ toBinary n) 
+    where da q 0 = add c q q
+          da q 1 = add c p (add c q q)
+
+  mull :: Integer -> Integer -> Integer
+  mull 0 _ = 0
+  mull 1 p = p
+  mull n p = foldl da 0 (toBinary n)
+    where da q 0 = q+q
+          da q 1 = q+q+p 
+
+  mulr :: Integer -> Integer -> Integer
+  mulr 0 _ = 0
+  mulr p 1 = p
+  mulr n p = foldr da p (tail $ toBinary n)
+    where da 0 q = q+q
+          da 1 q = q+q+p 
+
+  mulg :: Integer -> Integer -> Integer
+  mulg 0 _ = 0
+  mulg 1 p = p
+  mulg n p = go p (tail $ toBinary n)
+    where go q [] = q
+          go q (0:is) = go (q+q)   is
+          go q (1:is) = go (q+q+p) is
 
   mul2 :: Curve -> Integer -> Integer -> Point -> Point
   mul2 c _ _ O = O

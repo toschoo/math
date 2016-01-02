@@ -209,7 +209,7 @@ a bit clearer:
 
    \draw [red] (1.175,2.65) circle (1.5pt);
    \draw [red] (0.65 ,2.65) circle (1.5pt); 
-   \draw [red] (4.68 ,2.65) circle (1.5pt); % there must be some (rounding?) mistake
+   \draw [red] (4.69 ,2.65) circle (1.5pt); % there must be some (rounding?) mistake
                                             % the point is (4.676,2.662).
 
    \draw [red,fill=red] (7,3.5) circle (1.5pt);
