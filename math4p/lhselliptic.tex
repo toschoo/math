@@ -2121,41 +2121,34 @@ The algorithm may be implemented like this:
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{mul}\mathbin{::}\Conid{Curve}\to \Conid{Integer}\to \Conid{Point}\to \Conid{Point}{}\<[E]%
-\\
-\>[3]{}\Varid{mul}\;\anonymous \;\anonymous \;\Conid{O}{}\<[14]%
-\>[14]{}\mathrel{=}\Conid{O}{}\<[E]%
 \\
 \>[3]{}\Varid{mul}\;\anonymous \;\mathrm{0}\;\anonymous {}\<[14]%
 \>[14]{}\mathrel{=}\Conid{O}{}\<[E]%
 \\
+\>[3]{}\Varid{mul}\;\anonymous \;\anonymous \;\Conid{O}{}\<[14]%
+\>[14]{}\mathrel{=}\Conid{O}{}\<[E]%
+\\
 \>[3]{}\Varid{mul}\;\Varid{c}\;\Varid{n}\;\Varid{p}{}\<[14]%
-\>[14]{}\mathrel{=}\Varid{go}\;(\Varid{tail}\mathbin{\$}\Varid{toBinary}\;\Varid{n})\;\Varid{p}{}\<[E]%
+\>[14]{}\mathrel{=}\Varid{foldl}\;\Varid{da}\;\Varid{p}\;(\Varid{tail}\mathbin{\$}\Varid{toBinary}\;\Varid{n}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{q}{}\<[25]%
-\>[25]{}\mathrel{=}\Varid{q}{}\<[E]%
+\>[12]{}\Varid{da}\;\Varid{q}\;\mathrm{0}{}\<[20]%
+\>[20]{}\mathrel{=}\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}{}\<[E]%
 \\
-\>[12]{}\Varid{go}\;(\Varid{i}\mathbin{:}\Varid{is})\;\Varid{q}{}\<[25]%
-\>[25]{}\mathrel{=}\mathbf{let}\;\Varid{q'}\mathrel{=}\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}{}\<[E]%
-\\
-\>[25]{}\hsindent{2}{}\<[27]%
-\>[27]{}\mathbf{in}\;\mathbf{if}\;\Varid{i}\equiv \mathrm{0}\;{}\<[41]%
-\>[41]{}\mathbf{then}\;\Varid{go}\;\Varid{is}\;\Varid{q'}{}\<[E]%
-\\
-\>[41]{}\mathbf{else}\;\Varid{go}\;\Varid{is}\;(\Varid{add}\;\Varid{c}\;\Varid{q'}\;\Varid{p}){}\<[E]%
+\>[12]{}\Varid{da}\;\Varid{q}\;\mathrm{1}{}\<[20]%
+\>[20]{}\mathrel{=}\Varid{add}\;\Varid{c}\;\Varid{p}\;(\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-First, the identity multiplied by any number
-is the identity. It never changes by multiplication.
+First 0 times anything is the identity.
+Then, the identity multiplied by any number
+is just the identity. It never changes by multiplication.
 Just as zero would never change by multiplication
 in the realm of numbers.
 Any point multiplied by zero, on the other hand,
@@ -2163,8 +2156,8 @@ is the identity of the additive group and that, again, is zero.
 
 In all other cases, we convert $n$ into a list
 of binary digits of which we process all but the head.
-For each digit, we double the intermediate result $q$.
-That is we compute \ensuremath{\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}}.
+For each digit, we double the intermediate result $q$,
+that is we compute \ensuremath{\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}}.
 If the current digit is 0, we are done and continue
 with the next digit.
 Otherwise, if it is 1, we additionally add $p$.
@@ -2173,10 +2166,8 @@ we have a result.
 
 Consider for example $5 \times P$.
 The binary representation of 5 is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}.
-We, hence, would compute 
-$go~[0,1]~P = go~[1]~(P+P) = go~[1]~2P$,
-which, in its turn, is 
-$go~[]~(4P + P) = go~[]~5P$,
+We, hence, would compute $P+P$ for 0, starting with the tail of \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}.
+This is $2P$. Then we compute $2P+2P+P$ for 1,
 which is $5P$.
 
 \section{EC Diffie-Hellman} 

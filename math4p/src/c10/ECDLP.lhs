@@ -166,6 +166,6 @@ we have a result.
 Consider for example $5 \times P$.
 The binary representation of 5 is |[1,0,1]|.
 We, hence, would compute $P+P$ for 0, starting with the tail of |[1,0,1]|.
-This is $2P$. Then we compute $2P+2P+P for 1,
+This is $2P$. Then we compute $2P+2P+P$ for 1,
 which is $5P$.
 
