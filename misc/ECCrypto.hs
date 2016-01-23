@@ -25,7 +25,7 @@ where
   ecdhInit :: ECDHParams -> IO (Integer, Point)
   ecdhInit ps@(ECDHP c g) = do
     k <- ecdhRandomPrivate ps
-    return (k, mul c k g)
+    return (k, ecdhPublic ps k)
 
   alice :: ECDHParams -> PFun -> Chan Point -> Chan Point -> IO ()
   alice ps@(ECDHP c g) sfp ich och = do

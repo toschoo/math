@@ -127,7 +127,7 @@ for \acronym{ec} crypto.
 
 The information of \acronym{ec} crypto systems
 that is publicly known 
-consist of parameters describing the curve,
+consists of parameters describing the curve,
 the coefficients, the modulus, a starting point $P$ and perhaps
 some other details specifying the exact curve.
 The public key is typically a point $Q$ and the 
@@ -258,14 +258,14 @@ a_r2^rk + a_{r-1}2^{r-1}k + \dots + a_02^0k.
 Obviously, from step to step, that is from plus sign
 to plus sign, right to left, $k$ doubles. 
 Ignoring the coefficients $a_i$
-for a moment, that would look for the concrete number
+for a moment, this would look for the concrete number
 $10011_2 = 19_{10}$ like
 
 \[
 16k + 8k + 4k + 2k + k.
 \]
 
-Doubling would in this case generate the number $16k$,
+Doubling alone would in this case generate the number $16k$,
 which would indeed be the correct result if the 
 binary number were $10000_2$.
 Now, we eliminate all terms with coefficient $a_i = 0$,

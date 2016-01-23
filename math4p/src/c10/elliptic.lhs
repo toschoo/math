@@ -7,6 +7,7 @@
 \section{The EC Discrete Logarithm Problem} 
 %include ECDLP.lhs
 \section{EC Diffie-Hellman} 
+%include ECDH.lhs
 \section{EC Integrated Encryption Scheme} 
 \section{EC Digital Signature Algorithm} 
 \section{Cryptoanalysis} 

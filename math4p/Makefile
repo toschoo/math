@@ -72,6 +72,7 @@ ALL	 = cmds.tex \
 	   src/c10/ECProjective.lhs \
 	   src/c10/ECModulo.lhs \
 	   src/c10/ECDLP.lhs \
+	   src/c10/ECDH.lhs \
 	   src/c11/complex.lhs \
 	   src/c12/quadratics.lhs \
 	   src/c13/euclid.lhs \

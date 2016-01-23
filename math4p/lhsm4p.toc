@@ -78,8 +78,9 @@
 \contentsline {section}{\numberline {9.4}Plotting Functions}{313}
 \contentsline {section}{\numberline {9.5}Slopes and Intersects}{313}
 \contentsline {section}{\numberline {9.6}Trigonometry}{313}
-\contentsline {section}{\numberline {9.7}Conic Sections}{313}
-\contentsline {section}{\numberline {9.8}Algebra and Geometry}{313}
+\contentsline {section}{\numberline {9.7}Navigation}{313}
+\contentsline {section}{\numberline {9.8}Conic Sections}{313}
+\contentsline {section}{\numberline {9.9}Algebra and Geometry}{313}
 \contentsline {chapter}{\numberline {10}Linear Algebra}{315}
 \contentsline {section}{\numberline {10.1}Vectors}{315}
 \contentsline {section}{\numberline {10.2}Vector Spaces}{315}
