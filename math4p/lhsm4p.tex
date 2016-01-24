@@ -32871,7 +32871,7 @@ for \acronym{ec} crypto.
 
 The information of \acronym{ec} crypto systems
 that is publicly known 
-consist of parameters describing the curve,
+consists of parameters describing the curve,
 the coefficients, the modulus, a starting point $P$ and perhaps
 some other details specifying the exact curve.
 The public key is typically a point $Q$ and the 
@@ -33024,14 +33024,14 @@ a_r2^rk + a_{r-1}2^{r-1}k + \dots + a_02^0k.
 Obviously, from step to step, that is from plus sign
 to plus sign, right to left, $k$ doubles. 
 Ignoring the coefficients $a_i$
-for a moment, that would look for the concrete number
+for a moment, this would look for the concrete number
 $10011_2 = 19_{10}$ like
 
 \[
 16k + 8k + 4k + 2k + k.
 \]
 
-Doubling would in this case generate the number $16k$,
+Doubling alone would in this case generate the number $16k$,
 which would indeed be the correct result if the 
 binary number were $10000_2$.
 Now, we eliminate all terms with coefficient $a_i = 0$,
@@ -33052,6 +33052,562 @@ we add $k$ again. We, hence, get three ``extra'' $k$s,
 which we add to the overall doubling result 16 and get
 $16+2+1=16+3=19$.
 \section{EC Diffie-Hellman} 
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{ECDH}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Random}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{ECModulo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prelude}\;\Varid{hiding}\;(\Varid{mod}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prime}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Modular}\;\Varid{hiding}\;(\Varid{add},\Varid{mull},\Varid{mDiv}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+Diffie-Hellman on elliptic curves (\acronym{ecdh}) 
+is very similar to Diffie-Hellman on 
+the group of remainders of a prime.
+We just change the group operation.
+Everything else remains (more or less) the same.
+We start by defining the group parameters:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{ECDHParams}\mathrel{=}\Conid{ECDHP}\;\Conid{Curve}\;\Conid{Point}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+That is, the parameters we need to establish
+the protocol in the first place are the curve
+we are using and a starting point, which is
+a generator of the group of the curve.
+Now we define a function to generate a random
+private key:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdhRandomPrivate}\mathbin{::}\Conid{ECDHParams}\to \Conid{IO}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdhRandomPrivate}\;(\Conid{ECDHP}\;\Varid{c}\;\Varid{g})\mathrel{=}\Varid{randomNat}\;(\mathrm{2},\Varid{o}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+In plain English, we select a random number
+between two and the size of the group minus one.
+From this we can compute the public key,
+which we can exchange over the unsecure channel:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdhPublic}\mathbin{::}\Conid{ECDHParams}\to \Conid{Natural}\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdhPublic}\;(\Conid{ECDHP}\;\Varid{c}\;\Varid{g})\;\Varid{d}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{d}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The public key, hence, is a point, namely
+the result of the multiplication
+of the start point, \ensuremath{\Varid{g}}, by a number \ensuremath{\Varid{d}},
+which is the number we have just chosen 
+randomly from the range $2\dots o-1$.
+We put this into a convenient protocol
+initialisation routine:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdhInit}\mathbin{::}\Conid{ECDHParams}\to \Conid{IO}\;(\Conid{Natural},\Conid{Point}){}\<[E]%
+\\
+\>[3]{}\Varid{ecdhInit}\;\Varid{ps}\mathord{@}(\Conid{ECDHP}\;\Varid{c}\;\Varid{g})\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{k}\leftarrow \Varid{ecdhRandomPrivate}\;\Varid{ps}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{k},\Varid{ecdhPublic}\;\Varid{ps}\;\Varid{k}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Before we go on to present the communication
+between Alice and Bob, we define a 
+concurrent printing function that should
+help us inspecting what is going on between
+the two of them: 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{PFun}\mathrel{=}\Conid{String}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{put}\mathbin{::}\Conid{MVar}\;()\to \Conid{String}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{put}\;\Varid{m}\;\Varid{s}\mathrel{=}\Varid{withMVar}\;\Varid{m}\;(\mathbin{\char92 \char95 }\to \Varid{putStrLn}\;\Varid{s}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+As you can see, the function locks
+an \ensuremath{\Conid{MVar}} before writing to $stdout$.
+The intention is to avoid ending up
+with jumbled strings printed to $stdout$.
+
+We further implement two pairs of functions that
+together establish a secure channel
+on top of an unsecure one. The key we are using 
+to secure the channel is the result of the 
+Diffie-Hellman key exchange protocol. Note that these
+functions are not part of Diffie-Hellman itself.
+We, in fact, use a quite stupid encryption
+just for illustration purpose:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdhEncrypt}\mathbin{::}\Conid{Point}\to \Conid{Natural}\to \Conid{Point}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdhEncrypt}\;(\Conid{P}\;\Varid{x}\;\Varid{y})\;\Varid{m}\mathrel{=}\Conid{P}\;(\Varid{xor}\;(\Varid{x}\mathbin{+}\Varid{y})\;\Varid{m})\;\mathrm{0}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{ecdhDecrypt}\mathbin{::}\Conid{Point}\to \Conid{Point}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdhDecrypt}\;(\Conid{P}\;\Varid{x}\;\Varid{y})\;(\Conid{P}\;\Varid{m}\;\anonymous )\mathrel{=}\Varid{xor}\;(\Varid{x}\mathbin{+}\Varid{y})\;\Varid{m}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The first function encrypts a message 
+(represented as a natural number) using
+a key, which is a point. The encryption
+is just an \ensuremath{\Varid{xor}} of the message using
+the sum of the coordinates of the point.
+Decryption consists in \ensuremath{\Varid{xor}}ing the cipher,
+again, with the sum of the point coordinates.
+(This, certainly, is not a good encryption
+ algorithm -- but, finally, this is not
+ a cryptography tutorial!)
+
+Note that the encryption result is a point,
+not a number. This has no further significance.
+We just do that, because we want to use the
+same channels for exchanging messages that
+were used for establishing the key.
+Since these channels are defined as \ensuremath{\Conid{Chan}\;\Conid{Point}},
+the cipher sent through this channel must be
+a point too. Indeed, the $y$-coordinate of
+cipher is just 0. It has no meaning whatsover.
+
+The next pair of functions use the cryptographic
+functions above to send a message 
+(which is just a natural number) through
+the otherwise unsecure channel:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sfSend}\mathbin{::}\Conid{Chan}\;\Conid{Point}\to \Conid{Point}\to \Conid{Natural}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{sfSend}\;\Varid{ch}\;\Varid{p}\;\Varid{m}\mathrel{=}\Varid{writeChan}\;\Varid{ch}\;(\Varid{ecdhEncrypt}\;\Varid{p}\;\Varid{m}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{sfRead}\mathbin{::}\Conid{Chan}\;\Conid{Point}\to \Conid{Point}\to \Conid{IO}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{sfRead}\;\Varid{ch}\;\Varid{p}\mathrel{=}(\Varid{ecdhDecrypt}\;\Varid{p})\mathbin{<\$>}\Varid{readChan}\;\Varid{ch}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We now implement Alice, the one who
+initiates the protocol:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{alice}\mathbin{::}\Conid{ECDHParams}\to \Conid{PFun}\to \Conid{Chan}\;\Conid{Point}\to \Conid{Chan}\;\Conid{Point}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{alice}\;\Varid{ps}\mathord{@}(\Conid{ECDHP}\;\Varid{c}\;\Varid{g})\;\Varid{sfp}\;\Varid{ich}\;\Varid{och}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{d},\Varid{qa})\leftarrow \Varid{ecdhInit}\;\Varid{ps}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{writeChan}\;\Varid{och}\;\Varid{qa}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{qb}\leftarrow \Varid{readChan}\;\Varid{ich}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{k}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{d}\;\Varid{qb}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{m}\leftarrow \Varid{randomNat}\;(\mathrm{1},\Varid{o}\mathbin{-}\mathrm{1})\mathbin{::}\Conid{IO}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~sending~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfSend}\;\Varid{och}\;\Varid{k}\;\Varid{m}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{threadDelay}\;\mathrm{1000000}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This function receives the \ensuremath{\Conid{ECDHParams}}, 
+the concurrent printing function
+and two channels, one outgoing and the other incoming.
+Alice starts by initialising the protocol
+creating her secret, \ensuremath{\Varid{d}} and her public key, \ensuremath{\Varid{qa}}
+(standing for point q multiplied by alice's secret).
+Alice prints the secret to $stdout$, so we can follow
+what is happening.
+
+She then sends the public key, which is a point,
+through the outgoing channel (\ensuremath{\Varid{och}}) and waits
+on the incoming channel (\ensuremath{\Varid{ich}}) for Bob's answer.
+From the answer, she creates the joint secret
+by multiplying Bob's point (\ensuremath{\Varid{qb}}) by her own secret \ensuremath{\Varid{d}}.
+She prints it to $stdout$ for us to see and then creates
+a random number, which is the message to be protected
+by the common secret. Note that, due to our simplistic
+encryption function, the message must be a number 
+in the group we are happening to use.
+This is not realistic of course.
+
+Alice prints the message to $stdout$ and
+sends it encrypted by the common secret, \ensuremath{\Varid{k}}, 
+through the unsecure channel (which is just the
+outgoing channel used before).
+Finally, we delay the task for a second
+to give all players the time to finish their business.
+
+Here is what Bob does:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bob}\mathbin{::}\Conid{ECDHParams}\to \Conid{PFun}\to \Conid{Chan}\;\Conid{Point}\to \Conid{Chan}\;\Conid{Point}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{bob}\;\Varid{ps}\mathord{@}(\Conid{ECDHP}\;\Varid{c}\;\Varid{g})\;\Varid{sfp}\;\Varid{ich}\;\Varid{och}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{d},\Varid{qb})\leftarrow \Varid{ecdhInit}\;\Varid{ps}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{qa}{}\<[12]%
+\>[12]{}\leftarrow \Varid{readChan}\;\Varid{ich}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{writeChan}\;\Varid{och}\;\Varid{qb}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{k}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{d}\;\Varid{qa}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{m}\leftarrow \Varid{sfRead}\;\Varid{ich}\;\Varid{k}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~received:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{threadDelay}\;\mathrm{1000000}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Bob initialises the protocol, obtaining
+a secret key and a public key, prints
+the secret key to $stdout$ and waits
+for Alice to start the protocol.
+At some point he receives Alice's
+public key, \ensuremath{\Varid{qa}}, and then sends his own
+public key, \ensuremath{\Varid{qb}}.
+He computes the common secret $k$
+and prints it to $stdout$ for us to see.
+Then he waits for the encrypted message
+on the now secured channel and writes it
+to $stdout$.
+Finally, we delay the task for a second
+to give all players the time to finish their business.
+
+Of course, we also need the evesdropper Eve:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eve}\mathbin{::}\Conid{PFun}\to {}\<[19]%
+\>[19]{}\Conid{Chan}\;\Conid{Point}\to \Conid{Chan}\;\Conid{Point}\to {}\<[E]%
+\\
+\>[19]{}\Conid{Chan}\;\Conid{Point}\to \Conid{Chan}\;\Conid{Point}\to \Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{eve}\;\Varid{sfp}\;\Varid{aich}\;\Varid{aoch}\;\Varid{bich}\;\Varid{boch}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{a}\leftarrow \Varid{readChan}\;\Varid{aoch}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{a}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{writeChan}\;\Varid{bich}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{b}\leftarrow \Varid{readChan}\;\Varid{boch}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Bob~to~Alice:~\char34}\plus \Varid{show}\;\Varid{b}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{writeChan}\;\Varid{aich}\;\Varid{b}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{m}\leftarrow \Varid{readChan}\;\Varid{aoch}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{writeChan}\;\Varid{bich}\;\Varid{m}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{threadDelay}\;\mathrm{1000000}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Eve is a \term{woman-in-the-middle} and
+holds all channels, those used by Alice and
+those used by Bob. That this is possible 
+means that these channels are unsecure.
+Alice and Bob cannot rely on them when
+communicating confidential messages between them,
+such as love letters that should be kept
+away from their parents; or explosive news
+kept from the public by the authoritarian government
+that rules the country where Alice and Bob live.
+
+Eve reads Alice channel,
+prints what she sees, and sends the message
+as it is to Bob. Then she waits for Bob's
+response. When it arrives, she again prints
+what she sees and sends it to Alice.
+She now waits for Alice message, which will
+be encrypted by our simple \ensuremath{\Varid{xor}}ing encryption
+function. She again prints what she sees,
+sends it to Bob and delays execution for a second
+for the others to terminate their stuff.
+
+The point here is that Eve can see everything
+that is on the channel. But she cannot guess
+what the common secret key is Alice and Bob
+are using. She sees two numbers, the public
+key of Alice and that of Bob. But she does 
+not know the factors \ensuremath{\Varid{d}} that were used by them
+to generate those numbers. 
+To know them, she would need to solve the \acronym{ecdlp},
+which is hard for huge numbers.
+Alice and Bob, on the other hand, compute the shared
+secret by computing $a\times qb$ and $b\times qa$,
+respectively. Since $qb$, Bob's public key,
+is $b\times q$ and $qa$, Alice's public key,
+is $a\times q$, we end up with the computations
+$a\times b\times q$ and $b\times a\times q$.
+These computations, however, 
+since group operations are associative,
+result in the same number.
+
+Here is a demo program that puts all the pieces together:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdhDemo}\mathbin{::}\Conid{IO}\;(){}\<[E]%
+\\
+\>[3]{}\Varid{ecdhDemo}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{aich}\leftarrow \Varid{newChan}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{aoch}\leftarrow \Varid{newChan}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{bich}\leftarrow \Varid{newChan}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{boch}\leftarrow \Varid{newChan}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{m}{}\<[10]%
+\>[10]{}\leftarrow \Varid{newMVar}\;(){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{sfp}\mathrel{=}\Varid{put}\;\Varid{m}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{ecdhp}\mathrel{=}\Conid{ECDHP}\;(\Conid{Curve}\;\mathrm{2}\;\mathrm{2}\;\mathrm{17})\;(\Conid{P}\;\mathrm{5}\;\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{void}\mathbin{\$}\Varid{forkIO}\;(\Varid{eve}\;\Varid{sfp}\;\Varid{aich}\;\Varid{aoch}\;\Varid{bich}\;\Varid{boch}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{void}\mathbin{\$}\Varid{forkIO}\;(\Varid{alice}\;\Varid{ecdhp}\;\Varid{sfp}\;\Varid{aich}\;\Varid{aoch}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{void}\mathbin{\$}\Varid{forkIO}\;(\Varid{bob}\;{}\<[26]%
+\>[26]{}\Varid{ecdhp}\;\Varid{sfp}\;\Varid{bich}\;\Varid{boch}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{threadDelay}\;\mathrm{5000000}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Since the protocol is not deterministic,
+but uses random numbers, the output of this program
+will vary between calls.
+A possible output is:
+
+\begin{tabbing}\tt
+~Alice\char58{}~private~key~is~13\\
+\tt ~Bob~~\char58{}~private~key~is~2\\
+\tt ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}16\char44{}4\char41{}\\
+\tt ~Bob~~\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
+\tt ~Eve~~\char58{}~Bob~to~Alice\char58{}~\char40{}6\char44{}3\char41{}\\
+\tt ~Alice\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
+\tt ~Alice\char58{}~sending~11\\
+\tt ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}13\char44{}0\char41{}\\
+\tt ~Bob~~\char58{}~received\char58{}~11
+\end{tabbing}
+
+The first line is Alice to reveal her secret key to us,
+which is 13. Then Bob tells us his secret, which is 2.
+Alice now sends her public key to Bob. This message
+is intercepted by Eve. She sees the point $(16,4)$.
+Indeed, $13\times (5,1)$ in the curve \ensuremath{\Conid{Curve}\;\mathrm{2}\;\mathrm{2}\;\mathrm{17}} is
+$(16,4)$.
+
+In the next line we see a triumphant Bob, revealing
+the shared secret $(0,6)$, that he computed as 
+$2\times (16,4)$. Now Bob sends his public key $(6,3)$ to Alice,
+which is observed by Eve. Note that $2\times (5,1)$ is indeed
+$(6,3)$. In the next line, Alice has computed the shared secret
+and it is of course equal to Bob's result, 
+since $13\times (6,3) = (0,6)$.
+
+Alice now uses the shared secret to send the secret message,
+11, through the wire. Eve sees the point $(13,0)$.
+The $x$-coordinate of this point, 13, is the result of
+$xor$ing $0+6$ and 11, 
+since $6_{10} = 110_2$ and 
+$11_{10} = 1011_2$. When we $xor$, we compute
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}\hline
+0 & 1 & 1 & 0\\
+1 & 0 & 1 & 1\\\hline
+1 & 1 & 0 & 1\\\hline
+\end{tabular}
+\end{center}
+
+and $1101_2 = 13_{10}$.
+As we can see in the last line,
+Bob has received the correct message 11.
+
 \section{EC Integrated Encryption Scheme} 
 \section{EC Digital Signature Algorithm} 
 \section{Cryptoanalysis} 

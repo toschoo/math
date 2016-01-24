@@ -2,6 +2,7 @@ module ECCrypto
 where
 
   import Elliptic
+  import Modular hiding (mul,add)
 
   import System.Random (randomRIO)
   import Control.Applicative ((<$>))
@@ -101,3 +102,92 @@ where
   ecdhDecrypt :: Point -> Point -> Integer
   ecdhDecrypt (P x y) (P m _) = xor (x+y) m
      
+  ------------------------------------------------------------------------
+  -- EC Digital Signature Algorithm
+  -- Requirement: the order of point q in parameters must be prime
+  ------------------------------------------------------------------------
+  data ECDSAParams  = ECDSA Curve Point 
+  type ECDSAKeyPair = (Integer,Point)
+  type ECDSASig     = (Integer,Integer)
+
+  ecdsaPrivate :: ECDSAParams -> IO Integer
+  ecdsaPrivate (ECDSA c q) = randomRIO(2,o-1)
+    where o = gorder c q -- must be prime!
+
+  ecdsaPublic :: ECDSAParams -> Integer -> Point
+  ecdsaPublic (ECDSA c q) d = mul c d q
+
+  ecdsaKeyPair :: ECDSAParams -> IO ECDSAKeyPair
+  ecdsaKeyPair ps = do
+    d <- ecdsaPrivate ps
+    return (d, ecdsaPublic ps d)
+
+  ecdsaEphem :: ECDSAParams -> IO Integer
+  ecdsaEphem (ECDSA c q) = randomRIO(2,o-1)
+    where o = gorder c q  -- must be prime!
+
+  ecdsaSign :: ECDSAParams -> ECDSAKeyPair -> Integer -> IO ECDSASig
+  ecdsaSign ps@(ECDSA c q) (d,a) m = do
+    k <- ecdsaEphem ps
+    let r  = xco (mul c k q) -- since k < o, this is not O!
+    let k' = inverse k o
+    let s1 = (m+d*r) `mod` o -- this may be 0 mod p!
+    let s  = (s1*k') `mod` o
+    if  s1 == 0 then ecdsaSign ps (d,a) m
+                else return (r,s)
+    where o = gorder c q -- must be prime!
+
+  ------------------------------------------------------------------------
+  -- Verify 
+  ------------------------------------------------------------------------
+  -- looks complicated, but it is quite easy
+  --   Sign computes
+  --
+  --     s = (m+dr)k' mod o
+  --
+  --   This is
+  --
+  --   ks = m+dr       mod o | *k
+  --   k  = ms' + drs' mod o | *s'
+  --
+  --   but:
+  --   u = ms' and v = rs'
+  --   so, we have:
+  --
+  --   k = u + vd mod o
+  --
+  --   Note that q is a primitive element of the group.
+  --   We, hence, can multiply q with both sides of the equation:
+  --
+  --   kq = uq + vdq
+  --
+  --   dq is the public key a. We therefore have
+  --
+  --   kq = uq + va
+  -- 
+  --   kq is the point whose x coordinate is r. 
+  ------------------------------------------------------------------------
+  ecdsaVerify :: ECDSAParams -> Point -> Integer -> ECDSASig -> Bool
+  ecdsaVerify ps@(ECDSA c q) a m (r,s) = x == r 
+    where o  = gorder c q        -- must be prime
+          s' = inverse s o
+          u  = (s' * m) `mod` o
+          v  = (s' * r) `mod` o
+          x  = (xco p)  `mod` o
+          p  = add c (mul c u q)
+                     (mul c v a)
+
+  ------------------------------------------------------------------------
+  -- Test with curve c1 and generator p1
+  ------------------------------------------------------------------------
+  ecdsaTest :: Bool -> Integer -> IO Bool
+  ecdsaTest verbose m = do
+    let params = ECDSA c1 p1
+    (priv,pub) <- ecdsaKeyPair params
+    when verbose (do
+      putStrLn $ "private: " ++ show priv
+      putStrLn $ "public : " ++ show pub)
+    sig        <- ecdsaSign params (priv,pub) m
+    when verbose (putStrLn $ "sig    : " ++ show sig)
+    return (ecdsaVerify params pub m sig)
+
