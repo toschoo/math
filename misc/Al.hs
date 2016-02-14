@@ -9,12 +9,15 @@ where
   showName (c,0) = [c] 
   showName (c,s) = [c] ++ "_" ++ show s
 
+  ------------------------------------------------------------------------
+  -- Rational variable with roots
+  ------------------------------------------------------------------------
   data Var = Var Int [Name]
            | Neg Var
            | Inv Var
            | P   Var Var
            | T   Var Var
-           | Z   Int
+           | Z   Int    -- ?
     deriving (Eq,Show)
 
   pretty :: Var -> String
@@ -24,7 +27,7 @@ where
   pretty (Inv n)   = "1/" ++ show n
   pretty (P a (Neg n)) = pretty a ++ "-" ++ pretty n
   pretty (P a b)       = pretty a ++ "+" ++ pretty b
-  pretty (T a (P b c)) = pretty a ++ "(" ++ pretty (P b c) ++ ")"
+  pretty (T a (P b c)) = "(" ++ pretty a ++ ")(" ++ pretty (P b c) ++ ")"
   pretty (T a b)       = pretty a ++ pretty b
   
   eval :: Var -> Var
