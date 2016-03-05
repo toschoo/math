@@ -1,8 +1,10 @@
-module Algebrap1
+module Algebra
 where
 
-  import           Data.List (findIndex,intercalate,sort)
+  import           Data.List (findIndex,intercalate,sort,delete,
+                              nub,partition)
   import           Data.Char (isDigit)
+  import           Data.Either (rights)
   import           Control.Monad.Trans.Either
   import           Control.Applicative ((<$>))
   import           Text.Parsec hiding (parse)
@@ -61,6 +63,11 @@ where
   bracket ((Add x):es) = '(':pretty (Add x) ++ ")" ++ bracket es 
   bracket (e:es) = pretty e ++ bracket es
 
+  exp2num :: Exp -> Either String Int
+  exp2num (Exp (Pos (Num n))) = Right n
+  exp2num (Exp (Neg (Num n))) = Right (-n)
+  exp2num _                   = Left "NaN"
+
   ------------------------------------------------------------------------
   -- Addition
   ------------------------------------------------------------------------
@@ -111,7 +118,7 @@ where
   ------------------------------------------------------------------------
   eval :: Exp -> Exp
   eval (Add es) = normalise $ addE (map eval es)
-  eval (Mul es) = mulE (map eval es)
+  eval (Mul es) = normalise $ mulE (map eval es)
   eval (Exp v)  = Exp v
 
   ------------------------------------------------------------------------
@@ -131,6 +138,11 @@ where
                                      in if length rs == 1 
                                           then rs++go ts 
                                           else (head rs):go (tail rs ++ ts)
+                          {-
+                          Exp v3 -> let rs = addM e1 [Mul [Exp v3]]
+                                     in if length rs == 1 then rs++go ts
+                                        else (head rs):go (tail rs ++ ts)
+                          -}
                           _      -> t1:go (t2:ts)
               _      -> t1:go (t2:ts)
 
@@ -141,15 +153,43 @@ where
   addM m1 m2 = let e1 = mulE m1
                    e2 = mulE m2
                    r | e1 == e2  = [Mul [Exp (Pos $ Num 2), e1]]
-                     | otherwise = [e1,e2]
+                     | otherwise = -- map eval [e1,e2] 
+                                   let (ns1,os1) = partition isNum m1
+                                       (ns2,os2) = partition isNum m2
+                                       ns        = ns1++ns2
+                                       os        = os1++os2
+                                    in if null ns then map eval [e1,e2]
+                                       else if sort os1 /= sort os2 
+                                            then map eval [e1,e2]
+                                            else let is = map exp2num ns
+                                                     p  = sum $ rights is
+                                                     n  | p < 0 = Exp (Neg (Num (-p)))
+                                                        | otherwise = Exp (Pos (Num p))
+                                                  in if p == 0 then [n]
+                                                     else if p == 1 then os1
+                                                          else [Mul (n:os1)]
                 in r
 
   ------------------------------------------------------------------------
   -- Apply multiplication
   ------------------------------------------------------------------------
   mulE :: [Exp] -> Exp
-  mulE es | allVars es = Mul (sort es)
-          | otherwise  = Mul es
+  mulE [] = Mul []
+  mulE [x] = x
+  mulE es  = let (ns,os) = partition isNum es
+                 is      = map exp2num ns
+                 p       = product $ rights is
+                 n | p < 0     = Exp (Neg (Num (-p)))
+                   | otherwise = Exp (Pos (Num   p))
+              in if null ns then Mul os
+                 else if p == 0 || null os then n
+                      else if length (nub os) == 1 then Mul [n,head os]
+                           else Mul (n:os)
+
+  isNum :: Exp -> Bool
+  isNum (Exp (Pos (Num _))) = True
+  isNum (Exp (Neg (Num _))) = True
+  isNum _ = False
 
   ------------------------------------------------------------------------
   -- All expressions are vars
@@ -173,6 +213,23 @@ where
 
   ------------------------------------------------------------------------
   -- Factor (redo destribution)
+  ------------------------------------------------------------------------
+  factor :: Exp -> Exp -> Either String Exp
+  factor e (Add as) = do
+    rs <- factorFrom e as
+    Right (Mul [e,Add rs])
+  factor _ _        = Left "second expression is not a sum"
+
+  factorFrom :: Exp -> [Exp] -> Either String [Exp]
+  factorFrom e []  = Right []
+  factorFrom e ((Mul x):xs) = let x' = delete e x -- here we need division!
+                               in if x' == x then Left "cannot factor"
+                                  else do
+                                    xs' <- factorFrom e xs
+                                    Right (Mul x':xs')
+  factorFrom _ _ = Left "not a sum of products" -- here we need division
+
+  ------------------------------------------------------------------------
   -- Order
   -- Permute
   ------------------------------------------------------------------------
@@ -188,15 +245,43 @@ where
   ------------------------------------------------------------------------
   normalise :: Exp -> Exp
   normalise (Add [])  = Add []
-  normalise (Add [e]) = e
+  normalise (Add [e]) = normalise e
   normalise (Add es) = Add (go es)
     where go [] = []
           go (x:xs) = case x of
                         Add ts -> go ts ++ go xs
-                        _      -> (x:go xs)
+                        _      -> [normalise x] ++ go xs
   normalise (Mul [])  = Mul []
-  normalise (Mul [e]) = e
+  normalise (Mul [e]) = normalise e
+  normalise (Mul es)  = Mul (go es)
+    where go [] = []
+          go (x:xs) = case x of
+                        Mul ts -> go ts ++ go xs
+                        _      -> [normalise x] ++ go xs
   normalise es = es
+
+  ------------------------------------------------------------------------
+  -- preprocessing
+  ------------------------------------------------------------------------
+  insertP :: String -> String
+  insertP = undefined
+  
+  insertX :: String -> String
+  insertX = go ""
+    where go s []  = s
+          go "" (x:xs) | numerical [x] = go [x] xs
+                       | x == '+'      = x : go "" xs
+                       | null xs       = [x]
+                       | head xs == '+' = x : go "" xs
+                       | otherwise     = [x] ++ "*" ++ go "" xs
+          go s (x:xs)  | numerical [x] = go (x:s) xs
+                       | x == '+'      = reverse s ++ [x] ++ go "" xs
+                       | null xs       = reverse s ++ "*" ++ [x]
+                       | head xs == '+' = reverse s ++ [x] ++ go "" xs
+                       | otherwise      = reverse s ++ "*" ++ [x] ++ go "" xs
+
+  split :: [a] -> [[a]]
+  split xs =  [[x] | x <- xs]
 
   ------------------------------------------------------------------------
   -- parse
@@ -207,35 +292,30 @@ where
                  Right e -> Right (normalise e)
 
   expression :: Parser Exp
-  expression = try multiExp <|> try opExp <|> subexp
-
-  multiExp :: Parser Exp
-  multiExp = do
-    ps <- many1 bracketed
-    if length ps == 1 then return (head ps)
-                      else return (Mul ps)
+  expression = try opExp <|> qvaronly
 
   opExp :: Parser Exp
   opExp = do
-    e  <- subexp
+    e1 <- subexp
     o  <- operation
-    es <- expression
+    e2 <- try opExp <|> subexp
     case o of
-      AddOp -> return (Add [e,es])
+      AddOp -> return (Add [e1,e2])
+      MulOp -> return (Mul [e1,e2])
       SubOp -> undefined -- return (Sub [e,es])
       DivOp -> undefined -- return (Div [e,es])
 
+  qvaronly :: Parser Exp
+  qvaronly = do
+    v <- qvar 
+    eof
+    return v
+
   subexp :: Parser Exp
-  subexp = bracketed <|> parseMul
+  subexp = bracketed <|> qvar
 
   bracketed :: Parser Exp
   bracketed = between (char '(') (char ')') expression
-
-  parseMul :: Parser Exp
-  parseMul = do
-    vs <- many1 qvar
-    if (length vs == 1) then return (head vs)
-                        else return (Mul vs)
 
   qvar :: Parser Exp
   qvar = try signedVar <|> unsignedVar
@@ -272,13 +352,23 @@ where
 
   operation :: Parser Op
   operation =   (char '+' >> return AddOp)
+            <|> (char '*' >> return MulOp)
             <|> (char '-' >> return SubOp)
             <|> (char '/' >> return DivOp)
 
-  data Op = AddOp | SubOp | DivOp
+  data Op = AddOp | MulOp | SubOp | DivOp
 
   whitespace :: Parser ()
   whitespace = spaces
+
+  multiExp :: Parser Exp
+  multiExp = do
+    ps <- many1 factExp
+    if length ps == 1 then return (head ps)
+                      else return (Mul ps)
+
+  factExp :: Parser Exp
+  factExp = bracketed <|> qvar
 
   ------------------------------------------------------------------------
   -- test
@@ -286,9 +376,18 @@ where
   test :: String -> (Exp -> Exp) -> Either String String
   test s f = pretty . f <$> parseExp s
 
+  tstEval :: String -> Either String String
+  tstEval a = pretty <$> eval <$> parseExp a
+
   tstDist :: String -> String -> Either String String
   tstDist a b = do
     x1 <- parseExp a
     x2 <- parseExp b
     pretty <$> dist x1 x2
+
+  tstFactor :: String -> String -> Either String String
+  tstFactor a b = do
+    e  <- parseExp a
+    xs <- parseExp b
+    pretty <$> normalise <$> factor e xs
 
