@@ -2,7 +2,8 @@ module Algebra
 where
 
   import           Data.List (findIndex,intercalate,sort,delete,
-                              nub,partition)
+                              nub,partition,intersperse)
+  import qualified Data.List.Split as Sp
   import           Data.Char (isDigit)
   import           Data.Either (rights)
   import           Control.Monad.Trans.Either
@@ -67,6 +68,11 @@ where
   exp2num (Exp (Pos (Num n))) = Right n
   exp2num (Exp (Neg (Num n))) = Right (-n)
   exp2num _                   = Left "NaN"
+
+  isNum :: Exp -> Bool
+  isNum (Exp (Pos (Num _))) = True
+  isNum (Exp (Neg (Num _))) = True
+  isNum _ = False
 
   ------------------------------------------------------------------------
   -- Addition
@@ -154,20 +160,20 @@ where
                    e2 = mulE m2
                    r | e1 == e2  = [Mul [Exp (Pos $ Num 2), e1]]
                      | otherwise = -- map eval [e1,e2] 
-                                   let (ns1,os1) = partition isNum m1
-                                       (ns2,os2) = partition isNum m2
-                                       ns        = ns1++ns2
-                                       os        = os1++os2
-                                    in if null ns then map eval [e1,e2]
-                                       else if sort os1 /= sort os2 
-                                            then map eval [e1,e2]
-                                            else let is = map exp2num ns
-                                                     p  = sum $ rights is
-                                                     n  | p < 0 = Exp (Neg (Num (-p)))
-                                                        | otherwise = Exp (Pos (Num p))
-                                                  in if p == 0 then [n]
-                                                     else if p == 1 then os1
-                                                          else [Mul (n:os1)]
+                       let (ns1,os1) = partition isNum m1
+                           (ns2,os2) = partition isNum m2
+                           ns        = ns1++ns2
+                           os        = os1++os2
+                        in if null ns then map eval [e1,e2]
+                           else if sort os1 /= sort os2 
+                                then map eval [e1,e2]
+                                else let is = map exp2num ns
+                                         p  = sum $ rights is
+                                         n  | p < 0 = Exp (Neg (Num (-p)))
+                                            | otherwise = Exp (Pos (Num p))
+                                      in if p == 0 then [n]
+                                         else if p == 1 then os1
+                                              else [Mul (n:os1)]
                 in r
 
   ------------------------------------------------------------------------
@@ -185,11 +191,6 @@ where
                  else if p == 0 || null os then n
                       else if length (nub os) == 1 then Mul [n,head os]
                            else Mul (n:os)
-
-  isNum :: Exp -> Bool
-  isNum (Exp (Pos (Num _))) = True
-  isNum (Exp (Neg (Num _))) = True
-  isNum _ = False
 
   ------------------------------------------------------------------------
   -- All expressions are vars
@@ -263,37 +264,137 @@ where
   ------------------------------------------------------------------------
   -- preprocessing
   ------------------------------------------------------------------------
-  insertP :: String -> String
-  insertP = undefined
-  
-  insertX :: String -> String
-  insertX = go ""
-    where go s []  = s
-          go "" (x:xs) | numerical [x] = go [x] xs
-                       | x == '+'      = x : go "" xs
-                       | null xs       = [x]
-                       | head xs == '+' = x : go "" xs
-                       | otherwise     = [x] ++ "*" ++ go "" xs
-          go s (x:xs)  | numerical [x] = go (x:s) xs
-                       | x == '+'      = reverse s ++ [x] ++ go "" xs
-                       | null xs       = reverse s ++ "*" ++ [x]
-                       | head xs == '+' = reverse s ++ [x] ++ go "" xs
-                       | otherwise      = reverse s ++ "*" ++ [x] ++ go "" xs
+  data Brack = Brack   [String]
+             | NoBrack [String]
+    deriving (Show)
 
-  split :: [a] -> [[a]]
-  split xs =  [[x] | x <- xs]
+  prettyBrack :: Brack -> String
+  prettyBrack (Brack s)   = '(' : concat s ++ ")"
+  prettyBrack (NoBrack s) = concat s
+
+  data Ops = Oplus [String]
+           | Omin  [String]
+           -- Odiv
+    deriving (Show)
+
+  ------------------------------------------------------------------------
+  -- turn "ab(c+d)" into "(a*b)(c+d)"
+  ------------------------------------------------------------------------
+  preprocess :: String -> String
+  preprocess s = connect $ bracketS $ map prettyBrack $ concat [
+                   splitP (prettyBrack x) | x <- mapMul (splitP s)]
+
+  ------------------------------------------------------------------------
+  -- Two strings are connected with each other by an operator
+  ------------------------------------------------------------------------
+  areConnected :: String -> String -> Bool
+  areConnected s1 s2 | null s1 || null s2  = True
+                     | head s2 `elem` ops  = True
+                     | last s1 `elem` ops  = True
+                     | otherwise           = False
+
+  ------------------------------------------------------------------------
+  -- Put unconnected strings into brackets
+  ------------------------------------------------------------------------
+  bracketS :: [String] -> [String]
+  bracketS []  = []
+  bracketS [x] = [x]
+  bracketS (x:y:zs) | areConnected x y = x : bracketS (y:zs)
+                    | otherwise        = let g = takeWhileNotCon (y:zs)
+                                             e = last g
+                                          in ('(' : x) : init g ++ [e++")"] ++
+                                             bracketS (dropWhileNotCon (y:zs))
+
+  dropWhileNotCon :: [String] -> [String]
+  dropWhileNotCon []  = []
+  dropWhileNotCon [x] = []
+  dropWhileNotCon (x:y:zs) | areConnected x y = (y:zs)
+                           | otherwise = dropWhileNotCon (y:zs)
+
+  takeWhileNotCon :: [String] -> [String]
+  takeWhileNotCon []  = []
+  takeWhileNotCon [x] = [x]
+  takeWhileNotCon (x:y:zs) | areConnected x y = [x]
+                           | otherwise = x : takeWhileNotCon (y:zs) 
+
+  ------------------------------------------------------------------------
+  -- insMul on list of brackets
+  ------------------------------------------------------------------------
+  mapMul :: [Brack] -> [Brack]
+  mapMul [] = []
+  mapMul (Brack x:xs)   = Brack (map insMul x) : mapMul xs
+  mapMul (NoBrack x:xs) = NoBrack (map insMul x) : mapMul xs
+
+  ------------------------------------------------------------------------
+  -- Split a string into bracketed segements
+  ------------------------------------------------------------------------
+  splitP :: String -> [Brack]
+  splitP [] = []
+  splitP (x:xs) | x == '(' = let s = takeWhile (/= ')') xs
+                              in Brack [s] : 
+                                 splitP (drop 1 $ dropWhile (/= ')') xs)
+                | otherwise = let s = takeWhile (/= '(') xs
+                               in NoBrack [x:s] :
+                                  splitP (dropWhile (/= '(') xs)
+
+  ------------------------------------------------------------------------
+  -- Insert mul in "ab" or "12c"
+  ------------------------------------------------------------------------
+  insMul  :: String -> String
+  insMul  = go ""
+    where go t []  | length t > 1 = t2str t
+                   | otherwise    = t
+          go t (x:xs) | x `elem` ops = 
+                        if null t
+                          then x : go "" xs 
+                          else if length t < 2 
+                               then t ++ [x] ++ go "" xs
+                               else t2str t ++ [x] ++ go "" xs
+                      | otherwise = go (t++[x]) xs
+
+  t2str :: String -> String
+  t2str s = let xs = filter (not . null) (go s)
+             in '(' : intercalate "*" xs ++ ")"
+    where go [] = []
+          go (x:xs) = let z = takeWhile isDigit xs
+                          (n,y) | isDigit x = (x:z,[])
+                                | otherwise = (z,[x])
+                       in n:y:go (dropWhile isDigit xs)
+
+  ------------------------------------------------------------------------
+  -- Connect unconnected string with "*"
+  ------------------------------------------------------------------------
+  connect :: [String] -> String
+  connect [] = []
+  connect [x] = x
+  connect [x,x2] | last x `elem` ops || head x2 `elem` ops = x++x2 
+                 | otherwise = x ++ "*" ++ x2
+  connect (x:y:zs) = connect $ (connect [x,y]):zs
+
+  ------------------------------------------------------------------------
+  -- Legal operators
+  ------------------------------------------------------------------------
+  ops :: String
+  ops = "+-*/"
 
   ------------------------------------------------------------------------
   -- parse
   ------------------------------------------------------------------------
   parseExp :: String -> Either String Exp
-  parseExp s = case P.parse expression "" s of
+  parseExp s = trace (preprocess s) $
+               case P.parse expression "" (preprocess s) of
                  Left e  -> Left (show e)
                  Right e -> Right (normalise e)
 
+  ------------------------------------------------------------------------
+  -- parse expression
+  ------------------------------------------------------------------------
   expression :: Parser Exp
-  expression = try opExp <|> qvaronly
+  expression = try opExp <|> try qvaronly <|> bracketed
 
+  ------------------------------------------------------------------------
+  -- parse "a `op` b"
+  ------------------------------------------------------------------------
   opExp :: Parser Exp
   opExp = do
     e1 <- subexp
@@ -305,32 +406,53 @@ where
       SubOp -> undefined -- return (Sub [e,es])
       DivOp -> undefined -- return (Div [e,es])
 
+  ------------------------------------------------------------------------
+  -- parse a subexpression, i.e. either a bracketed expression or a qvar
+  ------------------------------------------------------------------------
+  subexp :: Parser Exp
+  subexp = bracketed <|> qvar
+
+  ------------------------------------------------------------------------
+  -- parse a qualified variable and nothing else
+  ------------------------------------------------------------------------
   qvaronly :: Parser Exp
   qvaronly = do
     v <- qvar 
     eof
     return v
 
-  subexp :: Parser Exp
-  subexp = bracketed <|> qvar
-
+  ------------------------------------------------------------------------
+  -- parse a bracketed expression, i.e. "(...)"  
+  ------------------------------------------------------------------------
   bracketed :: Parser Exp
   bracketed = between (char '(') (char ')') expression
 
+  ------------------------------------------------------------------------
+  -- parse a qualified variable ("-a" or "b")
+  ------------------------------------------------------------------------
   qvar :: Parser Exp
   qvar = try signedVar <|> unsignedVar
 
+  ------------------------------------------------------------------------
+  -- parse a signed variable ("-a")
+  ------------------------------------------------------------------------
   signedVar :: Parser Exp
   signedVar = do 
     char '-' 
     v <- var
     return $ Exp (Neg v)
 
+  ------------------------------------------------------------------------
+  -- parse a unsigned variable ("a")
+  ------------------------------------------------------------------------
   unsignedVar :: Parser Exp
   unsignedVar = do
     v <- var
     return $ Exp (Pos v)
 
+  ------------------------------------------------------------------------
+  -- parse a variable, either numeric or literal
+  ------------------------------------------------------------------------
   var :: Parser Var
   var = numVar <|> litVar
 
@@ -350,6 +472,9 @@ where
     c <- oneOf ['a'..'z']
     return (Var c)
 
+  ------------------------------------------------------------------------
+  -- parse an operation
+  ------------------------------------------------------------------------
   operation :: Parser Op
   operation =   (char '+' >> return AddOp)
             <|> (char '*' >> return MulOp)
@@ -358,23 +483,14 @@ where
 
   data Op = AddOp | MulOp | SubOp | DivOp
 
-  whitespace :: Parser ()
-  whitespace = spaces
-
-  multiExp :: Parser Exp
-  multiExp = do
-    ps <- many1 factExp
-    if length ps == 1 then return (head ps)
-                      else return (Mul ps)
-
-  factExp :: Parser Exp
-  factExp = bracketed <|> qvar
-
   ------------------------------------------------------------------------
   -- test
   ------------------------------------------------------------------------
   test :: String -> (Exp -> Exp) -> Either String String
   test s f = pretty . f <$> parseExp s
+
+  tstParse :: String -> Either String String
+  tstParse s = pretty <$> parseExp s
 
   tstEval :: String -> Either String String
   tstEval a = pretty <$> eval <$> parseExp a
