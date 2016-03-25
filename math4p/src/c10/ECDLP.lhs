@@ -24,7 +24,7 @@ modular arithmetic anymore. We do not add points
 modulo something, we just add them using the addition
 formula.
 
-The third layer consists of the cryptosystems built
+The third layer consists of the cryptosystems build
 on top of the group of points. To actually build
 cryptosystems on top of elliptic curves,
 we need a secret that we can use as private key
@@ -210,7 +210,8 @@ Any point multiplied by zero, on the other hand,
 is the identity of the additive group and that, again, is zero.
 
 In all other cases, we convert $n$ into a list
-of binary digits of which we process all but the head.
+of binary digits of which we process all but the head
+(of which we know it is 1, otherwise it would not be the head).
 For each digit, we double the intermediate result $q$,
 that is we compute |add c q q|.
 If the current digit is 0, we are done with this digit and continue
@@ -241,10 +242,11 @@ and we have $9P+9P+P=19P$.
 
 It works perfectly. But why does it work? Consider
 the representation of a number in terms of
-powers of 2 multiplied by a number $k$:
+powers of 2 multiplied by a number $k$
+(corresponding to our point $P$ above):
 
 \[
-k(a_r2^r + a_{r-1}2^{r-1} + \dots + a_02^0),
+(a_r2^r + a_{r-1}2^{r-1} + \dots + a_02^0)k,
 \]
 
 where, for $i \in \lbrace 0\dots r\rbrace$, 

@@ -297,7 +297,7 @@ testing if a point is the inverse of the other:
 \end{code}
 \end{minipage}
 
-Another useful tool would be one to find us a point
+Another useful tool would be one that finds us a point
 on the curve. There are two ways to do it:
 deterministic and random.
 We start with the deterministic function that would
@@ -489,15 +489,14 @@ element, a generator, and add it successivley
 to itself. But what is a primitive element
 of the group of our curve $c1$? Well,
 I happen to know that the order of that group
-is 19. Since 19 is a prime number and
-since we are talking about groups, Lagrange's theorem
+is 19. Since we are talking about groups, Lagrange's theorem
 applies, \ie\ the order of subgroups must divide
 the order of the main group. Therefore,
 all members of the group are either member
 of a trivial subgroup (which contains only one element,
 namely the identity)
 or generators of the main group. Since the sole element
-in the trivial group must be the identity $\mathcal{O}$,
+in the trivial group is the identity $\mathcal{O}$,
 all other members of the group must be generators.
 We, hence, can pick any point and generate the whole
 group from it. Here is a generator function:

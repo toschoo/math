@@ -26,7 +26,7 @@ one studies properties of objects under transformations
 that do not change the length and angle.
 A typical statement is, for instance, that two triangles
 are congruent (and hence equal), when one of them
-can be be as a roation or displacement of the other.
+can be seen as a roation or displacement of the other.
 The triangles below,
 for instance, are all congruent to each other:
 
@@ -165,7 +165,7 @@ no surprise that projective geometry was originally
 introduced to mathematics by math-literate painters,
 in particular Renaissance artists 
 like Leonardo da Vinci (1452 -- 1519) and
-Albrecht Dürer (1471 -- 2528). 
+Albrecht Dürer (1471 -- 1528). 
 Today projective geometry is ubiquitous. It is used
 in all kinds of image processing and image recognition.
 It is widely used in digital cameras for instance,
@@ -311,13 +311,13 @@ where they are parallel to each other,
 the point of intersection moves farther away towards
 infinity. We could then assume that all lines intersect.
 There is then nothing special about parallel lines.
-They intersect too, but do so very far away, \viz
+They intersect too, but do so very far away, \viz\
 at infinity. This way, we extend the concept
 of point and line by adding one point to each line,
 namely the point where this line and 
 all lines parallel to it
-intersect. That point is then said \emph{
-to be at infinity}.
+intersect. That point is then said \emph{to
+be at infinity}.
 
 This trick to extend a concept is very similar 
 to how we extended natural numbers to
@@ -336,7 +336,7 @@ We then only have to prove that, if one pair of
 lines intersect at infinity, the other two as well
 intersect at infinity.
 
-It is perhaps worth to emphasis that this is not
+It is perhaps worth to emphasise that this is not
 the result of observation of physical reality.
 Nobody has ever seen two lines intersecting at
 infinity. It is not a statement about physics at all.
@@ -436,14 +436,15 @@ Then addition would go $P + Q = R'$ and the
 reverse additions $R' + Q = P$ and
 $R' + P = Q$ would just lead back to where we started.
 This would be true for any three points 
-in such an additional constellation, because the three points
+in such a constellation, because the three points
 are on the same straight line. If we go forward prolonging
 the line $\overline{PQ}$, we find $R'$. If we go backward
 prolonging the line $\overline{R'Q}$, we find $P$, or,
 if we draw the line $\overline{R'P}$, we find $Q$ in the middle.
 Even if such a rule
-could ever lead to a group, there would be no 
-generators of the group. A generator is a point
+could ever lead to a group, it would not be cyclic, \ie\
+there would be no generators.
+A generator in elliptic curve cryptography is a point
 that repeatedly added to itself creates the whole group.
 But leaving reflection out, the subsequent addition of
 a point $P$ would give raise to a sequence like

@@ -296,7 +296,7 @@ we draw a straight line through them (the grey one).
 From the nature of the elliptic curve, it is obvious
 that the straight line will meet the curve once again.
 At that intersection, we draw a helper point, $R'$.
-The we reflect this point across the $x$-axis, \ie
+Then we reflect this point across the $x$-axis, \ie\
 we draw another line (the dotted one) that goes
 straight up crossing $R'$. This line will meet the curve
 again, namely at a point with the same $x$ coordinate,
@@ -384,8 +384,8 @@ the same $x$-coordinate.
 Computing $y_{R'}$ is again quite simple.
 The points $P$ and $R'$ are on the same 
 straight line. The $y$-values on a straight line
-increase at a constant rate. So, we compute
-the value $y$ should grow travelling on the segment
+increase at a constant rate. So, 
+the value of $y$ should grow travelling on the segment
 between $x_P$ and $x_R$, which is
 $m(x_R - x_P)$ and add this to the 
 already known $y$-value at point $P$:
@@ -472,7 +472,7 @@ y^2 = x^3 + ax + b.
 \end{equation}
 
 We can interpret this equation as an application of
-two different functions. The first function, say, $g$,
+two different functions. The first function, say $g$,
 is $g(x) = x^3 + ax + b$. The second function, $f$, is
 $f(x) = \sqrt{x} = x^{\frac{1}{2}}$.
 
@@ -587,7 +587,7 @@ one studies properties of objects under transformations
 that do not change the length and angle.
 A typical statement is, for instance, that two triangles
 are congruent (and hence equal), when one of them
-can be be as a roation or displacement of the other.
+can be seen as a roation or displacement of the other.
 The triangles below,
 for instance, are all congruent to each other:
 
@@ -726,7 +726,7 @@ no surprise that projective geometry was originally
 introduced to mathematics by math-literate painters,
 in particular Renaissance artists 
 like Leonardo da Vinci (1452 -- 1519) and
-Albrecht Dürer (1471 -- 2528). 
+Albrecht Dürer (1471 -- 1528). 
 Today projective geometry is ubiquitous. It is used
 in all kinds of image processing and image recognition.
 It is widely used in digital cameras for instance,
@@ -872,13 +872,13 @@ where they are parallel to each other,
 the point of intersection moves farther away towards
 infinity. We could then assume that all lines intersect.
 There is then nothing special about parallel lines.
-They intersect too, but do so very far away, \viz
+They intersect too, but do so very far away, \viz\
 at infinity. This way, we extend the concept
 of point and line by adding one point to each line,
 namely the point where this line and 
 all lines parallel to it
-intersect. That point is then said \emph{
-to be at infinity}.
+intersect. That point is then said \emph{to
+be at infinity}.
 
 This trick to extend a concept is very similar 
 to how we extended natural numbers to
@@ -897,7 +897,7 @@ We then only have to prove that, if one pair of
 lines intersect at infinity, the other two as well
 intersect at infinity.
 
-It is perhaps worth to emphasis that this is not
+It is perhaps worth to emphasise that this is not
 the result of observation of physical reality.
 Nobody has ever seen two lines intersecting at
 infinity. It is not a statement about physics at all.
@@ -997,14 +997,15 @@ Then addition would go $P + Q = R'$ and the
 reverse additions $R' + Q = P$ and
 $R' + P = Q$ would just lead back to where we started.
 This would be true for any three points 
-in such an additional constellation, because the three points
+in such a constellation, because the three points
 are on the same straight line. If we go forward prolonging
 the line $\overline{PQ}$, we find $R'$. If we go backward
 prolonging the line $\overline{R'Q}$, we find $P$, or,
 if we draw the line $\overline{R'P}$, we find $Q$ in the middle.
 Even if such a rule
-could ever lead to a group, there would be no 
-generators of the group. A generator is a point
+could ever lead to a group, it would not be cyclic, \ie\
+there would be no generators.
+A generator in elliptic curve cryptography is a point
 that repeatedly added to itself creates the whole group.
 But leaving reflection out, the subsequent addition of
 a point $P$ would give raise to a sequence like
@@ -1533,7 +1534,7 @@ testing if a point is the inverse of the other:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Another useful tool would be one to find us a point
+Another useful tool would be one that finds us a point
 on the curve. There are two ways to do it:
 deterministic and random.
 We start with the deterministic function that would
@@ -1856,15 +1857,14 @@ element, a generator, and add it successivley
 to itself. But what is a primitive element
 of the group of our curve $c1$? Well,
 I happen to know that the order of that group
-is 19. Since 19 is a prime number and
-since we are talking about groups, Lagrange's theorem
+is 19. Since we are talking about groups, Lagrange's theorem
 applies, \ie\ the order of subgroups must divide
 the order of the main group. Therefore,
 all members of the group are either member
 of a trivial subgroup (which contains only one element,
 namely the identity)
 or generators of the main group. Since the sole element
-in the trivial group must be the identity $\mathcal{O}$,
+in the trivial group is the identity $\mathcal{O}$,
 all other members of the group must be generators.
 We, hence, can pick any point and generate the whole
 group from it. Here is a generator function:
@@ -2003,7 +2003,7 @@ modular arithmetic anymore. We do not add points
 modulo something, we just add them using the addition
 formula.
 
-The third layer consists of the cryptosystems built
+The third layer consists of the cryptosystems build
 on top of the group of points. To actually build
 cryptosystems on top of elliptic curves,
 we need a secret that we can use as private key
@@ -2211,7 +2211,8 @@ Any point multiplied by zero, on the other hand,
 is the identity of the additive group and that, again, is zero.
 
 In all other cases, we convert $n$ into a list
-of binary digits of which we process all but the head.
+of binary digits of which we process all but the head
+(of which we know it is 1, otherwise it would not be the head).
 For each digit, we double the intermediate result $q$,
 that is we compute \ensuremath{\Varid{add}\;\Varid{c}\;\Varid{q}\;\Varid{q}}.
 If the current digit is 0, we are done with this digit and continue
@@ -2242,10 +2243,11 @@ and we have $9P+9P+P=19P$.
 
 It works perfectly. But why does it work? Consider
 the representation of a number in terms of
-powers of 2 multiplied by a number $k$:
+powers of 2 multiplied by a number $k$
+(corresponding to our point $P$ above):
 
 \[
-k(a_r2^r + a_{r-1}2^{r-1} + \dots + a_02^0),
+(a_r2^r + a_{r-1}2^{r-1} + \dots + a_02^0)k,
 \]
 
 where, for $i \in \lbrace 0\dots r\rbrace$, 
@@ -2481,7 +2483,7 @@ were used for establishing the key.
 Since these channels are defined as \ensuremath{\Conid{Chan}\;\Conid{Point}},
 the cipher sent through this channel must be
 a point too. Indeed, the $y$-coordinate of
-cipher is just 0. It has no meaning whatsover.
+the cipher is just 0. It has no meaning whatsover.
 
 The next pair of functions use the cryptographic
 functions above to send a message 

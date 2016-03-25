@@ -124,7 +124,7 @@ were used for establishing the key.
 Since these channels are defined as |Chan Point|,
 the cipher sent through this channel must be
 a point too. Indeed, the $y$-coordinate of
-cipher is just 0. It has no meaning whatsover.
+the cipher is just 0. It has no meaning whatsover.
 
 The next pair of functions use the cryptographic
 functions above to send a message 

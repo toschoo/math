@@ -103,6 +103,69 @@ where
   ecdhDecrypt (P x y) (P m _) = xor (x+y) m
      
   ------------------------------------------------------------------------
+  -- EC Integrated Encryption Scheme
+  ------------------------------------------------------------------------
+  type CryptoF = Integer -> Integer -> Integer
+
+  data ECIESParams = ECIES Curve Point Point CryptoF
+  -- the ECIES parameters contain a crypto suite
+  -- including a key derivation function, an authentication method
+  --           and the symmetric encryption function
+  -- here, we give only the encryption function
+
+  eciesRandomPrivate :: ECIESParams -> IO Integer
+  eciesRandomPrivate (ECIES c g _ _) = randomRIO (2,o-1)
+    where o = gorder c g
+
+  eciesKeyPair :: Curve -> Point -> IO (Integer,Point)
+  eciesKeyPair c g = do
+    p <- randomRIO (2,o-1)
+    let k = mul c p g
+    return (p,k)
+    where o = gorder c g
+
+  eciesMakeParams :: Curve -> Point -> CryptoF -> IO (Integer,ECIESParams)
+  eciesMakeParams c g f = do
+    (p,k) <- eciesKeyPair c g
+    return (p,ECIES c g k f)
+
+  eciesSecret :: ECIESParams -> IO (Integer,Point)
+  eciesSecret ps@(ECIES c g k _) = do
+    r <- randomRIO (2,o-1)
+    let p = mul c r g -- cannot be O
+    let q = mul c r k
+    if (p == O || q == O)
+      then eciesSecret ps
+      else return (xco q,p)
+    where o = gorder c g
+
+  eciesEncrypt :: ECIESParams -> Integer -> IO (Point,Integer)
+  eciesEncrypt p@(ECIES c g k f) m = do
+    (s,q) <- eciesSecret p
+    return (q,f s m)
+
+  eciesDecrypt :: ECIESParams -> Integer -> (Point,Integer) -> Integer
+  eciesDecrypt (ECIES c _ _ f) p (r,cm) = let s = xco (mul c p r) in f s cm 
+
+  ------------------------------------------------------------------------
+  -- Test with curve c1 and generator p1
+  ------------------------------------------------------------------------
+  eciesTest :: Bool -> Integer -> IO Bool
+  eciesTest verbose m = do
+    (p,ps@(ECIES _ _ k _)) <- eciesMakeParams c1 p1 simpleCrypto
+    when verbose (do
+      putStrLn $ "private: " ++ show p
+      putStrLn $ "public : " ++ show k)
+    (r,cipher) <- eciesEncrypt ps m
+    when verbose (do
+      putStrLn $ "cipher : " ++ show cipher
+      putStrLn $ "r      : " ++ show r)
+    return (eciesDecrypt ps p (r,cipher) == m)
+
+  simpleCrypto :: Integer -> Integer -> Integer
+  simpleCrypto k m = xor k m
+     
+  ------------------------------------------------------------------------
   -- EC Digital Signature Algorithm
   -- Requirement: the order of point q in parameters must be prime
   ------------------------------------------------------------------------

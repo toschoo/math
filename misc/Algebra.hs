@@ -280,7 +280,7 @@ where
   ------------------------------------------------------------------------
   -- turn "ab(c+d)" into "(a*b)(c+d)"
   ------------------------------------------------------------------------
-  preprocess :: String -> String
+  preprocess :: String -> String -- must be recursive
   preprocess s = connect $ bracketS $ map prettyBrack $ concat [
                    splitP (prettyBrack x) | x <- mapMul (splitP s)]
 

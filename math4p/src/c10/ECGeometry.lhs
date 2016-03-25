@@ -181,7 +181,7 @@ we draw a straight line through them (the grey one).
 From the nature of the elliptic curve, it is obvious
 that the straight line will meet the curve once again.
 At that intersection, we draw a helper point, $R'$.
-The we reflect this point across the $x$-axis, \ie
+Then we reflect this point across the $x$-axis, \ie\
 we draw another line (the dotted one) that goes
 straight up crossing $R'$. This line will meet the curve
 again, namely at a point with the same $x$ coordinate,
@@ -269,8 +269,8 @@ the same $x$-coordinate.
 Computing $y_{R'}$ is again quite simple.
 The points $P$ and $R'$ are on the same 
 straight line. The $y$-values on a straight line
-increase at a constant rate. So, we compute
-the value $y$ should grow travelling on the segment
+increase at a constant rate. So, 
+the value of $y$ should grow travelling on the segment
 between $x_P$ and $x_R$, which is
 $m(x_R - x_P)$ and add this to the 
 already known $y$-value at point $P$:
@@ -357,7 +357,7 @@ y^2 = x^3 + ax + b.
 \end{equation}
 
 We can interpret this equation as an application of
-two different functions. The first function, say, $g$,
+two different functions. The first function, say $g$,
 is $g(x) = x^3 + ax + b$. The second function, $f$, is
 $f(x) = \sqrt{x} = x^{\frac{1}{2}}$.
 
