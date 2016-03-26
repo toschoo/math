@@ -2846,7 +2846,732 @@ As we can see in the last line,
 Bob has received the correct message 11.
 
 \section{EC Integrated Encryption Scheme} 
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{ECIES}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Random}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{ECModulo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prelude}\;\Varid{hiding}\;(\Varid{mod}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prime}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Modular}\;\Varid{hiding}\;(\Varid{add},\Varid{mull},\Varid{mDiv}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{ECDH}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+The \acronym{ec} Integrated Encryption Scheme,
+\acronym{ecies}, is much more complex, but also
+much more complete than the \acronym{ecdh}.
+Mathematically, however, it is very similar.
+It differs from \acronym{ecdh} mainly in what
+is defined on top of the mathematical basis.
+
+In concrete terms, \acronym{ecies} defines
+a complete encryption scheme as part of its 
+parameters. Just as \acronym{ecdh}, it defines
+in its parameters the curve, the primitive element
+from where we start. Additionally, it defines
+a public key (which in Diffie-Hellman is computed
+randomly as part of the key exchange session),
+an algorithm to enrich the secret that is derived
+from the public key, so it can be used in a
+symmetric encryption function, this encryption
+function as such and an authentication scheme.
+Since we, here, focus on the mathematical aspects,
+we simplify this parameter set a bit. We are not
+interested in the key enrichment and, for the moment,
+we are not interested in authentication.
+We therefore present the \acronym{ecies} parameters
+in the much simpler form:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{ECIESParams}\mathrel{=}\Conid{ECIES}\;\Conid{Curve}\;\Conid{Point}\;\Conid{Point}\;\Conid{CryptoF}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+and define \ensuremath{\Conid{CryptoF}} as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{CryptoF}\mathrel{=}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+It represents an encryption function that receives
+a key and a message (both natural numbers) and uses
+the key to transform the message into a third
+natural number, the ciphertext. A simple example
+for such a crypto function is again \ensuremath{\Varid{xor}}.
+
+We now have two keys, 
+the public key known to everybody and
+the private key known only to the owner of the key,
+just as in traditional \acronym{rsa}.
+The key generation, hence, is not part of the protocol.
+Keys are generated in advance and the public key
+is made available to people that might want to communicate
+to the owner of the key pair, say Bob.
+
+So, at some point in time, Bob decides 
+he wants to use encryption for part of his communication
+and, to this end, he creates a key pair:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesKeyPair}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{IO}\;(\Conid{Natural},\Conid{Point}){}\<[E]%
+\\
+\>[3]{}\Varid{eciesKeyPair}\;\Varid{c}\;\Varid{g}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{p}\leftarrow \Varid{randomNatural}\;(\mathrm{2},\Varid{o}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;\Varid{k}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{p}\;\Varid{g}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{p},\Varid{k}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+The key generation function \ensuremath{\Varid{eciesKeyPair}}
+receives a part of the parameters, namely
+the curve and the primitive element, and
+generates by means of this input a natural number,
+the private key, and a point, the public key.
+The key generation itself is just as in \acronym{ECDH}:
+we generate a random number $p$ in the range of 
+the order of the underlying group
+and multiply the generator $g$ by this number.
+The number $p$ is the private key and the resulting point
+is the public key.
+
+Based on this key generator function,
+we can define a function that creates us the parameters:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesMakeParams}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{CryptoF}\to \Conid{IO}\;(\Conid{Natural},\Conid{ECIESParams}){}\<[E]%
+\\
+\>[3]{}\Varid{eciesMakeParams}\;\Varid{c}\;\Varid{g}\;\Varid{f}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{p},\Varid{k})\leftarrow \Varid{eciesKeyPair}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{p},\Conid{ECIES}\;\Varid{c}\;\Varid{g}\;\Varid{k}\;\Varid{f}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+The function receives a curve, a point (the generator) and
+a crypto function and yields a natural number (the private key)
+and the parameters. How it does this, is straight forward.
+
+Now, we look at encryption.
+To encrypt a message to Bob, Alice would use Bob's public key
+to derive a common secret. This step is very similar to 
+\acronym{ECDH}. The difference is that the public key
+is known beforehand.
+Here is a function for Alice to derive a secrete using
+Bob's public key:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesSecret}\mathbin{::}\Conid{ECIESParams}\to \Conid{IO}\;(\Conid{Natural},\Conid{Point}){}\<[E]%
+\\
+\>[3]{}\Varid{eciesSecret}\;\Varid{ps}\mathord{@}(\Conid{ECIES}\;\Varid{c}\;\Varid{g}\;\Varid{k}\;\anonymous )\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{r}\leftarrow \Varid{randomNatural}\;(\mathrm{2},\Varid{o}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{p}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{r}\;\Varid{g}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{q}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{r}\;\Varid{k}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{if}\;{}\<[10]%
+\>[10]{}\Varid{q}\equiv \Conid{O}\;{}\<[18]%
+\>[18]{}\mathbf{then}\;\Varid{eciesSecret}\;\Varid{ps}{}\<[E]%
+\\
+\>[18]{}\mathbf{else}\;\Varid{return}\;(\Varid{xco}\;\Varid{q},\Varid{p}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Alice starts by, again, selecting a random number
+in the order of the group.
+She multiplies this number with the generator 
+to obtain point $p$ and multiplies it with
+Bob's public key to obtain point $q$.
+If $q$ is the identity, she tries again.
+(Note that $p$ cannot be the identity,
+ since $r$ is in the order of the group
+ and $g$ is a primitive element).
+Otherwise, she returns the $x$-coordinate of $q$
+(the product of $r$ and Bob's public key)
+and the point $p$ (the product of $r$ and the generator).
+
+Here is how she uses the secret to encrypt a message $m$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesEncrypt}\mathbin{::}\Conid{ECIESParams}\to \Conid{Natural}\to \Conid{IO}\;(\Conid{Point},\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{eciesEncrypt}\;\Varid{ps}\mathord{@}(\Conid{ECIES}\;\Varid{c}\;\Varid{g}\;\Varid{k}\;\Varid{f})\;\Varid{m}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{s},\Varid{p})\leftarrow \Varid{eciesSecret}\;\Varid{ps}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{p},\Varid{f}\;\Varid{s}\;\Varid{m}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+She starts by creating the secret \ensuremath{(\Varid{s},\Varid{p})}, where
+$s$ is the $x$-coordinate of $q$ above and $p$ is
+just the point $p$ already returned by the secret function.
+She returns $p$ and \ensuremath{\Varid{f}\;\Varid{s}\;\Varid{m}}, where \ensuremath{\Varid{f}} is the encryption function,
+$s$, the secret, and $m$, the message to be encrypted.
+
+Now, what does Bob do with this stuff to decrypt the message?
+Here it is:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesDecrypt}\mathbin{::}\Conid{ECIESParams}\to \Conid{Natural}\to (\Conid{Point},\Conid{Natural})\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{eciesDecrypt}\;(\Conid{ECIES}\;\Varid{c}\;\anonymous \;\anonymous \;\Varid{f})\;\Varid{k}\;(\Varid{p},\Varid{cm})\mathrel{=}\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{xco}\;(\Varid{mul}\;\Varid{c}\;\Varid{k}\;\Varid{p})\;\mathbf{in}\;\Varid{f}\;\Varid{s}\;\Varid{cm}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+For decryption, he needs the parameters,
+his own private key and the tuple \ensuremath{(\Conid{Point},\Conid{Natural})} generated by Alice.
+Now, he does the following:
+He multiplies the private key ($k$) with the point $p$.
+When we go back, we see that this point $p$
+resulted from multiplying the primitive element $g$ by a random number $r$.
+The public key, however, is also a product of a random number, namely,
+Bob's private key, and the generator.
+The secret, $s$ was generated by multiplying Bob's public key
+by $r$. When Bob multiplies the point $p$ with his private key $k$,
+he hence derives the same point.
+
+To make that a bit clearer, let us adopt a better terminology.
+We will write points with capital letters and natural numbers
+in small letters. We then have 
+$G$, the primitive element,
+$K$, Bob's public key, 
+$P$, a point generated by Alice and
+$Q$, another point generated by Alice.
+We also have
+$k$, Bob's private key and
+$r$, a random number generated by Alice.
+
+Alice computes:
+$P=rG$ and $Q=rK$. The $x$-coordinate of the latter is the shared secret.
+$K$, Bob's public key is $kG$.
+$Q$, hence, is $Q=rkG$.
+Bob, when decrypting computes $kP$, where $P=rG$.
+He, hence, computes $krG$ and,
+since our group is associative and commutative, that is just $Q$
+whose $x$-coordinate is the shared secret.
+
+Here comes a simple testing function
+that puts all the bits together.
+The function uses the previously defined curve 
+$c1$ with generator $p1$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{eciesTest}\mathbin{::}\Conid{Bool}\to \Conid{Natural}\to \Conid{IO}\;\Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{eciesTest}\;\Varid{verbose}\;\Varid{m}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{pri},\Varid{ps}\mathord{@}(\Conid{ECIES}\;\anonymous \;\anonymous \;\Varid{pub}\;\anonymous ))\leftarrow \Varid{eciesMakeParams}\;\Varid{c1}\;\Varid{p1}\;\Varid{xor}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 private:~\char34}\plus \Varid{show}\;\Varid{pri}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 public~:~\char34}\plus \Varid{show}\;\Varid{pub}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{p},\Varid{cipher})\leftarrow \Varid{eciesEncrypt}\;\Varid{ps}\;\Varid{m}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 cipher~:~\char34}\plus \Varid{show}\;\Varid{cipher}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 p~~~~~~:~\char34}\plus \Varid{show}\;\Varid{p}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{eciesDecrypt}\;\Varid{ps}\;\Varid{pri}\;(\Varid{p},\Varid{cipher})\equiv \Varid{m}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 \section{EC Digital Signature Algorithm} 
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{ECDSA}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Random}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{ECModulo}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prelude}\;\Varid{hiding}\;(\Varid{mod}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Prime}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Modular}\;\Varid{hiding}\;(\Varid{add},\Varid{mull},\Varid{mDiv}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{ECDH}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+The \acronym{ec} Digital Signature Algorithm,
+\acronym{ecdsa}, is less complex than \acronym{ecies}
+in terms of parameters. But it is mathematically
+much more interesting.
+The objective of this algorithm is to provide
+message authentication, \ie\ a scheme to
+sign and verify messages.
+As \acronym{ecies}, it uses a pair of
+a private and a public key.
+The private key is used for signing
+and the public key is used to verify the signature,
+just as in \acronym{rsa}.
+
+We start to describe the math of signing and verification.
+We have the following components (besides the usual
+parameters curve $c$ and generator $G$):
+a random number $r$ called the ephemeral key,
+a point $P=rG$ and its $x$-coordinate $a$.
+The private key $k$, a number, 
+the public key $K$, a point computed as $kG$ 
+and the message $m$.
+The signature consists of the pair $(a,s)$.
+We compute $s$ as
+
+\begin{equation}
+s=(m+ak)r' \pmod{o},
+\end{equation}
+
+where $r'$ is the inverse of $r$ in the group
+established by $o$ the order of the group $G$,
+which itself must be a prime number.
+
+The challenge for verification is
+to compute $P=rG$ and to compare the result
+with the $x$-coordinate $a$ of $P$ without
+having access to the private key $k$.
+To achieve this, we transform the equation above
+to get rid of $k$.
+We start by multiplying $r$ 
+on both sides of the equation: 
+
+\begin{equation}
+rs=(m+ak) \pmod{o}.
+\end{equation}
+
+We then multiply the inverse of $s$:
+
+\begin{equation}
+r=ms'+as'k \pmod{o}.
+\end{equation}
+
+Now we multiply the generator $G$ on both sides of this equation.
+Note that the values that appear in the equation are modulo $o$,
+which is the order of the group generated by $G$ and, hence,
+the result is still in the group of the elliptic curve.
+
+\begin{equation}
+rG=ms'G+as'kG.
+\end{equation}
+
+$kG$, the product of private key and generator, however, 
+is just the public key.
+We can thus simplify to
+
+\begin{equation}
+rG=ms'G+as'K.
+\end{equation}
+
+All the values on the right-hand sight of the last equation are known
+without knowing the private key.
+$G$ is the generator, which is part of the parameters;
+$m$ is the message to be verified;
+$s'$ is the inverse of the second element 
+of the signature, which can be computed
+using only the order of the group generated by $G$.
+$a$, finally,
+is the first part of the signature. 
+We, hence, can compute $rG$ as $ms'G + as'K$.
+$rG$, however, is the point, $P$, 
+from which the $x$-coordinate $a$ was taken.
+If the $x$-coordinate of the result of our computation
+equals $a$, the signature is correct. 
+Otherwise, it is a forgery.
+
+Let us put the mathematics in code.
+We start, as usual, with the parameters:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{ECDSAParams}\mathrel{=}\Conid{ECDSA}\;\Conid{Curve}\;\Conid{Point}\;\Conid{Point}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+The parameters consists of the curve, 
+the generator and the public key.
+Next, we define a function to generate
+the key pair:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdsaKeyPair}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{IO}\;(\Conid{Natural},\Conid{Point}){}\<[E]%
+\\
+\>[3]{}\Varid{ecdsaKeyPair}\;\Varid{c}\;\Varid{g}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{k}\leftarrow \Varid{randomNatural}\;(\mathrm{2},\Varid{o}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{k},\Varid{mul}\;\Varid{c}\;\Varid{k}\;\Varid{g}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This is nothing new.
+We generate a random number
+in the order of the group of the elliptic curve
+and multply the generator by this number.
+The number is the private key, $k$, and the
+resulting point is the public key, which
+we will call $q$ in the following.
+
+Here comes the function that creates the key pair
+and the parameters:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdsaMakeParams}\mathbin{::}\Conid{Curve}\to \Conid{Point}\to \Conid{IO}\;(\Conid{Natural},\Conid{ECDSAParams}){}\<[E]%
+\\
+\>[3]{}\Varid{ecdsaMakeParams}\;\Varid{c}\;\Varid{g}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{k},\Varid{q})\leftarrow \Varid{ecdsaKeyPair}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{k},\Conid{ECDSA}\;\Varid{c}\;\Varid{g}\;(\Varid{mul}\;\Varid{c}\;\Varid{k}\;\Varid{g})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+Now, we implement the sign function:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdsaSign}\mathbin{::}\Conid{ECDSAParams}\to \Conid{Natural}\to \Conid{Natural}\to \Conid{IO}\;(\Conid{Natural},\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{ecdsaSign}\;\Varid{ps}\mathord{@}(\Conid{ECDSA}\;\Varid{c}\;\Varid{g}\;\Varid{q})\;\Varid{k}\;\Varid{m}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{r}\leftarrow \Varid{ecdsaNatural}\;(\mathrm{2},\Varid{o}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{a}{}\<[14]%
+\>[14]{}\mathrel{=}\Varid{xco}\;(\Varid{mul}\;\Varid{c}\;\Varid{r}\;\Varid{g}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{r'}{}\<[14]%
+\>[14]{}\mathrel{=}\Varid{inverse}\;\Varid{r}\;\Varid{o}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{s1}{}\<[14]%
+\>[14]{}\mathrel{=}(\Varid{m}\mathbin{+}\Varid{k}\mathbin{*}\Varid{a}){}\<[25]%
+\>[25]{}\mathbin{\Varid{`mod`}}\Varid{o}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{s}{}\<[14]%
+\>[14]{}\mathrel{=}(\Varid{s1}\mathbin{*}\Varid{r'}){}\<[25]%
+\>[25]{}\mathbin{\Varid{`mod`}}\Varid{o}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{if}\;{}\<[10]%
+\>[10]{}\Varid{s1}{}\<[14]%
+\>[14]{}\equiv \mathrm{0}\;{}\<[20]%
+\>[20]{}\mathbf{then}\;\Varid{ecdsaSign}\;\Varid{ps}\;\Varid{k}\;\Varid{m}{}\<[E]%
+\\
+\>[20]{}\mathbf{else}\;\Varid{return}\;(\Varid{a},\Varid{s}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{o}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{q}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
+
+We start by creating the so called ephemeral key,
+a random number $r$ in the order of the group.
+We generate a point and get its $x$-coordinate $a$.
+We then get the inverse of $r$ in the group $o$.
+Note that we treat the numbers in this range
+as the remainders of a prime number $o$.
+The order of the group, therefore, must be a prime number.
+
+We, now, compute $s$ in two steps.
+First, we compute $m+ak$, the message added to the product
+of the private key and the $a$ we just computed modulo $o$.
+We then multiply the result by $r'$, the inverse of $r$.
+Should $s1$ be a multiple of $o$, we try again with another $r$.
+Note that, if $s1$ is not a multiple of $o$, then $s1 \times r'$
+is not a multiple of $o$ either, since $r'$ is from the
+remainder group of $o$. If $o$ is a prime, this number and $o$
+do not share divisors and there is not way to get a multiple of $o$
+by multiplying by another number that does not share divisors with $o$.
+Otherwise, we return the pair $(a,s)$.
+This is the signature.
+
+Verification:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdsaVerify}\mathbin{::}\Conid{ECDSAParams}\to (\Conid{Natural},\Conid{Natural})\to \Conid{Natural}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdsaVerify}\;\Varid{ps}\mathord{@}(\Conid{ECDSA}\;\Varid{c}\;\Varid{g}\;\Varid{q})\;(\Varid{a},\Varid{s})\;\Varid{m}\mathrel{=}\Varid{x}\equiv \Varid{a}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{o}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{gorder}\;\Varid{c}\;\Varid{g}{}\<[E]%
+\\
+\>[12]{}\Varid{s'}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{inverse}\;\Varid{s}\;\Varid{o}{}\<[E]%
+\\
+\>[12]{}\Varid{u}{}\<[16]%
+\>[16]{}\mathrel{=}(\Varid{s'}\mathbin{*}\Varid{m}){}\<[28]%
+\>[28]{}\mathbin{\Varid{`mod`}}\Varid{o}{}\<[E]%
+\\
+\>[12]{}\Varid{v}{}\<[16]%
+\>[16]{}\mathrel{=}(\Varid{s'}\mathbin{*}\Varid{a}){}\<[28]%
+\>[28]{}\mathbin{\Varid{`mod`}}\Varid{o}{}\<[E]%
+\\
+\>[12]{}\Varid{x}{}\<[16]%
+\>[16]{}\mathrel{=}(\Varid{xco}\;\Varid{p}){}\<[28]%
+\>[28]{}\mathbin{\Varid{`mod`}}\Varid{o}{}\<[E]%
+\\
+\>[12]{}\Varid{p}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{add}\;\Varid{c}\;{}\<[25]%
+\>[25]{}(\Varid{mul}\;\Varid{c}\;\Varid{u}\;\Varid{g})\;{}\<[E]%
+\\
+\>[25]{}(\Varid{mul}\;\Varid{c}\;\Varid{v}\;\Varid{q}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives the paramters,
+the signature pair and the message.
+It computes the inverse of $s$ and two
+variables $u$ and $v$ as
+$u = ms'$ and $v = as'$,
+both modulo $o$.
+Multiplying the generator by $u$ results in the point $ms'G$;
+multiplying the public key $q$ by $v$ results in the point $as'K$. 
+Their sum $ms'G + as'K$ equals $rG$, the point of which $a$
+is the $x$-coordinate.
+Finally, we compare the result $x$ with $a$.
+The comparison verifies the signature.
+
+Here is a test function that brings all the bits together:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ecdsaTest}\mathbin{::}\Conid{Bool}\to \Conid{Natural}\to \Conid{IO}\;\Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{ecdsaTest}\;\Varid{verbose}\;\Varid{m}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Varid{k},\Varid{ps})\leftarrow \Varid{ecdsaMakeParams}\;\Varid{c1}\;\Varid{p1}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 private:~\char34}\plus \Varid{show}\;\Varid{k}{}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 public~:~\char34}\plus \Varid{show}\;\Varid{q}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{sig}{}\<[10]%
+\>[10]{}\leftarrow \Varid{ecdsaSign}\;\Varid{ps}\;\Varid{k}\;\Varid{m}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{when}\;\Varid{verbose}\;({}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 sig~~~~:~\char34}\plus \Varid{show}\;\Varid{sig}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{return}\;(\Varid{ecdsaVerify}\;\Varid{ps}\;\Varid{sig}\;\Varid{m}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage} 
 \section{Cryptoanalysis} 
 \section{Mr. Frobenius} 
 \section{Mr. Schoof} 

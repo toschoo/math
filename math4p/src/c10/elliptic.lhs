@@ -9,7 +9,9 @@
 \section{EC Diffie-Hellman} 
 %include ECDH.lhs
 \section{EC Integrated Encryption Scheme} 
+%include ECIES.lhs
 \section{EC Digital Signature Algorithm} 
+%include ECDSA.lhs
 \section{Cryptoanalysis} 
 \section{Mr. Frobenius} 
 \section{Mr. Schoof} 
