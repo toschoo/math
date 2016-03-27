@@ -236,7 +236,7 @@ where
           s' = inverse s o
           u  = (s' * m) `mod` o
           v  = (s' * r) `mod` o
-          x  = (xco p)  `mod` o
+          x  = xco p
           p  = add c (mul c u q)
                      (mul c v a)
 
