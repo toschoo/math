@@ -1,7 +1,7 @@
 %% =======================================================
 %% (c) Tobias Schoofs
 %% =======================================================
-%% Math 4 Programmers - The Inverse Element
+%% Math 4 Programmers - The Continuum
 %% =======================================================
 
 % Plain Style
@@ -3772,7 +3772,59 @@ This implementation now gives exactly the same tree
 as the implementation using continued fractions
 introduced at the beginning of the section.
 
-\section{p-adic Numbers} 
+\section{Field Extension}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Extension}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{\Conid{Data}.Ratio}\;\Varid{as}\;\Conid{R}\;(\Varid{numerator},\Varid{denominator}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}\;\Varid{hiding}\;(\Varid{rdiv}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Debug}.Trace}\;(\Varid{trace}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+\ignore{
+Motivation:
+
+1) Diophantine Equations are over integers
+2) Equations in general are often and historically importantly 
+   formulated over the field Q, but: the solution lies outside
+   that field, e.g.
+   x^2 - 2 = 0
+   x^2 = 2
+   x   = R2
+3) Extending the field, concept Q(R2)
+   extending the field many times: will we reach R?
+   - tower of fields
+   - algebraic and transcendent
+4) How does the field look like?
+   => (a,bR2)
+   => prove that this is a field?
+5) Constructibility? 
+}
+\section{p-adic Numbers}
 \section{Real Factorials}
 \section{The Continuum}
 \section{Review of the Number Zoo}

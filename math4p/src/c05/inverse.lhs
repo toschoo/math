@@ -8,7 +8,6 @@
 %include Quoz.lhs
 \section{Zeno's Paradox}
 %include Zeno.lhs
-\section{Linear Equations} % including diophantine equations
 \section{Binomial Coefficients are Integers}
 %include BinomInt.lhs
 \section{Euler's Totient Function} % Carmichael Theorem

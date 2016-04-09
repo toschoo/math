@@ -15,6 +15,7 @@
 \section{The Stern-Brocot Tree} 
 %include SternBrocot.lhs
 \section{Field Extension}
+%include Extension.lhs
 \section{p-adic Numbers}
 \section{Real Factorials}
 \section{The Continuum}

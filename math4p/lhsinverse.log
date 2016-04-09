@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  19 DEC 2015 20:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  9 APR 2016 19:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2126,7 +2126,7 @@ Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
 \openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (2.71973pt too wide) in paragraph at lines 4284--4288
+Overfull \hbox (2.71973pt too wide) in paragraph at lines 4283--4287
 [][] 
  []
 
@@ -2159,7 +2159,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 4970.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 4969.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2173,7 +2173,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 4970.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 4969.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2187,24 +2187,23 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 4970.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 4969.
 
 [50] [51]
 \openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (2.53668pt too wide) in paragraph at lines 5157--5168
+Overfull \hbox (2.53668pt too wide) in paragraph at lines 5156--5167
 \OT1/cmr/m/n/10.95 since $\OML/cmm/m/it/10.95 '\OT1/cmr/m/n/10.95 (8) = 4$, and
  $\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/n/10.95 (8) = 2$. We gen-er-ate the groups 
 with $[] ([] 8) ([] 8)$
  []
 
-[52]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
 
- [53] [54] [55] [56]
+[52] [53] [54] [55] [56]
 \openout3 = `lhsinverse.ptb'.
 
  [57] [58]
@@ -2215,12 +2214,16 @@ with $[] ([] 8) ([] 8)$
 
 \openout3 = `lhsinverse.ptb'.
 
+\openout3 = `lhsinverse.ptb'.
+
  [62]
 \openout3 = `lhsinverse.ptb'.
 
+ [63] [64]
 \openout3 = `lhsinverse.ptb'.
 
- [63] [64]
+\openout3 = `lhsinverse.ptb'.
+
 \openout3 = `lhsinverse.ptb'.
 
  [65]
@@ -2228,23 +2231,17 @@ with $[] ([] 8) ([] 8)$
 
 \openout3 = `lhsinverse.ptb'.
 
-\openout3 = `lhsinverse.ptb'.
-
  [66]
-\openout3 = `lhsinverse.ptb'.
-
-
 [67] [68] [69]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
 
- [70]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
 
- [71] (./lhsinverse.aux) ) 
+ [70] [71] (./lhsinverse.aux) ) 
 Here is how much of TeX's memory you used:
  30145 strings out of 493304
  687806 string characters out of 6139872
@@ -2253,23 +2250,23 @@ Here is how much of TeX's memory you used:
  20063 words of font info for 77 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,11n,80p,10417b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
-ols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
-ls/msbm10.pfb>
-Output written on lhsinverse.pdf (71 pages, 401624 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+symbols/msbm10.pfb>
+Output written on lhsinverse.pdf (71 pages, 400888 bytes).
 PDF statistics:
  301 PDF objects out of 1000 (max. 8388607)
  209 compressed objects within 3 object streams
