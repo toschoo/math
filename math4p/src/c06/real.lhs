@@ -12,11 +12,11 @@
 %include Realrep.lhs
 \section{$\mathbb{R}$}
 %include Real.lhs
+\section{Real Factorials}
 \section{The Stern-Brocot Tree} 
 %include SternBrocot.lhs
 \section{Field Extension}
 %include Extension.lhs
 \section{p-adic Numbers}
-\section{Real Factorials}
 \section{The Continuum}
 \section{Review of the Number Zoo}
