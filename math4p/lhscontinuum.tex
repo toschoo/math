@@ -3813,14 +3813,14 @@ should be of the same number type.
 A typical example is Diophantine equations,
 named after the late-antique mathematician 
 Diophantus of Alexandria who lived in the third century.
-He studied algebraic equations and is the first mathematician
+He studied equations and is the first mathematician
 to be known to have introduced abstract symbols for numbers.
 Diophantine equations operate over the integers.
 The known values, \ie\ the coefficients, as well as the
 unknown values, \ie\ the solutions, must be integers.
 The most famous result from the study of Diophantine
 equations is perhaps the proof of Fermat's Last Theorem,
-which states that there are no solutions for $z>2$ of
+which states that there are no solutions for $z>2$ in
 equations of the form
 
 \begin{equation} 
@@ -3828,15 +3828,19 @@ a^z + b^z = c^z
 \end{equation} 
 
 where $a$, $b$, $c$ and $z$ are all integers.
-Fermat scribbled his conjecture, which turned
-into his last \term{theorem} only when Andrew Wiles
-proved it in the 90ies of the $20^{th}$ century,
+Fermat scribbled his conjecture
 in the margin of his copy of Diophantus's ``Arithmetica''.
+It turned
+into his last \term{theorem} only when Andrew Wiles
+proved it in the 90ies of the $20^{th}$ century
+using concepts that went far beyond the knowledge
+of Fermat and his contemporaries.
 
 In modern times, equations are typically studied
 in a \term{field} and you might remember that a field
 is a structure defined over a set of numbers with
-two operations that both yield an Abelian group
+two operations. Both operations establish an 
+\term{Abelian group}
 with that set of numbers where one operation
 (called \term{multiplication}) distributes over
 the other (called \term{addition}).
@@ -3846,8 +3850,8 @@ More formally, a field is defined as a structure
 (S,+,\times),
 \]
 
-where $S$ is the set of numbers, $+$ the addition
-operation and $\times$ multiplication.
+where $S$ is the set of numbers, ``$+$'' the addition
+operation and ``$\times$'' multiplication.
 For both operations, the following properties must hold: 
 
 \begin{enumerate}
@@ -3870,7 +3874,7 @@ For both operations, the following properties must hold:
 \end{enumerate}
 
 Properties 1 -- 4, as you will have realised, are just the group laws.
-Property 5, commutativity, makes the group Abelian.
+Property 5, commutativity, makes the group \term{Abelian}.
 
 Furthermore, multiplication \textbf{distributes} over addition, i.e.
 
@@ -3880,8 +3884,9 @@ a \times (b + c) = ab + ac.
 
 When all these properties hold, then we have a field.
 We have already seen that $\mathbb{Q}$, the rational numbers,
-form a field. Historically, this field was important for
-the theory of solving equations. Linear equations with
+is a field. Historically, this field was important for
+the theory of solving equations. For the special case of
+linear equations, that is equations without exponents,
 rational coefficients lead to rational solutions. The reason is
 that the operations we need to solve linear equations are
 just the four arithmetic operations addition, subtraction,
@@ -3923,13 +3928,13 @@ we take the square root leading to
 x = \sqrt{2}.
 \end{equation}
 
-Well. Unfortunately, $\sqrt{2}$ is, as we have already shown,
+Unfortunately, $\sqrt{2}$ is, as we have already shown,
 not in the field $\mathbb{Q}$. It is a irrational number.
 We can of course redefine the field 
 in which we started to solve this equation in the first place.
 But that is a very sloppy solution.
-A typical question for a mathematician, here, is:
-what is the smallest field comprising both,
+A typical question for a mathematician is:
+what is the \emph{smallest} field comprising both,
 the coefficients and the solutions of this kind of equations?
 A possible answer is: the field $\mathbb{Q}$ with the solution
 $\sqrt{2}$ added to it. 
@@ -3953,8 +3958,13 @@ S = \left\lbrace 0,1,\frac{1}{2},2,\frac{1}{3},3,
 
 This, obviously, would not lead to a field, since
 not for every $a\in S$ $a\sqrt{2} \in S$.
-In fact, that would be true only for 0, the identity
-and $\sqrt{2}$ itself.
+$2\times \sqrt{2}$, for instance, is not in the field;
+$\frac{1}{2}\times \sqrt{2}$, too, is not in the field.
+In fact, for almost any $a\in S$, closure is not fulfilled.
+It is fulfilled only for 0, the identity
+and $\sqrt{2}$ itself, since $0\times\sqrt{2} = 0 \in S$,
+$1\times \sqrt{2} = \sqrt{2} \in S$ and
+$\sqrt{2} \times \sqrt{2} = 2 \in $S.
 
 So, we need a better approach.
 The following formalism defines the \term{smallest} field
@@ -3976,7 +3986,7 @@ consists of the numbers
 \]
 
 If you want to look at the concrete numbers,
-you may reformulate it in terms of Haskell list comprehension:
+you may reformulate this in terms of Haskell list comprehension:
 
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
@@ -4002,12 +4012,12 @@ you may reformulate it in terms of Haskell list comprehension:
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 
-Do not let yourself be confused by the fact
+Do not be confused by the fact
 that, in Haskell, we have to convert $a$ and $b$ to real numbers.
 Haskell has no built-in notion of field extension.
-Number are either rational or real. Since \ensuremath{\Varid{sqrt}\;\Varid{r}} is real,
-\ie\ a \ensuremath{\Conid{Double}} in Haskell terminology, we have to convert
-everything to \ensuremath{\Conid{Double}}. The result, however, shows
+Numbers are either rational or real. Since \ensuremath{\Varid{sqrt}\;\Varid{r}} is \ensuremath{\Conid{Real}},
+we have to convert
+everything to \ensuremath{\Conid{Real}}. The result, however, shows
 what the numbers in the new field look like ``in reality'',
 whatever that is supposed to mean.
 
@@ -4031,7 +4041,8 @@ of the form $a+bx$ and $c+dx$ looks like:
 ac+adx+bcx+bdx^2.
 \]
 
-Since, $x$ in our case is the square root of $r$, $x^2=r$ 
+Since, $x$ in our case is the square root of $r$, 
+$x^2=\sqrt{r}\times\sqrt{r}=r$ 
 and we, hence, get
 
 \[
@@ -4041,31 +4052,37 @@ ac+rbd+(ad+bc)x.
 From this we can derive the general rule
 
 \begin{equation}\label{fieldExtMul}
-(a,b)(c,d) = (ac+rbd,(ad+bc)),
+(a,b)(c,d) = (ac+rbd,ad+bc),
 \end{equation}
 
 where $r$ is the number, whose square root is adjoint to our base field.
 For $\mathbb{Q}(\sqrt{2})$, this is 
 
 \begin{equation}
-(a,b)(c,d) = (ac+2bd,(ad+bc)).
+(a,b)(c,d) = (ac+2bd,ad+bc).
 \end{equation}
 
 This construction of the field extension guarantees
 that for any addition and any multiplication 
 of two elements in this new field, the result, again,
-is element of this field.
-The rules also guarantee, as you may easily convince yourself, associativity.
+is and element of this field.
+The rules also guarantee associativity,
+as you may easily convince yourself.
 But what about the identities of addition and multiplication?
-Well, the additive identity is $(0,0)$.
-We just follow the rule \ref{fieldExtAdd}:
+
+In general, a rationl number $a$ is, in the new field,
+represented as $(a,0)$.
+This is easy to see, 
+because $(a,0) = a+0\times\sqrt{r} = a$.
+Since the additive identity is 0
+in $\mathbb{Q}$, the identity should be $(0,0)$.
+We just follow the rule \ref{fieldExtAdd}
+to prove that:
 
 \begin{equation}
-(a+b)+(0,0) = (a+0,b+0) = (a+b).
+(a+b)+(0,0) = (a+0,b+0) = (a+b)\qed.
 \end{equation}
 
-It is easy to see that $(0,0)$ is the representation
-of 0 in the new field, since $0+0\sqrt{r} = 0+0 = 0$.
 What about the multiplicative identity?
 We expect it to be the representation of 1 in the new field,
 which is $(1,0)$, since $1+0\sqrt{r} = 1+0 = 1$.
@@ -4075,11 +4092,11 @@ Let us check:
 (a+b)(1,0) = (1a+2b\times0,a\times 0+1b) = (a,b),
 \end{equation}
 
-which, indeed, fulfils the identity property.
+which, indeed, fulfils the identity property.\qed
 
 The next question is how the inverse will look like
 in the new field.
-For the additive inverse, that is not difficult to answer.
+For the additive inverse that is not difficult to answer.
 Since, for any number $(a,b)$, the additive inverse $-(a,b)$
 should fulfil the property $(a,b) + -(a,b) = (0,0)$,
 the inverse is just
@@ -4091,7 +4108,7 @@ the inverse is just
 We can check this quickly using again \ref{fieldExtAdd}:
 
 \begin{equation}
-(a,b) + (-a,-b)= (a-a,b-b)=(0,0).
+(a,b) + (-a,-b)= (a-a,b-b)=(0,0).\qed
 \end{equation}
 
 Concerning multiplication, which, as usual, is a bit
@@ -4110,15 +4127,28 @@ Here is the proof using \ref{fieldExtMul}:
 \end{equation}
 
 The scary looking formula on the right-hand side of the equation
-can be simplified. We immediately see that the second component
-of the tuple is just 0. The first one can be rewritten as
+can be simplified. The first component is
 
 \[
-\frac{a^2-rb^2}{a^2-rb^2}.
+\frac{a^2}{a^2-rb^2} - \frac{rb^2}{a^2-rb^2},
 \]
 
-Now, we see a fraction with identical numerator and denominator.
-The fraction, hence, can be reduced to 1.
+which can be reduced to one fraction,
+since the denominators are equal:
+
+\[
+\frac{a^2-rb^2}{a^2-rb^2} = 1.
+\]
+
+We see a fraction with identical numerator and denominator.
+The fraction, hence, can be further reduced to 1.
+
+The second component is
+
+\[
+\frac{ab}{a^2-rb^2} - \frac{ab}{a^2-rb^2}=0.
+\]
+
 We finally get
 
 \begin{equation}
@@ -4126,31 +4156,99 @@ We finally get
 \end{equation}
 
 which proves that the beast in \ref{fieldExtInvMul} fulfils
-the invertibility property.
+the invertibility property.\qed
 
-What we showed until here is the \emph{smallest} field that extends
-$\mathbb{Q}$ by adjoining $\sqrt{r}$, where $r \in \mathbb{Q}$.
-For other roots, the field must be created differently.
-$\mathbb{Q}(\sqrt[3]{r})$, for instance, can not be represented
-by the formulas above, because $\sqrt[3]{r} \times \sqrt[3]{r}$
-is not a rational number and is not in the group.
-The \term{degree} of this extension is not the same as that of
-$\mathbb{Q}(\sqrt{r})$.
-The degree of 
-$\mathbb{Q}(\sqrt{r})$ is 2, since it can be represented by a pair of numbers
-$(a,b)$.
-$\mathbb{Q}(\sqrt[3]{r})$, however, cannot be represented by a pair;
-a triple is needed, namely the triple
+The final piece in showing that $\mathbb{Q}(\sqrt{r})$ is indeed
+a field considering the rules \ref{fieldExtAdd} and \ref{fieldExtMul}
+is distributivity. Distributivity requires that
+
+\begin{equation}
+(a,b)((c,d) + (e,f)) = (a,b)(c,d) + (a,b)(e,f).
+\end{equation}
+
+Multiplying this out, we get
 
 \[
-(a,b,c) = a + b\sqrt[3]{r} + c\sqrt[3]{r^2}.
+(ac+rbd,ad+bc) + (ae+rbf,af+be),
 \]
 
-The degree of $\mathbb{Q}(\sqrt[3]{r})$ is therefore 3.
+which, when added, is
 
-We can also build \term{towers of fields},
-that is sequences of field extensions that build one on another.
-This, indeed, is often used in algebra, more specifically in 
+\[
+(ac+rbd+ae+rbf,ad+bc+af+be).
+\]
+
+We show that this is true by multiplying
+
+\[
+(a+b\sqrt{r})(c+d\sqrt{r} + e + f\sqrt{r}).
+\]
+
+We regroup the second part:
+
+\[
+c+e+d\sqrt{r}+f\sqrt{r}
+\]
+
+and distribute, first $a$:
+
+\[
+ac+ae+ad\sqrt{r}+af\sqrt{r}
+\]
+
+and then $b\sqrt{r}$:
+
+\[
+cb\sqrt{r}+eb\sqrt{r}+d\sqrt{r}b\sqrt{r}+f\sqrt{r}b\sqrt{r}.
+\]
+
+This second term simplifies to
+
+\[
+cb\sqrt{r}+eb\sqrt{r}+bdr+fbr.
+\]
+
+Now we bring the two terms together and get
+
+\[
+ac+ae+rbd+rbf+(ad+bc+af+be)\sqrt{r} = (ac+ae+rbd+rbf,ad+bc+af+be)
+\]
+
+as desired.\qed
+
+We have defined the smallest field that extends $\mathbb{Q}$
+by adjoining $\sqrt{r}$ for any rational number $r$.
+This is nice, because it allows us to add the square roots
+of all rational numbers at once, extending the field largely,
+but in a controlled manner.
+
+We can even go further and extend the extended field by adjoining
+the square roots of square roots on top of the extension already
+containing the square roots, \ie:
+
+\[
+\mathbb{Q}(\sqrt{r},\sqrt[4]{r}).
+\]
+
+We can go still further and add the square roots 
+of the square roots of the square roots:
+
+\[
+\mathbb{Q}(\sqrt{r},\sqrt[4]{r},\sqrt[8]{r})
+\]
+
+and then the square roots of the square roots of the square roots
+of the square roots and so on \emph{at infinitum}.
+There are indeed classic problems, as we will see later, that can be solved
+in exactly this field: $\mathbb{Q}$ extended by the $n^{th}$-roots,
+where $n$ is any power of 2.
+
+Extensions resulting from building extensions on top of extensions 
+is sometimes called \term{towers of fields} where one field is
+put on the top of another field yielding a batch of pancakes the
+slowly grows higher and higher.
+
+This technique, indeed, is often used in algebra, more specifically in 
 \term{Galois Theory}, to study equations of higher degrees.
 For instance, the equation
 
@@ -4179,47 +4277,188 @@ stepwise adjoining solutions:
 
 The interesting question presents itself whether it is possible
 to build a tower from $\mathbb{Q}$ to $\mathbb{R}$.
-Of course, that is possible. We can adjoin one irrational number
-after the other to $\mathbb{Q}$ until we arrive at $\mathbb{R}$.
-Unfortunately, we need infinitely many steps.
-$\mathbb{R}$, in fact, is much bigger than $\mathbb{Q}$.
-How much bigger, we will seen soon.
-For the moment, it may suffice to tell that it is not enough
-to add roots of rational numbers to $\mathbb{Q}$.
-This way we will not get to $\mathbb{R}$.
-There are numbers in $\mathbb{R}$ that are not the root
-of any rational number. 
-Our friends $\pi$ and $e$ are examples of such numbers.
+It is indeed possible. But it is not trivial.
+$\mathbb{R}$ is in fact much bigger than $\mathbb{Q}$.
+How much bigger, we will soon see.
 
-Finally, an outlook of the next part may be in place here
-that links field theory, which was developed in the $19^{th}$,
-with the ancient Greek questions of the constructibility of
-certain objects with ruler and compass.
-When we reformulate the Greek problems as equations
-asking for numbers, instead of geormetric objects,
-it turns out that these numbers are all in an extension of
-$\mathbb{Q}$. Constructible in the Greek sense are
+The difficulty arising in building that tower
+is that we need different definitions for different
+things we adjoin to $\mathbb{Q}$ and its extensions.
+Until now, we have only looked at square roots.
+But how to add $n$-roots where $n$ is not a power of two?
+$\mathbb{Q}(\sqrt[3]{r})$, for instance, can not be represented
+by the formulas above.
+This is because $\sqrt[3]{r} \times \sqrt[3]{r}$
+is not a rational number and is therefore not in the field.
+The \term{degree} of this extension is not the same as that of
+$\mathbb{Q}(\sqrt{r})$.
+The degree of 
+$\mathbb{Q}(\sqrt{r})$ is 2, since it can be represented by a pair of numbers
+$(a,b)$.
+$\mathbb{Q}(\sqrt[3]{r})$, however, cannot be represented by a pair;
+a triple is needed, namely the triple
 
-\begin{enumerate}
-\item The rational numbers;
-\item The square roots of constructible numbers (\ie\ 
-      all $n^{th}-roots$ with $n$ a power of 2);
-\item The sum, difference and product of any two
-      constructible numbers;
-\item The inverse of a constructible number (except, of course, 0).
-\end{enumerate}
+\[
+(a,b,c) = a + b\sqrt[3]{r} + c\sqrt[3]{r^2}.
+\]
 
-From this follows that there are some classic problems
-that cannot be constructed according 
-to the rules of ancient geometry, namely
-\term{squaring the circle} (which is impossible, because $\pi$
-is not a square root of a constructible number),
-\term{doubling the cube} (impossible, because it involves
-cube roots) and \term{trisecting the angle} (impossible,
-because this problem, too, involves cube roots).
-This may sound a bit surreal at this stage.
-We will come back to these problems in the next part
-on algebra and geometry.
+The degree of $\mathbb{Q}(\sqrt[3]{r})$ is therefore 3.
+
+What does this field look like?
+For addition, it looks very similar to the field $\mathbb{Q}(\sqrt{r})$.
+The addition rule is
+
+\begin{equation}\label{fieldExtAdd3}
+(a,b,c) + (d,e,f) = (a+d,b+e,c+f).
+\end{equation}
+
+The additive identity, trivially, is $(0,0,0)$.
+The inverse $-(a,b,c)$ is $(-a,-b,-c)$.
+
+Harder, however, is multiplication.
+Let us investigate the multiplication rule.
+We try to multiply two numbers in the new field
+
+\[
+(a,b,c)(d,e,f).
+\]
+
+This corresponds to the expression
+
+\[
+(a+b\sqrt[3]{r}+c\sqrt[3]{r^2})
+(d+e\sqrt[3]{r}+f\sqrt[3]{r^2}).
+\]
+
+We distribute the first sum 
+component by component
+over the second sum.
+Distributing $a$ gives
+
+\[
+ad+ae\sqrt[3]{r}+af\sqrt[3]{r^2};
+\]
+
+Distributing $b\sqrt[3]{r}$ gives
+
+\[
+bd\sqrt[3]{r}+be\sqrt[3]{r}\sqrt[3]{r}+bf\sqrt[3]{r}\sqrt[3]{r^2}
+\]
+
+and distributing $c\sqrt[3]{r^2}$ gives
+
+\[
+cd\sqrt[3]{r^2}+ce\sqrt[3]{r^2}\sqrt[3]{r}+cf\sqrt[3]{r^2}\sqrt[3]{r^2}.
+\]
+
+Now, we represent the roots as fractional exponents and get:
+
+\[
+ad+aer^{\frac{1}{3}}+afr^{\frac{2}{3}}
+\]
+
+for the first component,
+
+\[
+bdr^{\frac{1}{3}}+ber^{\frac{1}{3}}r^{\frac{1}{3}}+bfr^{\frac{1}{3}}r^{\frac{2}{3}}
+\]
+
+for the second and
+
+\[
+cdr^{\frac{2}{3}}+cer^{\frac{2}{3}}r^{\frac{1}{3}}+cfr^{\frac{2}{3}}r^{\frac{2}{3}}.
+\]
+
+We can simplify the second component to
+
+\[
+bdr^{\frac{1}{3}}+ber^{\frac{2}{3}}+bfr
+\]
+
+and the third to
+
+\[
+cdr^{\frac{2}{3}}+cer+cfr^{\frac{4}{3}}.
+\]
+
+The last term in this expression is not very nice.
+It, apparently, introduces a new element that we do not yet know.
+We can however transform it:
+
+\[
+r^{\frac{4}{3}} = r^{\frac{3}{3} + \frac{1}{3}} = rr^{\frac{1}{3}}
+\]
+
+resulting in a product of two elements we do know already,
+namely $r$, which is a rational number and $r^{\frac{1}{3}}$,
+which is just $\sqrt[3]{r}$.
+The last component, hence, is
+
+\[
+cdr^{\frac{2}{3}}+cer+cfrr^{\frac{1}{3}}.
+\]
+
+We will now group the terms in the components according 
+to their exponents. First the terms without exponent
+
+\[
+ad + bfr + cer,
+\]
+
+then those with exponent $\frac{1}{3}$:
+
+\[
+aer^{\frac{1}{3}} + bdr^{\frac{1}{3}} + cfrr^{\frac{1}{3}}
+\]
+
+and, finally, those with expoonent $\frac{2}{3}$:
+
+\[
+afr^{\frac{2}{3}} + ber^{\frac{2}{3}} + cdr^{\frac{2}{3}}.
+\]
+
+We conclude that the multiplication formula in this field is
+
+\begin{equation}\label{fieldExtMul3}
+(a,b,c)(d,e,f) = (ad+bfr+cer,ae+bd+cfr,af+be+cd),
+\end{equation}
+
+where $r$ is the rational number, whose third root was
+adjoint to $\mathbb{Q}$.
+
+The multiplicative identity should be $(1,0,0)$ and, indeed,
+$(a,b,c)(1,0,0)$ gives according to \ref{fieldExtMul3}:
+
+\[
+(a+0+0,0+b+0,0+0+c) = (a,b,c).\qed
+\]
+
+What, however, is the multiplicative inverse?
+Well, answering this questions corresponds to solving
+the equation
+
+\begin{equation}
+ad+bfr+cer + (ae+bd+cfr)\sqrt[3]{r} + (af+be+cd)\sqrt[3]{r^2} = 1.
+\end{equation}
+
+Solving such equations is a major topic of the next part.
+With the techniques we have at our disposal now,
+this is not easy. We will come back to that question later.
+Anyway, what should be clear from this exercise is
+that it is possible to extend the field $\mathbb{Q}$
+step by step including always more irrational numbers
+until we reach $\mathbb{R}$.
+But this process is not trivial. It involves a lot of algebra.
+It is a true Tower of Babel.
+And, until here, we have only looked at irrational numbers
+that are roots of rational numbers.
+We have not yet discussed how to extend fields by 
+\term{transcendental numbers}, \ie\ numbers that
+are not roots of rational numbers and, even further,
+do not appear as solutions of equations with
+rational coefficients. Our friends $\pi$ and $e$ are
+examples of such numbers. 
+
 \section{p-adic Numbers}
 \section{The Continuum}
 \section{Review of the Number Zoo}

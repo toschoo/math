@@ -4,6 +4,7 @@
 \section{Polar Form}
 \section{$\mathbb{C}$}
 \section{Gaussian Integers}
+\section{$\mathbb{Q}(i)$}
 \section{...}
 \section{Complex Vector Spaces}
 \section{...}
