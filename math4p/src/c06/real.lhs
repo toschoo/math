@@ -17,6 +17,7 @@
 %include SternBrocot.lhs
 \section{Field Extension}
 %include Extension.lhs
-\section{p-adic Numbers}
+%\section{p-adic Numbers}
 \section{The Continuum}
+%include Cantor2.lhs
 \section{Review of the Number Zoo}

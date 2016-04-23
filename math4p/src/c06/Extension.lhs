@@ -12,9 +12,11 @@ where
 }
 
 A very common activity of mathematicians is solving equations.
-They usually do so by restricting the number type of 
-the coefficients and they usually assume that the solution
-should be of the same number type. 
+They usually solve equations with
+coefficients of a certain type of numbers 
+(like integers or rationals)
+assuming that the solution
+is of that same number type. 
 A typical example is Diophantine equations,
 named after the late-antique mathematician 
 Diophantus of Alexandria who lived in the third century.
@@ -34,7 +36,7 @@ a^z + b^z = c^z
 
 where $a$, $b$, $c$ and $z$ are all integers.
 Fermat scribbled his conjecture
-in the margin of his copy of Diophantus's ``Arithmetica''.
+in the margin of his copy of Diophantus' ``Arithmetica''.
 It turned
 into his last \term{theorem} only when Andrew Wiles
 proved it in the 90ies of the $20^{th}$ century
@@ -134,10 +136,11 @@ x = \sqrt{2}.
 \end{equation}
 
 Unfortunately, $\sqrt{2}$ is, as we have already shown,
-not in the field $\mathbb{Q}$. It is a irrational number.
+not in the field $\mathbb{Q}$. It is irrational.
 We can of course redefine the field 
-in which we started to solve this equation in the first place.
-But that is a very sloppy solution.
+in which we started to solve this equation in the first place
+assuming $\mathbb{R}$ instead of $\mathbb{Q}$.
+But that is a sloppy solution.
 A typical question for a mathematician is:
 what is the \emph{smallest} field comprising both,
 the coefficients and the solutions of this kind of equations?
@@ -164,8 +167,9 @@ S = \left\lbrace 0,1,\frac{1}{2},2,\frac{1}{3},3,
 This, obviously, would not lead to a field, since
 not for every $a\in S$ $a\sqrt{2} \in S$.
 $2\times \sqrt{2}$, for instance, is not in the field;
-$\frac{1}{2}\times \sqrt{2}$, too, is not in the field.
-In fact, for almost any $a\in S$, closure is not fulfilled.
+$\frac{1}{2}\times \sqrt{2}$, too, is not in the field
+and so on.
+In fact, for almost no $a\in S$, closure is fulfilled.
 It is fulfilled only for 0, the identity
 and $\sqrt{2}$ itself, since $0\times\sqrt{2} = 0 \in S$,
 $1\times \sqrt{2} = \sqrt{2} \in S$ and
@@ -187,9 +191,10 @@ The set underlying the field $\mathbb{Q}(\sqrt{r})$, thus,
 consists of the numbers
 
 \[
-\left\lbrace a+b\sqrt{r} || a,b \in \mathbb{Q}\right\rbrace.
+\left\lbrace a+b\sqrt{r} || a,b \in \mathbb{Q}\right\rbrace,
 \]
 
+with $r$ being a constant rational number, \ie\ $r\in\mathbb{Q}$. 
 If you want to look at the concrete numbers,
 you may reformulate this in terms of Haskell list comprehension:
 
@@ -202,9 +207,9 @@ you may reformulate this in terms of Haskell list comprehension:
 Do not be confused by the fact
 that, in Haskell, we have to convert $a$ and $b$ to real numbers.
 Haskell has no built-in notion of field extension.
-Numbers are either rational or real. Since |sqrt r| is |Real|,
+Numbers are either rational or real. Since |sqrt r| is |RealN|,
 we have to convert
-everything to |Real|. The result, however, shows
+everything to |RealN|. The result, however, shows
 what the numbers in the new field look like ``in reality'',
 whatever that is supposed to mean.
 
@@ -225,7 +230,7 @@ Let us first ask, how the product of two expressions
 of the form $a+bx$ and $c+dx$ looks like:
 
 \[
-ac+adx+bcx+bdx^2.
+(a+bx)(c+dx)=ac+adx+bcx+bdx^2.
 \]
 
 Since, $x$ in our case is the square root of $r$, 
@@ -233,7 +238,7 @@ $x^2=\sqrt{r}\times\sqrt{r}=r$
 and we, hence, get
 
 \[
-ac+rbd+(ad+bc)x.
+ac+rbd+(ad+bc)\sqrt{r}.
 \]
 
 From this we can derive the general rule
@@ -252,7 +257,7 @@ For $\mathbb{Q}(\sqrt{2})$, this is
 This construction of the field extension guarantees
 that for any addition and any multiplication 
 of two elements in this new field, the result, again,
-is and element of this field.
+is an element of this field.
 The rules also guarantee associativity,
 as you may easily convince yourself.
 But what about the identities of addition and multiplication?
@@ -286,7 +291,7 @@ in the new field.
 For the additive inverse that is not difficult to answer.
 Since, for any number $(a,b)$, the additive inverse $-(a,b)$
 should fulfil the property $(a,b) + -(a,b) = (0,0)$,
-the inverse is just
+the inverse must therefore be
 
 \begin{equation}
 -(a,b) = (-a,-b).
@@ -353,7 +358,7 @@ is distributivity. Distributivity requires that
 (a,b)((c,d) + (e,f)) = (a,b)(c,d) + (a,b)(e,f).
 \end{equation}
 
-Multiplying this out, we get
+Multiplying the left side out, we get
 
 \[
 (ac+rbd,ad+bc) + (ae+rbf,af+be),
@@ -406,9 +411,7 @@ as desired.\qed
 We have defined the smallest field that extends $\mathbb{Q}$
 by adjoining $\sqrt{r}$ for any rational number $r$.
 This is nice, because it allows us to add the square roots
-of all rational numbers at once, extending the field largely,
-but in a controlled manner.
-
+of any rational number using the same recipe.
 We can even go further and extend the extended field by adjoining
 the square roots of square roots on top of the extension already
 containing the square roots, \ie:
@@ -425,17 +428,16 @@ of the square roots of the square roots:
 \]
 
 and then the square roots of the square roots of the square roots
-of the square roots and so on \emph{at infinitum}.
+of the square roots and so on \emph{ad infinitum}.
 There are indeed classic problems, as we will see later, that can be solved
 in exactly this field: $\mathbb{Q}$ extended by the $n^{th}$-roots,
 where $n$ is any power of 2.
 
 Extensions resulting from building extensions on top of extensions 
 is sometimes called \term{towers of fields} where one field is
-put on the top of another field yielding a batch of pancakes the
-slowly grows higher and higher.
-
-This technique, indeed, is often used in algebra, more specifically in 
+put on the top of another field yielding a batch of pancakes 
+that slowly grows higher and higher.
+This technique is often used in algebra, more specifically in 
 \term{Galois Theory}, to study equations of higher degrees.
 For instance, the equation
 
@@ -453,7 +455,7 @@ x_4 = 1 - \sqrt{2} - \sqrt{3 - \sqrt{2}}
 \end{align*}
 
 We can build a tower of extensions of $\mathbb{Q}$ by
-stepwise adjoining solutions:
+stepwise adjoining the irrational components of the solutions:
 
 \begin{align*}
 &\mathbb{Q}\\
@@ -553,9 +555,10 @@ bdr^{\frac{1}{3}}+ber^{\frac{1}{3}}r^{\frac{1}{3}}+bfr^{\frac{1}{3}}r^{\frac{2}{
 for the second and
 
 \[
-cdr^{\frac{2}{3}}+cer^{\frac{2}{3}}r^{\frac{1}{3}}+cfr^{\frac{2}{3}}r^{\frac{2}{3}}.
+cdr^{\frac{2}{3}}+cer^{\frac{2}{3}}r^{\frac{1}{3}}+cfr^{\frac{2}{3}}r^{\frac{2}{3}}
 \]
 
+for the third.
 We can simplify the second component to
 
 \[
@@ -570,14 +573,14 @@ cdr^{\frac{2}{3}}+cer+cfr^{\frac{4}{3}}.
 
 The last term in this expression is not very nice.
 It, apparently, introduces a new element that we do not yet know.
-We can however transform it:
+However, we can transform it:
 
 \[
 r^{\frac{4}{3}} = r^{\frac{3}{3} + \frac{1}{3}} = rr^{\frac{1}{3}}
 \]
 
 resulting in a product of two elements we do know already,
-namely $r$, which is a rational number and $r^{\frac{1}{3}}$,
+namely $r$, which is a rational number, and $r^{\frac{1}{3}}$,
 which is just $\sqrt[3]{r}$.
 The last component, hence, is
 
@@ -598,12 +601,18 @@ then those with exponent $\frac{1}{3}$:
 aer^{\frac{1}{3}} + bdr^{\frac{1}{3}} + cfrr^{\frac{1}{3}}
 \]
 
-and, finally, those with expoonent $\frac{2}{3}$:
+and, finally, those with exponent $\frac{2}{3}$:
 
 \[
 afr^{\frac{2}{3}} + ber^{\frac{2}{3}} + cdr^{\frac{2}{3}}.
 \]
 
+When we convert the exponents back to roots, we see that
+we have three groups:
+one consisting of rational numbers only,
+one consisting of rational numbers multiplied by $\sqrt[3]{r}$
+and, finally, one consisting of rational numbers
+multiplied by $\sqrt[3]{r^2}$.
 We conclude that the multiplication formula in this field is
 
 \begin{equation}\label{fieldExtMul3}
@@ -631,7 +640,7 @@ ad+bfr+cer + (ae+bd+cfr)\sqrt[3]{r} + (af+be+cd)\sqrt[3]{r^2} = 1.
 Solving such equations is a major topic of the next part.
 With the techniques we have at our disposal now,
 this is not easy. We will come back to that question later.
-Anyway, what should be clear from this exercise is
+Anyway, what should be clear from the exercise is
 that it is possible to extend the field $\mathbb{Q}$
 step by step including always more irrational numbers
 until we reach $\mathbb{R}$.
@@ -643,6 +652,10 @@ We have not yet discussed how to extend fields by
 \term{transcendental numbers}, \ie\ numbers that
 are not roots of rational numbers and, even further,
 do not appear as solutions of equations with
-rational coefficients. Our friends $\pi$ and $e$ are
+rational coefficients at all. 
+Our friends $\pi$ and $e$ are
 examples of such numbers. 
 
+\ignore{
+ http://math.stackexchange.com/questions/599930/extend-a-rational-number-field-mathbbq-by-using-a-transcendental-number
+}
