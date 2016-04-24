@@ -30793,9 +30793,11 @@ introduced at the beginning of the section.
 }
 
 A very common activity of mathematicians is solving equations.
-They usually do so by restricting the number type of 
-the coefficients and they usually assume that the solution
-should be of the same number type. 
+They usually solve equations with
+coefficients of a certain type of numbers 
+(like integers or rationals)
+assuming that the solution
+is of that same number type. 
 A typical example is Diophantine equations,
 named after the late-antique mathematician 
 Diophantus of Alexandria who lived in the third century.
@@ -30815,7 +30817,7 @@ a^z + b^z = c^z
 
 where $a$, $b$, $c$ and $z$ are all integers.
 Fermat scribbled his conjecture
-in the margin of his copy of Diophantus's ``Arithmetica''.
+in the margin of his copy of Diophantus' ``Arithmetica''.
 It turned
 into his last \term{theorem} only when Andrew Wiles
 proved it in the 90ies of the $20^{th}$ century
@@ -30915,10 +30917,11 @@ x = \sqrt{2}.
 \end{equation}
 
 Unfortunately, $\sqrt{2}$ is, as we have already shown,
-not in the field $\mathbb{Q}$. It is a irrational number.
+not in the field $\mathbb{Q}$. It is irrational.
 We can of course redefine the field 
-in which we started to solve this equation in the first place.
-But that is a very sloppy solution.
+in which we started to solve this equation in the first place
+assuming $\mathbb{R}$ instead of $\mathbb{Q}$.
+But that is a sloppy solution.
 A typical question for a mathematician is:
 what is the \emph{smallest} field comprising both,
 the coefficients and the solutions of this kind of equations?
@@ -30945,8 +30948,9 @@ S = \left\lbrace 0,1,\frac{1}{2},2,\frac{1}{3},3,
 This, obviously, would not lead to a field, since
 not for every $a\in S$ $a\sqrt{2} \in S$.
 $2\times \sqrt{2}$, for instance, is not in the field;
-$\frac{1}{2}\times \sqrt{2}$, too, is not in the field.
-In fact, for almost any $a\in S$, closure is not fulfilled.
+$\frac{1}{2}\times \sqrt{2}$, too, is not in the field
+and so on.
+In fact, for almost no $a\in S$, closure is fulfilled.
 It is fulfilled only for 0, the identity
 and $\sqrt{2}$ itself, since $0\times\sqrt{2} = 0 \in S$,
 $1\times \sqrt{2} = \sqrt{2} \in S$ and
@@ -30968,9 +30972,10 @@ The set underlying the field $\mathbb{Q}(\sqrt{r})$, thus,
 consists of the numbers
 
 \[
-\left\lbrace a+b\sqrt{r} | a,b \in \mathbb{Q}\right\rbrace.
+\left\lbrace a+b\sqrt{r} | a,b \in \mathbb{Q}\right\rbrace,
 \]
 
+with $r$ being a constant rational number, \ie\ $r\in\mathbb{Q}$. 
 If you want to look at the concrete numbers,
 you may reformulate this in terms of Haskell list comprehension:
 
@@ -31001,9 +31006,9 @@ you may reformulate this in terms of Haskell list comprehension:
 Do not be confused by the fact
 that, in Haskell, we have to convert $a$ and $b$ to real numbers.
 Haskell has no built-in notion of field extension.
-Numbers are either rational or real. Since \ensuremath{\Varid{sqrt}\;\Varid{r}} is \ensuremath{\Conid{Real}},
+Numbers are either rational or real. Since \ensuremath{\Varid{sqrt}\;\Varid{r}} is \ensuremath{\Conid{RealN}},
 we have to convert
-everything to \ensuremath{\Conid{Real}}. The result, however, shows
+everything to \ensuremath{\Conid{RealN}}. The result, however, shows
 what the numbers in the new field look like ``in reality'',
 whatever that is supposed to mean.
 
@@ -31024,7 +31029,7 @@ Let us first ask, how the product of two expressions
 of the form $a+bx$ and $c+dx$ looks like:
 
 \[
-ac+adx+bcx+bdx^2.
+(a+bx)(c+dx)=ac+adx+bcx+bdx^2.
 \]
 
 Since, $x$ in our case is the square root of $r$, 
@@ -31032,7 +31037,7 @@ $x^2=\sqrt{r}\times\sqrt{r}=r$
 and we, hence, get
 
 \[
-ac+rbd+(ad+bc)x.
+ac+rbd+(ad+bc)\sqrt{r}.
 \]
 
 From this we can derive the general rule
@@ -31051,7 +31056,7 @@ For $\mathbb{Q}(\sqrt{2})$, this is
 This construction of the field extension guarantees
 that for any addition and any multiplication 
 of two elements in this new field, the result, again,
-is and element of this field.
+is an element of this field.
 The rules also guarantee associativity,
 as you may easily convince yourself.
 But what about the identities of addition and multiplication?
@@ -31085,7 +31090,7 @@ in the new field.
 For the additive inverse that is not difficult to answer.
 Since, for any number $(a,b)$, the additive inverse $-(a,b)$
 should fulfil the property $(a,b) + -(a,b) = (0,0)$,
-the inverse is just
+the inverse must therefore be
 
 \begin{equation}
 -(a,b) = (-a,-b).
@@ -31152,7 +31157,7 @@ is distributivity. Distributivity requires that
 (a,b)((c,d) + (e,f)) = (a,b)(c,d) + (a,b)(e,f).
 \end{equation}
 
-Multiplying this out, we get
+Multiplying the left side out, we get
 
 \[
 (ac+rbd,ad+bc) + (ae+rbf,af+be),
@@ -31205,9 +31210,7 @@ as desired.\qed
 We have defined the smallest field that extends $\mathbb{Q}$
 by adjoining $\sqrt{r}$ for any rational number $r$.
 This is nice, because it allows us to add the square roots
-of all rational numbers at once, extending the field largely,
-but in a controlled manner.
-
+of any rational number using the same recipe.
 We can even go further and extend the extended field by adjoining
 the square roots of square roots on top of the extension already
 containing the square roots, \ie:
@@ -31224,17 +31227,16 @@ of the square roots of the square roots:
 \]
 
 and then the square roots of the square roots of the square roots
-of the square roots and so on \emph{at infinitum}.
+of the square roots and so on \emph{ad infinitum}.
 There are indeed classic problems, as we will see later, that can be solved
 in exactly this field: $\mathbb{Q}$ extended by the $n^{th}$-roots,
 where $n$ is any power of 2.
 
 Extensions resulting from building extensions on top of extensions 
 is sometimes called \term{towers of fields} where one field is
-put on the top of another field yielding a batch of pancakes the
-slowly grows higher and higher.
-
-This technique, indeed, is often used in algebra, more specifically in 
+put on the top of another field yielding a batch of pancakes 
+that slowly grows higher and higher.
+This technique is often used in algebra, more specifically in 
 \term{Galois Theory}, to study equations of higher degrees.
 For instance, the equation
 
@@ -31252,7 +31254,7 @@ x_4 = 1 - \sqrt{2} - \sqrt{3 - \sqrt{2}}
 \end{align*}
 
 We can build a tower of extensions of $\mathbb{Q}$ by
-stepwise adjoining solutions:
+stepwise adjoining the irrational components of the solutions:
 
 \begin{align*}
 &\mathbb{Q}\\
@@ -31352,9 +31354,10 @@ bdr^{\frac{1}{3}}+ber^{\frac{1}{3}}r^{\frac{1}{3}}+bfr^{\frac{1}{3}}r^{\frac{2}{
 for the second and
 
 \[
-cdr^{\frac{2}{3}}+cer^{\frac{2}{3}}r^{\frac{1}{3}}+cfr^{\frac{2}{3}}r^{\frac{2}{3}}.
+cdr^{\frac{2}{3}}+cer^{\frac{2}{3}}r^{\frac{1}{3}}+cfr^{\frac{2}{3}}r^{\frac{2}{3}}
 \]
 
+for the third.
 We can simplify the second component to
 
 \[
@@ -31369,14 +31372,14 @@ cdr^{\frac{2}{3}}+cer+cfr^{\frac{4}{3}}.
 
 The last term in this expression is not very nice.
 It, apparently, introduces a new element that we do not yet know.
-We can however transform it:
+However, we can transform it:
 
 \[
 r^{\frac{4}{3}} = r^{\frac{3}{3} + \frac{1}{3}} = rr^{\frac{1}{3}}
 \]
 
 resulting in a product of two elements we do know already,
-namely $r$, which is a rational number and $r^{\frac{1}{3}}$,
+namely $r$, which is a rational number, and $r^{\frac{1}{3}}$,
 which is just $\sqrt[3]{r}$.
 The last component, hence, is
 
@@ -31397,12 +31400,18 @@ then those with exponent $\frac{1}{3}$:
 aer^{\frac{1}{3}} + bdr^{\frac{1}{3}} + cfrr^{\frac{1}{3}}
 \]
 
-and, finally, those with expoonent $\frac{2}{3}$:
+and, finally, those with exponent $\frac{2}{3}$:
 
 \[
 afr^{\frac{2}{3}} + ber^{\frac{2}{3}} + cdr^{\frac{2}{3}}.
 \]
 
+When we convert the exponents back to roots, we see that
+we have three groups:
+one consisting of rational numbers only,
+one consisting of rational numbers multiplied by $\sqrt[3]{r}$
+and, finally, one consisting of rational numbers
+multiplied by $\sqrt[3]{r^2}$.
 We conclude that the multiplication formula in this field is
 
 \begin{equation}\label{fieldExtMul3}
@@ -31430,7 +31439,7 @@ ad+bfr+cer + (ae+bd+cfr)\sqrt[3]{r} + (af+be+cd)\sqrt[3]{r^2} = 1.
 Solving such equations is a major topic of the next part.
 With the techniques we have at our disposal now,
 this is not easy. We will come back to that question later.
-Anyway, what should be clear from this exercise is
+Anyway, what should be clear from the exercise is
 that it is possible to extend the field $\mathbb{Q}$
 step by step including always more irrational numbers
 until we reach $\mathbb{R}$.
@@ -31442,11 +31451,315 @@ We have not yet discussed how to extend fields by
 \term{transcendental numbers}, \ie\ numbers that
 are not roots of rational numbers and, even further,
 do not appear as solutions of equations with
-rational coefficients. Our friends $\pi$ and $e$ are
+rational coefficients at all. 
+Our friends $\pi$ and $e$ are
 examples of such numbers. 
 
-\section{p-adic Numbers}
+\ignore{
+ http://math.stackexchange.com/questions/599930/extend-a-rational-number-field-mathbbq-by-using-a-transcendental-number
+}
+%\section{p-adic Numbers}
 \section{The Continuum}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Cantor2}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{sort}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Tree}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Binom}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+So. How many real numbers are there?
+As before, we will try to \term{count}
+the real numbers by building a set of tuples
+$(r,n)$ for all numbers $r\in \mathbb{R}$ and
+$n\in\mathbb{N}$. In order to do this,
+we need to first establish a sequence 
+of real numbers. 
+We start by investigating the real numbers
+in the range $0\dots 1$.
+We construct a sequence of 
+real numbers in this interval.
+We start by creating some sequence
+like the following:
+
+\begin{minipage}{\textwidth}
+\[
+0.10001\dots
+\]
+\[
+0.01001\dots
+\]
+\[
+0.00101\dots
+\]
+\[
+0.00011\dots
+\]
+\[
+0.00001\dots
+\]
+\[
+\dots
+\]
+\end{minipage}
+
+That is, we now have an infinite sequence 
+of infinite sequences of digits.
+Can we enumerate this sequence and assign natural numbers 
+to each single real number to count the whole sequence?
+There is an issue. For any given sequence, we can easily
+construct a new number, not yet in the sequence, but in
+the same interval (the numbers $0\dots 1$).
+The method is called 
+Cantor's (second) \term{diagonal argument}.
+It goes like this:
+For each number in the sequence,
+from the first number take the first digit,
+from the second number take the second digit,
+from the third number take the third digit
+and so on.
+Since the numbers in the sequence are distinct,
+the new number, constructed in this way,
+is different from all other numbers in the sequence.
+For instance:
+
+\begin{minipage}{\textwidth}
+\[
+0.\mathbf{1}0001\dots\\
+\]
+\[
+0.0\mathbf{1}001\dots\\
+\]
+\[
+0.00\mathbf{1}01\dots\\
+\]
+\[
+0.000\mathbf{1}1\dots\\
+\]
+\[
+0.0000\mathbf{1}\dots\\
+\]
+\[
+\dots
+\]
+\[
+0.\mathbf{11111}\dots\\
+\]
+\end{minipage}
+
+Note that the sequence above was not particularly
+built for this method. As long as the numbers are
+irrational, \ie\ each of them consists of an infinite 
+non-repeating sequence of digits, we will, 
+following the method, always construct a number
+that is not yet in the list.
+
+The point is that we can do this with any sequence
+of irrational numbers one may come up with.
+In consequence, when we construct an enumeration 
+of the real numbers, as we did for rational
+numbers using the Calkin-Wilf or the Stern-Brocot tree,
+there is always a number that we can introduce
+between any two numbers in the sequence.
+Any possible sequence of the real numbers, hence,
+is necessarily incomplete.
+We, therefore, arrive at the strange conclusion
+that $|\mathbb{R}|\neq|\mathbb{N}|$ or,
+in other words, $\mathbb{R}$ is not \term{countable}.
+
+Cantor says that the sets are both infinite,
+but they are infinite in different ways:
+$\mathbb{N}$ is countably infinite, while
+$\mathbb{R}$ is \term{uncountably} infinite.
+There are thus different infinite cardinalities.
+That of $\mathbb{N}$ is $\aleph_0$;
+that of other sets may be $\aleph_1, \aleph_2, \aleph_3,\dots$
+leading to a whole new universe of numbers
+that express different ways of being infinite.
+
+Cantor conjectured that the cardinality of $\mathbb{R}$
+is the cardinality of the \term{powerset} of $\mathbb{N}$,
+which is, as you may remember, $2^n$ for a set with $n$
+elements. The cardinality of $\mathbb{R}$, would then be
+$2^{\aleph_0}$.
+
+This makes a lot of sense, 
+when you consider the diagonal method above.
+Indeed, when we created the powerset of a given set,
+we used binary numbers to encode the presence or absence
+of a given element in one of the sets in the powerset.
+For the set $S=\lbrace a,b,c\rbrace$, the number $100_2$
+would encode the set $\lbrace a\rbrace \in P(S)$.
+Now, when you consider that $S$ is infinite,
+you have an infinite sequence of such numbers and,
+as we did above illustrating the diagonal argument,
+we can introduce for any given such sequence
+a new number, \ie\ a new element of $P(S)$.
+
+Cantor further conjectured that
+$\aleph_1 = 2^{\aleph_0}$.
+That would mean that there is no infinite cardinality
+``between'' that of $\mathbb{N}$ and that of $\mathbb{R}$.
+Cantor's conjecture is very famous under the name
+\term{Continuum Hypothesis} (\acronym{ch}).
+In the early $20^{th}$ century it was important enough
+for Hilbert to include it into his equally famous 23 problems
+that he assumed to be the most important math problems
+to be solved. It was, in fact, the first of these 23 problems.
+
+The hypothesis as such is still unsolved today.
+In 1940, however, Kurt Gödel showed
+that \acronym{ch} cannot be disproven based on the standard
+axiomatic system, the Zermelo-Fraenkel set theory (\acronym{zf}).
+In 1963, again, Paul Cohen showed
+that it cannot be proven in \acronym{zf} either.
+Mathematicians today say that \acronym{ch} 
+is \term{independent} from \acronym{zf}.
+This may perhaps be translated into sloppy common speech as
+\acronym{ch} is irrelevant, at least in the context
+of the standard axiomatic system.
+
+Without out too much phantasy, 
+we can go beyond \acronym{ch} and suspect 
+that there is a general rule that
+for any $\aleph_n=2^{\aleph_{n-1}}$.
+$\aleph_1=2^{\aleph_0}$ would then be no exception.
+It would just be the way to count in infinity.
+This hypothesis is called the
+\term{Generalised Continuum Hypothesis} (\acronym{gch}).
+The idea is extremely beautiful and, again,
+it makes a lot of sense.
+We cannot, of course, extend infinity
+by just adding an element; that would still be infinity.
+Between a set and its powerset, however, there is
+a \emph{structural} difference that still holds,
+as we have seen, with infinite sets.
+There is no one-to-one mapping 
+from the set to its powerset or, more formally worded,
+``there is
+no \term{surjection} from a set to its powerset''.
+This is known as \term{Cantor's theorem} and
+Cantor's diagonal argument demonstrates that 
+the relation between the sets
+$\mathbb{N}$ and $\mathbb{R}$
+is an instance of this theorem.
+
+The \acronym{gch}, just as the weaker \acronym{ch},
+is also independent from \acronym{zf}.
+There are, however, some stronger implications
+when assuming the truth of \acronym{gch}, as shown, again,
+by Kurt Gödel and by Polish mathematician
+Wac\l{}aw Sierpiński (1882 -- 1969).
+That, however, would lead us deeply 
+into mathematical logic, which is not our topic here.
+More interesting appears to be the question
+what actually causes the difference between
+the cardinalities of $\mathbb{N}$ and $\mathbb{R}$.
+
+This question is discussed in Cantor's first article
+on set theory, a tremendously important document
+in the history of math.
+In this short article -- it has less than five pages --
+Cantor first proves that the set of real
+\term{algebraic} numbers is countable and then
+that the set of real numbers is not countable
+providing this way a new proof for the existence
+of the \term{transcendental} numbers
+and demonstrating that it is the transcendental numbers
+that make the set of real number uncountable.
+
+To enumerate the algebraic numbers,
+Cantor uses a sophisticated trick, that
+involves mathematical machinery that is not yet
+at our disposal. He uses \term{polynomials} --
+those beasts will be a major topic of the next part --
+that are \term{irreducible} over $\mathbb{Q}$.
+He orders these polynomials and interprets
+algebraic numbers as the \term{roots},
+\ie\ the solutions, of the polynomials.
+The first ten polynomials and their roots are:
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|}
+\hline
+Polynomial & Root \\\hline\hline
+$x$       & 0  \\\hline
+$x+1$     & -1 \\\hline
+$x-1$     & 1   \\\hline
+$x+2$     & -2  \\\hline
+$2x+1$    & $-\frac{1}{2}$ \\\hline
+$2x-1$    & $\frac{1}{2}$  \\\hline
+$x-2$     &  2             \\\hline
+$x+3$     & -3             \\\hline
+$x^2+x-1$ & $\frac{-1-\sqrt{5}}{2}$ \\\hline
+$x^2-2$   & $-\sqrt{2}$ \\\hline
+$\dots$   & $\dots$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+The column ``Root'' contains the components of the enumeration
+of the algebraic numbers, which, hence, goes like
+
+\[
+0,-1,1,-2,-\frac{1}{2},\frac{1}{2},2,-3,\frac{-1-\sqrt{5}}{2},-\sqrt{2},\dots
+\]
+
+The enumeration technique is better than the one
+he used to enumerate the rationals, since it contains
+each algebraic number only once. Perhaps you remember
+that, using Cantor's original technique, we had to
+filter out duplicates.
+
+We see further that the sequence enumerates an extension
+of $\mathbb{Q}$ containing roots of rational numbers and 
+more complex formulas including such roots.
+Since Cantor used the property of a real number
+being algebraic, \ie\ appearing as a solution
+of a polynomial with rational coefficients,
+he guarantees that the resulting enumeration
+contains exactly all algebraic numbers.
+He, thus, proves that the cardinality of the set
+of algebraic numbers equals $|\mathbb{N}| = \aleph_0$.
+Since, as we have already seen,
+the set of real numbers has not the cardinality $\aleph_0$,
+this means that it is indeed the transcendental numbers
+that make $\mathbb{R}$ uncountable.
+
+\ignore{
+first version:
+- enumerating the algebraic numbers
+https://en.wikipedia.org/wiki/Georg_Cantor%27s_first_set_theory_article
+}
 \section{Review of the Number Zoo}
 
 % -------------------------------------------------------------------------

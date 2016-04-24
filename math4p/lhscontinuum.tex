@@ -4517,20 +4517,11 @@ $n\in\mathbb{N}$. In order to do this,
 we need to first establish a sequence 
 of real numbers. 
 We start by investigating the real numbers
-between 0:
-
-\[
-0.00000\dots
-\]
-
-and 1:
-
-\[
-1.00000\dots
-\]
-
-Now, we construct a random sequence of 
-real numbers in this interval:
+in the range $0\dots 1$.
+We construct a sequence of 
+real numbers in this interval.
+We start by creating some sequence
+like the following:
 
 \begin{minipage}{\textwidth}
 \[
@@ -4600,7 +4591,7 @@ For instance:
 Note that the sequence above was not particularly
 built for this method. As long as the numbers are
 irrational, \ie\ each of them consists of an infinite 
-non-repeating sequences of digits, we will, 
+non-repeating sequence of digits, we will, 
 following the method, always construct a number
 that is not yet in the list.
 
@@ -4653,7 +4644,7 @@ That would mean that there is no infinite cardinality
 Cantor's conjecture is very famous under the name
 \term{Continuum Hypothesis} (\acronym{ch}).
 In the early $20^{th}$ century it was important enough
-for Hilbert to be included into his equally famous 23 problems
+for Hilbert to include it into his equally famous 23 problems
 that he assumed to be the most important math problems
 to be solved. It was, in fact, the first of these 23 problems.
 
@@ -4673,15 +4664,31 @@ Without out too much phantasy,
 we can go beyond \acronym{ch} and suspect 
 that there is a general rule that
 for any $\aleph_n=2^{\aleph_{n-1}}$.
-That $\aleph_1=2^{\aleph_0}$ would then be no exception.
+$\aleph_1=2^{\aleph_0}$ would then be no exception.
 It would just be the way to count in infinity.
-
-This lesser known hypothesis is called the
+This hypothesis is called the
 \term{Generalised Continuum Hypothesis} (\acronym{gch}).
+The idea is extremely beautiful and, again,
+it makes a lot of sense.
+We cannot, of course, extend infinity
+by just adding an element; that would still be infinity.
+Between a set and its powerset, however, there is
+a \emph{structural} difference that still holds,
+as we have seen, with infinite sets.
+There is no one-to-one mapping 
+from the set to its powerset or, more formally worded,
+``there is
+no \term{surjection} from a set to its powerset''.
+This is known as \term{Cantor's theorem} and
+Cantor's diagonal argument demonstrates that 
+the relation between the sets
+$\mathbb{N}$ and $\mathbb{R}$
+is an instance of this theorem.
+
 The \acronym{gch}, just as the weaker \acronym{ch},
 is also independent from \acronym{zf}.
 There are, however, some stronger implications
-on assuming the truth of \acronym{gch}, as shown, again,
+when assuming the truth of \acronym{gch}, as shown, again,
 by Kurt Gödel and by Polish mathematician
 Wac\l{}aw Sierpiński (1882 -- 1969).
 That, however, would lead us deeply 
@@ -4695,10 +4702,72 @@ on set theory, a tremendously important document
 in the history of math.
 In this short article -- it has less than five pages --
 Cantor first proves that the set of real
-\term{algebraic} numbers is countable and, then,
+\term{algebraic} numbers is countable and then
 that the set of real numbers is not countable
 providing this way a new proof for the existence
-of the \term{transcendental} numbers.
+of the \term{transcendental} numbers
+and demonstrating that it is the transcendental numbers
+that make the set of real number uncountable.
+
+To enumerate the algebraic numbers,
+Cantor uses a sophisticated trick, that
+involves mathematical machinery that is not yet
+at our disposal. He uses \term{polynomials} --
+those beasts will be a major topic of the next part --
+that are \term{irreducible} over $\mathbb{Q}$.
+He orders these polynomials and interprets
+algebraic numbers as the \term{roots},
+\ie\ the solutions, of the polynomials.
+The first ten polynomials and their roots are:
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|}
+\hline
+Polynomial & Root \\\hline\hline
+$x$       & 0  \\\hline
+$x+1$     & -1 \\\hline
+$x-1$     & 1   \\\hline
+$x+2$     & -2  \\\hline
+$2x+1$    & $-\frac{1}{2}$ \\\hline
+$2x-1$    & $\frac{1}{2}$  \\\hline
+$x-2$     &  2             \\\hline
+$x+3$     & -3             \\\hline
+$x^2+x-1$ & $\frac{-1-\sqrt{5}}{2}$ \\\hline
+$x^2-2$   & $-\sqrt{2}$ \\\hline
+$\dots$   & $\dots$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+The column ``Root'' contains the components of the enumeration
+of the algebraic numbers, which, hence, goes like
+
+\[
+0,-1,1,-2,-\frac{1}{2},\frac{1}{2},2,-3,\frac{-1-\sqrt{5}}{2},-\sqrt{2},\dots
+\]
+
+The enumeration technique is better than the one
+he used to enumerate the rationals, since it contains
+each algebraic number only once. Perhaps you remember
+that, using Cantor's original technique, we had to
+filter out duplicates.
+
+We see further that the sequence enumerates an extension
+of $\mathbb{Q}$ containing roots of rational numbers and 
+more complex formulas including such roots.
+Since Cantor used the property of a real number
+being algebraic, \ie\ appearing as a solution
+of a polynomial with rational coefficients,
+he guarantees that the resulting enumeration
+contains exactly all algebraic numbers.
+He, thus, proves that the cardinality of the set
+of algebraic numbers equals $|\mathbb{N}| = \aleph_0$.
+Since, as we have already seen,
+the set of real numbers has not the cardinality $\aleph_0$,
+this means that it is indeed the transcendental numbers
+that make $\mathbb{R}$ uncountable.
 
 \ignore{
 first version:
