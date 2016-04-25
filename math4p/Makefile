@@ -60,6 +60,7 @@ ALL	 = cmds.tex \
 	   src/c06/Gamma.lhs \
 	   src/c06/Realrep.lhs \
 	   src/c06/Real.lhs \
+	   src/c06/GFun.lhs \
 	   src/c06/SternBrocot.lhs \
 	   src/c06/Extension.lhs \
 	   src/c06/Cantor2.lhs \

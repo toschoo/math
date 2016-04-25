@@ -13,6 +13,7 @@
 \section{$\mathbb{R}$}
 %include Real.lhs
 \section{Real Factorials}
+%include GFun.lhs
 \section{The Stern-Brocot Tree} 
 %include SternBrocot.lhs
 \section{Field Extension}

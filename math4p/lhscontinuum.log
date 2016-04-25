@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  24 APR 2016 21:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  25 APR 2016 19:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1454,7 +1454,7 @@ Overfull \hbox (15.67502pt too wide) in paragraph at lines 2122--2198
 \openout3 = `lhscontinuum.ptb'.
 
 
-Overfull \hbox (3.25443pt too wide) in paragraph at lines 3341--3349
+Overfull \hbox (3.25443pt too wide) in paragraph at lines 3380--3388
 \OT1/cmr/m/n/10.95 see the cor-re-spond-ing gen-er-a-tion from the Stern-Brocot
  tree. Let $\OT1/cmr/m/it/10.95 t [] [] \OT1/cmr/m/n/10.95 ([]1) (1 %
  []
