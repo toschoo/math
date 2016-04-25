@@ -265,4 +265,3 @@ where
 
   coeffs_ :: [String] -> Int -> [Integer]
   coeffs_ xs = map fst . binomials xs
-
