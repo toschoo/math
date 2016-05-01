@@ -19,7 +19,7 @@ where
   gammae :: Int -> Double -> Double
   gammae i t = f * go 1 (fromIntegral i)
     where f = e**((-1)*gamma*t)/t
-          go n m | n > m     = 1
+          go n m | n >= m    = 1
                  | otherwise = e**(t/n)
                                * (1+(t/n))**(-1)
                                * go (n+1) m
@@ -40,6 +40,16 @@ where
   gammapi i = gammal i 0.5 * gammal i 0.5
 
   ------------------------------------------------------------------------
+  -- halves of odds
+  ------------------------------------------------------------------------
+  gammaho :: Integer -> Double
+  gammaho 1 = sqrt pi
+  gammaho n | even n = error "not an odd number!"
+            | otherwise = rff (n-2) / 2**i * sqrt pi
+    where rff = fromIntegral . facfac
+          i   = fromIntegral ((n-1) `div` 2)
+
+  ------------------------------------------------------------------------
   -- real binomial coefficients
   ------------------------------------------------------------------------
   chooser :: Int -> Double -> Double -> Double
@@ -48,7 +58,7 @@ where
 
   ------------------------------------------------------------------------
   -- The standard defintion of the Gamma Function
-  -- make use of integrals:
+  -- make use of the Euler integral of the second kind:
   -- Integral(0..inf) x^(t-1)e^(-x)dx
   ------------------------------------------------------------------------
   gammas :: Double -> Double

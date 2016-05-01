@@ -21,6 +21,11 @@ where
   fac 1 = 1
   fac n = n * fac (n - 1)
 
+  facfac :: Integer -> Integer
+  facfac 0 = 1
+  facfac 1 = 1
+  facfac n = n * facfac (n-2)
+
   choose2 :: Integer -> Integer -> Integer
   choose2 n 0 = 1
   choose2 n 1 = n
