@@ -9,12 +9,12 @@ where
 \end{code}
 }
 
-As we already did for integers and rational numbers,
-we will now try to generalise some of the combinatorical
+As we have already done in the domain of integers,
+we will now try to generalise some of the combinatorial
 sequences to the domain of real numbers.
-We did this for integers and rational numbers
-with the binomial coefficients.
-Before we can introduce binomials for real numbers,
+We did this with integers
+for the binomial coefficients.
+Before we can introduce real binomials,
 however, we need to look at factorials.
 The factorial of $n$, $n!$, is the number of possible
 permutations of a sequence of $n$ elements.
@@ -31,8 +31,8 @@ that often arises in modern mathematics.
 Mathematics usually aims to generalise concepts
 and often independent of concrete applications
 of this generalised concept.
-(The applications often follow, sometimes years
- or even centuries later.)
+The applications often follow, sometimes years
+or even centuries later.
 We all know geometry in the two-dimensional plane.
 Mathematicians have generalised the concepts of
 two-dimensional geometry to $n$ dimensions.
@@ -42,21 +42,21 @@ there is not much sense
 in such geometries beyond three or,
 with Einstein in mind, four dimensions.
 However, the areas of mathematics that study
-\term{spaces} with more than four or even
+\term{space} with more than four or even
 infinitely many dimensions (such as linear algebra
 and complex analysis), actually have many applications in
 statistics, engineering, physics and other
-quite practical domains.
+rather practical domains.
 Furthermore, applications is an important, but not
 the only motivation for mathematical investigation.
 Mathematics studies its fundamental concepts
 (like numbers, sets or the space in which
 geometry is studied) to arrive at general theorems.
-So, even when there is no immediate application,
+So, even when there is no immediate application yet,
 for the sake of better understanding of the concepts involved,
 mathematicians do not hesitate to ask questions
 that appear to be absurd or meaningless to ``ordinary'' people
-(whoever those people are).
+(whoever those are).
 
 An obvious way to look at real factorials is to represent them
 in the Cartesian plane, \ie\ in the coordinate system.
@@ -66,7 +66,7 @@ We can sketch the factorials of natural numbers as:
 \begin{tikzpicture}
    \draw [->] (0,0) -- (6,0);
    \draw [->] (0,0) -- (0,6.5);
-   \node [teal,font=\small,anchor=north east] (fac) at (0,6) {$n!$};
+   \node [teal,font=\small,anchor=north east] (fac) at (0,6.5) {$n!$};
    \node [teal,font=\small,anchor=north east] (fac) at (6,0) {$n$};
    \draw [red,fill=red] (0,0.05) circle (1pt);
    \draw [red,fill=red] (1,0.05) circle (1pt);
@@ -92,10 +92,10 @@ that connects the discrete dots in the picture.
 
 One obvious requirement for such a function $f$ is
 that for any $n\in\mathbb{N}, f(n) = n!$.
-A function that (almost) fulfills this requirement
+A function that (almost) fulfils this requirement
 is the \term{Gamma function}, $\Gamma$.
 For any integer $n>1$, 
-$\Gamma$ fulfills the constraints
+$\Gamma$ is
 
 \begin{equation}
 \Gamma(n) = (n-1)\Gamma(n-1)
@@ -107,7 +107,7 @@ We can model this in Haskell as
 \begin{minipage}{\textwidth}
 \begin{code}
   gamman :: Natural -> Natural
-  gamman 0 = 1
+  gamman 0 = undefined
   gamman 1 = 1
   gamman n = (n-1)*gamman (n-1)
 \end{code}
@@ -181,7 +181,8 @@ The |go| function implements the product itself.
 Finally we multiply $\frac{1}{x}$ and we are done.
 
 Let us look at how precise this function can mimic $n!$
-for given iterations. When we apply |gammal| on $x=1$,
+for a given number of iterations. 
+When we apply |gammal| on $x=1$,
 then we obviously get 1, since we compute
 
 \[
@@ -193,8 +194,7 @@ then we obviously get 1, since we compute
 \]
 
 Indeed, |gammal 1 1| immediately yields 1.
-What about the other factorials?
-We try |gammal 1 2| and get 
+Next, we try |gammal 1 2| and get 
 \[
 0.\overline{6}
 \]
@@ -213,14 +213,14 @@ We try |gammal 100 2| and see:
 0.99019607\dots
 \]
 
-What about |gammal 1000 2|?
+and |gammal 1000 2|:
 
 \[
 0.99900199\dots
 \]
 
 We see, the function converges slowly.
-When we try the the factorials of $3\dots 6$ 
+When we try the factorials for $3\dots 6$ 
 with \num{1000} iterations, we see:
 
 \[
@@ -244,7 +244,7 @@ Here it is:
 119.82018583\dots
 \]
 
-Still more than 1 off the expected result 120.
+Still more than 0.1 off the expected result 120.
 We try again with \num{100000} iterations:
 
 \[
@@ -262,7 +262,7 @@ We see that the infinite product slowly approaches
 the expected results of the $\Gamma$ function, but
 the stress here is on ``slowly''. Already for $x=6$,
 we need a lot of iterations to achieve a deviation
-of less than unity.
+of less than 0.01.
 
 Let us look at another infinite product.
 It is not faster than the one we looked at --
@@ -303,9 +303,9 @@ should result in 1 for $x=1$. Let us give it a try.
 0.56145836\dots
 \]
 
-That is an ugly result! Already for 1, the result
+That is an ugly result! Already for 1, it
 diverges from the expected result by almost $\frac{1}{2}$!
-Let us see how many iterations do we need to approach 1:
+Let us see how many iterations we need to approach 1:
 
 |gammae 10   1   = 0.95043595...|\\
 |gammae 100  1   = 0.99500219...|\\
@@ -319,16 +319,35 @@ and so on. What about 2?
 |gammae 1000 1   = 0.99799833...|
 
 It definitely converges slower than Euler's formula.
+For the remainder of this section, we will therefore stick
+to Euler's solution.
 
-What about results for other numbers, not positive
-integers:
+Let us look at some other numbers,
+not not positive
+integers, for instance:
 
+\begin{minipage}{\textwidth}
 \[
 \Gamma(0) = \infty,
 \]
 \[
 \Gamma(-1) = -\infty,
 \]
+\end{minipage}
+
+So, $\Gamma(0)$ and $\Gamma(-1)$ yield $\pm\infty$.
+What about $\frac{1}{2}$?
+Using |gammal|, we see the following results:
+
+\begin{minipage}{\textwidth}
+|gammal    1 0.5 = 1.8856...|\\
+|gammal   10 0.5 = 1.7927...|\\
+|gammal  100 0.5 = 1.7746...|\\
+|gammal 1000 0.5 = 1.7726...|\\
+\end{minipage}
+
+It will finally approach: 
+
 \[
 \Gamma(0.5) = 1.77267520\dots
 \]
@@ -339,9 +358,9 @@ Well, is it such boring? Look what happens:
 |gammal 1000 0.5 * gammal 1000 0.5 = 3.14237736...|
 
 That is $\pi$! So $\Gamma(0.5) = \sqrt{\pi}$. Not bad!
-The meeting of $e$ and $\gamma$ in Weierstrass' formula
+The occurrence of both, $e$ and $\gamma$, in Weierstrass' formula
 already looked somewhat suspicious. It was only a matter of time,
-when we would hit $\pi$ in applying the function to some values.
+when we would meet $\pi$ in applying the function to some values.
 In fact, there are many values for which $\Gamma$ produces
 a product of $\sqrt{\pi}$ with some fraction. For instance:
 
@@ -362,11 +381,13 @@ a product of $\sqrt{\pi}$ with some fraction. For instance:
 \]
 
 These results suggest a pattern for odd numbers $n$.
-Apparently, $\Gamma(\frac{n}{2})$ yields a product 
-$k\frac{1}{2^{(n-1)/2}}\sqrt{\pi}$,
+Apparently, $\Gamma(\frac{n}{2})$ yields a product of the form
+$\frac{k}{2^{(n-1)/2}}\sqrt{\pi}$,
 where $k = (n-2)(k_{n-2})$.
-The factors $k$ of the odd numbers $1,3,\dots 11$ are
-1, 1, 3, 15, 105, 945.
+
+Can we say more about the factor $k$?
+For the odd numbers $1,3,\dots 11$, $k$ is
+1, 3, 15, 105, 945, 10395.
 These are the \term{double factorials}, $n!!$, 
 for the odd numbers, \ie\
 the products of all odd numbers $1,3,..,n$.
@@ -394,6 +415,7 @@ The $\Gamma$ function shows many of such suprising properties.
 It has been and is still being extensively studied 
 and a lot of relations to other functions,
 such as the Riemann zeta function, have been found.
+
 But let us now go on to the definition of real binomial coefficients
 using the $\Gamma$ function.
 To this end, we define a new |choose| function, namely:
@@ -406,15 +428,55 @@ To this end, we define a new |choose| function, namely:
 \end{code}
 \end{minipage}
 
+Again, we try this function on integers.
+For instance:
 
+\begin{minipage}{\textwidth}
+|choose 2 1 = 2|\\
+|choose 3 1 = 3|\\
+|choose 3 2 = 3|\\
+|choose 5 2 = 10|\\
+|choose 5 3 = 10|\\
+|choose 7 2 = 21|\\
+|choose 7 3 = 35|
+\end{minipage}
 
+We start with $\binom{2}{1}=2$, using |chooser|
+
+|chooser 1 2 1 = 1.5|
+
+Far off. So, again, we increase the number of iterations:
+
+\begin{minipage}{\textwidth}
+|chooser     1 2 1 = 1.5|
+|chooser    10 2 1 = 1.8461...|
+|chooser   100 2 1 = 1.9805...|
+|chooser  1000 2 1 = 1.9980...|
+|chooser 10000 2 1 = 1.9998...|
+\end{minipage}
+
+After \num{10000} iterations, we come pretty close.
+Let us try the other examples with \num{10000} iterations:
+
+\begin{minipage}{\textwidth}
+|chooser 10000 3 1 = 2.9994...|\\
+|chooser 10000 3 2 = 2.9994...|\\
+|chooser 10000 5 2 = 9.9940...|\\
+|chooser 10000 5 3 = 9.9940...|\\
+|chooser 10000 7 2 = 10.9790...|\\
+|chooser 10000 7 3 = 34.9580...|
+\end{minipage}
+
+The resulting function has been little studied.
+It is known that many of the binomial identities
+fail for real numbers. The behaviour for different
+values of $n$ and $k$ not integers is very complex.
+We will not go in details here. But we will certainly
+come back to the $\Gamma$-function and its applications later on.
 
 
 \ignore {
-
-- Binomial coefficients
 - History of the Gamma function
 https://en.wikipedia.org/wiki/Binomial_coefficient#Two_real_or_complex_valued_arguments
-
 Check numerical results against RealN!!!
 }
