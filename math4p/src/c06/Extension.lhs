@@ -128,14 +128,14 @@ x^2 - 2 = 0.
 \end{equation}
 
 We proceed like for the linear equation: we subtract
-2 on both sides and then, instead of dividing by something,
+$-2$ on both sides and then, instead of dividing by something,
 we take the square root leading to
 
 \begin{equation}
 x = \sqrt{2}.
 \end{equation}
 
-Unfortunately, $\sqrt{2}$ is, as we have already shown,
+Unfortunately, $\sqrt{2}$ is, as we already know,
 not in the field $\mathbb{Q}$. It is irrational.
 We can of course redefine the field 
 in which we started to solve this equation in the first place
@@ -268,7 +268,7 @@ This is easy to see,
 because $(a,0) = a+0\times\sqrt{r} = a$.
 Since the additive identity is 0
 in $\mathbb{Q}$, the identity should be $(0,0)$.
-We just follow the rule \ref{fieldExtAdd}
+We just follow rule \ref{fieldExtAdd}
 to prove that:
 
 \begin{equation}
@@ -434,7 +434,7 @@ in exactly this field: $\mathbb{Q}$ extended by the $n^{th}$-roots,
 where $n$ is any power of 2.
 
 Extensions resulting from building extensions on top of extensions 
-is sometimes called \term{towers of fields} where one field is
+are sometimes called \term{towers of fields} where one field is
 put on the top of another field yielding a batch of pancakes 
 that slowly grows higher and higher.
 This technique is often used in algebra, more specifically in 
@@ -493,7 +493,7 @@ a triple is needed, namely the triple
 
 The degree of $\mathbb{Q}(\sqrt[3]{r})$ is therefore 3.
 
-What does this field look like?
+What does the field $\mathbb{Q}(\sqrt[3]{r})$ look like?
 For addition, it looks very similar to the field $\mathbb{Q}(\sqrt{r})$.
 The addition rule is
 
@@ -519,8 +519,7 @@ This corresponds to the expression
 (d+e\sqrt[3]{r}+f\sqrt[3]{r^2}).
 \]
 
-We distribute the first sum 
-component by component
+We distribute the first sum term by term
 over the second sum.
 Distributing $a$ gives
 

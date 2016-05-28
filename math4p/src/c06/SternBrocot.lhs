@@ -15,9 +15,9 @@ where
 
 Achille Brocot (1817 -- 1878) was part of a clockmaker dynasty
 in Paris started by his father and continuing after his death.
-The Brocots had a strong emphasis on engineering
-and, under the pressure of cheap low-quality imports
-mainly from the USA, 
+The Brocots had a strong emphasis on engineering.
+Under the pressure of cheap low-quality imports
+mainly from the USA, they
 innovated clockmaking with the aim to reduce production cost
 without equivalent degradation in quality.
 The constant engineering work manifested in a considerable
@@ -67,7 +67,7 @@ such a continued fraction can be captured in Haskell as:
 \end{minipage}
 
 Here, |invert| is a function to create the multiplicative
-invert of a fraction, \ie\ $invert(\frac{n}{d}) = \frac{d}{n}$
+inverse of a fraction, \ie\ $invert(\frac{n}{d}) = \frac{d}{n}$
 or in Haskell:
 
 \begin{minipage}{\textwidth}
@@ -227,10 +227,11 @@ The function |sterbroc| takes an integer argument
 to define the number of generations we want to create and
 an initial list of |Ratio|. If we have exhausted the number
 of generations, we create the final |Node| without kids.
-If we start with a negative number, we will generate 
-infinitely many generations.
 Otherwise, we create the |brocotkids| and continue with
 |sterbroc| on $k_1$ and $k_2$.
+If we start with a negative number, we will generate 
+infinitely many generations.
+
 We can now convert the continued fractions in the nodes
 to fractions by |fmap|ing |contfracr| on them. Here is a function
 that creates the Stern-Brocot Tree from root node |[0,1]|
@@ -243,7 +244,7 @@ labled with fractions:
 \end{code}
 \end{minipage}
 
-For the first five generations of this tree are
+For the first five generations, this tree is
 
 \begin{center}
 \begin{tikzpicture}
@@ -475,6 +476,7 @@ leading zeros, so that all binary numbers have the same length, we have
 \end{center}
 
 When we look at the indexes whose fractions do not change,
+\ie\ 0, 2, 5 and 7,
 we see one property that they all have in common:
 they are all symmetric. That is, when we reverse the bit strings,
 we still have the same number.
@@ -559,9 +561,9 @@ and use this function to permute the original input list:
 \end{code}
 \end{minipage}
 
-Applied on the list |[0,1,2,3,4,5,6]|,
+Applied on the list |[0,1,2,3,4,5,6,7]|,
 we see exactly the $(1,4)(3,6)$ permutation
-we saw above, namely |[0,4,2,6,1,5,3]|.
+we saw above, namely |[0,4,2,6,1,5,3,7]|.
 Applied on a generation from the Calkin-Wilf tree,
 we see the corresponding generation from the 
 Stern-Brocot tree. 
@@ -636,7 +638,7 @@ This sequence, named for British geologist
 John Farey (1766 -- 1826), has a lot of remarkable properties.
 The Farey sequence of $n$ lists all fractions 
 in canoncial form between 0 and 1,
-usually included, with a denominator less or equal than $n$.
+usually included, with a denominator less than or equal to $n$.
 For instance, the Farey sequence of 1, designated $F_1$ just contains
 $0,1$; $F_2$ contains $0,\frac{1}{2},1$;
 $F_3$ contains $0,\frac{1}{3},\frac{2}{3},1$ and so on.

@@ -48,15 +48,15 @@ simple, let the amount equal 1 (of any currency
 of your liking -- currencies in Jacob's lifetime
 were extremely complicated, so we better ignore
 that detail). After one year $100\%$ interest is paid.
-After that year, we hence have $1+\frac{1*100}{100} = 2$ 
+After that year, we hence have $1+\frac{1\times 100}{100} = 2$ 
 in our account. That is trivial.
 But what, if the interest is paid in shorter periods
 during the year?
 For instance, if the interest is paid twice a year,
 then the interest for that period would be $50\%$.
-After six months we would have $1+\frac{1*50}{100} = 1.5$
+After six months we would have $1+\frac{1\times 50}{100} = 1.5$
 in our account. After one year, the account would then be
-$1.5 + \frac{1.5*50}{100} = 1.5 + \frac{75}{100} = 1.5 + 0.75 = 2.25$.
+$1.5 + \frac{1.5\times 50}{100} = 1.5 + \frac{75}{100} = 1.5 + 0.75 = 2.25$.
 
 Another way to see this is that the initial value 
 is multiplied by 1.5 (the initial value plus the interest) twice:
@@ -140,7 +140,7 @@ We could then implement |e| as
 \end{minipage}
 
 The fact that $e$ is related to the factorial
-may led to the suspicion that it also appears
+may lead to the suspicion that it also appears
 directly in a formula dealing with factorials. 
 There, indeed, is a formula derived by James Stirling
 who we already know for the Stirling numbers.

@@ -967,15 +967,15 @@ simple, let the amount equal 1 (of any currency
 of your liking -- currencies in Jacob's lifetime
 were extremely complicated, so we better ignore
 that detail). After one year $100\%$ interest is paid.
-After that year, we hence have $1+\frac{1*100}{100} = 2$ 
+After that year, we hence have $1+\frac{1\times 100}{100} = 2$ 
 in our account. That is trivial.
 But what, if the interest is paid in shorter periods
 during the year?
 For instance, if the interest is paid twice a year,
 then the interest for that period would be $50\%$.
-After six months we would have $1+\frac{1*50}{100} = 1.5$
+After six months we would have $1+\frac{1\times 50}{100} = 1.5$
 in our account. After one year, the account would then be
-$1.5 + \frac{1.5*50}{100} = 1.5 + \frac{75}{100} = 1.5 + 0.75 = 2.25$.
+$1.5 + \frac{1.5\times 50}{100} = 1.5 + \frac{75}{100} = 1.5 + 0.75 = 2.25$.
 
 Another way to see this is that the initial value 
 is multiplied by 1.5 (the initial value plus the interest) twice:
@@ -1076,7 +1076,7 @@ We could then implement \ensuremath{\Varid{e}} as
 \end{minipage}
 
 The fact that $e$ is related to the factorial
-may led to the suspicion that it also appears
+may lead to the suspicion that it also appears
 directly in a formula dealing with factorials. 
 There, indeed, is a formula derived by James Stirling
 who we already know for the Stirling numbers.
@@ -1371,7 +1371,7 @@ called the \term{harmonic number} $H_k$, then is
 
 \begin{equation}
 \sum_{n=1}^k{\frac{1}{n}} = 1 + 
-  \frac{1}{2} + \dots
+  \frac{1}{2} + \dots +
   \frac{1}{k} 
 \end{equation}
 
@@ -1555,7 +1555,7 @@ $0.5\dots$ \ensuremath{\Varid{pquozavg}\;\mathrm{43}\mathrel{=}\mathrm{0.57416}}
 is already very close to $\gamma$.
 It may be mentioned that 43 is suspiciously close to 42.
 
-With de la Vallée-Pussin's result in mind,
+With de la Vallée-Poussin's result in mind,
 it is not too surprising that $\gamma$ is related
 to divisors and Euler's totient number.
 A result of Gauss' immediate successor in Göttingen, 
@@ -1699,7 +1699,7 @@ A better, even still not perfect approximation, is
 \frac{n}{e^{\gamma}\ln \ln n}.
 \]
 
-For the $n=40$ again,
+For $n=40$ again,
 $\frac{40}{e^{\gamma}\ln \ln 40}$ is around 17 and, hence,
 very close to the real value.
 
@@ -1780,7 +1780,7 @@ to fractions. We just have to multiply them
 by a power of 10, such that there is a part
 greater 0 before the decimal point and
 that the first number
-of the the repeating period is aligned to it.
+of the repeating period is aligned to it.
 For $0.\overline{3}$, 
 this is just $10\times 0.\overline{3} = 3.\overline{3}$.
 For $0.1\overline{6}$,
@@ -1841,11 +1841,11 @@ like in dealing with money, cooking,
 medication or travelling distances,
 we calculate up to one or two decimal places.
 Prices, for instances are often given 
-as 4.99 or something, but hardly 4.998.
+as 4.99 or something, but hardly as 4.998.
 Recipes would tell that we need 2.5 pounds
 or whatever of something, using one decimal place.
 One would say that it is about 1.5km 
-to somewhere, but hardly that it is 1.49km.
+to somewhere, but hardly that it is 1.499961km.
 In other areas, especially in science 
 much more precision is needed.
 We therefore need a flexible datatype.
@@ -1871,14 +1871,16 @@ The first number represents the integral part.
 You will remember that a number is a list
 of digits where every digit is multiplied
 by a power of ten according to the place
-of the digit. The digit, counted from the right,
+of the digit. The first digit, counted from the right,
 is multiplied by $10^0=1$. The second is 
 multiplied by $10^1$, the third by $10^2$
-and so on. The digit multiplied by $10^0$,
+and so on. 
+
+The digit multiplied by $10^0$,
 is the last digit before the decimal point.
 If we wanted to push it to the right
 of the decimal point, we would need
-to reduce the exponent. So, we multiplied it
+to reduce the exponent. So, we would multiply it
 not by $10^0$, but by $10^{-1}$ to push it
 to the first decimal place.
 This is the function of the second number
@@ -1923,7 +1925,7 @@ number with this number type.
 \ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1000}\;\mathrm{3}}\\
 $\dots$
 
-To keap numbers as concise as possible, we define a function
+To keep numbers as concise as possible, we define a function
 to simplify numbers with redundant zeros:
 
 \begin{minipage}{\textwidth}
@@ -2624,8 +2626,8 @@ rather practical domains.
 Furthermore, applications is an important, but not
 the only motivation for mathematical investigation.
 Mathematics studies its fundamental concepts
-(like numbers, sets or the space in which
-geometry is studied) to arrive at general theorems.
+(like numbers, sets or the space in which we
+exercise geometry) to arrive at general theorems.
 So, even when there is no immediate application yet,
 for the sake of better understanding of the concepts involved,
 mathematicians do not hesitate to ask questions
@@ -2725,7 +2727,8 @@ us here. We only have to keep in mind that, whenever
 we want to make the connection from $\Gamma$ to factorial,
 we need to increment $n$ by 1.
 
-Well, this shows us just another way to express
+Well, the \ensuremath{\Varid{gamman}} function above
+shows us just another way to express
 factorials for natural numbers. But we wanted to find
 a function for real numbers.
 There are indeed many ways to define the $\Gamma$ function
@@ -2961,7 +2964,7 @@ For the remainder of this section, we will therefore stick
 to Euler's solution.
 
 Let us look at some other numbers,
-not not positive
+not positive
 integers, for instance:
 
 \begin{minipage}{\textwidth}
@@ -2991,9 +2994,9 @@ It will finally approach:
 \]
 
 Is it possible that $\Gamma(0.5)$ yields such a boring number?
-Well, is it such boring? Look what happens:
+Well, is it such boring? Look what happens (with one million iterations):
 
-\ensuremath{\Varid{gammal}\;\mathrm{1000}\;\mathrm{0.5}\mathbin{*}\Varid{gammal}\;\mathrm{1000}\;\mathrm{0.5}\mathrel{=}\mathrm{3.14237736}\mathbin{...}}
+\ensuremath{\Varid{gammal}\;\mathrm{1000000}\;\mathrm{0.5}\mathbin{*}\Varid{gammal}\;\mathrm{1000000}\;\mathrm{0.5}\mathrel{=}\mathrm{3.14159}\mathbin{...}}
 
 That is $\pi$! So $\Gamma(0.5) = \sqrt{\pi}$. Not bad!
 The occurrence of both, $e$ and $\gamma$, in Weierstrass' formula
@@ -3120,10 +3123,10 @@ We start with $\binom{2}{1}=2$, using \ensuremath{\Varid{chooser}}
 Far off. So, again, we increase the number of iterations:
 
 \begin{minipage}{\textwidth}
-\ensuremath{\Varid{chooser}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.5}}
-\ensuremath{\Varid{chooser}\;\mathrm{10}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.8461}\mathbin{...}}
-\ensuremath{\Varid{chooser}\;\mathrm{100}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9805}\mathbin{...}}
-\ensuremath{\Varid{chooser}\;\mathrm{1000}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9980}\mathbin{...}}
+\ensuremath{\Varid{chooser}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.5}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.8461}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{100}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9805}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{1000}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9980}\mathbin{...}}\\
 \ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9998}\mathbin{...}}
 \end{minipage}
 
@@ -3139,11 +3142,13 @@ Let us try the other examples with \num{10000} iterations:
 \ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{7}\;\mathrm{3}\mathrel{=}\mathrm{34.9580}\mathbin{...}}
 \end{minipage}
 
+which is fairly close for all these numbers.
+
 The resulting function has been little studied.
 It is known that many of the binomial identities
 fail for real numbers. The behaviour for different
 values of $n$ and $k$ not integers is very complex.
-We will not go in details here. But we will certainly
+We will not go into details here. But we will certainly
 come back to the $\Gamma$-function and its applications later on.
 
 
@@ -3193,9 +3198,9 @@ Check numerical results against RealN!!!
 
 Achille Brocot (1817 -- 1878) was part of a clockmaker dynasty
 in Paris started by his father and continuing after his death.
-The Brocots had a strong emphasis on engineering
-and, under the pressure of cheap low-quality imports
-mainly from the USA, 
+The Brocots had a strong emphasis on engineering.
+Under the pressure of cheap low-quality imports
+mainly from the USA, they
 innovated clockmaking with the aim to reduce production cost
 without equivalent degradation in quality.
 The constant engineering work manifested in a considerable
@@ -3262,7 +3267,7 @@ such a continued fraction can be captured in Haskell as:
 \end{minipage}
 
 Here, \ensuremath{\Varid{invert}} is a function to create the multiplicative
-invert of a fraction, \ie\ $invert(\frac{n}{d}) = \frac{d}{n}$
+inverse of a fraction, \ie\ $invert(\frac{n}{d}) = \frac{d}{n}$
 or in Haskell:
 
 \begin{minipage}{\textwidth}
@@ -3511,10 +3516,11 @@ The function \ensuremath{\Varid{sterbroc}} takes an integer argument
 to define the number of generations we want to create and
 an initial list of \ensuremath{\Conid{Ratio}}. If we have exhausted the number
 of generations, we create the final \ensuremath{\Conid{Node}} without kids.
-If we start with a negative number, we will generate 
-infinitely many generations.
 Otherwise, we create the \ensuremath{\Varid{brocotkids}} and continue with
 \ensuremath{\Varid{sterbroc}} on $k_1$ and $k_2$.
+If we start with a negative number, we will generate 
+infinitely many generations.
+
 We can now convert the continued fractions in the nodes
 to fractions by \ensuremath{\Varid{fmap}}ing \ensuremath{\Varid{contfracr}} on them. Here is a function
 that creates the Stern-Brocot Tree from root node \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}
@@ -3534,7 +3540,7 @@ labled with fractions:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-For the first five generations of this tree are
+For the first five generations, this tree is
 
 \begin{center}
 \begin{tikzpicture}
@@ -3766,6 +3772,7 @@ leading zeros, so that all binary numbers have the same length, we have
 \end{center}
 
 When we look at the indexes whose fractions do not change,
+\ie\ 0, 2, 5 and 7,
 we see one property that they all have in common:
 they are all symmetric. That is, when we reverse the bit strings,
 we still have the same number.
@@ -3933,9 +3940,9 @@ and use this function to permute the original input list:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Applied on the list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5},\mathrm{6}\mskip1.5mu]},
+Applied on the list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5},\mathrm{6},\mathrm{7}\mskip1.5mu]},
 we see exactly the $(1,4)(3,6)$ permutation
-we saw above, namely \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{4},\mathrm{2},\mathrm{6},\mathrm{1},\mathrm{5},\mathrm{3}\mskip1.5mu]}.
+we saw above, namely \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{4},\mathrm{2},\mathrm{6},\mathrm{1},\mathrm{5},\mathrm{3},\mathrm{7}\mskip1.5mu]}.
 Applied on a generation from the Calkin-Wilf tree,
 we see the corresponding generation from the 
 Stern-Brocot tree. 
@@ -4020,7 +4027,7 @@ This sequence, named for British geologist
 John Farey (1766 -- 1826), has a lot of remarkable properties.
 The Farey sequence of $n$ lists all fractions 
 in canoncial form between 0 and 1,
-usually included, with a denominator less or equal than $n$.
+usually included, with a denominator less than or equal to $n$.
 For instance, the Farey sequence of 1, designated $F_1$ just contains
 $0,1$; $F_2$ contains $0,\frac{1}{2},1$;
 $F_3$ contains $0,\frac{1}{3},\frac{2}{3},1$ and so on.
@@ -4518,14 +4525,14 @@ x^2 - 2 = 0.
 \end{equation}
 
 We proceed like for the linear equation: we subtract
-2 on both sides and then, instead of dividing by something,
+$-2$ on both sides and then, instead of dividing by something,
 we take the square root leading to
 
 \begin{equation}
 x = \sqrt{2}.
 \end{equation}
 
-Unfortunately, $\sqrt{2}$ is, as we have already shown,
+Unfortunately, $\sqrt{2}$ is, as we already know,
 not in the field $\mathbb{Q}$. It is irrational.
 We can of course redefine the field 
 in which we started to solve this equation in the first place
@@ -4676,7 +4683,7 @@ This is easy to see,
 because $(a,0) = a+0\times\sqrt{r} = a$.
 Since the additive identity is 0
 in $\mathbb{Q}$, the identity should be $(0,0)$.
-We just follow the rule \ref{fieldExtAdd}
+We just follow rule \ref{fieldExtAdd}
 to prove that:
 
 \begin{equation}
@@ -4842,7 +4849,7 @@ in exactly this field: $\mathbb{Q}$ extended by the $n^{th}$-roots,
 where $n$ is any power of 2.
 
 Extensions resulting from building extensions on top of extensions 
-is sometimes called \term{towers of fields} where one field is
+are sometimes called \term{towers of fields} where one field is
 put on the top of another field yielding a batch of pancakes 
 that slowly grows higher and higher.
 This technique is often used in algebra, more specifically in 
@@ -4901,7 +4908,7 @@ a triple is needed, namely the triple
 
 The degree of $\mathbb{Q}(\sqrt[3]{r})$ is therefore 3.
 
-What does this field look like?
+What does the field $\mathbb{Q}(\sqrt[3]{r})$ look like?
 For addition, it looks very similar to the field $\mathbb{Q}(\sqrt{r})$.
 The addition rule is
 
@@ -4927,8 +4934,7 @@ This corresponds to the expression
 (d+e\sqrt[3]{r}+f\sqrt[3]{r^2}).
 \]
 
-We distribute the first sum 
-component by component
+We distribute the first sum term by term
 over the second sum.
 Distributing $a$ gives
 
@@ -5139,7 +5145,7 @@ like the following:
 \]
 \end{minipage}
 
-That is, we now have an infinite sequence 
+We now have an infinite sequence 
 of infinite sequences of digits.
 Can we enumerate this sequence and assign natural numbers 
 to each single real number to count the whole sequence?
@@ -5184,7 +5190,7 @@ For instance:
 \end{minipage}
 
 Note that the sequence above was not particularly
-built for this method. As long as the numbers are
+designed to hold for this method. As long as the numbers are
 irrational, \ie\ each of them consists of an infinite 
 non-repeating sequence of digits, we will, 
 following the method, always construct a number
@@ -5258,7 +5264,7 @@ of the standard axiomatic system.
 Without out too much phantasy, 
 we can go beyond \acronym{ch} and suspect 
 that there is a general rule that
-for any $\aleph_n=2^{\aleph_{n-1}}$.
+for any $n \in \mathbb{N}: \aleph_n=2^{\aleph_{n-1}}$.
 $\aleph_1=2^{\aleph_0}$ would then be no exception.
 It would just be the way to count in infinity.
 This hypothesis is called the
@@ -5346,7 +5352,8 @@ of the algebraic numbers, which, hence, goes like
 The enumeration technique is better than the one
 he used to enumerate the rationals, since it contains
 each algebraic number only once. Perhaps you remember
-that, using Cantor's original technique, we had to
+that, using Cantor's original technique 
+for enumerating the rationals, we had to
 filter out duplicates.
 
 We see further that the sequence enumerates an extension
@@ -5370,6 +5377,123 @@ first version:
 https://en.wikipedia.org/wiki/Georg_Cantor%27s_first_set_theory_article
 }
 \section{Review of the Number Zoo}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Zoo}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{sort}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Tree}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Binom}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+\begin{center}
+\begin{tikzpicture}
+% root
+\node (magma) at ( 6,  0) {Magma};
+
+\node [red,font=\small] (assoc) at (8.5,-0.2) {+associativity};
+
+% first level
+\node (semigroup) at ( 9,-1 ) {Semigroup};
+
+% kids of semigroup
+\node[text width=2.5cm,font=\small] 
+(semigroupg) at ( 7.5,-3 )
+                         {$(\mathbb{N,+)}$,
+                            $(\mathbb{N,\times)}$,
+                            $(\mathbb{Z,+)}$,
+                            $(\mathbb{Z,\times)}$,
+                            $(\mathbb{Q,+)}$,
+                            $(\mathbb{Q,\times)}$,
+                            $(\mathbb{R,+)}$,
+                            $(\mathbb{R,\times)}$
+                           };
+
+\node [red,font=\small] (identity) at (11.2,-1.3) {+identity};
+
+\node (monoid)     at (12,-2 ) {Monoid};
+
+% kids of monoid
+\node [red,font=\small] (inverse) at (13.8,-2.3) {+inverse};
+
+\node (group) at (14,-3 ) {Group};
+
+% kids of group
+\node (helper) at (14,-4) {};
+\node[text width=3cm,font=\small] 
+     (groupg) at (14.5,-4.5) 
+                         {$(\mathbb{Z,+)}\hskip1.5cm$,
+                          $(\mathbb{Q,+)}$,
+                          $(\mathbb{Q,\times)}$,
+                          $(\mathbb{R,+)}$,
+                          $(\mathbb{R,\times)}$
+                           };
+
+% connect magma
+\connect {magma} {semigroupg};
+\connect {magma} {semigroup};
+
+% connect semigroup
+\connect {semigroup} {semigroupg};
+\connect {semigroup} {monoid};
+
+% connect monoid
+\connect {monoid} {semigroupg};
+\connect {monoid} {group};
+
+% connect group
+\connect {group} {helper};
+
+\end{tikzpicture}
+\end{center}
+
+
+\begin{center}
+\begin{tikzpicture}
+% root
+\node (semiring)  at ( 6,  0) {Semiring};
+\node (semiringg) at ( 5, -1) {$\mathbb{N}$};
+\node (ring)      at ( 8, -1) {Ring};
+\node (ringg)     at ( 7, -2) {$\mathbb{Z}$};
+\node (field)     at ( 9, -2) {Field};
+\node (fieldg)    at ( 9, -3) {$\mathbb{Q}$,
+                                $\mathbb{R}$};
+
+% connect 
+\connect {semiring} {semiringg};
+\connect {semiring} {ring};
+\connect {ring} {ringg};
+\connect {ring} {field};
+\connect {field} {fieldg};
+
+\end{tikzpicture}
+\end{center}
 
 
 \end{document}

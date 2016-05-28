@@ -50,8 +50,8 @@ rather practical domains.
 Furthermore, applications is an important, but not
 the only motivation for mathematical investigation.
 Mathematics studies its fundamental concepts
-(like numbers, sets or the space in which
-geometry is studied) to arrive at general theorems.
+(like numbers, sets or the space in which we
+exercise geometry) to arrive at general theorems.
 So, even when there is no immediate application yet,
 for the sake of better understanding of the concepts involved,
 mathematicians do not hesitate to ask questions
@@ -142,7 +142,8 @@ us here. We only have to keep in mind that, whenever
 we want to make the connection from $\Gamma$ to factorial,
 we need to increment $n$ by 1.
 
-Well, this shows us just another way to express
+Well, the |gamman| function above
+shows us just another way to express
 factorials for natural numbers. But we wanted to find
 a function for real numbers.
 There are indeed many ways to define the $\Gamma$ function
@@ -323,7 +324,7 @@ For the remainder of this section, we will therefore stick
 to Euler's solution.
 
 Let us look at some other numbers,
-not not positive
+not positive
 integers, for instance:
 
 \begin{minipage}{\textwidth}
@@ -353,9 +354,9 @@ It will finally approach:
 \]
 
 Is it possible that $\Gamma(0.5)$ yields such a boring number?
-Well, is it such boring? Look what happens:
+Well, is it such boring? Look what happens (with one million iterations):
 
-|gammal 1000 0.5 * gammal 1000 0.5 = 3.14237736...|
+|gammal 1000000 0.5 * gammal 1000000 0.5 = 3.14159...|
 
 That is $\pi$! So $\Gamma(0.5) = \sqrt{\pi}$. Not bad!
 The occurrence of both, $e$ and $\gamma$, in Weierstrass' formula
@@ -448,10 +449,10 @@ We start with $\binom{2}{1}=2$, using |chooser|
 Far off. So, again, we increase the number of iterations:
 
 \begin{minipage}{\textwidth}
-|chooser     1 2 1 = 1.5|
-|chooser    10 2 1 = 1.8461...|
-|chooser   100 2 1 = 1.9805...|
-|chooser  1000 2 1 = 1.9980...|
+|chooser     1 2 1 = 1.5|\\
+|chooser    10 2 1 = 1.8461...|\\
+|chooser   100 2 1 = 1.9805...|\\
+|chooser  1000 2 1 = 1.9980...|\\
 |chooser 10000 2 1 = 1.9998...|
 \end{minipage}
 
@@ -467,11 +468,13 @@ Let us try the other examples with \num{10000} iterations:
 |chooser 10000 7 3 = 34.9580...|
 \end{minipage}
 
+which is fairly close for all these numbers.
+
 The resulting function has been little studied.
 It is known that many of the binomial identities
 fail for real numbers. The behaviour for different
 values of $n$ and $k$ not integers is very complex.
-We will not go in details here. But we will certainly
+We will not go into details here. But we will certainly
 come back to the $\Gamma$-function and its applications later on.
 
 

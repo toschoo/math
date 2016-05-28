@@ -46,7 +46,7 @@ to fractions. We just have to multiply them
 by a power of 10, such that there is a part
 greater 0 before the decimal point and
 that the first number
-of the the repeating period is aligned to it.
+of the repeating period is aligned to it.
 For $0.\overline{3}$, 
 this is just $10\times 0.\overline{3} = 3.\overline{3}$.
 For $0.1\overline{6}$,
@@ -107,11 +107,11 @@ like in dealing with money, cooking,
 medication or travelling distances,
 we calculate up to one or two decimal places.
 Prices, for instances are often given 
-as 4.99 or something, but hardly 4.998.
+as 4.99 or something, but hardly as 4.998.
 Recipes would tell that we need 2.5 pounds
 or whatever of something, using one decimal place.
 One would say that it is about 1.5km 
-to somewhere, but hardly that it is 1.49km.
+to somewhere, but hardly that it is 1.499961km.
 In other areas, especially in science 
 much more precision is needed.
 We therefore need a flexible datatype.
@@ -131,14 +131,16 @@ The first number represents the integral part.
 You will remember that a number is a list
 of digits where every digit is multiplied
 by a power of ten according to the place
-of the digit. The digit, counted from the right,
+of the digit. The first digit, counted from the right,
 is multiplied by $10^0=1$. The second is 
 multiplied by $10^1$, the third by $10^2$
-and so on. The digit multiplied by $10^0$,
+and so on. 
+
+The digit multiplied by $10^0$,
 is the last digit before the decimal point.
 If we wanted to push it to the right
 of the decimal point, we would need
-to reduce the exponent. So, we multiplied it
+to reduce the exponent. So, we would multiply it
 not by $10^0$, but by $10^{-1}$ to push it
 to the first decimal place.
 This is the function of the second number
@@ -174,7 +176,7 @@ number with this number type.
 |one = R 1000 3|\\
 $\dots$
 
-To keap numbers as concise as possible, we define a function
+To keep numbers as concise as possible, we define a function
 to simplify numbers with redundant zeros:
 
 \begin{minipage}{\textwidth}

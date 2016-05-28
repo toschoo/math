@@ -21,7 +21,7 @@ called the \term{harmonic number} $H_k$, then is
 
 \begin{equation}
 \sum_{n=1}^k{\frac{1}{n}} = 1 + 
-  \frac{1}{2} + \dots
+  \frac{1}{2} + \dots +
   \frac{1}{k} 
 \end{equation}
 
@@ -154,7 +154,7 @@ $0.5\dots$ |pquozavg 43 = 0.57416|
 is already very close to $\gamma$.
 It may be mentioned that 43 is suspiciously close to 42.
 
-With de la Vallée-Pussin's result in mind,
+With de la Vallée-Poussin's result in mind,
 it is not too surprising that $\gamma$ is related
 to divisors and Euler's totient number.
 A result of Gauss' immediate successor in Göttingen, 
@@ -265,7 +265,7 @@ A better, even still not perfect approximation, is
 \frac{n}{e^{\gamma}\ln \ln n}.
 \]
 
-For the $n=40$ again,
+For $n=40$ again,
 $\frac{40}{e^{\gamma}\ln \ln 40}$ is around 17 and, hence,
 very close to the real value.
 

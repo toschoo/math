@@ -47,7 +47,7 @@ like the following:
 \]
 \end{minipage}
 
-That is, we now have an infinite sequence 
+We now have an infinite sequence 
 of infinite sequences of digits.
 Can we enumerate this sequence and assign natural numbers 
 to each single real number to count the whole sequence?
@@ -92,7 +92,7 @@ For instance:
 \end{minipage}
 
 Note that the sequence above was not particularly
-built for this method. As long as the numbers are
+designed to hold for this method. As long as the numbers are
 irrational, \ie\ each of them consists of an infinite 
 non-repeating sequence of digits, we will, 
 following the method, always construct a number
@@ -166,7 +166,7 @@ of the standard axiomatic system.
 Without out too much phantasy, 
 we can go beyond \acronym{ch} and suspect 
 that there is a general rule that
-for any $\aleph_n=2^{\aleph_{n-1}}$.
+for any $n \in \mathbb{N}: \aleph_n=2^{\aleph_{n-1}}$.
 $\aleph_1=2^{\aleph_0}$ would then be no exception.
 It would just be the way to count in infinity.
 This hypothesis is called the
@@ -254,7 +254,8 @@ of the algebraic numbers, which, hence, goes like
 The enumeration technique is better than the one
 he used to enumerate the rationals, since it contains
 each algebraic number only once. Perhaps you remember
-that, using Cantor's original technique, we had to
+that, using Cantor's original technique 
+for enumerating the rationals, we had to
 filter out duplicates.
 
 We see further that the sequence enumerates an extension

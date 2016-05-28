@@ -22,3 +22,4 @@
 \section{The Continuum}
 %include Cantor2.lhs
 \section{Review of the Number Zoo}
+%include Zoo.lhs
