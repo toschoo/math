@@ -1,7 +1,11 @@
+---------------------------------------------------------------------------
+-- Polynomials
+---------------------------------------------------------------------------
 module Poly
 where
 
-  import Data.List (nub)
+  import Data.List (nub,foldl')
+  import Debug.Trace (trace)
 
   data Poly a = P [a]
     deriving (Eq,Show)
@@ -24,16 +28,146 @@ where
 
   apply :: Num a => Poly a -> a -> a
   apply (P []) _ = 0
-  apply (P as) x = go x $ zip [0..] (reverse as)
+  apply (P as) x = go x $ zip [0..] as
     where go z [] = 0
           go z ((i,c):cs) = c*z^i + go z cs
 
   weigh :: (Num a) => Poly a -> [(Integer,a)]
   weigh (P []) = []
-  weigh (P as) = reverse (zip [0..] (reverse as))
+  weigh (P as) = (zip [0..] as)
 
   degree :: Poly a -> Int
   degree (P as) = length as - 1
+
+  -------------------------------------------------------------------------
+  -- Addition
+  -------------------------------------------------------------------------
+  add :: Num a => Poly a -> Poly a -> Poly a
+  add = strich (+)
+
+  -------------------------------------------------------------------------
+  -- Addition
+  -------------------------------------------------------------------------
+  sub :: Num a => Poly a -> Poly a -> Poly a
+  sub = strich (-)
+
+  -------------------------------------------------------------------------
+  -- Generic Strichrechnung
+  -------------------------------------------------------------------------
+  strich :: Num a => (a -> a -> a) -> Poly a -> Poly a -> Poly a
+  strich o (P x) (P y)     = P $ strichlist o x y
+
+  -------------------------------------------------------------------------
+  -- Generic Strichrechnung on lists of coefficients
+  -------------------------------------------------------------------------
+  strichlist :: Num a => (a -> a -> a) -> [a] -> [a] -> [a]
+  strichlist o xs ys = go xs ys
+    where go [] bs         = bs
+          go as []         = as
+          go (a:as) (b:bs) = a `o` b : go as bs
+
+  -------------------------------------------------------------------------
+  -- Folding a list of lists of coefficients using strichrechnung
+  -------------------------------------------------------------------------
+  strichf :: Num a => (a -> a -> a) -> [[a]] -> [a]
+  strichf o = foldl' (strichlist o) []
+
+  -------------------------------------------------------------------------
+  -- Multiplication
+  -------------------------------------------------------------------------
+  mul :: (Show a, Num a) => Poly a -> Poly a -> Poly a
+  mul p1 p2 | d2 > d1   =  mul p2 p1
+            | otherwise =  P (strichf (+) ms)
+    where d1 = degree p1
+          d2 = degree p2
+          ms = [mul1 i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+
+  -------------------------------------------------------------------------
+  -- Mapping (a*) on a list of coefficients
+  -------------------------------------------------------------------------
+  mul1 :: Num a => Int -> [a] -> a -> [a]
+  mul1 i as a = zeros i ++ go as a
+    where go [] _     = []
+          go (c:cs) x = c*x : go cs x 
+
+  -------------------------------------------------------------------------
+  -- Creating a trail of zeros
+  -------------------------------------------------------------------------
+  zeros :: Num a => Int -> [a]
+  zeros i = take i $ repeat 0
+
+  -------------------------------------------------------------------------
+  -- Remove leading zeros
+  -------------------------------------------------------------------------
+  cleanz :: (Eq a, Num a) => [a] -> [a]
+  cleanz []  = []
+  cleanz [0] = [0]
+  cleanz (0:xs) = cleanz xs
+  cleanz xs     = xs
+
+  -------------------------------------------------------------------------
+  -- Multiply a list of coefficients
+  -------------------------------------------------------------------------
+  mulist :: (Show a, Num a) => [a] -> [a] -> [a]
+  mulist c1 c2 = coeffs $ mul (P c1) (P c2)
+
+  -------------------------------------------------------------------------
+  -- Division
+  -------------------------------------------------------------------------
+  divp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
+          Poly a -> Poly a -> (Poly a,Poly a)
+  divp (P as) (P bs) = let (q,r) = go [] as in (P q, P r)
+    where go q r | degree (P r) < db  = (q,r)
+                 | null r || r == [0] = (q,r)
+                 | otherwise          = 
+                     let t  = head r / head bs
+                         d  = degree (P r) - db
+                         ts = [t] ++ zeros d
+                         m  = mulist ts bs
+                      in go (cleanz $ strichlist (+) q ts)
+                            (cleanz $ strichlist (-) r m)
+          db = degree (P bs)
+
+  -------------------------------------------------------------------------
+  -- Divides
+  -------------------------------------------------------------------------
+  divides :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
+          Poly a -> Poly a -> Bool
+  divides a b = case divp b a of
+                  (_,P [0]) -> True
+                  _         -> False
+
+  -------------------------------------------------------------------------
+  -- GCD
+  -------------------------------------------------------------------------
+  gcdp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
+          Poly a -> Poly a -> Poly a
+  gcdp a b | degree b > degree a = gcdp b a
+           | nullp b = a
+           | otherwise = let (_,r) = divp a b in gcdp b r
+ 
+  -------------------------------------------------------------------------
+  -- Null
+  -------------------------------------------------------------------------
+  nullp :: (Num a, Eq a) => Poly a -> Bool
+  nullp (P [0]) = True
+  nullp _       = False
+
+  -------------------------------------------------------------------------
+  -- Comparison
+  -------------------------------------------------------------------------
+  cmp :: (Num a, Eq a, Ord a) => [a] -> [a] -> Ordering
+  cmp a  b  | length a < length b = LT
+            | length b > length b = GT
+            | otherwise           = go a b
+    where go [] [] = EQ
+          go [] _  = LT
+          go _  [] = GT
+          go (x:xs) (y:ys) | x < y     = LT
+                           | y < x     = GT
+                           | otherwise = go xs ys
+  
+  -- factor
 
   solve :: Poly Double -> [Double]
   solve p = case degree p of
@@ -61,19 +195,12 @@ where
   solve3 (P [a,0,c,d]) | a /= 1    = solve3 (P [1,0,c/a,d/a])
                        | otherwise =
                          let disc = d^2/4 + c^3/9
-                             u13  = -d/2 + sqrt disc
-                             u23  = -d/2 - sqrt disc
-                             v13  = -d/2 + sqrt disc
-                             v23  = -d/2 - sqrt disc
-                             u1   | u13 < 0    = -(-u13)**(1/3)
-                                  | otherwise  = u13**(1/3)
-                             u2   | u23 < 0    = -(-u23)**(1/3)
-                                  | otherwise  = u23**(1/3)
-                             v1   | v13 < 0    = -(-v13)**(1/3)
-                                  | otherwise = v13**(1/3)
-                             v2   | v23 < 0    = -(-v23)**(1/3)
-                                  | otherwise = v23**(1/3)
-                             (u,v) = finduv (-d/3) u1 u2 v1 v2
+                             u3   = -d/2 + sqrt disc
+                             v3   = -d/2 - sqrt disc
+                             u    | u3  < 0    = -(-u3)**(1/3)
+                                  | otherwise  = u3**(1/3)
+                             v    | v3  < 0    = -(-v3)**(1/3)
+                                  | otherwise = v3**(1/3)
                           in if disc < 0 then [] else [u+v]
   solve3 (P [a,b,c,0]) | a /= 1    = solve3 (P [1,b/a,c/a,0])
                        | otherwise = 
@@ -98,9 +225,3 @@ where
           go x (z:zs) | snd x < snd z = go x zs
                       | otherwise     = go z zs
     
-                          
-  -- add
-  -- subtract
-  -- multiply
-  -- divide
-  -- factor
