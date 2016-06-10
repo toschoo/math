@@ -479,6 +479,34 @@ where
     where r   = fromIntegral n
 
   -------------------------------------------------------------------------
+  -- Find Prime Ideals (first ist duplicated)
+  -------------------------------------------------------------------------
+  allideals :: Integer -> Integer -> [Integer]
+  allideals b s = s : ideals b s 0
+
+  ldi :: Integer -> Integer -> Integer -> Integer
+  ldi b s = ldpf (allideals b s)
+
+  ideals :: Integer -> Integer -> Integer -> [Integer]
+  ideals b i1 0  = filter (ideal b i1) (follow b i1 0)
+  ideals b i1 i2 = filter (ideal b i1) (follow b i1 i2)
+
+  ------------------------------------------------------------------------
+  -- Ideal Tests
+  ------------------------------------------------------------------------
+  ideal :: Integer -> Integer -> Integer -> Bool
+  ideal b s n | n < 1     = error "Not a positive integer!"
+              | n == 1    = False
+              | otherwise = ldi b s n == n
+
+  ------------------------------------------------------------------------
+  -- Some way to build a sequence
+  ------------------------------------------------------------------------
+  follow :: Integer -> Integer -> Integer -> [Integer]
+  follow b s e | e /= 0 && s >= e = []
+               | otherwise        = s : follow b (s+b) e
+
+  -------------------------------------------------------------------------
   -- computing
   -------------------------------------------------------------------------
   raise :: Integer -> Integer -> Integer -> Integer

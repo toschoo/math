@@ -7,6 +7,8 @@ where
   import Data.List (nub,foldl')
   import Debug.Trace (trace)
 
+  import qualified Modular as M
+
   data Poly a = P [a]
     deriving (Eq,Show)
 
@@ -73,22 +75,33 @@ where
   strichf o = foldl' (strichlist o) []
 
   -------------------------------------------------------------------------
-  -- Multiplication
+  -- Multiplication over an infinite field
   -------------------------------------------------------------------------
   mul :: (Show a, Num a) => Poly a -> Poly a -> Poly a
   mul p1 p2 | d2 > d1   =  mul p2 p1
             | otherwise =  P (strichf (+) ms)
     where d1 = degree p1
           d2 = degree p2
-          ms = [mul1 i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+          ms = [mul1 (*) i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+
+  -------------------------------------------------------------------------
+  -- Multiplication over a finite field
+  -------------------------------------------------------------------------
+  mulmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  mulmp p p1 p2 | d2 > d1   =  mulmp p p2 p1
+                | otherwise =  P [m `mmod` p | m <- strichf (+) ms]
+    where d1 = degree p1
+          d2 = degree p2
+          ms = [mul1 o i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+          o  = modmul p
 
   -------------------------------------------------------------------------
   -- Mapping (a*) on a list of coefficients
   -------------------------------------------------------------------------
-  mul1 :: Num a => Int -> [a] -> a -> [a]
-  mul1 i as a = zeros i ++ go as a
+  mul1 :: Num a => (a -> a -> a) -> Int -> [a] -> a -> [a]
+  mul1 o i as a = zeros i ++ go as a
     where go [] _     = []
-          go (c:cs) x = c*x : go cs x 
+          go (c:cs) x = c `o` x : go cs x 
 
   -------------------------------------------------------------------------
   -- Creating a trail of zeros
@@ -100,33 +113,81 @@ where
   -- Remove leading zeros
   -------------------------------------------------------------------------
   cleanz :: (Eq a, Num a) => [a] -> [a]
-  cleanz []  = []
-  cleanz [0] = [0]
-  cleanz (0:xs) = cleanz xs
-  cleanz xs     = xs
+  cleanz xs = reverse $ go (reverse xs)
+    where go []  = []
+          go [0] = [0]
+          go (0:xs) = go xs
+          go xs     = xs
 
   -------------------------------------------------------------------------
-  -- Multiply a list of coefficients
+  -- Multiply a list of coefficients (infinite field)
   -------------------------------------------------------------------------
   mulist :: (Show a, Num a) => [a] -> [a] -> [a]
   mulist c1 c2 = coeffs $ mul (P c1) (P c2)
 
   -------------------------------------------------------------------------
-  -- Division
+  -- Multiply a list of coefficients (finite field)
+  -------------------------------------------------------------------------
+  mulmlist :: Integer -> [Integer] -> [Integer] -> [Integer]
+  mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
+
+  -------------------------------------------------------------------------
+  -- Division (rational or real numbers)
   -------------------------------------------------------------------------
   divp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
           Poly a -> Poly a -> (Poly a,Poly a)
   divp (P as) (P bs) = let (q,r) = go [] as in (P q, P r)
     where go q r | degree (P r) < db  = (q,r)
                  | null r || r == [0] = (q,r)
-                 | otherwise          = 
-                     let t  = head r / head bs
+                 | otherwise          = -- trace (show (q,r)) $
+                     let t  = last r / last bs
                          d  = degree (P r) - db
-                         ts = [t] ++ zeros d
+                         ts = zeros d ++ [t]
                          m  = mulist ts bs
                       in go (cleanz $ strichlist (+) q ts)
                             (cleanz $ strichlist (-) r m)
           db = degree (P bs)
+
+  -------------------------------------------------------------------------
+  -- Division (over a modular field of integers)
+  -------------------------------------------------------------------------
+  divmp :: Integer -> 
+           Poly Integer -> Poly Integer -> (Poly Integer,Poly Integer)
+  divmp p (P as) (P bs) = let (q,r) = go [] as in (P q, P r)
+    where go q r | degree (P r) < db  = (q,r)
+                 | null r || r == [0] = (q,r)
+                 | otherwise          = -- trace (show (q,r)) $
+                     let t  = modiv p (last r) (last bs)
+                         d  = degree (P r) - db
+                         ts = zeros d ++ [t]
+                         m  = mulmlist p ts bs
+                      in go [m `mmod` p | m <- cleanz $ strichlist (+) q ts]
+                            [m `mmod` p | m <- cleanz $ strichlist (-) r m ]
+          db = degree (P bs)
+
+  -------------------------------------------------------------------------
+  -- Integer Division mod p
+  -------------------------------------------------------------------------
+  modiv :: Integer -> Integer -> Integer -> Integer
+  modiv p n d = modmul p n d'
+    where d' = M.inverse d p
+
+  mmod :: Integer -> Integer -> Integer
+  mmod n p | n < 0 && (-n) > p = mmod (-(mmod (-n)) p) p
+           | n < 0             = mmod (p + n) p
+           | otherwise         = n `rem` p
+
+  -------------------------------------------------------------------------
+  -- Multiplication mod p
+  -------------------------------------------------------------------------
+  modmul :: Integer -> Integer -> Integer -> Integer
+  modmul p f1 f2 = (f1 * f2) `mmod` p
+
+  -------------------------------------------------------------------------
+  -- Make polynomial mod p
+  -------------------------------------------------------------------------
+  modp :: Integer -> Poly Integer -> Poly Integer
+  modp p (P as) = P (cleanz [a `mmod` p | a <- as])
 
   -------------------------------------------------------------------------
   -- Divides
@@ -138,13 +199,21 @@ where
                   _         -> False
 
   -------------------------------------------------------------------------
-  -- GCD
+  -- GCD (infinite field)
   -------------------------------------------------------------------------
   gcdp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
           Poly a -> Poly a -> Poly a
   gcdp a b | degree b > degree a = gcdp b a
            | nullp b = a
            | otherwise = let (_,r) = divp a b in gcdp b r
+
+  -------------------------------------------------------------------------
+  -- GCD (finite field)
+  -------------------------------------------------------------------------
+  gcdmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  gcdmp p a b | degree b > degree a = gcdmp p b a
+              | nullp b = a
+              | otherwise = let (_,r) = divmp p a b in trace (show r) $ gcdmp p b r
  
   -------------------------------------------------------------------------
   -- Null
@@ -166,6 +235,15 @@ where
           go (x:xs) (y:ys) | x < y     = LT
                            | y < x     = GT
                            | otherwise = go xs ys
+
+  -------------------------------------------------------------------------
+  -- Derivatives
+  -------------------------------------------------------------------------
+  derivative :: (Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
+  derivative o (P as) = P (go $ zip [1..] (drop 1 as))
+    where go []         = []
+          go ((x,c):cs) = (x `o` c) : go cs
+
   
   -- factor
 
