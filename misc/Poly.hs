@@ -16,7 +16,7 @@ where
   coeffs (P as) = as
 
   pretty :: (Num a, Show a, Eq a) => Poly a -> String
-  pretty p = go (weigh p)
+  pretty p = go (reverse $ weigh p)
     where go [] = ""
           go ((i,c):cs) = let x | i == 0    = ""
                                 | i == 1    = "x"
@@ -213,7 +213,7 @@ where
   gcdmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   gcdmp p a b | degree b > degree a = gcdmp p b a
               | nullp b = a
-              | otherwise = let (_,r) = divmp p a b in trace (show r) $ gcdmp p b r
+              | otherwise = let (_,r) = divmp p a b in gcdmp p b r
  
   -------------------------------------------------------------------------
   -- Null
@@ -221,6 +221,48 @@ where
   nullp :: (Num a, Eq a) => Poly a -> Bool
   nullp (P [0]) = True
   nullp _       = False
+
+  -------------------------------------------------------------------------
+  -- unity
+  -------------------------------------------------------------------------
+  unityp :: Integer -> Poly Integer -> Bool
+  unityp _ (P [1]) = True
+  unityp p (P [x]) = x `mmod` p `elem` [1,p-1]
+  unityp _ _       = False      
+
+  -------------------------------------------------------------------------
+  -- Derivatives
+  -------------------------------------------------------------------------
+  derivative :: (Eq a, Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
+  derivative o (P as) = P (cleanz (go $ zip [1..] (drop 1 as)))
+    where go []         = []
+          go ((x,c):cs) = (x `o` c) : go cs
+
+  -------------------------------------------------------------------------
+  -- Squarefree
+  -- ----------
+  -- is this test correct?
+  -- usually the test is gcd poly (derivative poly) == 1
+  -- however, in computing the gcd, one would usually factor
+  --          the remainder, for instance:
+  -- rem (x^2 + 7x + 6) (x^2 - 5x - 6) = 12(x+1)
+  --     and then continue with
+  -- rem (x^2-5x-6) (x+1) = 0 (since (x+1)(x-6) = (x^2-5x-6))
+  --     resulting in the gcd x+1, otherwise,
+  --     the gcd would have been 12x+12
+  -------------------------------------------------------------------------
+  squarefree :: Integer -> Poly Integer -> Bool
+  squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
+
+  -------------------------------------------------------------------------
+  -- Powers of...
+  -------------------------------------------------------------------------
+  powers :: Integer -> Poly Integer -> [Poly Integer]
+  powers p poly = go poly
+    where go sq = pow sq : go (pow sq) 
+          pow   = mulmp p poly
+  
+  -- factor
 
   -------------------------------------------------------------------------
   -- Comparison
@@ -235,17 +277,6 @@ where
           go (x:xs) (y:ys) | x < y     = LT
                            | y < x     = GT
                            | otherwise = go xs ys
-
-  -------------------------------------------------------------------------
-  -- Derivatives
-  -------------------------------------------------------------------------
-  derivative :: (Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
-  derivative o (P as) = P (go $ zip [1..] (drop 1 as))
-    where go []         = []
-          go ((x,c):cs) = (x `o` c) : go cs
-
-  
-  -- factor
 
   solve :: Poly Double -> [Double]
   solve p = case degree p of

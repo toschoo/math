@@ -152,6 +152,9 @@ where
   rest n = zip rs $ map (\a -> (a^(n-1)) `rem` n) rs
     where rs = [2..n-1]
 
+  -------------------------------------------------------------------------
+  -- Liars and Strong Liars
+  -------------------------------------------------------------------------
   liars :: Integer -> Integer
   liars = fromIntegral . length . filter (==1) . map snd . rest 
 
@@ -479,10 +482,10 @@ where
     where r   = fromIntegral n
 
   -------------------------------------------------------------------------
-  -- Find Prime Ideals (first ist duplicated)
+  -- Find Prime Ideals
   -------------------------------------------------------------------------
   allideals :: Integer -> Integer -> [Integer]
-  allideals b s = s : ideals b s 0
+  allideals b s = s : drop 1 (ideals b s 0)
 
   ldi :: Integer -> Integer -> Integer -> Integer
   ldi b s = ldpf (allideals b s)
@@ -500,7 +503,7 @@ where
               | otherwise = ldi b s n == n
 
   ------------------------------------------------------------------------
-  -- Some way to build a sequence
+  -- One way to build a sequence
   ------------------------------------------------------------------------
   follow :: Integer -> Integer -> Integer -> [Integer]
   follow b s e | e /= 0 && s >= e = []
