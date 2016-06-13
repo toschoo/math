@@ -5,6 +5,7 @@ module Poly
 where
 
   import Data.List (nub,foldl')
+  import Control.Applicative ((<$>))
   import Debug.Trace (trace)
 
   import qualified Modular as M
@@ -48,7 +49,7 @@ where
   add = strich (+)
 
   -------------------------------------------------------------------------
-  -- Addition
+  -- Subtraction
   -------------------------------------------------------------------------
   sub :: Num a => Poly a -> Poly a -> Poly a
   sub = strich (-)
@@ -85,7 +86,7 @@ where
           ms = [mul1 (*) i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
 
   -------------------------------------------------------------------------
-  -- Multiplication over a finite field
+  -- Multiplication over a finite field (mod p)
   -------------------------------------------------------------------------
   mulmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   mulmp p p1 p2 | d2 > d1   =  mulmp p p2 p1
@@ -104,29 +105,13 @@ where
           go (c:cs) x = c `o` x : go cs x 
 
   -------------------------------------------------------------------------
-  -- Creating a trail of zeros
-  -------------------------------------------------------------------------
-  zeros :: Num a => Int -> [a]
-  zeros i = take i $ repeat 0
-
-  -------------------------------------------------------------------------
-  -- Remove leading zeros
-  -------------------------------------------------------------------------
-  cleanz :: (Eq a, Num a) => [a] -> [a]
-  cleanz xs = reverse $ go (reverse xs)
-    where go []  = []
-          go [0] = [0]
-          go (0:xs) = go xs
-          go xs     = xs
-
-  -------------------------------------------------------------------------
   -- Multiply a list of coefficients (infinite field)
   -------------------------------------------------------------------------
   mulist :: (Show a, Num a) => [a] -> [a] -> [a]
   mulist c1 c2 = coeffs $ mul (P c1) (P c2)
 
   -------------------------------------------------------------------------
-  -- Multiply a list of coefficients (finite field)
+  -- Multiply a list of coefficients (mod p)
   -------------------------------------------------------------------------
   mulmlist :: Integer -> [Integer] -> [Integer] -> [Integer]
   mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
@@ -149,11 +134,11 @@ where
           db = degree (P bs)
 
   -------------------------------------------------------------------------
-  -- Division (over a modular field of integers)
+  -- Division (mod p)
   -------------------------------------------------------------------------
   divmp :: Integer -> 
            Poly Integer -> Poly Integer -> (Poly Integer,Poly Integer)
-  divmp p (P as) (P bs) = let (q,r) = go [] as in (P q, P r)
+  divmp p (P as) (P bs) = let (q,r) = go [0] as in (P q, P r)
     where go q r | degree (P r) < db  = (q,r)
                  | null r || r == [0] = (q,r)
                  | otherwise          = -- trace (show (q,r)) $
@@ -166,22 +151,20 @@ where
           db = degree (P bs)
 
   -------------------------------------------------------------------------
-  -- Integer Division mod p
+  -- Creating a trail of zeros
   -------------------------------------------------------------------------
-  modiv :: Integer -> Integer -> Integer -> Integer
-  modiv p n d = modmul p n d'
-    where d' = M.inverse d p
-
-  mmod :: Integer -> Integer -> Integer
-  mmod n p | n < 0 && (-n) > p = mmod (-(mmod (-n)) p) p
-           | n < 0             = mmod (p + n) p
-           | otherwise         = n `rem` p
+  zeros :: Num a => Int -> [a]
+  zeros i = take i $ repeat 0
 
   -------------------------------------------------------------------------
-  -- Multiplication mod p
+  -- Remove leading zeros
   -------------------------------------------------------------------------
-  modmul :: Integer -> Integer -> Integer -> Integer
-  modmul p f1 f2 = (f1 * f2) `mmod` p
+  cleanz :: (Eq a, Num a) => [a] -> [a]
+  cleanz xs = reverse $ go (reverse xs)
+    where go []  = []
+          go [0] = [0]
+          go (0:xs) = go xs
+          go xs     = xs
 
   -------------------------------------------------------------------------
   -- Make polynomial mod p
@@ -208,7 +191,7 @@ where
            | otherwise = let (_,r) = divp a b in gcdp b r
 
   -------------------------------------------------------------------------
-  -- GCD (finite field)
+  -- GCD (mod p)
   -------------------------------------------------------------------------
   gcdmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   gcdmp p a b | degree b > degree a = gcdmp p b a
@@ -255,6 +238,14 @@ where
   squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
 
   -------------------------------------------------------------------------
+  -- Squared factors
+  -------------------------------------------------------------------------
+  squarefactor :: Integer -> Poly Integer -> [Poly Integer]
+  squarefactor p poly | degree(sq) > 0 = [sq] 
+                      | otherwise      = []
+    where sq = gcdmp p poly (derivative (modmul p) poly)
+
+  -------------------------------------------------------------------------
   -- Powers of...
   -------------------------------------------------------------------------
   powers :: Integer -> Poly Integer -> [Poly Integer]
@@ -262,7 +253,76 @@ where
     where go sq = pow sq : go (pow sq) 
           pow   = mulmp p poly
   
-  -- factor
+  -------------------------------------------------------------------------
+  -- Factoring: Cantor-Zassenhaus
+  -------------------------------------------------------------------------
+  cantorzass :: Integer -> Poly Integer -> IO [Poly Integer]
+  cantorzass p u = let sq = squarefactor p u
+                       g1 = zassen 0 p (P [0,1]) u
+                       gs = nub (g1 ++ map fst [divmp p u g | g <- g1])
+                    in do rs <- concat <$> mapM (splitG p) gs
+                          if length sq > 0 then return (sq++rs)
+                                           else return rs
+
+  zassen :: Int -> Integer -> Poly Integer -> Poly Integer -> [Poly Integer]
+  zassen d p w v | d   > (degree v) `div` 2 = []
+                 | otherwise                = 
+                     let w' = pmmod p (powmp p p w) v
+                         g  = gcdmp p ((sub w' (P [0,1])) `pmod` p) v
+                      in if degree g > 0
+                         then let (v',_) = divmp p v g
+                                  w''    = pmmod p w' v'
+                               in g : zassen (d+1) p w'' v'
+                         else zassen (d+1) p w' v
+
+  -------------------------------------------------------------------------
+  -- Factoring: factor product of factors
+  -------------------------------------------------------------------------
+  splitG :: Integer -> Poly Integer -> IO [Poly Integer]
+  splitG p gs = return [gs]
+
+  -- create random polynomials
+
+  -------------------------------------------------------------------------
+  -- pow
+  -------------------------------------------------------------------------
+  powmp :: Integer -> Integer -> Poly Integer -> Poly Integer
+  powmp p f poly = go f poly
+    where go 0 x = x
+          go n x = go (n-1) (mulmp p poly x) -- better: double+add
+
+  -------------------------------------------------------------------------
+  -- Multiplication mod p
+  -------------------------------------------------------------------------
+  modmul :: Integer -> Integer -> Integer -> Integer
+  modmul p f1 f2 = (f1 * f2) `mmod` p
+
+  -------------------------------------------------------------------------
+  -- Integer Division mod p
+  -------------------------------------------------------------------------
+  modiv :: Integer -> Integer -> Integer -> Integer
+  modiv p n d = modmul p n d'
+    where d' = M.inverse d p
+
+  -------------------------------------------------------------------------
+  -- n mod p
+  -------------------------------------------------------------------------
+  mmod :: Integer -> Integer -> Integer
+  mmod n p | n < 0 && (-n) > p = mmod (-(mmod (-n)) p) p
+           | n < 0             = mmod (p + n) p
+           | otherwise         = n `rem` p
+
+  -------------------------------------------------------------------------
+  -- Polynomial mod Integer
+  -------------------------------------------------------------------------
+  pmod :: Poly Integer -> Integer -> Poly Integer
+  pmod (P cs) p = P [c `mmod` p | c <- cs]
+
+  -------------------------------------------------------------------------
+  -- Polynomial mod Polynomial
+  -------------------------------------------------------------------------
+  pmmod :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  pmmod p poly m = snd (divmp p poly m) 
 
   -------------------------------------------------------------------------
   -- Comparison
