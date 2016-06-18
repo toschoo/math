@@ -4,9 +4,10 @@
 module Poly
 where
 
-  import Data.List (nub,foldl')
-  import Control.Applicative ((<$>))
-  import Debug.Trace (trace)
+  import           Data.List (nub,foldl')
+  import           Control.Applicative ((<$>))
+  import           Debug.Trace (trace)
+  import           System.Random (randomRIO)
 
   import qualified Modular as M
 
@@ -117,7 +118,7 @@ where
   mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
 
   -------------------------------------------------------------------------
-  -- Division (rational or real numbers)
+  -- Division (in a field)
   -------------------------------------------------------------------------
   divp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
           Poly a -> Poly a -> (Poly a,Poly a)
@@ -256,24 +257,37 @@ where
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
-  cantorzass :: Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzass p u = let sq = squarefactor p u
-                       g1 = zassen 0 p (P [0,1]) u
-                       gs = nub (g1 ++ map fst [divmp p u g | g <- g1])
-                    in do rs <- concat <$> mapM (splitG p) gs
-                          if length sq > 0 then return (sq++rs)
-                                           else return rs
-
+  cantorzassenhaus :: Integer -> Poly Integer -> IO [Poly Integer]
+  cantorzassenhaus = cantorzass 10
+  
+  -------------------------------------------------------------------------
+  -- Cantor-Zassenhaus (with repetition)
+  -------------------------------------------------------------------------
+  cantorzass :: Int -> Integer -> Poly Integer -> IO [Poly Integer]
+  cantorzass 0 _ _ = return []
+  cantorzass i p u = do x <- randomPoly p (d-1)
+                        let g1 = zassen 0 p x u
+                        let gs = nub (g1 ++ map fst [divmp p u g | g <- g1])
+                        fs <- concat <$> mapM (splitG p) gs
+                        let rs | length sq > 0 = sq++fs
+                               | otherwise     = fs
+                        if null rs then cantorzass (i-1) p u
+                                   else return rs
+    where sq = squarefactor p u
+          d  = degree u
+            
+  -------------------------------------------------------------------------
+  -- Cantor-Zassenhaus (the heart of the matter)
+  -------------------------------------------------------------------------
   zassen :: Int -> Integer -> Poly Integer -> Poly Integer -> [Poly Integer]
   zassen d p w v | d   > (degree v) `div` 2 = []
                  | otherwise                = 
                      let w' = pmmod p (powmp p p w) v
-                         g  = gcdmp p ((sub w' (P [0,1])) `pmod` p) v
-                      in if degree g > 0
-                         then let (v',_) = divmp p v g
-                                  w''    = pmmod p w' v'
-                               in g : zassen (d+1) p w'' v'
-                         else zassen (d+1) p w' v
+                      in case gcdmp p ((sub w' (P [0,1])) `pmod` p) v of
+                           P [_] -> zassen (d+1) p w' v
+                           g     -> let (v',_) = divmp p v g
+                                        w''    = pmmod p w' v'
+                                     in g : zassen (d+1) p w'' v'
 
   -------------------------------------------------------------------------
   -- Factoring: factor product of factors
@@ -281,14 +295,34 @@ where
   splitG :: Integer -> Poly Integer -> IO [Poly Integer]
   splitG p gs = return [gs]
 
-  -- create random polynomials
+  -------------------------------------------------------------------------
+  -- Produce a random polynomial (modulo p)
+  -------------------------------------------------------------------------
+  randomPoly :: Integer -> Int -> IO (Poly Integer)
+  randomPoly p d = do
+    cs <- mapM (\_ -> randomCoeff p) [1..d]
+    if all (== 0) cs then randomPoly p d
+                     else return (P cs)
+
+  -------------------------------------------------------------------------
+  -- Produce a random coefficient (modulo p)
+  -------------------------------------------------------------------------
+  randomCoeff :: Integer -> IO Integer
+  randomCoeff p = randomRIO (0,p-1)
+
+  -------------------------------------------------------------------------
+  -- product
+  -------------------------------------------------------------------------
+  prodp :: Num a => (Poly a -> Poly a -> Poly a) -> [Poly a] -> Poly a
+  prodp o ps = foldl' o (P [1]) ps
 
   -------------------------------------------------------------------------
   -- pow
   -------------------------------------------------------------------------
   powmp :: Integer -> Integer -> Poly Integer -> Poly Integer
   powmp p f poly = go f poly
-    where go 0 x = x
+    where go 0 x = P [1]
+          go 1 x = x
           go n x = go (n-1) (mulmp p poly x) -- better: double+add
 
   -------------------------------------------------------------------------
