@@ -14,6 +14,9 @@ where
   data Poly a = P [a]
     deriving (Eq,Show)
 
+  poly :: (Num a, Eq a) => [a] -> Poly a
+  poly = P . cleanz
+
   coeffs :: Poly a -> [a]
   coeffs (P as) = as
 
@@ -46,26 +49,26 @@ where
   -------------------------------------------------------------------------
   -- Addition
   -------------------------------------------------------------------------
-  add :: Num a => Poly a -> Poly a -> Poly a
+  add :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   add = strich (+)
 
   -------------------------------------------------------------------------
   -- Subtraction
   -------------------------------------------------------------------------
-  sub :: Num a => Poly a -> Poly a -> Poly a
+  sub :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   sub = strich (-)
 
   -------------------------------------------------------------------------
   -- Generic Strichrechnung
   -------------------------------------------------------------------------
-  strich :: Num a => (a -> a -> a) -> Poly a -> Poly a -> Poly a
+  strich :: (Num a, Eq a) => (a -> a -> a) -> Poly a -> Poly a -> Poly a
   strich o (P x) (P y)     = P $ strichlist o x y
 
   -------------------------------------------------------------------------
   -- Generic Strichrechnung on lists of coefficients
   -------------------------------------------------------------------------
-  strichlist :: Num a => (a -> a -> a) -> [a] -> [a] -> [a]
-  strichlist o xs ys = go xs ys
+  strichlist :: (Num a, Eq a) => (a -> a -> a) -> [a] -> [a] -> [a]
+  strichlist o xs ys = cleanz (go xs ys)
     where go [] bs         = bs
           go as []         = as
           go (a:as) (b:bs) = a `o` b : go as bs
@@ -73,13 +76,13 @@ where
   -------------------------------------------------------------------------
   -- Folding a list of lists of coefficients using strichrechnung
   -------------------------------------------------------------------------
-  strichf :: Num a => (a -> a -> a) -> [[a]] -> [a]
+  strichf :: (Num a, Eq a) => (a -> a -> a) -> [[a]] -> [a]
   strichf o = foldl' (strichlist o) []
 
   -------------------------------------------------------------------------
   -- Multiplication over an infinite field
   -------------------------------------------------------------------------
-  mul :: (Show a, Num a) => Poly a -> Poly a -> Poly a
+  mul :: (Show a, Num a, Eq a) => Poly a -> Poly a -> Poly a
   mul p1 p2 | d2 > d1   =  mul p2 p1
             | otherwise =  P (strichf (+) ms)
     where d1 = degree p1
@@ -92,9 +95,9 @@ where
   mulmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   mulmp p p1 p2 | d2 > d1   =  mulmp p p2 p1
                 | otherwise =  P [m `mmod` p | m <- strichf (+) ms]
-    where d1 = degree p1
+    where ms = [mul1 o i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+          d1 = degree p1
           d2 = degree p2
-          ms = [mul1 o i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
           o  = modmul p
 
   -------------------------------------------------------------------------
@@ -108,7 +111,7 @@ where
   -------------------------------------------------------------------------
   -- Multiply a list of coefficients (infinite field)
   -------------------------------------------------------------------------
-  mulist :: (Show a, Num a) => [a] -> [a] -> [a]
+  mulist :: (Show a, Num a, Eq a) => [a] -> [a] -> [a]
   mulist c1 c2 = coeffs $ mul (P c1) (P c2)
 
   -------------------------------------------------------------------------
@@ -258,7 +261,7 @@ where
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
   cantorzassenhaus :: Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzassenhaus = cantorzass 10
+  cantorzassenhaus = cantorzass 100
   
   -------------------------------------------------------------------------
   -- Cantor-Zassenhaus (with repetition)
@@ -267,13 +270,13 @@ where
   cantorzass 0 _ _ = return []
   cantorzass i p u = do x <- randomPoly p (d-1)
                         let g1 = zassen 0 p x u
-                        let gs = nub (g1 ++ map fst [divmp p u g | g <- g1])
+                        let gs = (g1 ++ map fst [divmp p u g | g <- g1])
                         fs <- concat <$> mapM (splitG p) gs
                         let rs | length sq > 0 = sq++fs
                                | otherwise     = fs
                         if null rs then cantorzass (i-1) p u
                                    else return rs
-    where sq = squarefactor p u
+    where sq = squarefactor p u -- we still need to find the other factors
           d  = degree u
             
   -------------------------------------------------------------------------
@@ -281,7 +284,7 @@ where
   -------------------------------------------------------------------------
   zassen :: Int -> Integer -> Poly Integer -> Poly Integer -> [Poly Integer]
   zassen d p w v | d   > (degree v) `div` 2 = []
-                 | otherwise                = 
+                 | otherwise                = -- trace (show w ++ ", " ++ show v) $
                      let w' = pmmod p (powmp p p w) v
                       in case gcdmp p ((sub w' (P [0,1])) `pmod` p) v of
                            P [_] -> zassen (d+1) p w' v
@@ -300,8 +303,8 @@ where
   -------------------------------------------------------------------------
   randomPoly :: Integer -> Int -> IO (Poly Integer)
   randomPoly p d = do
-    cs <- mapM (\_ -> randomCoeff p) [1..d]
-    if all (== 0) cs then randomPoly p d
+    cs <- cleanz <$> mapM (\_ -> randomCoeff p) [1..d]
+    if length cs < d then randomPoly p d
                      else return (P cs)
 
   -------------------------------------------------------------------------
