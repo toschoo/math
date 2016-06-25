@@ -245,10 +245,9 @@ where
   -- Squared factors
   -------------------------------------------------------------------------
   squarefactor :: Integer -> Poly Integer -> [Poly Integer]
-  squarefactor p poly | degree(sq) > 0 = if r == P [0] then [sq,s2] else [sq]
+  squarefactor p poly | degree(sq) > 0 = [sq]
                       | otherwise      = []
     where sq = gcdmp p poly (derivative (modmul p) poly)
-          (s2,r) = divmp p poly sq
 
   -------------------------------------------------------------------------
   -- Powers of...
@@ -270,23 +269,20 @@ where
   cantorzass :: Int -> Integer -> Poly Integer -> IO [Poly Integer]
   cantorzass 0 _ u = return [u]
   cantorzass i p u | d <= 1    = return [u]
-                   | otherwise = do 
-                        x <- randomPoly p (d-1)
-                        let g0 = zassen 0 p x u
-                        if null g0 && null sq 
-                          then cantorzass (i-1) p u
-                          else do
-                            g1 <- concat <$> mapM (splitG 10 p) g0
-                            let g2 = map fst [divmp p u g | g <- g1]
-                            g3 <- concat <$> mapM (cantorzassenhaus p) g2
-                            let fs = (g1++g3) -- (gs ++ map fst [divmp p u g | g <- gs])
-                            let rs | length sq > 0 = sq++fs
-                                   | otherwise     = fs
-                            return rs
-                            -- if null rs then cantorzass (i-1) p u
-                            --            else return rs
-    where sq = squarefactor p u -- we still need to find the other factors
-          d  = degree u
+                   | otherwise = 
+    case squarefactor p u of
+      [] -> do x <- randomPoly p (d-1)
+               case zassen 0 p x u of
+                 [] -> cantorzass (i-1) p u
+                 gs -> do g1 <- concat <$> mapM (splitG 10 p) gs
+                          let g2 = map fst [divmp p u g | g <- g1]
+                          g3 <- concat <$> mapM (cantorzassenhaus p) g2
+                          return $ nub (g1++g3)
+      sq -> let s1     = head sq
+                (s2,_) = divmp p u s1
+             in do fs <- cantorzassenhaus p s2
+                   return (s1:fs)
+    where d  = degree u
             
   -------------------------------------------------------------------------
   -- Cantor-Zassenhaus (the heart of the matter)
@@ -366,10 +362,12 @@ where
   -------------------------------------------------------------------------
   checkFactors :: Integer -> Poly Integer -> [Poly Integer] -> Bool
   checkFactors p x [] = True
-  checkFactors p x (f:fs) = 
+  checkFactors p x fs = prodp (mulmp p) fs == x
+  {-
     case divmp p x f of
       (q,P [0]) -> checkFactors p x fs -- is q (or its factors) in fs?
       (q,_)     -> False
+  -}
     
   -------------------------------------------------------------------------
   -- product
