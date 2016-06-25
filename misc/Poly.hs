@@ -95,7 +95,7 @@ where
   mulmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   mulmp p p1 p2 | d2 > d1   =  mulmp p p2 p1
                 | otherwise =  P [m `mmod` p | m <- strichf (+) ms]
-    where ms = [mul1 o i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
+    where ms = [mul1 o i (coeffs p1) c | (i,c) <- zip [0..] (coeffs p2)]
           d1 = degree p1
           d2 = degree p2
           o  = modmul p
@@ -245,9 +245,10 @@ where
   -- Squared factors
   -------------------------------------------------------------------------
   squarefactor :: Integer -> Poly Integer -> [Poly Integer]
-  squarefactor p poly | degree(sq) > 0 = [sq] 
+  squarefactor p poly | degree(sq) > 0 = if r == P [0] then [sq,s2] else [sq]
                       | otherwise      = []
     where sq = gcdmp p poly (derivative (modmul p) poly)
+          (s2,r) = divmp p poly sq
 
   -------------------------------------------------------------------------
   -- Powers of...
@@ -267,22 +268,31 @@ where
   -- Cantor-Zassenhaus (with repetition)
   -------------------------------------------------------------------------
   cantorzass :: Int -> Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzass 0 _ _ = return []
-  cantorzass i p u = do x <- randomPoly p (d-1)
-                        let g1 = zassen 0 p x u
-                        let gs = (g1 ++ map fst [divmp p u g | g <- g1])
-                        fs <- concat <$> mapM (splitG p) gs
-                        let rs | length sq > 0 = sq++fs
-                               | otherwise     = fs
-                        if null rs then cantorzass (i-1) p u
-                                   else return rs
+  cantorzass 0 _ u = return [u]
+  cantorzass i p u | d <= 1    = return [u]
+                   | otherwise = do 
+                        x <- randomPoly p (d-1)
+                        let g0 = zassen 0 p x u
+                        if null g0 && null sq 
+                          then cantorzass (i-1) p u
+                          else do
+                            g1 <- concat <$> mapM (splitG 10 p) g0
+                            let g2 = map fst [divmp p u g | g <- g1]
+                            g3 <- concat <$> mapM (cantorzassenhaus p) g2
+                            let fs = (g1++g3) -- (gs ++ map fst [divmp p u g | g <- gs])
+                            let rs | length sq > 0 = sq++fs
+                                   | otherwise     = fs
+                            return rs
+                            -- if null rs then cantorzass (i-1) p u
+                            --            else return rs
     where sq = squarefactor p u -- we still need to find the other factors
           d  = degree u
             
   -------------------------------------------------------------------------
   -- Cantor-Zassenhaus (the heart of the matter)
   -------------------------------------------------------------------------
-  zassen :: Int -> Integer -> Poly Integer -> Poly Integer -> [Poly Integer]
+  zassen :: Int -> Integer -> Poly Integer -> 
+                              Poly Integer -> [(Int,Poly Integer)]
   zassen d p w v | d   > (degree v) `div` 2 = []
                  | otherwise                = -- trace (show w ++ ", " ++ show v) $
                      let w' = pmmod p (powmp p p w) v
@@ -290,13 +300,25 @@ where
                            P [_] -> zassen (d+1) p w' v
                            g     -> let (v',_) = divmp p v g
                                         w''    = pmmod p w' v'
-                                     in g : zassen (d+1) p w'' v'
+                                     in (d,g) : zassen (d+1) p w'' v'
 
   -------------------------------------------------------------------------
   -- Factoring: factor product of factors
   -------------------------------------------------------------------------
-  splitG :: Integer -> Poly Integer -> IO [Poly Integer]
-  splitG p gs = return [gs]
+  splitG :: Int -> Integer -> (Int,Poly Integer) -> IO [Poly Integer]
+  splitG _ _ (1,g)    = return [g]
+  splitG i p (d,g) = do
+    t <- randomPoly p (2*d-1)
+    let x  = powmp p (p^d - 1) t
+    let x1 = add x (P  [1])
+    let x2 = add x (P [-1])
+    let r1 = gcdmp p g x1
+    let r2 = gcdmp p g x2
+    if degree r1 > 1 && 
+       degree r2 > 1 then return [r1,r2]
+                     else if i == 0 
+                          then return [g]
+                          else splitG (i-1) p (d,g)
 
   -------------------------------------------------------------------------
   -- Produce a random polynomial (modulo p)
@@ -313,6 +335,42 @@ where
   randomCoeff :: Integer -> IO Integer
   randomCoeff p = randomRIO (0,p-1)
 
+  -------------------------------------------------------------------------
+  -- Test Cantor-Zassenhaus
+  -------------------------------------------------------------------------
+  tstCantorZass :: Int -> Integer -> IO Bool
+  tstCantorZass 0 _ = return True
+  tstCantorZass i p = do
+    d  <- randomRIO (3,6)
+    x  <- randomPoly p d
+    putStr (showPoly x ++ ": ")
+    fs <- cantorzassenhaus p x
+    putStrLn (show fs)
+    if null fs then tstCantorZass (i-1) p
+               else if checkFactors p x fs then tstCantorZass (i-1) p
+                                           else return False
+
+  -------------------------------------------------------------------------
+  -- Align polynomials
+  -------------------------------------------------------------------------
+  showPoly :: Show a => Poly a -> String
+  showPoly p | a < 0 = show p
+             | otherwise = show p ++ sp
+    where d  = degree p 
+          l  = 2*d + 1
+          a  = 13 - l
+          sp = take a (repeat ' ')
+
+  -------------------------------------------------------------------------
+  -- Check Factors
+  -------------------------------------------------------------------------
+  checkFactors :: Integer -> Poly Integer -> [Poly Integer] -> Bool
+  checkFactors p x [] = True
+  checkFactors p x (f:fs) = 
+    case divmp p x f of
+      (q,P [0]) -> checkFactors p x fs -- is q (or its factors) in fs?
+      (q,_)     -> False
+    
   -------------------------------------------------------------------------
   -- product
   -------------------------------------------------------------------------
