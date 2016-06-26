@@ -14,12 +14,21 @@ where
   data Poly a = P [a]
     deriving (Eq,Show)
 
+  -------------------------------------------------------------------------
+  -- Clean constructor 
+  -------------------------------------------------------------------------
   poly :: (Num a, Eq a) => [a] -> Poly a
   poly = P . cleanz
 
+  -------------------------------------------------------------------------
+  -- Get the coefficients
+  -------------------------------------------------------------------------
   coeffs :: Poly a -> [a]
   coeffs (P as) = as
 
+  -------------------------------------------------------------------------
+  -- Print in math notation
+  -------------------------------------------------------------------------
   pretty :: (Num a, Show a, Eq a) => Poly a -> String
   pretty p = go (reverse $ weigh p)
     where go [] = ""
@@ -33,16 +42,27 @@ where
                                 | otherwise = " + "
                            in if c == 0 then go cs else t++o++go cs
 
+  -------------------------------------------------------------------------
+  -- Apply the polynomial (substitute x for a number)
+  -------------------------------------------------------------------------
   apply :: Num a => Poly a -> a -> a
   apply (P []) _ = 0
   apply (P as) x = go x $ zip [0..] as
     where go z [] = 0
           go z ((i,c):cs) = c*z^i + go z cs
 
+  -------------------------------------------------------------------------
+  -- Apply a weight to each term 
+  -------------------------------------------------------------------------
   weigh :: (Num a) => Poly a -> [(Integer,a)]
   weigh (P []) = []
   weigh (P as) = (zip [0..] as)
 
+  -------------------------------------------------------------------------
+  -- Degree of a polynomial is the number of elements minus 1
+  -- note that the degree is the greatest exponent 
+  --      appearing in the polynomial. (P [a]), hence, has degree 0.
+  -------------------------------------------------------------------------
   degree :: Poly a -> Int
   degree (P as) = length as - 1
 
@@ -121,7 +141,7 @@ where
   mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
 
   -------------------------------------------------------------------------
-  -- Division (in a field)
+  -- Division (infinite field)
   -------------------------------------------------------------------------
   divp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
           Poly a -> Poly a -> (Poly a,Poly a)
@@ -150,8 +170,8 @@ where
                          d  = degree (P r) - db
                          ts = zeros d ++ [t]
                          m  = mulmlist p ts bs
-                      in go [m `mmod` p | m <- cleanz $ strichlist (+) q ts]
-                            [m `mmod` p | m <- cleanz $ strichlist (-) r m ]
+                      in go [c `mmod` p | c <- cleanz $ strichlist (+) q ts]
+                            [c `mmod` p | c <- cleanz $ strichlist (-) r m ]
           db = degree (P bs)
 
   -------------------------------------------------------------------------
@@ -177,11 +197,12 @@ where
   modp p (P as) = P (cleanz [a `mmod` p | a <- as])
 
   -------------------------------------------------------------------------
-  -- Divides
+  -- Divides (generic)
   -------------------------------------------------------------------------
-  divides :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
-          Poly a -> Poly a -> Bool
-  divides a b = case divp b a of
+  divides :: (Show a, Num a, Eq a, Ord a) => 
+             (Poly a -> Poly a -> (Poly a, Poly a)) ->
+             Poly a -> Poly a -> Bool
+  divides d a b = case b `d` a of
                   (_,P [0]) -> True
                   _         -> False
 
@@ -191,7 +212,7 @@ where
   gcdp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
           Poly a -> Poly a -> Poly a
   gcdp a b | degree b > degree a = gcdp b a
-           | nullp b = a
+           | zerop b = a
            | otherwise = let (_,r) = divp a b in gcdp b r
 
   -------------------------------------------------------------------------
@@ -199,15 +220,15 @@ where
   -------------------------------------------------------------------------
   gcdmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   gcdmp p a b | degree b > degree a = gcdmp p b a
-              | nullp b = a
+              | zerop b = a
               | otherwise = let (_,r) = divmp p a b in gcdmp p b r
  
   -------------------------------------------------------------------------
   -- Null
   -------------------------------------------------------------------------
-  nullp :: (Num a, Eq a) => Poly a -> Bool
-  nullp (P [0]) = True
-  nullp _       = False
+  zerop :: (Num a, Eq a) => Poly a -> Bool
+  zerop (P [0]) = True
+  zerop _       = False
 
   -------------------------------------------------------------------------
   -- unity
@@ -218,7 +239,7 @@ where
   unityp _ _       = False      
 
   -------------------------------------------------------------------------
-  -- Derivatives
+  -- Derivatives (generic)
   -------------------------------------------------------------------------
   derivative :: (Eq a, Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
   derivative o (P as) = P (cleanz (go $ zip [1..] (drop 1 as)))
@@ -242,11 +263,11 @@ where
   squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
 
   -------------------------------------------------------------------------
-  -- Squared factors
+  -- Squared factor (mod p)
   -------------------------------------------------------------------------
-  squarefactor :: Integer -> Poly Integer -> [Poly Integer]
-  squarefactor p poly | degree(sq) > 0 = [sq]
-                      | otherwise      = []
+  squarefactor :: Integer -> Poly Integer -> Maybe (Poly Integer)
+  squarefactor p poly | degree sq  > 0 = Just sq
+                      | otherwise      = Nothing 
     where sq = gcdmp p poly (derivative (modmul p) poly)
 
   -------------------------------------------------------------------------
@@ -271,17 +292,17 @@ where
   cantorzass i p u | d <= 1    = return [u]
                    | otherwise = 
     case squarefactor p u of
-      [] -> do x <- randomPoly p (d-1)
-               case zassen 0 p x u of
-                 [] -> cantorzass (i-1) p u
-                 gs -> do g1 <- concat <$> mapM (splitG 10 p) gs
-                          let g2 = map fst [divmp p u g | g <- g1]
-                          g3 <- concat <$> mapM (cantorzassenhaus p) g2
-                          return $ nub (g1++g3)
-      sq -> let s1     = head sq
-                (s2,_) = divmp p u s1
-             in do fs <- cantorzassenhaus p s2
-                   return (s1:fs)
+      Nothing -> do 
+        x <- randomPoly p (d-1)
+        case zassen 0 p x u of
+          [] -> cantorzass (i-1) p u
+          gs ->  do g1 <- concat <$> mapM (splitG 10 p) gs
+                    let g2 = map fst [divmp p u g | g <- g1]
+                    g3 <- concat <$> mapM (cantorzassenhaus p) g2
+                    return $ nub (g1++g3)
+      Just s1 -> do let (s2,_) = divmp p u s1
+                    fs <- cantorzassenhaus p s2
+                    return (s1:fs)
     where d  = degree u
             
   -------------------------------------------------------------------------
@@ -339,23 +360,18 @@ where
   tstCantorZass i p = do
     d  <- randomRIO (3,6)
     x  <- randomPoly p d
-    putStr (showPoly x ++ ": ")
+    putStr (showp x ++ ": ")
     fs <- cantorzassenhaus p x
     putStrLn (show fs)
     if null fs then tstCantorZass (i-1) p
                else if checkFactors p x fs then tstCantorZass (i-1) p
                                            else return False
-
-  -------------------------------------------------------------------------
-  -- Align polynomials
-  -------------------------------------------------------------------------
-  showPoly :: Show a => Poly a -> String
-  showPoly p | a < 0 = show p
-             | otherwise = show p ++ sp
-    where d  = degree p 
-          l  = 2*d + 1
-          a  = 13 - l
-          sp = take a (repeat ' ')
+    where showp p | a < 0     = show p
+                  | otherwise = show p ++ sp
+            where d  = degree p 
+                  l  = 2*d + 1
+                  a  = 13 - l
+                  sp = take a (repeat ' ')
 
   -------------------------------------------------------------------------
   -- Check Factors
@@ -363,12 +379,7 @@ where
   checkFactors :: Integer -> Poly Integer -> [Poly Integer] -> Bool
   checkFactors p x [] = True
   checkFactors p x fs = prodp (mulmp p) fs == x
-  {-
-    case divmp p x f of
-      (q,P [0]) -> checkFactors p x fs -- is q (or its factors) in fs?
-      (q,_)     -> False
-  -}
-    
+
   -------------------------------------------------------------------------
   -- product
   -------------------------------------------------------------------------
@@ -376,16 +387,41 @@ where
   prodp o ps = foldl' o (P [1]) ps
 
   -------------------------------------------------------------------------
-  -- pow
+  -- pow (naive)
   -------------------------------------------------------------------------
-  powmp :: Integer -> Integer -> Poly Integer -> Poly Integer
-  powmp p f poly = go f poly
+  powmp2 :: Integer -> Integer -> Poly Integer -> Poly Integer
+  powmp2 p f poly = go f poly
     where go 0 x = P [1]
           go 1 x = x
           go n x = go (n-1) (mulmp p poly x) -- better: double+add
 
   -------------------------------------------------------------------------
-  -- Multiplication mod p
+  -- pow (square-and-multiply)
+  -------------------------------------------------------------------------
+  powmp :: Integer -> Integer -> Poly Integer -> Poly Integer
+  powmp p f poly = go f (P [1]) poly
+    where go 0 y _ = y
+          go 1 y x = mulmp p y x
+          go n y x | even n    = go (n `div` 2) y   (mulmp p x x) 
+                   | otherwise = go ((n-1) `div` 2) (mulmp p y x) 
+                                                    (mulmp p x x)
+
+  -------------------------------------------------------------------------
+  -- Test function
+  -------------------------------------------------------------------------
+  tstPow2 :: Int -> Integer -> IO Bool
+  tstPow2 0 _ = return True
+  tstPow2 i p = do
+    d <- randomRIO (2,5)
+    n <- randomRIO (0,25)
+    x <- randomPoly p d
+    let r  = powmp p n x
+    let r' = powmp2 p n x
+    if r == r' then tstPow2 (i-1) p
+               else return False
+
+  -------------------------------------------------------------------------
+  -- Integer Multiplication mod p
   -------------------------------------------------------------------------
   modmul :: Integer -> Integer -> Integer -> Integer
   modmul p f1 f2 = (f1 * f2) `mmod` p
@@ -431,6 +467,9 @@ where
                            | y < x     = GT
                            | otherwise = go xs ys
 
+  -------------------------------------------------------------------------
+  -- Solving equations
+  -------------------------------------------------------------------------
   solve :: Poly Double -> [Double]
   solve p = case degree p of
               0 -> coeffs p
