@@ -41,3 +41,17 @@ where
           go (0:xs) = 1 : go xs
           go (1:xs) = 0 : go xs
 
+  ------------------------------------------------------------------------
+  -- Find numbers with n digits and k digits /= 0
+  ------------------------------------------------------------------------
+  chooseNums :: Integer -> Integer -> [Integer]
+  chooseNums n k = go 1
+    where go x | x > 2^n            = []
+               | has k (toBinary x) = x : go (x+1)
+               | otherwise          =     go (x+1)
+          has 0 [] = True
+          has _ [] = False
+          has i (x:xs) | x == 1 && i == 0 = False
+                       | x == 1      = has (i-1) xs
+                       | otherwise   = has i xs
+

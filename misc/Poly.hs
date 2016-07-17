@@ -9,7 +9,10 @@ where
   import           Debug.Trace (trace)
   import           System.Random (randomRIO)
 
+  import qualified Binom   as B
   import qualified Modular as M
+  import qualified Prime   as P
+  import qualified Linear  as L
 
   data Poly a = P [a]
     deriving (Eq,Show)
@@ -353,6 +356,15 @@ where
   randomCoeff p = randomRIO (0,p-1)
 
   -------------------------------------------------------------------------
+  -- Produce a random prime
+  -------------------------------------------------------------------------
+  randomPrime :: Integer -> IO Integer
+  randomPrime k = do
+    n <- randomRIO (2^(k-1),2^k-1)
+    t <- P.rabinMiller 64 n
+    if t then return n else randomPrime k
+
+  -------------------------------------------------------------------------
   -- Test Cantor-Zassenhaus
   -------------------------------------------------------------------------
   tstCantorZass :: Int -> Integer -> IO Bool
@@ -466,6 +478,81 @@ where
           go (x:xs) (y:ys) | x < y     = LT
                            | y < x     = GT
                            | otherwise = go xs ys
+
+  -------------------------------------------------------------------------
+  -- Differences
+  -------------------------------------------------------------------------
+  diffs :: [Integer] -> [Integer]
+  diffs []  = []
+  diffs [_] = []
+  diffs (a:b:cs) = (b-a):diffs (b:cs)
+
+  -------------------------------------------------------------------------
+  -- diffs lists
+  -------------------------------------------------------------------------
+  dengine :: [Integer] -> [[Integer]]
+  dengine []  = []
+  dengine [_] = []
+  dengine cs  | constant cs = []
+              | otherwise   = ds : dengine ds
+    where ds = diffs cs
+          constant []     = True
+          constant [_]    = True
+          constant (x:xs) = all (==x) xs
+
+  -------------------------------------------------------------------------
+  -- predict
+  -------------------------------------------------------------------------
+  predict :: [[Integer]] -> [Integer] -> Maybe Integer
+  predict _ []  = Nothing
+  predict [] _  = Nothing
+  predict ds xs = case go (reverse ds) of
+                    0  -> Nothing
+                    d  -> Just (d + (last xs))
+    where go []   = 0
+          go [[]] = 0
+          go [a]  = last a
+          go (a:cs) = last a + go cs
+
+  -------------------------------------------------------------------------
+  -- Predict Degree
+  -------------------------------------------------------------------------
+  dpredict :: [[Integer]] -> Int
+  dpredict [] = -1
+  dpredict ds = length ds
+
+  -------------------------------------------------------------------------
+  -- Newton
+  -------------------------------------------------------------------------
+  newton :: Integer -> [[Integer]] -> [Integer] -> Integer
+  newton n ds seq = sum ts
+    where hs = getHeads seq ds
+          ts = [h * (B.choose n k) | (h,k) <- zip hs [0..n]]
+
+  -------------------------------------------------------------------------
+  -- Get Heads
+  -------------------------------------------------------------------------
+  getHeads :: [Integer] -> [[Integer]] -> [Integer]
+  getHeads seq ds = map head (seq:ds)
+
+  -------------------------------------------------------------------------
+  -- Find generating polynomial
+  -------------------------------------------------------------------------
+  findGen :: [[Integer]] -> [Integer] -> [Rational]
+  findGen ds = L.backsub . L.echelon . findCoeffs ds 
+
+  findCoeffs :: [[Integer]] -> [Integer] -> L.Matrix Integer
+  findCoeffs ds seq = L.M (go 0 seq)
+    where d = fromIntegral (length ds)
+          go _ []  = []
+          go n (x:xs) | n > d     = []
+                      | otherwise = genCoeff d n x : go (n+1) xs 
+
+  genCoeff :: Integer -> Integer -> Integer -> [Integer]
+  genCoeff m n x = go 0 x
+    where go i x | i == m    = [x]
+                 | otherwise = n^i : go (i+1) x
+
 
   -------------------------------------------------------------------------
   -- Solving equations

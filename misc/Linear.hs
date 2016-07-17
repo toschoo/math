@@ -2,6 +2,7 @@ module Linear
 where
 
   import Data.List (foldl')
+  import Data.Ratio
 
   ------------------------------------------------------------------------
   -- Test for linear independence
@@ -215,3 +216,52 @@ where
   rolen []    = 0
   rolen (x:_) = length x
 
+  ------------------------------------------------------------------------
+  -- Bring a matrix into echelon form
+  ------------------------------------------------------------------------
+  echelon :: (Eq a,Num a) => Matrix a -> Matrix a
+  echelon (M ms) = M (go ms)
+    where go :: (Eq a,Num a) => [[a]] -> [[a]]
+          go rs | null rs || 
+                  null (head rs) = rs
+                | null rs2       = map (0:) (go (map tail rs))
+                | otherwise      = piv : map (0:) (go rs')
+            where rs' = map (adjustWith piv) (rs1++rs3)
+                  (rs1,rs2) = span (\(n:_) -> n==0) rs
+                  (piv:rs3) = rs2
+
+  ------------------------------------------------------------------------
+  -- Adjust a row with a pivo
+  ------------------------------------------------------------------------
+  adjustWith :: (Num a) => [a] -> [a] -> [a]
+  adjustWith (m:ms) (n:ns) = zipWith (-) (map (n*) ms) 
+                                         (map (m*) ns)
+
+  ------------------------------------------------------------------------
+  -- Gaussian elimination
+  ------------------------------------------------------------------------
+  eliminate :: Rational -> Matrix Integer -> Matrix Integer
+  eliminate r (M ms) = M (map (simplify n d) ms)
+    where n = numerator   r
+          d = denominator r
+          simplify c d row = init (init row') ++ [d*lr - al*n]
+            where lr   = last row
+                  al   = last (init row)
+                  row' = map (*d) row
+
+  ------------------------------------------------------------------------
+  -- Backward substitution
+  ------------------------------------------------------------------------
+  backsub :: Matrix Integer -> [Rational]
+  backsub (M ms) = go ms []
+    where go [] rs = rs
+          go xs rs = go xs' (q:rs)
+            where idx2 | colen xs - 2 >= 0 = colen xs - 2
+                       | otherwise         = 0
+                  idx1 | colen xs - 1 >= 0 = colen xs - 1
+                       | otherwise         = 0
+                  a   = (last xs) !! idx2 
+                  c   = (last xs) !! idx1
+                  q   | a == 0    = 1
+                      | otherwise = c % a
+                  (M xs') = eliminate q $ M (init xs)
