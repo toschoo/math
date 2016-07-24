@@ -537,6 +537,7 @@ where
 
   -------------------------------------------------------------------------
   -- Find generating polynomial
+  -- NOTE: number of columns must be greater than number of rows!
   -------------------------------------------------------------------------
   findGen :: [[Integer]] -> [Integer] -> [Rational]
   findGen ds = L.backsub . L.echelon . findCoeffs ds 
@@ -550,9 +551,13 @@ where
 
   genCoeff :: Integer -> Integer -> Integer -> [Integer]
   genCoeff m n x = go 0 x
-    where go i x | i == m    = [x]
+    where go i x | i >  m    = [x] -- ? i == m = [x], the last one may be repeated!
                  | otherwise = n^i : go (i+1) x
 
+  testGauss :: Poly Integer -> L.Matrix Integer
+  testGauss p = L.echelon $ findCoeffs ds sq
+    where ds = dengine sq
+          sq = map (apply p) [0..15]
 
   -------------------------------------------------------------------------
   -- Solving equations

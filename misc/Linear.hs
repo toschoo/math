@@ -4,6 +4,8 @@ where
   import Data.List (foldl')
   import Data.Ratio
 
+  import Debug.Trace(trace)
+
   ------------------------------------------------------------------------
   -- Test for linear independence
   ------------------------------------------------------------------------
@@ -157,6 +159,9 @@ where
   data Matrix a = M [[a]]
     deriving (Show,Eq)
 
+  rows :: Matrix a -> [[a]]
+  rows (M rs) = rs
+
   ------------------------------------------------------------------------
   -- Add two matrices
   ------------------------------------------------------------------------
@@ -206,15 +211,15 @@ where
   ------------------------------------------------------------------------
   -- Column length
   ------------------------------------------------------------------------
-  colen :: [[a]] -> Int
-  colen = length
+  rolen :: [[a]] -> Int
+  rolen = length
 
   ------------------------------------------------------------------------
   -- Row length
   ------------------------------------------------------------------------
-  rolen :: [[a]] -> Int
-  rolen []    = 0
-  rolen (x:_) = length x
+  colen :: [[a]] -> Int
+  colen []    = 0
+  colen (x:_) = length x
 
   ------------------------------------------------------------------------
   -- Bring a matrix into echelon form
@@ -244,24 +249,24 @@ where
   eliminate r (M ms) = M (map (simplify n d) ms)
     where n = numerator   r
           d = denominator r
-          simplify c d row = init (init row') ++ [d*lr - al*n]
+          simplify n d row = init (init row') ++ [d*lr - al*n]
             where lr   = last row
                   al   = last (init row)
                   row' = map (*d) row
 
   ------------------------------------------------------------------------
   -- Backward substitution
+  -- Preconditions:
+  --   - The input Matrix *must* be in echelon form
+  --   - The number of columns must be greater than the number of rows,
+  --     (otherwise we divide by 0)
   ------------------------------------------------------------------------
   backsub :: Matrix Integer -> [Rational]
   backsub (M ms) = go ms []
     where go [] rs = rs
-          go xs rs = go xs' (q:rs)
-            where idx2 | colen xs - 2 >= 0 = colen xs - 2
-                       | otherwise         = 0
-                  idx1 | colen xs - 1 >= 0 = colen xs - 1
-                       | otherwise         = 0
-                  a   = (last xs) !! idx2 
-                  c   = (last xs) !! idx1
-                  q   | a == 0    = 1
-                      | otherwise = c % a
-                  (M xs') = eliminate q $ M (init xs)
+          go xs rs = trace (show xs) $ go xs' (p:rs)
+            where a   = (last xs) !! ((colen xs)-2)
+                  c   = (last xs) !! ((colen xs)-1)
+                  p   = c % a
+                  (M xs') = eliminate p $ M (init xs)
+
