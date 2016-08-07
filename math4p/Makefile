@@ -49,6 +49,7 @@ ALL	 = cmds.tex \
 	   src/c05/NegBinom.lhs \
 	   src/c05/Quoz.lhs \
 	   src/c05/Zeno.lhs \
+	   src/c05/LinearSystems.lhs \
 	   src/c05/BinomInt.lhs \
 	   src/c05/Totient.lhs \
 	   src/c05/Cantor1.lhs \

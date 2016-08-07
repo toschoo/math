@@ -551,7 +551,7 @@ where
 
   genCoeff :: Integer -> Integer -> Integer -> [Integer]
   genCoeff m n x = go 0 x
-    where go i x | i >  m    = [x] -- ? i == m = [x], the last one may be repeated!
+    where go i x | i >  m    = [x]
                  | otherwise = n^i : go (i+1) x
 
   testGauss :: Poly Integer -> L.Matrix Integer
