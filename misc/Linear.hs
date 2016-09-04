@@ -264,7 +264,7 @@ where
   backsub :: Matrix Integer -> [Rational]
   backsub (M ms) = go ms []
     where go [] rs = rs
-          go xs rs = trace (show xs) $ go xs' (p:rs)
+          go xs rs = go xs' (p:rs)
             where a   = (last xs) !! ((colen xs)-2)
                   c   = (last xs) !! ((colen xs)-1)
                   p   = c % a
