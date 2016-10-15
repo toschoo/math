@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  4 SEP 2016 18:56
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  15 OCT 2016 19:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2135,7 +2135,7 @@ Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
 \openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (2.71973pt too wide) in paragraph at lines 4867--4871
+Overfull \hbox (2.71973pt too wide) in paragraph at lines 4872--4876
 [][] 
  []
 
@@ -2168,7 +2168,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5553.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 5558.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2182,7 +2182,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5553.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 5558.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2196,13 +2196,13 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5553.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 5558.
 
 [57] [58]
 \openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (2.53668pt too wide) in paragraph at lines 5740--5751
+Overfull \hbox (2.53668pt too wide) in paragraph at lines 5745--5756
 \OT1/cmr/m/n/10.95 since $\OML/cmm/m/it/10.95 '\OT1/cmr/m/n/10.95 (8) = 4$, and
  $\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/n/10.95 (8) = 2$. We gen-er-ate the groups 
 with $[] ([] 8) ([] 8)$
@@ -2278,7 +2278,7 @@ msfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
 ols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
 ls/msbm10.pfb>
-Output written on lhsinverse.pdf (78 pages, 419746 bytes).
+Output written on lhsinverse.pdf (78 pages, 419801 bytes).
 PDF statistics:
  324 PDF objects out of 1000 (max. 8388607)
  225 compressed objects within 3 object streams

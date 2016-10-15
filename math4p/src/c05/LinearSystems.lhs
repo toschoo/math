@@ -18,6 +18,7 @@ famous ``Nine Chapters of Mathematical Art'', for instance,
 dates back to 179 \acronym{ad}. It contains advanced
 algorithms to solve systems of linear equations that were
 formulated in Europe only in the $19^{th}$ century.
+Another
 
 This knowledge was brought to Europe through Arab and
 Persian scholars, most famously perhaps al-Hwarizmi,
@@ -29,12 +30,13 @@ which was latinised as \term{algebra}.
 In this tradition, systems of linear equations were
 often worded in terms of \term{bird problems}.
 Bird problems are centered around the question of
-how many of $n$ different kind of birds can be
+how many of $n$ different kinds of birds can be
 bought for a specific amount of money. A typical
 problem is to buy 100 birds for 100 drachme.
-There are ducks, chickens and sparrows. One duck
-costs 5 drachme and one chicken or 20 sparrows
-cost 1 drachme. This translates into the simple
+There are ducks, chickens and sparrows. 
+For 1 drachme, you can either buy one chikcen
+or 20 sparrows; for 5 drachme, you get a duck.
+This translates into the simple
 system of equations
 
 \begin{equation}
@@ -94,7 +96,8 @@ in both cases.
 
 The final step in the derivation was a mere guess
 based on the fact that we expected integer numbers
-as results. Without that restriction, \ie\ when
+as results in one of the equations. 
+Without that restriction, \ie\ when
 we define the system over the field of rational
 numbers, would there be a way to solve any such
 system? It turns out, there is. Furthermore,
@@ -118,8 +121,9 @@ and unknowns; for the bird problem above this was
 not the case, since there were only two equations
 for three unknowns ($x$, $y$ and $z$). 
 However, the bird problem was restricted to integers,
-which do not form a field. The claim would not
-hold for the following system either
+and we were able to guess the result after some steps. 
+
+Have a look at the following system: 
 
 \begin{equation}
 \begin{array}{lcl}
@@ -168,7 +172,7 @@ contradiction. An inconsistent system is, for instance
 The sum of the left-hand side of equations 1 and 2 results in
 the left-hand side of equation 3. 
 The right-hand side of equation 3, however,
-is not the sum of the right-hand sides of equations 1 and 2.
+is not the sum of the right-hand side of equations 1 and 2.
 Any try of to solve this system will lead to 
 a contradiction of the form $1=0$.
 
@@ -178,8 +182,7 @@ within a field, always a unique
 solution and there is an algorithm that finds
 this solution.
 But before we present and implement the algorithm as such,
-we will look at the methods, which can be computed manually
-and which share common principles with the generic algorithm.
+we will look at the ideas, on which it is based.
 
 The first approach is \term{elimination}. The idea is
 to solve one equation for one of the variables and then
@@ -243,15 +246,18 @@ solved for $x$:
 x = 5 - 3\times 8 + 2\times 2 = -19 + 4 = -15.
 \end{equation}
 
+The complete result, hence, is 
+
+\[
+x=-15, y=8, z=2.
+\]
+
 Notice that the approach aims to subsequently 
 \term{eliminate} variables from the equations.
-This way, we simplify the system step by step 
-starting with $n$ unknowns per equation,
-simplifying to equations with $n-1$ unknowns
-and, just repeating the first step, 
-simplifying to equations with $n-2$ unknowns
-and so on
-until wie reach an equation containing only one unknown.
+This way, we simplify a system with $n$ equations 
+and unknowns to a system with $n-1$ equations and unknowns
+and, then, we just repeat until we are left with
+one equation with one unknown.
 
 We can reach this goal in a more direct manner
 by adding (or subtracting) one equation to (or from)
@@ -297,10 +303,10 @@ of these new equations by factor 6 and add it to the
 first one:
 
 \begin{equation}
-\begin{array}{clcl}
-  &  6x + 14y  & = &  22\\
-+ & -6x - 18y  & = & -54\\
-= &       -4y  & = & -32.
+\begin{array}{crrcr}
+  &  6x & + 14y  & = &  22\\
++ & -6x & - 18y  & = & -54\\
+= &     & -4y  & = & -32.
 \end{array}
 \end{equation}
 
@@ -313,10 +319,10 @@ by scaling and adding. We should not be frightened
 to use fractions, when solving equations in a field.
 We can, for instance, isolate $x$ by scaling
 the resulting equation \ref{eq:linPen2} by the factor
-$\frac{14}{3}$ and add it to the equation \ref{eq:linPen1}:
+$\frac{14}{3}$ and add it to equation \ref{eq:linPen1}:
 
 \begin{equation}
-\begin{array}{crlcl}
+\begin{array}{crrcr}
   &             6x & + 14y  & = &  22\\
 + & -\frac{14}{3}x & - 14y  & = & -42\\
 = &  \frac{4}{3}x  &        & = & -20.
@@ -326,8 +332,8 @@ $\frac{14}{3}$ and add it to the equation \ref{eq:linPen1}:
 After multiplying by $3$ and dividing by 4 on both sides,
 we get $x = -15$, as before.
 
-The algorithm already announced above is based on
-the principles of scaling and adding as well as elimination,
+The generic algorithm is based on
+these principles of scaling and adding as well as elimination,
 but does this in a systematic way. In our manual process,
 we took decisions on which equation to solve and on which
 equations to add to or subtract from which other. 
@@ -335,7 +341,7 @@ Those decisions
 were driven by human motives, for instance, to avoid
 fractions whenever possible. For a systematic algorithm
 executed on a machine, such considerations are irrelevant.
-The machine has no such peference of integers over fractions.
+The machine has no peference of integers over fractions.
 
 The algorithm is called \term{Gaussian elimination},
 although it is known to Chinese and Indian mathematicians
@@ -351,7 +357,7 @@ in applied science rather than in pure mathematics.
 Both algorithms are based on a data structure
 of fundamental importance in linear algebra, 
 the \term{matrix}.
-We will introduce matrices as a mere tool
+We, here, introduce matrices as a mere tool
 that helps us doing calculations. In algebra,
 however, matrices are studied as a topic in itself.
 
