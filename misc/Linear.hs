@@ -211,15 +211,15 @@ where
   ------------------------------------------------------------------------
   -- Column length
   ------------------------------------------------------------------------
-  rolen :: [[a]] -> Int
-  rolen = length
+  colen :: [[a]] -> Int
+  colen = length
 
   ------------------------------------------------------------------------
   -- Row length
   ------------------------------------------------------------------------
-  colen :: [[a]] -> Int
-  colen []    = 0
-  colen (x:_) = length x
+  rolen :: [[a]] -> Int
+  rolen []    = 0
+  rolen (x:_) = length x
 
   ------------------------------------------------------------------------
   -- Bring a matrix into echelon form
@@ -265,8 +265,8 @@ where
   backsub (M ms) = go ms []
     where go [] rs = rs
           go xs rs = go xs' (p:rs)
-            where a   = (last xs) !! ((colen xs)-2)
-                  c   = (last xs) !! ((colen xs)-1)
+            where a   = (last xs) !! ((rolen xs)-2)
+                  c   = (last xs) !! ((rolen xs)-1)
                   p   = c % a
                   (M xs') = eliminate p $ M (init xs)
 
