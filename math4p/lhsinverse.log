@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  16 OCT 2016 18:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  22 OCT 2016 18:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2122,19 +2122,11 @@ Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
 \openout3 = `lhsinverse.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3857--3951
+Underfull \hbox (badness 10000) in paragraph at lines 3918--4012
 
  []
 
-[39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49]
-\openout3 = `lhsinverse.ptb'.
-
-\openout3 = `lhsinverse.ptb'.
-
- [50]
-\openout3 = `lhsinverse.ptb'.
-
- [51]
+[39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
@@ -2142,27 +2134,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 3857--3951
  [52]
 \openout3 = `lhsinverse.ptb'.
 
+ [53]
+\openout3 = `lhsinverse.ptb'.
+
 \openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (2.71973pt too wide) in paragraph at lines 5204--5208
+[54]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+Overfull \hbox (2.71973pt too wide) in paragraph at lines 5344--5348
 [][] 
  []
 
-[53] [54]
+[55] [56]
 \openout3 = `lhsinverse.ptb'.
 
- [55] [56]
-\openout3 = `lhsinverse.ptb'.
-
-\openout3 = `lhsinverse.ptb'.
-
- [57]
+ [57] [58]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
 
- [58] [59]
+ [59]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [60] [61]
 \openout3 = `lhsinverse.ptb'.
 
 
@@ -2178,7 +2179,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5890.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6030.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2192,7 +2193,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5890.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6030.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -2206,13 +2207,13 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5890.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6030.
 
-[60] [61]
+[62] [63]
 \openout3 = `lhsinverse.ptb'.
 
- [62]
-Overfull \hbox (2.53668pt too wide) in paragraph at lines 6077--6088
+ [64]
+Overfull \hbox (2.53668pt too wide) in paragraph at lines 6217--6228
 \OT1/cmr/m/n/10.95 since $\OML/cmm/m/it/10.95 '\OT1/cmr/m/n/10.95 (8) = 4$, and
  $\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/n/10.95 (8) = 2$. We gen-er-ate the groups 
 with $[] ([] 8) ([] 8)$
@@ -2222,53 +2223,53 @@ with $[] ([] 8) ([] 8)$
 
 \openout3 = `lhsinverse.ptb'.
 
-[63] [64] [65] [66] [67]
-\openout3 = `lhsinverse.ptb'.
-
- [68] [69]
+[65] [66] [67] [68] [69]
 \openout3 = `lhsinverse.ptb'.
 
  [70] [71]
 \openout3 = `lhsinverse.ptb'.
 
- [72]
-\openout3 = `lhsinverse.ptb'.
-
-\openout3 = `lhsinverse.ptb'.
-
- [73]
+ [72] [73]
 \openout3 = `lhsinverse.ptb'.
 
  [74]
 \openout3 = `lhsinverse.ptb'.
 
- [75]
 \openout3 = `lhsinverse.ptb'.
 
+ [75]
 \openout3 = `lhsinverse.ptb'.
 
  [76]
 \openout3 = `lhsinverse.ptb'.
 
-\openout3 = `lhsinverse.ptb'.
-
  [77]
-[78] [79]
-\openout3 = `lhsinverse.ptb'.
-
- [80]
 \openout3 = `lhsinverse.ptb'.
 
 \openout3 = `lhsinverse.ptb'.
 
+ [78]
 \openout3 = `lhsinverse.ptb'.
 
- [81] [82] (./lhsinverse.aux) ) 
+\openout3 = `lhsinverse.ptb'.
+
+ [79]
+[80] [81]
+\openout3 = `lhsinverse.ptb'.
+
+ [82]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [83] [84] (./lhsinverse.aux) ) 
 Here is how much of TeX's memory you used:
- 30202 strings out of 493304
- 688500 string characters out of 6139872
+ 30203 strings out of 493304
+ 688508 string characters out of 6139872
  841787 words of memory out of 5000000
- 33073 multiletter control sequences out of 15000+600000
+ 33074 multiletter control sequences out of 15000+600000
  24913 words of font info for 96 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,11n,83p,10417b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2290,10 +2291,10 @@ m/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt1
 0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb>
-Output written on lhsinverse.pdf (82 pages, 450729 bytes).
+Output written on lhsinverse.pdf (84 pages, 455313 bytes).
 PDF statistics:
- 345 PDF objects out of 1000 (max. 8388607)
- 240 compressed objects within 3 object streams
+ 351 PDF objects out of 1000 (max. 8388607)
+ 244 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

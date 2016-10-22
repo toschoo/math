@@ -18,7 +18,6 @@ famous ``Nine Chapters of Mathematical Art'', for instance,
 dates back to 179 \acronym{ad}. It contains advanced
 algorithms to solve systems of linear equations that were
 formulated in Europe only in the $19^{th}$ century.
-Another
 
 This knowledge was brought to Europe through Arab and
 Persian scholars, most famously perhaps al-Hwarizmi,
@@ -34,7 +33,7 @@ how many of $n$ different kinds of birds can be
 bought for a specific amount of money. A typical
 problem is to buy 100 birds for 100 drachme.
 There are ducks, chickens and sparrows. 
-For 1 drachme, you can either buy one chikcen
+For 1 drachme, you can either buy one chicken
 or 20 sparrows; for 5 drachme, you get a duck.
 This translates into the simple
 system of equations
@@ -51,7 +50,7 @@ shall be 100; the second equation states that the sum of the
 price of the birds shall be 100 drachme.
 
 One way to solve such equations is 
-to eliminate one of the variables.
+to \term{eliminate} one of the variables.
 In the given system, we can solve for $z$
 in both equations:
 
@@ -65,7 +64,8 @@ and
 z = 100 - 5x - \frac{1}{20}y.
 \end{equation}
 
-We set both equations equal, subtract 100
+We set the right-hand sides of the equations equal, 
+subtract 100
 and bring $x$ to the left side of the equation
 and $y$ to the right side. We get:
 
@@ -126,9 +126,9 @@ and we were able to guess the result after some steps.
 Have a look at the following system: 
 
 \begin{equation}
-\begin{array}{lcl}
- x +  y & = & 1\\
-2x + 2y & = & 2
+\begin{array}{rcrcr}
+ x & + &  y & = & 1\\
+2x & + & 2y & = & 2
 \end{array}
 \end{equation}
 
@@ -143,17 +143,17 @@ A somewhat more subtle example of a system
 with a dependent equation is
 
 \begin{equation}\label{eq_linEqUnder}
-\begin{array}{lcl}
- x - 2y +  z & = & -1\\
-3x + 5y +  z & = &  8\\
-4x + 3y + 2z & = &  7.
+\begin{array}{rcrcrcr}
+ x & - & 2y & + &  z & = & -1\\
+3x & + & 5y & + &  z & = &  8\\
+4x & + & 3y & + & 2z & = &  7.
 \end{array}
 \end{equation}
 
 Here, the third equation is the sum of equations 1 and 2,
 so it does not add new information.
 
-Such systems of equations that have more unknowns than
+Systems of equations that have more unknowns than
 independent equations are called \term{underdetermined}.
 They usually have no or infinitely many solutions.
 If a system has more equations than unknowns, it is
@@ -162,10 +162,10 @@ The system is then \term{inconsistent}, \ie\ it contains a
 contradiction. An inconsistent system is, for instance
 
 \begin{equation}
-\begin{array}{lcl}
- x - 2y +  z & = & -1\\
-3x + 5y +  z & = &  8\\
-4x + 3y + 2z & = &  5.
+\begin{array}{rcrcrcr}
+ x & - & 2y & + &  z & = & -1\\
+3x & + & 5y & + &  z & = &  8\\
+4x & + & 3y & + & 2z & = &  5.
 \end{array}
 \end{equation}
 
@@ -190,10 +190,10 @@ to substitute that variable in the other equations by
 the result. A concrete example:
 
 \begin{equation}
-\begin{array}{lcl}
- x + 3y - 2z & = &  5\\
-3x + 5y + 6z & = &  7\\
-2x + 4y + 3z & = &  8.
+\begin{array}{rcrcrcr}
+ x & + & 3y & - & 2z & = &  5\\
+3x & + & 5y & + & 6z & = &  7\\
+2x & + & 4y & + & 3z & = &  8.
 \end{array}
 \end{equation}
 
@@ -209,9 +209,9 @@ We substitute this result for $x$ in the other equations
 and obtain:
 
 \begin{equation}
-\begin{array}{lcl}
-3(5-3y+2z) + 5y + 6z & = &  7\\
-2(5-3y+2z) + 4y + 3z & = &  8,
+\begin{array}{rcrcrcr}
+3(5-3y+2z) & + & 5y & + & 6z & = &  7\\
+2(5-3y+2z) & + & 4y & + & 3z & = &  8,
 \end{array}
 \end{equation}
 
@@ -219,16 +219,16 @@ which, after simplication and bringing the constant
 numbers to the right-hand side, translates to
 
 \begin{equation}
-\begin{array}{lcl}
--4y+12z & = & -8\\
--2y+7z & = &  -2.
+\begin{array}{rcrcr}
+-4y & + & 12z & = & -8\\
+-2y & + & 7z & = &  -2.
 \end{array}
 \end{equation}
 
 Now we repeat the process, solving the first of these equations
 for $y$, which yields $-4y = -12z-8$ and, after dividing
 both sides by $-4$, $y=3z+2$. We then substitute $y$
-in the third equation by this result yielding $-2(3z+2) + 7z = -2$.
+into the third equation yielding $-2(3z+2) + 7z = -2$.
 Simplifying again leads to $z-4=-2$ and, after adding 4 to both sides,
 $z=2$.
 
@@ -268,10 +268,10 @@ one of the equations to achieve this.
 When we look at the previous system once again
 
 \begin{equation}
-\begin{array}{lcl}
- x + 3y - 2z & = &  5\\
-3x + 5y + 6z & = &  7\\
-2x + 4y + 3z & = &  8,
+\begin{array}{rcrcrcr}
+ x & + & 3y & - & 2z & = &  5\\
+3x & + & 5y & + & 6z & = &  7\\
+2x & + & 4y & + & 3z & = &  8,
 \end{array}
 \end{equation}
 
@@ -279,10 +279,10 @@ we see that, if we scale the first equation by factor 3
 and add it to the second equation, $z$ would fall away:
 
 \begin{equation}\label{eq:linPen1}
-\begin{array}{clcl}
-  & 3x +  9y  - 6z & = & 15\\
-+ & 3x +  5y  + 6z & = &  7\\
-= & 6x + 14y       & = & 22.
+\begin{array}{crcrcrcr}
+  & 3x & +  & 9y  & - & 6z & = & 15\\
++ & 3x & +  & 5y  & + & 6z & = &  7\\
+= & 6x & + & 14y  &   &  & = & 22.
 \end{array}
 \end{equation}
 
@@ -290,10 +290,10 @@ Likewise, we can scale the third equation by factor 2
 and subtract it from the second equation:
 
 \begin{equation}\label{eq:linPen2}
-\begin{array}{clcl}
-  & 3x + 5y  + 6z & = &  7\\
-- & 4x + 8y  + 6z & = & 16\\
-= & -x - 3y       & = & -9.
+\begin{array}{crcrcrcr}
+  & 3x & + & 5y  & + & 6z & = &  7\\
+- & 4x & + & 8y  & + & 6z & = & 16\\
+= & -x & - & 3y  &   &    & = & -9.
 \end{array}
 \end{equation}
 
@@ -303,10 +303,10 @@ of these new equations by factor 6 and add it to the
 first one:
 
 \begin{equation}
-\begin{array}{crrcr}
-  &  6x & + 14y  & = &  22\\
-+ & -6x & - 18y  & = & -54\\
-= &     & -4y  & = & -32.
+\begin{array}{crcrcr}
+  &  6x & + & 14y  & = &  22\\
++ & -6x & - & 18y  & = & -54\\
+= &     &   & -4y  & = & -32.
 \end{array}
 \end{equation}
 
@@ -322,10 +322,10 @@ the resulting equation \ref{eq:linPen2} by the factor
 $\frac{14}{3}$ and add it to equation \ref{eq:linPen1}:
 
 \begin{equation}
-\begin{array}{crrcr}
-  &             6x & + 14y  & = &  22\\
-+ & -\frac{14}{3}x & - 14y  & = & -42\\
-= &  \frac{4}{3}x  &        & = & -20.
+\begin{array}{crcrcr}
+  &             6x & + & 14y  & = &  22\\
++ & -\frac{14}{3}x & - & 14y  & = & -42\\
+= &  \frac{4}{3}x  &   &      & = & -20.
 \end{array}
 \end{equation}
 
@@ -334,14 +334,14 @@ we get $x = -15$, as before.
 
 The generic algorithm is based on
 these principles of scaling and adding as well as elimination,
-but does this in a systematic way. In our manual process,
+but does so in a systematic way. In our manual process,
 we took decisions on which equation to solve and on which
 equations to add to or subtract from which other. 
 Those decisions 
 were driven by human motives, for instance, to avoid
 fractions whenever possible. For a systematic algorithm
 executed on a machine, such considerations are irrelevant.
-The machine has no peference of integers over fractions.
+The machine has no peference for integers over fractions.
 
 The algorithm is called \term{Gaussian elimination},
 although it is known to Chinese and Indian mathematicians
@@ -350,7 +350,8 @@ of this algorithm. There is a more advanced form,
 called \term{Gauss-Jordan algorithm}, at which we look later.
 Interesting, however, is the second eponym of the algorithm,
 Wilhelm Jordan (1842 -- 1899), a German geodesist.
-This underlines the fact that this method -- as well as other
+This underlines the fact that this method -- 
+as well as many other
 methods from linear algebra -- has its roots
 in applied science rather than in pure mathematics.
 
@@ -363,17 +364,17 @@ however, matrices are studied as a topic in itself.
 
 Anyway, what is a matrix in the first place?
 Well, ``matrix'' is basically a fancy name
-for what we all know as a table.
+for what we all know as ``table''.
 A matrix consists of rows and columns
 that are identified by a pair of indices $(i,j)$,
 where $i$ usually refers to the row and $j$
 to the column.
 
-We, here, use matrices to represent
+Here we use matrices to represent
 systems of equations. Each row contains
-one equation, where the values are the coefficients,
+one equation. Each column contains one coefficient,
 \ie\ the numbers before the unknowns and,
-in the last column of the rows, the constant
+in the last column, we have the constant
 value on the right-hand side of the equations
 (this is often called an \term{augmented matrix}).
 Our equation above can be represented in matrix form as:
@@ -401,9 +402,9 @@ We can create a matrix for our system by
 \begin{minipage}{\textwidth}
 \begin{code}
   mysystem :: Matrix [Natural]
-  mysystem =  let  e1  = [1,3,-2,5  ]
-                   e2  = [3,5,6,7   ]
-                   e3  = [2,4,3,8   ]
+  mysystem =  let  e1  = [1,3,-2,5]
+                   e2  = [3,5,6,7]
+                   e3  = [2,4,3,8]
               in   M [e1,e2,e3]
 \end{code}
 \end{minipage}
@@ -499,6 +500,11 @@ The echelon form of our matrix is as follows:
 \end{pmatrix}
 \]
 
+The echelon form corresponds to a system of equations
+where the last equation has been reduced to one unkown;
+the last but one to two unknowns and so one until
+the first that remains in its original form.
+
 The second step consists in eliminating and
 backsubstituting coefficients remaining in
 the matrix. But let us first look 
@@ -552,7 +558,7 @@ as the second element of a tuple resulting from
 |span (\(n:_)->n==0)|, 
 \ignore{\)}
 i.e. |rs1| will contain the rows with leading zeros 
-and |rs2| will contain those that do not.
+and |rs2| will contain those without leading zeros.
 If |rs2| is the empty list, all rows in |rs| have 
 at least one leading zero; we, therefore, ignore this step
 and continue with the tail of all rows, adding the zero
@@ -578,9 +584,69 @@ on more column with a value $\neq 0$ than the rows in
 the result matrix. The code looks a bit scary on the first sight,
 but, after going through it step by step, 
 it turns out to be quite simple.
+But let us go through an example:
+in the first instance of |go|, we compute
 
-Now, let us go on. We implement the second step
-of Gaussian elimination, the backsubstitution:\footnote{
+\begin{minipage}{\textwidth}
+|(rs1,rs2) = ([],m)|, where $m$ contains all lines of the matrix;\\
+|(piv,rs3) = ([1,3,-2,5],rs3)|, where |rs3| contains the last two lines.
+\end{minipage}
+
+For |adjustWith piv|, we compute, for the first line of |rs3|:
+
+\begin{equation}
+\begin{array}{crrrr}
+  &  3 & 9 & -6  & 15\\
+- &  3 & 5 &  6  &  7\\
+= &  0 & 4 & -12 &  8
+\end{array}
+\end{equation}
+
+and for the second:
+
+\begin{equation}
+\begin{array}{crrrr}
+  &  2 & 6 & -4 & 10\\
+- &  2 & 4 &  3 &  8\\
+= &  0 & 2 & -7 &  2
+\end{array}
+\end{equation}.
+
+With these results, we repeat the process computing
+
+\begin{minipage}{\textwidth}
+|(rs1,rs2) = ([],m)|, where $m$ now contains the two results computed above;\\
+|(piv,rs3) = ([4,-12,8],[[2,-7,2]])|.
+\end{minipage}
+
+For |adjustWith piv|, we compute:
+
+\begin{equation}
+\begin{array}{crrr}
+  & 8 & -24 & 16\\
+- & 8 & -28 &  8\\
+= & 0 &   4 &  8
+\end{array}
+\end{equation}
+
+Now, going back, we add heading zeros to the rows and,
+per recursion, the pivot resulting in the matrix:
+
+\[
+\begin{pmatrix}
+1 & 3 & -2  & 5\\
+0 & 4 & -12 & 8\\
+0 & 0 &   4 & 8
+\end{pmatrix}
+\]
+
+It should be clear, by the way, that |echelon| just applies
+the second method we discussed above:
+it systematically scales equations (in |adjustWith|) 
+and subtracts them from each other.
+Now you may guess that the second step of the algorithm
+applies the first method, \ie\ eliminating variables
+by solving and back-substituting -- and you are right:\footnote{
 This code is based on \term{Haskell Road}}
 
 \begin{minipage}{\textwidth}
@@ -606,10 +672,10 @@ This code is based on \term{Haskell Road}}
 \end{minipage}
 \ignore{$}
 
-Note that, for sake of simplicity, 
-we have adapted this code
+Note that, for sake of the topic of this section, 
+we have adapted the code
 to a specific data type.
-The |backsub| expects a system with 
+The function |backsub| expects a system with 
 integer coefficients and presents a
 result of rational numbers.
 
@@ -619,22 +685,96 @@ When the input matrix is exhausted, we yield the result set.
 Otherwise, we create the local variables |xs'| and |p|.
 The latter is a rational number generated by dividing
 the last element of the last row 
-by the penultimate element of the same row.
+by the penultimate element of that same row.
 This number, the quotient of the last 
-and the last but one element of the last row
+and the last but one element of the last row,
 is the first element of the result set.
+
+What does that mean? Well, look at the last line of the matrix.
+It reads $0,0,4,8$. That is: it contains only two elements.
+The penultimate element, 4, is the coefficient of the last
+unknown, $z$, while the last element, 8, is the constant value
+on the right-hand side of this equation with one unknown.
+The last row can thus be rephrased as:
+
+\[
+4z = 8.
+\]
+
+That we divide the last element by the last but one
+corresponds to the simple manipulation that divides
+both sides of the equation by 4, \ie\
+
+\[
+z = \frac{8}{4} = 2.
+\]
 
 The other variable |xs'| is generated by eliminating $p$
 from the other lines. Eliminating works as follows:
 We first multiply all elements in every row
-by the denominator of $p$;
-we then take the last two elements of each row,
+by the denominator of $p$.
+This corresponds to the following operation;
+the last but one row of the matrix, for instance, is
+
+\[
+4y - 12z = 8.
+\]
+
+When we substitute $z$ by $\frac{8}{4}$ (which, of course,
+is 2, but let us look at the fraction), we get:
+
+\[
+4y - \frac{12\times 8}{4} = 8.
+\]
+
+We now get rid of the denominator, by multiplying both sides by 4:
+
+\[
+16y - 12\times 8 = 32.
+\]
+
+In the code above, we start by performing this second step,
+\ie\ multiplying by the denominator.
+Note, however, that we later continue to compute with
+the last and the last but one element of |row|, not of |row'|.
+In other words, we multiply the denominator only by the elements
+that precede the penultimate and 
+leave the last two elements as they are.
+
+We then take the last two elements,
 multiply the last one by the denominator and
 the penultimate one by the numerator and
-subtract the latter from the former and
-append the result to the initial part of the row.
+subtract the latter from the former.
+That is, we get rid of the denominator, apply
+multiplication of the numerator to the value
+that represents $z$ and subtract it from both sides.
+In abstract algebraic notation, that would look like:
 
-Let us go through an example.
+\[
+ay + bz = c.
+\]
+
+We know that $z=\frac{n}{d}$, so we can substitute
+the second term for $\frac{bn}{d}$.
+We multiply by $d$ and get:
+
+\[
+ady + bn = cd.
+\]
+
+Now, we subtract $bn$ from both sides and get
+
+\[
+ady = cd - bn.
+\]
+
+Voilà, we have reduced an equation with two unknowns
+to an equation with only one unknown, namely $y$.
+This elimination step is applied to all rows
+(but the last). Then, the process is repeated
+using as input the reduced rows.
+
+Let us go through the whole example.
 The echelon form of our system is
 
 \[
@@ -652,11 +792,10 @@ We set
 p = \frac{8}{4} = \frac{2}{1}.
 \]
 
-This, as you may remember, is the result for $z$.
 We then call |eliminate p| on the first two lines
 of the matrix. Processing the first line,
-we compute |map (*1) row|, which we can ignore
-since $d=1$. We then set
+we compute |map (*1) row|, which we can ignore.
+We then set
 
 \[
 lr = 1\times 5,
@@ -676,7 +815,15 @@ al = 2\times -12
 
 and further computes $lr - al$, \ie\ $8 + 24 = 32$.
 The complete result for the second row, hence, is
-$0,4,32$.
+$0,4,32$. After application of |eliminate|, |xs'|
+is thus:
+
+\[
+\begin{pmatrix}
+1 & 3 & 9\\
+0 & 4 & 32
+\end{pmatrix}
+\]
 
 Now, in |backsub|, we repeat the process with this result.
 We, again, look at the last line, which now is $0,4,32$.
@@ -702,7 +849,7 @@ The complete result for this instance of |eliminate|, hence, is
 $1,-15$.
 
 We, again, repeat the |backsub| process with this result.
-There is only one line left and from this line we compute
+There is only one row left and from this line we compute
 $p$ as 
 
 \[
@@ -712,6 +859,4 @@ p = \frac{-15}{1} = -15,
 which, as you may remember, is the result for $x$.
 Since |init xs| is now |[]|, |eliminate| will return |[]|
 and this terminates the process with the correct result 
-|[2,8,-15]|.
-
-But why does that work?
+|[-15,8,2]|.
