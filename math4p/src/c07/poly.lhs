@@ -1,4 +1,5 @@
 \section{Numeral Systems}
+%include NumSystem.lhs
 \section{Polynomial Arithmetic}
 \section{The Difference Engine}
 \section{Factoring Polynomials}

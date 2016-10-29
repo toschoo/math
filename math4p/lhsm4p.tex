@@ -33664,6 +33664,525 @@ Here is an overview over our number types:
 
 \chapter{Polynomials} % c07
 \section{Numeral Systems}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{NumSystem}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{System}.Random}\;(\Varid{randomRIO}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+We started the first chapter with an investigation
+into numeral systems. We will now come back to this topic
+at least briefly.
+
+A numeral system consists of a finite set of digits $D$
+and a base, $b$, for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
+The binary system, for instance, 
+uses the digits $D=\lbrace 0,1\rbrace$.
+The cardinality of $D$ in this case, hence, is 2.
+The decimal system uses the digits $D=\lbrace 0\dots 9\rbrace$ and,
+thus, has the base $b=10$.
+The hexadecimal system uses the digits $D=\lbrace 0\dots 15\rbrace$,
+often given as $D=\lbrace 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f\rbrace$,
+and, therefore, has the base $b=16$.
+
+Numbers in any numeral system are usually represented as strings
+of digits. The string
+
+\[
+10101010,
+\]
+
+for instance, can represent a number in the binary system.
+(It could be a number in decimal format, too.)
+The string 
+
+\[
+170,
+\]
+
+by contrast, cannot be a binary number, because
+it contains the digit 7, which is not element of $D$
+in the binary system.
+It can represent a decimal (or a hexadecimal number).
+The string
+
+\[
+aa,
+\]
+
+can represent a number in the hexadecimal system
+(but not one of in the binary or decimal system).
+
+We interpret such a string, \ie\ convert it
+to the decimal system, by rewriting it to a formula of the form:
+
+\[
+a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
+\]
+
+where $a_i$ are the digits that appear in the string,
+$b$ is the base and $n$ is position of the left-most digit
+starting counting with 0 on the right-hand side of the string.
+The string $10101010$ in binary notation is interpreted as
+
+\[
+1\times 2^7 + 0\times 2^6 + 1\times 2^5 + 0\times 2^4 + 
+1\times 2^3 + 0\times 2^2 + 1\times 2^1 + 0\times 2^0,
+\]
+
+which can be simplified to
+
+\[
+2^7 + 2^5 + 2^3 + 2,
+\]
+
+which, in its turn, is
+
+\[
+128 + 32 + 8 + 2 = 170.
+\]
+
+The string 170 in decimal notation is interpreted as
+
+\[
+10^2 + 7\times 10 = 170.
+\]
+
+Interpreting a string in the notation it is written in
+yields just that string.
+The string $aa$ in hexadecimal notation is interpreted as
+
+\[
+a\times 16 + a.
+\]
+
+The digit $a$, however, is just 10. We, hence, get the equation
+
+\[
+10\times 16 + 10 = 160 + 10 = 170.
+\]
+
+What do we get, when we relax some of the constraints
+defining a numeral system?
+Instead of using a finite set of digits,
+we could use a number field, $F$, (finite or infinite)
+so that any member of that field qualifies as coefficient
+in the formulas above. We then also relax the rule
+that the base must be the cardinality of the field.
+Any member $x$ of the field would then qualify as $b$.
+Formulas we get from those new rules would follow the recipe:
+
+\[
+a_nx^n + a_{n-1}x^{n-1} + \dots + a_0x^0
+\]
+
+or shorter:
+
+\[
+\sum_{i=0}^n{a_ix^i}
+\]
+
+with $a_i, x \in F$.
+
+Such beasts are indeed known. They are very prominent in fact
+and they are called \term{polynomials}.
+
+The name \emph{poly}nomial stems from the fact
+that polynomials may be composed of many terms;
+a monomial, by contrast, is a polynomial 
+that consists of only one term.
+For instance,
+
+\[
+5x^2
+\]
+
+is a monomial. A binomial is a polynomial
+that consists of two terms. This is
+an example of a binomial:
+
+\[
+x^5 + 2x.
+\]
+
+There is nothing special about
+monomials and binomials, at least not
+in the way polynomials are defined.
+Monomials and binomials are just
+polynomials that happen to have only
+one or, respectively, two terms.
+
+Polynomials share many properties with numbers.
+Like numbers, arithmetic, including
+addition, subtraction, multiplication and subtraction
+as well as exponentiation, can be defined over polynomials. 
+In some cases, numbers reveal their close relation
+to polynomials. The binomial theorem states,
+for instance, that a product of the form 
+
+\[
+(a+b)(a+b)
+\]
+
+translates to a formula involving binomial coefficients:
+
+\[
+a^2 + 2ab + b^2.
+\]
+
+We can interpret this formula as the product 
+involving the polynomial $x+a$:
+
+\[
+(x+a)(x+a),
+\]
+
+which yields just another polynomial:
+
+\[
+x^2 + 2ax + a^2
+\]
+
+Let us replace $a$ for the number 3
+and fix $x=10$. We get:
+
+\begin{equation}
+(10+3)(10+3) = 10^2 + 2\times 3\times 10 + 3^2 = 100 + 60 + 9 = 169,
+\end{equation}
+
+which is just the result of the multiplication $13\times 13$.
+
+However, polynomials are not numbers.
+Polymonials and numbers are different concepts.
+One important difference is that polynomials do not establish
+a clear order. For any two distinct numbers, we can clearly say
+which of the two is the greater and which is the smaller one.
+We cannot decide that based on polynomial alone.
+One way to decide quickly which of two numbers is the grater one
+is to look at the number of their digits. The one with more digits
+is necessarily the greater one. In any numeral system it will hold:
+
+\[
+a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0,
+\]
+
+independent of the values of the $a$s and the $c$s.
+For polynomials, this is not true. Consider the following example:
+
+\[
+x^3 + x^2 + x + 1 > 100x^2.
+\]
+
+For $x=10$, the left-hand side of the inequation is
+$1000 + 100 + 10 + 1 = 1111$;
+the right-hand side, however, is $100\times 100 = 10000$.
+
+In spite of such differences, we can represent polynomials
+very similar to how we represented numbers,
+namely as a list of the coefficients. This is a valid
+implementation in Haskell:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{Poly}\;\Varid{a}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{deriving}\;(\Conid{Show}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We add a safe constructor:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{poly}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{poly}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Varid{error}\;\text{\tt \char34 not~a~polynomial\char34}{}\<[E]%
+\\
+\>[3]{}\Varid{poly}\;\Varid{as}\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;\Varid{as}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{cleanz}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cleanz}\;\Varid{xs}\mathrel{=}\Varid{reverse}\mathbin{\$}\Varid{go}\;(\Varid{reverse}\;\Varid{xs}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]{}\<[23]%
+\>[23]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[23]%
+\>[23]{}\mathrel{=}[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;(\mathrm{0}\mathbin{:}\Varid{xs}){}\<[23]%
+\>[23]{}\mathrel{=}\Varid{go}\;\Varid{xs}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{xs}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{xs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The constructor makes sure that the resulting polynomial
+has at least one coefficient and that all the coefficients
+are actually numbers in Haskell and are of type class \ensuremath{\Conid{Eq}}.
+The function \ensuremath{\Varid{cleanz}} called in the constructor
+removes leading zeros (which are redundant), just as we did this
+for the definition of natural numbers.
+But note that we reverse, first, the list of coefficients
+passed to \ensuremath{\Varid{go}} and, second, the result.
+This means that we store the coefficients from left to right
+in ascending order. Usually, we write polynomials out
+in descending order of their coefficients, \ie\:
+
+\[
+x^n + x^{n-1} + \dots + x^0.
+\]
+
+We store them in the order:
+
+\[
+x^0 + x^1 + \dots + x^{n-1} + x^n.
+\]
+
+The following functions get the list of coefficients back:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{coeffs}\mathbin{::}\Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{coeffs}\;(\Conid{P}\;\Varid{as})\mathrel{=}\Varid{as}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here is a function to pretty-print polynomials:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{38E}{@{}l@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pretty}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Show}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{String}{}\<[E]%
+\\
+\>[3]{}\Varid{pretty}\;\Varid{p}\mathrel{=}\Varid{go}\;(\Varid{reverse}\mathbin{\$}\Varid{weigh}\;\Varid{p}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;{}\<[16]%
+\>[16]{}[\mskip1.5mu \mskip1.5mu]\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;{}\<[16]%
+\>[16]{}((\Varid{i},\Varid{c})\mathbin{:}\Varid{cs})\mathrel{=}{}\<[30]%
+\>[30]{}\mathbf{let}\;{}\<[35]%
+\>[35]{}\Varid{x}{}\<[38]%
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{i}\equiv \mathrm{0}{}\<[52]%
+\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\\
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{i}\equiv \mathrm{1}{}\<[52]%
+\>[52]{}\mathrel{=}\text{\tt \char34 x\char34}{}\<[E]%
+\\
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{otherwise}{}\<[52]%
+\>[52]{}\mathrel{=}\text{\tt \char34 x\char94 \char34}\plus \Varid{show}\;\Varid{i}{}\<[E]%
+\\
+\>[35]{}\Varid{t}{}\<[38]%
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{c}\equiv \mathrm{1}{}\<[52]%
+\>[52]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{otherwise}{}\<[52]%
+\>[52]{}\mathrel{=}\Varid{show}\;\Varid{c}\plus \Varid{x}{}\<[E]%
+\\
+\>[35]{}\Varid{o}{}\<[38]%
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{null}\;\Varid{cs}{}\<[52]%
+\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\\
+\>[38]{}\mid {}\<[38E]%
+\>[41]{}\Varid{otherwise}{}\<[52]%
+\>[52]{}\mathrel{=}\text{\tt \char34 ~+~\char34}{}\<[E]%
+\\
+\>[30]{}\mathbf{in}\;\mathbf{if}\;\Varid{c}\equiv \mathrm{0}\;\mathbf{then}\;\Varid{go}\;\Varid{cs}\;\mathbf{else}\;\Varid{t}\plus \Varid{o}\plus \Varid{go}\;\Varid{cs}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{weigh}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu (\Conid{Integer},\Varid{a})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{weigh}\;(\Conid{P}\;[\mskip1.5mu \mskip1.5mu])\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{weigh}\;(\Conid{P}\;\Varid{as})\mathrel{=}(\Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;\Varid{as}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function show how we actually interpret the list of coefficients.
+We first \ensuremath{\Varid{weigh}} them by zipping the list of coefficients with integers
+assigning coefficient with a number. 
+One could say: we count the coefficients.
+Note that we start with 0. That, again, reflects our descending
+ordering of coefficients.
+
+The reversed weighted list is then passed to \ensuremath{\Varid{go}},
+which does the actual printing.
+We first determine the substring describing $x$:
+if $i$, the weight, is 0, we do not want to write the $x$,
+since $x^0=1$. If $i=1$, we just write $x$.
+Otherwise we write $x^i$.
+
+Then we determine the term composed of coefficient and $x$.
+If the coefficient, $c$ is 1, we just write $x$;
+otherwise, we concatenate $c$ with $x$.
+Note, however, that we later consider an additional case,
+namely, when $c=0$. In this case, we ignore the whole term.
+
+We still consider the operation. 
+If the remainder of the list is \ensuremath{\Varid{null}}, \ie\ 
+we are now handling the last term, \ensuremath{\Varid{o}} is the empty string.
+Otherwise, it is the plus symbol.
+Here is room for improvement:
+when the coefficient is negative, we do not really need
+the operation, since we then write $+ -cx$.
+Nicer would be to write only $-cx$.
+
+Finally, we put everything together concatenating a string
+composed of term, operation and \ensuremath{\Varid{go}} applied on the remainder 
+of the list. 
+
+Here are some examples. The polynomial $x^2 + x + 1$,
+would be created with our function as \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
+The polynomial $5x^5 + 4x^4 + 3x^3 + 2x^2 + x$ would be
+\ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}. The polynomial
+$5x^4 + 4x^3 + 3x^2 + 2x + 1$, on the other hand, 
+would be created by \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}.
+The polynomial $5x^4 + 3x^2 + 1$ can be created
+with \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{3},\mathrm{0},\mathrm{5}\mskip1.5mu]}.
+
+An important concept related to polynomials is the 
+\term{degree}. The degree is a measurement of the
+\emph{size} of the polynomial. In concrete terms,
+it is the greatest exponent in the polynomial.
+For us, it is the weight of the right-most element
+in the polynomial or, much simpler, the length
+of the list of coefficients minus one -- since,
+we start with zero!
+The following function computes the degree
+of a given polynomial:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{degree}\mathbin{::}\Conid{Poly}\;\Varid{a}\to \Conid{Int}{}\<[E]%
+\\
+\>[3]{}\Varid{degree}\;(\Conid{P}\;\Varid{as})\mathrel{=}\Varid{length}\;\Varid{as}\mathbin{-}\mathrm{1}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note, by the way, that polynomials of degree 0,
+those with only one trivial term, 
+are just constant numbers.
+
+Finally, here is a useful function that 
+creates random polynomials with \ensuremath{\Conid{Natural}}
+coefficients:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{randomPoly}\mathbin{::}\Conid{Natural}\to \Conid{Int}\to \Conid{IO}\;(\Conid{Poly}\;\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{randomPoly}\;\Varid{n}\;\Varid{d}\mathrel{=}\mathbf{do}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{cs}\leftarrow \Varid{cleanz}\mathbin{<\$>}\Varid{mapM}\;(\mathbin{\char92 \char95 }\to \Varid{randomCoeff}\;\Varid{n})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{d}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{if}\;\Varid{length}\;\Varid{cs}\mathbin{<}\Varid{d}\;\mathbf{then}\;\Varid{randomPoly}\;\Varid{n}\;\Varid{d}{}\<[E]%
+\\
+\>[5]{}\hsindent{17}{}\<[22]%
+\>[22]{}\mathbf{else}\;\Varid{return}\;(\Conid{P}\;\Varid{cs}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{randomCoeff}\mathbin{::}\Conid{Natural}\to \Conid{IO}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{randomCoeff}\;\Varid{n}\mathrel{=}\Varid{randomNatural}\;(\mathrm{0},\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives a \ensuremath{\Conid{Natural}} and an \ensuremath{\Conid{Int}}.
+The \ensuremath{\Conid{Int}} indicates the degree of the polynomial
+we want to obtain. The \ensuremath{\Conid{Natural}} is used to
+restrict the size of the coefficients we want
+to see in the polynomial.
+In \ensuremath{\Varid{randomCoeff}}, we use the \ensuremath{\Varid{randomNatural}}
+defined in the previous chapter to generate 
+a random number between 0 and $n-1$. You might
+suspect already where that will lead us:
+to polynomials modulo some number.
+But before we get there, 
+we will study polynomial arithmetic.
 \section{Polynomial Arithmetic}
 \section{The Difference Engine}
 \section{Factoring Polynomials}

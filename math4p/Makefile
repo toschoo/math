@@ -67,6 +67,7 @@ ALL	 = cmds.tex \
 	   src/c06/Cantor2.lhs \
 	   src/c06/Zoo.lhs \
 	   src/c07/poly.lhs \
+	   src/c07/NumSystem.lhs \
 	   src/c07/PartialF.lhs \
 	   src/c07/ClosedFib.lhs \
 	   src/c07/Gnomon.lhs \
