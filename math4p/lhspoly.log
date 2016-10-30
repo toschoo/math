@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  29 OCT 2016 20:03
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  30 OCT 2016 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1151,7 +1151,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 398.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 417.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1165,7 +1165,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 398.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 417.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1179,7 +1179,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 398.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 417.
 
 [4]
 \openout3 = `lhspoly.ptb'.
@@ -1199,7 +1199,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1213,7 +1213,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1227,7 +1227,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1241,7 +1241,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1255,7 +1255,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1269,7 +1269,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1283,7 +1283,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1297,7 +1297,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1311,7 +1311,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1325,7 +1325,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1339,7 +1339,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1353,7 +1353,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1367,7 +1367,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1381,7 +1381,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1395,7 +1395,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1409,7 +1409,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1423,7 +1423,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1437,18 +1437,18 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 508.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 527.
 
-[5]
+[5] [6]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [6] [7] [8] (./lhspoly.aux) ) 
+ [7] [8] [9] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
  29108 strings out of 493304
  674630 string characters out of 6139872
- 833784 words of memory out of 5000000
+ 835784 words of memory out of 5000000
  32004 multiletter control sequences out of 15000+600000
  13167 words of font info for 50 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -1464,10 +1464,10 @@ xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on lhspoly.pdf (8 pages, 140641 bytes).
+Output written on lhspoly.pdf (9 pages, 141635 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
