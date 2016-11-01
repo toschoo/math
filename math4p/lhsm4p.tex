@@ -33690,11 +33690,7 @@ Here is an overview over our number types:
 \)\par\noindent\endgroup\resethooks
 }
 
-We started the first chapter with an investigation
-into numeral systems. We will now come back to this topic
-at least briefly.
-
-A numeral system consists of a finite set of digits $D$
+A numeral system consists of a finite set of digits, $D$,
 and a base, $b$, for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
@@ -33702,7 +33698,7 @@ The cardinality of $D$ in this case, hence, is 2.
 The decimal system uses the digits $D=\lbrace 0\dots 9\rbrace$ and,
 thus, has the base $b=10$.
 The hexadecimal system uses the digits $D=\lbrace 0\dots 15\rbrace$,
-often given as $D=\lbrace 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f\rbrace$,
+often given as $D=\lbrace 0\dots 9,a,b,c,d,e,f\rbrace$,
 and, therefore, has the base $b=16$.
 
 Numbers in any numeral system are usually represented as strings
@@ -33712,8 +33708,8 @@ of digits. The string
 10101010,
 \]
 
-for instance, can represent a number in the binary system.
-(It could be a number in decimal format, too.)
+for instance, may represent a number in the binary system.
+(It could be a number in decimal format, too, though.)
 The string 
 
 \[
@@ -33734,7 +33730,8 @@ can represent a number in the hexadecimal system
 (but not one of in the binary or decimal system).
 
 We interpret such a string, \ie\ convert it
-to the decimal system, by rewriting it to a formula of the form:
+to the decimal system, by rewriting it 
+as a formula of the form:
 
 \[
 a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
@@ -33742,8 +33739,8 @@ a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
 
 where $a_i$ are the digits that appear in the string,
 $b$ is the base and $n$ is position of the left-most digit
-starting counting with 0 on the right-hand side of the string.
-The string $10101010$ in binary notation is interpreted as
+starting to count with 0 on the right-hand side of the string.
+The string $10101010$ in binary notation,hence, is interpreted as
 
 \[
 1\times 2^7 + 0\times 2^6 + 1\times 2^5 + 0\times 2^4 + 
@@ -33787,9 +33784,11 @@ defining a numeral system?
 Instead of using a finite set of digits,
 we could use a number field, $F$, (finite or infinite)
 so that any member of that field qualifies as coefficient
-in the formulas above. We then also relax the rule
+in the formulas we used above to interpret numbers
+in the decimal system. We would then relax the rule
 that the base must be the cardinality of the field.
-Any member $x$ of the field would then qualify as $b$.
+Instead, we allow any member $x$ of the field 
+to serve as a base.
 Formulas we get from those new rules would follow the recipe:
 
 \[
@@ -33804,8 +33803,8 @@ or shorter:
 
 with $a_i, x \in F$.
 
-Such beasts are indeed known. They are very prominent in fact
-and they are called \term{polynomials}.
+Such beasts are indeed well-known. They are very prominent, in fact,
+and their name is \term{polynomial}.
 
 The name \emph{poly}nomial stems from the fact
 that polynomials may be composed of many terms;
@@ -33826,15 +33825,15 @@ x^5 + 2x.
 \]
 
 There is nothing special about
-monomials and binomials, at least not
-in the way polynomials are defined.
+monomials and binomials, at least nothing
+that would affect their definition as polynomials.
 Monomials and binomials are just
 polynomials that happen to have only
 one or, respectively, two terms.
 
 Polynomials share many properties with numbers.
 Like numbers, arithmetic, including
-addition, subtraction, multiplication and subtraction
+addition, subtraction, multiplication and division
 as well as exponentiation, can be defined over polynomials. 
 In some cases, numbers reveal their close relation
 to polynomials. The binomial theorem states,
@@ -33851,7 +33850,7 @@ a^2 + 2ab + b^2.
 \]
 
 We can interpret this formula as the product 
-involving the polynomial $x+a$:
+of the polynomial $x+a$:
 
 \[
 (x+a)(x+a),
@@ -33871,26 +33870,42 @@ and fix $x=10$. We get:
 \end{equation}
 
 which is just the result of the multiplication $13\times 13$.
-
-However, polynomials are not numbers.
-Polymonials and numbers are different concepts.
-One important difference is that polynomials do not establish
-a clear order. For any two distinct numbers, we can clearly say
-which of the two is the greater and which is the smaller one.
-We cannot decide that based on polynomial alone.
-One way to decide quickly which of two numbers is the grater one
-is to look at the number of their digits. The one with more digits
-is necessarily the greater one. In any numeral system it will hold:
+Usually, it is harder to recognise this kind of relations 
+numbers have with the binomial theorem (and, hence, with polynomials),
+because most binomial coefficients are too big to be represented
+by a single-digit number. Already in the product $14\times 14$,
+the binomial coefficients are hidden. Let us look at this multiplication
+treated as the polynomial $(x+a)$ with $x=10$ and $a=4$:
 
 \[
-a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0,
+(10 + 4) (10 + 4) = 
+10^2 + 2\times 4\times 10 + 4^2 =
+100 + 2\times 40 + 16.
+\]
+
+When we look at the resulting number, we do not recognise
+the binomial coefficient anymore -- they are \emph{carried} away:
+$100 + 2\times 40 + 16 = 100 + 80 + 16 = 196$.
+
+Indeed, polynomials are not numbers.
+Those are different concepts.
+Another important difference is that polynomials do not establish
+a clear order. For any two distinct numbers, we can clearly say
+which of the two is the greater and which is the smaller one.
+We cannot decide that based on the formula of the polynomial alone.
+One way to decide quickly which of two numbers is the grater one
+is to look at the number of their digits. The one with more digits
+is necessarily the greater one. In any numeral system it holds that:
+
+\[
+a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0
 \]
 
 independent of the values of the $a$s and the $c$s.
 For polynomials, this is not true. Consider the following example:
 
 \[
-x^3 + x^2 + x + 1 > 100x^2.
+x^3 + x^2 + x + 1 > 100x^2?
 \]
 
 For $x=10$, the left-hand side of the inequation is
@@ -33899,7 +33914,7 @@ the right-hand side, however, is $100\times 100 = 10000$.
 
 In spite of such differences, we can represent polynomials
 very similar to how we represented numbers,
-namely as a list of the coefficients. This is a valid
+namely as a list of coefficients. This is a valid
 implementation in Haskell:
 
 \begin{minipage}{\textwidth}
@@ -33959,27 +33974,27 @@ We add a safe constructor:
 
 The constructor makes sure that the resulting polynomial
 has at least one coefficient and that all the coefficients
-are actually numbers in Haskell and are of type class \ensuremath{\Conid{Eq}}.
+are actually numbers and comparable for equality.
 The function \ensuremath{\Varid{cleanz}} called in the constructor
-removes leading zeros (which are redundant), just as we did this
-for the definition of natural numbers.
+removes leading zeros (which are redundant), just as we did 
+when we defined natural numbers.
 But note that we reverse, first, the list of coefficients
-passed to \ensuremath{\Varid{go}} and, second, the result.
+passed to \ensuremath{\Varid{go}} and, second, the result of \ensuremath{\Varid{go}}.
 This means that we store the coefficients from left to right
 in ascending order. Usually, we write polynomials out
-in descending order of their coefficients, \ie\:
+in descending order of their weight, \ie\:
 
 \[
 x^n + x^{n-1} + \dots + x^0.
 \]
 
-We store them in the order:
+But, here, we store them in the order:
 
 \[
 x^0 + x^1 + \dots + x^{n-1} + x^n.
 \]
 
-The following functions get the list of coefficients back:
+The following function gets the list of coefficients back:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -34067,11 +34082,15 @@ Here is a function to pretty-print polynomials:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The function show how we actually interpret the list of coefficients.
-We first \ensuremath{\Varid{weigh}} them by zipping the list of coefficients with integers
-assigning coefficient with a number. 
+The function demonstrates how we actually 
+interpret the list of coefficients.
+We first \ensuremath{\Varid{weigh}} them by zipping the list of coefficients 
+with a list of integers starting at 0.
 One could say: we count the coefficients.
-Note that we start with 0. That, again, reflects our descending
+Note that we start with 0, so that
+the first coefficient gets the weight 0, 
+the second gets the weight 1 and so on.
+That, again, reflects our descending
 ordering of coefficients.
 
 The reversed weighted list is then passed to \ensuremath{\Varid{go}},
@@ -34100,14 +34119,24 @@ Finally, we put everything together concatenating a string
 composed of term, operation and \ensuremath{\Varid{go}} applied on the remainder 
 of the list. 
 
-Here are some examples. The polynomial $x^2 + x + 1$,
-would be created with our function as \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
-The polynomial $5x^5 + 4x^4 + 3x^3 + 2x^2 + x$ would be
-\ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}. The polynomial
-$5x^4 + 4x^3 + 3x^2 + 2x + 1$, on the other hand, 
-would be created by \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}.
-The polynomial $5x^4 + 3x^2 + 1$ can be created
-with \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{3},\mathrm{0},\mathrm{5}\mskip1.5mu]}.
+Here is a list of polynomials and how they are
+represented with our Haksell type:
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c||c|}
+\hline
+$x^2 + x + 1$ & \ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\\hline
+$5x^5 + 4x^4 + 3x^3 + 2x^2 + x$ &
+\ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}\\\hline
+$5x^4 + 4x^3 + 3x^2 + 2x + 1$  &
+\ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}\\\hline
+$5x^4 + 3x^2 + 1$  &
+\ensuremath{\Varid{poly}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{3},\mathrm{0},\mathrm{5}\mskip1.5mu]}\\\hline
+\end{tabular}
+\endgroup
+\end{center}
 
 An important concept related to polynomials is the 
 \term{degree}. The degree is a measurement of the
@@ -34184,12 +34213,408 @@ to polynomials modulo some number.
 But before we get there, 
 we will study polynomial arithmetic.
 \section{Polynomial Arithmetic}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyArith}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+We start with addition and subtraction,
+which, in German, are summarised by
+the beautiful word \term{strichrechnung}
+meaning literally ``dash calculation'' as
+opposed to \term{punkt\-rech\-nung} or ``dot calculation'',
+which would be multiplication and division.
+
+Polynomial \term{strichrechnung} is easy.
+Key is to realise that the structure of polynomials 
+is already defined by \term{strichrechnung}:
+it is composed of terms each of which is a product
+of some number and different power of $x$.
+When we add (or subtract) two polynomials, we just sort them
+according to the exponents of their terms
+and add (or subtract) terms with equal exponents:
+
+\begin{equation}
+\begin{array}{crcrcccr}
+  & ax^n     & + & bx^{n-1}     & + & \dots & + & c\\
++ & dx^n     & + & ex^{n-1}     & + & \dots & + & f\\
+= & (a+d)x^n & + & (b+e)x^{n-1} & + & \dots & + & c+f
+\end{array}
+\end{equation}
+
+With our polynomial representation, it is easy 
+to implement this kind of operation. One might think
+it was designed especially to support addition and
+subtraction. We first define generic \term{strichrechnung}
+and then \ensuremath{\Varid{add}} and \ensuremath{\Varid{sub}} on top of it:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{30E}{@{}l@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{add}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{add}\mathrel{=}\Varid{strich}\;(\mathbin{+}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{sub}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{sub}\mathrel{=}\Varid{strich}\;(\mathbin{-}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{strich}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{strich}\;\Varid{o}\;(\Conid{P}\;\Varid{x})\;(\Conid{P}\;\Varid{y}){}\<[25]%
+\>[25]{}\mathrel{=}\Conid{P}\;(\Varid{strichlist}\;\Varid{o}\;\Varid{x}\;\Varid{y}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{strichlist}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{strichlist}\;\Varid{o}\;\Varid{xs}\;\Varid{ys}\mathrel{=}\Varid{cleanz}\;(\Varid{go}\;\Varid{xs}\;\Varid{ys}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{bs}{}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\>[33]{}\Varid{bs}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{as}\;[\mskip1.5mu \mskip1.5mu]{}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\>[33]{}\Varid{as}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;(\Varid{a}\mathbin{:}\Varid{as})\;(\Varid{b}\mathbin{:}\Varid{bs}){}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\>[33]{}\Varid{a}\mathbin{`\Varid{o}`}\Varid{b}\mathbin{:}\Varid{go}\;\Varid{as}\;\Varid{bs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here is one more function that might be useful 
+later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coefficients:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{strichf}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{strichf}\;\Varid{o}\mathrel{=}\Varid{foldl'}\;(\Varid{strichlist}\;\Varid{o})\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\term{Punktrechnung}, \ie\ multiplication and division,
+are a bit more complex -- because of the distribution law.
+Let us start with the simple case where we distribute
+a monomial over a polynomial:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{25E}{@{}l@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mul1}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{as}\;\Varid{a}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus \Varid{go}\;\Varid{as}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\anonymous {}\<[25]%
+\>[25]{}\mathrel{=}{}\<[25E]%
+\>[28]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;(\Varid{c}\mathbin{:}\Varid{cs})\;\Varid{x}{}\<[25]%
+\>[25]{}\mathrel{=}{}\<[25E]%
+\>[28]{}\Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mathbin{:}\Varid{go}\;\Varid{cs}\;\Varid{x}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{zeros}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\mathbin{\$}\Varid{repeat}\;\mathrm{0}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function \ensuremath{\Varid{mul1}} takes a single term (the monomial)
+and distributes over the coefficients of a polynomial 
+using the operation \ensuremath{\Varid{o}}.
+Each term in the polynomial 
+is combined with the single term.
+This corresponds to the operation:
+
+\begin{equation}
+\begin{array}{rcrcrcccr}
+dx^m & \times & ax^n      & + & bx^{n-1}    & + & \dots & + & c\\
+     & =      & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
+\end{array}
+\end{equation}
+
+The function \ensuremath{\Varid{mul1}} receives on more parameter,
+namely the \ensuremath{\Conid{Int}} $i$ and uses it to generate a sequence of zeros
+that is put in front of the resulting coefficient list.
+As we will see shortly, the list of zeros reflects the weight
+of the single term. In fact, we do not implement the manipulation
+of the exponents we see in the abstract formula directly.
+Instead, the addition $+m$ is implicitly handled by placing
+$m$ zeros at the head of the list resulting in a new polynomial
+of degree $m+d$ where $d$ is the degree of the original polynomial.
+A simple example:
+
+\[
+5x^2 \times (4x^3 + 3x^2 + 2x + 1) = 20x^5 + 15x^4 + 10x^3 + 5x^2
+\]
+
+would be:
+
+\ensuremath{\Varid{mul1}\;\mathrm{2}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]\;\mathrm{5}}
+
+which is: 
+
+\ensuremath{\Varid{zero}\;\mathrm{2}\plus (\mathrm{5}\mathbin{*}[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])} $=$ \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{5},\mathrm{10},\mathrm{15},\mathrm{20}\mskip1.5mu]}
+
+We, hence, would add 2 zeros, since 2 is the degree
+of the monomial.
+
+Now, when we multiply two polynomials, we need to map
+all terms in one of the polynomials on the other polynomial
+using \ensuremath{\Varid{mul1}}. We further need to pass the weight of
+the individual terms of the first polynomial as the \ensuremath{\Conid{Int}}
+parameter of \ensuremath{\Varid{mul1}}. What we want to do is:
+
+\ensuremath{[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mid (\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]}.
+
+What would we get applying this formula on
+the polynomials, say, 
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]} and \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]}?
+Let us have a look:
+
+\ensuremath{[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;([\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])\;\Varid{p}\mid (\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]\mskip1.5mu]}\\
+\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{10},\mathrm{12},\mathrm{14},\mathrm{16}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{15},\mathrm{18},\mathrm{21},\mathrm{24}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{20},\mathrm{24},\mathrm{28},\mathrm{32}\mskip1.5mu]\mskip1.5mu]}.
+
+We see a list of four lists, 
+one for each coefficient of \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]}.
+The first list is the result of distributing 1 
+over all the coefficients in \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]}.
+Since 1 is the first element,
+its weight is 0: no zeros are put before the resulting list.
+The second list results from distributing 2 over \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]}.
+Since 2 is the second element, its weight is 1:
+we add one zero.
+The same process is repeated for 3 and 4 resulting
+in the third and fourth result list.
+Since 3 is the the third element, the third resulting list
+gets two zeros and, since 4 is the fourth element,
+the fourth list gets three zeros.
+
+How do we transform this list of lists back
+into a single list of coefficients? Very easy:
+we add them together using \ensuremath{\Varid{strichf}}:
+
+\ensuremath{\Varid{strichf}\;(\mathbin{+})}
+\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{10},\mathrm{12},\mathrm{14},\mathrm{16}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{15},\mathrm{18},\mathrm{21},\mathrm{24}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{20},\mathrm{24},\mathrm{28},\mathrm{32}\mskip1.5mu]\mskip1.5mu]}
+
+which is
+
+\ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{16},\mathrm{34},\mathrm{60},\mathrm{61},\mathrm{52},\mathrm{32}\mskip1.5mu]}.
+
+This means that
+
+\begin{equation}
+(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) =
+32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\end{equation}
+
+Here is the whole algorithm:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{14E}{@{}l@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mul}\mathbin{::}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{mul}\;\Varid{p1}\;\Varid{p2}{}\<[14]%
+\>[14]{}\mid {}\<[14E]%
+\>[17]{}\Varid{d2}\mathbin{>}\Varid{d1}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Varid{mul}\;\Varid{p2}\;\Varid{p1}{}\<[E]%
+\\
+\>[14]{}\mid {}\<[14E]%
+\>[17]{}\Varid{otherwise}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Conid{P}\;(\Varid{strichf}\;(\mathbin{+})\;\Varid{ms}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{d1}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{p1}{}\<[E]%
+\\
+\>[12]{}\Varid{d2}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{p2}{}\<[E]%
+\\
+\>[12]{}\Varid{ms}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mathrel{\vee}(\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Division is, as usual, a bit more complicated than multiplication.
+But it is not too different from number division. First,
+we define polynomial division as Euclidian division, that is
+we search the solution for the equation
+
+\begin{equation}
+\frac{a}{b} = q + r
+\end{equation}
+
+where $r < b$ and $bq+r=a$.
+
+The manual process is as follows:
+we divide the first term of $a$ by the first term of $b$.
+The quotient goes to the result; then we multiply $b$
+by the quotient we just obtained 
+and subtract the result from $a$.
+Now we repeat the process
+with $a$ being the result of the subtraction 
+until the degree of $a$
+is less than that of $b$.
+
+Here is an example:
+
+\[
+\frac{4x^5 - x^4 + 2x^3 + x^2 - 1}{x^2 + 1}.
+\]
+
+We start by dividing $4x^5$ by $x^2$.
+The result is $4x^3$, which we add to the result.
+$4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$. 
+Now, we subtract this from $a$:
+
+\begin{equation}
+\begin{array}{crcrcrcrcr}
+  & 4x^5 & - &  x^4 & + & 2x^3 & + & x^2 & - & 1\\
+- & 4x^5 &   &      & + & 4x^3 &   &     &   &  \\
+= &      & - &  x^4 & - & 2x^3 & + & x^2 & - & 1
+\end{array}
+\end{equation}
+
+We continue with
+$-x^4$ and divide it by $x^2$, which is
+$-x^2$. 
+The result now is $4x^3 - x^2$.
+We multiply $-x^2 \times (x^2 + 1) = -x^4 - x^2$
+and subtract this result from what remains from $a$:
+
+\begin{equation}
+\begin{array}{ccrcrcrcr}
+  & - &  x^4 & - & 2x^3 & + &  x^2 & - & 1\\
+- & - &  x^4 &   &      & - &  x^2 &   &  \\
+= &   &      & - & 2x^3 & + & 2x^2 & - & 1
+\end{array}
+\end{equation}
+
+We continue with $-2x^3$, which, divided by
+$x^2$ is $-2x$. 
+We multiply $-2x \times (x^2 + 1) = -2x^3 - 2x$
+and subtract:
+
+\begin{equation}
+\begin{array}{ccrcrcrcr}
+  & - & 2x^3 & + & 2x^2 & + &    & - & 1\\
+- & - & 2x^3 &   &      & - & 2x &   &  \\
+= &   &      &   & 2x^2 & + & 2x & - & 1 
+\end{array}
+\end{equation}
+
+
+The result now is 
+$4x^3 - x^2 - 2x$.
+We continue with $2x^2$, which,
+divided by $x^2$ is 2. 
+We multiply $2\times (x^2 + 1) = 2x^2 + 2$
+and subtract:
+
+\begin{equation}
+\begin{array}{ccrcrcrcr}
+  & 2x^2 & + & 2x & - & 1\\
+- & 2x^2 &   &    & + & 2\\
+= &      &   & 2x & - & 3 
+\end{array}
+\end{equation}
+
+The result now is
+$4x^3 - x^2 - 2x + 2$.
+We finally have $2x - 3$,
+which is smaller in degree than $b$.
+The result, hence, is
+$(4x^3 - x^2 - 2x + 2, 2x - 3)$.
+
+\ignore {
+- division
+- divides
+- gcd
+- make modular
+- modular multiplication
+- modular division
+}
 \section{The Difference Engine}
+\section{Polynomials and Binomial Coefficients}
 \section{Factoring Polynomials}
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
-\section{Polynomials and Binomial Coefficients}
 \ignore{
 http://www.purplemath.com/modules/partfrac.htm
 }
