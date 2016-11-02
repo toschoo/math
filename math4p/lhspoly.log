@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  1 NOV 2016 19:48
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  2 NOV 2016 19:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1452,7 +1452,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 \openout3 = `lhspoly.ptb'.
 
  [8]
-Overfull \hbox (7.66925pt too wide) in paragraph at lines 868--872
+Overfull \hbox (7.66925pt too wide) in paragraph at lines 871--875
 []\OT1/cmr/m/n/10.95 What would we get ap-ply-ing this for-mula on the poly-no-
 mi-als, say, $[ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 
 ; \OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 4 ]$ and $[ 5\OM
@@ -1463,30 +1463,65 @@ L/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 6\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95
 [9]
 \openout3 = `lhspoly.ptb'.
 
- [10] [11] [12] [13] (./lhspoly.aux) ) 
+\openout3 = `lhspoly.ptb'.
+
+ [10]
+\openout3 = `lhspoly.ptb'.
+
+ [11] [12]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [13]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [14]
+\openout3 = `lhspoly.ptb'.
+
+ [15] [16] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 29168 strings out of 493304
- 675519 string characters out of 6139872
- 835784 words of memory out of 5000000
- 32064 multiletter control sequences out of 15000+600000
- 13167 words of font info for 50 fonts, out of 8000000 for 9000
+ 29285 strings out of 493304
+ 677240 string characters out of 6139872
+ 841784 words of memory out of 5000000
+ 32180 multiletter control sequences out of 15000+600000
+ 13468 words of font info for 51 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,10n,80p,10414b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on lhspoly.pdf (13 pages, 155781 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmtt10.pfb>
+Output written on lhspoly.pdf (16 pages, 176132 bytes).
 PDF statistics:
- 94 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 107 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

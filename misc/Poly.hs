@@ -399,6 +399,17 @@ where
   prodp o ps = foldl' o (P [1]) ps
 
   -------------------------------------------------------------------------
+  -- pow (square-and-multiply)
+  -------------------------------------------------------------------------
+  powp :: Integer -> Poly Integer -> Poly Integer
+  powp f poly = go f (P [1]) poly
+    where go 0 y _  = y
+          go 1 y x  = mul y x
+          go n y x | even n    = go (n `div` 2) y   (mul x x) 
+                   | otherwise = go ((n-1) `div` 2) (mul y x) 
+                                                    (mul x x)
+
+  -------------------------------------------------------------------------
   -- pow (naive)
   -------------------------------------------------------------------------
   powmp2 :: Integer -> Integer -> Poly Integer -> Poly Integer

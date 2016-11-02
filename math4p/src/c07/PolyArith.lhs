@@ -6,6 +6,7 @@ where
   import Quoz
   import Real
   import NumSystem
+  import Modular
 \end{code}
 }
 
@@ -187,6 +188,41 @@ Here is the whole algorithm:
 \end{code}
 \end{minipage}
 
+On top of multiplication, we can implement power.
+We will, of course, not implement a na\"ive approach
+based on repeated multiplication alone. Instead,
+we will use the \term{square-and-multiply} approach
+we have already used before for numbers.
+Here is the code:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  powp :: (Show a, Num a, Eq a) => Natural -> Poly a -> Poly a
+  powp f poly = go f (P [1]) poly
+    where  go 0 y _   =  y
+           go 1 y x   =  mul y x
+           go n y x   |  even n     = go (n `div` 2) y    (mul x x) 
+                      |  otherwise  = go ((n-1) `div` 2)  (mul y x) 
+                                                          (mul x x)
+\end{code}
+\end{minipage}
+
+The function |powp| receives a natural number,
+that is the exponent, and a polynomial.
+We kick off by calling |go| with the exponent,
+a base polynomial |P [1]|, \ie\ unity, and the polynimial
+we want to raise to the power of |f|.
+If $f=0$, we are done and return the base polynomial.
+This reflects the case $x^0=1$.
+If $f=1$, we multiply the base polynomial by the input polynomial.
+Otherwise, if the exponent is even,
+we halve it, pass the base polynomial on and square the input.
+Otherwise, we pass the product of the base polynomial and the input
+on instead of the base polynomial as it is.
+This implementation differs a bit from the implementation
+we presented before for numbers, but it implements the same
+algorithm. 
+
 Division is, as usual, a bit more complicated than multiplication.
 But it is not too different from number division. First,
 we define polynomial division as Euclidian division, that is
@@ -255,7 +291,6 @@ and subtract:
 \end{array}
 \end{equation}
 
-
 The result now is 
 $4x^3 - x^2 - 2x$.
 We continue with $2x^2$, which,
@@ -278,11 +313,248 @@ which is smaller in degree than $b$.
 The result, hence, is
 $(4x^3 - x^2 - 2x + 2, 2x - 3)$.
 
-\ignore {
-- division
-- divides
-- gcd
-- make modular
-- modular multiplication
-- modular division
-}
+Here is an implementation of division in Haskell:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  divp ::  (Show a, Num a, Eq a, Fractional a, Ord a) => 
+           Poly a -> Poly a -> (Poly a,Poly a)
+  divp (P as) (P bs) = let (q,r) = go [] as in (P q, P r)
+    where  db = degree (P bs)
+           go q r  |  degree (P r) < db   =  (q,r)
+                   |  null r || r == [0]  =  (q,r)
+                   |  otherwise           = 
+                      let  t   =  last r / last bs
+                           d   =  degree (P r) - db
+                           ts  =  zeros d ++ [t]
+                           m   =  mulist ts bs
+                      in go  (cleanz $ strichlist (+) q ts)
+                             (cleanz $ strichlist (-) r m)
+
+  mulist :: (Show a, Num a, Eq a) => [a] -> [a] -> [a]
+  mulist c1 c2 = coeffs $ mul (P c1) (P c2)
+\end{code}
+\end{minipage}
+
+First note that division expects its arguments
+to be polynomials over a |Fractional| data type.
+We do not allow polynomials over integers to be used
+with this implementation. The reason is that we do not
+want to use Euclidian division on the coefficients.
+That could indeed be very confusing. Furthermore,
+polynomials are most often used with rational or real
+coefficients. Restricting division to integers
+(using Euclidian division) would, therefore, not make
+much sense.
+
+Observer further that we call |go| with an empty set --
+that is the initial value of $q$, \ie\ the final result --
+and $as$ -- that is initially the number to be divided,
+the number we called $a$ above.
+The function |go| has two base cases:
+if the degree of $r$, the remainder and initially $as$,
+is less than the degree of the divisor $b$, we are done.
+The result is our current $(q,r)$. 
+The same is true if $r$ is |null| or 
+contains only the constant 0.
+In this case, there is no remainder: $b$ divides $a$.
+
+Otherwise, we divide the |last| of $r$ by the |last| of $b$.
+Note that those are the term with the highest degree
+in each polynomial.
+This division is just a number division of the two
+coefficients. We still have to compute the new exponent,
+which is the exponent of |last r| minus the exponent of 
+|last b|, \ie\ their weight. We do this by subtracting
+their degrees and then inserting zeros 
+at the head of the result |ts|.
+This result, |ts|, is then added to $q$.
+We further compute $ts \times bs$ and subtract
+the result from $r$. The function |mulist| we use for this purpose
+is just a wrapper around |mul| using
+lists of coefficients instead of |Poly| variables.
+With the resulting $(q,r)$, we go into the next round.
+
+Let us try this with our example from above: 
+
+\[
+\frac{4x^5 - x^4 + 2x^3 + x^2 - 1}{x^2 + 1}.
+\]
+
+We call |divp (P [-1,0,1,2,-1,4]) (P [1,0,1])| and get
+|(P [2,-2,-1,4],P [-3,2])|, which translates to the polynomials
+$4x^3-x^2-2x+2$ and $2x - 3$. 
+This is the same result we obtained above 
+with the manual procedure.
+
+From here on, we can implement functions based on division,
+such as |divides|:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  divides ::  (Show a, Num a, Eq a, Ord a) => 
+              Poly a -> Poly a -> Bool
+  divides a b =  case b `divp`  a of
+                 (_,P [0])  ->  True
+                 _          ->  False
+\end{code}
+\end{minipage}
+
+the remainder:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+ remp ::  (Show a, Num a, Eq a, Ord a) => 
+          Poly a -> Poly a -> Bool
+  rem a b =  let (_,r) = b `d` a in r
+\end{code}
+\end{minipage}
+
+and, of course, the |gcd|:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  gcdp ::  (Show a, Num a, Eq a, Fractional a, Ord a) => 
+           Poly a -> Poly a -> Poly a
+  gcdp a b  |  degree b > degree a = gcdp b a
+            |  zerop b    = a
+            |  otherwise  = let (_,r) = divp a b in gcdp b r
+\end{code}
+\end{minipage}
+
+We use a simple function to check whether
+a polynomial is zero:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  zerop :: (Num a, Eq a) => Poly a -> Bool
+  zerop (P [0])  = True
+  zerpo _        = False
+\end{code}
+\end{minipage}
+
+Until here, we have discussed polynomials in an infinite field.
+We now turn our attention to polynomial arithmetic
+in a finite field and, hence, to modular polynomial arithmetic.
+With modular arithmetic, all coefficients in the polynomial
+are modulo $n$. That means we have to reduce these numbers.
+This, of course, does only make sense with integer numbers.
+We first implement some helpers to reduce numbers modulo $n$
+reusing function implemented in the previous chapter.
+This function takes an integer number modulo $n$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mmod :: Zahl -> Zahl -> Zahl
+  mmod n p  |  n < 0 && (-n) > p  =  mmod (-(mmod (-n)) p) p
+            |  n < 0              =  mmod (p + n) p
+            |  otherwise          =  n `rem` p
+\end{code}
+\end{minipage}
+
+Equipped with this function, we can easily implement multiplication:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  modmul :: Zahl -> Zahl -> Zahl -> Zahl
+  modmul p f1 f2 = (f1 * f2) `mmod` p
+\end{code}
+\end{minipage}
+
+For division, we reuse the |inverse| function:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  modiv :: Zahl -> Zahl -> Zahl -> Zahl
+  modiv p n d = modmul p n d'
+    where d' = M.inverse d p
+\end{code}
+\end{minipage}
+
+Now, we turn to polynomials. Here is, first, a function
+that makes a polynomial modulo $n$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  pmod :: Poly Zahl -> Zahl -> Poly Zahl
+  pmod (P cs) p = P [c `mmod` p | c <- cs]
+\end{code}
+\end{minipage}
+
+In other words, we just map |mmod| on all coefficients.
+Here are addition and subtraction, which are very easy
+to convert to modular arithmetic:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  addmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  addmp n p1 p2 = strich (+) p1 p2 `pmod` n
+  submp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  submp n p1 p2 = strich (-) p1 p2 `pmod` n
+\end{code}
+\end{minipage}
+
+Multiplication:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mulmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl 
+  mulmp p p1 p2  |  d2 > d1    =  mulmp p p2 p1
+                 |  otherwise  =  P [m `mmod` p | m <- strichf (+) ms]
+    where  ms  =  [mul1 o i (coeffs p1) c | (i,c) <- zip [0..] (coeffs p2)]
+           d1  =  degree p1
+           d2  =  degree p2
+           o   =  modmul p
+\end{code}
+\end{minipage}
+
+Division:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  divmp :: Zahl -> Poly Zahl -> Poly Zahl -> (Poly Zahl,Poly Zahl)
+  divmp p (P as) (P bs) = let (q,r) = go [0] as in (P q, P r)
+    where  db = degree (P bs)
+           go q r  |  degree (P r) < db   = (q,r)
+                   |  null r || r == [0]  = (q,r)
+                   |  otherwise           = 
+                      let  t   =  modiv p (last r) (last bs)
+                           d   =  degree (P r) - db
+                           ts  =  zeros d ++ [t]
+                           m   =  mulmlist p ts bs
+                      in go  [c `mmod` p | c <- cleanz $ strichlist (+) q ts]
+                             [c `mmod` p | c <- cleanz $ strichlist (-) r m ]
+\end{code}
+\end{minipage}
+
+\acronym{gcd}:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  gcdmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  gcdmp p a b  |  degree b > degree a = gcdmp p b a
+               |  zerop b = a
+               |  otherwise = let (_,r) = divmp p a b in gcdmp p b r
+\end{code}
+\end{minipage}
+
+and power:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  powmp :: Zahl -> Zahl -> Poly Zahl -> Poly Zahl
+  powmp p f poly = go f (P [1]) poly
+    where  go 0 y _  = y
+           go 1 y x  = mulmp p y x
+           go n y x  | even n     =  go (n `div` 2) y    (mulmp p x x) 
+                     | otherwise  =  go ((n-1) `div` 2)  (mulmp p y x) 
+                                                         (mulmp p x x)
+\end{code}
+\end{minipage}
+
+There is nothing much new here with modular polynomial arithmetic.
+In fact, we are just applying a concept that we already know to
+a new concept, polynomials. But in a short while we will need
+modular arithmetic on polynomials. Before, however, we will
+investigate the application of polynomials using a famous device: 
+Babbage's difference engine.

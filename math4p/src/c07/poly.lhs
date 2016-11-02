@@ -4,7 +4,6 @@
 %include PolyArith.lhs
 \section{The Difference Engine}
 \section{Polynomials and Binomial Coefficients}
-\section{Factoring Polynomials}
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
@@ -12,3 +11,4 @@
 \section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 %include ClosedFib.lhs
+\section{Factoring Polynomials}
