@@ -699,7 +699,7 @@ Polynomial \term{strichrechnung} is easy.
 Key is to realise that the structure of polynomials 
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
-of some number and different power of $x$.
+of some number and a power of $x$.
 When we add (or subtract) two polynomials, we just sort them
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
@@ -715,8 +715,7 @@ and add (or subtract) terms with equal exponents:
 With our polynomial representation, it is easy 
 to implement this kind of operation. One might think
 it was designed especially to support addition and
-subtraction. We first define generic \term{strichrechnung}
-and then \ensuremath{\Varid{add}} and \ensuremath{\Varid{sub}} on top of it:
+subtraction. Here is a valid implementation:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -821,7 +820,7 @@ a monomial over a polynomial:
 \end{minipage}
 
 The function \ensuremath{\Varid{mul1}} takes a single term (the monomial)
-and distributes over the coefficients of a polynomial 
+and distributes it over the coefficients of a polynomial 
 using the operation \ensuremath{\Varid{o}}.
 Each term in the polynomial 
 is combined with the single term.
@@ -1012,8 +1011,8 @@ Here is the code:
 
 The function \ensuremath{\Varid{powp}} receives a natural number,
 that is the exponent, and a polynomial.
-We kick off by calling \ensuremath{\Varid{go}} with the exponent,
-a base polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}, \ie\ unity, and the polynimial
+We kick off by calling \ensuremath{\Varid{go}} with the exponent, $f$,
+a base polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}, \ie\ unity, and the polynomial
 we want to raise to the power of \ensuremath{\Varid{f}}.
 If $f=0$, we are done and return the base polynomial.
 This reflects the case $x^0=1$.
@@ -1024,11 +1023,45 @@ Otherwise, we pass the product of the base polynomial and the input
 on instead of the base polynomial as it is.
 This implementation differs a bit from the implementation
 we presented before for numbers, but it implements the same
-algorithm. 
+algorithm.
+
+Here is a simple example: we raise the polynomial
+$x + 1$ to the power of 5. In the first round, we compute
+
+\ensuremath{\Varid{go}\;\mathrm{5}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])},
+
+which, since 5 is odd, results in 
+
+\ensuremath{\Varid{go}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])}.
+
+This, in its turn, results in
+
+\ensuremath{\Varid{go}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu])}.
+
+This is the final step and results in 
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu])}, 
+
+which is
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]},
+
+the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
+You might have noticed that our Haskell notation
+shows the binomial coefficients $\binom{n}{k}$ for
+$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+We never see $n=3$, which would be 
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}, because we leave the multiplication
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])} out.
+For this specific case with exponent 5,
+leaving out this step is where square-and-multiply
+is more efficient than multiplying five times.
+With growing exponents, the saving quickly grows
+to a significant order.
 
 Division is, as usual, a bit more complicated than multiplication.
 But it is not too different from number division. First,
-we define polynomial division as Euclidian division, that is
+we define polynomial division as Euclidean division, that is
 we search the solution for the equation
 
 \begin{equation}
@@ -1039,11 +1072,9 @@ where $r < b$ and $bq+r=a$.
 
 The manual process is as follows:
 we divide the first term of $a$ by the first term of $b$.
-The quotient goes to the result; then we multiply $b$
-by the quotient we just obtained 
-and subtract the result from $a$.
+The quotient goes to the result; then we multiply it by $b$
+and set $a$ to $a$ minus that result.
 Now we repeat the process
-with $a$ being the result of the subtraction 
 until the degree of $a$
 is less than that of $b$.
 
@@ -1054,9 +1085,9 @@ Here is an example:
 \]
 
 We start by dividing $4x^5$ by $x^2$.
-The result is $4x^3$, which we add to the result.
-$4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$. 
-Now, we subtract this from $a$:
+The quotient is $4x^3$, which we add to the result.
+We multiply: $4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$
+and subtract the result from $a$:
 
 \begin{equation}
 \begin{array}{crcrcrcrcr}
@@ -1069,9 +1100,9 @@ Now, we subtract this from $a$:
 We continue with
 $-x^4$ and divide it by $x^2$, which is
 $-x^2$. 
-The result now is $4x^3 - x^2$.
+The overall result now is $4x^3 - x^2$.
 We multiply $-x^2 \times (x^2 + 1) = -x^4 - x^2$
-and subtract this result from what remains from $a$:
+and subtract that from what remains from $a$:
 
 \begin{equation}
 \begin{array}{ccrcrcrcr}
@@ -1197,14 +1228,14 @@ First note that division expects its arguments
 to be polynomials over a \ensuremath{\Conid{Fractional}} data type.
 We do not allow polynomials over integers to be used
 with this implementation. The reason is that we do not
-want to use Euclidian division on the coefficients.
+want to use Euclidean division on the coefficients.
 That could indeed be very confusing. Furthermore,
 polynomials are most often used with rational or real
 coefficients. Restricting division to integers
-(using Euclidian division) would, therefore, not make
+(using Euclidean division) would, therefore, not make
 much sense.
 
-Observer further that we call \ensuremath{\Varid{go}} with an empty set --
+Observe further that we call \ensuremath{\Varid{go}} with an empty set --
 that is the initial value of $q$, \ie\ the final result --
 and $as$ -- that is initially the number to be divided,
 the number we called $a$ above.
@@ -1286,23 +1317,22 @@ the remainder:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{remp}\mathbin{::}{}\<[11]%
-\>[11]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[3]{}\Varid{remp}\mathbin{::}{}\<[12]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
-\>[11]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
 \\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\Varid{rem}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[14]%
-\>[14]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{d}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
+\>[3]{}\Varid{remp}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[15]%
+\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{d}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-and, of course, the \ensuremath{\Varid{gcd}}:
+and, of course, the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1358,15 +1388,48 @@ a polynomial is zero:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Until here, we have discussed polynomials in an infinite field.
+We can demonstrate \ensuremath{\Varid{gcdp}} nicely on binomial coefficients.
+For instance, the \acronym{gcd} of the polynomials
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$ and
+$x^3 + 3x^2 + 3x + 1$, thus
+
+\ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu])}
+
+is $x^3 + 3x^2 + 3x + 1$.
+
+Since polynomials consisting of binomial coefficients of $n$,
+where $n$ is the degree of the polynomial,
+are always a product
+of polynomials composed of smaller binomial coefficients
+in the same way,
+the \acronym{gcd} of two polynomials
+consisting only of binomial coefficients,
+is always the smaller of the two.
+In other cases, that is, when the smaller does not divide
+the greater, this implementation of the \acronym{gcd}
+can lead to confusing results. For instance,
+we multiply \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]} by another polynomial, say,
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]}. The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu]}. Now,
+
+\ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu])}
+
+does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}.
+The reason is that the \acronym{gcd} is an operation
+defined on integers, but we implemented it on top
+of fractionals. That is often not what we want.
+Anyway, here, we will actually use the \acronym{gcd} 
+only in finite fields. 
+Until now, we have discussed polynomials in infinite fields.
 We now turn our attention to polynomial arithmetic
 in a finite field and, hence, to modular polynomial arithmetic.
+
 With modular arithmetic, all coefficients in the polynomial
-are modulo $n$. That means we have to reduce these numbers.
-This, of course, does only make sense with integer numbers.
+are modulo $n$. That means we have to reduce those numbers.
+This, of course, does only make sense with integers.
 We first implement some helpers to reduce numbers modulo $n$
-reusing function implemented in the previous chapter.
-This function takes an integer number modulo $n$:
+reusing functions implemented in the previous chapter.
+
+The first function takes an integer modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1439,7 +1502,7 @@ For division, we reuse the \ensuremath{\Varid{inverse}} function:
 \end{minipage}
 
 Now, we turn to polynomials. Here is, first, a function
-that makes a polynomial modulo $n$:
+that transforms a polynomial into one modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1456,6 +1519,44 @@ that makes a polynomial modulo $n$:
 \end{minipage}
 
 In other words, we just map \ensuremath{\Varid{mmod}} on all coefficients.
+Let us look at some polynomials modulo a number, say, 7.
+The polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]}
+we already used above is just the same modulo 7.
+The polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]}, however, changes:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]\mathbin{`\Varid{pmod}`}\mathrm{7}}
+
+is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{0},\mathrm{1}\mskip1.5mu]} or, in other words,
+$8x^3 + 7x^2 + 6x + 5$ turns, modulo 7, into 
+$x^3 + 6x + 5$.
+
+The polynomial $x + 1$ raised to the power of 5 is
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$. Modulo 7, this
+reduces to $x^5 + 5x^4 + 3x^3 + 3x^3 + 5x + 1$.
+That is: the binomial coefficients modulo $n$ change.
+For instance,
+
+\ensuremath{\Varid{map}\;(\Varid{choose2}\;\mathrm{6})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{6}\mskip1.5mu]}
+
+is
+
+1,6,15,20,15,6,1.
+
+Modulo 7, we get
+
+1,6,1,6,1,6,1.
+
+\ensuremath{\Varid{map}\;(\Varid{choose2}\;\mathrm{7})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{7}\mskip1.5mu]}
+
+is
+
+1,7,21,35,35,21,7,1.
+
+Without big surprise, we see this modulo 7
+drastically simplified:
+
+1,0,0,0,0,0,0,1.
+
 Here are addition and subtraction, which are very easy
 to convert to modular arithmetic:
 
@@ -1530,6 +1631,26 @@ Multiplication:
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
+
+We repeat the multiplication from above 
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])} 
+
+which was
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{16},\mathrm{34},\mathrm{60},\mathrm{61},\mathrm{52},\mathrm{32}\mskip1.5mu]}
+
+Modulo 7, this result is
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{2},\mathrm{6},\mathrm{4},\mathrm{5},\mathrm{3},\mathrm{4}\mskip1.5mu]}.
+
+The modulo multiplication
+
+\ensuremath{\Varid{mulmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{0},\mathrm{1}\mskip1.5mu])}
+
+yields the same result:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{2},\mathrm{6},\mathrm{4},\mathrm{5},\mathrm{3},\mathrm{4}\mskip1.5mu]}
 
 Division:
 
@@ -1624,7 +1745,21 @@ Division:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-and power:
+Let us try \ensuremath{\Varid{gcdmp}} on the variation we already tested above. 
+We multiply the polynomial
+$x^2 + 2x + 1$ by $3x^2 + 2x + 1$ modulo 7:
+
+\ensuremath{\Varid{mulmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu])}.
+
+The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{3}\mskip1.5mu]}.
+
+Now, we compute the \acronym{gcd} with \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]} modulo 7:
+
+\ensuremath{\Varid{gcdmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{3}\mskip1.5mu])}.
+
+The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}, as expected.
+
+Finally, power:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1668,10 +1803,33 @@ and power:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-There is nothing much new here with modular polynomial arithmetic.
-In fact, we are just applying a concept that we already know to
-a new concept, polynomials. But in a short while we will need
-modular arithmetic on polynomials. Before, however, we will
+Here is a nice variant of Pascal's triangle generated by
+\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
+
+\begin{minipage}{\textwidth}
+\begin{center}
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{2},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}
+\end{center}
+\end{minipage}
+
+It is especially interesting to look at greater powers 
+using exponents that are multiples of 7.
+Before we continue with modular arithmetic,
+which we need indeed to understand some of the deeper problems
+related to polynomials, we will
 investigate the application of polynomials using a famous device: 
 Babbage's difference engine.
 \section{The Difference Engine}

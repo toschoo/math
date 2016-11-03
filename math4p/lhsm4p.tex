@@ -34234,6 +34234,9 @@ we will study polynomial arithmetic.
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Modular}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -34250,7 +34253,7 @@ Polynomial \term{strichrechnung} is easy.
 Key is to realise that the structure of polynomials 
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
-of some number and different power of $x$.
+of some number and a power of $x$.
 When we add (or subtract) two polynomials, we just sort them
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
@@ -34266,8 +34269,7 @@ and add (or subtract) terms with equal exponents:
 With our polynomial representation, it is easy 
 to implement this kind of operation. One might think
 it was designed especially to support addition and
-subtraction. We first define generic \term{strichrechnung}
-and then \ensuremath{\Varid{add}} and \ensuremath{\Varid{sub}} on top of it:
+subtraction. Here is a valid implementation:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -34372,7 +34374,7 @@ a monomial over a polynomial:
 \end{minipage}
 
 The function \ensuremath{\Varid{mul1}} takes a single term (the monomial)
-and distributes over the coefficients of a polynomial 
+and distributes it over the coefficients of a polynomial 
 using the operation \ensuremath{\Varid{o}}.
 Each term in the polynomial 
 is combined with the single term.
@@ -34510,9 +34512,110 @@ Here is the whole algorithm:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+On top of multiplication, we can implement power.
+We will, of course, not implement a na\"ive approach
+based on repeated multiplication alone. Instead,
+we will use the \term{square-and-multiply} approach
+we have already used before for numbers.
+Here is the code:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{23E}{@{}l@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{59}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{powp}\mathbin{::}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Natural}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{powp}\;\Varid{f}\;\Varid{poly}\mathrel{=}\Varid{go}\;\Varid{f}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;\Varid{poly}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\Varid{y}\;\anonymous {}\<[23]%
+\>[23]{}\mathrel{=}{}\<[23E]%
+\>[26]{}\Varid{y}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\mathrm{1}\;\Varid{y}\;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}{}\<[23E]%
+\>[26]{}\Varid{mul}\;\Varid{y}\;\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{n}\;\Varid{y}\;\Varid{x}{}\<[23]%
+\>[23]{}\mid {}\<[23E]%
+\>[26]{}\Varid{even}\;\Varid{n}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{go}\;(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2})\;\Varid{y}\;{}\<[59]%
+\>[59]{}(\Varid{mul}\;\Varid{x}\;\Varid{x}){}\<[E]%
+\\
+\>[23]{}\mid {}\<[23E]%
+\>[26]{}\Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{go}\;((\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2})\;{}\<[59]%
+\>[59]{}(\Varid{mul}\;\Varid{y}\;\Varid{x})\;{}\<[E]%
+\\
+\>[59]{}(\Varid{mul}\;\Varid{x}\;\Varid{x}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function \ensuremath{\Varid{powp}} receives a natural number,
+that is the exponent, and a polynomial.
+We kick off by calling \ensuremath{\Varid{go}} with the exponent, $f$,
+a base polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}, \ie\ unity, and the polynomial
+we want to raise to the power of \ensuremath{\Varid{f}}.
+If $f=0$, we are done and return the base polynomial.
+This reflects the case $x^0=1$.
+If $f=1$, we multiply the base polynomial by the input polynomial.
+Otherwise, if the exponent is even,
+we halve it, pass the base polynomial on and square the input.
+Otherwise, we pass the product of the base polynomial and the input
+on instead of the base polynomial as it is.
+This implementation differs a bit from the implementation
+we presented before for numbers, but it implements the same
+algorithm.
+
+Here is a simple example: we raise the polynomial
+$x + 1$ to the power of 5. In the first round, we compute
+
+\ensuremath{\Varid{go}\;\mathrm{5}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])},
+
+which, since 5 is odd, results in 
+
+\ensuremath{\Varid{go}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])}.
+
+This, in its turn, results in
+
+\ensuremath{\Varid{go}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu])}.
+
+This is the final step and results in 
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu])}, 
+
+which is
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]},
+
+the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
+You might have noticed that our Haskell notation
+shows the binomial coefficients $\binom{n}{k}$ for
+$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+We never see $n=3$, which would be 
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}, because we leave the multiplication
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])} out.
+For this specific case with exponent 5,
+leaving out this step is where square-and-multiply
+is more efficient than multiplying five times.
+With growing exponents, the saving quickly grows
+to a significant order.
+
 Division is, as usual, a bit more complicated than multiplication.
 But it is not too different from number division. First,
-we define polynomial division as Euclidian division, that is
+we define polynomial division as Euclidean division, that is
 we search the solution for the equation
 
 \begin{equation}
@@ -34523,11 +34626,9 @@ where $r < b$ and $bq+r=a$.
 
 The manual process is as follows:
 we divide the first term of $a$ by the first term of $b$.
-The quotient goes to the result; then we multiply $b$
-by the quotient we just obtained 
-and subtract the result from $a$.
+The quotient goes to the result; then we multiply it by $b$
+and set $a$ to $a$ minus that result.
 Now we repeat the process
-with $a$ being the result of the subtraction 
 until the degree of $a$
 is less than that of $b$.
 
@@ -34538,9 +34639,9 @@ Here is an example:
 \]
 
 We start by dividing $4x^5$ by $x^2$.
-The result is $4x^3$, which we add to the result.
-$4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$. 
-Now, we subtract this from $a$:
+The quotient is $4x^3$, which we add to the result.
+We multiply: $4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$
+and subtract the result from $a$:
 
 \begin{equation}
 \begin{array}{crcrcrcrcr}
@@ -34553,9 +34654,9 @@ Now, we subtract this from $a$:
 We continue with
 $-x^4$ and divide it by $x^2$, which is
 $-x^2$. 
-The result now is $4x^3 - x^2$.
+The overall result now is $4x^3 - x^2$.
 We multiply $-x^2 \times (x^2 + 1) = -x^4 - x^2$
-and subtract this result from what remains from $a$:
+and subtract that from what remains from $a$:
 
 \begin{equation}
 \begin{array}{ccrcrcrcr}
@@ -34577,7 +34678,6 @@ and subtract:
 = &   &      &   & 2x^2 & + & 2x & - & 1 
 \end{array}
 \end{equation}
-
 
 The result now is 
 $4x^3 - x^2 - 2x$.
@@ -34601,17 +34701,693 @@ which is smaller in degree than $b$.
 The result, hence, is
 $(4x^3 - x^2 - 2x + 2, 2x - 3)$.
 
-\ignore {
-- division
-- divides
-- gcd
-- make modular
-- modular multiplication
-- modular division
-}
+Here is an implementation of division in Haskell:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{20E}{@{}l@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{32E}{@{}l@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{43E}{@{}l@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divp}\mathbin{::}{}\<[12]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to (\Conid{Poly}\;\Varid{a},\Conid{Poly}\;\Varid{a}){}\<[E]%
+\\
+\>[3]{}\Varid{divp}\;(\Conid{P}\;\Varid{as})\;(\Conid{P}\;\Varid{bs})\mathrel{=}\mathbf{let}\;(\Varid{q},\Varid{r})\mathrel{=}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{as}\;\mathbf{in}\;(\Conid{P}\;\Varid{q},\Conid{P}\;\Varid{r}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{db}\mathrel{=}\Varid{degree}\;(\Conid{P}\;\Varid{bs}){}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{q}\;\Varid{r}{}\<[20]%
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{degree}\;(\Conid{P}\;\Varid{r})\mathbin{<}\Varid{db}{}\<[43]%
+\>[43]{}\mathrel{=}{}\<[43E]%
+\>[46]{}(\Varid{q},\Varid{r}){}\<[E]%
+\\
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{null}\;\Varid{r}\mathrel{\vee}\Varid{r}\equiv [\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[43]%
+\>[43]{}\mathrel{=}{}\<[43E]%
+\>[46]{}(\Varid{q},\Varid{r}){}\<[E]%
+\\
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{otherwise}{}\<[43]%
+\>[43]{}\mathrel{=}{}\<[43E]%
+\\
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{t}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{last}\;\Varid{r}\mathbin{/}\Varid{last}\;\Varid{bs}{}\<[E]%
+\\
+\>[28]{}\Varid{d}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{degree}\;(\Conid{P}\;\Varid{r})\mathbin{-}\Varid{db}{}\<[E]%
+\\
+\>[28]{}\Varid{ts}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{zeros}\;\Varid{d}\plus [\mskip1.5mu \Varid{t}\mskip1.5mu]{}\<[E]%
+\\
+\>[28]{}\Varid{m}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{mulist}\;\Varid{ts}\;\Varid{bs}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;\Varid{go}\;{}\<[30]%
+\>[30]{}(\Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts})\;{}\<[E]%
+\\
+\>[30]{}(\Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{mulist}\mathbin{::}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mulist}\;\Varid{c1}\;\Varid{c2}\mathrel{=}\Varid{coeffs}\mathbin{\$}\Varid{mul}\;(\Conid{P}\;\Varid{c1})\;(\Conid{P}\;\Varid{c2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+First note that division expects its arguments
+to be polynomials over a \ensuremath{\Conid{Fractional}} data type.
+We do not allow polynomials over integers to be used
+with this implementation. The reason is that we do not
+want to use Euclidean division on the coefficients.
+That could indeed be very confusing. Furthermore,
+polynomials are most often used with rational or real
+coefficients. Restricting division to integers
+(using Euclidean division) would, therefore, not make
+much sense.
+
+Observe further that we call \ensuremath{\Varid{go}} with an empty set --
+that is the initial value of $q$, \ie\ the final result --
+and $as$ -- that is initially the number to be divided,
+the number we called $a$ above.
+The function \ensuremath{\Varid{go}} has two base cases:
+if the degree of $r$, the remainder and initially $as$,
+is less than the degree of the divisor $b$, we are done.
+The result is our current $(q,r)$. 
+The same is true if $r$ is \ensuremath{\Varid{null}} or 
+contains only the constant 0.
+In this case, there is no remainder: $b$ divides $a$.
+
+Otherwise, we divide the \ensuremath{\Varid{last}} of $r$ by the \ensuremath{\Varid{last}} of $b$.
+Note that those are the term with the highest degree
+in each polynomial.
+This division is just a number division of the two
+coefficients. We still have to compute the new exponent,
+which is the exponent of \ensuremath{\Varid{last}\;\Varid{r}} minus the exponent of 
+\ensuremath{\Varid{last}\;\Varid{b}}, \ie\ their weight. We do this by subtracting
+their degrees and then inserting zeros 
+at the head of the result \ensuremath{\Varid{ts}}.
+This result, \ensuremath{\Varid{ts}}, is then added to $q$.
+We further compute $ts \times bs$ and subtract
+the result from $r$. The function \ensuremath{\Varid{mulist}} we use for this purpose
+is just a wrapper around \ensuremath{\Varid{mul}} using
+lists of coefficients instead of \ensuremath{\Conid{Poly}} variables.
+With the resulting $(q,r)$, we go into the next round.
+
+Let us try this with our example from above: 
+
+\[
+\frac{4x^5 - x^4 + 2x^3 + x^2 - 1}{x^2 + 1}.
+\]
+
+We call \ensuremath{\Varid{divp}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{2},\mathbin{-}\mathrm{1},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu])} and get
+\ensuremath{(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{2},\mathbin{-}\mathrm{1},\mathrm{4}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{3},\mathrm{2}\mskip1.5mu])}, which translates to the polynomials
+$4x^3-x^2-2x+2$ and $2x - 3$. 
+This is the same result we obtained above 
+with the manual procedure.
+
+From here on, we can implement functions based on division,
+such as \ensuremath{\Varid{divides}}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{29E}{@{}l@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divides}\mathbin{::}{}\<[15]%
+\>[15]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[15]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{divides}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[18]%
+\>[18]{}\mathbf{case}\;\Varid{b}\mathbin{`\Varid{divp}`}{}\<[33]%
+\>[33]{}\Varid{a}\;\mathbf{of}{}\<[E]%
+\\
+\>[18]{}(\anonymous ,\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[29]%
+\>[29]{}\to {}\<[29E]%
+\>[33]{}\Conid{True}{}\<[E]%
+\\
+\>[18]{}\anonymous {}\<[29]%
+\>[29]{}\to {}\<[29E]%
+\>[33]{}\Conid{False}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+the remainder:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{remp}\mathbin{::}{}\<[12]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{remp}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[15]%
+\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{d}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+and, of course, the \acronym{gcd}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{13E}{@{}l@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gcdp}\mathbin{::}{}\<[12]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{gcdp}\;\Varid{a}\;\Varid{b}{}\<[13]%
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{degree}\;\Varid{b}\mathbin{>}\Varid{degree}\;\Varid{a}\mathrel{=}\Varid{gcdp}\;\Varid{b}\;\Varid{a}{}\<[E]%
+\\
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{zerop}\;\Varid{b}{}\<[27]%
+\>[27]{}\mathrel{=}\Varid{a}{}\<[E]%
+\\
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{otherwise}{}\<[27]%
+\>[27]{}\mathrel{=}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{divp}\;\Varid{a}\;\Varid{b}\;\mathbf{in}\;\Varid{gcdp}\;\Varid{b}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We use a simple function to check whether
+a polynomial is zero:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{zerop}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{zerop}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[18]%
+\>[18]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[3]{}\Varid{zerpo}\;\anonymous {}\<[18]%
+\>[18]{}\mathrel{=}\Conid{False}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We can demonstrate \ensuremath{\Varid{gcdp}} nicely on binomial coefficients.
+For instance, the \acronym{gcd} of the polynomials
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$ and
+$x^3 + 3x^2 + 3x + 1$, thus
+
+\ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu])}
+
+is $x^3 + 3x^2 + 3x + 1$.
+
+Since polynomials consisting of binomial coefficients of $n$,
+where $n$ is the degree of the polynomial,
+are always a product
+of polynomials composed of smaller binomial coefficients
+in the same way,
+the \acronym{gcd} of two polynomials
+consisting only of binomial coefficients,
+is always the smaller of the two.
+In other cases, that is, when the smaller does not divide
+the greater, this implementation of the \acronym{gcd}
+can lead to confusing results. For instance,
+we multiply \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]} by another polynomial, say,
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]}. The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu]}. Now,
+
+\ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu])}
+
+does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}.
+The reason is that the \acronym{gcd} is an operation
+defined on integers, but we implemented it on top
+of fractionals. That is often not what we want.
+Anyway, here, we will actually use the \acronym{gcd} 
+only in finite fields. 
+Until now, we have discussed polynomials in infinite fields.
+We now turn our attention to polynomial arithmetic
+in a finite field and, hence, to modular polynomial arithmetic.
+
+With modular arithmetic, all coefficients in the polynomial
+are modulo $n$. That means we have to reduce those numbers.
+This, of course, does only make sense with integers.
+We first implement some helpers to reduce numbers modulo $n$
+reusing functions implemented in the previous chapter.
+
+The first function takes an integer modulo $n$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{13E}{@{}l@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{35E}{@{}l@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mmod}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{mmod}\;\Varid{n}\;\Varid{p}{}\<[13]%
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{n}\mathbin{<}\mathrm{0}\mathrel{\wedge}(\mathbin{-}\Varid{n})\mathbin{>}\Varid{p}{}\<[35]%
+\>[35]{}\mathrel{=}{}\<[35E]%
+\>[38]{}\Varid{mmod}\;(\mathbin{-}(\Varid{mmod}\;(\mathbin{-}\Varid{n}))\;\Varid{p})\;\Varid{p}{}\<[E]%
+\\
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{n}\mathbin{<}\mathrm{0}{}\<[35]%
+\>[35]{}\mathrel{=}{}\<[35E]%
+\>[38]{}\Varid{mmod}\;(\Varid{p}\mathbin{+}\Varid{n})\;\Varid{p}{}\<[E]%
+\\
+\>[13]{}\mid {}\<[13E]%
+\>[16]{}\Varid{otherwise}{}\<[35]%
+\>[35]{}\mathrel{=}{}\<[35E]%
+\>[38]{}\Varid{n}\mathbin{\Varid{`rem`}}\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Equipped with this function, we can easily implement multiplication:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{modmul}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{modmul}\;\Varid{p}\;\Varid{f1}\;\Varid{f2}\mathrel{=}(\Varid{f1}\mathbin{*}\Varid{f2})\mathbin{`\Varid{mmod}`}\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+For division, we reuse the \ensuremath{\Varid{inverse}} function:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{modiv}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{modiv}\;\Varid{p}\;\Varid{n}\;\Varid{d}\mathrel{=}\Varid{modmul}\;\Varid{p}\;\Varid{n}\;\Varid{d'}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{d'}\mathrel{=}\Varid{\Conid{M}.inverse}\;\Varid{d}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Now, we turn to polynomials. Here is, first, a function
+that transforms a polynomial into one modulo $n$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pmod}\mathbin{::}\Conid{Poly}\;\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{pmod}\;(\Conid{P}\;\Varid{cs})\;\Varid{p}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+In other words, we just map \ensuremath{\Varid{mmod}} on all coefficients.
+Let us look at some polynomials modulo a number, say, 7.
+The polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]}
+we already used above is just the same modulo 7.
+The polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]}, however, changes:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu]\mathbin{`\Varid{pmod}`}\mathrm{7}}
+
+is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{0},\mathrm{1}\mskip1.5mu]} or, in other words,
+$8x^3 + 7x^2 + 6x + 5$ turns, modulo 7, into 
+$x^3 + 6x + 5$.
+
+The polynomial $x + 1$ raised to the power of 5 is
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$. Modulo 7, this
+reduces to $x^5 + 5x^4 + 3x^3 + 3x^3 + 5x + 1$.
+That is: the binomial coefficients modulo $n$ change.
+For instance,
+
+\ensuremath{\Varid{map}\;(\Varid{choose2}\;\mathrm{6})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{6}\mskip1.5mu]}
+
+is
+
+1,6,15,20,15,6,1.
+
+Modulo 7, we get
+
+1,6,1,6,1,6,1.
+
+\ensuremath{\Varid{map}\;(\Varid{choose2}\;\mathrm{7})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{7}\mskip1.5mu]}
+
+is
+
+1,7,21,35,35,21,7,1.
+
+Without big surprise, we see this modulo 7
+drastically simplified:
+
+1,0,0,0,0,0,0,1.
+
+Here are addition and subtraction, which are very easy
+to convert to modular arithmetic:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{addmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{addmp}\;\Varid{n}\;\Varid{p1}\;\Varid{p2}\mathrel{=}\Varid{strich}\;(\mathbin{+})\;\Varid{p1}\;\Varid{p2}\mathbin{`\Varid{pmod}`}\Varid{n}{}\<[E]%
+\\
+\>[3]{}\Varid{submp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{submp}\;\Varid{n}\;\Varid{p1}\;\Varid{p2}\mathrel{=}\Varid{strich}\;(\mathbin{-})\;\Varid{p1}\;\Varid{p2}\mathbin{`\Varid{pmod}`}\Varid{n}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Multiplication:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{18E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{32E}{@{}l@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mulmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{mulmp}\;\Varid{p}\;\Varid{p1}\;\Varid{p2}{}\<[18]%
+\>[18]{}\mid {}\<[18E]%
+\>[21]{}\Varid{d2}\mathbin{>}\Varid{d1}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{mulmp}\;\Varid{p}\;\Varid{p2}\;\Varid{p1}{}\<[E]%
+\\
+\>[18]{}\mid {}\<[18E]%
+\>[21]{}\Varid{otherwise}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Conid{P}\;[\mskip1.5mu \Varid{m}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{m}\leftarrow \Varid{strichf}\;(\mathbin{+})\;\Varid{ms}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ms}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}[\mskip1.5mu \Varid{mul1}\;\Varid{o}\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{c}\mid (\Varid{i},\Varid{c})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{d1}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{p1}{}\<[E]%
+\\
+\>[12]{}\Varid{d2}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{p2}{}\<[E]%
+\\
+\>[12]{}\Varid{o}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{modmul}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We repeat the multiplication from above 
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])} 
+
+which was
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{16},\mathrm{34},\mathrm{60},\mathrm{61},\mathrm{52},\mathrm{32}\mskip1.5mu]}
+
+Modulo 7, this result is
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{2},\mathrm{6},\mathrm{4},\mathrm{5},\mathrm{3},\mathrm{4}\mskip1.5mu]}.
+
+The modulo multiplication
+
+\ensuremath{\Varid{mulmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{0},\mathrm{1}\mskip1.5mu])}
+
+yields the same result:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{2},\mathrm{6},\mathrm{4},\mathrm{5},\mathrm{3},\mathrm{4}\mskip1.5mu]}
+
+Division:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{20E}{@{}l@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{32E}{@{}l@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to (\Conid{Poly}\;\Conid{Zahl},\Conid{Poly}\;\Conid{Zahl}){}\<[E]%
+\\
+\>[3]{}\Varid{divmp}\;\Varid{p}\;(\Conid{P}\;\Varid{as})\;(\Conid{P}\;\Varid{bs})\mathrel{=}\mathbf{let}\;(\Varid{q},\Varid{r})\mathrel{=}\Varid{go}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]\;\Varid{as}\;\mathbf{in}\;(\Conid{P}\;\Varid{q},\Conid{P}\;\Varid{r}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{db}\mathrel{=}\Varid{degree}\;(\Conid{P}\;\Varid{bs}){}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{q}\;\Varid{r}{}\<[20]%
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{degree}\;(\Conid{P}\;\Varid{r})\mathbin{<}\Varid{db}{}\<[43]%
+\>[43]{}\mathrel{=}(\Varid{q},\Varid{r}){}\<[E]%
+\\
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{null}\;\Varid{r}\mathrel{\vee}\Varid{r}\equiv [\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[43]%
+\>[43]{}\mathrel{=}(\Varid{q},\Varid{r}){}\<[E]%
+\\
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{otherwise}{}\<[43]%
+\>[43]{}\mathrel{=}{}\<[E]%
+\\
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{t}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{modiv}\;\Varid{p}\;(\Varid{last}\;\Varid{r})\;(\Varid{last}\;\Varid{bs}){}\<[E]%
+\\
+\>[28]{}\Varid{d}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{degree}\;(\Conid{P}\;\Varid{r})\mathbin{-}\Varid{db}{}\<[E]%
+\\
+\>[28]{}\Varid{ts}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{zeros}\;\Varid{d}\plus [\mskip1.5mu \Varid{t}\mskip1.5mu]{}\<[E]%
+\\
+\>[28]{}\Varid{m}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[32E]%
+\>[35]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{ts}\;\Varid{bs}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;\Varid{go}\;{}\<[30]%
+\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts}\mskip1.5mu]\;{}\<[E]%
+\\
+\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\acronym{gcd}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gcdmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{gcdmp}\;\Varid{p}\;\Varid{a}\;\Varid{b}{}\<[16]%
+\>[16]{}\mid {}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{b}\mathbin{>}\Varid{degree}\;\Varid{a}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{b}\;\Varid{a}{}\<[E]%
+\\
+\>[16]{}\mid {}\<[16E]%
+\>[19]{}\Varid{zerop}\;\Varid{b}\mathrel{=}\Varid{a}{}\<[E]%
+\\
+\>[16]{}\mid {}\<[16E]%
+\>[19]{}\Varid{otherwise}\mathrel{=}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{divmp}\;\Varid{p}\;\Varid{a}\;\Varid{b}\;\mathbf{in}\;\Varid{gcdmp}\;\Varid{p}\;\Varid{b}\;\Varid{r}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Let us try \ensuremath{\Varid{gcdmp}} on the variation we already tested above. 
+We multiply the polynomial
+$x^2 + 2x + 1$ by $3x^2 + 2x + 1$ modulo 7:
+
+\ensuremath{\Varid{mulmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu])}.
+
+The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{3}\mskip1.5mu]}.
+
+Now, we compute the \acronym{gcd} with \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]} modulo 7:
+
+\ensuremath{\Varid{gcdmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{3}\mskip1.5mu])}.
+
+The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}, as expected.
+
+Finally, power:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{35E}{@{}l@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{58}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{powmp}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{powmp}\;\Varid{p}\;\Varid{f}\;\Varid{poly}\mathrel{=}\Varid{go}\;\Varid{f}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;\Varid{poly}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\Varid{y}\;\anonymous {}\<[22]%
+\>[22]{}\mathrel{=}\Varid{y}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\mathrm{1}\;\Varid{y}\;\Varid{x}{}\<[22]%
+\>[22]{}\mathrel{=}\Varid{mulmp}\;\Varid{p}\;\Varid{y}\;\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{n}\;\Varid{y}\;\Varid{x}{}\<[22]%
+\>[22]{}\mid \Varid{even}\;\Varid{n}{}\<[35]%
+\>[35]{}\mathrel{=}{}\<[35E]%
+\>[38]{}\Varid{go}\;(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2})\;\Varid{y}\;{}\<[58]%
+\>[58]{}(\Varid{mulmp}\;\Varid{p}\;\Varid{x}\;\Varid{x}){}\<[E]%
+\\
+\>[22]{}\mid \Varid{otherwise}{}\<[35]%
+\>[35]{}\mathrel{=}{}\<[35E]%
+\>[38]{}\Varid{go}\;((\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2})\;{}\<[58]%
+\>[58]{}(\Varid{mulmp}\;\Varid{p}\;\Varid{y}\;\Varid{x})\;{}\<[E]%
+\\
+\>[58]{}(\Varid{mulmp}\;\Varid{p}\;\Varid{x}\;\Varid{x}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here is a nice variant of Pascal's triangle generated by
+\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
+
+\begin{minipage}{\textwidth}
+\begin{center}
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{5},\mathrm{3},\mathrm{3},\mathrm{5},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{6},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{2},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}
+\end{center}
+\end{minipage}
+
+It is especially interesting to look at greater powers 
+using exponents that are multiples of 7.
+Before we continue with modular arithmetic,
+which we need indeed to understand some of the deeper problems
+related to polynomials, we will
+investigate the application of polynomials using a famous device: 
+Babbage's difference engine.
 \section{The Difference Engine}
 \section{Polynomials and Binomial Coefficients}
-\section{Factoring Polynomials}
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
@@ -34683,6 +35459,7 @@ G(x) = \frac{x}{1-x-x^2}.
 
 
 
+\section{Factoring Polynomials}
 
 \chapter{Relations, Functions and the Cartesian Plane} % c08
 \section{Relations}

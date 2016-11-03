@@ -21,7 +21,7 @@ Polynomial \term{strichrechnung} is easy.
 Key is to realise that the structure of polynomials 
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
-of some number and different power of $x$.
+of some number and a power of $x$.
 When we add (or subtract) two polynomials, we just sort them
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
@@ -37,8 +37,7 @@ and add (or subtract) terms with equal exponents:
 With our polynomial representation, it is easy 
 to implement this kind of operation. One might think
 it was designed especially to support addition and
-subtraction. We first define generic \term{strichrechnung}
-and then |add| and |sub| on top of it:
+subtraction. Here is a valid implementation:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -87,7 +86,7 @@ a monomial over a polynomial:
 \end{minipage}
 
 The function |mul1| takes a single term (the monomial)
-and distributes over the coefficients of a polynomial 
+and distributes it over the coefficients of a polynomial 
 using the operation |o|.
 Each term in the polynomial 
 is combined with the single term.
@@ -209,8 +208,8 @@ Here is the code:
 
 The function |powp| receives a natural number,
 that is the exponent, and a polynomial.
-We kick off by calling |go| with the exponent,
-a base polynomial |P [1]|, \ie\ unity, and the polynimial
+We kick off by calling |go| with the exponent, $f$,
+a base polynomial |P [1]|, \ie\ unity, and the polynomial
 we want to raise to the power of |f|.
 If $f=0$, we are done and return the base polynomial.
 This reflects the case $x^0=1$.
@@ -221,11 +220,45 @@ Otherwise, we pass the product of the base polynomial and the input
 on instead of the base polynomial as it is.
 This implementation differs a bit from the implementation
 we presented before for numbers, but it implements the same
-algorithm. 
+algorithm.
+
+Here is a simple example: we raise the polynomial
+$x + 1$ to the power of 5. In the first round, we compute
+
+|go 5 (P [1]) (P [1,1])|,
+
+which, since 5 is odd, results in 
+
+|go 2 (P [1,1]) (P [1,2,1])|.
+
+This, in its turn, results in
+
+|go 1 (P [1,1]) (P [1,4,6,4,1])|.
+
+This is the final step and results in 
+
+|mul (P [1,1]) (P [1,4,6,4,1])|, 
+
+which is
+
+|P [1,5,10,10,5,1]|,
+
+the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
+You might have noticed that our Haskell notation
+shows the binomial coefficients $\binom{n}{k}$ for
+$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+We never see $n=3$, which would be 
+|P [1,3,3,1]|, because we leave the multiplication
+|mul (P [1,1]) (P [1,2,1])| out.
+For this specific case with exponent 5,
+leaving out this step is where square-and-multiply
+is more efficient than multiplying five times.
+With growing exponents, the saving quickly grows
+to a significant order.
 
 Division is, as usual, a bit more complicated than multiplication.
 But it is not too different from number division. First,
-we define polynomial division as Euclidian division, that is
+we define polynomial division as Euclidean division, that is
 we search the solution for the equation
 
 \begin{equation}
@@ -236,11 +269,9 @@ where $r < b$ and $bq+r=a$.
 
 The manual process is as follows:
 we divide the first term of $a$ by the first term of $b$.
-The quotient goes to the result; then we multiply $b$
-by the quotient we just obtained 
-and subtract the result from $a$.
+The quotient goes to the result; then we multiply it by $b$
+and set $a$ to $a$ minus that result.
 Now we repeat the process
-with $a$ being the result of the subtraction 
 until the degree of $a$
 is less than that of $b$.
 
@@ -251,9 +282,9 @@ Here is an example:
 \]
 
 We start by dividing $4x^5$ by $x^2$.
-The result is $4x^3$, which we add to the result.
-$4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$. 
-Now, we subtract this from $a$:
+The quotient is $4x^3$, which we add to the result.
+We multiply: $4x^3 \times (x^2 + 1) = 4x^5 + 4x^3$
+and subtract the result from $a$:
 
 \begin{equation}
 \begin{array}{crcrcrcrcr}
@@ -266,9 +297,9 @@ Now, we subtract this from $a$:
 We continue with
 $-x^4$ and divide it by $x^2$, which is
 $-x^2$. 
-The result now is $4x^3 - x^2$.
+The overall result now is $4x^3 - x^2$.
 We multiply $-x^2 \times (x^2 + 1) = -x^4 - x^2$
-and subtract this result from what remains from $a$:
+and subtract that from what remains from $a$:
 
 \begin{equation}
 \begin{array}{ccrcrcrcr}
@@ -340,14 +371,14 @@ First note that division expects its arguments
 to be polynomials over a |Fractional| data type.
 We do not allow polynomials over integers to be used
 with this implementation. The reason is that we do not
-want to use Euclidian division on the coefficients.
+want to use Euclidean division on the coefficients.
 That could indeed be very confusing. Furthermore,
 polynomials are most often used with rational or real
 coefficients. Restricting division to integers
-(using Euclidian division) would, therefore, not make
+(using Euclidean division) would, therefore, not make
 much sense.
 
-Observer further that we call |go| with an empty set --
+Observe further that we call |go| with an empty set --
 that is the initial value of $q$, \ie\ the final result --
 and $as$ -- that is initially the number to be divided,
 the number we called $a$ above.
@@ -404,13 +435,13 @@ the remainder:
 
 \begin{minipage}{\textwidth}
 \begin{code}
- remp ::  (Show a, Num a, Eq a, Ord a) => 
-          Poly a -> Poly a -> Bool
-  rem a b =  let (_,r) = b `d` a in r
+  remp ::  (Show a, Num a, Eq a, Ord a) => 
+           Poly a -> Poly a -> Bool
+  remp a b =  let (_,r) = b `d` a in r
 \end{code}
 \end{minipage}
 
-and, of course, the |gcd|:
+and, of course, the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -433,15 +464,48 @@ a polynomial is zero:
 \end{code}
 \end{minipage}
 
-Until here, we have discussed polynomials in an infinite field.
+We can demonstrate |gcdp| nicely on binomial coefficients.
+For instance, the \acronym{gcd} of the polynomials
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$ and
+$x^3 + 3x^2 + 3x + 1$, thus
+
+|gcdp (P [1,5,10,10,5,1]) (P [1,3,3,1])|
+
+is $x^3 + 3x^2 + 3x + 1$.
+
+Since polynomials consisting of binomial coefficients of $n$,
+where $n$ is the degree of the polynomial,
+are always a product
+of polynomials composed of smaller binomial coefficients
+in the same way,
+the \acronym{gcd} of two polynomials
+consisting only of binomial coefficients,
+is always the smaller of the two.
+In other cases, that is, when the smaller does not divide
+the greater, this implementation of the \acronym{gcd}
+can lead to confusing results. For instance,
+we multiply |P [1,2,1]| by another polynomial, say,
+|P [1,2,3]|. The result is |P [1,4,8,8,3]|. Now,
+
+|gcdp (P [1,5,10,10,5,1]) (P [1,4,8,8,3])|
+
+does not yield the expected result |P [1,2,1]|.
+The reason is that the \acronym{gcd} is an operation
+defined on integers, but we implemented it on top
+of fractionals. That is often not what we want.
+Anyway, here, we will actually use the \acronym{gcd} 
+only in finite fields. 
+Until now, we have discussed polynomials in infinite fields.
 We now turn our attention to polynomial arithmetic
 in a finite field and, hence, to modular polynomial arithmetic.
+
 With modular arithmetic, all coefficients in the polynomial
-are modulo $n$. That means we have to reduce these numbers.
-This, of course, does only make sense with integer numbers.
+are modulo $n$. That means we have to reduce those numbers.
+This, of course, does only make sense with integers.
 We first implement some helpers to reduce numbers modulo $n$
-reusing function implemented in the previous chapter.
-This function takes an integer number modulo $n$:
+reusing functions implemented in the previous chapter.
+
+The first function takes an integer modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -472,7 +536,7 @@ For division, we reuse the |inverse| function:
 \end{minipage}
 
 Now, we turn to polynomials. Here is, first, a function
-that makes a polynomial modulo $n$:
+that transforms a polynomial into one modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -482,6 +546,44 @@ that makes a polynomial modulo $n$:
 \end{minipage}
 
 In other words, we just map |mmod| on all coefficients.
+Let us look at some polynomials modulo a number, say, 7.
+The polynomial |P [1,2,3,4]|
+we already used above is just the same modulo 7.
+The polynomial |P [5,6,7,8]|, however, changes:
+
+|P [5,6,7,8] `pmod` 7|
+
+is |P [5,6,0,1]| or, in other words,
+$8x^3 + 7x^2 + 6x + 5$ turns, modulo 7, into 
+$x^3 + 6x + 5$.
+
+The polynomial $x + 1$ raised to the power of 5 is
+$x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$. Modulo 7, this
+reduces to $x^5 + 5x^4 + 3x^3 + 3x^3 + 5x + 1$.
+That is: the binomial coefficients modulo $n$ change.
+For instance,
+
+|map (choose2 6) [0..6]|
+
+is
+
+1,6,15,20,15,6,1.
+
+Modulo 7, we get
+
+1,6,1,6,1,6,1.
+
+|map (choose2 7) [0..7]|
+
+is
+
+1,7,21,35,35,21,7,1.
+
+Without big surprise, we see this modulo 7
+drastically simplified:
+
+1,0,0,0,0,0,0,1.
+
 Here are addition and subtraction, which are very easy
 to convert to modular arithmetic:
 
@@ -507,6 +609,26 @@ Multiplication:
            o   =  modmul p
 \end{code}
 \end{minipage}
+
+We repeat the multiplication from above 
+
+|mul (P [1,2,3,4]) (P [5,6,7,8])| 
+
+which was
+
+|P [5,16,34,60,61,52,32]|
+
+Modulo 7, this result is
+
+|P [5,2,6,4,5,3,4]|.
+
+The modulo multiplication
+
+|mulmp 7 (P [1,2,3,4]) (P [5,6,0,1])|
+
+yields the same result:
+
+|P [5,2,6,4,5,3,4]|
 
 Division:
 
@@ -538,7 +660,21 @@ Division:
 \end{code}
 \end{minipage}
 
-and power:
+Let us try |gcdmp| on the variation we already tested above. 
+We multiply the polynomial
+$x^2 + 2x + 1$ by $3x^2 + 2x + 1$ modulo 7:
+
+|mulmp 7 (P [1,2,1]) (P [1,2,3])|.
+
+The result is |P [1,4,1,1,3]|.
+
+Now, we compute the \acronym{gcd} with |P [1,5,10,10,5,1]| modulo 7:
+
+|gcdmp 7 (P [1,5,3,3,5,1]) (P [1,4,1,1,3])|.
+
+The result is |P [1,2,1]|, as expected.
+
+Finally, power:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -552,9 +688,32 @@ and power:
 \end{code}
 \end{minipage}
 
-There is nothing much new here with modular polynomial arithmetic.
-In fact, we are just applying a concept that we already know to
-a new concept, polynomials. But in a short while we will need
-modular arithmetic on polynomials. Before, however, we will
+Here is a nice variant of Pascal's triangle generated by
+|map (\x -> powmp 7 x (P [1,1]) [1..14]|:
+
+\begin{minipage}{\textwidth}
+\begin{center}
+|P [1,1]|\\
+|P [1,2,1]|\\
+|P [1,3,3,1]|\\
+|P [1,4,6,4,1]|\\
+|P [1,5,3,3,5,1]|\\
+|P [1,6,1,6,1,6,1]|\\
+|P [1,0,0,0,0,0,0,1]|\\
+|P [1,1,0,0,0,0,0,1,1]|\\
+|P [1,2,1,0,0,0,0,1,2,1]|\\
+|P [1,3,3,1,0,0,0,1,3,3,1]|\\
+|P [1,4,6,4,1,0,0,1,4,6,4,1]|\\
+|P [1,5,3,3,5,1,0,1,5,3,3,5,1]|\\
+|P [1,6,1,6,1,6,1,1,6,1,6,1,6,1]|\\
+|P [1,0,0,0,0,0,0,2,0,0,0,0,0,0,1]|
+\end{center}
+\end{minipage}
+
+It is especially interesting to look at greater powers 
+using exponents that are multiples of 7.
+Before we continue with modular arithmetic,
+which we need indeed to understand some of the deeper problems
+related to polynomials, we will
 investigate the application of polynomials using a famous device: 
 Babbage's difference engine.
