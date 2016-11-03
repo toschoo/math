@@ -3,6 +3,7 @@
 \section{Polynomial Arithmetic}
 %include PolyArith.lhs
 \section{The Difference Engine}
+%include DMachine.lhs
 \section{Polynomials and Binomial Coefficients}
 \section{Roots}
 \section{Vieta's Formula}
