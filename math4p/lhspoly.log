@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  3 NOV 2016 20:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  4 NOV 2016 19:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1511,20 +1511,56 @@ d by $[] (\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/it/10.95 x \OMS/cmsy/m/n/10.95 ! []
 [17]
 \openout3 = `lhspoly.ptb'.
 
- [18]
 \openout3 = `lhspoly.ptb'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 1987--1992
+ [18]
+Underfull \hbox (badness 10000) in paragraph at lines 1964--1969
 
  []
 
-[19] [20] [21] (./lhspoly.aux) ) 
+[19]
+\openout3 = `lhspoly.ptb'.
+
+ [20]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [21] [22]
+\openout3 = `lhspoly.ptb'.
+
+ [23]
+\openout3 = `lhspoly.ptb'.
+
+
+Overfull \hbox (16.63568pt too wide) in paragraph at lines 2487--2491
+[]\OT1/cmr/m/n/10.95 For the se-quence of the un-known poly-no-mial, we ob-tain
+ $\OT1/cmr/m/it/10.95 M \OT1/cmr/m/n/10.95 [ [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/
+m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1
+/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ;
+ [] \OT1/cmr/m/n/10.95 ]\OML/cmm/m/it/10.95 ; \OMS/cmsy/m/n/10.95 j \OT1/cmr/m/
+n/10.95 [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1
+/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ;
+ \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; [] \OT1/cmr/m/n/10.95 ]\OML/cmm/m/it
+/10.95 ;$
+ []
+
+\openout3 = `lhspoly.ptb'.
+
+[24]
+Overfull \hbox (25.96465pt too wide) in paragraph at lines 2559--2566
+\OT1/cmr/m/n/10.95 1 ]$, which cor-re-sponds to the poly-no-mial $144\OML/cmm/m
+/it/10.95 x[] \OT1/cmr/m/n/10.95 + 384\OML/cmm/m/it/10.95 x \OT1/cmr/m/n/10.95 
++ 286$. $[] (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ []\OML/cmm/m/it/10.95 ;
+ []; [] \OT1/cmr/m/n/10.95 ]) [ 0 [] [] ]$
+ []
+
+[25] [26] [27] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 29280 strings out of 493304
- 677168 string characters out of 6139872
+ 29310 strings out of 493304
+ 677610 string characters out of 6139872
  838784 words of memory out of 5000000
- 32175 multiletter control sequences out of 15000+600000
+ 32205 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,10n,80p,10414b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1540,10 +1576,10 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on lhspoly.pdf (21 pages, 190221 bytes).
+Output written on lhspoly.pdf (27 pages, 206557 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 87 compressed objects within 1 object stream
+ 142 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

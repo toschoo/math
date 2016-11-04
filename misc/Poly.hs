@@ -49,10 +49,7 @@ where
   -- Apply the polynomial (substitute x for a number)
   -------------------------------------------------------------------------
   apply :: Num a => Poly a -> a -> a
-  apply (P []) _ = 0
-  apply (P as) x = go x $ zip [0..] as
-    where go z [] = 0
-          go z ((i,c):cs) = c*z^i + go z cs
+  apply (P cs) x = sum [c*x^i | (i,c) <- zip [0..] cs]
 
   -------------------------------------------------------------------------
   -- Map apply 
@@ -508,8 +505,6 @@ where
   -- diffs lists
   -------------------------------------------------------------------------
   dengine :: [Integer] -> [[Integer]]
-  dengine []  = []
-  dengine [_] = []
   dengine cs  | constant cs = []
               | otherwise   = ds : dengine ds
     where ds = diffs cs
@@ -521,8 +516,6 @@ where
   -- predict
   -------------------------------------------------------------------------
   predict :: [[Integer]] -> [Integer] -> Maybe Integer
-  predict _ []  = Nothing
-  predict [] _  = Nothing
   predict ds xs = case go (reverse ds) of
                     0  -> Nothing
                     d  -> Just (d + (last xs))
