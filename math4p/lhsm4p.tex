@@ -34291,6 +34291,10 @@ subtraction. Here is a valid implementation:
 \\
 \>[3]{}\Varid{sub}\mathrel{=}\Varid{strich}\;(\mathbin{-}){}\<[E]%
 \\[\blanklineskip]%
+\>[3]{}\Varid{sump}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{sump}\mathrel{=}\Varid{foldl'}\;\Varid{add}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[E]%
+\\[\blanklineskip]%
 \>[3]{}\Varid{strich}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{strich}\;\Varid{o}\;(\Conid{P}\;\Varid{x})\;(\Conid{P}\;\Varid{y}){}\<[25]%
@@ -34318,6 +34322,7 @@ subtraction. Here is a valid implementation:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+Note that \ensuremath{\Varid{sump}} function, which implements \ensuremath{\Varid{sum}} for polynomials.
 Here is one more function that might be useful 
 later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coefficients:
 
@@ -35387,7 +35392,1293 @@ related to polynomials, we will
 investigate the application of polynomials using a famous device: 
 Babbage's difference engine.
 \section{The Difference Engine}
-\section{Polynomials and Binomial Coefficients}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyArith}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{PolyArith}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+Polynomial arithmetic, as we have seen,
+is very similar to number arithmetic.
+What is the correspondent of interpreting
+a number in a given numeral system
+in the domain of polynomials?
+Well, that is the \term{application} of the polynomial
+to a given number. We would substitute $x$
+for a number in the Field in which we are working
+and just compute the formula.
+For instance, the polynomial
+
+\[
+x^2 + x + 1
+\]
+
+can be applied to, say, 2.
+Then we get the formula
+
+\[
+2^2 + 2 + 1,
+\]
+
+which is $4 + 2 + 1 = 7$.
+
+For other values of $x$, it would of course
+generate other values. For $x=0$, for instance,
+it would give $0^2 + 0 + 1 = 1$; for $x=1$,
+it is $1^2 + 1 + 1 = 3$; for $x=3$, it yields
+$3^2 + 3 + 1 = 13$.
+
+How would we apply a polynomial represented
+by our Haskell type? We would need to go through the list
+of coefficients, raise $x$ to the power of the weight
+of each particular coefficient, multiply it by the coefficient
+and, finally, add all the values together.
+Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{apply}\mathbin{::}\Conid{Num}\;\Varid{a}{}\<[21]%
+\>[21]{}\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{apply}\;(\Conid{P}\;\Varid{cs})\;\Varid{x}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{sum}\;[\mskip1.5mu \Varid{c}\mathbin{*}\Varid{x}\mathbin{\uparrow}\Varid{i}\mid (\Varid{i},\Varid{c})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;\Varid{cs}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Let us try with a very simple polynomial, $x + 1$:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;\mathrm{0}} gives 1.\\
+\ensuremath{\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;\mathrm{1}} gives 2.\\
+\ensuremath{\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;\mathrm{2}} gives 3.\\
+\ensuremath{\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;\mathrm{3}} gives 4.
+\end{minipage}
+
+This polynomial, apparently, just counts the integers
+adding one to the value to which we apply it.
+It implements {\texttt i++}.
+
+On the first sight, this result appears to be boring.
+However, after a quick thought, there is a lesson to learn:
+we get to know the polynomial, when we look
+at the \term{sequence} it produces. So, let us implement
+a function that maps \ensuremath{\Varid{apply}} to lists of numbers:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mapply}\mathbin{::}\Conid{Num}\;\Varid{a}{}\<[22]%
+\>[22]{}\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mapply}\;\Varid{p}\mathrel{=}\Varid{map}\;(\Varid{apply}\;\Varid{p}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+For simple polynomials, the sequences are predictable.
+$x^2$, obviously, just produces the squares;
+$x^3$ produces the cubes and so on.
+Sequences created by powers of the simple polynomial $x+1$,
+still, are quite predictable, \eg\:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}: 1,4,9,16,25,36,49,64,81,100,121\\
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}: 1,8,27,64,125,216,343,512,729,1000,1331\\
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}: 1,16,81,256,625,1296,2401,4096,6561,10000,14641\\
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}:\\
+1,32,243,1024,3125,7776,16807,32768,59049,100000,161051\\
+\end{minipage}
+
+The first line, easy to recognise, is the squares, but pushed one up,
+\ie\ the application to 0 yields the value for $1^2$, 
+the application to 1 yields the value for $2^2$ and so on.
+The second, still easy to recognise,
+is the cubes -- again pushed up by one.
+The third line is the powers of four 
+and the fourth line is the powers of five,
+both pushed up by one.
+
+That is not too surprising at the end, since
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]} is the result of squaring \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]}, 
+which generates the integers pushed one up;
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]} is the result of raising \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]} to the third power
+and so on.
+
+Things become more interesting, when we deviate
+from the binomial coefficients. The sequence
+produced by \ensuremath{\Varid{mappy}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}, for instance,
+does not resemble such a simple sequence:
+1, 10, 49, 142, 313, 586, 985, 1534, 2257, 3178, 4321.
+Even the Online Encyclopedia has nothing interesting
+to say about it.
+The same is true for \ensuremath{\Varid{mappy}\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
+which is 5, 26, 109, 302, 653, 1210, 2021, 3134, 4597, 6458, 8765.
+
+This raises another interesting question:
+given a sequence, is there a method by which 
+we can we recognise the polynomial that created it?
+Yes, there is. In fact, there are.
+There was even a machine that helped in guessing
+polynomials from sequences. It was built in the early
+$19^{th}$ century by Charles Babbage (1791 -- 1871),
+an English polymath, mathematician, philosopher,
+economist and inventor.
+
+Babbage stands in the tradition of designers and constructors
+of early computing machinery; predecessors of his
+in this tradition were, for instance, 
+Blaise Pascal (1623 -- 1662) and
+Gottfried Wilhelm Leibniz (1646 -- 1716).
+Babbage designed two series of machines,
+first, the difference engines and, later, 
+the analytical engines.
+
+The analytical engine, unfortunately, was not built in his lifetime.
+The final collapse of the project came 
+in 1878, after Babbage's death in 1871, 
+due to lack of finance. 
+The analytical engine would have been 
+a universal (Turing-complete) computer
+very similar to our computers today,
+but not working on electricity, but on steam.
+It would have been programmed by punch cards that,
+in Babbage's time, were used for controlling looms.
+Programs would have resembled modern assembly languages
+allowing control structures like selection and iteration.
+In the context of a description of the analytical engine,
+Ada Lovelace (1815 -- 1852), 
+a friend of Babbage and daughter of Lord Byron,
+described how to compute Bernoulli numbers with the machine.
+She is, therefore, considered the first computer programmer
+in history.
+
+The difference engine, at which we will look here,
+is much simpler. It was designed to analyse polynomials
+and what it did was, according to Babbage, ``computing differences''.
+During Babbage's lifetime, a first version was built and
+sucessfully demonstrated. The construction
+of a second, much more powerful version
+which was financially backed by the government,
+failed due to disputes between Babbage and his engineers.
+This machine was finally built by the London Science Museum
+in 1991 using material and engineering techniques available
+in the $19^{th}$ century proving this way
+that it was actually possible for Babbage and his engineers
+to build such a machine.
+
+The difference engine, as Babbage put it, computes differences,
+namely the differences in a sequence of numbers.
+It would take as input a sequence of the form
+
+0,1,16,81,256,625,1296,2401,4096,6561,10000
+
+and compute the differences between the single numbers:
+
+\begin{equation}
+\begin{array}{rcrcr}
+  1 & - &  0 & = &   1 \\
+ 16 & - &  1 & = &  15 \\
+ 81 & - & 16 & = &  65 \\
+256 & - & 81 & = & 175\\
+\dots
+\end{array}
+\end{equation}
+
+Here is a simple function that does this job for us:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{diffs}\mathbin{::}[\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{diffs}\;[\mskip1.5mu \mskip1.5mu]{}\<[19]%
+\>[19]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{diffs}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[19]%
+\>[19]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{diffs}\;(\Varid{a}\mathbin{:}\Varid{b}\mathbin{:}\Varid{cs}){}\<[19]%
+\>[19]{}\mathrel{=}(\Varid{b}\mathbin{-}\Varid{a})\mathbin{:}\Varid{diffs}\;(\Varid{b}\mathbin{:}\Varid{cs}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Applied on the sequence above, \ensuremath{\Varid{diffs}} yields:
+
+1,15,65,175,369,671,1105,1695,2465,3439
+
+What is so special about it?
+Perhaps, nothing. But let us repeat the process
+using this sequence. It yields:
+
+14,50,110,194,302,434,590,770,974
+
+And once again:
+
+36,60,84,108,132,156,180,204
+
+And one more time:
+
+24,24,24,24,24,24,24
+
+Suddenly, we have constant list.
+How often did we apply \ensuremath{\Varid{diffs}}?
+Four times -- and, as you may have realised,
+the original sequence was generated by the polynomial
+$x^4$, a polynomial of degree 4.
+Is that coincidence?
+
+For further investigation, we implement
+the complete difference machine, which takes differences,
+until it reaches a constant sequence.
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{dengine}\mathbin{::}[\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{dengine}\;\Varid{cs}{}\<[16]%
+\>[16]{}\mid {}\<[16E]%
+\>[19]{}\Varid{constant}\;\Varid{cs}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[16]{}\mid {}\<[16E]%
+\>[19]{}\Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}\Varid{ds}\mathbin{:}\Varid{dengine}\;\Varid{ds}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ds}\mathrel{=}\Varid{diffs}\;\Varid{cs}{}\<[E]%
+\\
+\>[12]{}\Varid{constant}\;[\mskip1.5mu \mskip1.5mu]{}\<[29]%
+\>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[12]{}\Varid{constant}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[29]%
+\>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
+\\
+\>[12]{}\Varid{constant}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[29]%
+\>[29]{}\mathrel{=}\Varid{all}\;(\equiv \Varid{x})\;\Varid{xs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note that we restrict coefficients to integers.
+This is just for clearness.
+Polynomials are usually defined over a field,
+such as the rational or the real numbers!
+
+To confirm our suspicion that the difference engine
+creates $n$ difference sequences for a polynomial of degree $n$,
+we apply the engine on $x$, $x^2$, $x^3$, $x^4$ and $x^5$
+and count the sequences it creates:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{length}\;(\Varid{dengine}\;(\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]))}: 1\\
+\ensuremath{\Varid{length}\;(\Varid{dengine}\;(\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]))}: 2\\
+\ensuremath{\Varid{length}\;(\Varid{dengine}\;(\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]))}: 3\\
+\ensuremath{\Varid{length}\;(\Varid{dengine}\;(\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]))}: 4\\
+\ensuremath{\Varid{length}\;(\Varid{dengine}\;(\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{32}\mskip1.5mu]))}: 5
+\end{minipage}
+
+The engine already has a purpose:
+it tells us the degree of the polynomial
+that generates a given sequence.
+It can do much more, though.
+For instance, it lets us predict the next value
+in the sequence.
+To do so, we take the constant difference 
+from the last sequence and add it to 
+the last difference of the previous sequence;
+we take that result and add it to the previous sequence
+and so on, until we reach the first sequence.
+Consider the sequence and its differences from above:
+
+\begin{minipage}{\textwidth}
+0,1,16,81,256,625,1296,2401,4096,6561,10000\\
+1,15,65,175,369,671,1105,1695,2465,3439\\
+14,50,110,194,302,434,590,770,974\\
+36,60,84,108,132,156,180,204\\
+24,24,24,24,24,24,24
+\end{minipage}
+
+We start at the bottom and compute $204 + 24 = 228$.
+This is the next difference of the previous sequence.
+We compute $974 + 228 = 1202$. We go one line up and
+compute $3439 + 1202 = 4641$. This, finally, is the difference
+to the next value in the input sequence, which, hence, is
+$10000 + 4641 = 14641$ and, indeed, $11^4$.
+Even without knowing the polynomial that actually generates
+the sequence, we are now able to continue this sequence.
+Here is a function that does that for us:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{predict}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{Maybe}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{predict}\;\Varid{ds}\;\Varid{xs}\mathrel{=}{}\<[21]%
+\>[21]{}\mathbf{case}\;\Varid{go}\;(\Varid{reverse}\;\Varid{ds})\;\mathbf{of}{}\<[E]%
+\\
+\>[21]{}\mathrm{0}{}\<[24]%
+\>[24]{}\to \Conid{Nothing}{}\<[E]%
+\\
+\>[21]{}\Varid{d}{}\<[24]%
+\>[24]{}\to \Conid{Just}\;(\Varid{d}\mathbin{+}(\Varid{last}\;\Varid{xs})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;(\Varid{a}\mathbin{:}\Varid{cs})\mathrel{=}\Varid{last}\;\Varid{a}\mathbin{+}\Varid{go}\;\Varid{cs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function takes two arguments:
+the first is the list of difference sequences and
+the second is the original sequence.
+We apply \ensuremath{\Varid{go}} on the reverse of the sequences
+(because we are working backwards).
+For each sequence in this list, we get the last
+and add it to the last of the previous until
+we have exhausted the list.
+If \ensuremath{\Varid{go}} yields 0, we assume that something went wrong.
+The list of sequences may have been empty in the first place.
+Otherwise, we add the result to the last of the original list.
+
+Here are some more examples:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 11\\
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 121\\
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 1331\\
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 14641\\
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 161051
+\end{minipage}
+
+Let us go back to the question of how to find the polynomial
+given the sequence that this polynomial generates.
+With the help of the difference engine, we already know
+the degree of the polynomial. 
+Supposed, we know that the first element in the sequence
+was generated applying 0 to the unknown polynomial and
+the second one was generated applying 1,
+the third by applying 2 and so on,
+we have all information we need.
+
+From the degree, we know the form of the polynomial.
+A polynomial of degree 1 has the form $a_1x + a_2$;
+a polynomial of degree 2 has the form $a_1x^2 + a_2x + a_3$;
+a polynomial of degree 3 has the form $a_1x^3 + a_2x^2 + a_3x + a_4$
+and so on.
+
+Since we know the values to which the polynomial is applied,
+we can easily compute the value of the $x$-part of the terms.
+They are that value raised to the power of the weight.
+The challenge, then, is to find the coefficient by which
+that value is multiplied.
+
+The first element in the sequence is just the last coefficient,
+the one ``without'' an $x$, since the other terms ``disappear'',
+when we apply 0. Consider for example a polynomial of the form
+$x^2 + x + a$, we get $0^2 + 0 + a = c$, where $c$ is the first
+value in the sequence. Thus, $a=c$.
+
+The second element is 1 applied to the formula and, therefore,
+all terms equal their coefficients, since $cx^n$, for $x=1$, 
+is just $c$. The third element results from applying 2 to the polynomial,
+it hence adheres to a formula where unknown values (the coefficients)
+are multiplied by $2$, $2^2=4$, $2^3=8$ and so on.
+
+In other words, for a polynomial of degree $n$, we can devise
+a system of linear equations with $n+1$ unknowns and
+the $n+1$ first elements of the sequence as constant values.
+A polynomial of degree 2, for instance, yields the system
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+    &   &    &   & a  & = &  a_1 \\
+  a & + & b  & + & c  & = &  a_2 \\
+  a & + & 2b & + & 4c & = &  a_3
+\end{array}
+\end{equation}
+
+where the constant numbers $a_1$, $a_2$ and $a_3$
+are the first three elements of the sequence.
+A polynomial of degree 3 would generate the system
+
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+    &   &    &   &    &   &   a & = &  a_1 \\
+  a & + &  b & + &  c & + &   d & = &  a_2 \\
+  a & + & 2b & + & 4c & + &  8d & = &  a_3 \\
+  a & + & 3b & + & 9c & + & 27d & = &  a_4 
+\end{array}
+\end{equation}
+
+We have already learnt how to solve such systems:
+we can apply Gaussian elimination.
+The result of the elminiation is 
+the coefficients of the generating polynomial,
+which are the unknowns in the linear equations.
+The known values (which we would call the coefficients
+in a linear equation) are the values obtained
+by computing $x^i$ where $i$ is the weight 
+of the coefficient.
+Here is a function to extract the known values,
+the $x$es raised to the weight from a given 
+sequence with a given degree:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{20E}{@{}l@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{34E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{genCoeff}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathrel{=}\Varid{go}\;\mathrm{0}\;\Varid{x}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}{}\<[20]%
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{i}\mathbin{>}{}\<[28]%
+\>[28]{}\Varid{d}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[34E]%
+\>[37]{}[\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[E]%
+\\
+\>[20]{}\mid {}\<[20E]%
+\>[23]{}\Varid{otherwise}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[34E]%
+\>[37]{}\Varid{n}\mathbin{\uparrow}\Varid{i}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{x}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here, $d$ is the degree of the polynomial,
+$n$ is the value to which the polynomial is applied
+and $x$ is the result, \ie\ the value from the sequence.
+The local function \ensuremath{\Varid{go}} repeats from 0 to $d$,
+raising $n$, the input value, to the current weight
+and adding it to the resulting list.
+At the end, when we have reached a value greater 
+than the degree, we add the value from the sequence
+as known constant yielding one line of the system
+of linear equations.
+
+When we apply \ensuremath{\Varid{genCoeff}} on the the sequence
+generated by $x^4$, we would have:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{0}\;\mathrm{0}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{1}\;\mathrm{1}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{2}\;\mathrm{16}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{8},\mathrm{16},\mathrm{16}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{3}\;\mathrm{81}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{9},\mathrm{27},\mathrm{81},\mathrm{81}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{4}\;\mathrm{256}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{256}\mskip1.5mu]}
+\end{minipage}
+
+Note that the results are very regular:
+we see constant 1 in the first column,
+the natural numbers in the first column,
+the squares in the third, the cubes in the fourth and
+the powers in the fifth and sixth column.
+This are just the values for $x^i$, 
+for $i \in \lbrace 0\dots 4$.
+Since the value in the sixth column, the one we took
+from the sequence, equals the value in the fifth column,
+we can already guess that the polynomial is simply $x^4$.
+Here is another sequence, generated by a secret polynomial:
+
+14,62,396,1544,4322,9834,19472,34916,58134,91382,137204
+
+We compute the difference lists using 
+\ensuremath{\Varid{dengine}} as \ensuremath{\Varid{ds}} and compute the degree of the polynomial
+using \ensuremath{\Varid{length}\;\Varid{ds}}. The result is 4.
+Now we call \ensuremath{\Varid{genCoeff}} on the first four elements of the sequence:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{0}\;\mathrm{14}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{14}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{1}\;\mathrm{62}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{62}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{2}\;\mathrm{396}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{8},\mathrm{16},\mathrm{396}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{3}\;\mathrm{1544}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{9},\mathrm{27},\mathrm{81},\mathrm{1544}\mskip1.5mu]}\\
+\ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{4}\;\mathrm{4322}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{4322}\mskip1.5mu]}
+\end{minipage}
+
+We use \ensuremath{\Varid{genCoeff}} to create a matrix representing
+the entire system of equations:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{25E}{@{}l@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{39E}{@{}l@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{findCoeffs}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{\Conid{L}.Matrix}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{findCoeffs}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Conid{\Conid{L}.M}\;(\Varid{go}\;\mathrm{0}\;\Varid{seq}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{d}\mathrel{=}\Varid{fromIntegral}\;(\Varid{length}\;\Varid{ds}){}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
+\>[21]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{n}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[25]%
+\>[25]{}\mid {}\<[25E]%
+\>[28]{}\Varid{n}\mathbin{>}\Varid{d}{}\<[39]%
+\>[39]{}\mathrel{=}{}\<[39E]%
+\>[42]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\mid {}\<[25E]%
+\>[28]{}\Varid{otherwise}{}\<[39]%
+\>[39]{}\mathrel{=}{}\<[39E]%
+\>[42]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1})\;\Varid{xs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function \ensuremath{\Varid{findCoeffs}} receives 
+the list of difference sequences created by \ensuremath{\Varid{dengine}} and
+the original sequence.
+It computes the degree of the generating polynomial
+as \ensuremath{\Varid{length}\;\Varid{ds}} and, then, it goes through the 
+first \ensuremath{\Varid{d}} elements of the sequence calling \ensuremath{\Varid{genCoeff}}
+with \ensuremath{\Varid{d}}, the known input value $n$ and $x$,
+the element of the sequence.
+For the sequence generated by $x^4$, we obtain
+\ensuremath{\Conid{M}\;[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{8},\mathrm{16},\mathrm{16}\mskip1.5mu],}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{9},\mathrm{27},\mathrm{81},\mathrm{81}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{256}\mskip1.5mu]\mskip1.5mu]}, 
+which corresponds to the matrix
+
+\[
+\begin{pmatrix}
+ 1 &  0 &   0 &   0 &   0 &    0\\
+ 1 &  1 &   1 &   1 &   1 &    1\\
+ 1 &  2 &   4 &   8 &  16 &   16\\
+ 1 &  3 &   9 &  27 &  81 &   81\\
+ 1 &  4 &  16 &  64 & 256 &  256
+\end{pmatrix}
+\]
+
+For the sequence of the unknown polynomial, we obtain
+\ensuremath{\Conid{M}\;[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{14}\mskip1.5mu],\mid [\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{62}\mskip1.5mu],}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{8},\mathrm{16},\mathrm{396}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{9},\mathrm{27},\mathrm{81},\mathrm{1544}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{4322}\mskip1.5mu]\mskip1.5mu]},
+which corresponds to the matrix:
+
+\[
+\begin{pmatrix}
+ 1 &  0 &   0 &   0 &   0 &   14\\
+ 1 &  1 &   1 &   1 &   1 &   62\\
+ 1 &  2 &   4 &   8 &  16 &  396\\
+ 1 &  3 &   9 &  27 &  81 & 1544\\
+ 1 &  4 &  16 &  64 & 256 & 4322
+\end{pmatrix}
+\]
+
+The next steps are simple. We create the echelon form
+and solve by back-substitution. The following function
+puts all the bits together to find the generating polynomial:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{findGen}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Quoz}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{findGen}\;\Varid{ds}\mathrel{=}\Varid{\Conid{L}.backsub}\mathbin{\circ}\Varid{\Conid{L}.echelon}\mathbin{\circ}\Varid{findCoeffs}\;\Varid{ds}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Applied on the difference list and the sequence
+generated by $x^4$, \ensuremath{\Varid{findGen}} yields:
+\ensuremath{[\mskip1.5mu \mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+which indeed corresponds to the polynomial $x^4$. 
+For the sequence generated by the unknown polynomial,
+we get:
+\ensuremath{[\mskip1.5mu \mathrm{14}\mathbin{\%}\mathrm{1},\mathrm{9}\mathbin{\%}\mathrm{1},\mathrm{11}\mathbin{\%}\mathrm{1},\mathrm{16}\mathbin{\%}\mathrm{1},\mathrm{12}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+which corresponds to the polynomial
+$12x^4 + 16x^3 + 11x^2 + 9x + 14$.
+Let us test:
+
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{14},\mathrm{9},\mathrm{11},\mathrm{16},\mathrm{12}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} yields:
+
+14,62,396,1544,4322,9834,19472,34916,58134,91382,137204,
+
+which indeed is the same sequence we saw above!
+
+Now, what about the differences generated
+by the difference engine? Those, too, are sequences
+of numbers. Are there polynomials
+that generate those sequences?
+The first difference sequence of our formerly unknown polynomial is
+
+48,334,1148,2778,5512,9638,15444,23218,33248,45822
+
+The next three difference sequences could be derived
+from this sequence -- so, we can assume that this sequence
+is generated by a polynomial of degree 3. Let us see
+what \ensuremath{\Varid{findGen}\;(\Varid{tail}\;\Varid{ds})\;(\Varid{head}\;\Varid{ds})} yields with \ensuremath{\Varid{ds}}
+being the list of difference sequences of that polynomial:
+\ensuremath{[\mskip1.5mu \mathrm{48}\mathbin{\%}\mathrm{1},\mathrm{118}\mathbin{\%}\mathrm{1},\mathrm{120}\mathbin{\%}\mathrm{1},\mathrm{48}\mathbin{\%}\mathrm{1}\mskip1.5mu]}, 
+which corresponds to the polynomial 
+$48x^3 + 120x^2 + 118x + 48$.
+Let us test again:
+
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{48},\mathrm{118},\mathrm{120},\mathrm{48}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} yields:
+
+48,334,1148,2778,5512,9638,15444,23218,33248,45822,61228
+
+The next difference sequence should then be generated
+by a polynomial of degree 2. We try with
+\ensuremath{\mathbf{let}\;\Varid{ds'}\mathrel{=}\Varid{tail}\;\Varid{ds}\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds'})\;(\Varid{head}\;\Varid{ds'})} and get
+\ensuremath{[\mskip1.5mu \mathrm{286}\mathbin{\%}\mathrm{1},\mathrm{384}\mathbin{\%}\mathrm{1},\mathrm{144}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+which corresponds to the polynomial 
+$144x^2 + 384x + 286$.
+
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{286},\mathrm{384},\mathrm{144}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} yields:
+
+286,814,1630,2734,4126,5806,7774,10030,12574,15406,18526
+
+which, indeed, is the third difference sequence.
+
+Finally, the last but one sequence, the last
+that is not constant, should be generated by a polynomial
+of degree 1. We try with
+\ensuremath{\mathbf{let}\;\Varid{ds''}\mathrel{=}\Varid{tail}\;(\Varid{tail}\;\Varid{ds})\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds''})\;(\Varid{head}\;\Varid{ds''})}
+and get \ensuremath{\mathrm{528}\mathbin{\%}\mathrm{1},\mathrm{288}\mathbin{\%}\mathrm{1}}
+which corresponds to the polynomial $288x + 528$.
+
+\ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{528},\mathrm{288}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} yields:
+
+528,816,1104,1392,1680,1968,2256,2544,2832,3120,3408
+
+which, again is the expected difference sequence.
+
+The differences are closely related to the tremendously
+important concept of the \term{derivative} of a function.
+The derivative of a polynomial $\Pi$ of degree $n$
+is a polynomial $\Pi'$ of degree $n-1$ that measures
+the \term{rate of change} or \term{slope} of $\Pi$.
+The derivative expresses the rate of change precisely
+for any point in $\Pi$. We will look at this with
+much more attention in the next chapter; 
+the third part will then be dedicated to derivatives and
+related concepts.
+
+The difference sequences and the polynomials that generate them
+are also a measurement of the rate of change.
+Actually, the difference between two points \emph{is}
+the rate of change of that polynomial between those two points.
+The difference, however, is a sloppy measure.
+
+Without going into too many details here,
+we can quickly look at how the derivative of a polynomial
+is computed, which, in fact, is very easy.
+For a polynomial of the form
+
+\[
+ax^n + bx^m + \dots + cx + d,
+\]
+
+the derivative is
+
+\[
+nax^{n-1} + mbx^{m-1} + \dots + c.
+\]
+
+In other words, we drop the last term (which is the first term
+in our Haskell representation of polynomials)
+and, for all other terms, we multiply the term by the exponent
+and reduce the exponent by one.
+
+The derivative of the polynomial, $x^4$, for instance,
+is $4x^3$; in the notation of our polynomial type,
+we have \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} and its derivative \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{4}\mskip1.5mu]}.
+The derivative of $4x^3$ is $12x^2$, whose derivative then
+is $24x$, whose derivative is just $24$.
+The deriviative of our polynomial
+
+\[
+12x^4 + 16x^3 + 11x^2 + 9x + 14
+\]
+
+is 
+
+\[
+48x^3 + 48x^2 + 22x + 9.
+\]
+
+Note that the first term equals the first term
+of the polynomial that we identified as the generator
+of the first difference sequence. Indeed,
+the differences are sloppy as a measure for
+the rate of change -- but they are not completely wrong!
+
+Here is a function to compute the derivative:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{27E}{@{}l@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{derivative}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Enum}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{derivative}\;(\Conid{P}\;\Varid{as})\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;(\Varid{go}\mathbin{\$}\Varid{zip}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{drop}\;\mathrm{1}\;\Varid{as}))){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]{}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;((\Varid{x},\Varid{c})\mathbin{:}\Varid{cs}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}(\Varid{x}\mathbin{*}\Varid{c})\mathbin{:}\Varid{go}\;\Varid{cs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+\ignore{$}
+
+What is the sequence generated by the derivative of our polynomial?
+Well, we define the derivative as
+\ensuremath{\mathbf{let}\;\Varid{p'}\mathrel{=}\Varid{derivative}\;(\Conid{P}\;[\mskip1.5mu \mathrm{14},\mathrm{9},\mathrm{11},\mathrm{16},\mathrm{12}\mskip1.5mu])}, which is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{9},\mathrm{22},\mathrm{48},\mathrm{48}\mskip1.5mu]},
+apply it using \ensuremath{\Varid{mapply}\;\Varid{p'}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and see:
+
+9,127,629,1803,3937,7319,12237,18979,27833,39087,53029
+
+Quite different from the first difference sequence we saw above!
+
+What about the second derivative? we define as
+\ensuremath{\mathbf{let}\;\Varid{p''}\mathrel{=}\Varid{derivative}\;\Varid{p'}} and get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{22},\mathrm{96},\mathrm{144}\mskip1.5mu]}.
+This polynomial creates the sequence
+
+22,262,790,1606,2710,4102,5782,7750,10006,12550,15382
+
+The next derivative, \ensuremath{\mathbf{let}\;\Varid{p'''}\mathrel{=}\Varid{derivative}\;\Varid{p''}},
+is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{96},\mathrm{288}\mskip1.5mu]} and generates the sequence
+
+96,384,672,960,1248,1536,1824,2112,2400,2688,2976.
+
+You can already predict the next derivative,
+which is a polynomial of degree 0: it is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{288}\mskip1.5mu]}.
+This is a constant polynomial and will generate a constant
+sequence, namely the sequence 288. That, however,
+was also the constant sequence generated by the
+difference engine. Of course, when the rate of change
+is the same everywhere in the original polynomial,
+then precision does not make any difference anymore.
+The two methods shall come to the same result.
+
+Consider the simple polynomial $x^2$.
+It generates the sequence
+
+\[
+0,1,4,9,16,25,36,49,\dots
+\]
+
+The differences are
+
+\[
+1,3,5,7,9,11,13,\dots
+\]
+
+The differences of this list are all 2.
+
+The derivative of $x^2$ is $2x$.
+It would generate the sequence
+
+\[
+0,2,4,6,8,10,12,14,\dots
+\]
+
+which does not equal the differences.
+However, we can already see that the derivative
+of $2x$, $2$, is constant and generates the constant
+sequence 
+
+\[
+2,2,2,2,2,2,2,2,\dots
+\]
+\section{Differences and Binomial Coefficients}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{DiffBinom}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{PolyArith}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{DMachine}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+How are the values appearing in the sequence
+and the values appearing in the difference sequences related?
+There must be a relation, since the distance between the values 
+in the sequence is expressed by the values
+appearing in the difference sequences.
+
+The ingenious Isaac Newton has studied this relation
+intensely and came up with a formula. Before we go right
+to the formula, let us observe on our own.
+The following table shows, in the first line, 
+the value of $n$, \ie\ the value to which the polynomial
+is applied; in the second line, we see the result
+for this $n$; in the first column we have the first
+value from the sequence and from the difference lists:
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{||c||c|c|c|c|c||}
+\hline
+     &  0 &  1  &  2  &  3   &  4   \\\hline
+     & 14 & 62  & 396 & 1544 & 4322 \\\hline\hline
+  14 &  1 &  1  &  1  &  1   &  1   \\\hline
+  48 &  0 &  1  &  2  &  3   &  4   \\\hline
+ 286 &  0 &  0  &  1  &  3   &  6   \\\hline
+ 528 &  0 &  0  &  0  &  1   &  4   \\\hline
+ 288 &  0 &  0  &  0  &  0   &  1   \\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+What is the meaning then of the numbers in the cells of the table?
+Well, those are factors. We can compute the values of the sequence
+by formulas derived from this table:
+
+\begin{equation}
+\begin{array}{rcrcrcrcrcrcrcrcrcrcr}
+  1 & \times & 14 &   &   &        &    &   &   &        &     &   &   &        &     &   &   &        &     & = & 14\\
+  1 & \times & 14 & + & 1 & \times & 48 &   &   &        &     &   &   &        &     &   &   &        &     & = & 62\\
+  1 & \times & 14 & + & 2 & \times & 48 & + & 1 & \times & 286 &   &   &        &     &   &   &        &     & = & 396\\
+  1 & \times & 14 & + & 3 & \times & 48 & + & 3 & \times & 286 & + & 1 & \times & 528 &   &   &        &     & = & 1544\\
+  1 & \times & 14 & + & 4 & \times & 48 & + & 6 & \times & 286 & + & 4 & \times & 528 & + & 1 & \times & 288 & = & 4322
+\end{array}
+\end{equation}
+
+The next question would then be: what are those numbers?
+But, here, I have to ask you to look a bit more closely at the table.
+What we see is left-to-right:
+
+\begin{center}
+\begin{tabular}{cccccccccc}
+  &   &     &    &     & 1 &      &   &   &   \\
+  &   &     &    &  1  &   &  1   &   &   &   \\
+  &   &     &  1 &     & 2 &      & 1 &   &   \\
+  &   &  1  &    &  3  &   &  3   &   & 1 &    \\
+  & 1 &     & 4  &     & 6 &      & 4 &   & 1 
+\end{tabular}
+\end{center}
+
+Those are binomial coefficients!
+We could rewrite the table as
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{||c||c|c|c|c|c||}
+\hline
+     &  0 &  1  &  2  &  3   &  4   \\\hline
+     & 14         & 62         & 396        & 1544       & 4322       \\\hline\hline
+  14 &$\binom{0}{0}$&$\binom{1}{0}$&$\binom{2}{0}$&$\binom{3}{0}$&$\binom{4}{0}$\\\hline
+  48 &$\binom{0}{1}$&$\binom{1}{1}$&$\binom{2}{1}$&$\binom{3}{1}$&$\binom{4}{1}$\\\hline
+ 286 &$\binom{0}{2}$&$\binom{1}{2}$&$\binom{2}{2}$&$\binom{3}{2}$&$\binom{4}{2}$\\\hline
+ 528 &$\binom{0}{3}$&$\binom{1}{3}$&$\binom{2}{3}$&$\binom{3}{3}$&$\binom{4}{3}$\\\hline
+ 288 &$\binom{0}{3}$&$\binom{1}{4}$&$\binom{2}{4}$&$\binom{3}{4}$&$\binom{4}{4}$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+If this were universally true, we could devise a 
+much better prediction function. The one we wrote
+in the previous section has the disadvantage
+that we can only predict the next number in the sequence.
+To predict a value way ahead we need to generate
+number by number before we are there.
+With Newton's trick, we could compute any number
+in the sequence in one step.
+
+All we have to do is to get the \ensuremath{\Varid{head}}s of the sequences
+and to calculate the formula:
+
+\[
+\sum_{k=0}^{d}{h_k\binom{n}{k}} 
+\]
+
+where $d$ is the degree of the polynomial, $n$
+the position in the sequence, \ie\ the number
+to which we apply the polynomial, and $h_k$
+the head of the sequence starting to count
+with the original sequence as $k=0$,
+the first difference list as $k=1$ and so on.
+The sixth value ($n=5$) of the sequence would then be
+
+\[
+  14 \times \binom{5}{0} + 
+  48 \times \binom{5}{1} + 
+ 286 \times \binom{5}{2} + 
+ 528 \times \binom{5}{3} + 
+ 288 \times \binom{5}{4}, 
+\]
+
+which is
+
+\[
+  14           + 
+  48 \times  5 + 
+ 286 \times 10 + 
+ 528 \times 10 + 
+ 288 \times  5, 
+\]
+
+which, in its turn, is
+
+\[
+14 + 240 + 2860 + 5280 + 1440 = 9834,
+\]
+
+which is indeed the next value in the sequence.
+
+Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{newton}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{Zahl}{}\<[E]%
+\\
+\>[3]{}\Varid{newton}\;\Varid{n}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Varid{sum}\;\Varid{ts}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{hs}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{getHeads}\;\Varid{seq}\;\Varid{ds}{}\<[E]%
+\\
+\>[12]{}\Varid{ts}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}[\mskip1.5mu \Varid{h}\mathbin{*}(\Varid{choose}\;\Varid{n}\;\Varid{k})\mid (\Varid{h},\Varid{k})\leftarrow \Varid{zip}\;\Varid{hs}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{getHeads}\mathbin{::}[\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{getHeads}\;\Varid{seq}\;\Varid{ds}\mathrel{=}\Varid{map}\;\Varid{head}\;(\Varid{seq}\mathbin{:}\Varid{ds}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+To perform some experiments, here, as a reminder,
+are the first 14 numbers of the sequence generated
+by our polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{14},\mathrm{9},\mathrm{11},\mathrm{16},\mathrm{12}\mskip1.5mu]}:
+
+14,62,396,1544,4322,9834,19472,34916,58134,91382,137204,198432,278186,379874
+
+We set \ensuremath{\Varid{s}\mathrel{=}\Varid{mapply}\;\Conid{P}\;[\mskip1.5mu \mathrm{14},\mathrm{9},\mathrm{11},\mathrm{16},\mathrm{12}\mskip1.5mu]\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and \ensuremath{\Varid{d}\mathrel{=}\Varid{dengine}\;\Varid{s}}.
+Now we perform some tests:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{newton}\;\mathrm{0}\;\Varid{d}\;\Varid{s}} gives      14.\\
+\ensuremath{\Varid{newton}\;\mathrm{1}\;\Varid{d}\;\Varid{s}} gives      62.\\
+\ensuremath{\Varid{newton}\;\mathrm{5}\;\Varid{d}\;\Varid{s}} gives    9834.\\
+\ensuremath{\Varid{newton}\;\mathrm{11}\;\Varid{d}\;\Varid{s}} gives  198432.\\
+\ensuremath{\Varid{newton}\;\mathrm{13}\;\Varid{d}\;\Varid{s}} gives  379874.
+\end{minipage}
+
+The approach, hence, seems to work.
+But there is more.
+The function \ensuremath{\Varid{newton}} gives us a closed form 
+to compute any number in the sequence,
+given that we have the beginning of that sequence
+and its difference lists.
+A closed form, however, is a generating formula --
+it is the polynomial that generates the entire sequence.
+We just need a way to make the formula implicit in
+\ensuremath{\Varid{newton}} explicit.
+
+We can do that using our polynomial data type.
+When we can express the binomial coefficients
+in terms of polynomials and apply them
+to the formula used above, we will get the polynomial out
+that generates this sequence.
+Here is a function that does it:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{18E}{@{}l@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bin2poly}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Poly}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[3]{}\Varid{bin2poly}\;\Varid{f}\;\mathrm{0}{}\<[18]%
+\>[18]{}\mathrel{=}{}\<[18E]%
+\>[21]{}\Conid{P}\;[\mskip1.5mu \Varid{f}\mathbin{\%}\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{bin2poly}\;\Varid{f}\;\mathrm{1}{}\<[18]%
+\>[18]{}\mathrel{=}{}\<[18E]%
+\>[21]{}\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{f}\mathbin{\%}\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{bin2poly}\;\Varid{f}\;\Varid{k}{}\<[18]%
+\>[18]{}\mathrel{=}{}\<[18E]%
+\>[21]{}\Conid{P}\;[\mskip1.5mu \Varid{f}\mathbin{\%}(\Varid{\Conid{B}.fac}\;\Varid{k})\mskip1.5mu]\mathbin{`\Varid{mul}`}\Varid{go}\;(\Varid{k}\mathbin{\%}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{1}{}\<[18]%
+\>[18]{}\mathrel{=}{}\<[18E]%
+\>[21]{}\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}{}\<[18]%
+\>[18]{}\mathrel{=}{}\<[18E]%
+\>[21]{}\Conid{P}\;[\mskip1.5mu \mathbin{-}(\Varid{i}\mathbin{-}\mathrm{1}),\mathrm{1}\mskip1.5mu]\mathbin{`\Varid{mul}`}(\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives two integers:
+the first one is a factor (the head) 
+by which we multiply the resulting binomial polynomial
+and the second one is $k$ in $\binom{n}{k}$.
+Note that we do not need $n$, since $n$ is the unknown,
+the $x$, the base of our polynomial.
+
+If $k=0$, the binomial is 1, since for all binomials:
+$\binom{n}{0} = 1$. We, hence, return a constant polynomial
+consisting of the factor. This corresponds to 
+$h_0 \times \binom{n}{0}$. The result is just $h$.
+Note that we convert the coefficients to rational numbers,
+since that is the type the function is supposed to yield.
+
+If $k=1$, the binomial is $n$, since for all binomials:
+$\binom{n}{1} = n$. Since, $n$ is the base of the polynomial,
+it is expressed by the polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}. 
+This is just $n$ (or, if you are more used to it: $x$).
+Since we multiply with $f$, the result in this case is
+$f \times n = fn$, or, in the language of our Haskell
+polynomials \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{f}\mskip1.5mu]}.
+
+Otherwise, we go into the recursive \ensuremath{\Varid{go}} function.
+The function receives one rational number, namely $k$
+(which, de facto, is an integer)
+The base case is $k=1$. In that case we yield \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]},
+hence, $n$.
+Otherwise, we create the polynomial
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathbin{-}(\Varid{i}\mathbin{-}\mathrm{1}),\mathrm{1}\mskip1.5mu]}, that is $n-(k-1)$ and multiply
+with the result of \ensuremath{\Varid{go}} applied to $i-1$.
+This function, hence, creates the numerator
+of the fraction formula of the binomial coefficient:
+
+\[
+n(n-1)(n-2)\dots (n-k+1).
+\]
+
+The result of the function is then multiplied by
+$f$ divided by $k!$. The former, still, is some head
+from the difference sequences and
+the latter is the denominator
+of the fraction formula. We, thus, compute:
+
+\[
+\frac{fn(n-1)(n-2)\dots (n-k+1)}{k!}.
+\]
+
+Now, we can use this formula represented by a 
+polynomial to compute the generating polynomial.
+The function that does so has exactly the same
+structure as the \ensuremath{\Varid{newton}} function. The difference
+is just that it expresses binomial coefficients
+as polynomials and that it does not receive 
+a concrete number $n$ for which we want to compute
+the corresponding value (because we want to compute
+the formula generating all the values):
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{newtonGen}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{Poly}\;[\mskip1.5mu \Conid{Quoz}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{newtonGen}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Varid{sump}\;\Varid{ts}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{hs}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{getHeads}\;\Varid{seq}\;\Varid{ds}{}\<[E]%
+\\
+\>[12]{}\Varid{ts}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}[\mskip1.5mu \Varid{bin2poly}\;\Varid{h}\;\Varid{k}\mid (\Varid{h},\Varid{k})\leftarrow \Varid{zip}\;\Varid{hs}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{n}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{fromIntegral}\;(\Varid{length}\mathbin{\$}\Varid{ds}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+When we call \ensuremath{\Varid{newtonGen}\;\Varid{ds}\;\Varid{s}}, $ds$ 
+still being the difference lists and
+$s$ the sequence in question, we see:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{14}\mathbin{\%}\mathrm{1},\mathrm{9}\mathbin{\%}\mathrm{1},\mathrm{11}\mathbin{\%}\mathrm{1},\mathrm{16}\mathbin{\%}\mathrm{1},\mathrm{12}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
+which we immediately recognise as our polynomial
+$12x^4 + 16x^3 + 11x^2 + 9x + 14$.
+
+For another test, we apply the monomial $x^5$ as
+
+\ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{newtonGen}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}
+
+and see
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
+which is indeed the polynomial $x^5$.
+
+But now comes the really hard question:
+why does that work at all???
+
+
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}

@@ -47,6 +47,9 @@ subtraction. Here is a valid implementation:
   sub :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   sub = strich (-)
 
+  sump :: (Num a, Eq a) => [Poly a] -> Poly a
+  sump = foldl' add (P [0])
+
   strich :: (Num a, Eq a) => (a -> a -> a) -> Poly a -> Poly a -> Poly a
   strich o (P x) (P y)  = P (strichlist o x y)
 
@@ -58,6 +61,7 @@ subtraction. Here is a valid implementation:
 \end{code}
 \end{minipage}
 
+Note that |sump| function, which implements |sum| for polynomials.
 Here is one more function that might be useful 
 later on; it folds |strichlist| on a list of lists of coefficients:
 

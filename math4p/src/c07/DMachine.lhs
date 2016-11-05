@@ -590,8 +590,8 @@ is a polynomial $\Pi'$ of degree $n-1$ that measures
 the \term{rate of change} or \term{slope} of $\Pi$.
 The derivative expresses the rate of change precisely
 for any point in $\Pi$. We will look at this with
-much more attention in the next section; 
-the next chapter will then be dedicated to derivatives and
+much more attention in the next chapter; 
+the third part will then be dedicated to derivatives and
 related concepts.
 
 The difference sequences and the polynomials that generate them
@@ -649,8 +649,8 @@ Here is a function to compute the derivative:
 \begin{code}
   derivative :: (Eq a, Num a, Enum a) => Poly a -> Poly a
   derivative (P as) = P (cleanz (go $ zip [1..] (drop 1 as)))
-    where go []         = []
-          go ((x,c):cs) = (x * c) : go cs
+    where  go []          =  []
+           go ((x,c):cs)  =  (x * c) : go cs
 \end{code}
 \end{minipage}
 \ignore{$}
