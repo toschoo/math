@@ -5,6 +5,7 @@ module Poly
 where
 
   import           Data.List (nub,foldl')
+  import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Debug.Trace (trace)
   import           System.Random (randomRIO)
@@ -83,6 +84,12 @@ where
   -------------------------------------------------------------------------
   sub :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   sub = strich (-)
+
+  -------------------------------------------------------------------------
+  -- Sum
+  -------------------------------------------------------------------------
+  sump :: (Num a, Eq a) => [Poly a] -> Poly a
+  sump = foldl' add (P [0])
 
   -------------------------------------------------------------------------
   -- Generic Strichrechnung
@@ -534,16 +541,35 @@ where
   -------------------------------------------------------------------------
   -- Newton
   -------------------------------------------------------------------------
-  newton :: Integer -> [[Integer]] -> [Integer] -> Integer
-  newton n ds seq = sum ts
+  newton :: Integer -> Integer -> [[Integer]] -> [Integer] -> Integer
+  newton s n ds seq = sum ts
     where hs = getHeads seq ds
-          ts = [h * (B.choose n k) | (h,k) <- zip hs [0..n]]
+          ts = [h * (B.choose (n-s) k) | (h,k) <- zip hs [0..n]]
 
   -------------------------------------------------------------------------
   -- Get Heads
   -------------------------------------------------------------------------
   getHeads :: [Integer] -> [[Integer]] -> [Integer]
   getHeads seq ds = map head (seq:ds)
+
+  -------------------------------------------------------------------------
+  -- Newton Polynomial
+  -------------------------------------------------------------------------
+  newtonp :: [[Integer]] -> [Integer] -> Poly Rational
+  newtonp ds seq = sump ts
+    where hs = getHeads seq ds
+          n  = fromIntegral $ dpredict ds
+          ts = [bin2poly h k | (h,k) <- zip hs [0..n]]
+
+  -------------------------------------------------------------------------
+  -- Express binomials as polynomials formulas
+  -------------------------------------------------------------------------
+  bin2poly :: Integer -> Integer -> Poly Rational
+  bin2poly f 0 = P [f%1]
+  bin2poly f 1 = P [0,f%1]
+  bin2poly f k = P [f%(B.fac k)] `mul` go (k%1)
+    where go 1 = P [0,1]
+          go i = P [-(i-1),1] `mul` (go (i-1))
 
   -------------------------------------------------------------------------
   -- Find generating polynomial

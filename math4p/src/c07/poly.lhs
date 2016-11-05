@@ -4,7 +4,8 @@
 %include PolyArith.lhs
 \section{The Difference Engine}
 %include DMachine.lhs
-\section{Polynomials and Binomial Coefficients}
+\section{Differences and Binomial Coefficients}
+%include DiffBinom.lhs
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
