@@ -286,7 +286,127 @@ and see
 
 which is indeed the polynomial $x^5$.
 
-But now comes the really hard question:
+But now comes the hard question:
 why does that work at all???
+
+To answer this question, we should make sure to understand
+how Newton's formula basically works. The point is that
+we restrict ourselves to the heads of the sequences as
+building blocks. When we compute some value $x_n$ in the sequence,
+we need to compute $x_{n-1}$ and the difference between
+$x_{n-1}$ and $x_{n}$ and add those together.
+Let us build a model that simulates this approach,
+so we can reason about it more easily.
+
+We use as a model a polynomial of degree 3;
+that model is sufficiently complex to simulate the problem
+completely and is, on the other hand, a bit simpler
+than a model based on a polynomial of degree 4,
+like the one we have studied above.
+
+The model consists of a data type:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  data Newton = H | X | Y | Z
+    deriving (Show,Eq)
+\end{code}
+\end{minipage}
+
+The |Newton| type has four constructors:
+|H| represents the head of the original sequence;
+|X| is the head of the first difference list;
+|Y| is the head of the second difference list and
+|Z| is the constant element repeated in the last difference list.
+(Remember that a polynomial of degree 3 
+generates 3 difference lists.)
+
+The model also contains a function
+to compute positions in the sequence.
+This function, called |cn| (for ``computeNewton''),
+takes two arguments: a |Newton| constructor and an integer.
+The integer tells us the position we want to compute
+starting with the head $= 0$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  cn :: Newton -> Natural -> [Newton]
+  cn H 0 = [H]
+  cn H n = cn H (n-1) ++ cn X (n-1)
+\end{code}
+\end{minipage}
+
+When we want to compute the first element in the sequence,
+|cn H 0|, we just return |[H]|. When we want to compute
+any other numbers, we recursively call |cn H (n-1)|,
+which computes the previous data point and add |cn X (n-1)|,
+which computes the difference between the previous data point
+the one we want to compute.
+Here is how we compute the difference:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  cn X 0 = [X]
+  cn X n = cn X (n-1) ++ cn Y (n-1)
+\end{code}
+\end{minipage}
+
+If we need the first difference, |cn X 0|, we just return
+|[X]|. Otherwise, we call |cn X (n-1)|, this computes
+the previous difference, and compute |cn Y (n-1)|,
+the difference between the previous and the current difference.
+Here is how we compute the difference of the difference:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  cn Y 0 = [Y]
+  cn Y n = Z : cn Y (n-1)
+\end{code}
+\end{minipage}
+
+If we need the first difference, |cn Y 0|, we just return
+|[Y]|. Otherwise, we compute the previous difference |cn Y (n-1)|
+adding |Z|, the constant difference, to the result.
+
+The output looks somewhat weird. When we call, for instance,
+|cn H 5|, we see
+
+|[H,X,X,Y,X,Y,Z,Y,X,Y,Z,Y,Z,Z,Y,X,Y,Z,Y,Z,Z,Y,Z,Z,Z,Y]|,
+
+which is somewhat confusing.
+We, therefore implement one more function: |ccn|, for
+``count cn'':
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  ccn :: [Newton] -> (Int,Int,Int,Int)
+  ccn ls = (  length (filter (== H) ls),
+              length (filter (== X) ls),
+              length (filter (== Y) ls),
+              length (filter (== Z) ls))
+\end{code}
+\end{minipage}
+
+When we apply this function, \eg\ |ccn (cn H 5)|,
+we see:
+
+|(1,5,10,10)|
+
+The binomial coefficients $\binom{5}{k}$, 
+for $k \in \lbrace 0\dots 3\rbrace$.
+To see some more examples we call
+|map (\n -> ccn (cn H n)) [0..10]| and get
+
+|[(1,0,0,0),|\\
+|(1,1,0,0),|\\
+|(1,2,1,0),|\\
+|(1,3,3,1),|\\
+|(1,4,6,4),|\\
+|(1,5,10,10),|\\
+|(1,6,15,20),|\\
+|(1,7,21,35),|\\
+|(1,8,28,56),|\\
+|(1,9,36,84),|\\
+|(1,10,45,120)]|
 
 

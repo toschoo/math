@@ -596,6 +596,26 @@ where
           sq = map (apply p) [0..15]
 
   -------------------------------------------------------------------------
+  -- Newton Demonstrator
+  -------------------------------------------------------------------------
+  data Newton = H | X | Y | Z
+    deriving (Show,Eq)
+
+  cn :: Newton -> Integer -> [Newton]
+  cn H 0 = [H]
+  cn H n = cn H (n-1) ++ cn X (n-1)
+  cn X 0 = [X]
+  cn X n = cn X (n-1) ++ cn Y (n-1)
+  cn Y 0 = [Y]
+  cn Y n = Z : cn Y (n-1)
+
+  ccn :: [Newton] -> (Int,Int,Int,Int)
+  ccn ls = (length $ filter (== H) ls,
+            length $ filter (== X) ls,
+            length $ filter (== Y) ls,
+            length $ filter (== Z) ls)
+
+  -------------------------------------------------------------------------
   -- Solving equations
   -------------------------------------------------------------------------
   solve :: Poly Double -> [Double]
