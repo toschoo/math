@@ -290,13 +290,14 @@ But now comes the hard question:
 why does that work at all???
 
 To answer this question, we should make sure to understand
-how Newton's formula basically works. The point is that
-we restrict ourselves to the heads of the sequences as
+how Newton's formula works. The point is that
+we restrict ourselves to the heads of the sequences as basic
 building blocks. When we compute some value $x_n$ in the sequence,
-we need to compute $x_{n-1}$ and the difference between
-$x_{n-1}$ and $x_{n}$ and add those together.
-Let us build a model that simulates this approach,
-so we can reason about it more easily.
+we need to recursively compute $x_{n-1}$ and the difference between
+$x_{n-1}$ and $x_{n}$ and to add them together.
+Let us build a model that simulates this approach
+and that allows us to reason about 
+what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
@@ -326,7 +327,7 @@ to compute positions in the sequence.
 This function, called |cn| (for ``computeNewton''),
 takes two arguments: a |Newton| constructor and an integer.
 The integer tells us the position we want to compute
-starting with the head $= 0$:
+starting with the head $H = 0$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -339,9 +340,8 @@ starting with the head $= 0$:
 When we want to compute the first element in the sequence,
 |cn H 0|, we just return |[H]|. When we want to compute
 any other numbers, we recursively call |cn H (n-1)|,
-which computes the previous data point and add |cn X (n-1)|,
-which computes the difference between the previous data point
-the one we want to compute.
+which computes the previous data point, and add |cn X (n-1)|,
+which computes the difference between $n$ and $n-1$.
 Here is how we compute the difference:
 
 \begin{minipage}{\textwidth}
@@ -368,12 +368,39 @@ If we need the first difference, |cn Y 0|, we just return
 |[Y]|. Otherwise, we compute the previous difference |cn Y (n-1)|
 adding |Z|, the constant difference, to the result.
 
-The output looks somewhat weird. When we call, for instance,
-|cn H 5|, we see
+The simplest case is of course 
+computing the first in the sequence.
+This is just:
+
+|cn H 0|, which yields |[H]|.
+
+Computing the second in the sequence is slightly more work:
+
+|cn H 1| goes to\\
+|cn H 0 ++ cn X 0| which is |[H] ++ [X]|.
+We, hence, get |[H,X]|. That is the head of the sequence
+plus the head of the first difference list.
+
+Computing the third in the sequence
+
+|cn H 2| calls\\
+|cn H 1 ++ cn X 1|, which is\\
+|cn H 0 ++ cn X 0| and |cn X 0 ++ cn Y 0|.
+
+We hence get |[H,X,X,Y]|.
+This is the head of the original sequence
+plus the head of first difference sequence
+(we are now at |H 1|)
+plus this difference plus the first of
+the second difference sequence.
+
+This looks simple, but already after a few steps,
+the result looks weird. For |cn H 5|, for example, we see
 
 |[H,X,X,Y,X,Y,Z,Y,X,Y,Z,Y,Z,Z,Y,X,Y,Z,Y,Z,Z,Y,Z,Z,Z,Y]|,
 
 which is somewhat confusing.
+
 We, therefore implement one more function: |ccn|, for
 ``count cn'':
 
@@ -387,26 +414,213 @@ We, therefore implement one more function: |ccn|, for
 \end{code}
 \end{minipage}
 
-When we apply this function, \eg\ |ccn (cn H 5)|,
+When we apply this function, \eg\ |ccn (cn H 3)|,
 we see:
 
-|(1,5,10,10)|
+|(1,3,3,1)|
 
-The binomial coefficients $\binom{5}{k}$, 
+The binomial coefficients $\binom{3}{k}$, 
 for $k \in \lbrace 0\dots 3\rbrace$.
-To see some more examples we call
-|map (\n -> ccn (cn H n)) [0..10]| and get
 
-|[(1,0,0,0),|\\
-|(1,1,0,0),|\\
-|(1,2,1,0),|\\
-|(1,3,3,1),|\\
-|(1,4,6,4),|\\
+To see some more examples we call
+|map (\n -> ccn (cn H n)) [4..10]| and get
+
+\begin{minipage}{\textwidth}
+|[(1,4,6,4),|\\
 |(1,5,10,10),|\\
 |(1,6,15,20),|\\
 |(1,7,21,35),|\\
 |(1,8,28,56),|\\
 |(1,9,36,84),|\\
 |(1,10,45,120)]|
+\end{minipage}
 
+What we see, in terms of the table we used above, is
 
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{||||c||||c||c||c||c||||}
+\hline
+     &  0    &  1    &  2    &  3   \\\hline
+     & $n_0$ & $n_1$ & $n_2$ & $n_3$ \\\hline\hline
+   H &$\binom{0}{0}$&$\binom{1}{0}$&$\binom{2}{0}$&$\binom{3}{0}$\\\hline
+   X &$\binom{0}{1}$&$\binom{1}{1}$&$\binom{2}{1}$&$\binom{3}{1}$\\\hline
+   Y &$\binom{0}{2}$&$\binom{1}{2}$&$\binom{2}{2}$&$\binom{3}{2}$\\\hline
+   Z &$\binom{0}{3}$&$\binom{1}{3}$&$\binom{2}{3}$&$\binom{3}{3}$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+So, why do we see binomial coefficients and
+can we prove that we will always see binomial coefficients?
+To answer the first question, we will analyse the
+execution tree of |cn|. Here is the tree for |cn H 3|:
+
+\begin{center}
+\begin{tikzpicture}
+% root
+\node (H3) at (6,     5) {|cn H 3|};
+
+\node (H2) at (5 ,  4) {|cn H 2|};
+\node (X2) at (7,   4) {|cn X 2|};
+
+\node (X1) at (7  ,   3) {|cn X 1|};
+\node (Y1) at (10 ,   3) {|cn Y 1|};
+
+\node (X0) at (7  ,   2) {|cn X 0|};
+\node (Y0) at (8.5,   2) {|cn Y 0|};
+
+\node (X) at (7  ,   1) {|[X]|};
+\node (Y) at (8.5,   1) {|[Y]|};
+
+\node (Z)   at (10 ,  2) {|Z:|};
+\node (Y02) at (11.5,   2) {|cn Y 0|};
+\node (Y')  at (11.5,  1) {|[Y]|};
+
+\node (H1) at (4   ,  3) {|cn H 1|};
+\node (X12) at (5.5 ,  3) {|cn X 1|};
+
+\node (H0)  at (3,   2) {|cn H 0|};
+\node (X02) at (4.5 ,2) {|cn X 0|};
+
+\node (H) at  (3 ,    1) {|[H]|};
+
+\connect{H3} {H2};
+\connect{H3} {X2};
+\connect{X2} {X1};
+\connect{X2} {Y1};
+\connect{X1} {X0};
+\connect{X1} {Y0};
+\connect{X0} {X};
+\connect{Y0} {Y};
+\connect{Y1} {Z};
+\connect{Y1} {Y02};
+\connect{Y02} {Y'};
+\connect{H2} {H1};
+\connect{H2} {X12};
+\connect{H1} {H0};
+\connect{H0} {H};
+\connect{H1} {X02};
+\end{tikzpicture}
+\end{center}
+
+On the left-hand side of the tree,
+you see the main execution path 
+calling |cn H (n-1)| and |cn X (n-1)|
+on each level. The sketch expands |cn X|
+only for one case, namely the top-level call
+|cn X 2| on the right-hand side. 
+Otherwise, the tree would be quite confusing.
+
+Anyway, what we can see:
+\begin{itemize}
+\item Any top-level call of type |cn A| 
+      (for $A \in \lbrace H,X,Y\rbrace$)
+      creates only one |A|;
+      we therefore have always exactly one |H|.
+\item Every call to |cn H n|, for $n > 0$,
+      calls one instance of |cn X|.
+      We therefore have exactly $n$ |X|.
+\item Every call to |cn X n|, for $n > 0$,
+      calls one instance of |cn Y|.
+      We therefore have exactly $n$ |Y| per |cn X n|,
+      $n > 0$.
+\item Every call to |cn Y n|, for $n>0$, creates one |Z|.
+\item The call to |cn X 1| would expand to
+      |cn X 0 ++ cn Y 0|; it would, hence,
+      create one more |X| and one more |Y|.
+\item The call to |cn X 0| would create one more |X|.
+\item This execution, thus, creates
+      1 |H|, 3 |X|, 3 |Y| and 1 |Z|.
+\end{itemize}
+
+We now prove by induction that if a call to |cn H n|
+creates 
+$\binom{n}{0}H, \binom{n}{1}X, \binom{n}{2}Y and \binom{n}{3}Z$,
+then |cn H (n+1)| creates
+$\binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y and \binom{n+1}{3}Z$.
+
+Note that the number of |H| does not increase,
+because, as observed, each top-level call to |cn A n|
+creates exactly one |A|.
+If |cn H n| creates one |H|,
+|cn H (n+1)| creates exactly one |H|, too.
+We conclude that we create $\binom{n+1}{0}H$ as requested.
+
+When we call |cn H (n+1)|, we will call |cn H n|.
+We, therefore, create all instances of |X| created by |cn H n|
+plus those created in the first level of |cn H (n+1)|.
+This new level calls |cn X n| exaclty once,
+which creates one |X| (because any top-level call to |cn A n|
+creates exactly one |A|).
+We, hence, create one |X| more.
+This, however, is 
+$\binom{n}{0} + \binom{n}{1} = \binom{n+1}{1}$
+according to Pascal's Rule.
+We conclude that we create $\binom{n+1}{1}X$ as requested.
+
+Since we call |cn H n|, when we call |cn H (n+1)|, 
+we also create all instances of |Y| that were created
+by |cn H n|. We additionally create all instances of |Y|
+that are created by the new call to |cn X n|.
+This, in its turn, calls $n$ instances of |cn Y|.
+Since $n = \binom{n}{1}$ and any top-level call to 
+|cn Y n| creates exactly one |Y|, we create
+$\binom{n}{1} + \binom{n}{2} = \binom{n+1}{2}Y$ as requested.
+
+Finally, since we call |cn H n|, when we call |cn H (n+1)|,
+we also create all instances of |Z| that were created before.
+But we call one more instance of |cn X n|, which creates a
+certain amount of new |Z|. How many?
+We create again all |Z| that were created anew by |cn H n|,
+those that did not exist in |cn H (n-1)|.
+Let us call the number of |Z| created by |cn H n| $z_n$
+and the number of |Z| created by |cn H (n-1)| $z_{n-1}$.
+The number of |Z| created anew in |cn H n| is then 
+$z_n - z_{n-1}$.
+
+But since, in |cn H (n+1)|, we call |cn X| one level up,
+more |Z| are created than before.
+All calls to |cn Y 0|, those that did not create a new |Z|
+in |cn H n|,
+are now called as |cn Y 1| and, hence, create a |Z|
+that was not created before. The calls to |cn Y 0| create
+|Y| that were not created by |cn H (n-1)|.
+We, therefore, need to add to the number of |Z| the number
+of |Y| that did not exist in |cn H (n-1)|.
+We use the same convention as for |Z|, \ie\
+the  number of |Y| created anew in |cn H n| is
+$y_n - y_{n-1}$.
+The number of additional |Z| 
+created by the additional call to 
+|cn X n|, hence, is
+
+\[
+y_n - y_{n-1} + z_n - z_{n-1}
+\]
+
+But we are dealing with binomial coefficients.
+We, therefore, have $z_n = y_{n-1} + z_{n-1}$
+by Pascals' Rule applied backwards.
+When we substitute this back, we get
+
+\[
+y_n - y_{n-1} + y_{n-1} + z_{n-1} - z_{n-1},
+\]
+
+which simplifies to $y_n$, \ie\ the number of 
+instances of |Y| created by |cn H n|.
+In other words: the number of |Z| we 
+additionally create in |cn H (n+1)| is the number
+of |Y| in |cn H n|.
+So, the complete number of |Z| we have 
+in |cn H (n+1)| is
+the number of |Y| in |cn H n| 
+plus the number |Z| in |cn H n|.
+Since the number of |Y| is $\binom{n}{2}$
+and the number of |Z| is  $\binom{n}{3}$,
+we now have 
+$\binom{n}{2} + \binom{n}{3} = \binom{n+1}{3}$ 
+according to Pascal's Rule as requested
+and this completes the proof\qed.

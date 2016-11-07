@@ -3125,13 +3125,14 @@ But now comes the hard question:
 why does that work at all???
 
 To answer this question, we should make sure to understand
-how Newton's formula basically works. The point is that
-we restrict ourselves to the heads of the sequences as
+how Newton's formula works. The point is that
+we restrict ourselves to the heads of the sequences as basic
 building blocks. When we compute some value $x_n$ in the sequence,
-we need to compute $x_{n-1}$ and the difference between
-$x_{n-1}$ and $x_{n}$ and add those together.
-Let us build a model that simulates this approach,
-so we can reason about it more easily.
+we need to recursively compute $x_{n-1}$ and the difference between
+$x_{n-1}$ and $x_{n}$ and to add them together.
+Let us build a model that simulates this approach
+and that allows us to reason about 
+what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
@@ -3170,7 +3171,7 @@ to compute positions in the sequence.
 This function, called \ensuremath{\Varid{cn}} (for ``computeNewton''),
 takes two arguments: a \ensuremath{\Conid{Newton}} constructor and an integer.
 The integer tells us the position we want to compute
-starting with the head $= 0$:
+starting with the head $H = 0$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -3191,9 +3192,8 @@ starting with the head $= 0$:
 When we want to compute the first element in the sequence,
 \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{0}}, we just return \ensuremath{[\mskip1.5mu \Conid{H}\mskip1.5mu]}. When we want to compute
 any other numbers, we recursively call \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})},
-which computes the previous data point and add \ensuremath{\Varid{cn}\;\Conid{X}\;(\Varid{n}\mathbin{-}\mathrm{1})},
-which computes the difference between the previous data point
-the one we want to compute.
+which computes the previous data point, and add \ensuremath{\Varid{cn}\;\Conid{X}\;(\Varid{n}\mathbin{-}\mathrm{1})},
+which computes the difference between $n$ and $n-1$.
 Here is how we compute the difference:
 
 \begin{minipage}{\textwidth}
@@ -3234,12 +3234,39 @@ If we need the first difference, \ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{0}},
 \ensuremath{[\mskip1.5mu \Conid{Y}\mskip1.5mu]}. Otherwise, we compute the previous difference \ensuremath{\Varid{cn}\;\Conid{Y}\;(\Varid{n}\mathbin{-}\mathrm{1})}
 adding \ensuremath{\Conid{Z}}, the constant difference, to the result.
 
-The output looks somewhat weird. When we call, for instance,
-\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{5}}, we see
+The simplest case is of course 
+computing the first in the sequence.
+This is just:
+
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{0}}, which yields \ensuremath{[\mskip1.5mu \Conid{H}\mskip1.5mu]}.
+
+Computing the second in the sequence is slightly more work:
+
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{1}} goes to\\
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{0}\plus \Varid{cn}\;\Conid{X}\;\mathrm{0}} which is \ensuremath{[\mskip1.5mu \Conid{H}\mskip1.5mu]\plus [\mskip1.5mu \Conid{X}\mskip1.5mu]}.
+We, hence, get \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X}\mskip1.5mu]}. That is the head of the sequence
+plus the head of the first difference list.
+
+Computing the third in the sequence
+
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{2}} calls\\
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{1}\plus \Varid{cn}\;\Conid{X}\;\mathrm{1}}, which is\\
+\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{0}\plus \Varid{cn}\;\Conid{X}\;\mathrm{0}} and \ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{0}\plus \Varid{cn}\;\Conid{Y}\;\mathrm{0}}.
+
+We hence get \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y}\mskip1.5mu]}.
+This is the head of the original sequence
+plus the head of first difference sequence
+(we are now at \ensuremath{\Conid{H}\;\mathrm{1}})
+plus this difference plus the first of
+the second difference sequence.
+
+This looks simple, but already after a few steps,
+the result looks weird. For \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{5}}, for example, we see
 
 \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Z},\Conid{Y}\mskip1.5mu]},
 
 which is somewhat confusing.
+
 We, therefore implement one more function: \ensuremath{\Varid{ccn}}, for
 ``count cn'':
 
@@ -3265,29 +3292,216 @@ We, therefore implement one more function: \ensuremath{\Varid{ccn}}, for
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-When we apply this function, \eg\ \ensuremath{\Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\mathrm{5})},
+When we apply this function, \eg\ \ensuremath{\Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\mathrm{3})},
 we see:
 
-\ensuremath{(\mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10})}
+\ensuremath{(\mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1})}
 
-The binomial coefficients $\binom{5}{k}$, 
+The binomial coefficients $\binom{3}{k}$, 
 for $k \in \lbrace 0\dots 3\rbrace$.
-To see some more examples we call
-\ensuremath{\Varid{map}\;(\lambda \Varid{n}\to \Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\Varid{n}))\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
 
-\ensuremath{[\mskip1.5mu (\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{0}),}\\
-\ensuremath{(\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0}),}\\
-\ensuremath{(\mathrm{1},\mathrm{2},\mathrm{1},\mathrm{0}),}\\
-\ensuremath{(\mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}),}\\
-\ensuremath{(\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4}),}\\
+To see some more examples we call
+\ensuremath{\Varid{map}\;(\lambda \Varid{n}\to \Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\Varid{n}))\;[\mskip1.5mu \mathrm{4}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
+
+\begin{minipage}{\textwidth}
+\ensuremath{[\mskip1.5mu (\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4}),}\\
 \ensuremath{(\mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10}),}\\
 \ensuremath{(\mathrm{1},\mathrm{6},\mathrm{15},\mathrm{20}),}\\
 \ensuremath{(\mathrm{1},\mathrm{7},\mathrm{21},\mathrm{35}),}\\
 \ensuremath{(\mathrm{1},\mathrm{8},\mathrm{28},\mathrm{56}),}\\
 \ensuremath{(\mathrm{1},\mathrm{9},\mathrm{36},\mathrm{84}),}\\
 \ensuremath{(\mathrm{1},\mathrm{10},\mathrm{45},\mathrm{120})\mskip1.5mu]}
+\end{minipage}
 
+What we see, in terms of the table we used above, is
 
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{||c||c|c|c|c||}
+\hline
+     &  0    &  1    &  2    &  3   \\\hline
+     & $n_0$ & $n_1$ & $n_2$ & $n_3$ \\\hline\hline
+   H &$\binom{0}{0}$&$\binom{1}{0}$&$\binom{2}{0}$&$\binom{3}{0}$\\\hline
+   X &$\binom{0}{1}$&$\binom{1}{1}$&$\binom{2}{1}$&$\binom{3}{1}$\\\hline
+   Y &$\binom{0}{2}$&$\binom{1}{2}$&$\binom{2}{2}$&$\binom{3}{2}$\\\hline
+   Z &$\binom{0}{3}$&$\binom{1}{3}$&$\binom{2}{3}$&$\binom{3}{3}$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+So, why do we see binomial coefficients and
+can we prove that we will always see binomial coefficients?
+To answer the first question, we will analyse the
+execution tree of \ensuremath{\Varid{cn}}. Here is the tree for \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{3}}:
+
+\begin{center}
+\begin{tikzpicture}
+% root
+\node (H3) at (6,     5) {\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{3}}};
+
+\node (H2) at (5 ,  4) {\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{2}}};
+\node (X2) at (7,   4) {\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{2}}};
+
+\node (X1) at (7  ,   3) {\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{1}}};
+\node (Y1) at (10 ,   3) {\ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{1}}};
+
+\node (X0) at (7  ,   2) {\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{0}}};
+\node (Y0) at (8.5,   2) {\ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{0}}};
+
+\node (X) at (7  ,   1) {\ensuremath{[\mskip1.5mu \Conid{X}\mskip1.5mu]}};
+\node (Y) at (8.5,   1) {\ensuremath{[\mskip1.5mu \Conid{Y}\mskip1.5mu]}};
+
+\node (Z)   at (10 ,  2) {\ensuremath{\Conid{Z}\mathbin{:}}};
+\node (Y02) at (11.5,   2) {\ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{0}}};
+\node (Y')  at (11.5,  1) {\ensuremath{[\mskip1.5mu \Conid{Y}\mskip1.5mu]}};
+
+\node (H1) at (4   ,  3) {\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{1}}};
+\node (X12) at (5.5 ,  3) {\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{1}}};
+
+\node (H0)  at (3,   2) {\ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{0}}};
+\node (X02) at (4.5 ,2) {\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{0}}};
+
+\node (H) at  (3 ,    1) {\ensuremath{[\mskip1.5mu \Conid{H}\mskip1.5mu]}};
+
+\connect{H3} {H2};
+\connect{H3} {X2};
+\connect{X2} {X1};
+\connect{X2} {Y1};
+\connect{X1} {X0};
+\connect{X1} {Y0};
+\connect{X0} {X};
+\connect{Y0} {Y};
+\connect{Y1} {Z};
+\connect{Y1} {Y02};
+\connect{Y02} {Y'};
+\connect{H2} {H1};
+\connect{H2} {X12};
+\connect{H1} {H0};
+\connect{H0} {H};
+\connect{H1} {X02};
+\end{tikzpicture}
+\end{center}
+
+On the left-hand side of the tree,
+you see the main execution path 
+calling \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})} and \ensuremath{\Varid{cn}\;\Conid{X}\;(\Varid{n}\mathbin{-}\mathrm{1})}
+on each level. The sketch expands \ensuremath{\Varid{cn}\;\Conid{X}}
+only for one case, namely the top-level call
+\ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{2}} on the right-hand side. 
+Otherwise, the tree would be quite confusing.
+
+Anyway, what we can see:
+\begin{itemize}
+\item Any top-level call of type \ensuremath{\Varid{cn}\;\Conid{A}} 
+      (for $A \in \lbrace H,X,Y\rbrace$)
+      creates only one \ensuremath{\Conid{A}};
+      we therefore have always exactly one \ensuremath{\Conid{H}}.
+\item Every call to \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}, for $n > 0$,
+      calls one instance of \ensuremath{\Varid{cn}\;\Conid{X}}.
+      We therefore have exactly $n$ \ensuremath{\Conid{X}}.
+\item Every call to \ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}}, for $n > 0$,
+      calls one instance of \ensuremath{\Varid{cn}\;\Conid{Y}}.
+      We therefore have exactly $n$ \ensuremath{\Conid{Y}} per \ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}},
+      $n > 0$.
+\item Every call to \ensuremath{\Varid{cn}\;\Conid{Y}\;\Varid{n}}, for $n>0$, creates one \ensuremath{\Conid{Z}}.
+\item The call to \ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{1}} would expand to
+      \ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{0}\plus \Varid{cn}\;\Conid{Y}\;\mathrm{0}}; it would, hence,
+      create one more \ensuremath{\Conid{X}} and one more \ensuremath{\Conid{Y}}.
+\item The call to \ensuremath{\Varid{cn}\;\Conid{X}\;\mathrm{0}} would create one more \ensuremath{\Conid{X}}.
+\item This execution, thus, creates
+      1 \ensuremath{\Conid{H}}, 3 \ensuremath{\Conid{X}}, 3 \ensuremath{\Conid{Y}} and 1 \ensuremath{\Conid{Z}}.
+\end{itemize}
+
+We now prove by induction that if a call to \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}
+creates 
+$\binom{n}{0}H, \binom{n}{1}X, \binom{n}{2}Y and \binom{n}{3}Z$,
+then \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})} creates
+$\binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y and \binom{n+1}{3}Z$.
+
+Note that the number of \ensuremath{\Conid{H}} does not increase,
+because, as observed, each top-level call to \ensuremath{\Varid{cn}\;\Conid{A}\;\Varid{n}}
+creates exactly one \ensuremath{\Conid{A}}.
+If \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}} creates one \ensuremath{\Conid{H}},
+\ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})} creates exactly one \ensuremath{\Conid{H}}, too.
+We conclude that we create $\binom{n+1}{0}H$ as requested.
+
+When we call \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})}, we will call \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}.
+We, therefore, create all instances of \ensuremath{\Conid{X}} created by \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}
+plus those created in the first level of \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})}.
+This new level calls \ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}} exaclty once,
+which creates one \ensuremath{\Conid{X}} (because any top-level call to \ensuremath{\Varid{cn}\;\Conid{A}\;\Varid{n}}
+creates exactly one \ensuremath{\Conid{A}}).
+We, hence, create one \ensuremath{\Conid{X}} more.
+This, however, is 
+$\binom{n}{0} + \binom{n}{1} = \binom{n+1}{1}$
+according to Pascal's Rule.
+We conclude that we create $\binom{n+1}{1}X$ as requested.
+
+Since we call \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}, when we call \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})}, 
+we also create all instances of \ensuremath{\Conid{Y}} that were created
+by \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}. We additionally create all instances of \ensuremath{\Conid{Y}}
+that are created by the new call to \ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}}.
+This, in its turn, calls $n$ instances of \ensuremath{\Varid{cn}\;\Conid{Y}}.
+Since $n = \binom{n}{1}$ and any top-level call to 
+\ensuremath{\Varid{cn}\;\Conid{Y}\;\Varid{n}} creates exactly one \ensuremath{\Conid{Y}}, we create
+$\binom{n}{1} + \binom{n}{2} = \binom{n+1}{2}Y$ as requested.
+
+Finally, since we call \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}, when we call \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})},
+we also create all instances of \ensuremath{\Conid{Z}} that were created before.
+But we call one more instance of \ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}}, which creates a
+certain amount of new \ensuremath{\Conid{Z}}. How many?
+We create again all \ensuremath{\Conid{Z}} that were created anew by \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}},
+those that did not exist in \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})}.
+Let us call the number of \ensuremath{\Conid{Z}} created by \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}} $z_n$
+and the number of \ensuremath{\Conid{Z}} created by \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})} $z_{n-1}$.
+The number of \ensuremath{\Conid{Z}} created anew in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}} is then 
+$z_n - z_{n-1}$.
+
+But since, in \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})}, we call \ensuremath{\Varid{cn}\;\Conid{X}} one level up,
+more \ensuremath{\Conid{Z}} are created than before.
+All calls to \ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{0}}, those that did not create a new \ensuremath{\Conid{Z}}
+in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}},
+are now called as \ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{1}} and, hence, create a \ensuremath{\Conid{Z}}
+that was not created before. The calls to \ensuremath{\Varid{cn}\;\Conid{Y}\;\mathrm{0}} create
+\ensuremath{\Conid{Y}} that were not created by \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})}.
+We, therefore, need to add to the number of \ensuremath{\Conid{Z}} the number
+of \ensuremath{\Conid{Y}} that did not exist in \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{-}\mathrm{1})}.
+We use the same convention as for \ensuremath{\Conid{Z}}, \ie\
+the  number of \ensuremath{\Conid{Y}} created anew in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}} is
+$y_n - y_{n-1}$.
+The number of additional \ensuremath{\Conid{Z}} 
+created by the additional call to 
+\ensuremath{\Varid{cn}\;\Conid{X}\;\Varid{n}}, hence, is
+
+\[
+y_n - y_{n-1} + z_n - z_{n-1}
+\]
+
+But we are dealing with binomial coefficients.
+We, therefore, have $z_n = y_{n-1} + z_{n-1}$
+by Pascals' Rule applied backwards.
+When we substitute this back, we get
+
+\[
+y_n - y_{n-1} + y_{n-1} + z_{n-1} - z_{n-1},
+\]
+
+which simplifies to $y_n$, \ie\ the number of 
+instances of \ensuremath{\Conid{Y}} created by \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}.
+In other words: the number of \ensuremath{\Conid{Z}} we 
+additionally create in \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})} is the number
+of \ensuremath{\Conid{Y}} in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}.
+So, the complete number of \ensuremath{\Conid{Z}} we have 
+in \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})} is
+the number of \ensuremath{\Conid{Y}} in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}} 
+plus the number \ensuremath{\Conid{Z}} in \ensuremath{\Varid{cn}\;\Conid{H}\;\Varid{n}}.
+Since the number of \ensuremath{\Conid{Y}} is $\binom{n}{2}$
+and the number of \ensuremath{\Conid{Z}} is  $\binom{n}{3}$,
+we now have 
+$\binom{n}{2} + \binom{n}{3} = \binom{n+1}{3}$ 
+according to Pascal's Rule as requested
+and this completes the proof\qed.
 \section{Roots}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
