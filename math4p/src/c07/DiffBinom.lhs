@@ -12,15 +12,10 @@ where
 \end{code}
 }
 
-How are the values appearing in the sequence
-and the values appearing in the difference sequences related?
-There must be a relation, since the distance between the values 
-in the sequence is expressed by the values
-appearing in the difference sequences.
-
-The ingenious Isaac Newton has studied this relation
+The ingenious Isaac Newton studied the relation
+between sequences and their differences 
 intensely and came up with a formula. Before we go right
-to the formula, let us observe on our own.
+to it, let us observe on our own.
 The following table shows, in the first line, 
 the value of $n$, \ie\ the value to which the polynomial
 is applied; in the second line, we see the result
@@ -43,9 +38,9 @@ value from the sequence and from the difference lists:
 \endgroup
 \end{center}
 
-What is the meaning then of the numbers in the cells of the table?
-Well, those are factors. We can compute the values of the sequence
-by formulas derived from this table:
+What we see in the cells of the table
+are factors. With their help, we can compute
+the values in the sequence by formulas of the type:
 
 \begin{equation}
 \begin{array}{rcrcrcrcrcrcrcrcrcrcr}
@@ -72,7 +67,7 @@ What we see is left-to-right:
 \end{center}
 
 Those are binomial coefficients!
-We could rewrite the table as
+Indeed. We could rewrite the table as
 
 \begin{center}
 \begingroup
@@ -110,8 +105,7 @@ where $d$ is the degree of the polynomial, $n$
 the position in the sequence, \ie\ the number
 to which we apply the polynomial, and $h_k$
 the head of the sequence starting to count
-with the original sequence as $k=0$,
-the first difference list as $k=1$ and so on.
+with the original sequence as $k=0$.
 The sixth value ($n=5$) of the sequence would then be
 
 \[
@@ -192,9 +186,9 @@ Here is a function that does it:
 \begin{minipage}{\textwidth}
 \begin{code}
   bin2poly :: Zahl -> Zahl -> Poly Quoz
-  bin2poly f 0   =  P [f%1]
-  bin2poly f 1   =  P [0,f%1]
-  bin2poly f k   =  P [f%(B.fac k)] `mul` go (k%1)
+  bin2poly h 0   =  P [h%1]
+  bin2poly h 1   =  P [0,h%1]
+  bin2poly h k   =  P [h%(B.fac k)] `mul` go (k%1)
     where  go 1  =  P [0,1]
            go i  =  P [-(i-1),1] `mul` (go (i-1))
 \end{code}
@@ -205,7 +199,7 @@ the first one is a factor (the head)
 by which we multiply the resulting binomial polynomial
 and the second one is $k$ in $\binom{n}{k}$.
 Note that we do not need $n$, since $n$ is the unknown,
-the $x$, the base of our polynomial.
+the base of our polynomial.
 
 If $k=0$, the binomial is 1, since for all binomials:
 $\binom{n}{0} = 1$. We, hence, return a constant polynomial
@@ -215,22 +209,22 @@ Note that we convert the coefficients to rational numbers,
 since that is the type the function is supposed to yield.
 
 If $k=1$, the binomial is $n$, since for all binomials:
-$\binom{n}{1} = n$. Since, $n$ is the base of the polynomial,
-it is expressed by the polynomial |P [0,1]|. 
-This is just $n$ (or, if you are more used to it: $x$).
-Since we multiply with $f$, the result in this case is
-$f \times n = fn$, or, in the language of our Haskell
-polynomials |P [0,f]|.
+$\binom{n}{1} = n$. Because $n$ is the base of the polynomial,
+$n$ itself is expressed by |P [0,1]|. 
+This is just $n+0$ and, hence, $n$.
+Since we multiply with $h$, the result in this case is
+$h \times n = hn$, or, in the language of our Haskell
+polynomials |P [0,h]|.
 
 Otherwise, we go into the recursive |go| function.
 The function receives one rational number, namely $k$
 (which, de facto, is an integer)
 The base case is $k=1$. In that case we yield |P [0,1]|,
-hence, $n$.
+which is just $n$.
 Otherwise, we create the polynomial
 |P [-(i-1),1]|, that is $n-(k-1)$ and multiply
 with the result of |go| applied to $i-1$.
-This function, hence, creates the numerator
+The function, hence, creates the numerator
 of the fraction formula of the binomial coefficient:
 
 \[
@@ -238,13 +232,13 @@ n(n-1)(n-2)\dots (n-k+1).
 \]
 
 The result of the function is then multiplied by
-$f$ divided by $k!$. The former, still, is some head
+$h$ divided by $k!$. The former, still, is some head
 from the difference sequences and
 the latter is the denominator
 of the fraction formula. We, thus, compute:
 
 \[
-\frac{fn(n-1)(n-2)\dots (n-k+1)}{k!}.
+\frac{hn(n-1)(n-2)\dots (n-k+1)}{k!}.
 \]
 
 Now, we can use this formula represented by a 
@@ -294,14 +288,14 @@ how Newton's formula works. The point is that
 we restrict ourselves to the heads of the sequences as basic
 building blocks. When we compute some value $x_n$ in the sequence,
 we need to recursively compute $x_{n-1}$ and the difference between
-$x_{n-1}$ and $x_{n}$ and to add them together.
+$x_{n-1}$ and $x_{n}$ and add them together.
 Let us build a model that simulates this approach
 and that allows us to reason about 
 what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
-completely and is, on the other hand, a bit simpler
+completely and is, on the other hand, a somewhat simpler
 than a model based on a polynomial of degree 4,
 like the one we have studied above.
 
@@ -339,7 +333,7 @@ starting with the head $H = 0$:
 
 When we want to compute the first element in the sequence,
 |cn H 0|, we just return |[H]|. When we want to compute
-any other numbers, we recursively call |cn H (n-1)|,
+any other number, we recursively call |cn H (n-1)|,
 which computes the previous data point, and add |cn X (n-1)|,
 which computes the difference between $n$ and $n-1$.
 Here is how we compute the difference:
@@ -377,7 +371,9 @@ This is just:
 Computing the second in the sequence is slightly more work:
 
 |cn H 1| goes to\\
-|cn H 0 ++ cn X 0| which is |[H] ++ [X]|.
+|cn H 0 ++ cn X 0| which is\\
+|[H] ++ [X]|.
+
 We, hence, get |[H,X]|. That is the head of the sequence
 plus the head of the first difference list.
 
@@ -537,9 +533,21 @@ Anyway, what we can see:
 
 We now prove by induction that if a call to |cn H n|
 creates 
-$\binom{n}{0}H, \binom{n}{1}X, \binom{n}{2}Y and \binom{n}{3}Z$,
+
+\[
+\binom{n}{0}H, \binom{n}{1}X, \binom{n}{2}Y 
+\text{and} \binom{n}{3}Z
+\]
+
+(and the previous calls to |cn H (n-1)|, |cn H (n-2)|,
+$\dots$, |cn H 0| created similar patterns including
+the binomial coefficients),
 then |cn H (n+1)| creates
-$\binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y and \binom{n+1}{3}Z$.
+
+\[
+\binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y 
+\text{and} \binom{n+1}{3}Z.
+\]
 
 Note that the number of |H| does not increase,
 because, as observed, each top-level call to |cn A n|
@@ -623,4 +631,4 @@ and the number of |Z| is  $\binom{n}{3}$,
 we now have 
 $\binom{n}{2} + \binom{n}{3} = \binom{n+1}{3}$ 
 according to Pascal's Rule as requested
-and this completes the proof\qed.
+and this completes the proof.\qed
