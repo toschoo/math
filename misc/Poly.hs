@@ -306,8 +306,8 @@ where
                    | otherwise = 
     case squarefactor p u of
       Nothing -> do 
-        x <- randomPoly p (d-1)
-        case zassen 0 p x u of
+        x <- randomPoly p (d-1) -- randomPoly receives the number of coeffs
+        case zassen 0 p x u of  -- should it be 'd'?
           [] -> cantorzass (i-1) p u
           gs ->  do g1 <- concat <$> mapM (splitG 10 p) gs
                     let g2 = map fst [divmp p u g | g <- g1]
@@ -352,6 +352,8 @@ where
 
   -------------------------------------------------------------------------
   -- Produce a random polynomial (modulo p)
+  -- note: d indicates the number of coefficients (not the degree!)
+  --       is that correct? check cantor-zassenhaus!
   -------------------------------------------------------------------------
   randomPoly :: Integer -> Int -> IO (Poly Integer)
   randomPoly p d = do
@@ -596,7 +598,7 @@ where
           sq = map (apply p) [0..15]
 
   -------------------------------------------------------------------------
-  -- Newton Demonstrator
+  -- Newton Demonstrator (degree 3 model)
   -------------------------------------------------------------------------
   data Newton = H | X | Y | Z
     deriving (Show,Eq)
@@ -614,6 +616,16 @@ where
             length $ filter (== X) ls,
             length $ filter (== Y) ls,
             length $ filter (== Z) ls)
+
+  new2a :: (a,a,a,a) -> Newton -> a
+  new2a (h,x,y,z) n = case n of 
+                        H -> h
+                        X -> x
+                        Y -> y
+                        Z -> z
+
+  subst :: (a,a,a,a) -> [Newton] -> [a]
+  subst as = map (new2a as)
 
   -------------------------------------------------------------------------
   -- Solving equations

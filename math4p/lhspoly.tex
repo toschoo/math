@@ -3133,7 +3133,7 @@ what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
-completely and is, on the other hand, a somewhat simpler
+completely and is, on the other hand, somewhat simpler
 than a model based on a polynomial of degree 4,
 like the one we have studied above.
 
@@ -3254,7 +3254,7 @@ Computing the third in the sequence
 
 We hence get \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y}\mskip1.5mu]}.
 This is the head of the original sequence
-plus the head of first difference sequence
+plus the head of the first difference sequence
 (we are now at \ensuremath{\Conid{H}\;\mathrm{1}})
 plus this difference plus the first of
 the second difference sequence.
@@ -3264,9 +3264,60 @@ the result looks weird. For \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{5}}, for 
 
 \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Z},\Conid{Y}\mskip1.5mu]},
 
-which is somewhat confusing.
+which is somewhat confusing. The result, however,
+is correct. When we generate a random polynomial of degree 3,
+say, \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{28},\mathrm{15},\mathrm{22}\mskip1.5mu]}, this is the polynomial
+$22x^3 + 15x^2 + 28x + 2$, we get the sequence, $s$,
+2, 67, 294, 815, 1762, 3267, 5462, 8479, 12450, 17507, 23782.
+We now define a function that substitutes the symbols
+of our model by the heads of the sequence and the
+difference lists:
 
-We, therefore implement one more function: \ensuremath{\Varid{ccn}}, for
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{new2a}\mathbin{::}(\Varid{a},\Varid{a},\Varid{a},\Varid{a})\to \Conid{Newton}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{new2a}\;(\Varid{h},\Varid{x},\Varid{y},\Varid{z})\;\Varid{n}\mathrel{=}\mathbf{case}\;\Varid{n}\;\mathbf{of}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{H}\to \Varid{h}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{X}\to \Varid{x}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{Y}\to \Varid{y}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{Z}\to \Varid{z}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{subst}\mathbin{::}(\Varid{a},\Varid{a},\Varid{a},\Varid{a})\to [\mskip1.5mu \Conid{Newton}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{subst}\;\Varid{as}\mathrel{=}\Varid{map}\;(\Varid{new2a}\;\Varid{as}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The head of the sequence is 2; the head of the difference
+sequences are 65, 162 and 132.
+We call the function as \ensuremath{\Varid{subst}\;(\mathrm{2},\mathrm{65},\mathrm{162},\mathrm{132})\;(\Varid{cn}\;\Conid{H}\;\mathrm{5})}
+and see
+
+2,65,65,162,65,162,132,162,65,162,132,162,132,132,162,\\
+  65,162,132,162,132,132,162,132,132,132,162.
+
+When we sum this together,
+\ensuremath{\Varid{sum}\;(\Varid{subst}\;(\mathrm{2},\mathrm{65},\mathrm{162},\mathrm{132})\;(\Varid{cn}\;\Conid{H}\;\mathrm{5}))},
+we get 3267, which is indeed the number appearing at
+position 5 in the sequence (starting to count with 0).
+
+We implement one more function: \ensuremath{\Varid{ccn}}, for
 ``count cn'':
 
 \begin{minipage}{\textwidth}
@@ -3300,7 +3351,7 @@ The binomial coefficients $\binom{3}{k}$,
 for $k \in \lbrace 0\dots 3\rbrace$.
 
 To see some more examples we call
-\ensuremath{\Varid{map}\;(\lambda \Varid{n}\to \Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\Varid{n}))\;[\mskip1.5mu \mathrm{4}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
+\ensuremath{\Varid{map}\;(\Varid{ccn}\mathbin{\circ}\Varid{cn}\;\Conid{H})\;[\mskip1.5mu \mathrm{4}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
 
 \begin{minipage}{\textwidth}
 \ensuremath{[\mskip1.5mu (\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4}),}\\
@@ -3514,6 +3565,29 @@ $\binom{n}{2} + \binom{n}{3} = \binom{n+1}{3}$
 according to Pascal's Rule as requested
 and this completes the proof.\qed
 \section{Roots}
+\ignore{
+module Roots
+where
+
+  import DMachine
+
+}
+
+\ignore{
+ - roots (https://en.wikipedia.org/wiki/Properties_of_polynomial_roots):
+   + where p = 0
+   + continuous function
+   + ps of odd degree may be negative
+     - they must have at least one root
+   + ps of even degree do not necessarily have a root
+ - most root-finding algorithms are analysis not algebra
+   overview (https://en.wikipedia.org/wiki/Root-finding_algorithm):
+   + bracketing
+   + newton and similar
+ - factoring (https://en.wikipedia.org/wiki/Factorization_of_polynomials)
+   + simple methods
+ - quadratic formula
+}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
 \ignore{

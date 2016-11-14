@@ -295,7 +295,7 @@ what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
-completely and is, on the other hand, a somewhat simpler
+completely and is, on the other hand, somewhat simpler
 than a model based on a polynomial of degree 4,
 like the one we have studied above.
 
@@ -385,7 +385,7 @@ Computing the third in the sequence
 
 We hence get |[H,X,X,Y]|.
 This is the head of the original sequence
-plus the head of first difference sequence
+plus the head of the first difference sequence
 (we are now at |H 1|)
 plus this difference plus the first of
 the second difference sequence.
@@ -395,9 +395,43 @@ the result looks weird. For |cn H 5|, for example, we see
 
 |[H,X,X,Y,X,Y,Z,Y,X,Y,Z,Y,Z,Z,Y,X,Y,Z,Y,Z,Z,Y,Z,Z,Z,Y]|,
 
-which is somewhat confusing.
+which is somewhat confusing. The result, however,
+is correct. When we generate a random polynomial of degree 3,
+say, |P [2,28,15,22]|, this is the polynomial
+$22x^3 + 15x^2 + 28x + 2$, we get the sequence
+2, 67, 294, 815, 1762, 3267, 5462, 8479, 12450, 17507, 23782.
+We now define a function that substitutes the symbols
+of our model by the heads of the sequence and the
+difference lists:
 
-We, therefore implement one more function: |ccn|, for
+\begin{minipage}{\textwidth}
+\begin{code}
+  new2a :: (a,a,a,a) -> Newton -> a
+  new2a (h,x,y,z) n = case n of 
+                         H -> h
+                         X -> x
+                         Y -> y
+                         Z -> z
+
+  subst :: (a,a,a,a) -> [Newton] -> [a]
+  subst as = map (new2a as)
+\end{code}
+\end{minipage}
+
+The head of the sequence is 2; the head of the difference
+sequences are 65, 162 and 132.
+We call the function as |subst (2,65,162,132) (cn H 5)|
+and see
+
+2,65,65,162,65,162,132,162,65,162,132,162,132,132,162,\\
+  65,162,132,162,132,132,162,132,132,132,162.
+
+When we sum this together,
+|sum (subst (2,65,162,132) (cn H 5))|,
+we get 3267, which is indeed the number appearing at
+position 5 in the sequence (starting to count with 0).
+
+We implement one more function: |ccn|, for
 ``count cn'':
 
 \begin{minipage}{\textwidth}
@@ -419,7 +453,7 @@ The binomial coefficients $\binom{3}{k}$,
 for $k \in \lbrace 0\dots 3\rbrace$.
 
 To see some more examples we call
-|map (\n -> ccn (cn H n)) [4..10]| and get
+|map (ccn . cn H) [4..10]| and get
 
 \begin{minipage}{\textwidth}
 |[(1,4,6,4),|\\

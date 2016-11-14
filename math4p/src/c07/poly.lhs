@@ -7,6 +7,7 @@
 \section{Differences and Binomial Coefficients}
 %include DiffBinom.lhs
 \section{Roots}
+%include Roots.lhs
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
 %include PartialF.lhs
