@@ -628,6 +628,30 @@ where
   subst as = map (new2a as)
 
   -------------------------------------------------------------------------
+  -- Numerical root finding
+  -------------------------------------------------------------------------
+  -- a and b must be of opposite signedness
+  bisect :: (Num a, Eq a, Ord a, Fractional a, Show a) => 
+            Poly a -> a -> a -> a -> a
+  bisect p t a b | abs fc < abs t          = c
+                 | signum fc == signum fa  = bisect p t c b 
+                 | otherwise               = bisect p t a c 
+    where fa = apply p a
+          fb = apply p b
+          fc = apply p c
+          c  = (a+b)/2
+
+  -- newton's method
+  newguess :: (Num a, Eq a, Ord a, Enum a, Fractional a) =>
+              Poly a -> a -> a -> a -> a
+  newguess p t m a | abs pa < t = a
+                   | m <= 0     = a
+                   | otherwise  = newguess p t (m-1) (a-pa/p'a)
+    where p'  = derivative (*) p
+          pa  = apply p a
+          p'a = apply p' a
+
+  -------------------------------------------------------------------------
   -- Solving equations
   -------------------------------------------------------------------------
   solve :: Poly Double -> [Double]
