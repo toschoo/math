@@ -54,6 +54,13 @@ where
   instance Real RealN where
     toRational (R r e) = r % (10^e)
 
+  instance Enum RealN where
+    succ n = n + (R 1 0)
+    pred n = n - (R 1 0)
+    toEnum i = R (fromIntegral i) 0
+    fromEnum (R a 0) = fromIntegral $ a
+    fromEnum _       = error "exponent must be 0"
+
   borrow :: Integer -> Integer -> (Integer,Integer)
   borrow a b | a > b     = (a,0)
              | otherwise = let (x,e) = borrow (10*a) b

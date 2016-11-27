@@ -14,6 +14,7 @@ where
   import qualified Modular as M
   import qualified Prime   as P
   import qualified Linear  as L
+  import qualified Real    as R
 
   data Poly a = P [a]
     deriving (Eq,Show)
@@ -650,6 +651,12 @@ where
     where p'  = derivative (*) p
           pa  = apply p a
           p'a = apply p' a
+
+  -------------------------------------------------------------------------
+  -- Wilkinson's Polynomial
+  -------------------------------------------------------------------------
+  wilkinson :: (Num a, Enum a, Show a, Eq a) => Poly a
+  wilkinson = prodp mul [P [-i,1] | i <- [1..20]]
 
   -------------------------------------------------------------------------
   -- Solving equations
