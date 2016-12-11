@@ -89,9 +89,9 @@ then the result is in that field, too. Rational polynomials,
 for instance, have rational results. 
 Real polynomials have real results.
 
-Furthermore, the function does not ``jump'', \ie\ the growth
-of the results growth with the input values -- not necessarily
-at the same rate, in fact, for polynomials of degree greater 1,
+Furthermore, the function does not ``jump'', \ie\ the results
+grow with the input values -- not necessarily
+at the same rate, in fact, for polynomials of degree greater than 1,
 the result grows much faster than the input -- but the growth
 is regular.
 
@@ -188,7 +188,7 @@ The results when applying the polynomial, however,
 look quite irregular and, on the first sight,
 completely unrelated to the coefficients.
 When we say that polynomials show a regular behaviour,
-that must be, therefore, taken with a grain of salt.
+that must be taken with a grain of salt.
 Anyway, that they behave like this 
 gives rise to a number of simple
 methods to find roots based on approximation,
@@ -284,7 +284,7 @@ a somewhat surprising result.
 Wilkinson used this polynomial to demonstrate
 the sensivity of coefficients to small differences
 in the input values. Using Haskell real numbers,
-The computation in leads to a loss of precision
+The computation leads to a loss of precision
 in representing the terms. Indeed, considering
 terms raised to the $20^{th}$ power and multiplied
 by large coefficients, the number 1148 appears to
@@ -322,14 +322,14 @@ also called Newton-Raphson method.
 It was first developed by Newton in about 1670
 and, then, by Joseph Raphson in 1690.
 Newton's version was probably not known to Raphson,
-since Newton did not publish the work in which
-he presents the approach. Raphson's version is
-simpler and, therefore, preferred.
+since Newton did not publish his work.
+Raphson's version, on the other hand, is
+simpler and, therefore, usually preferred.
 
 Anyway, the method starts with only one approximation
 and is therefore not a bracketing method.
 The approximation is then applied to the polynomial $\pi$
-and the derivative of the polynomial $\pi'$.
+and the derivative of that polynomial, $\pi'$.
 Then, the quotient of the results, $\frac{\pi(x)}{\pi'(x)}$ 
 is computed and subtracted from the initial guess.
 Here is an implementation:
@@ -350,7 +350,7 @@ Here is an implementation:
 The function receives four parameters.
 The polynomial |p|, the natural number |m|,
 the tolerance |t| and the initial guess |a|.
-The natural number |m| is a limiter.
+The natural number |m| is a delimiter.
 It is not guaranteed that the value increases
 in precision with always more repetitions.
 It may get worse at some point.
@@ -376,13 +376,13 @@ For the other root we call
 and get the equally close result $-2.00069\dots$
 For the Wilkinson polynomial, we call
 
-|newguess wilkinson 20 (0.0001) 10 1.5|
+|newguess wilkinson 10 (0.0001) 1.5|
 
 and get $1.99999\dots$, which is very close
 to the real root 2. We can further improve
 precision by increasing the number of iterations:
 
-|newguess wilkinson 20 (0.0001) 20 1.5|
+|newguess wilkinson 20 (0.0001) 1.5|
 
 The difference is at the $12^{th}$ decimal digit.
 

@@ -214,7 +214,6 @@ where
   reciprocal :: Integer -> Integer -> Bool
   reciprocal p q | even (((p-1) * (q-1)) `div` 4) = hasResidue q p
                  | otherwise                      = not (hasResidue q p)
-
   
   -------------------------------------------------------------------------
   -- Generators

@@ -288,3 +288,23 @@ where
           go (y:ys) rs = go ys (ins y rs)
           ins y [] = []
           ins y (s:ss) = (y:s):s:ins y ss
+
+  -------------------------------------------------------------------------
+  -- all combinations of sets (cartesian product)
+  -------------------------------------------------------------------------
+  listcombine :: [[a]] -> [[a]]
+  listcombine [] = []
+  listcombine ([]:_) = []
+  listcombine (x:xs) = inshead (head x) (listcombine xs) ++ 
+                       listcombine ((tail x):xs)
+
+  inshead :: a -> [[a]] -> [[a]]
+  inshead x [] = [[x]]
+  inshead x zs = map (x:) zs
+
+  listcombine2 :: [a] -> [a] -> [[a]]
+  listcombine2 as bs = concat [listcombine1 a bs | a <- as]
+
+  listcombine1 :: a -> [a] -> [[a]]
+  listcombine1 a bs = [[a,b] | b <- bs] 
+

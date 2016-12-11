@@ -11,6 +11,7 @@ where
   import           System.Random (randomRIO)
 
   import qualified Binom   as B
+  import qualified Perm
   import qualified Modular as M
   import qualified Prime   as P
   import qualified Linear  as L
@@ -292,6 +293,21 @@ where
     where go sq = pow sq : go (pow sq) 
           pow   = mulmp p poly
   
+  -------------------------------------------------------------------------
+  -- Factoring: Kronecker
+  -- receives the polynomial to be factored
+  -- a list of integers which are results of applying the polynomial
+  -- (the length of the list determines the degree of the factor,
+  --  the degree = length - 1)
+  -------------------------------------------------------------------------
+  kronecker :: Poly Rational -> [Integer] -> [Poly Rational]
+  kronecker = undefined
+              -- get all divisors of the integers 
+              --   (using P.divs, adding negatives)
+              -- create all combinations of the divisors (Perm.listcombine)
+              -- convert them to Poly and filter out the ones
+              -- that divide p
+
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
@@ -644,10 +660,10 @@ where
 
   -- newton's method
   newguess :: (Num a, Eq a, Ord a, Enum a, Fractional a) =>
-              Poly a -> a -> a -> a -> a
-  newguess p t m a | abs pa < t = a
+              Poly a -> Int -> a -> a -> a
+  newguess p m t a | abs pa < t = a
                    | m <= 0     = a
-                   | otherwise  = newguess p t (m-1) (a-pa/p'a)
+                   | otherwise  = newguess p (m-1) t (a-pa/p'a)
     where p'  = derivative (*) p
           pa  = apply p a
           p'a = apply p' a
