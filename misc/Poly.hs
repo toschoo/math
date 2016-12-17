@@ -300,14 +300,17 @@ where
   -- (the length of the list determines the degree of the factor,
   --  the degree = length - 1)
   -------------------------------------------------------------------------
-  kronecker :: Poly Rational -> [Integer] -> [Poly Rational]
-  kronecker = undefined
-              -- get all divisors of the integers 
-              --   (using P.divs, adding negatives)
-              -- create all combinations of the divisors (Perm.listcombine)
-              -- convert them to Poly and filter out the ones
-              -- that divide p
-
+  kronecker :: Poly Integer -> [Integer] -> [Poly Rational]
+  kronecker (P cs) is = [a | a <- as, snd (r `divp` a) == P [0]]
+    where ts = map P.divs ns 
+          ds = ts ++ map (map negate) ts
+          xs = Perm.listcombine ds
+          sx = map reverse xs
+          ps = xs ++ sx
+          as = map (P . map fromInteger) ps -- this is too simple
+          ns = map abs is
+          r  = P [c%1 | c <- cs]
+          
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
