@@ -430,147 +430,27 @@ one of the factors of Wilkinson's polynomial zero.
 The integers $[1\dots 20]$ are therefore the roots
 of Wilkinson's polynomial.
 
-Polynomials can be factored in different contexts,
-for instance a field or the integers (which, as
-you may remember, do not form a field, but a ring).
-These contexts can be generalised to what is called
-a \term{unique factorisation domain}.
-A unique factorisation domain is a commutative ring $R$,
-where
+Factoring polynomials, however, is an advanced
+problem in its own right and we will dedicate
+the next section to its study. Anyway, what
+algebraists did for centuries was to find
+formulas that would yield the roots for any kind
+of polynomials. In some cases they succeeded,
+in particular for polynomials of degrees less
+than 5. For higher degrees, there are not such
+formulas. This dicovery is perhaps much more
+important than the single formulas developed
+over the centuries for polynomials of the first
+four degrees. In fact, the concepts that led
+to the discovery are the foundations of modern
+(and postmodern) algebra. 
 
-\begin{itemize}
-\item $uv \neq 0$, whenever $u,v \in R$ and 
-      $u \neq 0$ and $v \neq 0$;
-\item every nonzero element is either a \term{unit}
-      or a \term{prime} or can be uniquely represented 
-      as a product of primes;
-\item every unit $u$ has an inverse $v$, such that
-      $uv = 1$.
-\item a prime $p$ is a nonunit element for which an
-      equation of the form $p = qr$ can be true, only 
-      if either $q$ or $r$ is a unit.
-\end{itemize} 
-
-The integers form a unique factorisation domain,
-with the units 1 and -1 and the primes are
-$\pm 2, \pm 3, \pm 5, \pm 7, \dots$.
-We can easily verify that 1 and -1 obey to
-the definition of unit, 
-when we assume that each one is its own inverse.
-We can also agree that the primes are primes
-in the sense of the above definition: for any prime
-in $p \in \mathbb{Z}$, if $p = qr$, then either 
-$q$ or $r$ must be a unit and the other must equal $p$.
-That is the definition of primes.
-
-A field is trivially a unique factorisation domain
-without primes where all elements are units.
-
-The simplest notion of factoring in such a domain
-is the factoring into \term{primitive part} and
-\term{content}. This, basically, splits a polynomial
-into a number (in the domain we are dealing with) and
-a \term{primitive polynomial}. 
-
-With the integer, the content is the \acronym{gcd} of the
-coefficients. For instance, the \acronym{gcd} 
-of the coefficients of the polynomial 
-$9x^5 + 27x^2 + 81$ is 9. 
-When we divide the polynomial by 9 we get
-$x^5 + 3x^2 + 9$.
-
-For rational numbers, we would choose a fraction
-that turns all coefficients into integers that do
-not share divisors. The polynomial
-
-\[
-\frac{1}{3}x^5 + \frac{7}{2}x^2 + 2x + 1,
-\]
-
-for instance, can be factored dividing 
-all coefficients by $\frac{1}{6}$:
-
-\[
-\begingroup
-\renewcommand{\arraystretch}{1.5}
-\begin{array}{rcrcr}
-\frac{1}{3} & \times & 6 & = & 2\\
-\frac{7}{2} & \times & 6 & = & 21\\
-2 & \times & 6 & = & 12\\
-1 & \times & 6 & = & 6
-\end{array}
-\endgroup
-\]
-
-We, hence, get the product
-$\frac{1}{6}(2x^5 + 21x^2 + 12x + 6)$.
-
-This, however, is not the end of the story.
-Consider the polynomial 
-
-\[
-3x^2 - 27.
-\]
-
-We can factor this one into
-$3(x^2 - 9)$, with the second part being
-primitve: the \acronym{gcd} of its coefficients
-is 1. But we can factor it further.
-Obviously, we have
-
-\begin{equation}
-x^2 - 9 = (x - 3)(x + 3).
-\end{equation}
-
-The complete factorisation of the polynomial
-$3x^2 - 27$, hence, is $3(x-3)(x+3)$.
-
-For factoring primitive polynomials manually, there
-are many different methods (most of which have a
-video on youtube). They share one property:
-they are highly inefficient, when it comes
-to polynomials of larger degrees or with big
-coefficients. They, basically, all use integer
-factorisation of which we know that it is extremely
-expensive in terms of computation complexity.
-Instead of going through all of them, we will here
-present a typical classical method, namely Kronecker's
-method.
-
-Kronecker's method is based on ideas that we already know.
-First it is a distinct-degree approach. That is, it
-searches for the factors of a given degree.
-We start by applying the polynomial to $n$ distinct values,
-for $n$ the degree of the polynomial plus 1.
-That is because, to represent a polynomial of degree $d$,
-we need $d+1$ coefficients, \eg\ |P [0,0,1]| has three
-coefficients and represents the polynomail $x^2$, which is
-of degree two.
-
-For the results, we compute all divisors and combine them
-into $n$-tuples and interpret these tuples as polynomials.
-The polynomials that divide the input without remainder
-are factors of the input. Here is an implementation:
-
-\begin{minipage}{\textwidth}
-\begin{code}
-  kronecker :: Poly Zahl -> [Zahl] -> [Poly Quoz]
-  kronecker (P cs) is = [a | a <- as, snd (r `divp` a) == P [0]]
-    where  ds  =  map P.divs is ++ map P.divs (map negate is)
-           ps  =  Perm.listcombine ds
-           as  =  map (P . map fromInteger) ps
-           r   =  P [c%1 | c <- cs]
-\end{code}
-\end{minipage}
-
-
-
-
-\ignore{
- - factoring (https://en.wikipedia.org/wiki/Factorization_of_polynomials)
-   + review kronecker (for poly P [-9,0,1])
-   + explain the idea (coefficients of the products are combinations of
-                       the coefficients of the factors)
-   + show that it works
- - quadratic formula
-}
+But first things first. To understand why there
+cannot be general formulas for solving polynomials
+higher degrees, we need to understand polynomials
+much better. First, we will look at the formula
+to solve polynomials of the second degree.
+Note that we skip the first degree, since 
+finding the roots of polynomials
+of the first degree is just solving linear
+equations.

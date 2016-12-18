@@ -8,10 +8,11 @@
 %include DiffBinom.lhs
 \section{Roots}
 %include Roots.lhs
+\section{Factoring Polynomials}
+%include PolyFactor.lhs
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
 %include PartialF.lhs
 \section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 %include ClosedFib.lhs
-\section{Factoring Polynomials}

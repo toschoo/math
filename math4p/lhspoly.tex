@@ -4093,6 +4093,47 @@ one of the factors of Wilkinson's polynomial zero.
 The integers $[1\dots 20]$ are therefore the roots
 of Wilkinson's polynomial.
 
+Factoring polynomials, however, is an advanced
+problem in its own right and we will dedicate
+the next section to its study. Anyway, what
+algebraists did for centuries was to find
+formulas that would yield the roots for any kind
+of polynomials. In some cases they succeeded,
+in particular for polynomials of degrees less
+than 5. For higher degrees, there are not such
+formulas. This dicovery is perhaps much more
+important than the single formulas developed
+over the centuries for polynomials of the first
+four degrees. In fact, the concepts that led
+to the discovery are the foundations of modern
+(and postmodern) algebra. 
+
+But first things first. To understand why there
+cannot be general formulas for solving polynomials
+higher degrees, we need to understand polynomials
+much better. First, we will look at the formula
+to solve polynomials of the second degree.
+Note that we skip the first degree, since 
+finding the roots of polynomials
+of the first degree is just solving linear
+equations.
+\section{Factoring Polynomials}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyFactor}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Roots}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
 Polynomials can be factored in different contexts,
 for instance a field or the integers (which, as
 you may remember, do not form a field, but a ring).
@@ -4135,7 +4176,7 @@ is the factoring into \term{primitive part} and
 into a number (in the domain we are dealing with) and
 a \term{primitive polynomial}. 
 
-With the integer, the content is the \acronym{gcd} of the
+With the integers, the content is the \acronym{gcd} of the
 coefficients. For instance, the \acronym{gcd} 
 of the coefficients of the polynomial 
 $9x^5 + 27x^2 + 81$ is 9. 
@@ -4200,20 +4241,85 @@ Instead of going through all of them, we will here
 present a typical classical method, namely Kronecker's
 method.
 
-Kronecker's method is based on ideas that we already know.
-First it is a distinct-degree approach. That is, it
-searches for the factors of a given degree.
+Kronecker's method is a distinct-degree approach. 
+That is, it searches for the factors of a given degree.
 We start by applying the polynomial to $n$ distinct values,
 for $n$ the degree of the polynomial plus 1.
 That is because, to represent a polynomial of degree $d$,
 we need $d+1$ coefficients, \eg\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} has three
-coefficients and represents the polynomail $x^2$, which is
+coefficients and represents the polynomial $x^2$, which is
 of degree two.
 
-For the results, we compute all divisors and combine them
-into $n$-tuples and interpret these tuples as polynomials.
-The polynomials that divide the input without remainder
-are factors of the input. Here is an implementation:
+The rationale of applying the polynomial is the following:
+When the polynomial we want to factor generates
+a given set of values, then the product of the factors
+of that polynomial must generate the same values.
+Any factor must, hence, consist of divisors of those values. 
+The number of integer divisors
+of those values, however, is limited.
+We can therefore afford, at least for small polynomials
+with small coefficients, trying all the combinations
+of the divisors.
+
+We have already defined a function
+to find the divisors of a given number,
+when we discussed Euler's totient function.
+However, that function dealt with natural numbers
+only. We now need a variant that is able to
+compute negative divisors.
+It would be also nice if that function
+could give us not only the divisors,
+but additionally the additive inverse,
+\ie\ the negation of the divisors, because,
+in many cases, we need to look at the negative
+alternatives too. Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{11E}{@{}l@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divs}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{divs}\;\Varid{i}{}\<[11]%
+\>[11]{}\mid {}\<[11E]%
+\>[14]{}\Varid{i}\mathbin{<}\mathrm{0}{}\<[25]%
+\>[25]{}\mathrel{=}\Varid{divs}\;(\mathbin{-}\Varid{i}){}\<[E]%
+\\
+\>[11]{}\mid {}\<[11E]%
+\>[14]{}\Varid{otherwise}{}\<[25]%
+\>[25]{}\mathrel{=}\Varid{ds}\plus \Varid{map}\;\Varid{negate}\;\Varid{ds}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{ds}\mathrel{=}[\mskip1.5mu \Varid{d}\mid \Varid{d}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{i}\mskip1.5mu],\Varid{rem}\;\Varid{i}\;\Varid{d}\equiv \mathrm{0}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The divisors are now combined to yield
+$n$-tuples, $n$, still the degree of the factor
+plus one, where each divisor represents
+one coefficient of the resulting polynomial.
+But before we can convert the $n$-tuples
+into polynomials, we need to create all
+possible permutations, since the polynomial
+\ensuremath{\Conid{P}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]} is not the same as \ensuremath{\Conid{P}\;[\mskip1.5mu \Varid{b},\Varid{a}\mskip1.5mu]} if
+$a \neq b$.
+From this we obtain a (potentially very large)
+list of $n$-tuples that we then convert
+into polynomials. From that list,
+we finally filter those polynomials
+for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv \mathrm{0}}, where $p$ is the
+input polynomial and $k$ the candidate in 
+the list of polynomials. Here is an implementation
+(using lists instead of $n$-tuples):
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -4226,19 +4332,19 @@ are factors of the input. Here is an implementation:
 \column{16E}{@{}l@{}}%
 \column{19}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{kronecker}\mathbin{::}\Conid{Poly}\;\Conid{Natural}\to [\mskip1.5mu \Conid{Natural}\mskip1.5mu]\to [\mskip1.5mu \Conid{Poly}\;\Conid{Quoz}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{kronecker}\mathbin{::}\Conid{Poly}\;\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Poly}\;\Conid{Quoz}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{kronecker}\;(\Conid{P}\;\Varid{cs})\;\Varid{is}\mathrel{=}[\mskip1.5mu \Varid{a}\mid \Varid{a}\leftarrow \Varid{as},\Varid{snd}\;(\Varid{r}\mathbin{`\Varid{divp}`}\Varid{a})\equiv \Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{kronecker}\;(\Conid{P}\;\Varid{cs})\;\Varid{is}\mathrel{=}\Varid{nub}\;[\mskip1.5mu \Varid{a}\mid \Varid{a}\leftarrow \Varid{as},\Varid{snd}\;(\Varid{r}\mathbin{`\Varid{divp}`}\Varid{a})\equiv \Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{ds}{}\<[16]%
 \>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}\Varid{map}\;\Varid{\Conid{P}.divs}\;\Varid{is}\plus \Varid{map}\;\Varid{\Conid{P}.divs}\;(\Varid{map}\;\Varid{negate}\;\Varid{is}){}\<[E]%
+\>[19]{}\Varid{map}\;\Varid{divs}\;\Varid{is}{}\<[E]%
 \\
 \>[12]{}\Varid{ps}{}\<[16]%
 \>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}\Varid{\Conid{Perm}.listcombine}\;\Varid{ds}{}\<[E]%
+\>[19]{}\Varid{concatMap}\;\Varid{perms}\;(\Varid{listcombine}\;\Varid{ds}){}\<[E]%
 \\
 \>[12]{}\Varid{as}{}\<[16]%
 \>[16]{}\mathrel{=}{}\<[16E]%
@@ -4252,15 +4358,138 @@ are factors of the input. Here is an implementation:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+Note that, since we use \ensuremath{\Varid{divp}}, we need to convert
+the integer polynomial to a rational polynomial.
+
+There are two combinatorial functions, \ensuremath{\Varid{perms}} and \ensuremath{\Varid{listcombine}}.
+We have already defined \ensuremath{\Varid{perms}}, when discussing
+permutations. The function generates all permutations
+of a given list. The other function, \ensuremath{\Varid{listcombine}},
+however, is new. It creates all possible combinations
+of a list of lists. Here is a possible implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{listcombine}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}[\mskip1.5mu \mskip1.5mu]{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}([\mskip1.5mu \mskip1.5mu]\mathbin{:\char95 }){}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}(\Varid{x}\mathbin{:}\Varid{xs}){}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\Varid{inshead}\;(\Varid{head}\;\Varid{x})\;(\Varid{listcombine}\;\Varid{xs})\plus {}\<[E]%
+\\
+\>[27]{}\Varid{listcombine}\;((\Varid{tail}\;\Varid{x})\mathbin{:}\Varid{xs}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{inshead}\mathbin{::}\Varid{a}\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{inshead}\;\Varid{x}\;[\mskip1.5mu \mskip1.5mu]{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}[\mskip1.5mu [\mskip1.5mu \Varid{x}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{inshead}\;\Varid{x}\;\Varid{zs}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{map}\;(\Varid{x}\mathbin{:})\;\Varid{zs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Let us try \ensuremath{\Varid{kronecker}} on some polynomials.
+First, we need to apply the input polynomial
+to get $n$ results. For instance, we know
+that the polynomial $x^2 - 9$ has factors
+of first degree. We, therefore, apply it on
+two values: \ensuremath{\mathbf{let}\;\Varid{vs}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}
+and get for \ensuremath{\Varid{vs}}: \ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{9},\mathbin{-}\mathrm{8}\mskip1.5mu]}.
+Now we call \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathbin{-}\mathrm{8}\mskip1.5mu]}
+and get:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3}\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{3})\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{3})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}
+
+Those are the polynomials $x+3$, $-x+3$, $x-3$ and $-x-3$.
+By convention, we exclude the polynomials starting with
+a negative coefficients by factoring out -1 first.
+However, we can easily see that all of them are actually
+factors of $x^2 - 9$, since
+
+\begin{equation}
+(x+3)(x-3) = (x^2-9)
+\end{equation}
+
+and
+
+\begin{equation}
+(-x+3)(-x-3) = (x^2-9).
+\end{equation}
+
+Here is another example: $x^5 + x^4 + x^2 + x + 2$.
+We want to find a factor of degree 2,
+so we apply the polynomial to three values, say,
+\ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}. The result is \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]}.
+We run \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]} 
+and, after a short while, we get:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
+which corresponds to the polynomials
+$x^2+x+1$, $2x^2+2x+2$,
+$-x^2-x -1$ and $-x^2-2x-2$.
+Ony the first one is a primitive polynomial.
+We can factor out 2 from the second one,
+leaving just the first one;
+Polynomials three and four are just
+the negative counterparts of one and two,
+so we can factor out -1 and -2, respectively,
+to obtain again the first one.
+
+To check if the first one is really a factor
+of the input polynomial we divide:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]\mathbin{`\Varid{divp}`}\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+
+ and get
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}, which corresponds to 
+$x^3 - x + 2$. Indeed:
+
+\begin{equation}
+(x^2 + x + 1)(x^3 - x + 2) = x^5 + x^4 + x^2 + x + 2.
+\end{equation}
+
+Kronecker's method is just a brute force search.
+It is obvious that it is not efficient and it fails
+with growing degrees and coefficients.
+Modern methods to factor polynomials use
+much more sophisticated techniques.
 
 
 
-\ignore{
 
- - factoring (https://en.wikipedia.org/wiki/Factorization_of_polynomials)
-   + simple methods
- - quadratic formula
-}
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
 \ignore{
@@ -4331,7 +4560,6 @@ G(x) = \frac{x}{1-x-x^2}.
 
 
 
-\section{Factoring Polynomials}
 
 
 \end{document}

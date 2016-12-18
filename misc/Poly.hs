@@ -298,18 +298,19 @@ where
   -- receives the polynomial to be factored
   -- a list of integers which are results of applying the polynomial
   -- (the length of the list determines the degree of the factor,
-  --  the degree = length - 1)
+  --  where degree = length - 1)
   -------------------------------------------------------------------------
   kronecker :: Poly Integer -> [Integer] -> [Poly Rational]
-  kronecker (P cs) is = [a | a <- as, snd (r `divp` a) == P [0]]
-    where ts = map P.divs ns 
-          ds = ts ++ map (map negate) ts
-          xs = Perm.listcombine ds
-          sx = map reverse xs
-          ps = xs ++ sx
-          as = map (P . map fromInteger) ps -- this is too simple
-          ns = map abs is
+  kronecker (P cs) is = nub [a | a <- as, snd (r `divp` a) == P [0]]
+    where ds = map divs is
+          ps = concatMap Perm.perms (Perm.listcombine ds)
+          as = map (P . map fromInteger) ps
           r  = P [c%1 | c <- cs]
+
+  divs :: Integer -> [Integer]
+  divs i | i < 0     = divs (-i) 
+         | otherwise = ds ++ map negate ds
+    where ds = [d | d <- [1..i], rem i d == 0] 
           
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
