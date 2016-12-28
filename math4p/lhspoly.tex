@@ -4117,6 +4117,7 @@ Note that we skip the first degree, since
 finding the roots of polynomials
 of the first degree is just solving linear
 equations.
+\section{Vieta's Formula}
 \section{Factoring Polynomials}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -4459,11 +4460,11 @@ and, after a short while, we get:
 
 which corresponds to the polynomials
 $x^2+x+1$, $2x^2+2x+2$,
-$-x^2-x -1$ and $-x^2-2x-2$.
+$-x^2-x -1$ and $-2x^2-2x-2$.
 Ony the first one is a primitive polynomial.
 We can factor out 2 from the second one,
 leaving just the first one;
-Polynomials three and four are just
+polynomials three and four, simply, are 
 the negative counterparts of one and two,
 so we can factor out -1 and -2, respectively,
 to obtain again the first one.
@@ -4472,7 +4473,6 @@ To check if the first one is really a factor
 of the input polynomial we divide:
 
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]\mathbin{`\Varid{divp}`}\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
-
  and get
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}, which corresponds to 
 $x^3 - x + 2$. Indeed:
@@ -4487,10 +4487,12 @@ with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
+\ignore{
+$q(x) divides  x^p^d - x$ mod p
+Cantor+Zassenhaus factoring the product of factors
+}
 
 
-
-\section{Vieta's Formula}
 \section{The Method of partial Fractions}
 \ignore{
 http://www.purplemath.com/modules/partfrac.htm

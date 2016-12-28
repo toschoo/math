@@ -1,3 +1,4 @@
+{-# Language BangPatterns #-}
 ---------------------------------------------------------------------------
 -- Polynomials
 ---------------------------------------------------------------------------
@@ -264,7 +265,6 @@ where
   -------------------------------------------------------------------------
   -- Squarefree
   -- ----------
-  -- is this test correct?
   -- usually the test is gcd poly (derivative poly) == 1
   -- however, in computing the gcd, one would usually factor
   --          the remainder, for instance:
@@ -273,6 +273,9 @@ where
   -- rem (x^2-5x-6) (x+1) = 0 (since (x+1)(x-6) = (x^2-5x-6))
   --     resulting in the gcd x+1, otherwise,
   --     the gcd would have been 12x+12
+  --     This is called content-and-primitive-part factorisation
+  --     and should always be applied 
+  --     before searching for non-trivialfactors.
   -------------------------------------------------------------------------
   squarefree :: Integer -> Poly Integer -> Bool
   squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
@@ -311,6 +314,21 @@ where
   divs i | i < 0     = divs (-i) 
          | otherwise = ds ++ map negate ds
     where ds = [d | d <- [1..i], rem i d == 0] 
+
+  -------------------------------------------------------------------------
+  -- Irreducible mod p?
+  -------------------------------------------------------------------------
+  irreducible :: Integer -> Poly Integer -> Bool
+  irreducible p poly | d < 2     = True
+                     | otherwise =
+                       let x  = P [0,1]
+                           !t1 = powmp p (p^d)     x
+                           !t2 = powmp p (p^(d-1)) x
+                           !s1 = modp p (sub t1 x)
+                           !s2 = modp p (sub t2 x)
+                        in (divides (divmp p) poly s1 && not (
+                            divides (divmp p) poly s2))
+    where d = degree poly
           
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
@@ -327,10 +345,12 @@ where
                    | otherwise = 
     case squarefactor p u of
       Nothing -> do 
-        x <- randomPoly p (d-1) -- randomPoly receives the number of coeffs
-        case zassen 0 p x u of  -- should it be 'd'?
+        x <- randomPoly p (d-1)
+        -- putStr ("x: " ++ show x ++ ", ")
+        case zassen 0 p x u of 
           [] -> cantorzass (i-1) p u
           gs ->  do g1 <- concat <$> mapM (splitG 10 p) gs
+                    -- putStrLn ("gs: " ++ show gs ++ ", g1: " ++ show g1)
                     let g2 = map fst [divmp p u g | g <- g1]
                     g3 <- concat <$> mapM (cantorzassenhaus p) g2
                     return $ nub (g1++g3)
@@ -413,9 +433,8 @@ where
                                            else return False
     where showp p | a < 0     = show p
                   | otherwise = show p ++ sp
-            where d  = degree p 
-                  l  = 2*d + 1
-                  a  = 13 - l
+            where l  = length(show p)
+                  a  = 20 - l
                   sp = take a (repeat ' ')
 
   -------------------------------------------------------------------------

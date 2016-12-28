@@ -8,9 +8,9 @@
 %include DiffBinom.lhs
 \section{Roots}
 %include Roots.lhs
+\section{Vieta's Formula}
 \section{Factoring Polynomials}
 %include PolyFactor.lhs
-\section{Vieta's Formula}
 \section{The Method of partial Fractions}
 %include PartialF.lhs
 \section{Generationfunctionology 1}

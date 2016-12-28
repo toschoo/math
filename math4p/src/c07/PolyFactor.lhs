@@ -279,6 +279,10 @@ with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
-
+\ignore{
+$q(x) divides  x^p^d - x$ mod p
+Cantor+Zassenhaus factoring the product of factors
+application to integers: hensel's lemma
+}
 
 

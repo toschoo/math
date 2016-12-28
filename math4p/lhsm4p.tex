@@ -36687,7 +36687,7 @@ what is going on more easily.
 
 We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
-completely and is, on the other hand, a somewhat simpler
+completely and is, on the other hand, somewhat simpler
 than a model based on a polynomial of degree 4,
 like the one we have studied above.
 
@@ -36808,7 +36808,7 @@ Computing the third in the sequence
 
 We hence get \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y}\mskip1.5mu]}.
 This is the head of the original sequence
-plus the head of first difference sequence
+plus the head of the first difference sequence
 (we are now at \ensuremath{\Conid{H}\;\mathrm{1}})
 plus this difference plus the first of
 the second difference sequence.
@@ -36818,9 +36818,60 @@ the result looks weird. For \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{5}}, for 
 
 \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Z},\Conid{Y}\mskip1.5mu]},
 
-which is somewhat confusing.
+which is somewhat confusing. The result, however,
+is correct. When we generate a random polynomial of degree 3,
+say, \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{28},\mathrm{15},\mathrm{22}\mskip1.5mu]}, this is the polynomial
+$22x^3 + 15x^2 + 28x + 2$, we get the sequence
+2, 67, 294, 815, 1762, 3267, 5462, 8479, 12450, 17507, 23782.
+We now define a function that substitutes the symbols
+of our model by the heads of the sequence and the
+difference lists:
 
-We, therefore implement one more function: \ensuremath{\Varid{ccn}}, for
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{new2a}\mathbin{::}(\Varid{a},\Varid{a},\Varid{a},\Varid{a})\to \Conid{Newton}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{new2a}\;(\Varid{h},\Varid{x},\Varid{y},\Varid{z})\;\Varid{n}\mathrel{=}\mathbf{case}\;\Varid{n}\;\mathbf{of}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{H}\to \Varid{h}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{X}\to \Varid{x}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{Y}\to \Varid{y}{}\<[E]%
+\\
+\>[3]{}\hsindent{23}{}\<[26]%
+\>[26]{}\Conid{Z}\to \Varid{z}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{subst}\mathbin{::}(\Varid{a},\Varid{a},\Varid{a},\Varid{a})\to [\mskip1.5mu \Conid{Newton}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{subst}\;\Varid{as}\mathrel{=}\Varid{map}\;(\Varid{new2a}\;\Varid{as}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The head of the sequence is 2; the head of the difference
+sequences are 65, 162 and 132.
+We call the function as \ensuremath{\Varid{subst}\;(\mathrm{2},\mathrm{65},\mathrm{162},\mathrm{132})\;(\Varid{cn}\;\Conid{H}\;\mathrm{5})}
+and see
+
+2,65,65,162,65,162,132,162,65,162,132,162,132,132,162,\\
+  65,162,132,162,132,132,162,132,132,132,162.
+
+When we sum this together,
+\ensuremath{\Varid{sum}\;(\Varid{subst}\;(\mathrm{2},\mathrm{65},\mathrm{162},\mathrm{132})\;(\Varid{cn}\;\Conid{H}\;\mathrm{5}))},
+we get 3267, which is indeed the number appearing at
+position 5 in the sequence (starting to count with 0).
+
+We implement one more function: \ensuremath{\Varid{ccn}}, for
 ``count cn'':
 
 \begin{minipage}{\textwidth}
@@ -36854,7 +36905,7 @@ The binomial coefficients $\binom{3}{k}$,
 for $k \in \lbrace 0\dots 3\rbrace$.
 
 To see some more examples we call
-\ensuremath{\Varid{map}\;(\lambda \Varid{n}\to \Varid{ccn}\;(\Varid{cn}\;\Conid{H}\;\Varid{n}))\;[\mskip1.5mu \mathrm{4}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
+\ensuremath{\Varid{map}\;(\Varid{ccn}\mathbin{\circ}\Varid{cn}\;\Conid{H})\;[\mskip1.5mu \mathrm{4}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} and get
 
 \begin{minipage}{\textwidth}
 \ensuremath{[\mskip1.5mu (\mathrm{1},\mathrm{4},\mathrm{6},\mathrm{4}),}\\
@@ -37068,6 +37119,930 @@ $\binom{n}{2} + \binom{n}{3} = \binom{n+1}{3}$
 according to Pascal's Rule as requested
 and this completes the proof.\qed
 \section{Roots}
+\ignore{
+module Roots
+where
+  import DMachine
+}
+
+In the previous sections, we looked at the results,
+when applying polynomials to given values.
+That is, we applied a polynomial $\pi(x)$ to
+a given value (or sequence of values) for $x$ 
+and studied the result $y = \pi(x)$.
+Now we are turning this around. We will look at
+a given $y$ and ask which value $x$ would
+create that $y$. In other words, 
+we look at polynomials as equations of the form:
+
+\begin{equation}
+a_nx^n + a_{n-1}x^{n-1} + \dots + a_0 = a
+\end{equation}
+
+and search for ways to solve such equations.
+In the focus of this investigation is usually
+the special case $a=0$, \ie\:
+
+\begin{equation}
+a_nx^n + a_{n-1}x^{n-1} + \dots + a_0 = 0.
+\end{equation}
+
+The values for $x$ fulfilling this equation
+are called the \term{root}s of the polynomial.
+A trivial example is $x^2$, whose root is 0.
+A slightly less trivial example is $x^2 - 4$,
+whose roots are $x_1 = -2$ and $x_2 = 2$, since
+
+\[
+(-2)^2 - 4 = 4 - 4 = 0
+\]
+
+and
+
+\[
+2^2 - 4 = 4 - 4 = 0.
+\]
+
+Note that these examples are polynomials of even degree.
+Polynomials of even degree do not need to have any roots.
+Since even powers are always positive (or zero), negative values
+are turned into positive numbers and, since the term of highest
+degree is even, the whole expression may always be positive.
+This is true for the polynomial $x^2 + 1$. Since all negative values
+are transformed into positive values by $x^2$, the smallest value
+that we can reach is the result for $x=0$, which is $0+1=1$.
+
+On the other hand, even polynomials may have negative values,
+namely when they have terms with negative coefficients that, 
+for smaller numbers,
+result in numbers that are greater than those resulting from
+the term of highest degree. 
+The polynomial $x^2 - 4$, for instance, is negative
+in the interval $]-2\dots 2[$. It, therefore, must have two roots:
+one at -2, where the polynomial results become negative, and the other at 2,
+where the polynomial results become positive again.
+
+Odd polynomials, by contrast, usually have negative values, because
+the term with the highest degree may result in a negative or a
+positive number depending on the signedness of the input value
+and that of the coefficient.
+The trivial polynomial $x^3$, for instance, is negative for
+negative values and positive for positive values. The slightly
+less trivial polynomial $x^3 + 9$ has its root at -3, while
+$x^3 - 9$ has its root at 3.
+
+In summary, we can say that even polynomials do not necessarily
+have negative values and, hence, do not need to have a root.
+Odd polynomials, on the other hand, usually have both, negative
+and positive values, and, hence, must have a root.
+
+Those are strong claims. They are true, because polynomials
+belong to a specific set of \term{functions}, 
+namely \term{continuous} functions.
+That, basically, means that they have no \emph{holes}, \ie\
+for any value $x$ of a certain number type there is a result $y$
+of that number type. For instance, when the coefficients of the
+polynomial are all integers and the $x$-value is an integer,
+then the result is an integer, too. When the polynomial is defined
+over a field (all coefficients are part of that field and
+the values to which we apply the polynomial lie in that field),
+then the result is in that field, too. Rational polynomials,
+for instance, have rational results. 
+Real polynomials have real results.
+
+Furthermore, the function does not ``jump'', \ie\ the results
+grow with the input values -- not necessarily
+at the same rate, in fact, for polynomials of degree greater than 1,
+the result grows much faster than the input -- but the growth
+is regular.
+
+These properties appear to be ``natural'' at the first sight.
+But there are functions that do not fulful these criteria.
+In the next chapter, when we properly define the term \term{function},
+we will actually see functions with holes and jumps.
+
+The reason that polynomials behave regularily is that we only
+use basic arithmetic functions in their definition: we add, multiply
+and raise to powers. 
+Those operations together with the integers form monoids and,
+with rational and real numbers, they form groups.
+Both, monoids and groups, are closed over their base set.
+We can therefore be sure that, for any input value from the base set,
+the result is in the same base set, too.
+
+Furthermore, the form of polynomials guarantees that they develop
+in a certain way. For very large numbers (negative or positive), 
+it is the term with the greatest exponents, \ie\ the degree 
+of the polynomial, that most significantly determines the
+outcome, that is, the result for very large numbers
+approaches the result for the term with the largest exponent. 
+For smaller values, however, the terms of lower degree have
+stronger impact. The terms ``large'' and ``small'', here, 
+must be understood relative to the coefficients. If the coefficients
+are very large, the values to which the polynomial is applied
+must be even larger to approach the result for the first term.
+
+There are also polynomials with a quite confusing behaviour that
+make it hard to guess the roots, for instance, Wilkinson's polynomial
+named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
+and computer scientist. The Wilkinson polynomial is defined as
+
+\begin{equation}
+w(x) = \prod_{i=1}^{20}{(x-i)}.
+\end{equation}
+
+We can generate it in terms of our polynomial type as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{wilkinson}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Enum}\;\Varid{a},\Conid{Show}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{wilkinson}\mathrel{=}\Varid{prodp}\;\Varid{mul}\;[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathbin{-}\Varid{i},\mathrm{1}\mskip1.5mu]\mid \Varid{i}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{20}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+It looks like this:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu }\\
+\ensuremath{\mathrm{2432902008176640000},\mathbin{-}\mathrm{8752948036761600000},\mathrm{13803759753640704000},}\\
+\ensuremath{\mathbin{-}\mathrm{12870931245150988800},\mathrm{8037811822645051776},\mathbin{-}\mathrm{3599979517947607200},}\\
+\ensuremath{\mathrm{1206647803780373360},\mathbin{-}\mathrm{311333643161390640},\mathrm{63030812099294896},}\\
+\ensuremath{\mathbin{-}\mathrm{10142299865511450},\mathrm{1307535010540395},\mathbin{-}\mathrm{135585182899530},\mathrm{11310276995381},}\\
+\ensuremath{\mathbin{-}\mathrm{756111184500},\mathrm{40171771630},\mathbin{-}\mathrm{1672280820},\mathrm{53327946},\mathbin{-}\mathrm{1256850},\mathrm{20615},\mathbin{-}\mathrm{210},\mathrm{1}\mskip1.5mu]}
+
+The first terms are
+
+\[
+x^{20} - 210x^{19} + 20615x^{18} - 1256850x^{17} \dots
+\]
+
+When we apply Wilkinson's polynomial to the integers $1\dots 10$, we see:
+
+\ensuremath{\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{2432902008176640000},}\\
+\ensuremath{\mathrm{51090942171709440000},\mathrm{562000363888803840000},\mathrm{4308669456480829440000},}\\
+\ensuremath{\mathrm{25852016738884976640000}},
+
+which looks very confusing. When we try non-integers, we see
+
+\ensuremath{\Varid{apply}\;\Varid{wilkinson}\;\mathrm{0.9}} is $1.7213\dots$\\
+\ensuremath{\Varid{apply}\;\Varid{wilkinson}\;\mathrm{1.1}} is $-8.4600\dots$\\
+\ensuremath{\Varid{apply}\;\Varid{wilkinson}\;\mathrm{1.9}} is $-8.1111\dots$\\
+\ensuremath{\Varid{apply}\;\Varid{wilkinson}\;\mathrm{2.1}} is $4.9238\dots$\\
+
+As we see, the results switch sign at the integers or,
+more precisely, at the integers in the interval $[1\dots 20]$,
+which are the roots of Wilkinson's polynomial.
+Looking at the factors of the polynomial
+
+\[
+(x-1)(x-2)\dots (x-20),
+\]
+
+this result is much less surprising, since, obviously,
+when any of these factors becomes 0, then the whole
+expression becomes 0. So, for the value $x=3$, we would have
+
+\[
+2 \times 1 \times 0 \times \dots \times -17 = 0.
+\]
+
+The results when applying the polynomial, however,
+look quite irregular and, on the first sight,
+completely unrelated to the coefficients.
+When we say that polynomials show a regular behaviour,
+that must be taken with a grain of salt.
+Anyway, that they behave like this 
+gives rise to a number of simple
+methods to find roots based on approximation,
+at least when we start with a fair guess,
+which requires some knowledge about the rough shape
+of the polynomial in the first place.
+
+These methods can be split into two major groups:
+\term{bracketing} methods and \term{open} methods.
+Bracketing methods start with two distinct values
+somewhere on the ``left'' and the ``right'' of
+the root. Bracketing methods, hence, require a
+pre-knowledge about where, more or less, a root
+is located. We then choose two values that limit
+this interval on the lower and on the upper side.
+
+The simplest variant of bracketing is the \term{bisect}
+algorithm. It is very similar to Heron's method
+to find the square root of a given number.
+We start with two values $a$ and $b$ and, on each step,
+we compute the average $(a+b)/2$ and substitute
+either $a$ or $b$ by this value depending on the side
+the value is located relative to the root.
+Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{47E}{@{}l@{}}%
+\column{50}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bisect}\mathbin{::}{}\<[14]%
+\>[14]{}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Show}\;\Varid{a}){}\<[E]%
+\\
+\>[14]{}\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}\to \Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{bisect}\;\Varid{p}\;\Varid{t}\;\Varid{a}\;\Varid{b}{}\<[19]%
+\>[19]{}\mid {}\<[22]%
+\>[22]{}\Varid{abs}\;\Varid{fc}\mathbin{<}\Varid{abs}\;\Varid{t}{}\<[47]%
+\>[47]{}\mathrel{=}{}\<[47E]%
+\>[50]{}\Varid{c}{}\<[E]%
+\\
+\>[19]{}\mid {}\<[22]%
+\>[22]{}\Varid{signum}\;\Varid{fc}\equiv \Varid{signum}\;\Varid{fa}{}\<[47]%
+\>[47]{}\mathrel{=}{}\<[47E]%
+\>[50]{}\Varid{bisect}\;\Varid{p}\;\Varid{t}\;\Varid{c}\;\Varid{b}{}\<[E]%
+\\
+\>[19]{}\mid {}\<[22]%
+\>[22]{}\Varid{otherwise}{}\<[47]%
+\>[47]{}\mathrel{=}{}\<[47E]%
+\>[50]{}\Varid{bisect}\;\Varid{p}\;\Varid{t}\;\Varid{a}\;\Varid{c}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{fa}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{apply}\;\Varid{p}\;\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{fb}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{apply}\;\Varid{p}\;\Varid{b}{}\<[E]%
+\\
+\>[12]{}\Varid{fc}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{apply}\;\Varid{p}\;\Varid{c}{}\<[E]%
+\\
+\>[12]{}\Varid{c}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}(\Varid{a}\mathbin{+}\Varid{b})\mathbin{/}\mathrm{2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives four arguments.
+The first is the polynomial.
+The second is a tolerance.
+When we reach a result that is smaller
+than the tolerance, we return the result.
+$a$ and $b$ are the starting values.
+
+We distinguish three cases:
+\begin{itemize}
+\item The result for the new value, $c$, 
+      is below the tolerance threshold.
+      In this case, $c$ is sufficiently close
+      to the root and we yield this value.
+\item the sign of the result for the new value
+      equals the sign of $a$. Then we replace
+      $a$ by $c$.
+\item the sign of the result for the new value
+      equals the sign of $b$. In this case,
+      we replace $b$ by $c$.
+\end{itemize}
+
+We try \ensuremath{\Varid{bisect}} on the polynomial $x^2$ with
+the initial guess $a=-1$ and $b=1$ (because we
+assume that the root should be close to 0) and
+a tolerance of 0.1:
+
+\ensuremath{\Varid{bisect}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;\mathrm{0.1}\;(\mathbin{-}\mathrm{1})\;\mathrm{1}}
+
+and see the correct result \ensuremath{\mathrm{0.0}}.
+
+For the polynomial $x^2 - 4$, which has two roots,
+we try 
+
+\ensuremath{\Varid{bisect}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])\;\mathrm{0.1}\;(\mathbin{-}\mathrm{3})\;(\mathbin{-}\mathrm{1})},
+
+which yields \ensuremath{\mathbin{-}\mathrm{2}} and 
+
+\ensuremath{\Varid{bisect}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])\;\mathrm{0.1}\;\mathrm{1}\;\mathrm{3}},
+
+which yields \ensuremath{\mathrm{2}}.
+
+With Wilkinson's polynomial, however,
+we get a surprise:
+
+\ensuremath{\Varid{bisect}\;\Varid{wilkinson}\;\mathrm{0.1}\;\mathrm{0.5}\;\mathrm{1.5}},
+
+for which we expect to find the root 1.
+But the function does not return.
+Indeed, when we try \ensuremath{\Varid{apply}\;\Varid{wilkinson}\;\mathrm{1.0}}, we see
+
+\ensuremath{\mathrm{1148.0}},
+
+a somewhat surprising result.
+Wilkinson used this polynomial to demonstrate
+the sensivity of coefficients to small differences
+in the input values. Using Haskell real numbers,
+The computation leads to a loss of precision
+in representing the terms. Indeed, considering
+terms raised to the $20^{th}$ power and multiplied
+by large coefficients, the number 1148 appears to
+be a tiny inprecision.
+
+We can work around this, using rational numbers:
+
+\ensuremath{\Varid{apply}\;\Varid{wilkinson}\;(\mathrm{1}\mathbin{\%}\mathrm{1})}
+
+gives without any surprise \ensuremath{\mathrm{0}\mathbin{\%}\mathrm{1}}.
+So, we try
+
+\ensuremath{\Varid{bisect}\;\Varid{wilkinson}\;(\mathrm{1}\mathbin{\%}\mathrm{10})\;(\mathrm{1}\mathbin{\%}\mathrm{2})\;(\mathrm{3}\mathbin{\%}\mathrm{2})}
+
+and get the correct result \ensuremath{\mathrm{1}\mathbin{\%}\mathrm{1}}.
+The function with this parameters
+returns almost instantanious. That is
+because the average of 0.5 and 1.5 is already 1.
+The function finds the root in the first step.
+A more serious challenge is
+
+\ensuremath{\Varid{bisect}\;\Varid{wilkinson}\;(\mathrm{1}\mathbin{\%}\mathrm{10})\;(\mathrm{1}\mathbin{\%}\mathrm{3})\;(\mathrm{3}\mathbin{\%}\mathrm{2})},
+
+which needs more than one recursion.
+The function, now, runs for a short while and
+comes up with the result
+
+\ensuremath{\mathrm{1729382256910270463}\mathbin{\%}\mathrm{1729382256910270464}},
+
+which is pretty close to 1 and, hence,
+the correct result.
+
+The most widely known open method is Newton's method,
+also called Newton-Raphson method.
+It was first developed by Newton in about 1670
+and, then, by Joseph Raphson in 1690.
+Newton's version was probably not known to Raphson,
+since Newton did not publish his work.
+Raphson's version, on the other hand, is
+simpler and, therefore, usually preferred.
+
+Anyway, the method starts with only one approximation
+and is therefore not a bracketing method.
+The approximation is then applied to the polynomial $\pi$
+and the derivative of that polynomial, $\pi'$.
+Then, the quotient of the results, $\frac{\pi(x)}{\pi'(x)}$ 
+is computed and subtracted from the initial guess.
+Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{21E}{@{}l@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{36E}{@{}l@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{newguess}\mathbin{::}{}\<[16]%
+\>[16]{}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a},\Conid{Enum}\;\Varid{a},\Conid{Fractional}\;\Varid{a}){}\<[E]%
+\\
+\>[16]{}\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Natural}\to \Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{newguess}\;\Varid{p}\;\Varid{m}\;\Varid{t}\;\Varid{a}{}\<[21]%
+\>[21]{}\mid {}\<[21E]%
+\>[24]{}\Varid{abs}\;\Varid{pa}\mathbin{<}\Varid{t}{}\<[36]%
+\>[36]{}\mathrel{=}{}\<[36E]%
+\>[39]{}\Varid{a}{}\<[E]%
+\\
+\>[21]{}\mid {}\<[21E]%
+\>[24]{}\Varid{m}\leq \mathrm{0}{}\<[36]%
+\>[36]{}\mathrel{=}{}\<[36E]%
+\>[39]{}\Varid{a}{}\<[E]%
+\\
+\>[21]{}\mid {}\<[21E]%
+\>[24]{}\Varid{otherwise}{}\<[36]%
+\>[36]{}\mathrel{=}{}\<[36E]%
+\>[39]{}\Varid{newguess}\;\Varid{p}\;(\Varid{m}\mathbin{-}\mathrm{1})\;\Varid{t}\;(\Varid{a}\mathbin{-}\Varid{pa}\mathbin{/}\Varid{p'a}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{p'}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{derivative}\;(\mathbin{*})\;\Varid{p}{}\<[E]%
+\\
+\>[12]{}\Varid{pa}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{apply}\;\Varid{p}\;\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{p'a}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{apply}\;\Varid{p'}\;\Varid{a}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives four parameters.
+The polynomial \ensuremath{\Varid{p}}, the natural number \ensuremath{\Varid{m}},
+the tolerance \ensuremath{\Varid{t}} and the initial guess \ensuremath{\Varid{a}}.
+The natural number \ensuremath{\Varid{m}} is a delimiter.
+It is not guaranteed that the value increases
+in precision with always more repetitions.
+It may get worse at some point.
+It is therefore useful to restrict the number
+of iterations.
+
+The function terminates when we have 
+reached either the intended precision or 
+the number of repetitions, $m$.
+Otherwise, we repeat with $m-1$ and with
+$a - \frac{\pi(a)}{\pi'(a)}$.
+
+For the polynomial $x^2 - 4$, we call first
+
+\ensuremath{\Varid{newguess}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])\;\mathrm{10}\;\mathrm{0.1}\;\mathrm{1}}
+
+and get $2.00069\dots$, which is very close
+to the known root 2.
+For the other root we call
+
+\ensuremath{\Varid{newguess}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])\;\mathrm{10}\;\mathrm{0.1}\;(\mathbin{-}\mathrm{1})}
+
+and get the equally close result $-2.00069\dots$
+For the Wilkinson polynomial, we call
+
+\ensuremath{\Varid{newguess}\;\Varid{wilkinson}\;\mathrm{10}\;(\mathrm{0.0001})\;\mathrm{1.5}}
+
+and get $1.99999\dots$, which is very close
+to the real root 2. We can further improve
+precision by increasing the number of iterations:
+
+\ensuremath{\Varid{newguess}\;\Varid{wilkinson}\;\mathrm{20}\;(\mathrm{0.0001})\;\mathrm{1.5}}
+
+The difference is at the $12^{th}$ decimal digit.
+
+Note that the Newton-Raphson method
+is not only more precise (that is: converges earlier
+with a good result), but also more robust against
+real representation imprecision.
+
+To understand why this method works at all,
+we need to better understand what the derivative is.
+We will come back to this issue in the next chapter.
+In the strict sense, the derivative does not belong
+here anyway, since the concept of derivative is
+analysis, not algebra. Both kinds of methods,
+the bracketing and the open methods, in fact, come
+from numerical analysis.
+They do not have the ``look and feel'' of algebraic
+methods. So, how would an algebraist tackle the
+problem of finding the roots of a polynomial?
+
+One possibility is factoring.
+Polynomials may be represented as the product
+of their factors (just like integers).
+We have experienced with Wilkinson's polynomial
+that the factor representation may be much more
+convenient that the usual representation with
+coefficients. Wilkinson's polynomial expressed
+as a product was just
+
+\begin{equation}
+w(x) = \prod_{i=1}^{20}{(x-i)},
+\end{equation}
+
+\ie: $(x-1)(x-2)\dots (x-20)$.
+
+As for all products, when one of the factors
+is zero, then the whole product becomes zero.
+For the root problem, this means that, 
+when we have the factors, we can find a value
+for $x$, so that any of the factors becomes zero
+and this value is then a root, because it makes
+the product and, as such, the whole polynomial zero.
+Any integer in the range $[1\dots 20]$ would make
+one of the factors of Wilkinson's polynomial zero.
+The integers $[1\dots 20]$ are therefore the roots
+of Wilkinson's polynomial.
+
+Factoring polynomials, however, is an advanced
+problem in its own right and we will dedicate
+the next section to its study. Anyway, what
+algebraists did for centuries was to find
+formulas that would yield the roots for any kind
+of polynomials. In some cases they succeeded,
+in particular for polynomials of degrees less
+than 5. For higher degrees, there are not such
+formulas. This dicovery is perhaps much more
+important than the single formulas developed
+over the centuries for polynomials of the first
+four degrees. In fact, the concepts that led
+to the discovery are the foundations of modern
+(and postmodern) algebra. 
+
+But first things first. To understand why there
+cannot be general formulas for solving polynomials
+higher degrees, we need to understand polynomials
+much better. First, we will look at the formula
+to solve polynomials of the second degree.
+Note that we skip the first degree, since 
+finding the roots of polynomials
+of the first degree is just solving linear
+equations.
+\section{Factoring Polynomials}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyFactor}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Roots}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+Polynomials can be factored in different contexts,
+for instance a field or the integers (which, as
+you may remember, do not form a field, but a ring).
+These contexts can be generalised to what is called
+a \term{unique factorisation domain}.
+A unique factorisation domain is a commutative ring $R$,
+where
+
+\begin{itemize}
+\item $uv \neq 0$, whenever $u,v \in R$ and 
+      $u \neq 0$ and $v \neq 0$;
+\item every nonzero element is either a \term{unit}
+      or a \term{prime} or can be uniquely represented 
+      as a product of primes;
+\item every unit $u$ has an inverse $v$, such that
+      $uv = 1$.
+\item a prime $p$ is a nonunit element for which an
+      equation of the form $p = qr$ can be true, only 
+      if either $q$ or $r$ is a unit.
+\end{itemize} 
+
+The integers form a unique factorisation domain,
+with the units 1 and -1 and the primes are
+$\pm 2, \pm 3, \pm 5, \pm 7, \dots$.
+We can easily verify that 1 and -1 obey to
+the definition of unit, 
+when we assume that each one is its own inverse.
+We can also agree that the primes are primes
+in the sense of the above definition: for any prime
+in $p \in \mathbb{Z}$, if $p = qr$, then either 
+$q$ or $r$ must be a unit and the other must equal $p$.
+That is the definition of primes.
+
+A field is trivially a unique factorisation domain
+without primes where all elements are units.
+
+The simplest notion of factoring in such a domain
+is the factoring into \term{primitive part} and
+\term{content}. This, basically, splits a polynomial
+into a number (in the domain we are dealing with) and
+a \term{primitive polynomial}. 
+
+With the integers, the content is the \acronym{gcd} of the
+coefficients. For instance, the \acronym{gcd} 
+of the coefficients of the polynomial 
+$9x^5 + 27x^2 + 81$ is 9. 
+When we divide the polynomial by 9 we get
+$x^5 + 3x^2 + 9$.
+
+For rational numbers, we would choose a fraction
+that turns all coefficients into integers that do
+not share divisors. The polynomial
+
+\[
+\frac{1}{3}x^5 + \frac{7}{2}x^2 + 2x + 1,
+\]
+
+for instance, can be factored dividing 
+all coefficients by $\frac{1}{6}$:
+
+\[
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{array}{rcrcr}
+\frac{1}{3} & \times & 6 & = & 2\\
+\frac{7}{2} & \times & 6 & = & 21\\
+2 & \times & 6 & = & 12\\
+1 & \times & 6 & = & 6
+\end{array}
+\endgroup
+\]
+
+We, hence, get the product
+$\frac{1}{6}(2x^5 + 21x^2 + 12x + 6)$.
+
+This, however, is not the end of the story.
+Consider the polynomial 
+
+\[
+3x^2 - 27.
+\]
+
+We can factor this one into
+$3(x^2 - 9)$, with the second part being
+primitve: the \acronym{gcd} of its coefficients
+is 1. But we can factor it further.
+Obviously, we have
+
+\begin{equation}
+x^2 - 9 = (x - 3)(x + 3).
+\end{equation}
+
+The complete factorisation of the polynomial
+$3x^2 - 27$, hence, is $3(x-3)(x+3)$.
+
+For factoring primitive polynomials manually, there
+are many different methods (most of which have a
+video on youtube). They share one property:
+they are highly inefficient, when it comes
+to polynomials of larger degrees or with big
+coefficients. They, basically, all use integer
+factorisation of which we know that it is extremely
+expensive in terms of computation complexity.
+Instead of going through all of them, we will here
+present a typical classical method, namely Kronecker's
+method.
+
+Kronecker's method is a distinct-degree approach. 
+That is, it searches for the factors of a given degree.
+We start by applying the polynomial to $n$ distinct values,
+for $n$ the degree of the polynomial plus 1.
+That is because, to represent a polynomial of degree $d$,
+we need $d+1$ coefficients, \eg\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} has three
+coefficients and represents the polynomial $x^2$, which is
+of degree two.
+
+The rationale of applying the polynomial is the following:
+When the polynomial we want to factor generates
+a given set of values, then the product of the factors
+of that polynomial must generate the same values.
+Any factor must, hence, consist of divisors of those values. 
+The number of integer divisors
+of those values, however, is limited.
+We can therefore afford, at least for small polynomials
+with small coefficients, trying all the combinations
+of the divisors.
+
+We have already defined a function
+to find the divisors of a given number,
+when we discussed Euler's totient function.
+However, that function dealt with natural numbers
+only. We now need a variant that is able to
+compute negative divisors.
+It would be also nice if that function
+could give us not only the divisors,
+but additionally the additive inverse,
+\ie\ the negation of the divisors, because,
+in many cases, we need to look at the negative
+alternatives too. Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{11E}{@{}l@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divs}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{divs}\;\Varid{i}{}\<[11]%
+\>[11]{}\mid {}\<[11E]%
+\>[14]{}\Varid{i}\mathbin{<}\mathrm{0}{}\<[25]%
+\>[25]{}\mathrel{=}\Varid{divs}\;(\mathbin{-}\Varid{i}){}\<[E]%
+\\
+\>[11]{}\mid {}\<[11E]%
+\>[14]{}\Varid{otherwise}{}\<[25]%
+\>[25]{}\mathrel{=}\Varid{ds}\plus \Varid{map}\;\Varid{negate}\;\Varid{ds}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{ds}\mathrel{=}[\mskip1.5mu \Varid{d}\mid \Varid{d}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{i}\mskip1.5mu],\Varid{rem}\;\Varid{i}\;\Varid{d}\equiv \mathrm{0}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The divisors are now combined to yield
+$n$-tuples, $n$, still the degree of the factor
+plus one, where each divisor represents
+one coefficient of the resulting polynomial.
+But before we can convert the $n$-tuples
+into polynomials, we need to create all
+possible permutations, since the polynomial
+\ensuremath{\Conid{P}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]} is not the same as \ensuremath{\Conid{P}\;[\mskip1.5mu \Varid{b},\Varid{a}\mskip1.5mu]} if
+$a \neq b$.
+From this we obtain a (potentially very large)
+list of $n$-tuples that we then convert
+into polynomials. From that list,
+we finally filter those polynomials
+for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv \mathrm{0}}, where $p$ is the
+input polynomial and $k$ the candidate in 
+the list of polynomials. Here is an implementation
+(using lists instead of $n$-tuples):
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{kronecker}\mathbin{::}\Conid{Poly}\;\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Poly}\;\Conid{Quoz}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{kronecker}\;(\Conid{P}\;\Varid{cs})\;\Varid{is}\mathrel{=}\Varid{nub}\;[\mskip1.5mu \Varid{a}\mid \Varid{a}\leftarrow \Varid{as},\Varid{snd}\;(\Varid{r}\mathbin{`\Varid{divp}`}\Varid{a})\equiv \Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ds}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{map}\;\Varid{divs}\;\Varid{is}{}\<[E]%
+\\
+\>[12]{}\Varid{ps}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{concatMap}\;\Varid{perms}\;(\Varid{listcombine}\;\Varid{ds}){}\<[E]%
+\\
+\>[12]{}\Varid{as}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{map}\;(\Conid{P}\mathbin{\circ}\Varid{map}\;\Varid{fromInteger})\;\Varid{ps}{}\<[E]%
+\\
+\>[12]{}\Varid{r}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Conid{P}\;[\mskip1.5mu \Varid{c}\mathbin{\%}\mathrm{1}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note that, since we use \ensuremath{\Varid{divp}}, we need to convert
+the integer polynomial to a rational polynomial.
+
+There are two combinatorial functions, \ensuremath{\Varid{perms}} and \ensuremath{\Varid{listcombine}}.
+We have already defined \ensuremath{\Varid{perms}}, when discussing
+permutations. The function generates all permutations
+of a given list. The other function, \ensuremath{\Varid{listcombine}},
+however, is new. It creates all possible combinations
+of a list of lists. Here is a possible implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{listcombine}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}[\mskip1.5mu \mskip1.5mu]{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}([\mskip1.5mu \mskip1.5mu]\mathbin{:\char95 }){}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{listcombine}\;{}\<[16]%
+\>[16]{}(\Varid{x}\mathbin{:}\Varid{xs}){}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\Varid{inshead}\;(\Varid{head}\;\Varid{x})\;(\Varid{listcombine}\;\Varid{xs})\plus {}\<[E]%
+\\
+\>[27]{}\Varid{listcombine}\;((\Varid{tail}\;\Varid{x})\mathbin{:}\Varid{xs}){}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{inshead}\mathbin{::}\Varid{a}\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{inshead}\;\Varid{x}\;[\mskip1.5mu \mskip1.5mu]{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}[\mskip1.5mu [\mskip1.5mu \Varid{x}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{inshead}\;\Varid{x}\;\Varid{zs}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{map}\;(\Varid{x}\mathbin{:})\;\Varid{zs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Let us try \ensuremath{\Varid{kronecker}} on some polynomials.
+First, we need to apply the input polynomial
+to get $n$ results. For instance, we know
+that the polynomial $x^2 - 9$ has factors
+of first degree. We, therefore, apply it on
+two values: \ensuremath{\mathbf{let}\;\Varid{vs}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}
+and get for \ensuremath{\Varid{vs}}: \ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{9},\mathbin{-}\mathrm{8}\mskip1.5mu]}.
+Now we call \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathbin{-}\mathrm{9},\mathbin{-}\mathrm{8}\mskip1.5mu]}
+and get:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3}\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{3})\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{3})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}
+
+Those are the polynomials $x+3$, $-x+3$, $x-3$ and $-x-3$.
+By convention, we exclude the polynomials starting with
+a negative coefficients by factoring out -1 first.
+However, we can easily see that all of them are actually
+factors of $x^2 - 9$, since
+
+\begin{equation}
+(x+3)(x-3) = (x^2-9)
+\end{equation}
+
+and
+
+\begin{equation}
+(-x+3)(-x-3) = (x^2-9).
+\end{equation}
+
+Here is another example: $x^5 + x^4 + x^2 + x + 2$.
+We want to find a factor of degree 2,
+so we apply the polynomial to three values, say,
+\ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}. The result is \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]}.
+We run \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]} 
+and, after a short while, we get:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
+which corresponds to the polynomials
+$x^2+x+1$, $2x^2+2x+2$,
+$-x^2-x -1$ and $-2x^2-2x-2$.
+Ony the first one is a primitive polynomial.
+We can factor out 2 from the second one,
+leaving just the first one;
+polynomials three and four, simply, are 
+the negative counterparts of one and two,
+so we can factor out -1 and -2, respectively,
+to obtain again the first one.
+
+To check if the first one is really a factor
+of the input polynomial we divide:
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]\mathbin{`\Varid{divp}`}\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+ and get
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}, which corresponds to 
+$x^3 - x + 2$. Indeed:
+
+\begin{equation}
+(x^2 + x + 1)(x^3 - x + 2) = x^5 + x^4 + x^2 + x + 2.
+\end{equation}
+
+Kronecker's method is just a brute force search.
+It is obvious that it is not efficient and it fails
+with growing degrees and coefficients.
+Modern methods to factor polynomials use
+much more sophisticated techniques.
+
+
+
+
 \section{Vieta's Formula}
 \section{The Method of partial Fractions}
 \ignore{
@@ -37138,7 +38113,6 @@ G(x) = \frac{x}{1-x-x^2}.
 
 
 
-\section{Factoring Polynomials}
 
 \chapter{Relations, Functions and the Cartesian Plane} % c08
 \section{Relations}
