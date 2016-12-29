@@ -329,6 +329,20 @@ where
                         in (divides (divmp p) poly s1 && not (
                             divides (divmp p) poly s2))
     where d = degree poly
+
+  -------------------------------------------------------------------------
+  -- Irreducible mod p, variant
+  -------------------------------------------------------------------------
+  irreducible2 :: Integer -> Poly Integer -> Bool
+  irreducible2 p poly | d < 2     = True
+                      | otherwise = go 1 x
+    where d      = degree poly
+          x      = P [0,1]
+          go i z = let z' = powmp p p z
+                    in case pmmod p (sub z' x) poly of
+                     P [_] -> trace (show i) $ i == d
+                     g     -> if i < d then go (i+1) z'
+                                       else False
           
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
@@ -346,11 +360,9 @@ where
     case squarefactor p u of
       Nothing -> do 
         x <- randomPoly p (d-1)
-        -- putStr ("x: " ++ show x ++ ", ")
         case zassen 0 p x u of 
           [] -> cantorzass (i-1) p u
           gs ->  do g1 <- concat <$> mapM (splitG 10 p) gs
-                    -- putStrLn ("gs: " ++ show gs ++ ", g1: " ++ show g1)
                     let g2 = map fst [divmp p u g | g <- g1]
                     g3 <- concat <$> mapM (cantorzassenhaus p) g2
                     return $ nub (g1++g3)
@@ -366,12 +378,14 @@ where
                               Poly Integer -> [(Int,Poly Integer)]
   zassen d p w v | d   > (degree v) `div` 2 = []
                  | otherwise                = -- trace (show w ++ ", " ++ show v) $
-                     let w' = pmmod p (powmp p p w) v
-                      in case gcdmp p ((sub w' (P [0,1])) `pmod` p) v of
+                     let w' = pmmod p raiseAndSub v
+                      in case gcdmp p w' v of
                            P [_] -> zassen (d+1) p w' v
                            g     -> let (v',_) = divmp p v g
                                         w''    = pmmod p w' v'
                                      in (d,g) : zassen (d+1) p w'' v'
+
+    where raiseAndSub = sub (powmp p p w) (P [0,1]) `pmod` p
 
   -------------------------------------------------------------------------
   -- Factoring: factor product of factors

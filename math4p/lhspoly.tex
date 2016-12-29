@@ -4487,9 +4487,309 @@ with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
+They are, in particular, based on modular arithmetic
+of polynomials and make use of theorems that we have
+already discussed in the ring of integers.
+Polynomials with coefficients in a ring (or field)
+form a ring too, a polynomial ring.
+Theorems that hold in any ring, hence, hold also
+in a polynomial ring. We, therefore, do not need
+to prove them here again.
+
+Famous factorisation algorithms using modular
+arithmetic are \term{Berlekamp's algorithm}
+developed by the American mathematician 
+Elwyn Berlekamp in the late Sixties
+and the \term{Cantor-Zassenhaus algorithm}
+developed in the late Seventies and early Eighties
+by David Cantor, an American methematician,
+not to be confused with Georg Cantor, and
+Hans Zassenhaus (1912 -- 1991), a German-American
+mathematician.
+We will here focus on Cantor-Zassenhaus,
+which is by today probably the most-used algorithm
+implemented in many computer algebra systems.
+
+Cantor-Zassenhaus makes use of Euler's theorem,
+which, as you may remember, states that
+
+\begin{equation}
+a^{\varphi(n)} \equiv 1 \pmod{n},
+\end{equation}
+
+where $\varphi(n)$ is the totient function
+of $n$ counting the numbers $1\dots n-1$ that
+are coprime to $n$, \ie that share no divisors with $n$.
+For a polynomial ring, we need to interpret $a$ and $n$ as 
+being polynomials, not natural numbers.
+To stress this fact, we use different letters $f$ and $m$:
+
+\begin{equation}
+f^{\varphi(m)} \equiv 1 \pmod{m}.
+\end{equation}
+
+From this theorem (which we will not prove, but just assume
+that it holds in any field), Fermat's little theorem
+follows. Let $K$ be a field with $q$ elements; when using
+arithmetic modulo a prime $p$, then $K$ is the field
+of numbers $0\dots p-1$, which has $q=p$ elements.
+Note that, when we refer to the multiplicative group
+of this field, we usually refer only to the numbers
+$1\dots p-1$, which contains only $p-1$ elements.
+Now, let $g$ be an \term{irreducible} polynomial,
+\ie\ a non-constant polynomial that cannot be 
+further factored and, hence, a ``prime'' in our polynomial ring,
+with degree $d$, $d>0$. Then it holds for any polynomial $f$
+from this field
+
+\begin{equation}\label{eq:polyFacFermat}
+f^{q^d} \equiv f \pmod{g}.
+\end{equation}
+
+We can prove this easily:
+We know that $K$ has $q$ elements.
+From this $q$ elements we can create 
+a limited number of polynomials.
+When you look at our Haskell definition of polynomials,
+you will easily convince yourself that the number of valid
+polynomials of a given degree $d$ equals the number of valid
+numbers that can be presented in the numeral system base $q$
+with $d+1$ digits. If, for instance, $q=2$, then we have
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|r|r|c|}\hline
+0     & 2 & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}\\\hline
+1     & 2 & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]}\\\hline
+2     & 4 & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\\hline
+3     & 8 & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+      &   & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\\hline
+$\dots$&$\dots$&$\dots$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+We, hence, can precisely say how many polynomials 
+of degree $<d$ there are, namely $r=q^d$.
+For the example $q=2$, we see that there 16 polynomials
+with degree less than 4, which is $2^4$.
+One of those polynomials, however, is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]},
+which we must exclude, when asking for $\varphi(g)$,
+since this polynomial is the zero polynomial
+for which division is not defined.
+For the irreducible polynomial $g$, we therefore
+have $r-1$ elements that do not share divisors with $g$,
+\ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
+we have 
+
+\begin{equation}
+f^{r-1} \equiv 1 \pmod{g}. 
+\end{equation}
+
+Multiplying both sides by $f$, we get
+
+\begin{equation}
+f^{r} \equiv f \pmod{g}. 
+\end{equation}
+
+Since $r=q^d$, this is equivalent to \ref{eq:polyFacFermat}
+and this concludes the proof.$\qed$
+
+From Fermat's theorem, we can derive a nice and useful corollary.
+Note that when we subtract $f$ from both sides of the equivalence,
+then we would get 0 on the right-hand side, which means that
+$g$ divides the expression on the left-hand side.
+Set $x=f$, then we have:
+
+\begin{equation}\label{eq:polyFacIrrTest}
+x^{q^d} - x \equiv 0 \pmod{g}. 
+\end{equation}
+
+This is a nice criterion to build a test for irreducibility.
+Here is a Haskell implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{20E}{@{}l@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{34E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{irreducible}\mathbin{::}\Conid{Natural}\to \Conid{Poly}\;\Conid{Natural}\to \Conid{Bool}{}\<[E]%
+\\
+\>[3]{}\Varid{irreducible}\;\Varid{p}\;\Varid{poly}{}\<[23]%
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{d}\mathbin{<}\mathrm{1}{}\<[37]%
+\>[37]{}\mathrel{=}\Conid{False}{}\<[E]%
+\\
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{go}\;\mathrm{1}\;\Varid{x}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{d}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[20E]%
+\>[23]{}\Varid{degree}\;\Varid{poly}{}\<[E]%
+\\
+\>[12]{}\Varid{x}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[20E]%
+\>[23]{}\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{z}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[20E]%
+\>[23]{}\mathbf{let}\;\Varid{z'}\mathrel{=}\Varid{powmp}\;\Varid{p}\;\Varid{p}\;\Varid{z}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;{}\<[27]%
+\>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{sub}\;\Varid{z'}\;\Varid{x})\;\Varid{poly}\;\mathbf{of}{}\<[E]%
+\\
+\>[27]{}\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[34]%
+\>[34]{}\to {}\<[34E]%
+\>[38]{}\Varid{i}\equiv \Varid{d}{}\<[E]%
+\\
+\>[27]{}\Varid{g}{}\<[34]%
+\>[34]{}\to {}\<[34E]%
+\>[38]{}\mathbf{if}\;\Varid{i}\mathbin{<}\Varid{d}\;{}\<[48]%
+\>[48]{}\mathbf{then}\;\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{z'}{}\<[E]%
+\\
+\>[48]{}\mathbf{else}\;\Conid{False}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function receives two arguments: the modulus and 
+the polynomial we want to check.
+First, we compute the degree of the polynomial.
+When the polynomial is of degree zero, it is by definition
+not irreducible (it is not reducible either, 
+it is just constant and as such uninteresting).
+Then we start the algorithm beginning with the values 1 and
+$x$, where $x$ is the simple polynomial $x$.
+In \ensuremath{\Varid{go}}, we raise this polynomial to the power of $p$,
+the modulus and subtract it from the result 
+taking it modulo the input polynomial \ensuremath{\Varid{poly}}. 
+The result of this operation
+is $x^{p^d} - x$ for degree $d=1$.
+
+If the result is a constant polynomial 
+and the degree counter $i$ equals $d$,
+then equation \ref{eq:polyFacIrrTest} is fulfilled.
+(Note that we consider any constant polynomial as zero,
+since a constant polynomial is just the content,
+which usually should have been removed before we start
+to search factor.)
+Otherwise, if the degree counter does not equal $d$,
+this polynomial fulfils the equation with a ``wrong'' degree.
+This is possible only if the input was not irreducible
+in the first place.
+
+Finally, if we have a remainder that is not constant,
+we either continue (if we have not yet reached the degree
+in question) with the next degree and the polynomial raised
+to $p^i$. Otherwise, if we had already reached our degree,
+the polynomial is certainly not irreducible.
+
+Let us look at an example.
+We generate a random polynomial of degree 3 modulo 7
+(note that, since our implementation of numbers and
+polynomials is far from optimal, using greater primes
+and higher degrees would take a lot of time!):
+
+\ensuremath{\Varid{g}\leftarrow \Varid{randomPoly}\;\mathrm{7}\;\mathrm{4}}\\
+
+I get the polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{3},\mathrm{3},\mathrm{4}\mskip1.5mu]}.
+(Note that you may get another one!)
+Calling \ensuremath{\Varid{irreducible}\;\mathrm{7}\;\Varid{g}} says: \ensuremath{\Conid{False}}.
+
+When we raise the polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]} 
+to the power of $7^3 = 343$,
+we get a polynomial of degree 343
+with the leading coefficient 1.
+When we subtract \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]} from it,
+it will have -1 as last but one coefficient.
+Taking this modulo to the random polynomial $g$,
+we get the polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{3},\mathrm{6}\mskip1.5mu]}, which is 
+$6x^2 + 3x$ and certainly not constant.
+$g$ is therefore not irreducible.
+
+Let us try another one:
+
+\ensuremath{\Varid{g}\leftarrow \Varid{randomPoly}\;\mathrm{7}\;\mathrm{4}}\\
+
+This time, I get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{4},\mathrm{4}\mskip1.5mu]}.
+Calling \ensuremath{\Varid{irreducible}\;\mathrm{7}\;\Varid{g}} says: \ensuremath{\Conid{True}}.
+When we take $x^{7^3} - x$ modulo $g$,
+we get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]}. \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{4},\mathrm{4}\mskip1.5mu]}, hence,
+is irreducible.
+
+Can we make anything out of the number
+that that we got back as remainder 
+for the polynomial that was not
+irreducible, \ie\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{3},\mathrm{6}\mskip1.5mu]}?
+Let us think: it is a remainder that
+does not fulfil the equation 
+$x^{q^d} - x \equiv 0 \pmod{g}$.
+This should always be true if $g$ is irreducible.
+If $g$ is not irreducible, it shares divisors
+with some polynomials of lower degrees --
+and this is the point!
+The polynomial we saw, when taking
+$x^{q^d} - x$ modulo $g$ is a polynomial
+that shares a common divisor with $g$.
+We, hence, can compute the greatest common divisor
+calling \ensuremath{\Varid{gcdmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{3},\mathrm{6}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{3},\mathrm{3},\mathrm{4}\mskip1.5mu])}
+and we get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{6}\mskip1.5mu]}.
+When we divide \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{3},\mathrm{3},\mathrm{4}\mskip1.5mu]} by this one,
+we expect to get a result without remainder:
+
+\ensuremath{\Varid{divmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{3},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{6}\mskip1.5mu])}\\
+
+and we get: \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{6},\mathrm{3}\mskip1.5mu]}, 
+which is an irreducible polynomial.
+We, hence, can factor the polynomial
+$4x^3 + 3x^2 + 3x + 3$ modulo 7 into
+$3x^2 + 6x + 1$ and $6x + 3$.
+
+Let us verify this result:
+
+\[
+(3x^2 + 6x + 1)(6x + 3) = 
+(18x^3 + 36x^2 + 6x) + 
+(9x^2 + 18x + 3) =
+18x^3 + 45x^2 + 24x + 3,
+\]
+
+which, modulo 7, is $4x^3 + 3x^2 + 3x + 3$ and,
+thus, the correct result.
+
+
+
+
+
+
+
+
+
+
+
+
 \ignore{
 $q(x) divides  x^p^d - x$ mod p
 Cantor+Zassenhaus factoring the product of factors
+application to integers: hensel's lemma
 }
 
 

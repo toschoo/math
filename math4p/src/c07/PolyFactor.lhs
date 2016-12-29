@@ -279,6 +279,259 @@ with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
+They are, in particular, based on modular arithmetic
+of polynomials and make use of theorems that we have
+already discussed in the ring of integers.
+Polynomials with coefficients in a ring (or field)
+form a ring too, a polynomial ring.
+Theorems that hold in any ring, hence, hold also
+in a polynomial ring. We, therefore, do not need
+to prove them here again.
+
+Famous factorisation algorithms using modular
+arithmetic are \term{Berlekamp's algorithm}
+developed by the American mathematician 
+Elwyn Berlekamp in the late Sixties
+and the \term{Cantor-Zassenhaus algorithm}
+developed in the late Seventies and early Eighties
+by David Cantor, an American methematician,
+not to be confused with Georg Cantor, and
+Hans Zassenhaus (1912 -- 1991), a German-American
+mathematician.
+We will here focus on Cantor-Zassenhaus,
+which is by today probably the most-used algorithm
+implemented in many computer algebra systems.
+
+Cantor-Zassenhaus makes use of Euler's theorem,
+which, as you may remember, states that
+
+\begin{equation}
+a^{\varphi(n)} \equiv 1 \pmod{n},
+\end{equation}
+
+where $\varphi(n)$ is the totient function
+of $n$ counting the numbers $1\dots n-1$ that
+are coprime to $n$, \ie that share no divisors with $n$.
+For a polynomial ring, we need to interpret $a$ and $n$ as 
+being polynomials, not natural numbers.
+To stress this fact, we use different letters $f$ and $m$:
+
+\begin{equation}
+f^{\varphi(m)} \equiv 1 \pmod{m}.
+\end{equation}
+
+From this theorem (which we will not prove, but just assume
+that it holds in any field), Fermat's little theorem
+follows. Let $K$ be a field with $q$ elements; when using
+arithmetic modulo a prime $p$, then $K$ is the field
+of numbers $0\dots p-1$, which has $q=p$ elements.
+Note that, when we refer to the multiplicative group
+of this field, we usually refer only to the numbers
+$1\dots p-1$, which contains only $p-1$ elements.
+Now, let $g$ be an \term{irreducible} polynomial,
+\ie\ a non-constant polynomial that cannot be 
+further factored and, hence, a ``prime'' in our polynomial ring,
+with degree $d$, $d>0$. Then it holds for any polynomial $f$
+from this field
+
+\begin{equation}\label{eq:polyFacFermat}
+f^{q^d} \equiv f \pmod{g}.
+\end{equation}
+
+We can prove this easily:
+We know that $K$ has $q$ elements.
+From this $q$ elements we can create 
+a limited number of polynomials.
+When you look at our Haskell definition of polynomials,
+you will easily convince yourself that the number of valid
+polynomials of a given degree $d$ equals the number of valid
+numbers that can be presented in the numeral system base $q$
+with $d+1$ digits. If, for instance, $q=2$, then we have
+
+\begin{center}
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{||r||r||c||}\hline
+0     & 2 & |P [0], P [1]|\\\hline
+1     & 2 & |P [0,1], P [1,1]|\\\hline
+2     & 4 & |P [0,0,1], P [1,0,1], P [0,1,1], P [1,1,1]|\\\hline
+3     & 8 & |P [0,0,1,1], P [1,0,1,1], P [0,1,1,1], P [1,1,1,1]|\\
+      &   & |P [0,0,0,1], P [1,0,0,1], P [0,1,0,1], P [1,1,0,1]|\\\hline
+$\dots$&$\dots$&$\dots$\\\hline
+\end{tabular}
+\endgroup
+\end{center}
+
+We, hence, can precisely say how many polynomials 
+of degree $<d$ there are, namely $r=q^d$.
+For the example $q=2$, we see that there 16 polynomials
+with degree less than 4, which is $2^4$.
+One of those polynomials, however, is |P [0]|,
+which we must exclude, when asking for $\varphi(g)$,
+since this polynomial is the zero polynomial
+for which division is not defined.
+For the irreducible polynomial $g$, we therefore
+have $r-1$ elements that do not share divisors with $g$,
+\ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
+we have 
+
+\begin{equation}
+f^{r-1} \equiv 1 \pmod{g}. 
+\end{equation}
+
+Multiplying both sides by $f$, we get
+
+\begin{equation}
+f^{r} \equiv f \pmod{g}. 
+\end{equation}
+
+Since $r=q^d$, this is equivalent to \ref{eq:polyFacFermat}
+and this concludes the proof.$\qed$
+
+From Fermat's theorem, we can derive a nice and useful corollary.
+Note that when we subtract $f$ from both sides of the equivalence,
+then we would get 0 on the right-hand side, which means that
+$g$ divides the expression on the left-hand side.
+Set $x=f$, then we have:
+
+\begin{equation}\label{eq:polyFacIrrTest}
+x^{q^d} - x \equiv 0 \pmod{g}. 
+\end{equation}
+
+This is a nice criterion to build a test for irreducibility.
+Here is a Haskell implementation:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  irreducible :: Natural -> Poly Natural -> Bool
+  irreducible p poly  |  d < 1      = False
+                      |  otherwise  = go 1 x
+    where  d       =  degree poly
+           x       =  P [0,1]
+           go i z  =  let z' = powmp p p z
+                      in  case pmmod p (sub z' x) poly of
+                          P [_]  ->  i == d
+                          g      ->  if i < d  then go (i+1) z'
+                                               else False
+\end{code}
+\end{minipage}
+
+The function receives two arguments: the modulus and 
+the polynomial we want to check.
+First, we compute the degree of the polynomial.
+When the polynomial is of degree zero, it is by definition
+not irreducible (it is not reducible either, 
+it is just constant and as such uninteresting).
+Then we start the algorithm beginning with the values 1 and
+$x$, where $x$ is the simple polynomial $x$.
+In |go|, we raise this polynomial to the power of $p$,
+the modulus and subtract it from the result 
+taking it modulo the input polynomial |poly|. 
+The result of this operation
+is $x^{p^d} - x$ for degree $d=1$.
+
+If the result is a constant polynomial 
+and the degree counter $i$ equals $d$,
+then equation \ref{eq:polyFacIrrTest} is fulfilled.
+(Note that we consider any constant polynomial as zero,
+since a constant polynomial is just the content,
+which usually should have been removed before we start
+to search factor.)
+Otherwise, if the degree counter does not equal $d$,
+this polynomial fulfils the equation with a ``wrong'' degree.
+This is possible only if the input was not irreducible
+in the first place.
+
+Finally, if we have a remainder that is not constant,
+we either continue (if we have not yet reached the degree
+in question) with the next degree and the polynomial raised
+to $p^i$. Otherwise, if we had already reached our degree,
+the polynomial is certainly not irreducible.
+
+Let us look at an example.
+We generate a random polynomial of degree 3 modulo 7
+(note that, since our implementation of numbers and
+polynomials is far from optimal, using greater primes
+and higher degrees would take a lot of time!):
+
+|g <- randomPoly 7 4|\\
+
+I get the polynomial |P [3,3,3,4]|.
+(Note that you may get another one!)
+Calling |irreducible 7 g| says: |False|.
+
+When we raise the polynomial |P [0,1]| 
+to the power of $7^3 = 343$,
+we get a polynomial of degree 343
+with the leading coefficient 1.
+When we subtract |P [0,1]| from it,
+it will have -1 as last but one coefficient.
+Taking this modulo to the random polynomial $g$,
+we get the polynomial |P [0,3,6]|, which is 
+$6x^2 + 3x$ and certainly not constant.
+$g$ is therefore not irreducible.
+
+Let us try another one:
+
+|g <- randomPoly 7 4|\\
+
+This time, I get |P [3,1,4,4]|.
+Calling |irreducible 7 g| says: |True|.
+When we take $x^{7^3} - x$ modulo $g$,
+we get |P [0]|. |P [3,1,4,4]|, hence,
+is irreducible.
+
+Can we make anything out of the number
+that that we got back as remainder 
+for the polynomial that was not
+irreducible, \ie\ |P [0,3,6]|?
+Let us think: it is a remainder that
+does not fulfil the equation 
+$x^{q^d} - x \equiv 0 \pmod{g}$.
+This should always be true if $g$ is irreducible.
+If $g$ is not irreducible, it shares divisors
+with some polynomials of lower degrees --
+and this is the point!
+The polynomial we saw, when taking
+$x^{q^d} - x$ modulo $g$ is a polynomial
+that shares a common divisor with $g$.
+We, hence, can compute the greatest common divisor
+calling |gcdmp 7 (P [0,3,6]) (P [3,3,3,4])|
+and we get |P [3,6]|.
+When we divide |P [3,3,3,4]| by this one,
+we expect to get a result without remainder:
+
+|divmp 7 (P [3,3,3,4]) (P [3,6])|\\
+
+and we get: |P [1,6,3]|, 
+which is an irreducible polynomial.
+We, hence, can factor the polynomial
+$4x^3 + 3x^2 + 3x + 3$ modulo 7 into
+$3x^2 + 6x + 1$ and $6x + 3$.
+
+Let us verify this result:
+
+\[
+(3x^2 + 6x + 1)(6x + 3) = 
+(18x^3 + 36x^2 + 6x) + 
+(9x^2 + 18x + 3) =
+18x^3 + 45x^2 + 24x + 3,
+\]
+
+which, modulo 7, is $4x^3 + 3x^2 + 3x + 3$ and,
+thus, the correct result.
+
+
+
+
+
+
+
+
+
+
+
+
 \ignore{
 $q(x) divides  x^p^d - x$ mod p
 Cantor+Zassenhaus factoring the product of factors
