@@ -404,14 +404,14 @@ Here is a Haskell implementation:
 \begin{minipage}{\textwidth}
 \begin{code}
   irreducible :: Natural -> Poly Natural -> Bool
-  irreducible p poly  |  d < 1      = False
-                      |  otherwise  = go 1 x
-    where  d       =  degree poly
+  irreducible p u  |  d < 2      = False
+                   |  otherwise  = go 1 x
+    where  d       =  degree u
            x       =  P [0,1]
            go i z  =  let z' = powmp p p z
-                      in  case pmmod p (sub z' x) poly of
+                      in  case pmmod p (add z' (P [0,p-1])) u of
                           P [_]  ->  i == d
-                          g      ->  if i < d  then go (i+1) z'
+                          g      ->  if i < d  then go (i+1) (pmmod p z' u)
                                                else False
 \end{code}
 \end{minipage}
@@ -422,13 +422,15 @@ First, we compute the degree of the polynomial.
 When the polynomial is of degree zero, it is by definition
 not irreducible (it is not reducible either, 
 it is just constant and as such uninteresting).
-Then we start the algorithm beginning with the values 1 and
+Then we start the algorithm beginning with values 1 and
 $x$, where $x$ is the simple polynomial $x$.
 In |go|, we raise this polynomial to the power of $p$,
-the modulus and subtract it from the result 
-taking it modulo the input polynomial |poly|. 
-The result of this operation
-is $x^{p^d} - x$ for degree $d=1$.
+the modulus and subtract it from the result.
+Note that we add $p-1$, which,
+in modular arithmetic, is the same as subtracting 1. 
+We take the result modulo the input polynomial |poly|. 
+This corresponds to
+$x^{p^d} - x$ for degree $d=1$.
 
 If the result is a constant polynomial 
 and the degree counter $i$ equals $d$,
@@ -436,7 +438,7 @@ then equation \ref{eq:polyFacIrrTest} is fulfilled.
 (Note that we consider any constant polynomial as zero,
 since a constant polynomial is just the content,
 which usually should have been removed before we start
-to search factor.)
+to search factors.)
 Otherwise, if the degree counter does not equal $d$,
 this polynomial fulfils the equation with a ``wrong'' degree.
 This is possible only if the input was not irreducible
@@ -444,15 +446,23 @@ in the first place.
 
 Finally, if we have a remainder that is not constant,
 we either continue (if we have not yet reached the degree
-in question) with the next degree and the polynomial raised
-to $p^i$. Otherwise, if we had already reached our degree,
-the polynomial is certainly not irreducible.
+in question) or, if we had already reached the final degree,
+we return with False, since the polynomial 
+is certainly not irreducible.
+
+Note that we continue with |pmmod p z' u|, that is,
+with the previous power modulo to $u$. This is an important
+optimisation measure. If we did not do that,
+we would create gigantic polynomials. Imagine
+a polynomial of degree 8 modulo 11. To check that polynomial
+we would need to raise $x$ to the power of $11^8$,
+which would result in a polynomial of degree \num{214358881}.
+Since the only thing we want to know is
+a value modulo $u$, we can reduce the overhead of taking powers
+by taking them modulo $u$ in the first place.
 
 Let us look at an example.
-We generate a random polynomial of degree 3 modulo 7
-(note that, since our implementation of numbers and
-polynomials is far from optimal, using greater primes
-and higher degrees would take a lot of time!):
+We generate a random polynomial of degree 3 modulo 7:
 
 |g <- randomPoly 7 4|\\
 
@@ -465,7 +475,8 @@ to the power of $7^3 = 343$,
 we get a polynomial of degree 343
 with the leading coefficient 1.
 When we subtract |P [0,1]| from it,
-it will have -1 as last but one coefficient.
+it will have -1, which is 6 in this case,
+as last but one coefficient.
 Taking this modulo to the random polynomial $g$,
 we get the polynomial |P [0,3,6]|, which is 
 $6x^2 + 3x$ and certainly not constant.
@@ -481,61 +492,111 @@ When we take $x^{7^3} - x$ modulo $g$,
 we get |P [0]|. |P [3,1,4,4]|, hence,
 is irreducible.
 
-Can we make anything out of the number
-that that we got back as remainder 
-for the polynomial that was not
-irreducible, \ie\ |P [0,3,6]|?
-Let us think: it is a remainder that
-does not fulfil the equation 
-$x^{q^d} - x \equiv 0 \pmod{g}$.
-This should always be true if $g$ is irreducible.
-If $g$ is not irreducible, it shares divisors
-with some polynomials of lower degrees --
-and this is the point!
-The polynomial we saw, when taking
-$x^{q^d} - x$ modulo $g$ is a polynomial
-that shares a common divisor with $g$.
-We, hence, can compute the greatest common divisor
-calling |gcdmp 7 (P [0,3,6]) (P [3,3,3,4])|
-and we get |P [3,6]|.
-When we divide |P [3,3,3,4]| by this one,
-we expect to get a result without remainder:
+The formula, however, is not only interesting
+for testing irreducibility.
+What the formula states is in fact that
+all irreducible polynomials of degree $d$
+are factors of $x^{q^d} - x$.
+Whenever we construct this expression,
+we have created the product of all 
+irreducible polynomials of degree $d$.
+The irreducible factors of our polynomial
+are part of this product and we can get them out,
+just by asking for the greatest common divisor.
+This would give us the product of all factors
+of our polynomial of a given degree.
 
-|divmp 7 (P [3,3,3,4]) (P [3,6])|\\
+We need to add one more qualification however.
+Since we are searching for a \term{unique}
+factorisation, we should make sure that
+we always make the polynomial \term{monic},
+that is, we should remove the leading coefficient, $l$,
+by dividing all coefficients by $l$.
+This corresponds to content-and-primitive-part factorisation
+as already discussed above, but is in the case of modular
+arithmetic much simpler. Whatever the leading coefficients
+is, we can just multiply all coefficients by its inverse
+without worrying about coefficients becoming fractions.
+Here is an implementation:
 
-and we get: |P [1,6,3]|, 
-which is an irreducible polynomial.
-We, hence, can factor the polynomial
-$4x^3 + 3x^2 + 3x + 3$ modulo 7 into
-$3x^2 + 6x + 1$ and $6x + 3$.
+\begin{minipage}{\textwidth}
+\begin{code}
+  monicp :: Integer -> Poly Integer -> Poly Integer
+  monicp p u =  let  cs  = coeffs u
+                     k   = last cs `M.inverse` p
+                in P (map (modmul p k) cs)
+\end{code}
+\end{minipage}
 
-Let us verify this result:
+The following function, obtains the products of the factors
+of a given (monic) polynomial degree by degree. Note
+that we give the result, again, back as a monic
+polynomial. Each result is a tuple of the degree and
+the corresponding factor product.
 
-\[
-(3x^2 + 6x + 1)(6x + 3) = 
-(18x^3 + 36x^2 + 6x) + 
-(9x^2 + 18x + 3) =
-18x^3 + 45x^2 + 24x + 3,
-\]
+\begin{minipage}{\textwidth}
+\begin{code}
+  ddfac :: Integer -> Poly Integer -> [(Int, Poly Integer)]
+  ddfac p u   = go 1 u (P [0,1])
+    where  n  = degree u
+           go d v x  |  degree v <= 0  = []
+                     |  otherwise      = 
+                        let  x'        = powmp p p x 
+                             t         = add x' (P [0,p-1])
+                             g         = gcdmp p t v
+                             (v',_)    = divmp p v g
+                             r         = (d,monicp p g)
+                        in  case g of
+                            P [_]  ->      go (d+1) v' (pmmod p x' u) 
+                            _      -> r :  go (d+1) v' (pmmod p x' u) 
+\end{code}
+\end{minipage}
 
-which, modulo 7, is $4x^3 + 3x^2 + 3x + 3$ and,
-thus, the correct result.
+The real work is done by function |go|.
+It starts with degree $d=1$, the polynomial $u$,
+we want to factor and, again, with the simple polynomial $x$.
+We then raise $x$ to the power $p^1$ for the first degree,
+subract $x$ from the result and compute the |gcd|.
+If the result is a constant polynomial,
+there are no non-trivial factors of this degree and we continue.
+Otherwise, we store the result with the degree,
+making $g$ monic. 
 
+We continue with the next degree, $d+1$,
+the quotient of the polynomial we started with and
+the power of |x'| reduced to the modulo $u$.
+The latter is again an optimisation.
+The former, however, is essential to avoid
+generating the same factor product over and over again.
+By dividing the input polynomial by the $g$, we make sure
+that the factors we have found are taken out.
+This works only if the polynomial is squarefree of course.
+(You might remember the discussion of squarefree
+numbers in the context of Euler's theorem where we found
+that, if $n$ is squarefree, then 
+$\varphi(n) = \prod_{p||n}{p-1}$, \ie\ the totient number
+of $n$ is the product of the primes in the factorisation
+of $n$ all reduced by 1.)
+The algorithm presented here, in fact,
+works properly only with squarefree polynomials.
+We need to come back to this topic and, for the moment,
+make sure that we only apply polynomials that are
+\begin{enumerate}
+\item not irreducible
+\item squarefree
+\item and monic.
+\end{enumerate}
 
-
-
-
-
-
-
-
-
+Let us look at some examples.
 
 
 \ignore{
-$q(x) divides  x^p^d - x$ mod p
-Cantor+Zassenhaus factoring the product of factors
-application to integers: hensel's lemma
+- examples with irreducible and non-irreducible results
+=> how to get the factors out?
+- cz
+- cz for 2
+- squarefactor
+- application to integers: hensel's lemma
 }
 
 

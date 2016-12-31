@@ -8,6 +8,8 @@ where
   import           Data.List (nub,foldl')
   import           Data.Ratio
   import           Control.Applicative ((<$>))
+  import           Control.Concurrent
+  import           Control.Monad (when,void)
   import           Debug.Trace (trace)
   import           System.Random (randomRIO)
 
@@ -286,7 +288,9 @@ where
   squarefactor :: Integer -> Poly Integer -> Maybe (Poly Integer)
   squarefactor p poly | degree sq  > 0 = Just sq
                       | otherwise      = Nothing 
-    where sq = gcdmp p poly (derivative (modmul p) poly)
+    where dv = derivative (modmul p) poly
+          sq | dv == P [0] = error "derivative is zero!"
+             | otherwise   = gcdmp p poly (derivative (modmul p) poly)
 
   -------------------------------------------------------------------------
   -- Powers of...
@@ -316,94 +320,87 @@ where
     where ds = [d | d <- [1..i], rem i d == 0] 
 
   -------------------------------------------------------------------------
-  -- Irreducible mod p?
+  -- Irreducible mod p
   -------------------------------------------------------------------------
   irreducible :: Integer -> Poly Integer -> Bool
-  irreducible p poly | d < 2     = True
-                     | otherwise =
-                       let x  = P [0,1]
-                           !t1 = powmp p (p^d)     x
-                           !t2 = powmp p (p^(d-1)) x
-                           !s1 = modp p (sub t1 x)
-                           !s2 = modp p (sub t2 x)
-                        in (divides (divmp p) poly s1 && not (
-                            divides (divmp p) poly s2))
-    where d = degree poly
-
-  -------------------------------------------------------------------------
-  -- Irreducible mod p, variant
-  -------------------------------------------------------------------------
-  irreducible2 :: Integer -> Poly Integer -> Bool
-  irreducible2 p poly | d < 2     = True
-                      | otherwise = go 1 x
-    where d      = degree poly
+  irreducible p u | d < 2     = True
+                  | otherwise = go 1 x
+    where d      = degree u
           x      = P [0,1]
           go i z = let z' = powmp p p z
-                    in case pmmod p (sub z' x) poly of
-                     P [_] -> trace (show i) $ i == d
-                     g     -> if i < d then go (i+1) z'
+                    in case pmmod p (sub z' x) u of
+                     P [_] -> {- trace (show i) $ -} d == i
+                     g     -> if i < d then go (i+1) (pmmod p z' u)
                                        else False
           
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
   cantorzassenhaus :: Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzassenhaus = cantorzass 100
-  
-  -------------------------------------------------------------------------
-  -- Cantor-Zassenhaus (with repetition)
-  -------------------------------------------------------------------------
-  cantorzass :: Int -> Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzass 0 _ u = return [u]
-  cantorzass i p u | d <= 1    = return [u]
-                   | otherwise = 
-    case squarefactor p u of
-      Nothing -> do 
-        x <- randomPoly p (d-1)
-        case zassen 0 p x u of 
-          [] -> cantorzass (i-1) p u
-          gs ->  do g1 <- concat <$> mapM (splitG 10 p) gs
-                    let g2 = map fst [divmp p u g | g <- g1]
-                    g3 <- concat <$> mapM (cantorzassenhaus p) g2
-                    return $ nub (g1++g3)
-      Just s1 -> do let (s2,_) = divmp p u s1
-                    fs <- cantorzassenhaus p s2
-                    return (s1:fs)
-    where d  = degree u
+  cantorzassenhaus p u | irreducible p u = return [m]
+                       | otherwise       = 
+                         case squarefactor p m of
+                           Nothing -> 
+                             (nub . concat) <$> mapM (\(d,v) -> cz p d v) 
+                                                     (ddfac p m)
+                           Just s1 -> 
+                             let (s2,_) = divmp p m s1
+                              in do fs1 <- cantorzassenhaus p s1
+                                    fs2 <- cantorzassenhaus p s2
+                                    return (nub (fs1++fs2))
+    where m = monicp p u
             
   -------------------------------------------------------------------------
-  -- Cantor-Zassenhaus (the heart of the matter)
+  -- Discrete degree factorisation
   -------------------------------------------------------------------------
-  zassen :: Int -> Integer -> Poly Integer -> 
-                              Poly Integer -> [(Int,Poly Integer)]
-  zassen d p w v | d   > (degree v) `div` 2 = []
-                 | otherwise                = -- trace (show w ++ ", " ++ show v) $
-                     let w' = pmmod p raiseAndSub v
-                      in case gcdmp p w' v of
-                           P [_] -> zassen (d+1) p w' v
-                           g     -> let (v',_) = divmp p v g
-                                        w''    = pmmod p w' v'
-                                     in (d,g) : zassen (d+1) p w'' v'
+  ddfac :: Integer -> Poly Integer -> [(Int, Poly Integer)]
+  ddfac p u = go 1 u (P [0,1])
+    where n = degree u
+          go d v x | degree v <= 0 = []
+                   | otherwise = -- trace (show d ++ ": " ++ show v ++ ", " ++ show x) $
+                     let x'     = powmp p p x 
+                         t      = add x' (P [0,p-1])
+                         g      = gcdmp p t v
+                         (v',_) = divmp p v g
+                         r      = (d,monicp p g)
+                      in case g of
+                           P [_] ->     go (d+1) v' (pmmod p x' u) 
+                           _     -> r : go (d+1) v' (pmmod p x' u) 
 
-    where raiseAndSub = sub (powmp p p w) (P [0,1]) `pmod` p
+  -------------------------------------------------------------------------
+  -- Cantor-Zassenhaus factor splitting
+  -------------------------------------------------------------------------
+  cz :: Integer -> Int -> Poly Integer -> IO [Poly Integer]
+  cz p d u | n <= d          = return [monicp p u]
+           | otherwise = do -- trace (show d ++ ": " ++ show u) $ do
+    x <- monicp p <$> randomPoly p (2*d) -- 2*d-1
+    let t | p == 2    = addsquares (d-1) p x u
+          | otherwise = add (powmodp p m x u) (P [p-1])
+    let r = gcdmp p u t
+    if degree r <= 0 || degree r >= n then cz p d u
+      else do r1 <- cz p d r 
+              r2 <- cz p d (fst $ divmp p u r) 
+              return (r1 ++ r2)
+    where n = degree u
+          m = (p^d-1) `div` 2
 
   -------------------------------------------------------------------------
-  -- Factoring: factor product of factors
+  -- Power for even primes (i.e. 2)
   -------------------------------------------------------------------------
-  splitG :: Int -> Integer -> (Int,Poly Integer) -> IO [Poly Integer]
-  splitG _ _ (1,g)    = return [g]
-  splitG i p (d,g) = do
-    t <- randomPoly p (2*d-1)
-    let x  = powmp p (p^d - 1) t
-    let x1 = add x (P  [1])
-    let x2 = add x (P [-1])
-    let r1 = gcdmp p g x1
-    let r2 = gcdmp p g x2
-    if degree r1 > 1 && 
-       degree r2 > 1 then return [r1,r2]
-                     else if i == 0 
-                          then return [g]
-                          else splitG (i-1) p (d,g)
+  addsquares :: Int -> Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  addsquares i p x u = go i x x
+    where go 0 w _ = w
+          go k w t = let t' = pmmod p (powmp p p t) u
+                         w' = modp p (add w t')
+                      in go (k-1) w' t'
+
+  -------------------------------------------------------------------------
+  -- Make monic, i.e. divide by leading coefficient
+  -------------------------------------------------------------------------
+  monicp :: Integer -> Poly Integer -> Poly Integer
+  monicp p u = let cs  = coeffs u
+                   k   = last cs `M.inverse` p
+                in P (map (modmul p k) cs)
 
   -------------------------------------------------------------------------
   -- Produce a random polynomial (modulo p)
@@ -437,12 +434,12 @@ where
   tstCantorZass :: Int -> Integer -> IO Bool
   tstCantorZass 0 _ = return True
   tstCantorZass i p = do
-    d  <- randomRIO (3,6)
+    d  <- randomRIO (3,8)
     x  <- randomPoly p d
     putStr (showp x ++ ": ")
     fs <- cantorzassenhaus p x
     putStrLn (show fs)
-    if null fs then tstCantorZass (i-1) p
+    if null fs then return False
                else if checkFactors p x fs then tstCantorZass (i-1) p
                                            else return False
     where showp p | a < 0     = show p
@@ -455,8 +452,13 @@ where
   -- Check Factors
   -------------------------------------------------------------------------
   checkFactors :: Integer -> Poly Integer -> [Poly Integer] -> Bool
-  checkFactors p x [] = True
-  checkFactors p x fs = prodp (mulmp p) fs == x
+  checkFactors p x fs | length fs == 1 = head fs == m || not (squarefree p m)
+                      | otherwise = 
+                        let rs = map (divmp p m) fs
+                            is = map (irreducible p) fs
+                            zs = map ((==P[0]) . snd) rs
+                         in and zs && and is
+    where m = monicp p x
 
   -------------------------------------------------------------------------
   -- product
@@ -494,6 +496,17 @@ where
           go n y x | even n    = go (n `div` 2) y   (mulmp p x x) 
                    | otherwise = go ((n-1) `div` 2) (mulmp p y x) 
                                                     (mulmp p x x)
+
+  -------------------------------------------------------------------------
+  -- pow (square-and-multiply) modulo a polynomial
+  -------------------------------------------------------------------------
+  powmodp :: Integer -> Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  powmodp p f poly u = go f (P [1]) poly
+    where go 0 y _ = y
+          go 1 y x = mulmp p y x
+          go n y x | even n    = go (n `div` 2) y   (pmmod p (mulmp p x x) u)
+                   | otherwise = go ((n-1) `div` 2) (pmmod p (mulmp p y x) u)
+                                                    (pmmod p (mulmp p x x) u)
 
   -------------------------------------------------------------------------
   -- Test function
@@ -618,7 +631,7 @@ where
           ts = [bin2poly h k | (h,k) <- zip hs [0..n]]
 
   -------------------------------------------------------------------------
-  -- Express binomials as polynomials formulas
+  -- Express binomials as polynomials 
   -------------------------------------------------------------------------
   bin2poly :: Integer -> Integer -> Poly Rational
   bin2poly f 0 = P [f%1]
