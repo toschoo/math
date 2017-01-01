@@ -302,7 +302,9 @@ We will here focus on Cantor-Zassenhaus,
 which is by today probably the most-used algorithm
 implemented in many computer algebra systems.
 
-Cantor-Zassenhaus makes use of Euler's theorem,
+The contribution of Cantor-Zassenhaus, strictly speaking,
+is just one over several pieces. The main parts are
+ring and field theory and are based on Euler's theorem,
 which, as you may remember, states that
 
 \begin{equation}
@@ -312,19 +314,69 @@ a^{\varphi(n)} \equiv 1 \pmod{n},
 where $\varphi(n)$ is the totient function
 of $n$ counting the numbers $1\dots n-1$ that
 are coprime to $n$, \ie that share no divisors with $n$.
-For a polynomial ring, we need to interpret $a$ and $n$ as 
-being polynomials, not natural numbers.
-To stress this fact, we use different letters $f$ and $m$:
+
+Euler's theorem is defined as theorem over the ring
+of integers, which, by modular arithmetic, transforms
+into the finite field of the integers $0\dots n-1$.
+Polynomial rings can be seen as extensions
+of the underlying ring (of integers).
+When we introduce modular arithmetic,
+that is, when we build polynomials on 
+a finite field, they still
+constitute a ring, this time on top of the finite field.
+Notationally, this is usually expressed as $K[x]$,
+where $K$ is a field and $K[x]$ the polynomial ring
+defined on top of $K$.
+
+When we now take polynomials modulo a polynomial,
+we again get a finite field, this time a polynomial field
+of the form $K[x]/m$ (pronounced ``over'' $m$),
+where $m$ is a polynomial.
+The point in doing this is that many properties of
+the original field $K$ are preserved in $K[x]/m$ and
+Euler's theorem is an example thereof.
+
+However, we need to redefine Euler's theorem
+to make clear what is meant by it in the new context.
+First, we are dealing with the polynomial field $K[x]$
+and a polynomial $m \in K[x]$.
+Then we define the totient function as
+
+\[
+\varphi(m) = ||\lbrace f \in K[x] : 0 \le f \le m \wedge \gcd(m,f) = 1\rbrace||,
+\]
+
+\ie\ the cardinality of the set of all polynomials $f$
+less or equal than $m$ that do not share
+divisors with $m$. For any such field 
+and any $f \in K[x] : \gcd(m,f) = 1$,
+the following holds:
 
 \begin{equation}
 f^{\varphi(m)} \equiv 1 \pmod{m}.
 \end{equation}
 
-From this theorem (which we will not prove, but just assume
-that it holds in any field), Fermat's little theorem
+This is easy to prove.
+The resulting structure $K[x]/(m)$
+has a multiplicative
+group $K_m^*$ (just as the integers $\pmod{n}$).
+The members of this group are all polynomials
+that do not share divisors with $m$ and $\varphi(m)$
+is the cardinality of this group.
+From $gcd(m,f) = 1$, it follows that
+$f_m = f \mod{m} \in K_m^*$.
+We, for sure, have 
+$f_m^{\varphi(m)} \equiv 1 \pmod{m}$, since 
+$\varphi(m)$ is the size of the group.
+It follows from Lagrange's theorem 
+(that the cardinality of subgroups of $G$ divide
+the cardinality of $G$) that
+$f^{\varphi(m)} \equiv f_m^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
+
+From this theorem, Fermat's little theorem
 follows. Let $K$ be a field with $q$ elements; when using
-arithmetic modulo a prime $p$, then $K$ is the field
-of numbers $0\dots p-1$, which has $q=p$ elements.
+arithmetic modulo a prime $p$, then $K_m^*$ is the group
+of numbers $1\dots p-1$, which has $q=p-1$ elements.
 Note that, when we refer to the multiplicative group
 of this field, we usually refer only to the numbers
 $1\dots p-1$, which contains only $p-1$ elements.
@@ -342,7 +394,7 @@ We can prove this easily:
 We know that $K$ has $q$ elements.
 From this $q$ elements we can create 
 a limited number of polynomials.
-When you look at our Haskell definition of polynomials,
+When you look at our Haskell representation of polynomials,
 you will easily convince yourself that the number of valid
 polynomials of a given degree $d$ equals the number of valid
 numbers that can be presented in the numeral system base $q$
@@ -352,11 +404,12 @@ with $d+1$ digits. If, for instance, $q=2$, then we have
 \begingroup
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{||r||r||c||}\hline
-0     & 2 & |P [0], P [1]|\\\hline
-1     & 2 & |P [0,1], P [1,1]|\\\hline
-2     & 4 & |P [0,0,1], P [1,0,1], P [0,1,1], P [1,1,1]|\\\hline
-3     & 8 & |P [0,0,1,1], P [1,0,1,1], P [0,1,1,1], P [1,1,1,1]|\\
-      &   & |P [0,0,0,1], P [1,0,0,1], P [0,1,0,1], P [1,1,0,1]|\\\hline
+degree & size & polynomials\\\hline\hline
+0      & 2    & |P [0], P [1]|\\\hline
+1      & 2    & |P [0,1], P [1,1]|\\\hline
+2      & 4    & |P [0,0,1], P [1,0,1], P [0,1,1], P [1,1,1]|\\\hline
+3      & 8    & |P [0,0,1,1], P [1,0,1,1], P [0,1,1,1], P [1,1,1,1]|\\
+       &      & |P [0,0,0,1], P [1,0,0,1], P [0,1,0,1], P [1,1,0,1]|\\\hline
 $\dots$&$\dots$&$\dots$\\\hline
 \end{tabular}
 \endgroup
@@ -364,7 +417,7 @@ $\dots$&$\dots$&$\dots$\\\hline
 
 We, hence, can precisely say how many polynomials 
 of degree $<d$ there are, namely $r=q^d$.
-For the example $q=2$, we see that there 16 polynomials
+For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is |P [0]|,
 which we must exclude, when asking for $\varphi(g)$,
@@ -398,7 +451,13 @@ Set $x=f$, then we have:
 x^{q^d} - x \equiv 0 \pmod{g}. 
 \end{equation}
 
-This is a nice criterion to build a test for irreducibility.
+This is the basis for 
+a nice test for irreducibility.
+Since the group established by a non-irreducible
+polynomial of degree $d$ has less than $p^d - 1$ elements,
+it will divide $x^{p^c} - x$ for some $c<d$, but an irreducible
+polynomial will not.
+\ignore{TODO: why are there no subgroups?}
 Here is a Haskell implementation:
 
 \begin{minipage}{\textwidth}
@@ -419,16 +478,17 @@ Here is a Haskell implementation:
 The function receives two arguments: the modulus and 
 the polynomial we want to check.
 First, we compute the degree of the polynomial.
-When the polynomial is of degree zero, it is by definition
-not irreducible (it is not reducible either, 
-it is just constant and as such uninteresting).
+When the polynomial is of degree 0 or 1, 
+there are by definition only trivial, \ie\ constant factors.
+It is, hence, not irreducible (it is not reducible either, 
+it is just uninteresting).
 Then we start the algorithm beginning with values 1 and
 $x$, where $x$ is the simple polynomial $x$.
 In |go|, we raise this polynomial to the power of $p$,
-the modulus and subtract it from the result.
+and subtract it from the result.
 Note that we add $p-1$, which,
 in modular arithmetic, is the same as subtracting 1. 
-We take the result modulo the input polynomial |poly|. 
+We take the result modulo the input polynomial |u|. 
 This corresponds to
 $x^{p^d} - x$ for degree $d=1$.
 
@@ -451,7 +511,7 @@ we return with False, since the polynomial
 is certainly not irreducible.
 
 Note that we continue with |pmmod p z' u|, that is,
-with the previous power modulo to $u$. This is an important
+with the previous power modulo $u$. This is an important
 optimisation measure. If we did not do that,
 we would create gigantic polynomials. Imagine
 a polynomial of degree 8 modulo 11. To check that polynomial
@@ -501,7 +561,7 @@ Whenever we construct this expression,
 we have created the product of all 
 irreducible polynomials of degree $d$.
 The irreducible factors of our polynomial
-are part of this product and we can get them out,
+are part of this product and we can get them out
 just by asking for the greatest common divisor.
 This would give us the product of all factors
 of our polynomial of a given degree.
@@ -510,11 +570,11 @@ We need to add one more qualification however.
 Since we are searching for a \term{unique}
 factorisation, we should make sure that
 we always make the polynomial \term{monic},
-that is, we should remove the leading coefficient, $l$,
-by dividing all coefficients by $l$.
+that is, we should remove the leading coefficient
+by dividing all coefficients by it.
 This corresponds to content-and-primitive-part factorisation
-as already discussed above, but is in the case of modular
-arithmetic much simpler. Whatever the leading coefficients
+as already discussed above, but in the case of modular
+arithmetic it is much simpler. Whatever the leading coefficients
 is, we can just multiply all coefficients by its inverse
 without worrying about coefficients becoming fractions.
 Here is an implementation:
@@ -536,7 +596,7 @@ the corresponding factor product.
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  ddfac :: Integer -> Poly Integer -> [(Int, Poly Integer)]
+  ddfac :: Natural -> Poly Natural -> [(Int, Poly Natural)]
   ddfac p u   = go 1 u (P [0,1])
     where  n  = degree u
            go d v x  |  degree v <= 0  = []
@@ -553,10 +613,10 @@ the corresponding factor product.
 \end{minipage}
 
 The real work is done by function |go|.
-It starts with degree $d=1$, the polynomial $u$,
-we want to factor and, again, with the simple polynomial $x$.
+It starts with degree $d=1$, the polynomial $u$
+we want to factor and, again, the simple polynomial $x$.
 We then raise $x$ to the power $p^1$ for the first degree,
-subract $x$ from the result and compute the |gcd|.
+subtract $x$ from the result and compute the |gcd|.
 If the result is a constant polynomial,
 there are no non-trivial factors of this degree and we continue.
 Otherwise, we store the result with the degree,
@@ -568,8 +628,8 @@ the power of |x'| reduced to the modulo $u$.
 The latter is again an optimisation.
 The former, however, is essential to avoid
 generating the same factor product over and over again.
-By dividing the input polynomial by the $g$, we make sure
-that the factors we have found are taken out.
+By dividing the input polynomial by $g$, we make sure
+that the factors we have already found are taken out.
 This works only if the polynomial is squarefree of course.
 (You might remember the discussion of squarefree
 numbers in the context of Euler's theorem where we found
@@ -581,22 +641,256 @@ The algorithm presented here, in fact,
 works properly only with squarefree polynomials.
 We need to come back to this topic and, for the moment,
 make sure that we only apply polynomials that are
-\begin{enumerate}
-\item not irreducible
-\item squarefree
-\item and monic.
-\end{enumerate}
+squarefree and monic.
 
-Let us look at some examples.
+We try |ddfac| on the 4-degree polynomial 
+$u(x) = x^4 + x^3 + 3x^2 + 4 x + 5$ modulo 7 and call
+|ddfac 7 u| and obtain the result
+
+|[(1,P [2,4,1]),(2,P [6,4,1])]|,
+
+\ie\ the factor product $x^2 + 4x + 2$ for degree 1
+and the factor product $x^2 + 4x + 6$ for degree 2.
+First, we make sure that these are really factors
+of $u$ by calling |divmp 7 (P [2,4,1])|, which shows
+
+|(P [6,4,1],P [0])|.
+
+We can conclude that these are indeed the factors
+of $u$ and that they contain all the factors.
+But obviously, |P [2,4,1]| or $x^2 + 4x + 2$ is
+not irreducible, since it is a second-degree polynomial,
+but it was obtained for the irreducible factors of degree 1.
+|P [6,4,1]|, on the other hand, was obtained for degree 2
+and is itself of degree 2. We can therefore assume that
+it is already irreducible, but let us check: 
+|irreducible 7 (P [6,4,1])|, indeed, yields |True|.
+
+But what about the other one? How can we get the irreducible
+factors out of that one? Here Cantor and Zassenhaus come in.
+They proposed a simple algorithm with the following logic.
+We, again, use the magic polynomial $x^{p^d} - x$, but choose 
+a specific polynomial for $x$, say $t$. We already have
+that chunk of irreducible polynomials hidden in |(P [2,4,1])|,
+let us call it $u$,
+and know that those polynomials are factors of both,
+$t$ and and $u$. The only thing we have to do is to split them,
+so that the problem reduces significantly. We can split $t$
+into three parts using the equality
+
+\begin{equation}
+t^{p^d} - t = t(t^{(p^d-1)/2} + 1)((t^{(p^d-1)/2} - 1)
+\end{equation}
+
+and by a careful choice of $t$, we can make sure that the factors
+are likely to be more or less equally distributed among the
+latter two factors. That would reduce the problem significantly.
+
+Since $u$ and $t^{p^d} - t$ share factors, we can transform
+the equality into the following variant:
+
+\begin{equation}\label{eq:polyFac_CZ1}
+u = \gcd(u,t)\times\gcd(u,(t^{(p^d-1)/2} + 1))\times\gcd(u,((t^{(p^d-1)/2} - 1))
+\end{equation}
+
+A reasonable choice for $t$ is a polynomial
+of degree $2d-1$, since in this case there is high probability
+that the factors are spread equally among the three factors
+of equality \ref{eq:polyFac_CZ1}. 
+With high probability, we reduce the problem significantly,
+when we compute one of the $\gcd$s and continue splitting
+the $\gcd$ and the quotient of $u$ and the $\gcd$ further.
+Should we be unlucky (the $\gcd$ contains either no or all
+of the factors), we just try again with another polynomial.
+After some tries (less than three according to common wisdom), 
+we will hit a common factor.
+
+There is an issue, however, for $p=2$.
+Because in that case, 
+$t^{(p^d-1)/2} - 1 = t^{(p^d-1)/2} + 1$.
+Consider, to illustrate that, a polynomial modulo 2, for instance
+|P [0,1,1]| and $d=3$. Then we have 
+
+\[
+(p^d-1)/2 = (2^3-1)/2 = 7/2 = 3.
+\]
+
+We raise the polynomial to the power of 3 and get |[0,0,0,1,1,1,1]|.
+When we add |P [1]|, we get |[1,0,0,1,1,1,1]|. 
+But what do we subtract? Let us try |modp 2 (P [-1])|.
+We get back |P [1]|. 
+Adding and subtracting 1 is just the same thing here.
+
+But that would mean that our formula would be much poorer.
+We would not have three different factors, but only two, namely
+$t$ and $t^{(p^d-1)/2} + 1$. Unfortunately, it is very likely
+that all the factors end up in the second one and with this,
+we would not simplify the problem.
+
+The fact that we are now working modulo 2
+may help. We first observe that, modulo 2, there is
+no difference between the polynomials 
+$t^{2^d} - t$ (the magic one with $p=2$) and 
+$t^{2^d} + t$. 
+The second one, however, is easy to split,
+when we set 
+
+\[
+w = t + t^2 + t^4 + \dots + t^{2^{d-1}}.
+\]
+
+Then, $w^2$ would be 
+
+\[
+t^2 + t^4 + \dots + t^{2d}.
+\]
+
+This may shock you on the first sight.
+But remember, we are still working modulo p 
+and we have (\term{freshman's dream}):
+
+\[
+(a+b)^p \equiv a^p + b^p \pmod{p}.
+\]
+
+When multiplying $w$ by itself, we would get
+
+\[
+t^2 + 2t^3 + t^4 + 2t^5 + 2t^6 + t^8.
+\]
+
+Since we are working modulo 2,
+all terms with even coefficients cancel out,
+we, hence, get
+
+\[
+t^2 + t^4 + t^8.
+\]
+
+Now, observe that 
+
+\[
+w^2 + w = t^2 + t^4 + \dots + t^{2^d} + t + t^2 + \dots + t^{2^{d-1}},
+\]
+
+when we rearrange according to exponents, we again get pairs of equal terms:
+
+\[
+w^2 + w = t + 2t^2 + 2t^4 + \dots +  2t^{2^{d-1}} + t^{2^d}.
+\]
+
+When we compute this modulo 2, again, all terms with even coefficients
+fall away and we finally get
+
+\begin{equation}
+w^2 + w = t^{2^d} + t.
+\end{equation}
+
+The point of all this is that we can split the expression $w^2 + w$
+into two more or less equal parts, just by factoring $w$ out:
+$w(w+1)$. Now, it is again very probable that we find common divisors
+in one of the factors, $w$ or $w+1$.
+Here is the implementation of the Cantor-Zassenhaus algorithm:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  cz :: Natural -> Int -> Poly Natural -> IO [Poly Natural]
+  cz p d u  | n <= d     = return [monicp p u]
+            | otherwise  = do 
+    x <- monicp p <$> randomPoly p (2*d) -- 2*d-1
+    let t  | p == 2     = addsquares (d-1) p x u
+           | otherwise  = add (powmodp p m x u) (P [p-1])
+    let r = gcdmp p u t
+    if degree r == 0 || degree r == n then cz p d u
+      else do  r1 <- cz p d r 
+               r2 <- cz p d (fst $ divmp p u r) 
+               return (r1 ++ r2)
+    where  n = degree u
+           m = (p^d-1) `div` 2
+\end{code}
+\end{minipage}
+
+The function receives a natural number,
+that is the modulus $p$, an |Int|, $d$, for the degree
+and the polynomial $u$, the factor product,
+which we both obtained from |ddfac|.
+When the degree is equal or greater than $n$,
+the degree of $u$, we are done: we already have
+a factor of the predicted degree.
+Otherwise, we generate a random monic polynomial
+of degree $2d-1$. Note that, since |randomPoly|
+expects the number of coefficients, we just pass $2d$.
+
+Then we calculate $t$. If $p$ is 2, we use |addsquares|,
+at which we will look in a moment. Otherwise,
+we raise the random polynomial to the power of $p^d-1/2$
+and subtract 1. That is the third factor of equation
+\ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
+if the result has either degree 0 (no factor was found)
+or degree equal to $u$ (all factors are in this one),
+then we just try again with another random polynomial.
+Otherwise, we continue with the $\gcd$ and the quotient
+$u/\gcd$.
+
+Let us try this for the result |(1,P [2,4,1])| we obtained
+earlier from applying |ddfac| on |P [5,4,3,1,1]|.
+|cz 7 1 (P [2,4,1])| gives 
+
+|[P [6,1],P [5,1]]|
+
+two irreducible polynomials of degree 1.
+The complete factorisation of |P [5,4,3,1,1]|, hence, is
+
+|[P [6,1],P [5,1],P [6,4,1]]|,
+
+which we can test by calling 
+|prodp (mulmp 7) [P [6,1],P [5,1],P [6,4,1]]|
+and we, indeed, get |P [5,4,3,1,1]| back.
+
+For the case where $p=2$, we use the function addsquares:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  addsquares :: Int -> Natural -> Poly Natural -> Poly Natural -> Poly Natural
+  addsquares i p x u = go i x x
+    where  go 0 w _  = w
+           go k w t  =  let  t'  =  pmmod p (powmp p p t) u
+                             w'  =  modp p (add w t')
+                        in go (k-1) w' t'
+\end{code}
+\end{minipage}
+
+which just computes $w$ as $t + t^2 + t^4 + \dots t^{2^{d-1}}$.
+
+Let us try |ddfac| and |cz| with a polynomial modulo 2,
+\eg\ |P [0,1,1,1,0,0,1,1,1]|, which is of degree 8 and
+is squarefree and irreducible (and, per definition, monic).
+The call |ddfac 2 (P [0,1,1,1,0,0,1,1,1])| gives
+us three chunks of factors:
+
+|[(1,P [0,1,1]),(2,P [1,1,1]),(4,P [1,1,1,1,1])]|.
+
+We see at once that the second and third polynomials
+are already irreducible, since they already have 
+the specified degree. The first one, however, is
+of degree 2, but shall contain factors of degree 1.
+So, let us see what |cz 2 1 (P [0,1,1])| will yield:
+
+|[P [0,1],P [1,1]]|.
+
+The complete factorisation of |P [0,1,1,1,0,0,1,1,1]|,
+hence, is
+
+|[P [0,1],P [1,1],P [1,1,1],P [1,1,1,1,1]]|.
 
 
 \ignore{
-- examples with irreducible and non-irreducible results
-=> how to get the factors out?
-- cz
-- cz for 2
+TODO:
+- derivative modulo p
 - squarefactor
+- Euler's theorem: why does f = fm = 1 mod(m)?
+- why does x^p^c, with c dividing d is not divided by g?
+- why do g and g' do not share divisors if squarefree
 - application to integers: hensel's lemma
 }
-
 

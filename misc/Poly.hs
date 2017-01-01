@@ -277,7 +277,7 @@ where
   --     the gcd would have been 12x+12
   --     This is called content-and-primitive-part factorisation
   --     and should always be applied 
-  --     before searching for non-trivialfactors.
+  --     before searching for non-trivial factors.
   -------------------------------------------------------------------------
   squarefree :: Integer -> Poly Integer -> Bool
   squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
@@ -371,7 +371,7 @@ where
   -- Cantor-Zassenhaus factor splitting
   -------------------------------------------------------------------------
   cz :: Integer -> Int -> Poly Integer -> IO [Poly Integer]
-  cz p d u | n <= d          = return [monicp p u]
+  cz p d u | n <= d    = return [monicp p u]
            | otherwise = do -- trace (show d ++ ": " ++ show u) $ do
     x <- monicp p <$> randomPoly p (2*d) -- 2*d-1
     let t | p == 2    = addsquares (d-1) p x u
@@ -412,6 +412,14 @@ where
     cs <- cleanz <$> mapM (\_ -> randomCoeff p) [1..d]
     if length cs < d then randomPoly p d
                      else return (P cs)
+
+  -------------------------------------------------------------------------
+  -- Produce a random monic squarefree polynomial (modulo p) 
+  -------------------------------------------------------------------------
+  msRandomPoly :: Integer -> Int -> IO (Poly Integer)
+  msRandomPoly p d = do
+    r <- monicp p <$> randomPoly p d
+    if squarefree p r then return r else msRandomPoly p d
 
   -------------------------------------------------------------------------
   -- Produce a random coefficient (modulo p)
