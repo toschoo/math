@@ -789,7 +789,8 @@ w^2 + w = t^{2^d} + t.
 The point of all this is that we can split the expression $w^2 + w$
 into two more or less equal parts, just by factoring $w$ out:
 $w(w+1)$. Now, it is again very probable that we find common divisors
-in one of the factors, $w$ or $w+1$.
+in both of the factors, $w$ or $w+1$ making it likely that we can
+reduce the problem by taking the $\gcd$ with one of them.
 Here is the implementation of the Cantor-Zassenhaus algorithm:
 
 \begin{minipage}{\textwidth}

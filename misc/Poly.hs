@@ -85,10 +85,22 @@ where
   add = strich (+)
 
   -------------------------------------------------------------------------
+  -- Addition over finite field
+  -------------------------------------------------------------------------
+  addp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  addp p a b = modp p (add a b)
+
+  -------------------------------------------------------------------------
   -- Subtraction
   -------------------------------------------------------------------------
   sub :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   sub = strich (-)
+
+  -------------------------------------------------------------------------
+  -- Subtraction over finite field
+  -------------------------------------------------------------------------
+  subp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
+  subp p a b = modp p (sub a b)
 
   -------------------------------------------------------------------------
   -- Sum
@@ -183,13 +195,13 @@ where
   divmp p (P as) (P bs) = let (q,r) = go [0] as in (P q, P r)
     where go q r | degree (P r) < db  = (q,r)
                  | null r || r == [0] = (q,r)
-                 | otherwise          = -- trace (show (q,r)) $
+                 | otherwise          = 
                      let t  = modiv p (last r) (last bs)
                          d  = degree (P r) - db
                          ts = zeros d ++ [t]
                          m  = mulmlist p ts bs
-                      in go [c `mmod` p | c <- cleanz $ strichlist (+) q ts]
-                            [c `mmod` p | c <- cleanz $ strichlist (-) r m ]
+                      in go (cleanz [c `mmod` p | c <- strichlist (+) q ts])
+                            (cleanz [c `mmod` p | c <- strichlist (-) r m ])
           db = degree (P bs)
 
   -------------------------------------------------------------------------
@@ -205,14 +217,8 @@ where
   cleanz xs = reverse $ go (reverse xs)
     where go []  = []
           go [0] = [0]
-          go (0:xs) = go xs
-          go xs     = xs
-
-  -------------------------------------------------------------------------
-  -- Make polynomial mod p
-  -------------------------------------------------------------------------
-  modp :: Integer -> Poly Integer -> Poly Integer
-  modp p (P as) = P (cleanz [a `mmod` p | a <- as])
+          go (0:zs) = go zs
+          go zs     = zs
 
   -------------------------------------------------------------------------
   -- Divides (generic)
@@ -267,7 +273,7 @@ where
   -------------------------------------------------------------------------
   -- Squarefree
   -- ----------
-  -- usually the test is gcd poly (derivative poly) == 1
+  -- usually the test is gcd u (derivative u) == 1
   -- however, in computing the gcd, one would usually factor
   --          the remainder, for instance:
   -- rem (x^2 + 7x + 6) (x^2 - 5x - 6) = 12(x+1)
@@ -280,25 +286,25 @@ where
   --     before searching for non-trivial factors.
   -------------------------------------------------------------------------
   squarefree :: Integer -> Poly Integer -> Bool
-  squarefree p poly = degree (gcdmp p poly (derivative (modmul p) poly)) == 0
+  squarefree p u = degree (gcdmp p u (derivative (modmul p) u)) == 0
 
   -------------------------------------------------------------------------
-  -- Squared factor (mod p)
+  -- Squared factor
   -------------------------------------------------------------------------
-  squarefactor :: Integer -> Poly Integer -> Maybe (Poly Integer)
-  squarefactor p poly | degree sq  > 0 = Just sq
-                      | otherwise      = Nothing 
-    where dv = derivative (modmul p) poly
-          sq | dv == P [0] = error "derivative is zero!"
-             | otherwise   = gcdmp p poly (derivative (modmul p) poly)
+  squarefactor :: (Show a, Num a, Eq a, Enum a, Fractional a, Ord a) => 
+                  Poly a -> [Poly a]
+  squarefactor u | degree sq  > 0 = [sq]
+                 | otherwise      = []
+    where dv = derivative (*) u
+          sq = gcdp u dv
 
   -------------------------------------------------------------------------
   -- Powers of...
   -------------------------------------------------------------------------
   powers :: Integer -> Poly Integer -> [Poly Integer]
-  powers p poly = go poly
+  powers p u = go u
     where go sq = pow sq : go (pow sq) 
-          pow   = mulmp p poly
+          pow   = mulmp p u
   
   -------------------------------------------------------------------------
   -- Factoring: Kronecker
@@ -328,38 +334,63 @@ where
     where d      = degree u
           x      = P [0,1]
           go i z = let z' = powmp p p z
-                    in case pmmod p (sub z' x) u of
-                     P [_] -> {- trace (show i) $ -} d == i
-                     g     -> if i < d then go (i+1) (pmmod p z' u)
+                    in case pmmod p (subp p z' x) u of
+                     P [0] -> d == i
+                     _     -> if i < d then go (i+1) (pmmod p z' u)
                                        else False
           
   -------------------------------------------------------------------------
   -- Factoring: Cantor-Zassenhaus
   -------------------------------------------------------------------------
-  cantorzassenhaus :: Integer -> Poly Integer -> IO [Poly Integer]
-  cantorzassenhaus p u | irreducible p u = return [m]
+  cantorzassenhaus :: Integer -> Poly Integer -> IO [(Integer, Poly Integer)] 
+  cantorzassenhaus p u | irreducible p m = return [(1,m)]
                        | otherwise       = 
-                         case squarefactor p m of
-                           Nothing -> 
-                             (nub . concat) <$> mapM (\(d,v) -> cz p d v) 
-                                                     (ddfac p m)
-                           Just s1 -> 
-                             let (s2,_) = divmp p m s1
-                              in do fs1 <- cantorzassenhaus p s1
-                                    fs2 <- cantorzassenhaus p s2
-                                    return (nub (fs1++fs2))
+                           concat <$> mapM mexpcz [(e, ddfac p f) | 
+                                      (e,f) <- squarefactormod p u]
     where m = monicp p u
+          expcz e (d,v)   = map (\f -> (e,f)) <$> cz p d v
+          mexpcz (e,dds)  = concat <$> mapM (expcz e) dds
+
+  -------------------------------------------------------------------------
+  -- Squared factor (mod p)
+  -------------------------------------------------------------------------
+  squarefactormod :: Integer -> Poly Integer -> [(Integer, Poly Integer)]
+  squarefactormod p = sqmd p 0 
+
+  -------------------------------------------------------------------------
+  -- Squared factor (mod p) per exponent
+  -------------------------------------------------------------------------
+  sqmd :: Integer -> Integer -> Poly Integer -> [(Integer, Poly Integer)]
+  sqmd p e u | degree u < 1 = []
+             | otherwise    = let u' = derivative (modmul p) u
+                                  t  = gcdmp p u u'
+                               in go 1 t (fst $ divmp p u t)
+    where go k tk vk = let vk' | k `rem` p /= 0 = gcdmp p tk vk
+                               | otherwise      = vk
+                           tk' = fst (divmp p tk vk')
+                           k'  = k + 1
+                        in case divmp p vk vk' of
+                             (P [_],_) ->             nextStep k' tk' vk'
+                             (f,_)     -> (k*p^e,f) : nextStep k' tk' vk'
+          nextStep k tk vk | degree vk <= 0 && 
+                             degree tk > 0 = sqmd p (e+1) (mkNextTk tk)
+                           | degree vk > 0 = go k tk vk
+                           | otherwise     = []
+          mkNextTk tk = poly $ reverse (nexT (degree tk) (coeffs tk))
+          nexT i cs | i <  0 = []
+                    | i `rem` q == 0 = cs!!i : nexT (i-1) cs
+                    | otherwise      =         nexT (i-1) cs
+          q = fromIntegral p
             
   -------------------------------------------------------------------------
   -- Discrete degree factorisation
   -------------------------------------------------------------------------
   ddfac :: Integer -> Poly Integer -> [(Int, Poly Integer)]
   ddfac p u = go 1 u (P [0,1])
-    where n = degree u
-          go d v x | degree v <= 0 = []
-                   | otherwise = -- trace (show d ++ ": " ++ show v ++ ", " ++ show x) $
+    where go d v x | degree v <= 0 = []
+                   | otherwise = 
                      let x'     = powmp p p x 
-                         t      = add x' (P [0,p-1])
+                         t      = addp p x' (P [0,p-1])
                          g      = gcdmp p t v
                          (v',_) = divmp p v g
                          r      = (d,monicp p g)
@@ -372,10 +403,10 @@ where
   -------------------------------------------------------------------------
   cz :: Integer -> Int -> Poly Integer -> IO [Poly Integer]
   cz p d u | n <= d    = return [monicp p u]
-           | otherwise = do -- trace (show d ++ ": " ++ show u) $ do
+           | otherwise = do 
     x <- monicp p <$> randomPoly p (2*d) -- 2*d-1
     let t | p == 2    = addsquares (d-1) p x u
-          | otherwise = add (powmodp p m x u) (P [p-1])
+          | otherwise = addp p (powmodp p m x u) (P [p-1])
     let r = gcdmp p u t
     if degree r <= 0 || degree r >= n then cz p d u
       else do r1 <- cz p d r 
@@ -391,7 +422,7 @@ where
   addsquares i p x u = go i x x
     where go 0 w _ = w
           go k w t = let t' = pmmod p (powmp p p t) u
-                         w' = modp p (add w t')
+                         w' = addp p w t'
                       in go (k-1) w' t'
 
   -------------------------------------------------------------------------
@@ -437,36 +468,49 @@ where
     if t then return n else randomPrime k
 
   -------------------------------------------------------------------------
+  -- Deep Test Cantor-Zassenhaus
+  -------------------------------------------------------------------------
+  deepCantorZass :: Int -> IO Bool
+  deepCantorZass 0 = return True
+  deepCantorZass i = do
+    k <- randomRIO(0,4)
+    let p = ps!!k
+    let x | k == 4    = "" 
+          | otherwise = " "
+    putStr (x ++ show p ++ " - ")
+    t <- tstCantorZass 1 p
+    if t then deepCantorZass (i-1)
+         else return False
+    where ps = [2,3,5,7,11]
+    
+
+  -------------------------------------------------------------------------
   -- Test Cantor-Zassenhaus
   -------------------------------------------------------------------------
   tstCantorZass :: Int -> Integer -> IO Bool
   tstCantorZass 0 _ = return True
   tstCantorZass i p = do
     d  <- randomRIO (3,8)
-    x  <- randomPoly p d
+    x  <- monicp p <$> randomPoly p d
     putStr (showp x ++ ": ")
     fs <- cantorzassenhaus p x
     putStrLn (show fs)
     if null fs then return False
                else if checkFactors p x fs then tstCantorZass (i-1) p
                                            else return False
-    where showp p | a < 0     = show p
-                  | otherwise = show p ++ sp
-            where l  = length(show p)
-                  a  = 20 - l
-                  sp = take a (repeat ' ')
+
+  showp :: Poly Integer -> String
+  showp p | a < 0     = show p
+          | otherwise = show p ++ sp
+    where l  = length(show p)
+          a  = 20 - l
+          sp = take a (repeat ' ')
 
   -------------------------------------------------------------------------
   -- Check Factors
   -------------------------------------------------------------------------
-  checkFactors :: Integer -> Poly Integer -> [Poly Integer] -> Bool
-  checkFactors p x fs | length fs == 1 = head fs == m || not (squarefree p m)
-                      | otherwise = 
-                        let rs = map (divmp p m) fs
-                            is = map (irreducible p) fs
-                            zs = map ((==P[0]) . snd) rs
-                         in and zs && and is
-    where m = monicp p x
+  checkFactors :: Integer -> Poly Integer -> [(Integer,Poly Integer)] -> Bool
+  checkFactors p x fs = prodp (mulmp p) [powmp p i u | (i,u) <- fs] == x
 
   -------------------------------------------------------------------------
   -- product
@@ -478,7 +522,7 @@ where
   -- pow (square-and-multiply)
   -------------------------------------------------------------------------
   powp :: Integer -> Poly Integer -> Poly Integer
-  powp f poly = go f (P [1]) poly
+  powp f u = go f (P [1]) u
     where go 0 y _  = y
           go 1 y x  = mul y x
           go n y x | even n    = go (n `div` 2) y   (mul x x) 
@@ -489,16 +533,16 @@ where
   -- pow (naive)
   -------------------------------------------------------------------------
   powmp2 :: Integer -> Integer -> Poly Integer -> Poly Integer
-  powmp2 p f poly = go f poly
-    where go 0 x = P [1]
+  powmp2 p f u = go f u 
+    where go 0 _ = P [1]
           go 1 x = x
-          go n x = go (n-1) (mulmp p poly x) -- better: double+add
+          go n x = go (n-1) (mulmp p u x) -- better: double+add
 
   -------------------------------------------------------------------------
   -- pow (square-and-multiply)
   -------------------------------------------------------------------------
   powmp :: Integer -> Integer -> Poly Integer -> Poly Integer
-  powmp p f poly = go f (P [1]) poly
+  powmp p f u = go f (P [1]) u
     where go 0 y _ = y
           go 1 y x = mulmp p y x
           go n y x | even n    = go (n `div` 2) y   (mulmp p x x) 
@@ -509,7 +553,7 @@ where
   -- pow (square-and-multiply) modulo a polynomial
   -------------------------------------------------------------------------
   powmodp :: Integer -> Integer -> Poly Integer -> Poly Integer -> Poly Integer
-  powmodp p f poly u = go f (P [1]) poly
+  powmodp p f v u = go f (P [1]) v
     where go 0 y _ = y
           go 1 y x = mulmp p y x
           go n y x | even n    = go (n `div` 2) y   (pmmod p (mulmp p x x) u)
@@ -552,16 +596,16 @@ where
            | otherwise         = n `rem` p
 
   -------------------------------------------------------------------------
-  -- Polynomial mod Integer
+  -- Make polynomial mod p
   -------------------------------------------------------------------------
-  pmod :: Poly Integer -> Integer -> Poly Integer
-  pmod (P cs) p = P [c `mmod` p | c <- cs]
+  modp :: Integer -> Poly Integer -> Poly Integer
+  modp p (P as) = P (cleanz [a `mmod` p | a <- as])
 
   -------------------------------------------------------------------------
   -- Polynomial mod Polynomial
   -------------------------------------------------------------------------
   pmmod :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
-  pmmod p poly m = snd (divmp p poly m) 
+  pmmod p u m = snd (divmp p u m) 
 
   -------------------------------------------------------------------------
   -- Comparison
@@ -619,22 +663,22 @@ where
   -- Newton
   -------------------------------------------------------------------------
   newton :: Integer -> Integer -> [[Integer]] -> [Integer] -> Integer
-  newton s n ds seq = sum ts
-    where hs = getHeads seq ds
+  newton s n ds sq = sum ts
+    where hs = getHeads sq ds
           ts = [h * (B.choose (n-s) k) | (h,k) <- zip hs [0..n]]
 
   -------------------------------------------------------------------------
   -- Get Heads
   -------------------------------------------------------------------------
   getHeads :: [Integer] -> [[Integer]] -> [Integer]
-  getHeads seq ds = map head (seq:ds)
+  getHeads sq ds = map head (sq:ds)
 
   -------------------------------------------------------------------------
   -- Newton Polynomial
   -------------------------------------------------------------------------
   newtonp :: [[Integer]] -> [Integer] -> Poly Rational
-  newtonp ds seq = sump ts
-    where hs = getHeads seq ds
+  newtonp ds sq = sump ts
+    where hs = getHeads sq ds
           n  = fromIntegral $ dpredict ds
           ts = [bin2poly h k | (h,k) <- zip hs [0..n]]
 
@@ -656,7 +700,7 @@ where
   findGen ds = L.backsub . L.echelon . findCoeffs ds 
 
   findCoeffs :: [[Integer]] -> [Integer] -> L.Matrix Integer
-  findCoeffs ds seq = L.M (go 0 seq)
+  findCoeffs ds sq = L.M (go 0 sq)
     where d = fromIntegral (length ds)
           go _ []  = []
           go n (x:xs) | n > d     = []
@@ -664,8 +708,8 @@ where
 
   genCoeff :: Integer -> Integer -> Integer -> [Integer]
   genCoeff m n x = go 0 x
-    where go i x | i >  m    = [x]
-                 | otherwise = n^i : go (i+1) x
+    where go i z | i >  m    = [z]
+                 | otherwise = n^i : go (i+1) z
 
   testGauss :: Poly Integer -> L.Matrix Integer
   testGauss p = L.echelon $ findCoeffs ds sq
@@ -685,6 +729,7 @@ where
   cn X n = cn X (n-1) ++ cn Y (n-1)
   cn Y 0 = [Y]
   cn Y n = Z : cn Y (n-1)
+  cn Z _ = undefined
 
   ccn :: [Newton] -> (Int,Int,Int,Int)
   ccn ls = (length $ filter (== H) ls,
@@ -712,7 +757,6 @@ where
                  | signum fc == signum fa  = bisect p t c b 
                  | otherwise               = bisect p t a c 
     where fa = apply p a
-          fb = apply p b
           fc = apply p c
           c  = (a+b)/2
 
@@ -740,7 +784,7 @@ where
               0 -> coeffs p
               1 -> solvel p
               2 -> solve2 p
-              3 -> solve3 p
+              -- 3 -> solve3 p
               _ -> error "I don't know how to solve this polynomial"
 
   solvel :: (Num a,Fractional a) => Poly a -> [a]
@@ -753,10 +797,11 @@ where
                                        x1 = (-b + d) / 2*a
                                        x2 = (-b - d) / 2*a
                         in if x1 /= x2 then [x1,x2] else [x1]
-    where det = b^2 - 4*a*c
+    where det = b^2 - 4*a*c 
   solve2 _           = error "oops!"
 
   -- not correct...
+  {-
   solve3 :: Poly Double -> [Double]
   solve3 (P [a,0,c,d]) | a /= 1    = solve3 (P [1,0,c/a,d/a])
                        | otherwise =
@@ -786,8 +831,10 @@ where
                              four  = (u2,v2) 
                           in mymin [(x,abs (d-(fst x * snd x))) | 
                                     x <- [one,two,three,four]]
-    where mymin (x:xs) = go x xs
+    where mymin []     = (0,0)
+          mymin (x:xs) = go x xs
           go x [] = fst x
           go x (z:zs) | snd x < snd z = go x zs
                       | otherwise     = go z zs
+  -}
     

@@ -1,3 +1,4 @@
+{-# Language BangPatterns #-}
 module Main
 where 
 
@@ -5,5 +6,5 @@ where
 
   main :: IO ()
   main = do 
-    t <- tstCantorZass 100 7
+    !t <- deepCantorZass 1000
     if t then putStrLn "passed" else putStrLn "failed"
