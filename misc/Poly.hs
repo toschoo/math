@@ -364,7 +364,8 @@ where
   sqmd p e u | degree u < 1 = []
              | otherwise    = let u' = derivative (modmul p) u
                                   t  = gcdmp p u u'
-                               in go 1 t (fst $ divmp p u t)
+                                  v  = fst (divmp p u t)
+                               in go 1 t v
     where go k tk vk = let vk' | k `rem` p /= 0 = gcdmp p tk vk
                                | otherwise      = vk
                            tk' = fst (divmp p tk vk')
@@ -431,7 +432,7 @@ where
   monicp :: Integer -> Poly Integer -> Poly Integer
   monicp p u = let cs  = coeffs u
                    k   = last cs `M.inverse` p
-                in P (map (modmul p k) cs)
+                in P (cleanz $ map (modmul p k) cs)
 
   -------------------------------------------------------------------------
   -- Produce a random polynomial (modulo p)

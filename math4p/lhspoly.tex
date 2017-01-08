@@ -4709,7 +4709,7 @@ Here is a Haskell implementation:
 \>[23]{}\mathbf{let}\;\Varid{z'}\mathrel{=}\Varid{powmp}\;\Varid{p}\;\Varid{p}\;\Varid{z}{}\<[E]%
 \\
 \>[23]{}\mathbf{in}\;{}\<[27]%
-\>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{add}\;\Varid{z'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]))\;\Varid{u}\;\mathbf{of}{}\<[E]%
+\>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{addp}\;\Varid{p}\;\Varid{z'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]))\;\Varid{u}\;\mathbf{of}{}\<[E]%
 \\
 \>[27]{}\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[34]%
 \>[34]{}\to {}\<[38]%
@@ -4902,7 +4902,7 @@ the corresponding factor product.
 \>[40]{}\mathrel{=}\Varid{powmp}\;\Varid{p}\;\Varid{p}\;\Varid{x}{}\<[E]%
 \\
 \>[30]{}\Varid{t}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{add}\;\Varid{x'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
+\>[40]{}\mathrel{=}\Varid{addp}\;\Varid{p}\;\Varid{x'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
 \\
 \>[30]{}\Varid{g}{}\<[40]%
 \>[40]{}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{t}\;\Varid{v}{}\<[E]%
@@ -4953,8 +4953,6 @@ that, if $n$ is squarefree, then
 $\varphi(n) = \prod_{p|n}{p-1}$, \ie\ the totient number
 of $n$ is the product of the primes in the factorisation
 of $n$ all reduced by 1.)
-The algorithm presented here, in fact,
-works properly only with squarefree polynomials.
 We need to come back to this topic and, for the moment,
 make sure that we only apply polynomials that are
 squarefree and monic.
@@ -5140,7 +5138,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
 \>[25]{}\mathrel{=}\Varid{addsquares}\;(\Varid{d}\mathbin{-}\mathrm{1})\;\Varid{p}\;\Varid{x}\;\Varid{u}{}\<[E]%
 \\
 \>[12]{}\mid \Varid{otherwise}{}\<[25]%
-\>[25]{}\mathrel{=}\Varid{add}\;(\Varid{powmodp}\;\Varid{p}\;\Varid{m}\;\Varid{x}\;\Varid{u})\;(\Conid{P}\;[\mskip1.5mu \Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
+\>[25]{}\mathrel{=}\Varid{addp}\;\Varid{p}\;(\Varid{powmodp}\;\Varid{p}\;\Varid{m}\;\Varid{x}\;\Varid{u})\;(\Conid{P}\;[\mskip1.5mu \Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{let}\;\Varid{r}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{u}\;\Varid{t}{}\<[E]%
@@ -5184,7 +5182,7 @@ and subtract 1. That is the third factor of equation
 \ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
 if the result has either degree 0 (no factor was found)
 or degree equal to $u$ (all factors are in this one),
-then we just try again with another random polynomial.
+we just try again with another random polynomial.
 Otherwise, we continue with the $\gcd$ and the quotient
 $u/\gcd$.
 
@@ -5237,7 +5235,7 @@ For the case where $p=2$, we use the function addsquares:
 \\
 \>[30]{}\Varid{w'}{}\<[34]%
 \>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}\Varid{modp}\;\Varid{p}\;(\Varid{add}\;\Varid{w}\;\Varid{t'}){}\<[E]%
+\>[37]{}\Varid{addp}\;\Varid{p}\;\Varid{w}\;\Varid{t'}{}\<[E]%
 \\
 \>[25]{}\mathbf{in}\;\Varid{go}\;(\Varid{k}\mathbin{-}\mathrm{1})\;\Varid{w'}\;\Varid{t'}{}\<[E]%
 \ColumnHook
@@ -5268,6 +5266,257 @@ hence, is
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
 
+Now, we still have to solve the problem of polynomials
+containing squared factors, \ie\ repeated roots.
+There is in fact a method to find such factors
+adopted from calculus and, again, related to the
+derivative. The point is that a polynomial and
+its derivative share only those divisors that
+appear more than once in the factorisation.
+We have not enough knowledge on derivatives to
+prove that here rigorously, but we can give an
+intuition.
+
+Consider a polynomial with the factorisation
+
+\[
+(x+a)(x+b)(x+c)\dots
+\]
+
+This is a product and, to find the derivative
+of this polynomial, we need to apply the \term{product rule}
+(which we will study in part 3). The product rule states that
+
+\begin{equation}
+(f \times g)' = fg' + f'g,
+\end{equation}
+
+\ie\ the derivative of the product of $f$ and $g$
+is the sum of the product of $f$ and the derivative of $g$
+and the product of the derivative of $f$ and $g$.
+
+The derivatives of the individual factors above
+all reduce to 1, since for $f = x^1 + a$,
+$f' = 1\times x^0 = 1$. The product of factors, hence,
+turns into a sum of factors:
+
+\[
+1\times(x+a) + 1\times(x+b) + 1\times(x+c)\dots
+\]
+
+As a simple example, let us compute the polynomial
+with the factors $(x+a)(x+b)$. The polynomial is
+$x^2 + ax + bx + ab$. Its derivative is
+$2x + a + b$. When we apply the product rule to
+the factors, we get $x+a+x+b = 2x+a+b$,
+which is indeed the same result.
+
+It is intuitively clear that the sum of the factors
+is not the same as the product of those same factors
+and, even further, that none of the factors is preserved.
+They all disappear in favour of others they do not
+share divisors with, because, since the factors are
+coprime to each other, they do not share divisors
+with their sum either.
+When we have a repeated factor, however, as in
+the following polynomial
+
+\[
+(x+a)(x+a)(x+b)\dots,
+\]
+
+then this factor is preserved. The product rule
+will create the factor $x+a+x+a=2x+2a$, which
+is a multiple of the original factor, which,
+in its turn, is therefore preserved.
+
+In an infinite field, the following algorithm
+can be adopted.
+Suppose we want to compute the factorisation
+of 
+
+\[
+f = a_1a_2^2a_3^3\dots a_k^k.
+\]
+
+Then, the $\gcd$ of $f$ and its derivative $f'$ represents
+
+\[
+a_2^1a_3^2\dots a_k^{k-1},
+\]
+
+\ie\, the repeated factors with the exponent
+decreased by one. Then $f$ divided by the $\gcd$
+gives us
+
+\[
+a_1a_2a_3\dots a_k.
+\]
+
+$f'$ divided by the $\gcd$ is 
+
+\[
+\sum_{i=1}^k{ia_i'a_1}.
+\]
+
+Now, we can build an iterative algorithm that
+computes $\gcd(f/\gcd(f,f'))$, which is the next $a$,
+and the quotient of the previous result and the current
+result, which are the remaining $a$s. In other words,
+we can obtain $a$ by $a$, each $a$ representing
+the factors of the same exponent.
+
+In a finite field, this, unfortunately does not
+work in all cases. Problematic are all coefficients
+with exponents that are multiples of the modulus.
+When we compute $nc^{n-1}$, for $n$ an exponent
+in the original polynomial that is a multiple of
+the modulus, the coefficient itself becomes zero.
+If we are unlucky, the derivative \term{disappears},
+\ie\ it is 0. A simple example is the polynomial
+$x^4 \pmod{2}$. When we compute the derivative, we get
+$4x^3$. Unfortunately, 4 is a multiple of 2 and,
+therefore, the only nonzero coefficient we had
+in the original polynomial becomes zero.
+
+What we can do, however, is to keep the coefficients
+with exponents that are multiples of the modulus
+separated from those that are not.
+That is, we would create two sequences of polynomials,
+one representing the coefficients whose exponents
+are not multiples of the modulus and one with those
+whose exponents are. Before we do this, we should have
+a closer look at the product rule. Until now,
+we have only considered products with two factors.
+When we have more than two factors, the derivative
+becomes:
+
+\[
+(abc)' = a'bc + ab'c + abc'.
+\]
+
+In other words, it is a sum of products of all factors
+of the original polynomial but one (the one whose derivative
+is taken in this term). We can represent that more elegantly as
+
+\begin{equation}
+f' = \sum_i{\prod_{j\neq i}{\left(a_j^j\right)}a_i'}
+\end{equation}
+
+It is now easy to see that the individual terms
+in the factorisation of the derivative conatain
+all the factors of the original polynomial but one.
+
+
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{30E}{@{}l@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{53}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{58}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sqmd}\mathbin{::}\Conid{Integer}\to \Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{sqmd}\;\Varid{p}\;\Varid{e}\;\Varid{u}{}\<[15]%
+\>[15]{}\mid \Varid{degree}\;\Varid{u}\mathbin{<}\mathrm{1}{}\<[31]%
+\>[31]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[15]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}{}\<[34]%
+\>[34]{}\mathbf{let}\;{}\<[39]%
+\>[39]{}\Varid{u'}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{derivative}\;(\Varid{modmul}\;\Varid{p})\;\Varid{u}{}\<[E]%
+\\
+\>[39]{}\Varid{t}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{u}\;\Varid{u'}{}\<[E]%
+\\
+\>[39]{}\Varid{v}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{fst}\;(\Varid{divmp}\;\Varid{p}\;\Varid{u}\;\Varid{t}){}\<[E]%
+\\
+\>[34]{}\mathbf{in}\;\Varid{go}\;\mathrm{1}\;\Varid{t}\;\Varid{v}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}\mathrel{=}{}\<[26]%
+\>[26]{}\mathbf{let}\;{}\<[31]%
+\>[31]{}\Varid{vk'}{}\<[36]%
+\>[36]{}\mid \Varid{k}\mathbin{\Varid{`rem`}}\Varid{p}\not\equiv \mathrm{0}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{tk}\;\Varid{vk}{}\<[E]%
+\\
+\>[36]{}\mid \Varid{otherwise}{}\<[53]%
+\>[53]{}\mathrel{=}\Varid{vk}{}\<[E]%
+\\
+\>[31]{}\Varid{tk'}{}\<[36]%
+\>[36]{}\mathrel{=}\Varid{fst}\;(\Varid{divmp}\;\Varid{p}\;\Varid{tk}\;\Varid{vk'}){}\<[E]%
+\\
+\>[31]{}\Varid{k'}{}\<[36]%
+\>[36]{}\mathrel{=}\Varid{k}\mathbin{+}\mathrm{1}{}\<[E]%
+\\
+\>[26]{}\mathbf{in}\;\mathbf{case}\;\Varid{divmp}\;\Varid{p}\;\Varid{vk}\;\Varid{vk'}\;\mathbf{of}{}\<[E]%
+\\
+\>[26]{}\hsindent{5}{}\<[31]%
+\>[31]{}(\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu],\anonymous ){}\<[42]%
+\>[42]{}\to {}\<[58]%
+\>[58]{}\Varid{nextStep}\;\Varid{k'}\;\Varid{tk'}\;\Varid{vk'}{}\<[E]%
+\\
+\>[26]{}\hsindent{5}{}\<[31]%
+\>[31]{}(\Varid{f},\anonymous ){}\<[42]%
+\>[42]{}\to (\Varid{k}\mathbin{*}\Varid{p}\mathbin{\uparrow}\Varid{e},\Varid{f})\mathbin{:}{}\<[58]%
+\>[58]{}\Varid{nextStep}\;\Varid{k'}\;\Varid{tk'}\;\Varid{vk'}{}\<[E]%
+\\
+\>[12]{}\Varid{nextStep}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[30]%
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{degree}\;\Varid{vk}\leq \mathrm{0}\mathrel{\wedge}{}\<[E]%
+\\
+\>[33]{}\Varid{degree}\;\Varid{tk}\mathbin{>}\mathrm{0}{}\<[48]%
+\>[48]{}\mathrel{=}\Varid{sqmd}\;\Varid{p}\;(\Varid{e}\mathbin{+}\mathrm{1})\;(\Varid{mkNextTk}\;\Varid{tk}){}\<[E]%
+\\
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{degree}\;\Varid{vk}\mathbin{>}\mathrm{0}{}\<[48]%
+\>[48]{}\mathrel{=}\Varid{go}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[E]%
+\\
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{otherwise}{}\<[48]%
+\>[48]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{mkNextTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{reverse}\;(\Varid{nexT}\;(\Varid{degree}\;\Varid{tk})\;(\Varid{coeffs}\;\Varid{tk}))){}\<[E]%
+\\
+\>[12]{}\Varid{nexT}\;\Varid{i}\;\Varid{cs}{}\<[23]%
+\>[23]{}\mid \Varid{i}\mathbin{<}{}\<[30]%
+\>[30]{}\mathrm{0}{}\<[30E]%
+\>[41]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[23]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{q}\equiv \mathrm{0}{}\<[41]%
+\>[41]{}\mathrel{=}\Varid{cs}\mathbin{!!}\Varid{i}\mathbin{:}{}\<[52]%
+\>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\\
+\>[23]{}\mid \Varid{otherwise}{}\<[41]%
+\>[41]{}\mathrel{=}{}\<[52]%
+\>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\\
+\>[12]{}\Varid{q}\mathrel{=}\Varid{fromIntegral}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 \ignore{
 TODO:

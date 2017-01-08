@@ -468,7 +468,7 @@ Here is a Haskell implementation:
     where  d       =  degree u
            x       =  P [0,1]
            go i z  =  let z' = powmp p p z
-                      in  case pmmod p (add z' (P [0,p-1])) u of
+                      in  case pmmod p (addp p z' (P [0,p-1])) u of
                           P [_]  ->  i == d
                           g      ->  if i < d  then go (i+1) (pmmod p z' u)
                                                else False
@@ -602,7 +602,7 @@ the corresponding factor product.
            go d v x  |  degree v <= 0  = []
                      |  otherwise      = 
                         let  x'        = powmp p p x 
-                             t         = add x' (P [0,p-1])
+                             t         = addp p x' (P [0,p-1])
                              g         = gcdmp p t v
                              (v',_)    = divmp p v g
                              r         = (d,monicp p g)
@@ -637,8 +637,6 @@ that, if $n$ is squarefree, then
 $\varphi(n) = \prod_{p||n}{p-1}$, \ie\ the totient number
 of $n$ is the product of the primes in the factorisation
 of $n$ all reduced by 1.)
-The algorithm presented here, in fact,
-works properly only with squarefree polynomials.
 We need to come back to this topic and, for the moment,
 make sure that we only apply polynomials that are
 squarefree and monic.
@@ -800,7 +798,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
             | otherwise  = do 
     x <- monicp p <$> randomPoly p (2*d) -- 2*d-1
     let t  | p == 2     = addsquares (d-1) p x u
-           | otherwise  = add (powmodp p m x u) (P [p-1])
+           | otherwise  = addp p (powmodp p m x u) (P [p-1])
     let r = gcdmp p u t
     if degree r == 0 || degree r == n then cz p d u
       else do  r1 <- cz p d r 
@@ -829,7 +827,7 @@ and subtract 1. That is the third factor of equation
 \ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
 if the result has either degree 0 (no factor was found)
 or degree equal to $u$ (all factors are in this one),
-then we just try again with another random polynomial.
+we just try again with another random polynomial.
 Otherwise, we continue with the $\gcd$ and the quotient
 $u/\gcd$.
 
@@ -856,7 +854,7 @@ For the case where $p=2$, we use the function addsquares:
   addsquares i p x u = go i x x
     where  go 0 w _  = w
            go k w t  =  let  t'  =  pmmod p (powmp p p t) u
-                             w'  =  modp p (add w t')
+                             w'  =  addp p w t'
                         in go (k-1) w' t'
 \end{code}
 \end{minipage}
@@ -884,6 +882,175 @@ hence, is
 
 |[P [0,1],P [1,1],P [1,1,1],P [1,1,1,1,1]]|.
 
+Now, we still have to solve the problem of polynomials
+containing squared factors, \ie\ repeated roots.
+There is in fact a method to find such factors
+adopted from calculus and, again, related to the
+derivative. The point is that a polynomial and
+its derivative share only those divisors that
+appear more than once in the factorisation.
+We have not enough knowledge on derivatives to
+prove that here rigorously, but we can give an
+intuition.
+
+Consider a polynomial with the factorisation
+
+\[
+(x+a)(x+b)(x+c)\dots
+\]
+
+This is a product and, to find the derivative
+of this polynomial, we need to apply the \term{product rule}
+(which we will study in part 3). The product rule states that
+
+\begin{equation}
+(f \times g)' = fg' + f'g,
+\end{equation}
+
+\ie\ the derivative of the product of $f$ and $g$
+is the sum of the product of $f$ and the derivative of $g$
+and the product of the derivative of $f$ and $g$.
+
+The derivatives of the individual factors above
+all reduce to 1, since for $f = x^1 + a$,
+$f' = 1\times x^0 = 1$. The product of factors, hence,
+turns into a sum of factors:
+
+\[
+1\times(x+a) + 1\times(x+b) + 1\times(x+c)\dots
+\]
+
+As a simple example, let us compute the polynomial
+with the factors $(x+a)(x+b)$. The polynomial is
+$x^2 + ax + bx + ab$. Its derivative is
+$2x + a + b$. When we apply the product rule to
+the factors, we get $x+a+x+b = 2x+a+b$,
+which is indeed the same result.
+
+It is intuitively clear that the sum of the factors
+is not the same as the product of those same factors
+and, even further, that none of the factors is preserved.
+They all disappear in favour of others they do not
+share divisors with, because, since the factors are
+coprime to each other, they do not share divisors
+with their sum either.
+When we have a repeated factor, however, as in
+the following polynomial
+
+\[
+(x+a)(x+a)(x+b)\dots,
+\]
+
+then this factor is preserved. The product rule
+will create the factor $x+a+x+a=2x+2a$, which
+is a multiple of the original factor, which,
+in its turn, is therefore preserved.
+
+In an infinite field, the following algorithm
+can be adopted.
+Suppose we want to compute the factorisation
+of 
+
+\[
+f = a_1a_2^2a_3^3\dots a_k^k.
+\]
+
+Then, the $\gcd$ of $f$ and its derivative $f'$ represents
+
+\[
+a_2^1a_3^2\dots a_k^{k-1},
+\]
+
+\ie\, the repeated factors with the exponent
+decreased by one. Then $f$ divided by the $\gcd$
+gives us
+
+\[
+a_1a_2a_3\dots a_k.
+\]
+
+$f'$ divided by the $\gcd$ is 
+
+\[
+\sum_{i=1}^k{ia_i'a_1}.
+\]
+
+Now, we can build an iterative algorithm that
+computes $\gcd(f/\gcd(f,f'))$, which is the next $a$,
+and the quotient of the previous result and the current
+result, which are the remaining $a$s. In other words,
+we can obtain $a$ by $a$, each $a$ representing
+the factors of the same exponent.
+
+In a finite field, this, unfortunately does not
+work in all cases. Problematic are all coefficients
+with exponents that are multiples of the modulus.
+When we compute $nc^{n-1}$, for $n$ an exponent
+in the original polynomial that is a multiple of
+the modulus, the coefficient itself becomes zero.
+If we are unlucky, the derivative \term{disappears},
+\ie\ it is 0. A simple example is the polynomial
+$x^4 \pmod{2}$. When we compute the derivative, we get
+$4x^3$. Unfortunately, 4 is a multiple of 2 and,
+therefore, the only nonzero coefficient we had
+in the original polynomial becomes zero.
+
+What we can do, however, is to keep the coefficients
+with exponents that are multiples of the modulus
+separated from those that are not.
+That is, we would create two sequences of polynomials,
+one representing the coefficients whose exponents
+are not multiples of the modulus and one with those
+whose exponents are. Before we do this, we should have
+a closer look at the product rule. Until now,
+we have only considered products with two factors.
+When we have more than two factors, the derivative
+becomes:
+
+\[
+(abc)' = a'bc + ab'c + abc'.
+\]
+
+In other words, it is a sum of products of all factors
+of the original polynomial but one (the one whose derivative
+is taken in this term). We can represent that more elegantly as
+
+\begin{equation}
+f' = \sum_i{\prod_{j\neq i}{\left(a_j^j\right)}a_i'}
+\end{equation}
+
+It is now easy to see that the individual terms
+in the factorisation of the derivative conatain
+all the factors of the original polynomial but one.
+
+
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  sqmd :: Integer -> Integer -> Poly Integer -> [(Integer, Poly Integer)]
+  sqmd p e u  | degree u < 1  = []
+              | otherwise     =  let  u'  = derivative (modmul p) u
+                                      t   = gcdmp p u u'
+                                      v   = fst (divmp p u t)
+                                 in go 1 t v
+    where  go k tk vk =  let  vk'  | k `rem` p /= 0 = gcdmp p tk vk
+                                   | otherwise      = vk
+                              tk'  = fst (divmp p tk vk')
+                              k'   = k + 1
+                         in case divmp p vk vk' of
+                              (P [_],_)  ->              nextStep k' tk' vk'
+                              (f,_)      -> (k*p^e,f) :  nextStep k' tk' vk'
+           nextStep k tk vk  |  degree vk <= 0 && 
+                                degree tk > 0  = sqmd p (e+1) (mkNextTk tk)
+                             |  degree vk > 0  = go k tk vk
+                             |  otherwise      = []
+           mkNextTk tk = poly (reverse (nexT (degree tk) (coeffs tk)))
+           nexT i cs  | i <  0          = []
+                      | i `rem` q == 0  = cs!!i :  nexT (i-1) cs
+                      | otherwise       =          nexT (i-1) cs
+           q = fromIntegral p
+\end{code}
+\end{minipage}
 
 \ignore{
 TODO:
