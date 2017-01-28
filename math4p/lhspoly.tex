@@ -5442,6 +5442,13 @@ therefore, the only nonzero coefficient we had
 in the original polynomial becomes zero and the entire
 derivative disappears.
 
+\ignore{
+- next step is gcd tk vk if p does not divide k
+        and just vk if it does
+  i.e.: everything is the same for p not dividing k
+        for p dividing k, we end up with w^p
+}
+
 \ignore{review from here on}
 What we can do, however, is to keep the coefficients
 with exponents that are multiples of the modulus
@@ -5477,8 +5484,6 @@ It is now easy to see that the individual terms
 in the factorisation of the derivative conatain
 all the factors of the original polynomial but one.
 
-
-
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
@@ -5487,8 +5492,8 @@ all the factors of the original polynomial but one.
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{15}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{30}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{30E}{@{}l@{}}%
 \column{31}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5496,9 +5501,9 @@ all the factors of the original polynomial but one.
 \column{34}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{36}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{39}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{42}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{48}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{52}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{53}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5567,22 +5572,18 @@ all the factors of the original polynomial but one.
 \>[33]{}\Varid{otherwise}{}\<[48]%
 \>[48]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[12]{}\Varid{mkNextTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{reverse}\;(\Varid{nexT}\;(\Varid{degree}\;\Varid{tk})\;(\Varid{coeffs}\;\Varid{tk}))){}\<[E]%
+\>[12]{}\Varid{mkNextTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{nexT}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{degree}\;\Varid{tk})\;(\Varid{coeffs}\;\Varid{tk})){}\<[E]%
 \\
-\>[12]{}\Varid{nexT}\;\Varid{i}\;\Varid{cs}{}\<[23]%
-\>[23]{}\mid \Varid{i}\mathbin{<}{}\<[30]%
-\>[30]{}\mathrm{0}{}\<[30E]%
-\>[41]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\>[12]{}\Varid{nexT}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[23]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{q}\equiv \mathrm{0}{}\<[41]%
-\>[41]{}\mathrel{=}\Varid{cs}\mathbin{!!}\Varid{i}\mathbin{:}{}\<[52]%
+\>[12]{}\Varid{nexT}\;\Varid{i}\;(\Varid{c}\mathbin{:}\Varid{cs}){}\<[27]%
+\>[27]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{p}\equiv \mathrm{0}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{c}\mathbin{:}{}\<[52]%
 \>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
 \\
-\>[23]{}\mid \Varid{otherwise}{}\<[41]%
-\>[41]{}\mathrel{=}{}\<[52]%
+\>[27]{}\mid \Varid{otherwise}{}\<[45]%
+\>[45]{}\mathrel{=}{}\<[52]%
 \>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
-\\
-\>[12]{}\Varid{q}\mathrel{=}\Varid{fromIntegral}\;\Varid{p}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks

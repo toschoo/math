@@ -377,12 +377,11 @@ where
                              degree tk > 0 = sqmd p (e+1) (mkNextTk tk)
                            | degree vk > 0 = go k tk vk
                            | otherwise     = []
-          mkNextTk tk = poly $ reverse (nexT (degree tk) (coeffs tk))
-          nexT i cs | i <  0 = []
-                    | i `rem` q == 0 = cs!!i : nexT (i-1) cs
-                    | otherwise      =         nexT (i-1) cs
-          q = fromIntegral p
-            
+          mkNextTk tk = poly (nexT (fromIntegral $ degree tk) (coeffs tk))
+          nexT _ [] = []
+          nexT i (c:cs) | i `rem` p == 0 = c : nexT (i-1) cs
+                        | otherwise      =     nexT (i-1) cs
+
   -------------------------------------------------------------------------
   -- Discrete degree factorisation
   -------------------------------------------------------------------------

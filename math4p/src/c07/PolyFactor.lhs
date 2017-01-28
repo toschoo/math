@@ -1058,6 +1058,13 @@ therefore, the only nonzero coefficient we had
 in the original polynomial becomes zero and the entire
 derivative disappears.
 
+\ignore{
+- next step is gcd tk vk if p does not divide k
+        and just vk if it does
+  i.e.: everything is the same for p not dividing k
+        for p dividing k, we end up with w^p
+}
+
 \ignore{review from here on}
 What we can do, however, is to keep the coefficients
 with exponents that are multiples of the modulus
@@ -1093,8 +1100,6 @@ It is now easy to see that the individual terms
 in the factorisation of the derivative conatain
 all the factors of the original polynomial but one.
 
-
-
 \begin{minipage}{\textwidth}
 \begin{code}
   sqmd :: Integer -> Integer -> Poly Integer -> [(Integer, Poly Integer)]
@@ -1114,11 +1119,10 @@ all the factors of the original polynomial but one.
                                 degree tk > 0  = sqmd p (e+1) (mkNextTk tk)
                              |  degree vk > 0  = go k tk vk
                              |  otherwise      = []
-           mkNextTk tk = poly (reverse (nexT (degree tk) (coeffs tk)))
-           nexT i cs  | i <  0          = []
-                      | i `rem` q == 0  = cs!!i :  nexT (i-1) cs
-                      | otherwise       =          nexT (i-1) cs
-           q = fromIntegral p
+           mkNextTk tk = poly (nexT (fromIntegral $ degree tk) (coeffs tk))
+           nexT _ [] = []
+           nexT i (c:cs)  | i `rem` p == 0  = c :  nexT (i-1) cs
+                          | otherwise       =      nexT (i-1) cs
 \end{code}
 \end{minipage}
 

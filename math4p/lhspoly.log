@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  22 JAN 2017 19:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  28 JAN 2017 20:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1646,13 +1646,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 4803--4804
 
  [59] [60] [61] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 29572 strings out of 493304
- 681672 string characters out of 6139872
- 842784 words of memory out of 5000000
- 32464 multiletter control sequences out of 15000+600000
+ 29577 strings out of 493304
+ 681744 string characters out of 6139872
+ 841784 words of memory out of 5000000
+ 32469 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 70i,10n,99p,10414b,671s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,10n,99p,10414b,653s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
