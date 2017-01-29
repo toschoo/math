@@ -73,6 +73,7 @@ ALL	 = cmds.tex \
 	   src/c07/DiffBinom.lhs \
 	   src/c07/Roots.lhs \
 	   src/c07/PolyFactor.lhs \
+	   src/c07/PolyModFactor.lhs \
 	   src/c07/PartialF.lhs \
 	   src/c07/ClosedFib.lhs \
 	   src/c07/Gnomon.lhs \

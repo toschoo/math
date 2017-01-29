@@ -346,7 +346,7 @@ where
   cantorzassenhaus p u | irreducible p m = return [(1,m)]
                        | otherwise       = 
                            concat <$> mapM mexpcz [(e, ddfac p f) | 
-                                      (e,f) <- squarefactormod p u]
+                                      (e,f) <- squarefactormod p m]
     where m = monicp p u
           expcz e (d,v)   = map (\f -> (e,f)) <$> cz p d v
           mexpcz (e,dds)  = concat <$> mapM (expcz e) dds
@@ -355,13 +355,13 @@ where
   -- Squared factor (mod p)
   -------------------------------------------------------------------------
   squarefactormod :: Integer -> Poly Integer -> [(Integer, Poly Integer)]
-  squarefactormod p = sqmd p 0 
+  squarefactormod p = sqmp p 0 
 
   -------------------------------------------------------------------------
   -- Squared factor (mod p) per exponent
   -------------------------------------------------------------------------
-  sqmd :: Integer -> Integer -> Poly Integer -> [(Integer, Poly Integer)]
-  sqmd p e u | degree u < 1 = []
+  sqmp :: Integer -> Integer -> Poly Integer -> [(Integer, Poly Integer)]
+  sqmp p e u | degree u < 1 = []
              | otherwise    = let u' = derivative (modmul p) u
                                   t  = gcdmp p u u'
                                   v  = fst (divmp p u t)
@@ -373,14 +373,13 @@ where
                         in case divmp p vk vk' of
                              (P [_],_) ->             nextStep k' tk' vk'
                              (f,_)     -> (k*p^e,f) : nextStep k' tk' vk'
-          nextStep k tk vk | degree vk <= 0 && 
-                             degree tk > 0 = sqmd p (e+1) (mkNextTk tk)
-                           | degree vk > 0 = go k tk vk
+          nextStep k tk vk | degree vk > 0 = go k tk vk
+                           | degree tk > 0 = sqmp p (e+1) (mkNextTk tk)
                            | otherwise     = []
-          mkNextTk tk = poly (nexT (fromIntegral $ degree tk) (coeffs tk))
+          mkNextTk tk = poly (nexT 0 (coeffs tk))
           nexT _ [] = []
-          nexT i (c:cs) | i `rem` p == 0 = c : nexT (i-1) cs
-                        | otherwise      =     nexT (i-1) cs
+          nexT i (c:cs) | i `rem` p == 0 = c : nexT (i+1) cs
+                        | otherwise      =     nexT (i+1) cs
 
   -------------------------------------------------------------------------
   -- Discrete degree factorisation

@@ -4496,6 +4496,29 @@ Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
 
+\ignore{
+TODO:
+- application to integers: hensel's lemma
+}
+
+\section{Factoring Polynomials in a finite Field}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyModFactor}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{PolyFactor}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
 Famous factorisation algorithms using modular
 arithmetic are \term{Berlekamp's algorithm}
 developed by the American mathematician 
@@ -5385,48 +5408,46 @@ will create the factor $x+a+x+a=2x+2a$, which
 is a multiple of the original factor, which,
 in its turn, is therefore preserved.
 
-To find the squared factors in an infinite field, 
-the following algorithm, called after his inventor
-\term{Yun's} algorithm, can be adopted.
 Suppose we want to compute the factorisation
 of 
 
-\[
-f = a_1a_2^2a_3^3\dots a_k^k.
-\]
+\begin{equation}
+f = a_1a_2^2a_3^3\dots a_k^k,
+\end{equation}
 
-Then, since the derivative preserves the factors,
+where the $a$s represent the products of all
+the factors raised to the indicated exponent,
+then, since the derivative preserves the factors,
 the $\gcd$ of $f$ and its derivative $f'$
 (whatever that looks like) is:
 
-\[
-a_2^1a_3^2\dots a_k^{k-1},
-\]
+\begin{equation}\label{eq:polyFacYun1}
+\gcd(f,f') = a_2^1a_3^2\dots a_k^{k-1},
+\end{equation}
 
 \ie\, the repeated factors with the exponent
 decreased by one. Then $f$ divided by the $\gcd$
 gives us
 
-\[
-a_1a_2a_3\dots a_k,
-\]
+\begin{equation}\label{eq:polyFacYun2}
+\frac{f}{\gcd(f,f')} = a_1a_2a_3\dots a_k,
+\end{equation}
 
 all the factors reduced to their first power.
-
-$f'$ divided by the $\gcd$ is 
+Now, if we continue this scheme using
+the $\gcd(f,f')$ and $f/\gcd(f,f')$ as input,
+we would get \ref{eq:polyFacYun1} 
+reduced one more ($a_3a_4^2\dots$) and
+\ref{eq:polyFacYun2} with the head chopped off
+($a_2a_3\dots$). The quotient of the two
+versions of \ref{eq:polyFacYun2}, \ie\
 
 \[
-\sum_{i=1}^k{ia_i'a_1},
+\frac{a_1a_2a_3\dots}{a_2a_3\dots},
 \]
 
-the sum of the factor products.
-
-Now, we can build an iterative algorithm that
-computes $\gcd(f/\gcd(f,f'))$, which is the next $a$,
-and the quotient of the previous result and the current
-result, which are the remaining $a$s. In other words,
-we can obtain $a$ by $a$, each $a$ being the product
-of all factors of the same exponent.
+would give us the head. The head, however,
+is the product of all factors with a given exponent.
 
 In a finite field, this, unfortunately does not
 work in all cases. Problematic are all coefficients
@@ -5435,54 +5456,73 @@ When we compute $nc^{n-1}$, for $n$ an exponent
 in the original polynomial that is a multiple of
 the modulus, the coefficient itself becomes zero.
 If we are unlucky, the derivative \term{disappears},
-\ie\ it is 0. A simple example is the polynomial
+\ie\ it becomes zero. A simple example is the polynomial
 $x^4 \pmod{2}$. When we compute the derivative, we get
 $4x^3$. Unfortunately, 4 is a multiple of 2 and,
 therefore, the only nonzero coefficient we had
 in the original polynomial becomes zero and the entire
 derivative disappears.
 
-\ignore{
-- next step is gcd tk vk if p does not divide k
-        and just vk if it does
-  i.e.: everything is the same for p not dividing k
-        for p dividing k, we end up with w^p
-}
-
-\ignore{review from here on}
 What we can do, however, is to keep the coefficients
 with exponents that are multiples of the modulus
 separated from those that are not.
-That is, we would create two sequences of polynomials,
-one representing the coefficients whose exponents
-are not multiples of the modulus and one with those
-whose exponents are. Before we do this, we should have
-a closer look at the product rule. Until now,
-we have only considered products with two factors.
-When we have more than two factors, the derivative
-becomes:
+As in the algorithm for infinte fields, we would
+iteratively compute two sequences of values,
+namely $T_{k+1} = T_k/V_{k+1}$ with $T_1 = \gcd(f,f')$
+and $V_{k+1} = \gcd(T_k,V_k)$ with $V_1 = f/T_1$.
+But we would now deviate for all $k$ that are
+multiples of $p$, \viz\: 
 
 \[
-(abc)' = a'bc + ab'c + abc'.
+V_{k+1} = \begin{cases}
+            \gcd(T_k,V_k) & if~p\nmid k~\textrm{(as before)}\\
+            V_k & if~p\mid k
+          \end{cases}
 \]
 
-\ignore{
-start from this. This is much better than the half-correct
-product rule above. Note the striking similarity to the 
-Chinese remainder theorem!
-}
-
-In other words, it is a sum of products of all factors
-of the original polynomial but one (the one whose derivative
-is taken in this term). We can represent that more elegantly as
+At each step, we have
 
 \begin{equation}
-f' = \sum_i{\prod_{j\neq i}{\left(a_j^j\right)}a_i'}
+V_k = \prod_{i\ge k, p\nmid i}{a_i},
 \end{equation}
 
-It is now easy to see that the individual terms
-in the factorisation of the derivative conatain
-all the factors of the original polynomial but one.
+\ie, the product of all $a$s with exponents greater than those
+that we have already processed and that do not divide $p$, and
+
+\begin{equation}
+T_k = \prod_{i\ge k, p\nmid i}{a_i^{i-k}}
+      \prod_{i\ge k, p\mid i}{a_i^i},
+\end{equation}
+
+\ie, the product of the powers greater than those 
+we have already processed for both cases $p\mid k$ and $p\nmid k$.
+For the cases $p\nmid k$, everything is as before.
+For the cases $p\nmid k$, we will end up, when we have reduced
+$V_k$ to a constant polynomial, with a product of all the powers
+of the $a$s with exponents that multiples of $p$.
+
+To get $a$s out, we divide all all exponents by $p$ 
+and repeat the whole algorithm. For the return value, \ie\ the
+factors, we need to remember the original exponent,
+but that is easily done as shown below.
+
+Note that for polynomials with many coefficients,
+this recursion step will occur more than once.
+The exponents that are multiples of $p$ 
+in such a polynomial have the form
+
+\[
+0p,p,2p,3p,4p,\dots
+\]
+
+Dividing by $p$, we get 
+
+\[
+0,1,p,2p,3p,\dots
+\]
+
+So, we need to repeat, until there are no more multiples of $p$.
+Here is the algorithm:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -5493,7 +5533,7 @@ all the factors of the original polynomial but one.
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{26}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{30}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{30E}{@{}l@{}}%
 \column{31}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5503,15 +5543,15 @@ all the factors of the original polynomial but one.
 \column{39}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{42}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{43}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{48}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{53}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{58}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{sqmd}\mathbin{::}\Conid{Integer}\to \Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{sqmp}\mathbin{::}\Conid{Integer}\to \Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{sqmd}\;\Varid{p}\;\Varid{e}\;\Varid{u}{}\<[15]%
+\>[3]{}\Varid{sqmp}\;\Varid{p}\;\Varid{e}\;\Varid{u}{}\<[15]%
 \>[15]{}\mid \Varid{degree}\;\Varid{u}\mathbin{<}\mathrm{1}{}\<[31]%
 \>[31]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
@@ -5559,51 +5599,158 @@ all the factors of the original polynomial but one.
 \\
 \>[12]{}\Varid{nextStep}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[30]%
 \>[30]{}\mid {}\<[30E]%
-\>[33]{}\Varid{degree}\;\Varid{vk}\leq \mathrm{0}\mathrel{\wedge}{}\<[E]%
-\\
-\>[33]{}\Varid{degree}\;\Varid{tk}\mathbin{>}\mathrm{0}{}\<[48]%
-\>[48]{}\mathrel{=}\Varid{sqmd}\;\Varid{p}\;(\Varid{e}\mathbin{+}\mathrm{1})\;(\Varid{mkNextTk}\;\Varid{tk}){}\<[E]%
-\\
-\>[30]{}\mid {}\<[30E]%
 \>[33]{}\Varid{degree}\;\Varid{vk}\mathbin{>}\mathrm{0}{}\<[48]%
 \>[48]{}\mathrel{=}\Varid{go}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[E]%
+\\
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{degree}\;\Varid{tk}\mathbin{>}\mathrm{0}{}\<[48]%
+\>[48]{}\mathrel{=}\Varid{sqmp}\;\Varid{p}\;(\Varid{e}\mathbin{+}\mathrm{1})\;(\Varid{dividedTk}\;\Varid{tk}){}\<[E]%
 \\
 \>[30]{}\mid {}\<[30E]%
 \>[33]{}\Varid{otherwise}{}\<[48]%
 \>[48]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[12]{}\Varid{mkNextTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{nexT}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{degree}\;\Varid{tk})\;(\Varid{coeffs}\;\Varid{tk})){}\<[E]%
+\>[12]{}\Varid{dividedTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{divExp}\;\mathrm{0}\;(\Varid{coeffs}\;\Varid{tk})){}\<[E]%
 \\
-\>[12]{}\Varid{nexT}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\>[12]{}\Varid{divExp}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[12]{}\Varid{nexT}\;\Varid{i}\;(\Varid{c}\mathbin{:}\Varid{cs}){}\<[27]%
-\>[27]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{p}\equiv \mathrm{0}{}\<[45]%
-\>[45]{}\mathrel{=}\Varid{c}\mathbin{:}{}\<[52]%
-\>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\>[12]{}\Varid{divExp}\;\Varid{i}\;(\Varid{c}\mathbin{:}\Varid{cs}){}\<[29]%
+\>[29]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{p}\equiv \mathrm{0}{}\<[47]%
+\>[47]{}\mathrel{=}\Varid{c}\mathbin{:}{}\<[54]%
+\>[54]{}\Varid{divExp}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
 \\
-\>[27]{}\mid \Varid{otherwise}{}\<[45]%
-\>[45]{}\mathrel{=}{}\<[52]%
-\>[52]{}\Varid{nexT}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\>[29]{}\mid \Varid{otherwise}{}\<[47]%
+\>[47]{}\mathrel{=}{}\<[54]%
+\>[54]{}\Varid{divExp}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+As usual, the hard work is done in the local function \ensuremath{\Varid{go}},
+which takes three arguments, $k$, $t_k$ and $v_k$.
+We initialise $k=1$, $t_k = \gcd(u,u')$ and $v_k = u/t_k$.
+We set $v_{k+1} = \gcd(t_k,v_k)$, if $p\nmid k$,
+and $v_{k+1}=v_k$, otherwise.
+We further set $t_{k+1} = t_k/v_{k+1}$ and $k = k+1$.
+If $v_k / v_{k+1}$ is not constant (otherwise it is irrelevant),
+we remember the result as the product of factors with this
+exponent. Note that the overall result is a list of tuples,
+where the first element represents the exponent and
+the second the factor product. The exponent is calculated
+as $k\times p^e$. The number $e$, here, is not the
+Euler-Napier constant, but a variable passed in to \ensuremath{\Varid{sqmp}}.
+We would start the algorithm with $e=0$. We, hence, get
+$k\times p^0 = k\times 1 = k$ for the first recursion.
+
+The function \ensuremath{\Varid{nextStep}} is just a convenient wrapper
+for the decision of how to continue.
+If $v_k$ is not yet constant, we continue with 
+$go~(k+1)~t_{k+1}~v_{k+1}$.
+Otherwise, if $t_k$ is not yet constant, we continue
+with \ensuremath{\Varid{sqmp}} with $e+1$ and $t_k$ with exponents
+that are multiples of $p$ divided by $p$.
+
+For bootstrapping the algorithm, we can define
+a simple function with a reasonable name that
+calls \ensuremath{\Varid{sqmp}} with $e=0$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{squarefactormod}\mathbin{::}\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{squarefactormod}\;\Varid{p}\mathrel{=}\Varid{sqmp}\;\Varid{p}\;\mathrm{0}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Finally, we are ready to put everything together:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{cantorzassenhaus}\mathbin{::}\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to \Conid{IO}\;[\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cantorzassenhaus}\;\Varid{p}\;\Varid{u}{}\<[25]%
+\>[25]{}\mid \Varid{irreducible}\;\Varid{p}\;\Varid{m}{}\<[44]%
+\>[44]{}\mathrel{=}\Varid{return}\;[\mskip1.5mu (\mathrm{1},\Varid{m})\mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\mid \Varid{otherwise}{}\<[44]%
+\>[44]{}\mathrel{=}{}\<[E]%
+\\
+\>[25]{}\hsindent{5}{}\<[30]%
+\>[30]{}\Varid{concat}\mathbin{<\$>}{}\<[43]%
+\>[43]{}\Varid{mapM}\;\Varid{mexpcz}\;[\mskip1.5mu (\Varid{e},\Varid{ddfac}\;\Varid{p}\;\Varid{f})\mid {}\<[E]%
+\\
+\>[43]{}(\Varid{e},\Varid{f})\leftarrow \Varid{squarefactormod}\;\Varid{p}\;\Varid{m}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{m}\mathrel{=}\Varid{monicp}\;\Varid{p}\;\Varid{u}{}\<[E]%
+\\
+\>[12]{}\Varid{expcz}\;\Varid{e}\;(\Varid{d},\Varid{v}){}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Varid{map}\;(\lambda \Varid{f}\to (\Varid{e},\Varid{f}))\mathbin{<\$>}\Varid{cz}\;\Varid{p}\;\Varid{d}\;\Varid{v}{}\<[E]%
+\\
+\>[12]{}\Varid{mexpcz}\;(\Varid{e},\Varid{dds}){}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Varid{concat}\mathbin{<\$>}\Varid{mapM}\;(\Varid{expcz}\;\Varid{e})\;\Varid{dds}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Hans Zassenhaus worked most of his life as a computeralgeabrist and
+was important for the development of this area of mathematics and
+computer science. He was born in Germany before the second world war
+and studied mathematics under Emil Artin, one of the founders of
+modern algebra. Zassenhaus' father was strongly influenced by
+Albert Schweitzer and, as such, opposed to Nazi ideology.
+Hans shared this antipathy and, to avoid being drafted to
+a significant war effort like, as it would appear natural
+for an algebraist, cryptography, he left university and volonteered for 
+the army weather forecast where he survived the war.
+Later, he would follow invitations first to the UK and later to the USA,
+where he remained until his death.
+
+His sister Hiltgunt (who, after emigrating to the USA,
+preferred to use her second name Margret) studied Scandinavistics.
+During the war, she worked as translator for censorship in camps
+for Norwegian and Danish prisoners. She undermined censorship in
+this position, maintained contact between 
+prisioners and helped smuggling medicine, tobacco and food
+into the prisons. For her efforts during and after the war,
+she was nominated for the Nobel Peace Prize in 1974. 
+Unfortunately, the societal engagement of the Zassenhaus siblings
+is hardly remembered today.
+
 \ignore{
 TODO:
-- derivative modulo p
-- squarefactor
-- Euler's theorem: why does f = fm = 1 mod(m)?
 - why does x^p^c, with c dividing d is not divided by g?
-- why do g and g' do not share divisors if squarefree
 - application to integers: hensel's lemma
 }
 
-\section{The Method of partial Fractions}
+\section{The Method of Partial Fractions}
 \ignore{
 http://www.purplemath.com/modules/partfrac.htm
 }
-\section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(

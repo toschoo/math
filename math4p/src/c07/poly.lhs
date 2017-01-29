@@ -11,8 +11,9 @@
 \section{Vieta's Formula}
 \section{Factoring Polynomials}
 %include PolyFactor.lhs
-\section{The Method of partial Fractions}
+\section{Factoring Polynomials in a finite Field}
+%include PolyModFactor.lhs
+\section{The Method of Partial Fractions}
 %include PartialF.lhs
-\section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 %include ClosedFib.lhs

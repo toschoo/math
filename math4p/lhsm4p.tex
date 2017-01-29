@@ -38050,6 +38050,29 @@ Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
 
+\ignore{
+TODO:
+- application to integers: hensel's lemma
+}
+
+\section{Factoring Polynomials in a finite Field}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{PolyModFactor}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{PolyFactor}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
 Famous factorisation algorithms using modular
 arithmetic are \term{Berlekamp's algorithm}
 developed by the American mathematician 
@@ -38065,8 +38088,8 @@ which is by today probably the most-used algorithm
 implemented in many computer algebra systems.
 
 The contribution of Cantor-Zassenhaus, strictly speaking,
-is just one over several pieces. The main parts are
-ring and field theory and are based on Euler's theorem,
+is just one of several pieces. The whole approach is
+based on Euler's theorem,
 which, as you may remember, states that
 
 \begin{equation}
@@ -38085,7 +38108,7 @@ of the underlying ring (of integers).
 When we introduce modular arithmetic,
 that is, when we build polynomials on 
 a finite field, they still
-constitute a ring, this time on top of the finite field.
+constitute a ring, but now a ring built on top of a finite field.
 Notationally, this is usually expressed as $K[x]$,
 where $K$ is a field and $K[x]$ the polynomial ring
 defined on top of $K$.
@@ -38130,10 +38153,14 @@ $f_m = f \mod{m} \in K_m^*$.
 We, for sure, have 
 $f_m^{\varphi(m)} \equiv 1 \pmod{m}$, since 
 $\varphi(m)$ is the size of the group.
-It follows from Lagrange's theorem 
-(that the cardinality of subgroups of $G$ divide
-the cardinality of $G$) that
-$f^{\varphi(m)} \equiv f_m^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
+This equivalence may hold also for other numbers, $a$,
+such that $f^a \equiv 1 \pmod{m}$, but
+according to Lagrange's theorem 
+(that the cardinality of subgroups of $G$ divides
+the cardinality of $G$) all these numbers $a$
+must divide $\varphi(m)$, the size of the group,
+and we unmistakenly have
+$f^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
 
 From this theorem, Fermat's little theorem
 follows. Let $K$ be a field with $q$ elements; when using
@@ -38161,13 +38188,14 @@ you will easily convince yourself that the number of valid
 polynomials of a given degree $d$ equals the number of valid
 numbers that can be presented in the numeral system base $q$
 with $d+1$ digits. If, for instance, $q=2$, then we have
+(without the zero-polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]})
 
 \begin{center}
 \begingroup
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|r|r|c|}\hline
 degree & size & polynomials\\\hline\hline
-0      & 2    & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}\\\hline
+0      & 1    & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}\\\hline
 1      & 2    & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]}\\\hline
 2      & 4    & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\\hline
 3      & 8    & \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
@@ -38183,7 +38211,7 @@ For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]},
 which we must exclude, when asking for $\varphi(g)$,
-since this polynomial is the zero polynomial
+since this polynomial is zero 
 for which division is not defined.
 For the irreducible polynomial $g$, we therefore
 have $r-1$ elements that do not share divisors with $g$,
@@ -38263,7 +38291,7 @@ Here is a Haskell implementation:
 \>[23]{}\mathbf{let}\;\Varid{z'}\mathrel{=}\Varid{powmp}\;\Varid{p}\;\Varid{p}\;\Varid{z}{}\<[E]%
 \\
 \>[23]{}\mathbf{in}\;{}\<[27]%
-\>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{add}\;\Varid{z'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]))\;\Varid{u}\;\mathbf{of}{}\<[E]%
+\>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{addp}\;\Varid{p}\;\Varid{z'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]))\;\Varid{u}\;\mathbf{of}{}\<[E]%
 \\
 \>[27]{}\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[34]%
 \>[34]{}\to {}\<[38]%
@@ -38411,8 +38439,8 @@ Here is an implementation:
 
 The following function, obtains the products of the factors
 of a given (monic) polynomial degree by degree. Note
-that we give the result, again, back as a monic
-polynomial. Each result is a tuple of the degree and
+that we give the result back as a monic
+polynomial again. Each result is a tuple of the degree and
 the corresponding factor product.
 
 \begin{minipage}{\textwidth}
@@ -38456,7 +38484,7 @@ the corresponding factor product.
 \>[40]{}\mathrel{=}\Varid{powmp}\;\Varid{p}\;\Varid{p}\;\Varid{x}{}\<[E]%
 \\
 \>[30]{}\Varid{t}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{add}\;\Varid{x'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
+\>[40]{}\mathrel{=}\Varid{addp}\;\Varid{p}\;\Varid{x'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
 \\
 \>[30]{}\Varid{g}{}\<[40]%
 \>[40]{}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{t}\;\Varid{v}{}\<[E]%
@@ -38507,8 +38535,6 @@ that, if $n$ is squarefree, then
 $\varphi(n) = \prod_{p|n}{p-1}$, \ie\ the totient number
 of $n$ is the product of the primes in the factorisation
 of $n$ all reduced by 1.)
-The algorithm presented here, in fact,
-works properly only with squarefree polynomials.
 We need to come back to this topic and, for the moment,
 make sure that we only apply polynomials that are
 squarefree and monic.
@@ -38526,9 +38552,8 @@ of $u$ by calling \ensuremath{\Varid{divmp}\;\mathrm{7}\;(\Conid{P}\;[\mskip1.5m
 
 \ensuremath{(\Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu])}.
 
-We can conclude that these are indeed the factors
-of $u$ and that they contain all the factors.
-But obviously, \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu]} or $x^2 + 4x + 2$ is
+We can conclude that these are indeed all the factors
+of $u$. But, obviously, \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu]} or $x^2 + 4x + 2$ is
 not irreducible, since it is a second-degree polynomial,
 but it was obtained for the irreducible factors of degree 1.
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]}, on the other hand, was obtained for degree 2
@@ -38544,17 +38569,20 @@ a specific polynomial for $x$, say $t$. We already have
 that chunk of irreducible polynomials hidden in \ensuremath{(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])},
 let us call it $u$,
 and know that those polynomials are factors of both,
-$t$ and and $u$. The only thing we have to do is to split them,
+$t^{p^d} - t$ and and $u$. 
+The approach of Cantor and Zassenhaus is to split the factors
 so that the problem reduces significantly. We can split $t$
 into three parts using the equality
 
 \begin{equation}
-t^{p^d} - t = t(t^{(p^d-1)/2} + 1)((t^{(p^d-1)/2} - 1)
+t^{p^d} - t = t(t^{(p^d-1)/2} + 1)(t^{(p^d-1)/2} - 1).
 \end{equation}
 
-and by a careful choice of $t$, we can make sure that the factors
+Make sure that the equality holds 
+by multiplying the right-hand side out.
+By a careful choice of $t$, we can make sure that the factors
 are likely to be more or less equally distributed among the
-latter two factors. That would reduce the problem significantly.
+latter two factors. That, indeed, would reduce the problem significantly.
 
 Since $u$ and $t^{p^d} - t$ share factors, we can transform
 the equality into the following variant:
@@ -38569,7 +38597,7 @@ that the factors are spread equally among the three factors
 of equality \ref{eq:polyFac_CZ1}. 
 With high probability, we reduce the problem significantly,
 when we compute one of the $\gcd$s and continue splitting
-the $\gcd$ and the quotient of $u$ and the $\gcd$ further.
+this $\gcd$ and the quotient of $u$ and the $\gcd$ further.
 Should we be unlucky (the $\gcd$ contains either no or all
 of the factors), we just try again with another polynomial.
 After some tries (less than three according to common wisdom), 
@@ -38649,7 +38677,7 @@ when we rearrange according to exponents, we again get pairs of equal terms:
 w^2 + w = t + 2t^2 + 2t^4 + \dots +  2t^{2^{d-1}} + t^{2^d}.
 \]
 
-When we compute this modulo 2, again, all terms with even coefficients
+When we compute this modulo 2, again all terms with even coefficients
 fall away and we finally get
 
 \begin{equation}
@@ -38659,7 +38687,8 @@ w^2 + w = t^{2^d} + t.
 The point of all this is that we can split the expression $w^2 + w$
 into two more or less equal parts, just by factoring $w$ out:
 $w(w+1)$. Now, it is again very probable that we find common divisors
-in one of the factors, $w$ or $w+1$.
+in both of the factors, $w$ or $w+1$ making it likely that we can
+reduce the problem by taking the $\gcd$ with one of them.
 Here is the implementation of the Cantor-Zassenhaus algorithm:
 
 \begin{minipage}{\textwidth}
@@ -38685,7 +38714,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
 \>[26]{}\mathrel{=}\mathbf{do}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{x}\leftarrow \Varid{monicp}\;\Varid{p}\mathbin{<\$>}\Varid{randomPoly}\;\Varid{p}\;(\mathrm{2}\mathbin{*}\Varid{d})\mbox{\onelinecomment  2*d-1}{}\<[E]%
+\>[5]{}\Varid{x}\leftarrow \Varid{monicp}\;\Varid{p}\mathbin{<\$>}\Varid{randomPoly}\;\Varid{p}\;(\mathrm{2}\mathbin{*}\Varid{d}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{let}\;\Varid{t}{}\<[12]%
@@ -38693,7 +38722,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
 \>[25]{}\mathrel{=}\Varid{addsquares}\;(\Varid{d}\mathbin{-}\mathrm{1})\;\Varid{p}\;\Varid{x}\;\Varid{u}{}\<[E]%
 \\
 \>[12]{}\mid \Varid{otherwise}{}\<[25]%
-\>[25]{}\mathrel{=}\Varid{add}\;(\Varid{powmodp}\;\Varid{p}\;\Varid{m}\;\Varid{x}\;\Varid{u})\;(\Conid{P}\;[\mskip1.5mu \Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
+\>[25]{}\mathrel{=}\Varid{addp}\;\Varid{p}\;(\Varid{powmodp}\;\Varid{p}\;\Varid{m}\;\Varid{x}\;\Varid{u})\;(\Conid{P}\;[\mskip1.5mu \Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{let}\;\Varid{r}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{u}\;\Varid{t}{}\<[E]%
@@ -38732,12 +38761,12 @@ expects the number of coefficients, we just pass $2d$.
 
 Then we calculate $t$. If $p$ is 2, we use \ensuremath{\Varid{addsquares}},
 at which we will look in a moment. Otherwise,
-we raise the random polynomial to the power of $p^d-1/2$
+we raise the random polynomial to the power of $(p^d-1)/2$
 and subtract 1. That is the third factor of equation
 \ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
 if the result has either degree 0 (no factor was found)
 or degree equal to $u$ (all factors are in this one),
-then we just try again with another random polynomial.
+we just try again with another random polynomial.
 Otherwise, we continue with the $\gcd$ and the quotient
 $u/\gcd$.
 
@@ -38790,7 +38819,7 @@ For the case where $p=2$, we use the function addsquares:
 \\
 \>[30]{}\Varid{w'}{}\<[34]%
 \>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}\Varid{modp}\;\Varid{p}\;(\Varid{add}\;\Varid{w}\;\Varid{t'}){}\<[E]%
+\>[37]{}\Varid{addp}\;\Varid{p}\;\Varid{w}\;\Varid{t'}{}\<[E]%
 \\
 \>[25]{}\mathbf{in}\;\Varid{go}\;(\Varid{k}\mathbin{-}\mathrm{1})\;\Varid{w'}\;\Varid{t'}{}\<[E]%
 \ColumnHook
@@ -38821,22 +38850,461 @@ hence, is
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
 
+Now, we still have to solve the problem of polynomials
+containing squared factors, \ie\ repeated roots.
+There is in fact a method to find such factors
+adopted from calculus and, again, related to the
+derivative. The point is that a polynomial and
+its derivative share only those divisors that
+appear more than once in the factorisation.
+We have not enough knowledge on derivatives to
+prove that here rigorously, but we can give an
+intuition.
+
+Consider a polynomial with the factorisation
+
+\[
+(x+a)(x+b)\dots
+\]
+
+This is a product and, to find the derivative
+of this polynomial, we need to apply the \term{product rule}
+(which we will study in part 3). The product rule states that
+
+\begin{equation}
+(f \times g)' = fg' + f'g,
+\end{equation}
+
+\ie\ the derivative of the product of $f$ and $g$
+is the sum of the product of $f$ and the derivative of $g$
+and the product of the derivative of $f$ and $g$.
+
+The derivatives of the individual factors $(x+a)(x+b)$
+all reduce to 1, since for $f = x^1 + a$,
+$f' = 1\times x^0 = 1$. The product of factors, hence,
+turns into a sum of factors:
+
+\[
+1\times(x+a) + 1\times(x+b) = (x+a) + (x+b).
+\]
+
+Let us compute the polynomial
+with the factors $(x+a)(x+b)$. The polynomial is
+$x^2 + ax + bx + ab$. Its derivative is
+$2x + a + b$. When we apply the product rule to
+the factors, we get $(x+a)+(x+b)= x+a+x+b = 2x+a+b$,
+which is indeed the same result.
+
+It is intuitively clear that the sum of the factors
+is not the same as the product of those same factors
+and, even further, that none of the factors is preserved.
+They all disappear in favour of others they do not
+share divisors with, because, since the factors are
+coprime to each other, they do not share divisors
+with their sum either.
+
+To elaborate on this, consider now polynomials
+with more than two factors of the form
+
+\[
+abc\dots,
+\]
+
+where $a$, $b$ and $c$ stand for irreducible polynomials like
+$(x+\alpha)$, $(x+\beta)$ and so on.
+
+We apply the product rule on the first two factors
+and get:
+
+\[
+(a'b + ab')\dots
+\]
+
+When we now apply the product rule once again,
+we would multiply $c$ with the derivative of $ab$
+(which is $a'b + ab'$) and the derivative of $c$,
+$c'$, with the original $ab$ and get:
+
+\[
+(a'b + ab')c + abc' = a'bc + ab'c + abc'.
+\]
+
+We see that we end up with the sum of the products
+of the original factors, with the current factor $i$
+substituted by something else, namely the derivative
+of this factor. This can be represented nicely as:
+
+\begin{equation}\label{eq:polyFacProductRule}
+\left(\prod_{i=0}^k{a_i}\right)' = 
+\sum_{i=0}^k{\left(a_i'\prod_{j\neq i}{a_j}\right)}
+\end{equation}
+
+There is a remarkable similarity to the structure
+we found in analysing the Chinese remainder theorem,
+when we divided the product of all remainders by
+the current remainder. Just as in the Chinese remainder
+theorem, each of the terms resulting from the product
+rule is coprime to the original factor at the same position,
+since it is the product of irreducible factors 
+(and, hence, coprime to each other) and the derivative
+of that factor, which, for sure, does not share
+divisors with the original factor at that position.
+
+When we have a repeated factor, however, as in
+the following polynomial
+
+\[
+(x+a)(x+a)(x+b)\dots,
+\]
+
+then this factor is preserved. The product rule
+will create the factor $x+a+x+a=2x+2a$, which
+is a multiple of the original factor, which,
+in its turn, is therefore preserved.
+
+Suppose we want to compute the factorisation
+of 
+
+\begin{equation}
+f = a_1a_2^2a_3^3\dots a_k^k,
+\end{equation}
+
+where the $a$s represent the products of all
+the factors raised to the indicated exponent,
+then, since the derivative preserves the factors,
+the $\gcd$ of $f$ and its derivative $f'$
+(whatever that looks like) is:
+
+\begin{equation}\label{eq:polyFacYun1}
+\gcd(f,f') = a_2^1a_3^2\dots a_k^{k-1},
+\end{equation}
+
+\ie\, the repeated factors with the exponent
+decreased by one. Then $f$ divided by the $\gcd$
+gives us
+
+\begin{equation}\label{eq:polyFacYun2}
+\frac{f}{\gcd(f,f')} = a_1a_2a_3\dots a_k,
+\end{equation}
+
+all the factors reduced to their first power.
+Now, if we continue this scheme using
+the $\gcd(f,f')$ and $f/\gcd(f,f')$ as input,
+we would get \ref{eq:polyFacYun1} 
+reduced one more ($a_3a_4^2\dots$) and
+\ref{eq:polyFacYun2} with the head chopped off
+($a_2a_3\dots$). The quotient of the two
+versions of \ref{eq:polyFacYun2}, \ie\
+
+\[
+\frac{a_1a_2a_3\dots}{a_2a_3\dots},
+\]
+
+would give us the head. The head, however,
+is the product of all factors with a given exponent.
+
+In a finite field, this, unfortunately does not
+work in all cases. Problematic are all coefficients
+with exponents that are multiples of the modulus.
+When we compute $nc^{n-1}$, for $n$ an exponent
+in the original polynomial that is a multiple of
+the modulus, the coefficient itself becomes zero.
+If we are unlucky, the derivative \term{disappears},
+\ie\ it becomes zero. A simple example is the polynomial
+$x^4 \pmod{2}$. When we compute the derivative, we get
+$4x^3$. Unfortunately, 4 is a multiple of 2 and,
+therefore, the only nonzero coefficient we had
+in the original polynomial becomes zero and the entire
+derivative disappears.
+
+What we can do, however, is to keep the coefficients
+with exponents that are multiples of the modulus
+separated from those that are not.
+As in the algorithm for infinte fields, we would
+iteratively compute two sequences of values,
+namely $T_{k+1} = T_k/V_{k+1}$ with $T_1 = \gcd(f,f')$
+and $V_{k+1} = \gcd(T_k,V_k)$ with $V_1 = f/T_1$.
+But we would now deviate for all $k$ that are
+multiples of $p$, \viz\: 
+
+\[
+V_{k+1} = \begin{cases}
+            \gcd(T_k,V_k) & if~p\nmid k~\textrm{(as before)}\\
+            V_k & if~p\mid k
+          \end{cases}
+\]
+
+At each step, we have
+
+\begin{equation}
+V_k = \prod_{i\ge k, p\nmid i}{a_i},
+\end{equation}
+
+\ie, the product of all $a$s with exponents greater than those
+that we have already processed and that do not divide $p$, and
+
+\begin{equation}
+T_k = \prod_{i\ge k, p\nmid i}{a_i^{i-k}}
+      \prod_{i\ge k, p\mid i}{a_i^i},
+\end{equation}
+
+\ie, the product of the powers greater than those 
+we have already processed for both cases $p\mid k$ and $p\nmid k$.
+For the cases $p\nmid k$, everything is as before.
+For the cases $p\nmid k$, we will end up, when we have reduced
+$V_k$ to a constant polynomial, with a product of all the powers
+of the $a$s with exponents that multiples of $p$.
+
+To get $a$s out, we divide all all exponents by $p$ 
+and repeat the whole algorithm. For the return value, \ie\ the
+factors, we need to remember the original exponent,
+but that is easily done as shown below.
+
+Note that for polynomials with many coefficients,
+this recursion step will occur more than once.
+The exponents that are multiples of $p$ 
+in such a polynomial have the form
+
+\[
+0p,p,2p,3p,4p,\dots
+\]
+
+Dividing by $p$, we get 
+
+\[
+0,1,p,2p,3p,\dots
+\]
+
+So, we need to repeat, until there are no more multiples of $p$.
+Here is the algorithm:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{30E}{@{}l@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{53}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{58}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sqmp}\mathbin{::}\Conid{Integer}\to \Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{sqmp}\;\Varid{p}\;\Varid{e}\;\Varid{u}{}\<[15]%
+\>[15]{}\mid \Varid{degree}\;\Varid{u}\mathbin{<}\mathrm{1}{}\<[31]%
+\>[31]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[15]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}{}\<[34]%
+\>[34]{}\mathbf{let}\;{}\<[39]%
+\>[39]{}\Varid{u'}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{derivative}\;(\Varid{modmul}\;\Varid{p})\;\Varid{u}{}\<[E]%
+\\
+\>[39]{}\Varid{t}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{u}\;\Varid{u'}{}\<[E]%
+\\
+\>[39]{}\Varid{v}{}\<[43]%
+\>[43]{}\mathrel{=}\Varid{fst}\;(\Varid{divmp}\;\Varid{p}\;\Varid{u}\;\Varid{t}){}\<[E]%
+\\
+\>[34]{}\mathbf{in}\;\Varid{go}\;\mathrm{1}\;\Varid{t}\;\Varid{v}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}\mathrel{=}{}\<[26]%
+\>[26]{}\mathbf{let}\;{}\<[31]%
+\>[31]{}\Varid{vk'}{}\<[36]%
+\>[36]{}\mid \Varid{k}\mathbin{\Varid{`rem`}}\Varid{p}\not\equiv \mathrm{0}\mathrel{=}\Varid{gcdmp}\;\Varid{p}\;\Varid{tk}\;\Varid{vk}{}\<[E]%
+\\
+\>[36]{}\mid \Varid{otherwise}{}\<[53]%
+\>[53]{}\mathrel{=}\Varid{vk}{}\<[E]%
+\\
+\>[31]{}\Varid{tk'}{}\<[36]%
+\>[36]{}\mathrel{=}\Varid{fst}\;(\Varid{divmp}\;\Varid{p}\;\Varid{tk}\;\Varid{vk'}){}\<[E]%
+\\
+\>[31]{}\Varid{k'}{}\<[36]%
+\>[36]{}\mathrel{=}\Varid{k}\mathbin{+}\mathrm{1}{}\<[E]%
+\\
+\>[26]{}\mathbf{in}\;\mathbf{case}\;\Varid{divmp}\;\Varid{p}\;\Varid{vk}\;\Varid{vk'}\;\mathbf{of}{}\<[E]%
+\\
+\>[26]{}\hsindent{5}{}\<[31]%
+\>[31]{}(\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu],\anonymous ){}\<[42]%
+\>[42]{}\to {}\<[58]%
+\>[58]{}\Varid{nextStep}\;\Varid{k'}\;\Varid{tk'}\;\Varid{vk'}{}\<[E]%
+\\
+\>[26]{}\hsindent{5}{}\<[31]%
+\>[31]{}(\Varid{f},\anonymous ){}\<[42]%
+\>[42]{}\to (\Varid{k}\mathbin{*}\Varid{p}\mathbin{\uparrow}\Varid{e},\Varid{f})\mathbin{:}{}\<[58]%
+\>[58]{}\Varid{nextStep}\;\Varid{k'}\;\Varid{tk'}\;\Varid{vk'}{}\<[E]%
+\\
+\>[12]{}\Varid{nextStep}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[30]%
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{degree}\;\Varid{vk}\mathbin{>}\mathrm{0}{}\<[48]%
+\>[48]{}\mathrel{=}\Varid{go}\;\Varid{k}\;\Varid{tk}\;\Varid{vk}{}\<[E]%
+\\
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{degree}\;\Varid{tk}\mathbin{>}\mathrm{0}{}\<[48]%
+\>[48]{}\mathrel{=}\Varid{sqmp}\;\Varid{p}\;(\Varid{e}\mathbin{+}\mathrm{1})\;(\Varid{dividedTk}\;\Varid{tk}){}\<[E]%
+\\
+\>[30]{}\mid {}\<[30E]%
+\>[33]{}\Varid{otherwise}{}\<[48]%
+\>[48]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{dividedTk}\;\Varid{tk}\mathrel{=}\Varid{poly}\;(\Varid{divExp}\;\mathrm{0}\;(\Varid{coeffs}\;\Varid{tk})){}\<[E]%
+\\
+\>[12]{}\Varid{divExp}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{divExp}\;\Varid{i}\;(\Varid{c}\mathbin{:}\Varid{cs}){}\<[29]%
+\>[29]{}\mid \Varid{i}\mathbin{\Varid{`rem`}}\Varid{p}\equiv \mathrm{0}{}\<[47]%
+\>[47]{}\mathrel{=}\Varid{c}\mathbin{:}{}\<[54]%
+\>[54]{}\Varid{divExp}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\\
+\>[29]{}\mid \Varid{otherwise}{}\<[47]%
+\>[47]{}\mathrel{=}{}\<[54]%
+\>[54]{}\Varid{divExp}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+As usual, the hard work is done in the local function \ensuremath{\Varid{go}},
+which takes three arguments, $k$, $t_k$ and $v_k$.
+We initialise $k=1$, $t_k = \gcd(u,u')$ and $v_k = u/t_k$.
+We set $v_{k+1} = \gcd(t_k,v_k)$, if $p\nmid k$,
+and $v_{k+1}=v_k$, otherwise.
+We further set $t_{k+1} = t_k/v_{k+1}$ and $k = k+1$.
+If $v_k / v_{k+1}$ is not constant (otherwise it is irrelevant),
+we remember the result as the product of factors with this
+exponent. Note that the overall result is a list of tuples,
+where the first element represents the exponent and
+the second the factor product. The exponent is calculated
+as $k\times p^e$. The number $e$, here, is not the
+Euler-Napier constant, but a variable passed in to \ensuremath{\Varid{sqmp}}.
+We would start the algorithm with $e=0$. We, hence, get
+$k\times p^0 = k\times 1 = k$ for the first recursion.
+
+The function \ensuremath{\Varid{nextStep}} is just a convenient wrapper
+for the decision of how to continue.
+If $v_k$ is not yet constant, we continue with 
+$go~(k+1)~t_{k+1}~v_{k+1}$.
+Otherwise, if $t_k$ is not yet constant, we continue
+with \ensuremath{\Varid{sqmp}} with $e+1$ and $t_k$ with exponents
+that are multiples of $p$ divided by $p$.
+
+For bootstrapping the algorithm, we can define
+a simple function with a reasonable name that
+calls \ensuremath{\Varid{sqmp}} with $e=0$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{squarefactormod}\mathbin{::}\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{squarefactormod}\;\Varid{p}\mathrel{=}\Varid{sqmp}\;\Varid{p}\;\mathrm{0}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Finally, we are ready to put everything together:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{cantorzassenhaus}\mathbin{::}\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to \Conid{IO}\;[\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cantorzassenhaus}\;\Varid{p}\;\Varid{u}{}\<[25]%
+\>[25]{}\mid \Varid{irreducible}\;\Varid{p}\;\Varid{m}{}\<[44]%
+\>[44]{}\mathrel{=}\Varid{return}\;[\mskip1.5mu (\mathrm{1},\Varid{m})\mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\mid \Varid{otherwise}{}\<[44]%
+\>[44]{}\mathrel{=}{}\<[E]%
+\\
+\>[25]{}\hsindent{5}{}\<[30]%
+\>[30]{}\Varid{concat}\mathbin{<\$>}{}\<[43]%
+\>[43]{}\Varid{mapM}\;\Varid{mexpcz}\;[\mskip1.5mu (\Varid{e},\Varid{ddfac}\;\Varid{p}\;\Varid{f})\mid {}\<[E]%
+\\
+\>[43]{}(\Varid{e},\Varid{f})\leftarrow \Varid{squarefactormod}\;\Varid{p}\;\Varid{m}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{m}\mathrel{=}\Varid{monicp}\;\Varid{p}\;\Varid{u}{}\<[E]%
+\\
+\>[12]{}\Varid{expcz}\;\Varid{e}\;(\Varid{d},\Varid{v}){}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Varid{map}\;(\lambda \Varid{f}\to (\Varid{e},\Varid{f}))\mathbin{<\$>}\Varid{cz}\;\Varid{p}\;\Varid{d}\;\Varid{v}{}\<[E]%
+\\
+\>[12]{}\Varid{mexpcz}\;(\Varid{e},\Varid{dds}){}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\Varid{concat}\mathbin{<\$>}\Varid{mapM}\;(\Varid{expcz}\;\Varid{e})\;\Varid{dds}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Hans Zassenhaus worked most of his life as a computeralgeabrist and
+was important for the development of this area of mathematics and
+computer science. He was born in Germany before the second world war
+and studied mathematics under Emil Artin, one of the founders of
+modern algebra. Zassenhaus' father was strongly influenced by
+Albert Schweitzer and, as such, opposed to Nazi ideology.
+Hans shared this antipathy and, to avoid being drafted to
+a significant war effort like, as it would appear natural
+for an algebraist, cryptography, he left university and volonteered for 
+the army weather forecast where he survived the war.
+Later, he would follow invitations first to the UK and later to the USA,
+where he remained until his death.
+
+His sister Hiltgunt (who, after emigrating to the USA,
+preferred to use her second name Margret) studied Scandinavistics.
+During the war, she worked as translator for censorship in camps
+for Norwegian and Danish prisoners. She undermined censorship in
+this position, maintained contact between 
+prisioners and helped smuggling medicine, tobacco and food
+into the prisons. For her efforts during and after the war,
+she was nominated for the Nobel Peace Prize in 1974. 
+Unfortunately, the societal engagement of the Zassenhaus siblings
+is hardly remembered today.
 
 \ignore{
 TODO:
-- derivative modulo p
-- squarefactor
-- Euler's theorem: why does f = fm = 1 mod(m)?
 - why does x^p^c, with c dividing d is not divided by g?
-- why do g and g' do not share divisors if squarefree
 - application to integers: hensel's lemma
 }
 
-\section{The Method of partial Fractions}
+\section{The Method of Partial Fractions}
 \ignore{
 http://www.purplemath.com/modules/partfrac.htm
 }
-\section{Generationfunctionology 1}
 \section{The closed Form of the Fibonacci Sequence}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
