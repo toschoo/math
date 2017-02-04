@@ -4146,19 +4146,19 @@ where
 \begin{itemize}
 \item $uv \neq 0$, whenever $u,v \in R$ and 
       $u \neq 0$ and $v \neq 0$;
-\item every nonzero element is either a \term{unit}
-      or a \term{prime} or can be uniquely represented 
+\item every nonzero element is a \term{unit},
+      a \term{prime} or can be uniquely represented 
       as a product of primes;
 \item every unit $u$ has an inverse $v$, such that
       $uv = 1$.
 \item a prime $p$ is a nonunit element for which an
-      equation of the form $p = qr$ can be true, only 
+      equation of the form $p = qr$ is true, only 
       if either $q$ or $r$ is a unit.
 \end{itemize} 
 
 The integers form a unique factorisation domain,
-with the units 1 and -1 and the primes are
-$\pm 2, \pm 3, \pm 5, \pm 7, \dots$.
+with the units 1 and -1 and the primes 
+$\pm 2, \pm 3, \pm 5, \pm 7, \dots$
 We can easily verify that 1 and -1 obey to
 the definition of unit, 
 when we assume that each one is its own inverse.
@@ -4305,8 +4305,8 @@ alternatives too. Here is an implementation:
 \end{minipage}
 
 The divisors are now combined to yield
-$n$-tuples, $n$, still the degree of the factor
-plus one, where each divisor represents
+$n$-tuples with $n$ still the degree of the factor
+plus one and each divisor representing
 one coefficient of the resulting polynomial.
 But before we can convert the $n$-tuples
 into polynomials, we need to create all
@@ -4359,8 +4359,16 @@ the list of polynomials. Here is an implementation
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Note that, since we use \ensuremath{\Varid{divp}}, we need to convert
-the integer polynomial to a rational polynomial.
+The function takes two arguments. The first is
+the polynomial we want to factor and the second
+is the list of results obtained by applying the polynomial.
+We then get the divisors \ensuremath{\Varid{ds}}, create all possible
+combinations of the divisors and all possible
+permutations of the resulting lists.
+We then convert the coefficients to rational numbers
+(since we later use \ensuremath{\Varid{divp}}). Finally,
+we filter all polynomials that leave no remainder
+when the input polynomial is divided by any one of them.
 
 There are two combinatorial functions, \ensuremath{\Varid{perms}} and \ensuremath{\Varid{listcombine}}.
 We have already defined \ensuremath{\Varid{perms}}, when discussing
@@ -4482,19 +4490,26 @@ $x^3 - x + 2$. Indeed:
 \end{equation}
 
 Kronecker's method is just a brute force search.
-It is obvious that it is not efficient and it fails
+It is obvious that it is not efficient and will fail
 with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
 They are, in particular, based on modular arithmetic
-of polynomials and make use of theorems that we have
+and make use of theorems that we have
 already discussed in the ring of integers.
 Polynomials with coefficients in a ring (or field)
 form a ring too, a polynomial ring.
 Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
+
+We will discuss the methods for factorising
+polynomials in a finite field in the next section.
+Let us here assume that we already knew such a method.
+We could then call it to factor a given polynomial
+in a finite field and then reinterpret the result
+for the domain we started with.
 
 \ignore{
 TODO:
@@ -4544,7 +4559,7 @@ a^{\varphi(n)} \equiv 1 \pmod{n},
 
 where $\varphi(n)$ is the totient function
 of $n$ counting the numbers $1\dots n-1$ that
-are coprime to $n$, \ie that share no divisors with $n$.
+are coprime to $n$, \ie\ that share no divisors with $n$.
 
 Euler's theorem is defined as theorem over the ring
 of integers, which, by modular arithmetic, transforms
@@ -4565,13 +4580,13 @@ of the form $K[x]/m$ (pronounced ``over'' $m$),
 where $m$ is a polynomial.
 The point in doing this is that many properties of
 the original field $K$ are preserved in $K[x]/m$ and
-Euler's theorem is an example thereof.
+Euler's theorem is one of them.
 
 However, we need to redefine Euler's theorem
 to make clear what is meant by it in the new context.
-First, we are dealing with the polynomial field $K[x]$
+We are now dealing with the polynomial ring $K[x]$
 and a polynomial $m \in K[x]$.
-Then we define the totient function as
+Based on this, we can define the totient function as
 
 \[
 \varphi(m) = |\lbrace f \in K[x] : 0 \le f \le m \wedge \gcd(m,f) = 1\rbrace|,
@@ -4579,7 +4594,7 @@ Then we define the totient function as
 
 \ie\ the cardinality of the set of all polynomials $f$
 less or equal than $m$ that do not share
-divisors with $m$. For any such field 
+divisors with $m$. For any such ring $K[x]$
 and any $f \in K[x] : \gcd(m,f) = 1$,
 the following holds:
 
@@ -4603,7 +4618,7 @@ This equivalence may hold also for other numbers, $a$,
 such that $f^a \equiv 1 \pmod{m}$, but
 according to Lagrange's theorem 
 (that the cardinality of subgroups of $G$ divides
-the cardinality of $G$) all these numbers $a$
+the cardinality of $G$), all these numbers $a$
 must divide $\varphi(m)$, the size of the group,
 and we unmistakenly have
 $f^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
@@ -4614,7 +4629,7 @@ arithmetic modulo a prime $p$, then $K_m^*$ is the group
 of numbers $1\dots p-1$, which has $q=p-1$ elements.
 Note that, when we refer to the multiplicative group
 of this field, we usually refer only to the numbers
-$1\dots p-1$, which contains only $p-1$ elements.
+$1\dots p-1$, \ie\ $p-1$ numbers.
 Now, let $g$ be an \term{irreducible} polynomial,
 \ie\ a non-constant polynomial that cannot be 
 further factored and, hence, a ``prime'' in our polynomial ring,
@@ -4657,8 +4672,8 @@ For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]},
 which we must exclude, when asking for $\varphi(g)$,
-since this polynomial is zero 
-for which division is not defined.
+since, for this polynomial, 
+division is not defined.
 For the irreducible polynomial $g$, we therefore
 have $r-1$ elements that do not share divisors with $g$,
 \ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
@@ -4678,8 +4693,8 @@ Since $r=q^d$, this is equivalent to \ref{eq:polyFacFermat}
 and this concludes the proof.$\qed$
 
 From Fermat's theorem, we can derive a nice and useful corollary.
-Note that when we subtract $f$ from both sides of the equivalence,
-then we would get 0 on the right-hand side, which means that
+Note that, when we subtract $f$ from both sides of the equivalence,
+we would get 0 on the right-hand side, which means that
 $g$ divides the expression on the left-hand side.
 Set $x=f$, then we have:
 
@@ -4828,7 +4843,9 @@ Let us try another one:
 This time, I get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{4},\mathrm{4}\mskip1.5mu]}.
 Calling \ensuremath{\Varid{irreducible}\;\mathrm{7}\;\Varid{g}} says: \ensuremath{\Conid{True}}.
 When we take $x^{7^3} - x$ modulo $g$,
-we get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]}. \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{4},\mathrm{4}\mskip1.5mu]}, hence,
+we get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]}. But we do not get a 
+constant polynomial for $x^7 - x$ or
+$x^{7^2} -x $. \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{4},\mathrm{4}\mskip1.5mu]}, hence,
 is irreducible.
 
 The formula, however, is not only interesting
@@ -4839,9 +4856,10 @@ are factors of $x^{q^d} - x$.
 Whenever we construct this expression,
 we have created the product of all 
 irreducible polynomials of degree $d$.
-The irreducible factors of our polynomial
+The irreducible factors of the polynomial we want to factor
 are part of this product and we can get them out
-just by asking for the greatest common divisor.
+just by asking for the greatest common divisor
+of $x^{p^d} - x$ and the polynomial we want to factor.
 This would give us the product of all factors
 of our polynomial of a given degree.
 
@@ -4968,6 +4986,7 @@ making $g$ monic.
 
 We continue with the next degree, $d+1$,
 the quotient of the polynomial we started with and
+the factor product $g$ we obtained and
 the power of \ensuremath{\Varid{x'}} reduced to the modulo $u$.
 The latter is again an optimisation.
 The former, however, is essential to avoid
@@ -5015,7 +5034,7 @@ a specific polynomial for $x$, say $t$. We already have
 that chunk of irreducible polynomials hidden in \ensuremath{(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])},
 let us call it $u$,
 and know that those polynomials are factors of both,
-$t^{p^d} - t$ and and $u$. 
+$t^{p^d} - t$ and $u$. 
 The approach of Cantor and Zassenhaus is to split the factors
 so that the problem reduces significantly. We can split $t$
 into three parts using the equality
@@ -5038,14 +5057,14 @@ u = \gcd(u,t)\times\gcd(u,(t^{(p^d-1)/2} + 1))\times\gcd(u,((t^{(p^d-1)/2} - 1))
 \end{equation}
 
 A reasonable choice for $t$ is a polynomial
-of degree $2d-1$, since in this case there is high probability
-that the factors are spread equally among the three factors
-of equality \ref{eq:polyFac_CZ1}. 
-With high probability, we reduce the problem significantly,
-when we compute one of the $\gcd$s and continue splitting
+of degree $2d-1$. 
+With high probability, the factors are equally distributed
+among the latter two factors of the equation and 
+we indeed reduce the problem significantly.
+To do so, we compute one of the $\gcd$s and continue splitting
 this $\gcd$ and the quotient of $u$ and the $\gcd$ further.
 Should we be unlucky (the $\gcd$ contains either no or all
-of the factors), we just try again with another polynomial.
+of the factors), we just try again with another choice for $t$.
 After some tries (less than three according to common wisdom), 
 we will hit a common factor.
 
@@ -5135,7 +5154,7 @@ into two more or less equal parts, just by factoring $w$ out:
 $w(w+1)$. Now, it is again very probable that we find common divisors
 in both of the factors, $w$ or $w+1$ making it likely that we can
 reduce the problem by taking the $\gcd$ with one of them.
-Here is the implementation of the Cantor-Zassenhaus algorithm:
+Here is an implementation of the Cantor-Zassenhaus algorithm:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -5195,7 +5214,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
 \end{minipage}
 
 The function receives a natural number,
-that is the modulus $p$, an \ensuremath{\Conid{Int}}, $d$, for the degree
+that is the modulus $p$, an \ensuremath{\Conid{Int}}, $d$, for the degree,
 and the polynomial $u$, the factor product,
 which we both obtained from \ensuremath{\Varid{ddfac}}.
 When the degree is equal or greater than $n$,
@@ -5203,7 +5222,8 @@ the degree of $u$, we are done: we already have
 a factor of the predicted degree.
 Otherwise, we generate a random monic polynomial
 of degree $2d-1$. Note that, since \ensuremath{\Varid{randomPoly}}
-expects the number of coefficients, we just pass $2d$.
+expects the number of coefficients, 
+which is $d+1$, we just pass $2d$.
 
 Then we calculate $t$. If $p$ is 2, we use \ensuremath{\Varid{addsquares}},
 at which we will look in a moment. Otherwise,
@@ -5211,7 +5231,7 @@ we raise the random polynomial to the power of $(p^d-1)/2$
 and subtract 1. That is the third factor of equation
 \ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
 if the result has either degree 0 (no factor was found)
-or degree equal to $u$ (all factors are in this one),
+or the same degree as $u$ (all factors are in this one),
 we just try again with another random polynomial.
 Otherwise, we continue with the $\gcd$ and the quotient
 $u/\gcd$.
@@ -5220,7 +5240,7 @@ Let us try this for the result \ensuremath{(\mathrm{1},\Conid{P}\;[\mskip1.5mu \
 earlier from applying \ensuremath{\Varid{ddfac}} on \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
 \ensuremath{\Varid{cz}\;\mathrm{7}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])} gives 
 
-\ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+\ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{1}\mskip1.5mu]\mskip1.5mu]},
 
 two irreducible polynomials of degree 1.
 The complete factorisation of \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1},\mathrm{1}\mskip1.5mu]}, hence, is
@@ -5277,7 +5297,7 @@ which just computes $w$ as $t + t^2 + t^4 + \dots t^{2^{d-1}}$.
 
 Let us try \ensuremath{\Varid{ddfac}} and \ensuremath{\Varid{cz}} with a polynomial modulo 2,
 \eg\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}, which is of degree 8 and
-is squarefree and irreducible (and, per definition, monic).
+is squarefree (and, per definition, monic).
 The call \ensuremath{\Varid{ddfac}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])} gives
 us three chunks of factors:
 
@@ -5303,7 +5323,7 @@ adopted from calculus and, again, related to the
 derivative. The point is that a polynomial and
 its derivative share only those divisors that
 appear more than once in the factorisation.
-We have not enough knowledge on derivatives to
+We have not enough knowledge on derivatives yet to
 prove that here rigorously, but we can give an
 intuition.
 
@@ -5392,7 +5412,7 @@ the current remainder. Just as in the Chinese remainder
 theorem, each of the terms resulting from the product
 rule is coprime to the original factor at the same position,
 since it is the product of irreducible factors 
-(and, hence, coprime to each other) and the derivative
+(which, hence, are coprime to each other) and the derivative
 of that factor, which, for sure, does not share
 divisors with the original factor at that position.
 
@@ -5495,13 +5515,13 @@ T_k = \prod_{i\ge k, p\nmid i}{a_i^{i-k}}
 \end{equation}
 
 \ie, the product of the powers greater than those 
-we have already processed for both cases $p\mid k$ and $p\nmid k$.
-For the cases $p\nmid k$, everything is as before.
-For the cases $p\nmid k$, we will end up, when we have reduced
+we have already processed for both cases $p\mid i$ and $p\nmid i$.
+For the cases $p\nmid i$, everything is as before.
+For the cases $p\mid i$, we will end up, when we have reduced
 $V_k$ to a constant polynomial, with a product of all the powers
-of the $a$s with exponents that multiples of $p$.
+of the $a$s with exponents that are multiples of $p$.
 
-To get $a$s out, we divide all all exponents by $p$ 
+To get these $a$s out, we divide all all exponents by $p$ 
 and repeat the whole algorithm. For the return value, \ie\ the
 factors, we need to remember the original exponent,
 but that is easily done as shown below.
@@ -5633,7 +5653,8 @@ We initialise $k=1$, $t_k = \gcd(u,u')$ and $v_k = u/t_k$.
 We set $v_{k+1} = \gcd(t_k,v_k)$, if $p\nmid k$,
 and $v_{k+1}=v_k$, otherwise.
 We further set $t_{k+1} = t_k/v_{k+1}$ and $k = k+1$.
-If $v_k / v_{k+1}$ is not constant (otherwise it is irrelevant),
+If $v_k / v_{k+1}$ (this is the head)
+is not constant (otherwise it is irrelevant),
 we remember the result as the product of factors with this
 exponent. Note that the overall result is a list of tuples,
 where the first element represents the exponent and

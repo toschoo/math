@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  29 JAN 2017 19:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  4 FEB 2017 13:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1621,27 +1621,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 3739--3743
 \openout3 = `lhspoly.ptb'.
 
  [50]
-Underfull \hbox (badness 10000) in paragraph at lines 4806--4807
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 4826--4827
+Underfull \hbox (badness 10000) in paragraph at lines 4821--4822
 
  []
 
 [51]
+Underfull \hbox (badness 10000) in paragraph at lines 4841--4842
+
+ []
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+[52] [53] [54] [55]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [52] [53] [54]
-\openout3 = `lhspoly.ptb'.
+ [56]
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 5298--5303
+\OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
+ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
+10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
+m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML
+/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 
+1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/1
+0.95 1 ])$
+ []
 
- [55]
-\openout3 = `lhspoly.ptb'.
-
- [56] [57] [58] [59]
+[57] [58] [59]
 \openout3 = `lhspoly.ptb'.
 
  [60]
@@ -1649,36 +1658,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 4826--4827
 
 \openout3 = `lhspoly.ptb'.
 
- [61] [62] (./lhspoly.aux) ) 
+ [61] [62] [63] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
  29579 strings out of 493304
  681776 string characters out of 6139872
- 838784 words of memory out of 5000000
+ 842784 words of memory out of 5000000
  32471 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  70i,10n,99p,10414b,647s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
-sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm10.pfb>
-Output written on lhspoly.pdf (62 pages, 351861 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
+ols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
+ls/msbm10.pfb>
+Output written on lhspoly.pdf (63 pages, 352877 bytes).
 PDF statistics:
- 276 PDF objects out of 1000 (max. 8388607)
- 193 compressed objects within 2 object streams
+ 279 PDF objects out of 1000 (max. 8388607)
+ 195 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

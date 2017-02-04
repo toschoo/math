@@ -16,19 +16,19 @@ where
 \begin{itemize}
 \item $uv \neq 0$, whenever $u,v \in R$ and 
       $u \neq 0$ and $v \neq 0$;
-\item every nonzero element is either a \term{unit}
-      or a \term{prime} or can be uniquely represented 
+\item every nonzero element is a \term{unit},
+      a \term{prime} or can be uniquely represented 
       as a product of primes;
 \item every unit $u$ has an inverse $v$, such that
       $uv = 1$.
 \item a prime $p$ is a nonunit element for which an
-      equation of the form $p = qr$ can be true, only 
+      equation of the form $p = qr$ is true, only 
       if either $q$ or $r$ is a unit.
 \end{itemize} 
 
 The integers form a unique factorisation domain,
-with the units 1 and -1 and the primes are
-$\pm 2, \pm 3, \pm 5, \pm 7, \dots$.
+with the units 1 and -1 and the primes 
+$\pm 2, \pm 3, \pm 5, \pm 7, \dots$
 We can easily verify that 1 and -1 obey to
 the definition of unit, 
 when we assume that each one is its own inverse.
@@ -155,8 +155,8 @@ alternatives too. Here is an implementation:
 \end{minipage}
 
 The divisors are now combined to yield
-$n$-tuples, $n$, still the degree of the factor
-plus one, where each divisor represents
+$n$-tuples with $n$ still the degree of the factor
+plus one and each divisor representing
 one coefficient of the resulting polynomial.
 But before we can convert the $n$-tuples
 into polynomials, we need to create all
@@ -183,8 +183,16 @@ the list of polynomials. Here is an implementation
 \end{code}
 \end{minipage}
 
-Note that, since we use |divp|, we need to convert
-the integer polynomial to a rational polynomial.
+The function takes two arguments. The first is
+the polynomial we want to factor and the second
+is the list of results obtained by applying the polynomial.
+We then get the divisors |ds|, create all possible
+combinations of the divisors and all possible
+permutations of the resulting lists.
+We then convert the coefficients to rational numbers
+(since we later use |divp|). Finally,
+we filter all polynomials that leave no remainder
+when the input polynomial is divided by any one of them.
 
 There are two combinatorial functions, |perms| and |listcombine|.
 We have already defined |perms|, when discussing
@@ -274,19 +282,26 @@ $x^3 - x + 2$. Indeed:
 \end{equation}
 
 Kronecker's method is just a brute force search.
-It is obvious that it is not efficient and it fails
+It is obvious that it is not efficient and will fail
 with growing degrees and coefficients.
 Modern methods to factor polynomials use
 much more sophisticated techniques.
 
 They are, in particular, based on modular arithmetic
-of polynomials and make use of theorems that we have
+and make use of theorems that we have
 already discussed in the ring of integers.
 Polynomials with coefficients in a ring (or field)
 form a ring too, a polynomial ring.
 Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
+
+We will discuss the methods for factorising
+polynomials in a finite field in the next section.
+Let us here assume that we already knew such a method.
+We could then call it to factor a given polynomial
+in a finite field and then reinterpret the result
+for the domain we started with.
 
 \ignore{
 TODO:

@@ -31,7 +31,7 @@ a^{\varphi(n)} \equiv 1 \pmod{n},
 
 where $\varphi(n)$ is the totient function
 of $n$ counting the numbers $1\dots n-1$ that
-are coprime to $n$, \ie that share no divisors with $n$.
+are coprime to $n$, \ie\ that share no divisors with $n$.
 
 Euler's theorem is defined as theorem over the ring
 of integers, which, by modular arithmetic, transforms
@@ -52,13 +52,13 @@ of the form $K[x]/m$ (pronounced ``over'' $m$),
 where $m$ is a polynomial.
 The point in doing this is that many properties of
 the original field $K$ are preserved in $K[x]/m$ and
-Euler's theorem is an example thereof.
+Euler's theorem is one of them.
 
 However, we need to redefine Euler's theorem
 to make clear what is meant by it in the new context.
-First, we are dealing with the polynomial field $K[x]$
+We are now dealing with the polynomial ring $K[x]$
 and a polynomial $m \in K[x]$.
-Then we define the totient function as
+Based on this, we can define the totient function as
 
 \[
 \varphi(m) = ||\lbrace f \in K[x] : 0 \le f \le m \wedge \gcd(m,f) = 1\rbrace||,
@@ -66,7 +66,7 @@ Then we define the totient function as
 
 \ie\ the cardinality of the set of all polynomials $f$
 less or equal than $m$ that do not share
-divisors with $m$. For any such field 
+divisors with $m$. For any such ring $K[x]$
 and any $f \in K[x] : \gcd(m,f) = 1$,
 the following holds:
 
@@ -90,7 +90,7 @@ This equivalence may hold also for other numbers, $a$,
 such that $f^a \equiv 1 \pmod{m}$, but
 according to Lagrange's theorem 
 (that the cardinality of subgroups of $G$ divides
-the cardinality of $G$) all these numbers $a$
+the cardinality of $G$), all these numbers $a$
 must divide $\varphi(m)$, the size of the group,
 and we unmistakenly have
 $f^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
@@ -101,7 +101,7 @@ arithmetic modulo a prime $p$, then $K_m^*$ is the group
 of numbers $1\dots p-1$, which has $q=p-1$ elements.
 Note that, when we refer to the multiplicative group
 of this field, we usually refer only to the numbers
-$1\dots p-1$, which contains only $p-1$ elements.
+$1\dots p-1$, \ie\ $p-1$ numbers.
 Now, let $g$ be an \term{irreducible} polynomial,
 \ie\ a non-constant polynomial that cannot be 
 further factored and, hence, a ``prime'' in our polynomial ring,
@@ -144,8 +144,8 @@ For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is |P [0]|,
 which we must exclude, when asking for $\varphi(g)$,
-since this polynomial is zero 
-for which division is not defined.
+since, for this polynomial, 
+division is not defined.
 For the irreducible polynomial $g$, we therefore
 have $r-1$ elements that do not share divisors with $g$,
 \ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
@@ -165,8 +165,8 @@ Since $r=q^d$, this is equivalent to \ref{eq:polyFacFermat}
 and this concludes the proof.$\qed$
 
 From Fermat's theorem, we can derive a nice and useful corollary.
-Note that when we subtract $f$ from both sides of the equivalence,
-then we would get 0 on the right-hand side, which means that
+Note that, when we subtract $f$ from both sides of the equivalence,
+we would get 0 on the right-hand side, which means that
 $g$ divides the expression on the left-hand side.
 Set $x=f$, then we have:
 
@@ -272,7 +272,9 @@ Let us try another one:
 This time, I get |P [3,1,4,4]|.
 Calling |irreducible 7 g| says: |True|.
 When we take $x^{7^3} - x$ modulo $g$,
-we get |P [0]|. |P [3,1,4,4]|, hence,
+we get |P [0]|. But we do not get a 
+constant polynomial for $x^7 - x$ or
+$x^{7^2} -x $. |P [3,1,4,4]|, hence,
 is irreducible.
 
 The formula, however, is not only interesting
@@ -283,9 +285,10 @@ are factors of $x^{q^d} - x$.
 Whenever we construct this expression,
 we have created the product of all 
 irreducible polynomials of degree $d$.
-The irreducible factors of our polynomial
+The irreducible factors of the polynomial we want to factor
 are part of this product and we can get them out
-just by asking for the greatest common divisor.
+just by asking for the greatest common divisor
+of $x^{p^d} - x$ and the polynomial we want to factor.
 This would give us the product of all factors
 of our polynomial of a given degree.
 
@@ -347,6 +350,7 @@ making $g$ monic.
 
 We continue with the next degree, $d+1$,
 the quotient of the polynomial we started with and
+the factor product $g$ we obtained and
 the power of |x'| reduced to the modulo $u$.
 The latter is again an optimisation.
 The former, however, is essential to avoid
@@ -394,7 +398,7 @@ a specific polynomial for $x$, say $t$. We already have
 that chunk of irreducible polynomials hidden in |(P [2,4,1])|,
 let us call it $u$,
 and know that those polynomials are factors of both,
-$t^{p^d} - t$ and and $u$. 
+$t^{p^d} - t$ and $u$. 
 The approach of Cantor and Zassenhaus is to split the factors
 so that the problem reduces significantly. We can split $t$
 into three parts using the equality
@@ -417,14 +421,14 @@ u = \gcd(u,t)\times\gcd(u,(t^{(p^d-1)/2} + 1))\times\gcd(u,((t^{(p^d-1)/2} - 1))
 \end{equation}
 
 A reasonable choice for $t$ is a polynomial
-of degree $2d-1$, since in this case there is high probability
-that the factors are spread equally among the three factors
-of equality \ref{eq:polyFac_CZ1}. 
-With high probability, we reduce the problem significantly,
-when we compute one of the $\gcd$s and continue splitting
+of degree $2d-1$. 
+With high probability, the factors are equally distributed
+among the latter two factors of the equation and 
+we indeed reduce the problem significantly.
+To do so, we compute one of the $\gcd$s and continue splitting
 this $\gcd$ and the quotient of $u$ and the $\gcd$ further.
 Should we be unlucky (the $\gcd$ contains either no or all
-of the factors), we just try again with another polynomial.
+of the factors), we just try again with another choice for $t$.
 After some tries (less than three according to common wisdom), 
 we will hit a common factor.
 
@@ -514,7 +518,7 @@ into two more or less equal parts, just by factoring $w$ out:
 $w(w+1)$. Now, it is again very probable that we find common divisors
 in both of the factors, $w$ or $w+1$ making it likely that we can
 reduce the problem by taking the $\gcd$ with one of them.
-Here is the implementation of the Cantor-Zassenhaus algorithm:
+Here is an implementation of the Cantor-Zassenhaus algorithm:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -535,7 +539,7 @@ Here is the implementation of the Cantor-Zassenhaus algorithm:
 \end{minipage}
 
 The function receives a natural number,
-that is the modulus $p$, an |Int|, $d$, for the degree
+that is the modulus $p$, an |Int|, $d$, for the degree,
 and the polynomial $u$, the factor product,
 which we both obtained from |ddfac|.
 When the degree is equal or greater than $n$,
@@ -543,7 +547,8 @@ the degree of $u$, we are done: we already have
 a factor of the predicted degree.
 Otherwise, we generate a random monic polynomial
 of degree $2d-1$. Note that, since |randomPoly|
-expects the number of coefficients, we just pass $2d$.
+expects the number of coefficients, 
+which is $d+1$, we just pass $2d$.
 
 Then we calculate $t$. If $p$ is 2, we use |addsquares|,
 at which we will look in a moment. Otherwise,
@@ -551,7 +556,7 @@ we raise the random polynomial to the power of $(p^d-1)/2$
 and subtract 1. That is the third factor of equation
 \ref{eq:polyFac_CZ1}. We compute the $\gcd$ and,
 if the result has either degree 0 (no factor was found)
-or degree equal to $u$ (all factors are in this one),
+or the same degree as $u$ (all factors are in this one),
 we just try again with another random polynomial.
 Otherwise, we continue with the $\gcd$ and the quotient
 $u/\gcd$.
@@ -560,7 +565,7 @@ Let us try this for the result |(1,P [2,4,1])| we obtained
 earlier from applying |ddfac| on |P [5,4,3,1,1]|.
 |cz 7 1 (P [2,4,1])| gives 
 
-|[P [6,1],P [5,1]]|
+|[P [6,1],P [5,1]]|,
 
 two irreducible polynomials of degree 1.
 The complete factorisation of |P [5,4,3,1,1]|, hence, is
@@ -588,7 +593,7 @@ which just computes $w$ as $t + t^2 + t^4 + \dots t^{2^{d-1}}$.
 
 Let us try |ddfac| and |cz| with a polynomial modulo 2,
 \eg\ |P [0,1,1,1,0,0,1,1,1]|, which is of degree 8 and
-is squarefree and irreducible (and, per definition, monic).
+is squarefree (and, per definition, monic).
 The call |ddfac 2 (P [0,1,1,1,0,0,1,1,1])| gives
 us three chunks of factors:
 
@@ -614,7 +619,7 @@ adopted from calculus and, again, related to the
 derivative. The point is that a polynomial and
 its derivative share only those divisors that
 appear more than once in the factorisation.
-We have not enough knowledge on derivatives to
+We have not enough knowledge on derivatives yet to
 prove that here rigorously, but we can give an
 intuition.
 
@@ -703,7 +708,7 @@ the current remainder. Just as in the Chinese remainder
 theorem, each of the terms resulting from the product
 rule is coprime to the original factor at the same position,
 since it is the product of irreducible factors 
-(and, hence, coprime to each other) and the derivative
+(which, hence, are coprime to each other) and the derivative
 of that factor, which, for sure, does not share
 divisors with the original factor at that position.
 
@@ -806,13 +811,13 @@ T_k = \prod_{i\ge k, p\nmid i}{a_i^{i-k}}
 \end{equation}
 
 \ie, the product of the powers greater than those 
-we have already processed for both cases $p\mid k$ and $p\nmid k$.
-For the cases $p\nmid k$, everything is as before.
-For the cases $p\nmid k$, we will end up, when we have reduced
+we have already processed for both cases $p\mid i$ and $p\nmid i$.
+For the cases $p\nmid i$, everything is as before.
+For the cases $p\mid i$, we will end up, when we have reduced
 $V_k$ to a constant polynomial, with a product of all the powers
-of the $a$s with exponents that multiples of $p$.
+of the $a$s with exponents that are multiples of $p$.
 
-To get $a$s out, we divide all all exponents by $p$ 
+To get these $a$s out, we divide all all exponents by $p$ 
 and repeat the whole algorithm. For the return value, \ie\ the
 factors, we need to remember the original exponent,
 but that is easily done as shown below.
@@ -866,7 +871,8 @@ We initialise $k=1$, $t_k = \gcd(u,u')$ and $v_k = u/t_k$.
 We set $v_{k+1} = \gcd(t_k,v_k)$, if $p\nmid k$,
 and $v_{k+1}=v_k$, otherwise.
 We further set $t_{k+1} = t_k/v_{k+1}$ and $k = k+1$.
-If $v_k / v_{k+1}$ is not constant (otherwise it is irrelevant),
+If $v_k / v_{k+1}$ (this is the head)
+is not constant (otherwise it is irrelevant),
 we remember the result as the product of factors with this
 exponent. Note that the overall result is a list of tuples,
 where the first element represents the exponent and
