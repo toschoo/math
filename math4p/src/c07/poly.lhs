@@ -13,7 +13,7 @@
 %include PolyFactor.lhs
 \section{Factoring Polynomials in a finite Field}
 %include PolyModFactor.lhs
-\section{The Method of Partial Fractions}
-%include PartialF.lhs
+\section{Hensel Lifting}
+%include HenselLifting.lhs
 \section{The closed Form of the Fibonacci Sequence}
 %include ClosedFib.lhs

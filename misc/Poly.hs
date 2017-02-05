@@ -132,7 +132,7 @@ where
   -------------------------------------------------------------------------
   -- Multiplication over an infinite field
   -------------------------------------------------------------------------
-  mul :: (Show a, Num a, Eq a) => Poly a -> Poly a -> Poly a
+  mul :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   mul p1 p2 | d2 > d1   =  mul p2 p1
             | otherwise =  P (strichf (+) ms)
     where d1 = degree p1
@@ -169,6 +169,12 @@ where
   -------------------------------------------------------------------------
   mulmlist :: Integer -> [Integer] -> [Integer] -> [Integer]
   mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
+          
+  -------------------------------------------------------------------------
+  -- Scale a polynomial
+  -------------------------------------------------------------------------
+  scale :: (Num a) => a -> Poly a -> Poly a 
+  scale n (P cs) = P (map (n*) cs)
 
   -------------------------------------------------------------------------
   -- Division (infinite field)
@@ -265,10 +271,10 @@ where
   -------------------------------------------------------------------------
   -- Derivatives (generic)
   -------------------------------------------------------------------------
-  derivative :: (Eq a, Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
+  derivative :: (Eq a, Num a) => (a -> a -> a) -> Poly a -> Poly a
   derivative o (P as) = P (cleanz (go $ zip [1..] (drop 1 as)))
     where go []         = []
-          go ((x,c):cs) = (x `o` c) : go cs
+          go ((x,c):cs) = (z `o` c) : go cs where z = fromIntegral x
 
   -------------------------------------------------------------------------
   -- Squarefree
@@ -520,7 +526,7 @@ where
   -------------------------------------------------------------------------
   -- pow (square-and-multiply)
   -------------------------------------------------------------------------
-  powp :: Integer -> Poly Integer -> Poly Integer
+  powp :: (Eq a, Show a, Num a) => Integer -> Poly a -> Poly a 
   powp f u = go f (P [1]) u
     where go 0 y _  = y
           go 1 y x  = mul y x
@@ -745,6 +751,42 @@ where
 
   subst :: (a,a,a,a) -> [Newton] -> [a]
   subst as = map (new2a as)
+
+  -------------------------------------------------------------------------
+  -- Talyor Series (real numbers)
+  -------------------------------------------------------------------------
+  taylor :: Integer -> Double -> Poly Double  -> Poly Double 
+  taylor i a = go 0
+    where go n f | n == i = P [0]
+                 | otherwise = 
+                   let k = apply f a 
+                       d = fromIntegral (B.fac n)
+                       q = k / d
+                       x = scale q (powp n (P [-a,1]))
+                    in x `add` go (n+1) (derivative (*) f)
+
+  -------------------------------------------------------------------------
+  -- Talyor Series (mod p)
+  -------------------------------------------------------------------------
+  taylormp :: Integer -> Integer -> Integer -> Poly Integer -> Poly Integer
+  taylormp i p a = go 0
+    where go n f | n == i = P [0]
+                 | otherwise = 
+                   let k = apply f a 
+                       d = B.fac n
+                       q = k * (d `M.inverse` p) 
+                       x = modp p $ scale q (powmp p n (P [-a,1]))
+                    in addp p x $ go (n+1) (derivative (modmul p) f)
+
+  -------------------------------------------------------------------------
+  -- Hensel lifting
+  -------------------------------------------------------------------------
+  hlift :: Integer -> Integer -> Poly Integer -> Integer -> (Bool, Integer)
+  hlift p x u r = ((apply u' r) `mmod` p /= 0, s `mmod` p')
+    where u' = derivative (modmul p) u
+          a  = (apply u' r) `M.inverse` p'
+          s  = r - (apply u r) * a 
+          p' = p^x
 
   -------------------------------------------------------------------------
   -- Numerical root finding

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  4 FEB 2017 13:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.6.2)  4 FEB 2017 19:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1684,7 +1684,7 @@ msfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
 ols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
 ls/msbm10.pfb>
-Output written on lhspoly.pdf (63 pages, 352877 bytes).
+Output written on lhspoly.pdf (63 pages, 352892 bytes).
 PDF statistics:
  279 PDF objects out of 1000 (max. 8388607)
  195 compressed objects within 2 object streams
