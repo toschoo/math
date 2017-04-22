@@ -6,6 +6,9 @@
   cz  31:  "   (x+28)
   cz 101:  "   (x+98), etc., i.e.:
   (x+3)(x-3)
+
+https://en.wikipedia.org/wiki/Factorization_of_polynomials#Modern_methods
+
 - Taylor series
 - Hensel's lemma
 - Hensel Lifting for roots

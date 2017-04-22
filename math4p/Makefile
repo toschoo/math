@@ -71,6 +71,7 @@ ALL	 = cmds.tex \
 	   src/c07/PolyArith.lhs \
 	   src/c07/DMachine.lhs \
 	   src/c07/DiffBinom.lhs \
+	   src/c07/FacPoly.lhs \
 	   src/c07/Roots.lhs \
 	   src/c07/PolyFactor.lhs \
 	   src/c07/PolyModFactor.lhs \
@@ -101,7 +102,7 @@ INC = -isrc/c02 \
       -isrc/c07 \
       -iscratchpad
 
-toTex = lhs2TeX --poly
+toTex = lhs2TeX --tt
 
 m4p.pdf:	m4p.tex $(ALL) 
 		$(toTex) m4p.tex > lhsm4p.tex

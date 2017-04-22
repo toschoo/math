@@ -22,7 +22,7 @@ testZeno2 l k = go 2 1
                  zeno2 i j = go i (j+1)
 
 ---------------------------------------------------------------------------
--- Heron's paradox
+-- Heron's method
 ---------------------------------------------------------------------------
 heron :: Integer -> Int -> Double
 heron n s = let a = fromIntegral n

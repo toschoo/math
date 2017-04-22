@@ -674,7 +674,7 @@ Even more important for the following, however,
 is the formula at which we arrive by factoring
 $p^k$ out. We then get
 
-\begin{equation}\label{eq:TotPrimePower1}
+\begin{equation}\label{eqTotPrimePower1}
 \varphi\left(p^k\right) = p^k \left(1-\frac{1}{p}\right)
 \end{equation}
 
@@ -693,7 +693,7 @@ the totient function applies, \ie\
 
 We now can substitute the totient computations 
 of the prime powers on the right-hand side
-by the formula in equation \ref{eq:TotPrimePower1}
+by the formula in equation \ref{eqTotPrimePower1}
 resulting in 
 
 \[
@@ -706,7 +706,8 @@ We regroup the formula a bit to get:
 
 \[
 \varphi(n) = p_1^{k_1}p_2^{k_2}\dots
-             \left(1-\frac{1}{p_1}\right)
+             % \left(1-\frac{1}{p_1}\right) % this has stopped working, why???
+             (1-\frac{1}{p_1})
              \left(1-\frac{1}{p_2}\right)
              \dots
 \]

@@ -6,6 +6,8 @@
 %include DMachine.lhs
 \section{Differences and Binomial Coefficients}
 %include DiffBinom.lhs
+\section{Factorial Polynomials}
+%include FacPoly.lhs
 \section{Roots}
 %include Roots.lhs
 \section{Vieta's Formula}
