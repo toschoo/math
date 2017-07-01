@@ -10,8 +10,6 @@
 % Springer Style
 %\documentclass[envcountsame]{llncs}
 
-%% ODER: format ==         = "\mathrel{==}"
-%% ODER: format /=         = "\neq "
 %
 %
 \makeatletter
@@ -43,58 +41,6 @@
 \newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
 
 \newcommand{\Sp}{\hskip.33334em\relax}
-
-
-\newcommand{\Conid}[1]{\mathit{#1}}
-\newcommand{\Varid}[1]{\mathit{#1}}
-\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
-\newcommand{\plus}{\mathbin{+\!\!\!+}}
-\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
-\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
-\newcommand{\sequ}{\mathbin{>\!\!\!>}}
-\renewcommand{\leq}{\leqslant}
-\renewcommand{\geq}{\geqslant}
-\usepackage{polytable}
-
-%mathindent has to be defined
-\@ifundefined{mathindent}%
-  {\newdimen\mathindent\mathindent\leftmargini}%
-  {}%
-
-\def\resethooks{%
-  \global\let\SaveRestoreHook\empty
-  \global\let\ColumnHook\empty}
-\newcommand*{\savecolumns}[1][default]%
-  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
-\newcommand*{\restorecolumns}[1][default]%
-  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
-\newcommand*{\aligncolumn}[2]%
-  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
-
-\resethooks
-
-\newcommand{\onelinecommentchars}{\quad-{}- }
-\newcommand{\commentbeginchars}{\enskip\{-}
-\newcommand{\commentendchars}{-\}\enskip}
-
-\newcommand{\visiblecomments}{%
-  \let\onelinecomment=\onelinecommentchars
-  \let\commentbegin=\commentbeginchars
-  \let\commentend=\commentendchars}
-
-\newcommand{\invisiblecomments}{%
-  \let\onelinecomment=\empty
-  \let\commentbegin=\empty
-  \let\commentend=\empty}
-
-\visiblecomments
-
-\newlength{\blanklineskip}
-\setlength{\blanklineskip}{0.66084ex}
-
-\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
-\let\hspre\empty
-\let\hspost\empty
 \newcommand{\NB}{\textbf{NB}}
 \newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
 
@@ -111,30 +57,19 @@
 \chapter{Induction, Series, Sets and Combinatorics} % c03
 \section{Logistics}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Ex1}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{intercalate}){}\<[E]%
-\\
-\>[B]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\mathbf{import}\;\Conid{Numbers}{}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\mbox{\onelinecomment  more number operations}{}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment  basic sums: 1 + 2 + ... + n}{}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment              1^2 + ... n^2}{}\<[E]%
-\\
-\>[B]{}\mbox{\onelinecomment }{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Ex1}\\
+\texfamily {\bfseries where}\\
+\texfamily \\
+\texfamily {\bfseries import}~{\itshape {\itshape Data}.List}~(intercalate)\\
+\texfamily {\bfseries import}~{\itshape Natural}\\
+\texfamily {\bfseries import}~{\itshape Numbers}\\
+\texfamily \\
+\texfamily {\rmfamily-{}-  more number operations}\\
+\texfamily {\rmfamily-{}-  basic sums: 1 + 2 + ... + n}\\
+\texfamily {\rmfamily-{}-              1^2 + ... n^2}\\
+\texfamily {\rmfamily-{}- }
+\end{tabbing}
 }
 
 Before we continue to investigate
@@ -385,36 +320,22 @@ cumulated result anymore:
 % (it is therefore much more an identity
 %  than a limit)
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{converge1}\mathbin{::}(\Conid{Natural}\to \Conid{Natural})\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{converge1}\;\Varid{f}\;\Varid{n}\mathrel{=}{}\<[18]%
-\>[18]{}\mathbf{let}\;\Varid{r}\mathrel{=}\Varid{f}\;\Varid{n}{}\<[E]%
-\\
-\>[18]{}\hsindent{1}{}\<[19]%
-\>[19]{}\mathbf{in}\;\mathbf{if}\;\Varid{r}\equiv \mathrm{0}\;{}\<[33]%
-\>[33]{}\mathbf{then}\;\Varid{r}{}\<[E]%
-\\
-\>[33]{}\mathbf{else}\;\Varid{r}\mathbin{+}\Varid{converge1}\;\Varid{l}\;\Varid{f}\;(\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+converge1~::~({\itshape Natural}~\char'31~{\itshape Natural})~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily converge1~f~n~=~~{\bfseries let}~r~=~f~n\\
+\texfamily ~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~r~\char'36~0~~{\bfseries then}~r\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~r~+~converge1~l~f~(n+1)
+\end{tabbing}
 
 The function \term{converge} receives 
 a function $f$ that transforms 
 a natural number into another natural number
 and the natural number $n$,
 which is the starting point for the series. 
-We compute the result $r$ of \ensuremath{\Varid{f}\;\Varid{n}}
+We compute the result $r$ of \text{\texfamily f\Sp n}
 and if this result equals zero,
 we produce the result $r$,
-otherwise, we continue with \ensuremath{\Varid{n}\mathbin{+}\mathrm{1}}.
+otherwise, we continue with \text{\texfamily n\Sp +\Sp 1}.
 
 We can generalise this function
 so that it is also applicable to  products.
@@ -425,112 +346,64 @@ The definition of the generalised convergence function
 must hence include the stop signal
 explicitly as one of its arguments:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{60}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{converge}\mathbin{::}\Conid{Natural}\to {}\<[25]%
-\>[25]{}(\Conid{Natural}\to \Conid{Natural}{}\<[47]%
-\>[47]{}\to \Conid{Natural}){}\<[60]%
-\>[60]{}\to {}\<[E]%
-\\
-\>[25]{}(\Conid{Natural}\to \Conid{Natural}){}\<[47]%
-\>[47]{}\to \Conid{Natural}{}\<[60]%
-\>[60]{}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{converge}\;\Varid{l}\;\Varid{con}\;\Varid{f}\;\Varid{n}\mathrel{=}{}\<[23]%
-\>[23]{}\mathbf{let}\;\Varid{r}\mathrel{=}\Varid{f}\;\Varid{n}{}\<[E]%
-\\
-\>[23]{}\hsindent{1}{}\<[24]%
-\>[24]{}\mathbf{in}\;\mathbf{if}\;\Varid{r}\equiv \Varid{l}\;{}\<[38]%
-\>[38]{}\mathbf{then}\;\Varid{r}{}\<[E]%
-\\
-\>[38]{}\mathbf{else}\;\Varid{r}\mathbin{`\Varid{con}`}\Varid{converge}\;\Varid{l}\;\Varid{f}\;(\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+converge~::~{\itshape Natural}~\char'31~~({\itshape Natural}~\char'31~{\itshape Natural}~~~\char'31~{\itshape Natural})~~\char'31~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~({\itshape Natural}~\char'31~{\itshape Natural})~~\char'31~{\itshape Natural}~~~\char'31~{\itshape Natural}\\
+\texfamily converge~l~con~f~n~=~~{\bfseries let}~r~=~f~n\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~r~\char'36~l~~{\bfseries then}~r\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~r~`con`~converge~l~f~(n+1)
+\end{tabbing}
 
 This version is very similar to the previous one,
 but it accepts two more arguments:
 The first argument, $l$, 
 is the neutral element with respect
 to the combination function, $con$, passed in 
-as the second argument (\ensuremath{\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}}),
+as the second argument (\text{\texfamily {\itshape Natural}\Sp \char'31\Sp {\itshape Natural}\Sp \char'31\Sp {\itshape Natural}}),
 \ie\ addition or multiplication.
 The implementation of the function
 differs in only two aspects:
 We compare the result not explicitly with 0,
 but with $l$, the limit passed in,
-and, instead of \ensuremath{(\mathbin{+})}, we use \ensuremath{\mathbin{`\Varid{con}`}}
+and, instead of \text{\texfamily (+)}, we use \text{\texfamily `con`}
 to combine results.
 
 From here, we can very simply define two
-derived functions \ensuremath{\Varid{convSum}} and \ensuremath{\Varid{convProduct}}:
+derived functions \text{\texfamily convSum} and \text{\texfamily convProduct}:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{convSum}\mathbin{::}(\Conid{Natural}\to \Conid{Natural})\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{convSum}\mathrel{=}\Varid{converge}\;\mathrm{0}\;(\mathbin{+}){}\<[E]%
-\\[\blanklineskip]%
-\>[B]{}\Varid{convProduct}\mathbin{::}(\Conid{Natural}\to \Conid{Natural})\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{convProduct}\mathrel{=}\Varid{converge}\;\mathrm{1}\;(\mathbin{*}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+convSum~::~({\itshape Natural}~\char'31~{\itshape Natural})~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily convSum~=~converge~0~(+)\\
+\texfamily \\
+\texfamily convProduct~::~({\itshape Natural}~\char'31~{\itshape Natural})~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily convProduct~=~converge~1~(*)
+\end{tabbing}
 
 Let us look at how to use the convergence function:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{ragmen}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\Varid{ragmen}\;\Varid{n}\;\Varid{m}\;\Varid{c}\mathrel{=}\mathrm{1}\mathbin{+}\Varid{convSum}\;(\Varid{f}\;\Varid{n}\;\Varid{m}\;\Varid{c})\;\mathrm{1}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{where}\;{}\<[10]%
-\>[10]{}\Varid{f}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[10]{}\Varid{f}\;\Varid{n}\;\Varid{m}\;\Varid{c}\;\Varid{k}\mathrel{=}(\Varid{n}\mathbin{-}\Varid{m})\mathbin{`\Varid{floorDiv}`}(\Varid{c}\mathbin{\uparrow}\Varid{k}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+ragmen~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ragmen~n~m~c~=~1~+~convSum~(f~n~m~c)~1~\\
+\texfamily ~~{\bfseries where}~~f~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~~~~~~~~f~n~m~c~k~=~(n~-~m)~`floorDiv`~(c\char94 k)
+\end{tabbing}
 
-The \ensuremath{\Varid{ragmen}} function simply adds one to the result 
-of a call to the \ensuremath{\Varid{convSum}} function defined above.
-The function $f$ passed to \ensuremath{\Varid{convSum}}
-and defined in the \ensuremath{\mathbf{where}} clause
+The \text{\texfamily ragmen} function simply adds one to the result 
+of a call to the \text{\texfamily convSum} function defined above.
+The function $f$ passed to \text{\texfamily convSum}
+and defined in the \text{\texfamily {\bfseries where}} clause
 can be easily recocnised as the ragman function
 defined in the text above.
 We pass $f$ with $n$, $m$ and $c$,
 thas is the number of customers, the number of endpoints
-and the constant $c$ to \ensuremath{\Varid{convSum}}.
+and the constant $c$ to \text{\texfamily convSum}.
 We additionally pass 1 as the first value of $k$.
 
 \section{Induction}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~{\bfseries import}~{\itshape Natural}
+\end{tabbing}
 }
 The series we looked at in the previous section
 converge very soon,
@@ -590,36 +463,12 @@ The formula appears to be correct.
 
 We can implement this formula literally 
 by a simple Haskell program:
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{17E}{@{}l@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{31E}{@{}l@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{oddSum1}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{oddSum1}\;\Varid{n}\mathrel{=}\Varid{go}\;\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{k}{}\<[17]%
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{k}\mathbin{>}\Varid{n}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}\mathrm{0}{}\<[E]%
-\\
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{otherwise}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}(\mathrm{2}\mathbin{*}\Varid{k}\mathbin{-}\mathrm{1})\mathbin{+}\Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~oddSum1~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~oddSum1~n~=~go~1\\
+\texfamily ~~~~{\bfseries where}~go~k~~|~~k~>~n~~~~~~=~~0~\\
+\texfamily ~~~~~~~~~~~~~~~~|~~otherwise~~=~~(2*k~-~1)~+~go~(k~+~1)
+\end{tabbing}
 
 Now, is there a closed form that spares us
 from going through all the additions in the $go$ function?
@@ -713,17 +562,10 @@ Summing this up gives $n^2 + 2n + 1$.
 The $oddSum$ function can thus be implemented
 in much more efficient way:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{oddSum}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{oddSum}\mathrel{=}(\mathbin{\uparrow}\mathrm{2}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~oddSum~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~oddSum~=~(\char94 2)~
+\end{tabbing}
 
 For another example, let us look at
 even numbers. Formally, the sum of the 
@@ -731,36 +573,12 @@ first $n$ even numbers corresponds to:
 $\sum_{k=1}^{n}{2k}$. This is easily implemented
 in Haskell as
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{17E}{@{}l@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{31E}{@{}l@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{evenSum1}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{evenSum1}\;\Varid{n}\mathrel{=}\Varid{go}\;\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{k}{}\<[17]%
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{k}\mathbin{>}\Varid{n}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}\mathrm{0}{}\<[E]%
-\\
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{otherwise}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}\mathrm{2}\mathbin{*}\Varid{k}\mathbin{+}\Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~evenSum1~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~evenSum1~n~=~go~1\\
+\texfamily ~~~~{\bfseries where}~go~k~~|~~k~>~n~~~~~~=~~0\\
+\texfamily ~~~~~~~~~~~~~~~~|~~otherwise~~=~~2*k~+~go~(k~+~1)
+\end{tabbing}
 
 Applying $evenSum1$ to the test set $[1..9]$
 gives the sequence:
@@ -825,17 +643,10 @@ adding all this up gives $n^2 + 2n + n + 2 = n^2 + 3n + 2$.
 
 We can now define an efficient version of $evenSum$:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{evenSum}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{evenSum}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{\uparrow}\mathrm{2}\mathbin{+}\Varid{n}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~evenSum~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~evenSum~n~=~n\char94 2~+~n
+\end{tabbing}
 
 Now, of course, the question arises
 to what number the first $n$ of both kinds of numbers, 
@@ -907,31 +718,17 @@ we already know from the even numbers:
 
 The sum of the first $n$ natural numbers in Haskell, hence is:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{natSum}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{natSum}\mathrel{=}(\mathbin{\Varid{`div`}}\mathrm{2})\mathbin{\circ}\Varid{evenSum}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~natSum~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~natSum~=~(`div`~2)~\char'00~evenSum
+\end{tabbing}
 
 \section{The Fibonacci Sequence}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\mathbf{import}\;\Conid{Prelude}\;\Varid{hiding}\;(\Varid{gcd}){}\<[E]%
-\\
-\>[3]{}\mathbf{import}\;\Conid{Natural}\;\Varid{hiding}\;(\Varid{gcd}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~{\bfseries import}~{\itshape Prelude}~hiding~(gcd)\\
+\texfamily ~~{\bfseries import}~{\itshape Natural}~hiding~(gcd)
+\end{tabbing}
 }
 
 We have already discussed 
@@ -941,48 +738,31 @@ the $\gcd$ of, say, $89$ and $55$.
 As a reminder here the definition 
 of $\gcd$ once again:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{12E}{@{}l@{}}%
-\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{gcd}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{gcd}\;\Varid{a}\;\mathrm{0}{}\<[12]%
-\>[12]{}\mathrel{=}{}\<[12E]%
-\>[15]{}\Varid{a}{}\<[E]%
-\\
-\>[3]{}\Varid{gcd}\;\Varid{a}\;\Varid{b}{}\<[12]%
-\>[12]{}\mathrel{=}{}\<[12E]%
-\>[15]{}\Varid{gcd}\;{}\<[20]%
-\>[20]{}\Varid{b}\;(\Varid{a}\mathbin{\Varid{`rem`}}\Varid{b}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~gcd~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~gcd~a~0~~=~~a\\
+\texfamily ~~gcd~a~b~~=~~gcd~~b~(a~`rem`~b)
+\end{tabbing}
 
-We start with \ensuremath{\Varid{gcd}\;\mathrm{89}\;\mathrm{55}}, which is
-\ensuremath{\Varid{gcd}\;\mathrm{55}\;(\mathrm{89}\mathbin{\Varid{`rem`}}\mathrm{55})} after one step.
+We start with \text{\texfamily gcd\Sp 89\Sp 55}, which is
+\text{\texfamily gcd\Sp 55\Sp (89\Sp `rem`\Sp 55)} after one step.
 What is the remainder of 89 and 55?
 89 divided by 55 is 1 leaving the remainder 
 $89 - 55 = 34$.
-The next round, hence, is \ensuremath{\Varid{gcd}\;\mathrm{55}\;\mathrm{34}}.
+The next round, hence, is \text{\texfamily gcd\Sp 55\Sp 34}.
 The remainder of 55 and 34 is $55 - 34 = 21$.
-We recurse once again, this time with \ensuremath{\Varid{gcd}\;\mathrm{34}\;\mathrm{21}}.
+We recurse once again, this time with \text{\texfamily gcd\Sp 34\Sp 21}.
 The remainder of 34 and 21 is $34 - 21 = 13$.
-The next step, hence, is \ensuremath{\Varid{gcd}\;\mathrm{21}\;\mathrm{13}},
+The next step, hence, is \text{\texfamily gcd\Sp 21\Sp 13},
 which leads to the remainder $21 - 13 = 8$.
 As you see, this gets quite boring, 
 but we are not done yet,
-since the next round \ensuremath{\Varid{gcd}\;\mathrm{13}\;\mathrm{8}}
+since the next round \text{\texfamily gcd\Sp 13\Sp 8}
 forces us to call the function again with 8 and $13 - 8 = 5$,
-which then leads to \ensuremath{\Varid{gcd}\;\mathrm{5}\;\mathrm{3}}, subsequently to
-\ensuremath{\Varid{gcd}\;\mathrm{3}\;\mathrm{2}} and then to \ensuremath{\Varid{gcd}\;\mathrm{2}\;\mathrm{1}}.
+which then leads to \text{\texfamily gcd\Sp 5\Sp 3}, subsequently to
+\text{\texfamily gcd\Sp 3\Sp 2} and then to \text{\texfamily gcd\Sp 2\Sp 1}.
 The division of 2 by 1 is 2 leaving no remainder
-and, finally, we call \ensuremath{\Varid{gcd}\;\mathrm{1}\;\mathrm{0}},
+and, finally, we call \text{\texfamily gcd\Sp 1\Sp 0},
 which reduces immediately to 1.
 
 Apparently, we got in some kind of trap.
@@ -1076,21 +856,12 @@ the sum of the Fibonacci numbers
 of its two predecessors.
 In Haskell this looks like:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{fib}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{fib}\;\mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{fib}\;\mathrm{1}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{fib}\;\Varid{n}\mathrel{=}\Varid{fib}\;(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{+}\Varid{fib}\;(\Varid{n}\mathbin{-}\mathrm{2}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~fib~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~fib~0~=~0\\
+\texfamily ~~fib~1~=~1\\
+\texfamily ~~fib~n~=~fib~(n-1)~+~fib~(n-2)
+\end{tabbing}
 
 Many people have studied the Fibonacci sequence,
 following Fibonacci,
@@ -1293,23 +1064,12 @@ and we have something to look forward to.
 
 \section{Factorial}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Fact}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{concatMap}){}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Fact}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.List}~(concatMap)\\
+\texfamily ~~{\bfseries import}~{\itshape Natural}
+\end{tabbing}
 }
 
 A fundamental concept in mathematics,
@@ -1326,20 +1086,20 @@ or the final classification of a league
 where all teams play all others,
 is another example.
 
-For the list \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} (in Haskell notation),
+For the list \text{\texfamily [1,2,3]} (in Haskell notation),
 the following permutations are possible:
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} (this is the identity),
-\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{3}\mskip1.5mu]},
-\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{3},\mathrm{1}\mskip1.5mu]},
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{2}\mskip1.5mu]},
-\ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{2}\mskip1.5mu]} and
-\ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu]}.
+\text{\texfamily [1,2,3]} (this is the identity),
+\text{\texfamily [2,1,3]},
+\text{\texfamily [2,3,1]},
+\text{\texfamily [1,3,2]},
+\text{\texfamily [3,1,2]} and
+\text{\texfamily [3,2,1]}.
 
 Let us look at how to construct 
 all permutations of a given sequence.
 The simplest case is the empty list
 that allows only one arrangement:
-\ensuremath{\Varid{permutations}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]}. 
+\text{\texfamily permutations\Sp []\Sp =\Sp [[]]}. 
 From this base case on, 
 we can easily create permutations of longer lists,
 simply inserting new elements at every possible
@@ -1348,9 +1108,9 @@ The permutations of a list with one elmenent, for instance,
 would be constructed by inserting this element, say $x$,
 in all possible positions of all possible permutations
 of the empty list,
-trivially yielding: \ensuremath{[\mskip1.5mu [\mskip1.5mu \Varid{x}\mskip1.5mu]\mskip1.5mu]}.
+trivially yielding: \text{\texfamily [[x]]}.
 Now, when we add one more element, we get:
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \Varid{y},\Varid{x}\mskip1.5mu],[\mskip1.5mu \Varid{x},\Varid{y}\mskip1.5mu]\mskip1.5mu]}, 
+\text{\texfamily [[y,x],[x,y]]}, 
 first adding the new element $y$ 
 in front of the existing element $x$
 and, second, adding it behind $x$.
@@ -1359,65 +1119,47 @@ of a list with three elements
 by simply inserting the new element $z$
 in all possible positions of these two sequences,
 which, for the first, gives:
-\ensuremath{[\mskip1.5mu \Varid{z},\Varid{y},\Varid{x}\mskip1.5mu],[\mskip1.5mu \Varid{y},\Varid{z},\Varid{x}\mskip1.5mu],[\mskip1.5mu \Varid{y},\Varid{x},\Varid{z}\mskip1.5mu]}
+\text{\texfamily [z,y,x],[y,z,x],[y,x,z]}
 and for the second:
-\ensuremath{[\mskip1.5mu \Varid{z},\Varid{x},\Varid{y}\mskip1.5mu],[\mskip1.5mu \Varid{x},\Varid{z},\Varid{y}\mskip1.5mu],[\mskip1.5mu \Varid{x},\Varid{y},\Varid{z}\mskip1.5mu]}.
+\text{\texfamily [z,x,y],[x,z,y],[x,y,z]}.
 Compare this pattern to the permutations
-of the list \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} above
+of the list \text{\texfamily [1,2,3]} above
 with $z=1,y=2$ and $x=3$.
 
 Let us implement the process
 of inserting a new element at any possible position
 of a list in Haskell
-using the $cons$ operator \ensuremath{(\mathbin{:})}:
+using the $cons$ operator \text{\texfamily (:)}:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{21E}{@{}l@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{insall}\mathbin{::}\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{insall}\;\Varid{p}\;{}\<[13]%
-\>[13]{}[\mskip1.5mu \mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}[\mskip1.5mu [\mskip1.5mu \Varid{p}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{insall}\;\Varid{p}\;{}\<[13]%
-\>[13]{}(\Varid{x}\mathbin{:}\Varid{xs}){}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}(\Varid{p}\mathbin{:}\Varid{x}\mathbin{:}\Varid{xs})\mathbin{:}(\Varid{map}\;(\Varid{x}\mathbin{:})\mathbin{\$}\Varid{insall}\;\Varid{p}\;\Varid{xs}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~insall~::~a~\char'31~[a]~\char'31~[[a]]\\
+\texfamily ~~insall~p~~[]~~~~~~=~~[[p]]\\
+\texfamily ~~insall~p~~(x:xs)~~=~~(p:x:xs):(map~(x:)~\$~insall~p~xs)
+\end{tabbing}
 
 As base case, we have $p$, the new element,
 added to the empty list,
-which trivially results in \ensuremath{[\mskip1.5mu [\mskip1.5mu \Varid{p}\mskip1.5mu]\mskip1.5mu]}.
-From here on, for any list of the form \ensuremath{\Varid{x}\mathbin{:}\Varid{xs}},
-we add $p$ in front of the list (\ensuremath{\Varid{p}\mathbin{:}\Varid{x}\mathbin{:}\Varid{xs}})
+which trivially results in \text{\texfamily [[p]]}.
+From here on, for any list of the form \text{\texfamily x:xs},
+we add $p$ in front of the list (\text{\texfamily p:x:xs})
 and then repeat the process for all possible
 reductions of the list until we reach the base case.
 In each recursion step, we add $x$,
 the head of the original list, 
 in front of the resulting lists.
 Imagine this for the case $p=1$, $x=2$ and $xs=\{3\}$:
-We first create \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} by means of \ensuremath{\Varid{p}\mathbin{:}\Varid{x}\mathbin{:}\Varid{xs}};
+We first create \text{\texfamily [1,2,3]} by means of \text{\texfamily p:x:xs};
 we then enter $insall$ again with $p=1$, $x=3$ and $xs=\{\}$,
-which creates \ensuremath{\mathrm{1}\mathbin{:}\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu]}, to which later,
+which creates \text{\texfamily 1:3:[]}, to which later,
 when we return, $2$, the $x$ of the previous step, is inserted, 
-yielding \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{3}\mskip1.5mu]}.
+yielding \text{\texfamily [2,1,3]}.
 With the next step, 
-we hit our base case \ensuremath{\Varid{insall}\;\mathrm{1}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
+we hit our base case \text{\texfamily insall\Sp 1\Sp []\Sp =\Sp [[1]]}.
 Returning to the step with $x={3}$,
-mapping \ensuremath{(\Varid{x}\mathbin{:})} gives \ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{1}\mskip1.5mu]} and,
-one step further back, \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{3},\mathrm{1}\mskip1.5mu]}.
+mapping \text{\texfamily (x:)} gives \text{\texfamily [3,1]} and,
+one step further back, \text{\texfamily [2,3,1]}.
 We, hence, have created three cases: 
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+\text{\texfamily [[1,2,3],[2,1,3],[2,3,1]]}
 inserting $1$ in front of the list,
 in the middle of the list
 and at the end.
@@ -1425,51 +1167,41 @@ and at the end.
 To generate all possible permutations 
 we would need to apply $insall$
 to \emph{all} permutations of the input list,
-that is not only to \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]}
-as above, but also to \ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{2}\mskip1.5mu]}.
+that is not only to \text{\texfamily [2,3]}
+as above, but also to \text{\texfamily [3,2]}.
 This is done by the following function:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{perms}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{perms}\;[\mskip1.5mu \mskip1.5mu]{}\<[13]%
-\>[13]{}\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{perms}\;(\Varid{x}\mathbin{:}\Varid{xs})\mathrel{=}\Varid{concatMap}\;(\Varid{insall}\;\Varid{x})\mathbin{\$}\Varid{perms}\;\Varid{xs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~perms~::~[a]~\char'31~[[a]]\\
+\texfamily ~~perms~[]~~=~[[]]\\
+\texfamily ~~perms~(x:xs)~=~concatMap~(insall~x)~\$~perms~xs
+\end{tabbing}
 
-Called with \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]},
-the function would map \ensuremath{\Varid{insall}\;\mathrm{1}}
-on the result of \ensuremath{\Varid{perms}\;\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{3}\mskip1.5mu]}.
-This, in its turn, would map \ensuremath{\Varid{insall}\;\mathrm{2}}
-onto \ensuremath{\Varid{perms}\;\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu]}.
-Finally, we get to the base case resulting in \ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]}.
+Called with \text{\texfamily [1,2,3]},
+the function would map \text{\texfamily insall\Sp 1}
+on the result of \text{\texfamily perms\Sp 2:[3]}.
+This, in its turn, would map \text{\texfamily insall\Sp 2}
+onto \text{\texfamily perms\Sp 3:[]}.
+Finally, we get to the base case resulting in \text{\texfamily [[]]}.
 Going back the call tree, 
-\ensuremath{\Varid{insall}\;\mathrm{3}} would now be called on the empty set
-yielding \ensuremath{[\mskip1.5mu \mathrm{3}\mskip1.5mu]}; 
-one step further back, \ensuremath{\Varid{insall}\;\mathrm{2}} would 
-now result in \ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{3},\mathrm{2}\mskip1.5mu]\mskip1.5mu]}.
-Mapping \ensuremath{\Varid{insall}\;\mathrm{1}} finally on these two lists
+\text{\texfamily insall\Sp 3} would now be called on the empty set
+yielding \text{\texfamily [3]}; 
+one step further back, \text{\texfamily insall\Sp 2} would 
+now result in \text{\texfamily [[2,3],[3,2]]}.
+Mapping \text{\texfamily insall\Sp 1} finally on these two lists
 leads to the desired result.
 
 You will have noticed that we are using the function $concatMap$.
 The reason is that each call of $insall$ creates a list of lists
 (a subset of the possible permutations). 
-Mapping \ensuremath{\Varid{insall}\;\mathrm{1}} on the permutations of 
-\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]}, for instance, creates two lists,
-one for each permutation (\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]} and \ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{2}\mskip1.5mu]}):
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3},\mathrm{1}\mskip1.5mu]\mskip1.5mu]} and
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{3},\mathrm{1},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
+Mapping \text{\texfamily insall\Sp 1} on the permutations of 
+\text{\texfamily [2,3]}, for instance, creates two lists,
+one for each permutation (\text{\texfamily [2,3]} and \text{\texfamily [3,2]}):
+\text{\texfamily [[1,2,3],\Sp [2,1,3],\Sp [2,3,1]]} and
+\text{\texfamily [[1,3,2],\Sp [3,1,2],\Sp [3,2,1]]}.
 We could use the function $concat$
 to merge the lists together, like:
-\ensuremath{\Varid{concat}\mathbin{\char92 \$}\Varid{map}\;(\Varid{insall}\;\Varid{x})\mathbin{\char92 \$}\Varid{perms}\;\Varid{xs}};
+\text{\texfamily concat\Sp \char92 \$\Sp map\Sp (insall\Sp x)\Sp \char92 \$\Sp perms\Sp xs};
 $concatMap$ is much more convenient:
 it performs mapping and merging in one step.
 
@@ -1477,7 +1209,7 @@ We have not yet noted explicitly
 that, when talking about permutations,
 we treat sequences as Haskell lists.
 Important is that the elements in permutation lists
-are distinct. In a list like \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{2}\mskip1.5mu]},
+are distinct. In a list like \text{\texfamily [1,\Sp 2,\Sp 2]},
 we cannot distinguish the last two elements
 leading to errors in counting possible permutations.
 In fact, when we say \term{sequence},
@@ -1491,7 +1223,7 @@ We have seen that for the empty list
 and for any list with only one element,
 there is just one possible arrangement.
 For a list with two elements,
-there are two permuntations (\ensuremath{[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu],[\mskip1.5mu \Varid{b},\Varid{a}\mskip1.5mu]}).
+there are two permuntations (\text{\texfamily [a,b],[b,a]}).
 For a list with three elments,
 there are six permutations.
 Indeed, for a list with three elements,
@@ -1517,19 +1249,11 @@ n! = \prod_{k=1}^{n}{k}.
 
 We can define factorial in Haskell as follows:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{fac}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}{}\<[E]%
-\\
-\>[3]{}\Varid{fac}\;\mathrm{0}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{fac}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{*}\Varid{fac}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~fac~::~({\itshape Num}~a,~{\itshape Eq}~a)~=>~a~\char'31~a\\
+\texfamily ~~fac~0~=~1\\
+\texfamily ~~fac~n~=~n~*~fac~(n-1)
+\end{tabbing}
 
 There is sometimes confusion about the fact
 that $0!$ is $1$ and not,
@@ -1565,7 +1289,7 @@ $1! = \frac{2!=2}{2} = 1$
 and, finally, $0! = \frac{1!=1}{1} = 1$.
 
 The first factorials,
-which you can create by \ensuremath{\Varid{map}\;\Varid{fac}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{7}\mskip1.5mu]}, are:
+which you can create by \text{\texfamily map\Sp fac\Sp [0..7]}, are:
 $1, 1, 2, 6, 24, 120,\\ 720, 5040$.
 They, then, increase very quickly,
 $10!$, for instance, is \num{3628800}.
@@ -1665,34 +1389,12 @@ substitute a substitution,
 instead of the second place.
 Here is the $replace$ function:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{30E}{@{}l@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{44}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{44E}{@{}l@{}}%
-\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{replace}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{replace}\;\anonymous \;\anonymous \;[\mskip1.5mu \mskip1.5mu]\;\anonymous \mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{replace}\;\Varid{p}\;\Varid{s}\;(\Varid{y}\mathbin{:}\Varid{ys})\;(\Varid{z}\mathbin{:}\Varid{zs}){}\<[30]%
-\>[30]{}\mid {}\<[30E]%
-\>[33]{}\Varid{y}\equiv \Varid{p}{}\<[44]%
-\>[44]{}\mathrel{=}{}\<[44E]%
-\>[47]{}\Varid{s}\mathbin{:}\Varid{zs}{}\<[E]%
-\\
-\>[30]{}\mid {}\<[30E]%
-\>[33]{}\Varid{otherwise}{}\<[44]%
-\>[44]{}\mathrel{=}{}\<[44E]%
-\>[47]{}\Varid{z}\mathbin{:}\Varid{replace}\;\Varid{p}\;\Varid{s}\;\Varid{ys}\;\Varid{zs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~replace~::~({\itshape Eq}~a)~=>~a~\char'31~a~\char'31~[a]~\char'31~[a]~\char'31~[a]\\
+\texfamily ~~replace~\char95 ~\char95 ~[]~\char95 ~=~[]\\
+\texfamily ~~replace~p~s~(y:ys)~(z:zs)~~|~~y~\char'36~p~~~~~=~~s:zs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~~z:replace~p~s~ys~zs
+\end{tabbing}
 
 In this function, $p$ is the element from the original list
 that will be substituted, 
@@ -1716,15 +1418,9 @@ according to a definition in cycle notation.
 Cycle notation is translated to Haskell as a list of lists,
 each inner list representing one orbit:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\mathbf{type}\;\Conid{Perm}\;\Varid{a}\mathrel{=}[\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~{\bfseries type}~{\itshape Perm}~a~=~[[a]]
+\end{tabbing}
 
 The $permute$ function takes such a $Perm$
 and a list on which to perform the permutation.
@@ -1733,60 +1429,16 @@ or of only one element
 is the identity and, hence, ignored.
 Otherwise, one orbit after the other is processed:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{26E}{@{}l@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{35}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{35E}{@{}l@{}}%
-\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{permute}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Perm}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{permute}\;[\mskip1.5mu \mskip1.5mu]\;{}\<[21]%
-\>[21]{}\Varid{xs}{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{permute}\;([\mskip1.5mu \mskip1.5mu]\mathbin{:}\Varid{ps})\;{}\<[21]%
-\>[21]{}\Varid{xs}{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\Varid{permute}\;\Varid{ps}\;\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{permute}\;([\mskip1.5mu \Varid{p}\mskip1.5mu]\mathbin{:}\Varid{ps})\;{}\<[21]%
-\>[21]{}\Varid{xs}{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\Varid{permute}\;\Varid{ps}\;\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{permute}\;(\Varid{p}\mathbin{:}\Varid{ps})\;{}\<[21]%
-\>[21]{}\Varid{xs}{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\Varid{permute}\;\Varid{ps}\mathbin{\$}\Varid{orbit}\;(\Varid{head}\;\Varid{p})\;\Varid{xs}\;\Varid{p}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{orbit}\;\anonymous \;\Varid{rs}\;{}\<[24]%
-\>[24]{}[\mskip1.5mu \mskip1.5mu]{}\<[35]%
-\>[35]{}\mathrel{=}{}\<[35E]%
-\>[38]{}\Varid{rs}{}\<[E]%
-\\
-\>[12]{}\Varid{orbit}\;\Varid{x}\;\Varid{rs}\;[\mskip1.5mu \Varid{u}\mskip1.5mu]{}\<[35]%
-\>[35]{}\mathrel{=}{}\<[35E]%
-\>[38]{}\Varid{replace}\;\Varid{u}\;\Varid{x}\;\Varid{xs}\;\Varid{rs}{}\<[E]%
-\\
-\>[12]{}\Varid{orbit}\;\Varid{x}\;\Varid{rs}\;(\Varid{p1}\mathbin{:}\Varid{p2}\mathbin{:}\Varid{pp}){}\<[35]%
-\>[35]{}\mathrel{=}{}\<[35E]%
-\>[38]{}\Varid{orbit}\;\Varid{x}\;(\Varid{replace}\;\Varid{p1}\;\Varid{p2}\;\Varid{xs}\;\Varid{rs})\;(\Varid{p2}\mathbin{:}\Varid{pp}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~permute~::~({\itshape Eq}~a)~=>~{\itshape Perm}~a~\char'31~[a]~\char'31~[a]\\
+\texfamily ~~permute~[]~~~~~~~~xs~~~=~~xs\\
+\texfamily ~~permute~([]:ps)~~~xs~~~=~~permute~ps~xs\\
+\texfamily ~~permute~([p]:ps)~~xs~~~=~~permute~ps~xs\\
+\texfamily ~~permute~(p:ps)~~~~xs~~~=~~permute~ps~\$~orbit~(head~p)~xs~p\\
+\texfamily ~~~~{\bfseries where}~~orbit~\char95 ~rs~~[]~~~~~~~~~=~~rs\\
+\texfamily ~~~~~~~~~~~orbit~x~rs~[u]~~~~~~~~~=~~replace~u~x~xs~rs\\
+\texfamily ~~~~~~~~~~~orbit~x~rs~(p1:p2:pp)~~=~~orbit~x~(replace~p1~p2~xs~rs)~(p2:pp)~
+\end{tabbing}
 
 For every orbit (that contains more than one element),
 $permute$ is applied to the result of the function $orbit$,
@@ -1816,18 +1468,18 @@ of composing permutations,
 of another.
 The permutation above applied to itself,
 for instance,
-would yield \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{1},\mathrm{3},\mathrm{4},\mathrm{2}\mskip1.5mu]};
-applying it once again results in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{3},\mathrm{5}\mskip1.5mu]}.
+would yield \text{\texfamily [5,1,3,4,2]};
+applying it once again results in \text{\texfamily [1,2,4,3,5]}.
 Six subsequent applications would 
 return to the original list:
 
-\ensuremath{\mathbf{let}\;\Varid{sigma}\mathrel{=}\Varid{permute}\;[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{5}\mskip1.5mu]\;[\mskip1.5mu \mathrm{3},\mathrm{4}\mskip1.5mu]\mskip1.5mu]}\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1}\mskip1.5mu]}.\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{2},\mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{1},\mathrm{3},\mathrm{4},\mathrm{2}\mskip1.5mu]}.\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{5},\mathrm{1},\mathrm{3},\mathrm{4},\mathrm{2}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{3},\mathrm{5}\mskip1.5mu]}.\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{3},\mathrm{5}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{5},\mathrm{3},\mathrm{4},\mathrm{1}\mskip1.5mu]}.\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{2},\mathrm{5},\mathrm{3},\mathrm{4},\mathrm{1}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{5},\mathrm{1},\mathrm{4},\mathrm{3},\mathrm{2}\mskip1.5mu]}.\\
-\ensuremath{\Varid{sigma}\;[\mskip1.5mu \mathrm{5},\mathrm{1},\mathrm{4},\mathrm{3},\mathrm{2}\mskip1.5mu]} is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}.
+\text{\texfamily {\bfseries let}\Sp sigma\Sp =\Sp permute\Sp [[1,2,5][3,4]]}\\
+\text{\texfamily sigma\Sp [1,2,3,4,5]} is \text{\texfamily [2,5,4,3,1]}.\\
+\text{\texfamily sigma\Sp [2,5,4,3,1]} is \text{\texfamily [5,1,3,4,2]}.\\
+\text{\texfamily sigma\Sp [5,1,3,4,2]} is \text{\texfamily [1,2,4,3,5]}.\\
+\text{\texfamily sigma\Sp [1,2,4,3,5]} is \text{\texfamily [2,5,3,4,1]}.\\
+\text{\texfamily sigma\Sp [2,5,3,4,1]} is \text{\texfamily [5,1,4,3,2]}.\\
+\text{\texfamily sigma\Sp [5,1,4,3,2]} is \text{\texfamily [1,2,3,4,5]}.
 
 The result in the third line is funny:
 It is almost identical to the original list,
@@ -1853,7 +1505,7 @@ to each other,
 would always yield the same set of sequences.
 Trivially, all possible permutations of a list form such a system.
 More interesting are subsets of all possible permutations.
-Let us simplifiy the original list above to \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu]},
+Let us simplifiy the original list above to \text{\texfamily [1,2,3,4]},
 which has 4 elements and, hence, $4!=24$ possible permutations.
 On this list, we define a set of permutations, namely
 
@@ -1866,13 +1518,13 @@ c = (1~2)(3~4)
 
 The first permutation $e$ is just the identity that fixes all elements.
 The second permutation, $a$, swaps 1 and 2 and fixes 3 and 4.
-One application of $a$ would yield \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{3},\mathrm{4}\mskip1.5mu]}
+One application of $a$ would yield \text{\texfamily [2,1,3,4]}
 and two applications ($a \cdot a$) would yield the original list again.
 The third permutation, $b$, fixes 1 and 2 and swaps 3 and 4.
-One application of $b$ would yield \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{3}\mskip1.5mu]}
+One application of $b$ would yield \text{\texfamily [1,2,4,3]}
 and two applications ($b \cdot b$) would yield the original list again.
 The fourth permutation, $c$, swaps 1 and 2 and 3 and 4.
-It is the same as $a \cdot b$, thus creating \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{4},\mathrm{3}\mskip1.5mu]}
+It is the same as $a \cdot b$, thus creating \text{\texfamily [2,1,4,3]}
 and $c \cdot c$ would return to the original list.
 We can now observe that all possible compositions of these permutations,
 create permuations that are already part of the system:
@@ -1950,37 +1602,15 @@ are not groups either.
 
 \section{Random Permutations} % kshuffle
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Random}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{Types}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{Fact}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{\Conid{System}.Random}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{\Conid{Data}.\Conid{Vector}.Mutable}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Random}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape Types}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape Natural}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape Fact}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape {\itshape System}.Random}\\
+\texfamily ~~{\bfseries import}~qualified~{\itshape {\itshape Data}.{\itshape Vector}.Mutable}
+\end{tabbing}
 }
 
 We have discussed how we can generate
@@ -2010,7 +1640,7 @@ is shorter than that sequence.
 For instance, we could look at any
 sequence of numbers such as
 $1,2,3,\dots$ A program to create
-such a sequence is just \ensuremath{\Varid{genSeq}\;\Varid{n}\mathrel{=}\Varid{n}\mathbin{:}\Varid{genSeq}\;(\Varid{n}\mathbin{+}\mathrm{1})}
+such a sequence is just \text{\texfamily genSeq\Sp n\Sp =\Sp n:genSeq\Sp (n+1)}
 and, obviously, much shorter than the resulting sequence.
 
 When you think of it,
@@ -2039,30 +1669,12 @@ generates this as well as many other
 similar sequences, namely the \term{hailstone}
 algorithm:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{29}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{29E}{@{}l@{}}%
-\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{hailstone}\mathbin{::}\Conid{Integer}\to [\mskip1.5mu \Conid{Integer}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{hailstone}\;\mathrm{1}\mathrel{=}[\mskip1.5mu \mathrm{1}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{hailstone}\;\Varid{n}{}\<[16]%
-\>[16]{}\mid \Varid{even}\;\Varid{n}{}\<[29]%
-\>[29]{}\mathrel{=}{}\<[29E]%
-\>[32]{}\Varid{n}\mathbin{:}\Varid{hailstone}\;(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2}){}\<[E]%
-\\
-\>[16]{}\mid \Varid{otherwise}{}\<[29]%
-\>[29]{}\mathrel{=}{}\<[29E]%
-\>[32]{}\Varid{n}\mathbin{:}\Varid{hailstone}\;(\mathrm{3}\mathbin{*}\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~hailstone~::~{\itshape Integer}~\char'31~[{\itshape Integer}]\\
+\texfamily ~~hailstone~1~=~[1]\\
+\texfamily ~~hailstone~n~~|~even~n~~~~~=~~n~:~hailstone~(n~`div`~2)\\
+\texfamily ~~~~~~~~~~~~~~~|~otherwise~~=~~n~:~hailstone~(3~*~n~+~1)~
+\end{tabbing}
 \end{minipage}
 
 One may argue that this code is in fact longer
@@ -2134,71 +1746,56 @@ To get access to true random data, thus, implies
 that the program requesting those data
 needs to interact with the operating system.
 Therefore, whenever we need randomness
-in Haskell, we need the \ensuremath{\Conid{IO}\;\Conid{Monad}}. 
+in Haskell, we need the \text{\texfamily {\itshape IO}\Sp {\itshape Monad}}. 
 This adds some complexity to our code;
 but, in fact, this complexity just reflects
 reality: randomness \emph{is} complex.
 
 In Haskell, there is a module 
-called \ensuremath{\Conid{\Conid{System}.Random}}
+called \text{\texfamily {\itshape {\itshape System}.Random}}
 that provides functions to create
 random numbers, both \term{pseudo-random} numbers,
 which create sequences that appear random on the
 first sight, but are generated by deterministic
 algorithms, and true random numbers.
 Interesting for us in this module is the function
-\ensuremath{\Varid{randomRIO}},
+\text{\texfamily randomRIO},
 which creates random objects within a
 range defined as a tuple.
-The call \ensuremath{\Varid{randomRIO}\;(\mathrm{0},\mathrm{9})},
+The call \text{\texfamily randomRIO\Sp (0,9)},
 for instance, would create a random number
 between 0 to 9 (both included).
-Since \ensuremath{\Varid{randomRIO}} does not know our number type
-\ensuremath{\Conid{Natural}}, we would have to define a way
-for \ensuremath{\Varid{randomRIO}} to create random \ensuremath{\Conid{Natural}}s.
+Since \text{\texfamily randomRIO} does not know our number type
+\text{\texfamily {\itshape Natural}}, we would have to define a way
+for \text{\texfamily randomRIO} to create random \text{\texfamily {\itshape Natural}}s.
 It is much simpler, however, to use a type
-known to \ensuremath{\Varid{randomRIO}} and to convert the result
+known to \text{\texfamily randomRIO} and to convert the result
 afterwards.
 Here is a simple implementation of a function
-\ensuremath{\Varid{randomNatural}} that generates a random
+\text{\texfamily randomNatural} that generates a random
 natural number:
 
 \begin{minipage}{\textwidth}
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{randomNatural}\mathbin{::}(\Conid{Natural},\Conid{Natural})\to \Conid{IO}\;\Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{randomNatural}\;(\Varid{l},\Varid{u})\mathrel{=}{}\<[26]%
-\>[26]{}\mathbf{let}\;{}\<[31]%
-\>[31]{}\Varid{il}\mathrel{=}\Varid{fromIntegral}\;\Varid{l}{}\<[E]%
-\\
-\>[31]{}\Varid{iu}\mathrel{=}\Varid{fromIntegral}\;\Varid{u}{}\<[E]%
-\\
-\>[26]{}\mathbf{in}\;{}\<[31]%
-\>[31]{}\Varid{fromIntegral}\mathbin{<\$>}{}\<[E]%
-\\
-\>[31]{}(\Varid{randomRIO}\;(\Varid{il},\Varid{iu})\mathbin{::}(\Conid{IO}\;\Conid{Integer})){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~randomNatural~::~({\itshape Natural},~{\itshape Natural})~\char'31~{\itshape IO}~{\itshape Natural}\\
+\texfamily ~~randomNatural~(l,u)~=~~{\bfseries let}~~il~=~fromIntegral~l\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~iu~=~fromIntegral~u\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~~~fromIntegral~<\$>~~~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(randomRIO~(il,iu)::({\itshape IO}~{\itshape Integer}))
+\end{tabbing}
 \end{minipage}
 \ignore{$}
 
 The range we want the result to lie in is defined
-by the tuple \ensuremath{(\Varid{l},\Varid{u})}, for \ensuremath{\Varid{lower}} and \ensuremath{\Varid{upper}}.
+by the tuple \text{\texfamily (l,u)}, for \text{\texfamily lower} and \text{\texfamily upper}.
 We convert the elements of the tuples to 
-\ensuremath{\Varid{li}} and \ensuremath{\Varid{iu}}, which, as we see in an instance,
-are of type \ensuremath{\Conid{Integer}}.
+\text{\texfamily li} and \text{\texfamily iu}, which, as we see in an instance,
+are of type \text{\texfamily {\itshape Integer}}.
 We then call the random number generator
-with the type signature \ensuremath{\Conid{IO}\;\Conid{Integer}}
+with the type signature \text{\texfamily {\itshape IO}\Sp {\itshape Integer}}
 defining the output type.
 This output is finally converted back
-to natural using \ensuremath{\Varid{fromIntegral}}.
+to natural using \text{\texfamily fromIntegral}.
 
 The canonical algorithm for generating random numbers
 is called \term{Fisher-Yates shuffle}, 
@@ -2225,99 +1822,51 @@ depending on the value of $j$.
 Also, we have to change the list by going through it.
 This is essential, because, we might change 
 the same place more than once.
-For the \ensuremath{\Varid{fold}}-kind of processing that was
+For the \text{\texfamily fold}-kind of processing that was
 so typical for the functions we have studied so far,
 this would be extremely ineffecient.
 We therefore use another data type,
-a mutable vector, defined in \ensuremath{\Conid{\Conid{Data}.\Conid{Vector}.Mutable}}.
+a mutable vector, defined in \text{\texfamily {\itshape {\itshape Data}.{\itshape Vector}.Mutable}}.
 First, we will look at a function that creates
 a mutable vector from a list:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{30E}{@{}l@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{createVector}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{IO}\;(\Conid{\Conid{V}.IOVector}\;\Varid{a}){}\<[E]%
-\\
-\>[3]{}\Varid{createVector}\;\Varid{xs}\mathrel{=}\mathbf{do}\;{}\<[25]%
-\>[25]{}\Varid{v}\leftarrow \Varid{\Conid{V}.new}\;(\Varid{length}\;\Varid{xs}){}\<[E]%
-\\
-\>[25]{}\Varid{initV}\;\Varid{v}\;\mathrm{0}\;\Varid{xs}{}\<[E]%
-\\
-\>[25]{}\Varid{return}\;\Varid{v}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{initV}\;\anonymous \;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{return}\;(){}\<[E]%
-\\
-\>[12]{}\Varid{initV}\;\Varid{v}\;\Varid{i}\;(\Varid{z}\mathbin{:}\Varid{zs}){}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{\Conid{V}.unsafeWrite}\;\Varid{v}\;\Varid{i}\;\Varid{z}{}\<[E]%
-\\
-\>[33]{}\sequ \Varid{initV}\;\Varid{v}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{zs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~createVector~::~[a]~\char'31~{\itshape IO}~({\itshape {\itshape V}.IOVector}~a)\\
+\texfamily ~~createVector~xs~=~{\bfseries do}~~v~\char'06~{\itshape V}.new~(length~xs)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~initV~v~0~xs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~return~v\\
+\texfamily ~~~~{\bfseries where}~~initV~\char95 ~\char95 ~[]~~~~~~=~~return~()\\
+\texfamily ~~~~~~~~~~~initV~v~i~(z:zs)~~=~~{\itshape V}.unsafeWrite~v~i~z\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>>~initV~v~(i+1)~zs
+\end{tabbing}
 \end{minipage}
 
 We first create a new vector of the size of the list.
 Then we initialise this vector just passing
-through the list in a \ensuremath{\Varid{map}} fashion, but
+through the list in a \text{\texfamily map} fashion, but
 incrementing the index $i$ at each step.
-We use the vector function \ensuremath{\Varid{unsafeWrite}},
-which takes a vector, \ensuremath{\Varid{v}}, an index, \ensuremath{\Varid{i}},
-and the value to write, \ensuremath{\Varid{z}}.
-The function is called \ensuremath{\Varid{unsafe}} because
+We use the vector function \text{\texfamily unsafeWrite},
+which takes a vector, \text{\texfamily v}, an index, \text{\texfamily i},
+and the value to write, \text{\texfamily z}.
+The function is called \text{\texfamily unsafe} because
 it does not perform a boundary check
 (and is, as such, much faster than its
 safe cousin).
 Since we are careful to move within the boundaries,
 there is no huge risk involved in using the
-\ensuremath{\Varid{unsafe}} version of this operation.
+\text{\texfamily unsafe} version of this operation.
 Finally, we just return the initialised vector.
 
 The next function does the opposite:
 it converts a vector back to a list:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{30E}{@{}l@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{vector2list}\mathbin{::}\Conid{\Conid{V}.IOVector}\;\Varid{a}\to \Conid{Int}\to \Conid{IO}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{vector2list}\;\Varid{v}\;\Varid{n}\mathrel{=}\Varid{go}\;\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{i}{}\<[17]%
-\>[17]{}\mid \Varid{i}\equiv \Varid{n}{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{return}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[17]{}\mid \Varid{otherwise}{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\mathbf{do}\;{}\<[37]%
-\>[37]{}\Varid{x}\leftarrow \Varid{\Conid{V}.unsafeRead}\;\Varid{v}\;\Varid{i}{}\<[E]%
-\\
-\>[37]{}(\Varid{x}\mathbin{:})\mathbin{<\$>}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~vector2list~::~{\itshape {\itshape V}.IOVector}~a~\char'31~{\itshape Int}~\char'31~{\itshape IO}~[a]\\
+\texfamily ~~vector2list~v~n~=~go~0\\
+\texfamily ~~~~{\bfseries where}~go~i~~|~i~\char'36~n~~~~~=~~return~[]\\
+\texfamily ~~~~~~~~~~~~~~~~|~otherwise~~=~~{\bfseries do}~~x~\char'06~{\itshape V}.unsafeRead~v~i\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(x:)~<\$>~go~(i+1)~
+\end{tabbing}
 \end{minipage}
 \ignore{$}
 
@@ -2327,94 +1876,53 @@ after the other and, when it reaches $n$,
 just returns the empty list.
 On each step, the value at position $i$ is read
 and inserted as the head of the list that results
-from recursing on \ensuremath{\Varid{go}}.
+from recursing on \text{\texfamily go}.
 Now we are ready to actually implement
-the \ensuremath{\Varid{kshuffle}}:
+the \text{\texfamily kshuffle}:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{27}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{27E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{28E}{@{}l@{}}%
-\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{kshuffle}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{IO}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{kshuffle}\;\Varid{xs}\mathrel{=}\mathbf{do}\;{}\<[21]%
-\>[21]{}\mathbf{let}\;\Varid{n}\mathrel{=}\Varid{length}\;\Varid{xs}{}\<[E]%
-\\
-\>[21]{}\Varid{vs}\leftarrow \Varid{createVector}\;\Varid{xs}{}\<[E]%
-\\
-\>[21]{}\Varid{is}\leftarrow \Varid{randomidx}\;\Varid{n}\;\mathrm{0}{}\<[E]%
-\\
-\>[21]{}\Varid{go}\;\mathrm{0}\;\Varid{is}\;\Varid{vs}{}\<[E]%
-\\
-\>[21]{}\Varid{vector2list}\;\Varid{vs}\;\Varid{n}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{randomidx}\;\Varid{n}\;\Varid{k}{}\<[27]%
-\>[27]{}\mid {}\<[27E]%
-\>[30]{}\Varid{k}\equiv \Varid{n}{}\<[42]%
-\>[42]{}\mathrel{=}\Varid{return}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[27]{}\mid {}\<[27E]%
-\>[30]{}\Varid{otherwise}{}\<[42]%
-\>[42]{}\mathrel{=}\mathbf{do}\;{}\<[48]%
-\>[48]{}\Varid{i}\leftarrow \Varid{randomRIO}\;(\mathrm{0},\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
-\\
-\>[48]{}(\Varid{i}\mathbin{:})\mathbin{<\$>}\Varid{randomidx}\;\Varid{n}\;(\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\;\anonymous {}\<[28]%
-\>[28]{}\mathrel{=}{}\<[28E]%
-\>[31]{}\Varid{return}\;(){}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\Varid{k}\;(\Varid{i}\mathbin{:}\Varid{is})\;\Varid{vs}{}\<[28]%
-\>[28]{}\mathrel{=}{}\<[28E]%
-\>[31]{}\Varid{when}\;(\Varid{k}\not\equiv \Varid{i})\;(\Varid{\Conid{V}.unsafeSwap}\;\Varid{vs}\;\Varid{k}\;\Varid{i}){}\<[E]%
-\\
-\>[31]{}\sequ \Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1})\;\Varid{is}\;\Varid{vs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~kshuffle~::~[a]~\char'31~{\itshape IO}~[a]\\
+\texfamily ~~kshuffle~xs~=~{\bfseries do}~~{\bfseries let}~n~=~length~xs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~vs~\char'06~createVector~xs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~is~\char'06~randomidx~n~0\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~go~0~is~vs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~vector2list~vs~n\\
+\texfamily ~~~~{\bfseries where}~~randomidx~n~k~~|~~k~\char'36~n~~~~~~=~return~[]~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~~=~{\bfseries do}~~i~\char'06~randomRIO~(0,n-1)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(i:)~<\$>~randomidx~n~(k+1)\\
+\texfamily ~~~~~~~~~~~go~\char95 ~[]~\char95 ~~~~~~~=~~return~()\\
+\texfamily ~~~~~~~~~~~go~k~(i:is)~vs~~=~~when~(k~\char'32~i)~({\itshape V}.unsafeSwap~vs~k~i)~~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~>>~go~(k+1)~is~vs
+\end{tabbing}
 \end{minipage}
 \ignore{$}
 
 We start by creating the vector
-using the function \ensuremath{\Varid{createVector}} defined above.
+using the function \text{\texfamily createVector} defined above.
 Note that, since we need it
 more than once, we initially store
-the size of the list in the variable \ensuremath{\Varid{n}}.
-Since we compute it again in \ensuremath{\Varid{createVector}},
+the size of the list in the variable \text{\texfamily n}.
+Since we compute it again in \text{\texfamily createVector},
 there is potential for improvement.
 
-In the next step, we create a list of \ensuremath{\Varid{n}} numbers
-using \ensuremath{\Varid{randomidx}}. \ensuremath{\Varid{randomidx}} calls \ensuremath{\Varid{randomRIO}}
-\ensuremath{\Varid{n}} times making each result head of the list
+In the next step, we create a list of \text{\texfamily n} numbers
+using \text{\texfamily randomidx}. \text{\texfamily randomidx} calls \text{\texfamily randomRIO}
+\text{\texfamily n} times making each result head of the list
 that is constructed by recursion.
-Note that we do not use \ensuremath{\Varid{randomNatural}}.
-We will see in \ensuremath{\Varid{go}} that the results of \ensuremath{\Varid{randomidx}}
+Note that we do not use \text{\texfamily randomNatural}.
+We will see in \text{\texfamily go} that the results of \text{\texfamily randomidx}
 are used as vector indices and, since vector indices
-are of type \ensuremath{\Conid{Int}}, we spare some forth and back conversions.
-\ensuremath{\Varid{go}} expects three arguments: an \ensuremath{\Conid{Int}} called $k$, a list of \ensuremath{\Conid{Int}},
+are of type \text{\texfamily {\itshape Int}}, we spare some forth and back conversions.
+\text{\texfamily go} expects three arguments: an \text{\texfamily {\itshape Int}} called $k$, a list of \text{\texfamily {\itshape Int}},
 these are the random indices just created, and the vector
 on which we are operating.
 For each index in the list, we swap 
-the value at position \ensuremath{\Varid{k}} in the vector,
+the value at position \text{\texfamily k} in the vector,
 which is the index in the natural ordering starting from 0,
-with the value at position \ensuremath{\Varid{i}} and continue with the recursion
-on \ensuremath{\Varid{go}} with \ensuremath{\Varid{k}\mathbin{+}\mathrm{1}} and the tail
+with the value at position \text{\texfamily i} and continue with the recursion
+on \text{\texfamily go} with \text{\texfamily k+1} and the tail
 of the list of random indices.
-Finally, we call \ensuremath{\Varid{vector2list}} on the manipulated vector
+Finally, we call \text{\texfamily vector2list} on the manipulated vector
 yielding a permutation of the input list.
 
 One may be tempted to say that the permutation
@@ -2426,7 +1934,7 @@ of the natural ordering of the input list.
 Each index is generated randomly -- completely
 \term{independent} of the other indices.
 In consequence, some of the values we get
-back from \ensuremath{\Varid{randomRIO}}, in fact, at least theoretically,
+back from \text{\texfamily randomRIO}, in fact, at least theoretically,
 all of them, may be equal --
 and this is the whole point of this shuffle.
 
@@ -2435,12 +1943,12 @@ with the natural ordering of positions
 $0,1,2,3,4$, \ie\ at postion 0, we have $a$,
 at position 1, we have $b$,
 at position 2, we have $c$ and so on.
-\ensuremath{\Varid{randomidx}} could result in a list of
+\text{\texfamily randomidx} could result in a list of
 random indices like, for example, $2,0,1,3,4$,
 which would be a permutation of the natural order.
 However, it may also result in a list like
 $2,0,1,1,4$, which is not a permutation.
-The \ensuremath{\Varid{kshuffle}} algorithm does not require
+The \text{\texfamily kshuffle} algorithm does not require
 the constraint that the indices we create
 form a permutation of the initial order.
 It guarantees that the overall result is
@@ -2451,13 +1959,13 @@ the result of the random number generator
 and calling it again each time,
 there is a collision.
 
-Imagine \ensuremath{\Varid{randomidx}} would create the list
+Imagine \text{\texfamily randomidx} would create the list
 $1,1,1,1,1$, which we could obtain with a probability
 of 
 $\frac{1}{5} \times \frac{1}{5} \times$
 $\frac{1}{5} \times \frac{1}{5} \times \frac{1}{5} =$
 $\frac{1}{5^5} = \frac{1}{3125}$.
-We now \ensuremath{\Varid{go}} through the natural positions \ensuremath{\Varid{k}},
+We now \text{\texfamily go} through the natural positions \text{\texfamily k},
 $0\dots 4$ and the vector
 initially representing the list $a,b,c,d,e$.
 It is essential to realise that operations
@@ -2489,16 +1997,12 @@ of the input list.
 
 \section{Binomial Coefficients}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Binom}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Binom}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~{\itshape Natural}\\
+\texfamily ~~{\bfseries import}~{\itshape Fact}
+\end{tabbing}
 }
 
 Closely related to permutations
@@ -3205,51 +2709,16 @@ without the need
 to create values greater than the final result.
 So, let us implement the first option:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{15}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{15E}{@{}l@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{choose}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{choose}\;\Varid{n}\;\mathrm{0}{}\<[15]%
-\>[15]{}\mathrel{=}{}\<[15E]%
-\>[18]{}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{choose}\;\Varid{n}\;\mathrm{1}{}\<[15]%
-\>[15]{}\mathrel{=}{}\<[15E]%
-\>[18]{}\Varid{n}{}\<[E]%
-\\
-\>[3]{}\Varid{choose}\;\Varid{n}\;\Varid{k}{}\<[15]%
-\>[15]{}\mid {}\<[15E]%
-\>[18]{}\Varid{k}\mathbin{>}\Varid{n}{}\<[29]%
-\>[29]{}\mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[15]{}\mid {}\<[15E]%
-\>[18]{}\mathrm{2}\mathbin{*}\Varid{k}\mathbin{>}\Varid{n}{}\<[29]%
-\>[29]{}\mathrel{=}\Varid{choose}\;\Varid{n}\;(\Varid{n}\mathbin{-}\Varid{k}){}\<[E]%
-\\
-\>[15]{}\mid {}\<[15E]%
-\>[18]{}\Varid{otherwise}{}\<[29]%
-\>[29]{}\mathrel{=}\Varid{go}\;\mathrm{1}\;\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{m}\;\Varid{i}{}\<[19]%
-\>[19]{}\mid \Varid{i}\mathbin{>}\Varid{k}{}\<[32]%
-\>[32]{}\mathrel{=}\Varid{m}{}\<[E]%
-\\
-\>[19]{}\mid \Varid{otherwise}{}\<[32]%
-\>[32]{}\mathrel{=}\Varid{go}\;(\Varid{m}\mathbin{*}(\Varid{n}\mathbin{-}\Varid{k}\mathbin{+}\Varid{i}))\mathbin{\Varid{`div`}}\Varid{i})\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~choose~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~choose~n~0~~=~~1\\
+\texfamily ~~choose~n~1~~=~~n\\
+\texfamily ~~choose~n~k~~|~~k~>~n~~~~~~=~0\\
+\texfamily ~~~~~~~~~~~~~~|~~2*k~>~n~~~~=~choose~n~(n-k)\\
+\texfamily ~~~~~~~~~~~~~~|~~otherwise~~=~go~1~1\\
+\texfamily ~~~~{\bfseries where}~go~m~i~~|~i~>~k~~~~~~=~m\\
+\texfamily ~~~~~~~~~~~~~~~~~~|~otherwise~~=~go~(m~*~(n~-~k~+~i)~`div`~i)~(i+1)
+\end{tabbing}
 
 The implementation is straight forward.
 The function $choose$ is defined over natural numbers,
@@ -3272,20 +2741,20 @@ $\frac{m \times (n - k + i)}{i}$
 and $i + 1$.
 
 Let us look at the example $\binom{5}{3}$.
-We start with \ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{1}}, which expands to
+We start with \text{\texfamily go\Sp 1\Sp 1}, which expands to
 
-\ensuremath{\Varid{go}\;(\mathrm{1}\mathbin{*}(\mathrm{5}\mathbin{-}\mathrm{3}\mathbin{+}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{1})\;(\mathrm{1}\mathbin{+}\mathrm{1})},
+\text{\texfamily go\Sp (1\Sp *\Sp (5\Sp -\Sp 3\Sp +\Sp 1)\Sp `div`\Sp 1)\Sp (1+1)},
 
-which is \ensuremath{\Varid{go}\;\mathrm{3}\;\mathrm{2}}.
+which is \text{\texfamily go\Sp 3\Sp 2}.
 This, in its turn, expands to 
 
-\ensuremath{\Varid{go}\;(\mathrm{3}\mathbin{*}(\mathrm{5}\mathbin{-}\mathrm{3}\mathbin{+}\mathrm{2})\mathbin{\Varid{`div`}}\mathrm{2})\;(\mathrm{2}\mathbin{+}\mathrm{1})},
+\text{\texfamily go\Sp (3\Sp *\Sp (5\Sp -\Sp 3\Sp +\Sp 2)\Sp `div`\Sp 2)\Sp (2+1)},
 
-which equals \ensuremath{\Varid{go}\;\mathrm{6}\;\mathrm{3}}, expands to
+which equals \text{\texfamily go\Sp 6\Sp 3}, expands to
 
-\ensuremath{\Varid{go}\;(\mathrm{6}\mathbin{*}(\mathrm{5}\mathbin{-}\mathrm{3}\mathbin{+}\mathrm{3})\mathbin{\Varid{`div`}}\mathrm{3})\;(\mathrm{3}\mathbin{+}\mathrm{1})}
+\text{\texfamily go\Sp (6\Sp *\Sp (5\Sp -\Sp 3\Sp +\Sp 3)\Sp `div`\Sp 3)\Sp (3\Sp +\Sp 1)}
 
-and results in \ensuremath{\Varid{go}\;\mathrm{10}\;\mathrm{4}}.
+and results in \text{\texfamily go\Sp 10\Sp 4}.
 Since $i$ is now greater than $k$, $4 > 3$,
 we just get back $m$, which is 10 and, thus, the correct result.
 
@@ -3322,33 +2791,14 @@ in spite of division being involved.
 
 \section{Combinatorial Problems with Sets}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Set}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{\Conid{Data}.Vector}\;\Varid{as}\;\Conid{V}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{\Conid{Data}.Vector}\;((\mathbin{!})){}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;{}\<[20]%
-\>[20]{}\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{delete},(\mathbin{\char92 \char92 })){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Set}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape Natural}\\
+\texfamily ~~{\bfseries import}~qualified~{\itshape {\itshape Data}.Vector}~as~{\itshape V}\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape {\itshape Data}.Vector}~((!))\\
+\texfamily ~~{\bfseries import}~~~~~~~~~~~{\itshape {\itshape Data}.List}~(nub,~delete,~(\char92 \char92 ))
+\end{tabbing}
 }
 
 Many real-world problems can be modelled
@@ -3416,7 +2866,7 @@ or by intension:
 A powerful tool to define lists by intension 
 is list comprehension, for instance:
 
-\ensuremath{[\mskip1.5mu \Varid{x}\mid \Varid{x}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{100}\mskip1.5mu],\Varid{even}\;\Varid{x},\Varid{x}\mathbin{\Varid{`mod`}}\mathrm{3}\not\equiv \mathrm{0}\mskip1.5mu]},
+\text{\texfamily [x\Sp |\Sp x\Sp \char'06\Sp [1..100],\Sp even\Sp x,\Sp x\Sp `mod`\Sp 3\Sp \char'32\Sp 0]},
 
 which would contain all even numbers
 between 1 and 100 that are not multiples of 3.
@@ -3464,7 +2914,7 @@ An important detail of the subset relation is
 that there is one special set that is subset of any set,
 \viz\ the \term{empty set} $\lbrace\rbrace$
 that does not contain any element and which is 
-often denoted as $\emptyset$,
+often denoted as $\varnothing$,
 
 As you can see in the example $\lbrace 1,2,3\rbrace$,
 a set may have many subsets.
@@ -3473,7 +2923,7 @@ is called the \term{powerset} of this set,
 often written $P(S)$ for a set $S$.
 The powerset of $\lbrace 1,2,3\rbrace$, for example, is:
 $\lbrace
-\emptyset,
+\varnothing,
 \lbrace 1\rbrace,
 \lbrace 2\rbrace,
 \lbrace 3\rbrace,
@@ -3505,7 +2955,7 @@ $\binom{n}{k}$ for one specific value of $n$,
 in one row of Pascal's Triangle.
 For $n=0$, $n$ is the number of elements of the set,
 we have: $\binom{0}{0} = 1$,
-since the only subset of $\emptyset$ is $\emptyset$.
+since the only subset of $\varnothing$ is $\varnothing$.
 For $n=1$, we have: $\binom{1}{0} + \binom{1}{1} = 2$.
 For $n=2$, we have:
 $\binom{2}{0} + \binom{2}{1} + \binom{2}{2}$,
@@ -3554,19 +3004,11 @@ and a set of 20 elements has more than a million.
 Here is a Haskell implementation
 of a quite elegant and simple algorithm:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{ps}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{ps}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{ps}\;(\Varid{x}\mathbin{:}\Varid{xs})\mathrel{=}\Varid{ps}\;\Varid{xs}\plus \Varid{map}\;(\Varid{x}\mathbin{:})\;(\Varid{ps}\;\Varid{xs}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~ps~::~({\itshape Eq}~a)~=>~[a]~\char'31~[[a]]\\
+\texfamily ~~ps~[]~=~[[]]\\
+\texfamily ~~ps~(x:xs)~=~ps~xs~++~map~(x:)~(ps~xs)
+\end{tabbing}
 
 Note that we use lists instead of sets.
 There is a set module in Haskell,
@@ -3579,23 +3021,23 @@ in lists that represent sets.
 Let us see
 how the $ps$ function works for the 
 input $\lbrace 1,2,3\rbrace$.
-We start with \ensuremath{\Varid{ps}\;(\mathrm{1}\mathbin{:}[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu])}
-and immediately continue with \ensuremath{\Varid{ps}\;(\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{3}\mskip1.5mu])}
-and, in the next round, with \ensuremath{\Varid{ps}\;(\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu])},
+We start with \text{\texfamily ps\Sp (1:[2,3])}
+and immediately continue with \text{\texfamily ps\Sp (2:[3])}
+and, in the next round, with \text{\texfamily ps\Sp (3:[])},
 which then leads to the base case 
-\ensuremath{\Varid{ps}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]}.
+\text{\texfamily ps\Sp []\Sp =\Sp [[]]}.
 On the way back,
-we then have \ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]\plus \Varid{map}\;(\mathrm{3}\mathbin{:})\;[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]},
-which leads to the result \ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu]\mskip1.5mu]}.
+we then have \text{\texfamily [[]]\Sp ++\Sp map\Sp (3:)\Sp [[]]},
+which leads to the result \text{\texfamily [[],[3]]}.
 This, one step further back,
 leads to 
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu]\mskip1.5mu]\plus \Varid{map}\;(\mathrm{2}\mathbin{:})\;[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu]\mskip1.5mu]},
+\text{\texfamily [[],[3]]\Sp ++\Sp map\Sp (2:)\Sp [[],[3]]},
 which results in
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]\mskip1.5mu]}.
+\text{\texfamily [[],\Sp [3],\Sp [2],\Sp [2,3]]}.
 In the previous step, we then have:
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]\mskip1.5mu]\plus \Varid{map}\;(\mathrm{1}\mathbin{:})\;[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu]\mskip1.5mu]},
+\text{\texfamily [[],\Sp [3],\Sp [2],\Sp [2,3]]\Sp ++\Sp map\Sp (1:)\Sp [[],\Sp [3],\Sp [2],\Sp [2,3]]},
 resulting in\\
-\ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]\mskip1.5mu]}
+\text{\texfamily [[],\Sp [3],\Sp [2],\Sp [2,3],\Sp [1],\Sp [1,3],\Sp [1,2],\Sp [1,2,3]]}
 and we are done.
 
 A completely different approach
@@ -3755,27 +3197,12 @@ A function implementing this in Haskell
 would be (cheating on our number type 
 by using floating point numbers):
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{natLog}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to (\Conid{Natural},\Conid{Natural}){}\<[E]%
-\\
-\>[3]{}\Varid{natLog}\;\Varid{b}\;\Varid{n}\mathrel{=}{}\<[17]%
-\>[17]{}\mathbf{let}\;\Varid{e}\mathrel{=}\Varid{floor}\mathbin{\$}\Varid{logBase}\;{}\<[42]%
-\>[42]{}(\Varid{fromIntegral}\;\Varid{b})\;{}\<[E]%
-\\
-\>[42]{}(\Varid{fromIntegral}\;\Varid{n}){}\<[E]%
-\\
-\>[17]{}\hsindent{1}{}\<[18]%
-\>[18]{}\mathbf{in}\;(\Varid{e},\Varid{n}\mathbin{-}\Varid{b}\mathbin{\uparrow}\Varid{e}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~natLog~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~({\itshape Natural},{\itshape Natural})\\
+\texfamily ~~natLog~b~n~=~~{\bfseries let}~e~=~floor~\$~logBase~~(fromIntegral~b)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(fromIntegral~n)\\
+\texfamily ~~~~~~~~~~~~~~~~~{\bfseries in}~(e,~n~-~b\char94 e)
+\end{tabbing}
 
 This function takes a natural number $b$,
 the base, and a natural number $n$.
@@ -3787,32 +3214,19 @@ We can use this function
 to obtain all exponents of the powers of two
 that sum up to a given number:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{binExp}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Natural}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{binExp}\;\mathrm{0}{}\<[13]%
-\>[13]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{binExp}\;\mathrm{1}{}\<[13]%
-\>[13]{}\mathrel{=}[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{binExp}\;\Varid{n}{}\<[13]%
-\>[13]{}\mathrel{=}\mathbf{let}\;(\Varid{e},\Varid{r})\mathrel{=}\Varid{natLog}\;\mathrm{2}\;\Varid{n}\;\mathbf{in}\;\Varid{e}\mathbin{:}\Varid{binExp}\;\Varid{r}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~binExp~::~{\itshape Natural}~\char'31~[{\itshape Natural}]\\
+\texfamily ~~binExp~0~~=~[]\\
+\texfamily ~~binExp~1~~=~[0]\\
+\texfamily ~~binExp~n~~=~{\bfseries let}~(e,r)~=~natLog~2~n~{\bfseries in}~e~:~binExp~r
+\end{tabbing}
 
 That is, for input 0 and 1,
-we explicitly define the results \ensuremath{[\mskip1.5mu \mskip1.5mu]}
-and \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]}.
-Here, \ensuremath{[\mskip1.5mu \mskip1.5mu]} means that
+we explicitly define the results \text{\texfamily []}
+and \text{\texfamily [0]}.
+Here, \text{\texfamily []} means that
 there is no 1 in the binary representation
-and \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]} means that
+and \text{\texfamily [0]} means that
 there is 1 at the first position (indexed by 0).
 For any other number $n$,
 we calculate the exponent $e$ 
@@ -3821,16 +3235,16 @@ and the remainder $r$ and add $e$
 to the list that will result from
 applying $binExp$ to $r$.
 Let us look at the example \num{1000}.
-We start with \ensuremath{\Varid{natLog}\;\mathrm{2}\;\mathrm{1000}}:
+We start with \text{\texfamily natLog\Sp 2\Sp 1000}:
 
-\ensuremath{\Varid{binExp}\;\mathrm{1000}} = $(9, 1000 - 2^9 = 1000 - 512 = 488)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\Varid{binExp}\;\mathrm{488}} = $(8, 488 - 2^8 = 488 - 256 = 232)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\Varid{binExp}\;\mathrm{232}} = $(7, 232 - 2^7 = 232 - 128 = 104)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\mathrm{7}\mathbin{:}\Varid{binExp}\;\mathrm{104}} $ = (6, 104 - 2^6 = 104 - 64 = 40)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\mathrm{7}\mathbin{:}\mathrm{6}\mathbin{:}\Varid{binExp}\;\mathrm{40}} $ = (5, 40 - 2^5 = 40 - 32 = 8)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\mathrm{7}\mathbin{:}\mathrm{6}\mathbin{:}\mathrm{5}\mathbin{:}\Varid{binExp}\;\mathrm{8}} $ = (3, 8 - 2^3 = 8 - 8 = 0)$\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\mathrm{7}\mathbin{:}\mathrm{6}\mathbin{:}\mathrm{5}\mathbin{:}\mathrm{3}\mathbin{:}\Varid{binExp}\;\mathrm{0}\mathrel{=}[\mskip1.5mu \mskip1.5mu]}\\
-\ensuremath{\mathrm{9}\mathbin{:}\mathrm{8}\mathbin{:}\mathrm{7}\mathbin{:}\mathrm{6}\mathbin{:}\mathrm{5}\mathbin{:}\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu]},
+\text{\texfamily binExp\Sp 1000} = $(9, 1000 - 2^9 = 1000 - 512 = 488)$\\
+\text{\texfamily 9\Sp :\Sp binExp\Sp 488} = $(8, 488 - 2^8 = 488 - 256 = 232)$\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp binExp\Sp 232} = $(7, 232 - 2^7 = 232 - 128 = 104)$\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp 7\Sp :\Sp binExp\Sp 104} $ = (6, 104 - 2^6 = 104 - 64 = 40)$\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp 7\Sp :\Sp 6\Sp :\Sp binExp\Sp 40} $ = (5, 40 - 2^5 = 40 - 32 = 8)$\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp 7\Sp :\Sp 6\Sp :\Sp 5\Sp :\Sp binExp\Sp 8} $ = (3, 8 - 2^3 = 8 - 8 = 0)$\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp 7\Sp :\Sp 6\Sp :\Sp 5\Sp :\Sp 3\Sp :\Sp binExp\Sp 0\Sp =\Sp []}\\
+\text{\texfamily 9\Sp :\Sp 8\Sp :\Sp 7\Sp :\Sp 6\Sp :\Sp 5\Sp :\Sp 3\Sp :\Sp []},
 
 which, indeed, is the list of the exponents
 of the powers of two that add up to \num{1000}.
@@ -3841,49 +3255,15 @@ calculates the exponents of the powers of two for each number
 and then retrieves the elements in the input set
 that corresponds to the exponents:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{20E}{@{}l@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{34E}{@{}l@{}}%
-\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{ps2}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{ps2}\;[\mskip1.5mu \mskip1.5mu]{}\<[11]%
-\>[11]{}\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{ps2}\;\Varid{xs}{}\<[11]%
-\>[11]{}\mathrel{=}\Varid{go}\;(\mathrm{2}\mathbin{\uparrow}(\Varid{length}\;\Varid{xs})\mathbin{-}\mathrm{1})\;\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\Varid{n}\;\Varid{i}{}\<[20]%
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{i}\equiv \Varid{n}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}[\mskip1.5mu \Varid{xs}\mskip1.5mu]{}\<[E]%
-\\
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{otherwise}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{map}\;\Varid{exp2idx}\mathbin{\$}\Varid{binExp}\;\Varid{i}{}\<[E]%
-\\
-\>[37]{}\mathbf{in}\;{}\<[41]%
-\>[41]{}\Varid{s}\mathbin{:}\Varid{go}\;\Varid{n}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
-\\
-\>[12]{}\Varid{exp2idx}\;\Varid{x}\mathrel{=}\Varid{xs}\mathbin{!!}(\Varid{fromIntegral}\;\Varid{x}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~ps2~::~({\itshape Eq}~a)~=>~[a]~\char'31~[[a]]\\
+\texfamily ~~ps2~[]~~=~[[]]\\
+\texfamily ~~ps2~xs~~=~go~(2\char94 (length~xs)-1)~0\\
+\texfamily ~~~~{\bfseries where}~~go~n~i~~|~~i~\char'36~n~~~~~=~~[xs]\\
+\texfamily ~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~~{\bfseries let}~s~=~map~exp2idx~\$~binExp~i\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~~s:go~n~(i+1)\\
+\texfamily ~~~~~~~~~~~exp2idx~x~=~xs!!(fromIntegral~x)
+\end{tabbing}
 
 The function $ps2$ returns just a set that contains the empty set
 when called with the empty set.
@@ -3908,7 +3288,7 @@ This algorithm exploits a fascinating
 \term{isomorphism} -- an analogous structure --
 between binary numbers and powersets.
 With an appropriate data structure
-to represent sets, like \ensuremath{\Conid{Vector}},
+to represent sets, like \text{\texfamily {\itshape Vector}},
 and, of course, a more efficient number representation
 than our humble natural numbers,
 the algorithm definitely beats the one
@@ -3928,53 +3308,16 @@ $ps2$ is indeed faster.
 The changes, by the way, are minimal.
 Just compare the implementation of $ps2$ and $psv$:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{22E}{@{}l@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{36}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{36E}{@{}l@{}}%
-\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{psv}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{psv}\;[\mskip1.5mu \mskip1.5mu]{}\<[11]%
-\>[11]{}\mathrel{=}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{psv}\;\Varid{xs}{}\<[11]%
-\>[11]{}\mathrel{=}{}\<[14]%
-\>[14]{}\mathbf{let}\;\Varid{v}\mathrel{=}\Varid{\Conid{V}.fromList}\;\Varid{xs}{}\<[E]%
-\\
-\>[14]{}\mathbf{in}\;\Varid{go}\;\Varid{v}\;(\mathrm{2}\mathbin{\uparrow}(\Varid{length}\;\Varid{xs})\mathbin{-}\mathrm{1})\;\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\Varid{v}\;\Varid{n}\;\Varid{i}{}\<[22]%
-\>[22]{}\mid {}\<[22E]%
-\>[25]{}\Varid{i}\equiv \Varid{n}{}\<[36]%
-\>[36]{}\mathrel{=}{}\<[36E]%
-\>[39]{}[\mskip1.5mu \Varid{xs}\mskip1.5mu]{}\<[E]%
-\\
-\>[22]{}\mid {}\<[22E]%
-\>[25]{}\Varid{otherwise}{}\<[36]%
-\>[36]{}\mathrel{=}{}\<[36E]%
-\>[39]{}\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{map}\;(\Varid{exp2idx}\;\Varid{v})\;(\Varid{binExp}\;\Varid{i}){}\<[E]%
-\\
-\>[39]{}\mathbf{in}\;{}\<[43]%
-\>[43]{}\Varid{s}\mathbin{:}\Varid{go}\;\Varid{v}\;\Varid{n}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
-\\
-\>[12]{}\Varid{exp2idx}\;\Varid{v}\;\Varid{x}\mathrel{=}\Varid{v}\mathbin{!}(\Varid{fromIntegral}\;\Varid{x}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~psv~::~({\itshape Eq}~a)~=>~[a]~\char'31~[[a]]\\
+\texfamily ~~psv~[]~~=~[[]]\\
+\texfamily ~~psv~xs~~=~~{\bfseries let}~v~=~{\itshape V}.fromList~xs~\\
+\texfamily ~~~~~~~~~~~~~{\bfseries in}~go~v~(2\char94 (length~xs)-1)~0\\
+\texfamily ~~~~{\bfseries where}~~go~v~n~i~~|~~i~\char'36~n~~~~~=~~[xs]\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~~{\bfseries let}~s~=~map~(exp2idx~v)~(binExp~i)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~~s:go~v~n~(i+1)\\
+\texfamily ~~~~~~~~~~~exp2idx~v~x~=~v!(fromIntegral~x)
+\end{tabbing}
 
 The changes to the code of $ps2$ relate to the introduction
 of $v$, a vector created from $xs$ 
@@ -4040,17 +3383,10 @@ Union is not too difficult either
 using the function $nub$,
 which removes duplicates from a list:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{union}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{union}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{nub}\;(\Varid{a}\plus \Varid{b}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~\char'23~::~({\itshape Eq}~a)~=>~[a]~\char'31~[a]~\char'31~[a]\\
+\texfamily ~~\char'23~a~b~=~nub~(a~++~b)
+\end{tabbing}
 
 Using $nub$ is necessary,
 since merging the two lists
@@ -4063,7 +3399,7 @@ of $nub$; we used $nub$ in $union$
 to remove the duplicates of exactly those elements
 that we want to have in intersect.
 The intersect, hence, could be implemented as
-\ensuremath{\Varid{a}\plus \Varid{b}\mathbin{\char92 \char92 }\Varid{nub}\;(\Varid{a}\plus \Varid{b})}.
+\text{\texfamily a\Sp ++\Sp b\Sp \char92 \char92 \Sp nub\Sp (a\Sp ++\Sp b)}.
 This would define the intersect as the difference
 of the concatenation of two lists
 and the union of these two lists.
@@ -4071,56 +3407,27 @@ Have a look at the example
 $A=\lbrace 1,2,3\rbrace$ and
 $B=\lbrace 3,4,5\rbrace$:
 
-\ensuremath{\Conid{A}\plus \Conid{B}\mathbin{\char92 \char92 }\Varid{nub}\;(\Conid{A}\plus \Conid{B})\mathrel{=}}\\
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]\plus [\mskip1.5mu \mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]\mathbin{\char92 \char92 }\Varid{nub}\;([\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]\plus [\mskip1.5mu \mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu])\mathrel{=}}\\
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]\mathbin{\char92 \char92 }\Varid{nub}\;([\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu])\mathrel{=}}\\
-\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]\mathbin{\char92 \char92 }[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]\mathrel{=}}\\
-\ensuremath{[\mskip1.5mu \mathrm{3}\mskip1.5mu]}.
+\text{\texfamily {\itshape A}\Sp ++\Sp {\itshape B}\Sp \char92 \char92 \Sp nub\Sp ({\itshape A}\Sp ++\Sp {\itshape B})\Sp =}\\
+\text{\texfamily [1,2,3]\Sp ++\Sp [3,4,5]\Sp \char92 \char92 \Sp \Sp \Sp \Sp \Sp \Sp \Sp \Sp \Sp \Sp nub\Sp ([1,2,3]\Sp ++\Sp [3,4,5])\Sp =\Sp }\\
+\text{\texfamily [1,2,3,3,4,5]\Sp \char92 \char92 \Sp nub\Sp ([1,2,3,3,4,5])\Sp =\Sp }\\
+\text{\texfamily [1,2,3,3,4,5]\Sp \char92 \char92 \Sp [1,2,3,4,5]\Sp =\Sp }\\
+\text{\texfamily [3]}.
          
 This implementation, however,
 is not very efficient.
 Preferable is the following one:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{19E}{@{}l@{}}%
-\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{24E}{@{}l@{}}%
-\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{intersect}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{intersect}\;[\mskip1.5mu \mskip1.5mu]\;\anonymous {}\<[19]%
-\>[19]{}\mathrel{=}{}\<[19E]%
-\>[22]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{intersect}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[19]%
-\>[19]{}\mathrel{=}{}\<[19E]%
-\>[22]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{intersect}\;(\Varid{a}\mathbin{:}\Varid{as})\;\Varid{bs}{}\<[24]%
-\>[24]{}\mid {}\<[24E]%
-\>[27]{}\Varid{a}\in \Varid{bs}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{a}\mathbin{:}{}\<[47]%
-\>[47]{}\Varid{intersect}\;\Varid{as}\;\Varid{bs}{}\<[E]%
-\\
-\>[24]{}\mid {}\<[24E]%
-\>[27]{}\Varid{otherwise}{}\<[40]%
-\>[40]{}\mathrel{=}{}\<[47]%
-\>[47]{}\Varid{intersect}\;\Varid{as}\;\Varid{bs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~\char'22~::~({\itshape Eq}~a)~=>~[a]~\char'31~[a]~\char'31~[a]\\
+\texfamily ~~\char'22~[]~\char95 ~~=~~[]\\
+\texfamily ~~\char'22~\char95 ~[]~~=~~[]\\
+\texfamily ~~\char'22~(a:as)~bs~~|~~a~`elem`~bs~~=~a~:~~\char'22~as~bs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~~~=~~~~~~\char'22~as~bs
+\end{tabbing}
 
 We first define the intersection of the empty set
 with any other set as the empty set.
-(Note the similarity of the role of the $\emptyset$ 
+(Note the similarity of the role of the $\varnothing$ 
  in union and intersect with that of $0$ in 
  addition and multiplication!)
 For other cases, we start with the first element of the first list, $a$,
@@ -4275,17 +3582,10 @@ and an obvious notion for distance
 is just the size of the difference
 between the universe and another set:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{dist}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Int}{}\<[E]%
-\\
-\>[3]{}\Varid{dist}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{length}\;(\Varid{a}\mathbin{\char92 \char92 }\Varid{b}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~dist~::~({\itshape Eq}~a)~=>~[a]~\char'31~[a]~\char'31~{\itshape Int}\\
+\texfamily ~~dist~a~b~=~length~(a~\char92 \char92 ~b)
+\end{tabbing}
 
 Now, we need a function, say, $best$
 that uses $dist$ to find the set in $S$
@@ -4298,69 +3598,25 @@ or no set in $S$ is able to reduce
 the distance to the universe anymore.
 Here are these functions:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{31E}{@{}l@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{63}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{greedySetCover}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{greedySetCover}\;\Varid{u}\;\Varid{s}\mathrel{=}\Varid{loop}\;(\Varid{length}\;\Varid{u})\;[\mskip1.5mu \mskip1.5mu]\;\Varid{s}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{loop}\;\anonymous \;\anonymous \;{}\<[22]%
-\>[22]{}[\mskip1.5mu \mskip1.5mu]{}\<[26]%
-\>[26]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{loop}\;\Varid{m}\;\Varid{rs}\;\Varid{xs}{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[29]%
-\>[29]{}\mathbf{let}\;(\Varid{m'},\Varid{p})\mathrel{=}\Varid{best}\;\Varid{m}\;\Varid{rs}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{xs}{}\<[E]%
-\\
-\>[29]{}\mathbf{in}\;\mathbf{if}\;\Varid{m'}\mathbin{<}\Varid{m}{}\<[E]%
-\\
-\>[29]{}\hsindent{5}{}\<[34]%
-\>[34]{}\mathbf{then}\;\Varid{p}\mathbin{:}\Varid{loop}\;\Varid{m'}\;(\Varid{p}\mathbin{`\Varid{union}`}\Varid{rs})\;(\Varid{delete}\;\Varid{p}\;\Varid{xs}){}\<[E]%
-\\
-\>[29]{}\hsindent{5}{}\<[34]%
-\>[34]{}\mathbf{else}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{best}\;\Varid{m}\;\anonymous \;\Varid{p}\;[\mskip1.5mu \mskip1.5mu]{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}(\Varid{m},\Varid{p}){}\<[E]%
-\\
-\>[12]{}\Varid{best}\;\Varid{m}\;\Varid{r}\;\Varid{p}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}\mathbf{let}\;\Varid{m'}\mathrel{=}\Varid{dist}\;\Varid{u}\;(\Varid{x}\mathbin{`\Varid{union}`}\Varid{r}){}\<[E]%
-\\
-\>[34]{}\mathbf{in}\;\mathbf{if}\;\Varid{m'}\mathbin{<}\Varid{m}\;{}\<[48]%
-\>[48]{}\mathbf{then}\;{}\<[54]%
-\>[54]{}\Varid{best}\;\Varid{m'}\;{}\<[63]%
-\>[63]{}\Varid{r}\;\Varid{x}\;\Varid{xs}{}\<[E]%
-\\
-\>[48]{}\mathbf{else}\;{}\<[54]%
-\>[54]{}\Varid{best}\;\Varid{m}\;{}\<[63]%
-\>[63]{}\Varid{r}\;\Varid{p}\;\Varid{xs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~greedySetCover~::~({\itshape Eq}~a)~=>~[a]~\char'31~[[a]]~\char'31~[[a]]\\
+\texfamily ~~greedySetCover~u~s~=~loop~(length~u)~[]~s\\
+\texfamily ~~~~{\bfseries where}~~loop~\char95 ~\char95 ~~[]~~=~[]\\
+\texfamily ~~~~~~~~~~~loop~m~rs~xs~~=~~{\bfseries let}~(m',p)~=~best~m~rs~[]~xs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~m'~<~m~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries then}~p~:~loop~m'~(p~`\char'23`~rs)~(delete~p~xs)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~[]\\
+\texfamily ~~~~~~~~~~~best~m~\char95 ~p~[]~~~~~~=~~(m,~p)\\
+\texfamily ~~~~~~~~~~~best~m~r~p~(x:xs)~~=~~{\bfseries let}~m'~=~dist~u~(x~`\char'23`~r)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~m'~<~m~~{\bfseries then}~~best~m'~~r~x~xs\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~~best~m~~~r~p~xs
+\end{tabbing}
 
 The measure for the current optimum is 
 the variable $m$ used in $loop$ and $best$.
 The whole algorithm starts with $m = length(u)$,
 which is the worst possible distance,
-\viz\ the distance between $\emptyset$ and the universe.
+\viz\ the distance between $\varnothing$ and the universe.
 
 The second parameter passed to $loop$, $rs$,
 is the union of partial results.
@@ -4369,7 +3625,7 @@ The third parameter is the set of subsets
 we are working on
 starting with $S$.
 With an empty $S$, $loop$
-is just $\emptyset$.
+is just $\varnothing$.
 Otherwise, it uses $best$
 to get the local optimum,
 which is the tuple $(m',p)$,
@@ -4435,29 +3691,14 @@ the local minimum is therefore the preferred solution.
 
 \section{Stirling Numbers}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Stirling}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub}){}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Types}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Stirling}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.List}~(nub)\\
+\texfamily ~~{\bfseries import}~{\itshape Natural}\\
+\texfamily ~~{\bfseries import}~{\itshape Fact}\\
+\texfamily ~~{\bfseries import}~{\itshape Types}
+\end{tabbing}
 }
 
 We saw that the number of all permutations of a set 
@@ -4495,78 +3736,43 @@ To illustrate that let us look at an
 algorithm that generates all possibilities to
 partition a set into two partitions:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{18E}{@{}l@{}}%
-\column{19}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{19E}{@{}l@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{twoPartitions}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu ([\mskip1.5mu \Varid{a}\mskip1.5mu],[\mskip1.5mu \Varid{a}\mskip1.5mu])\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{twoPartitions}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\Varid{fltr}\mathbin{\circ}\Varid{p2}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{p2}\;[\mskip1.5mu \mskip1.5mu]{}\<[23]%
-\>[23]{}\mathrel{=}{}\<[29]%
-\>[29]{}[\mskip1.5mu ([\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mskip1.5mu])\mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{p2}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[23]%
-\>[23]{}\mathrel{=}{}\<[29]%
-\>[29]{}[\mskip1.5mu (\Varid{x}\mathbin{:}\Varid{a},\Varid{b})\mid (\Varid{a},\Varid{b})\leftarrow \Varid{p2}\;\Varid{xs}\mskip1.5mu]\plus {}\<[E]%
-\\
-\>[23]{}\Varid{fltr}\;{}\<[29]%
-\>[29]{}[\mskip1.5mu (\Varid{a},\Varid{x}\mathbin{:}\Varid{b})\mid (\Varid{a},\Varid{b})\leftarrow \Varid{p2}\;\Varid{xs}\mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{fltr}{}\<[19]%
-\>[19]{}\mathrel{=}{}\<[19E]%
-\>[22]{}\Varid{filter}\;(\lambda \Varid{p}\to \neg \;({}\<[43]%
-\>[43]{}\Varid{null}\;(\Varid{fst}\;\Varid{p})\mathrel{\vee}{}\<[E]%
-\\
-\>[43]{}\Varid{null}\;(\Varid{snd}\;\Varid{p}))){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~twoPartitions~::~({\itshape Eq}~a)~=>~[a]~\char'31~[([a],[a])]\\
+\texfamily ~~twoPartitions~~=~~fltr~\char'00~p2\\
+\texfamily ~~~~{\bfseries where}~~p2~[]~~~~~~=~~~~~[([],[])]\\
+\texfamily ~~~~~~~~~~~p2~(x:xs)~~=~~~~~[(x:a,b)~|~(a,b)~\char'06~p2~xs]~++\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~fltr~~[(a,x:b)~|~(a,b)~\char'06~p2~xs]\\
+\texfamily ~~~~~~~~~~~fltr~~~=~~filter~(\char'10p~\char'31~\char'05~(~~null~(fst~p)~\char'37\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~null~(snd~p)))
+\end{tabbing}
 
 This innocent looking lines of code are quite tricky.
-The basic idea is implemented in \ensuremath{\Varid{p2}}:
-For an empty set, \ensuremath{\Varid{p2}} returns a pair of empty sets.
-For any other set, it applies \ensuremath{\Varid{p2}} twice on the \ensuremath{\Varid{tail}} of the list
-and adds the \ensuremath{\Varid{head}} once to the first of the pair
+The basic idea is implemented in \text{\texfamily p2}:
+For an empty set, \text{\texfamily p2} returns a pair of empty sets.
+For any other set, it applies \text{\texfamily p2} twice on the \text{\texfamily tail} of the list
+and adds the \text{\texfamily head} once to the first of the pair
 and once to the second of the pair.
 This sounds easy, but there is an issue:
 The intermediate result sets will contain empty sets.
 In the first result, the second set is empty and,
 in the second result, the first one is empty.
 To solve this problem, we explicitly filter empty sets out
-(using \ensuremath{\Varid{fltr}}).
+(using \text{\texfamily fltr}).
 If we applied the filter once on the overall result,
 we would get the following pairs
 for the set $\lbrace 1,2,3\rbrace$: 
 
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu])}.
+\text{\texfamily ([1,2],[3])}\\
+\text{\texfamily ([1,3],[2])}\\
+\text{\texfamily ([1],[2,3])}\\
+\text{\texfamily ([2,3],[1])}\\
+\text{\texfamily ([2],[1,3])}\\
+\text{\texfamily ([3],[1,2])}.
 
 All results are correct,
 but there are too many of them.
 More specifically, some of the results are repeated.
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu])} and \ensuremath{([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu])} are different tuples of course,
+\text{\texfamily ([1,2],[3])} and \text{\texfamily ([3],[1,2])} are different tuples of course,
 but they describe the same partitioning
 consisting of the subsets 
 $\lbrace 1,2\rbrace$ and $\lbrace 3\rbrace$.
@@ -4575,35 +3781,35 @@ In the code above, this issue is solved
 by applying the filter once again, \viz\
 on the second intermediate result.
 Let us look at how the second list comprehension develops.
-After the first application of \ensuremath{\Varid{p2}},
+After the first application of \text{\texfamily p2},
 we have a tuple of two empty sets:
 
-\ensuremath{\Varid{p2}\;(\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu])\mathrel{=}[\mskip1.5mu (\Varid{a},\mathrm{3}\mathbin{:}\Varid{b})\mid (\Varid{a},\Varid{b})\leftarrow [\mskip1.5mu ([\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mskip1.5mu])\mskip1.5mu]\mskip1.5mu]}\\
-\ensuremath{\Varid{p2}\;(\mathrm{3}\mathbin{:}[\mskip1.5mu \mskip1.5mu])\mathrel{=}[\mskip1.5mu ([\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu])\mskip1.5mu]}.
+\text{\texfamily p2\Sp (3:[])\Sp \Sp =\Sp \Sp [(a,3:b)\Sp |\Sp (a,b)\Sp \char'06\Sp [([],[])]]}\\
+\text{\texfamily p2\Sp (3:[])\Sp \Sp =\Sp \Sp [([],[3])]}.
 
 This result is filtered out, because the first set is empty.
 In the next round we consequently have, as input, 
 only the result of the first, unfiltered, list comprehension:
 
-\ensuremath{\Varid{p2}\;(\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{3}\mskip1.5mu])\mathrel{=}[\mskip1.5mu (\Varid{a},\mathrm{2}\mathbin{:}\Varid{b})\mid (\Varid{a},\Varid{b})\leftarrow [\mskip1.5mu ([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mskip1.5mu])\mskip1.5mu]\mskip1.5mu]}\\
-\ensuremath{\Varid{p2}\;(\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{3}\mskip1.5mu])\mathrel{=}[\mskip1.5mu ([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu])\mskip1.5mu]},\\
+\text{\texfamily p2\Sp (2:[3])\Sp \Sp =\Sp \Sp [(a,2:b)\Sp |\Sp (a,b)\Sp \char'06\Sp [([3],[])]]}\\
+\text{\texfamily p2\Sp (2:[3])\Sp \Sp =\Sp \Sp [([3],[2])]},\\
 
 which is preserved.
 We then get to the final round
 where the input is now the result of the first comprehension
 plus the one created above:
 
-\ensuremath{\Varid{p2}\;(\mathrm{1}\mathbin{:}[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu])\mathrel{=}[\mskip1.5mu (\Varid{a},\mathrm{1}\mathbin{:}\Varid{b})\mid (\Varid{a},\Varid{b})\leftarrow [\mskip1.5mu ([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu]),([\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mskip1.5mu])\mskip1.5mu]}\\
-\ensuremath{\Varid{p2}\;(\mathrm{1}\mathbin{:}[\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu])\mathrel{=}[\mskip1.5mu ([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu]),([\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu])\mskip1.5mu]}.
+\text{\texfamily p2\Sp (1:[2,3])\Sp \Sp =\Sp \Sp [(a,1:b)\Sp |\Sp (a,b)\Sp \char'06\Sp [([3],[2]),\Sp ([2,3],[])]}\\
+\text{\texfamily p2\Sp (1:[2,3])\Sp \Sp =\Sp \Sp [([3],[1,2]),\Sp ([2,3],[1])]}.
 
 The result of the first comprehension in the last round consists of the pairs:
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu])}, which results from the input \ensuremath{([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu])}, and
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mskip1.5mu])}, which is removed by the filter on the final result of \ensuremath{\Varid{p2}}.
+\text{\texfamily ([1,3],[2])}, which results from the input \text{\texfamily ([3],[2])}, and
+\text{\texfamily ([1,2,3],[])}, which is removed by the filter on the final result of \text{\texfamily p2}.
 This gives the correct result: 
 
-\ensuremath{([\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{2},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu])}\\
-\ensuremath{([\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu])}.
+\text{\texfamily ([1,3],[2])}\\
+\text{\texfamily ([2,3],[1])}\\
+\text{\texfamily ([3],\Sp [1,2])}.
 
 As long as we create only two partitions,
 we can use pairs and the 
@@ -4714,7 +3920,7 @@ the partitioning would, hence, be invalid;
 if 0 did appear later in the string,
 the string would not be ordered, \ie\
 a greater number would appear 
-before the smallest possible number \ensuremath{\Varid{zero}}.
+before the smallest possible number \text{\texfamily zero}.
 
 To be sure that the \acronym{rgs}-technique effectively
 avoids duplication of subset by suppressing permuations,
@@ -4764,10 +3970,10 @@ we first need a function that converts decimal numbers
 into numbers with base $b$.
 We have already looked at such functions,
 for $b = 2$ in the previous section,
-which we called \ensuremath{\Varid{binExp}}, and, for $b=10$,
+which we called \text{\texfamily binExp}, and, for $b=10$,
 in the previous chapter in the context of
-the conversion function \ensuremath{\Varid{integer2Num}}.
-\ensuremath{\Varid{binExp}} was tailored for binary numbers,
+the conversion function \text{\texfamily integer2Num}.
+\text{\texfamily binExp} was tailored for binary numbers,
 since it yielded only the positions 
 where the binary result would have a 1.
 That information is obviously not sufficient
@@ -4780,10 +3986,10 @@ We divided the number by 10,
 collecting the remainders and continuing on the quotient,
 like in the following example:
 
-\ensuremath{\mathrm{1000}\mathbin{`\Varid{quotRem}`}\mathrm{10}\mathrel{=}(\mathrm{100},\mathrm{0})}\\
-\ensuremath{\mathrm{100}\mathbin{`\Varid{quotRem}`}\mathrm{10}\mathrel{=}(\mathrm{10},\mathrm{0})}\\
-\ensuremath{\mathrm{10}\mathbin{`\Varid{quotRem}`}\mathrm{10}\mathrel{=}(\mathrm{1},\mathrm{0})}\\
-\ensuremath{\mathrm{1}\mathbin{`\Varid{quotRem}`}\mathrm{10}\mathrel{=}(\mathrm{0},\mathrm{1})}.
+\text{\texfamily 1000\Sp \Sp `quotRem`\Sp 10\Sp =\Sp (100,0)}\\
+\text{\texfamily 100\Sp \Sp \Sp `quotRem`\Sp 10\Sp =\Sp (10,0)}\\
+\text{\texfamily 10\Sp \Sp \Sp \Sp `quotRem`\Sp 10\Sp =\Sp (1,0)}\\
+\text{\texfamily 1\Sp \Sp \Sp \Sp \Sp `quotRem`\Sp 10\Sp =\Sp (0,1)}.
 
 Now, the remainders of the subsequent divisions
 bottom-up would read $1,0,0,0$, which are just 
@@ -4791,63 +3997,49 @@ the components of the decimal representation
 of the number \num{1000}.
 If we do this with $b=2$, we would see:
 
-\ensuremath{\mathrm{1000}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{500},\mathrm{0})}\\
-\ensuremath{\mathrm{500}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{250},\mathrm{0})}\\
-\ensuremath{\mathrm{250}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{125},\mathrm{0})}\\
-\ensuremath{\mathrm{125}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{62},\mathrm{1})}\\
-\ensuremath{\mathrm{62}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{31},\mathrm{0})}\\
-\ensuremath{\mathrm{31}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{15},\mathrm{1})}\\
-\ensuremath{\mathrm{15}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{7},\mathrm{1})}\\
-\ensuremath{\mathrm{7}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{3},\mathrm{1})}\\
-\ensuremath{\mathrm{3}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{1},\mathrm{1})}\\
-\ensuremath{\mathrm{1}\mathbin{`\Varid{quotRem}`}\mathrm{2}\mathrel{=}(\mathrm{0},\mathrm{1})}.
+\text{\texfamily 1000\Sp `quotRem`\Sp 2\Sp =\Sp (500,0)}\\
+\text{\texfamily 500\Sp \Sp `quotRem`\Sp 2\Sp =\Sp (250,0)}\\
+\text{\texfamily 250\Sp \Sp `quotRem`\Sp 2\Sp =\Sp (125,0)}\\
+\text{\texfamily 125\Sp \Sp `quotRem`\Sp 2\Sp =\Sp (62,1)}\\
+\text{\texfamily 62\Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (31,0)}\\
+\text{\texfamily 31\Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (15,1)}\\
+\text{\texfamily 15\Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (7,1)}\\
+\text{\texfamily 7\Sp \Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (3,1)}\\
+\text{\texfamily 3\Sp \Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (1,1)}\\
+\text{\texfamily 1\Sp \Sp \Sp \Sp `quotRem`\Sp 2\Sp =\Sp (0,1)}.
 
 \num{1000}, in the binary system, hence, 
 is $1111101000$, the same result we have already obtained
 in the previous section.
 We can implement this procedure in Haskell as:\footnote{
-We use \ensuremath{\Conid{Int}} instead of \ensuremath{\Conid{Natural}} here, because,
+We use \text{\texfamily {\itshape Int}} instead of \text{\texfamily {\itshape Natural}} here, because,
 in the following, we will need list functions
-like \ensuremath{\Varid{length}} or \ensuremath{\Varid{take}} quite often;
-with \ensuremath{\Conid{Natural}}, we would have to add a lot of conversions,
+like \text{\texfamily length} or \text{\texfamily take} quite often;
+with \text{\texfamily {\itshape Natural}}, we would have to add a lot of conversions,
 which is much harder to read.}
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{toBaseN}\mathbin{::}\Conid{Int}\to \Conid{Int}\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{toBaseN}\;\Varid{b}\mathrel{=}\Varid{reverse}\mathbin{\circ}\Varid{go}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{x}\mathrel{=}{}\<[19]%
-\>[19]{}\mathbf{case}\;\Varid{x}\mathbin{`\Varid{quotRem}`}\Varid{b}\;\mathbf{of}{}\<[E]%
-\\
-\>[19]{}(\mathrm{0},\Varid{r})\to [\mskip1.5mu \Varid{r}\mskip1.5mu]{}\<[E]%
-\\
-\>[19]{}(\Varid{q},\Varid{r})\to \Varid{r}\mathbin{:}\Varid{go}\;\Varid{q}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~toBaseN~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~[{\itshape Int}]\\
+\texfamily ~~toBaseN~b~=~reverse~\char'00~go~\\
+\texfamily ~~~~{\bfseries where}~go~x~=~~{\bfseries case}~x~`quotRem`~b~{\bfseries of}\\
+\texfamily ~~~~~~~~~~~~~~~~~~(0,r)~\char'31~[r]\\
+\texfamily ~~~~~~~~~~~~~~~~~~(q,r)~\char'31~r~:~go~q
+\end{tabbing}
 
-The \ensuremath{\Varid{go}}-part of this function applied to base $b = 3$
+The \text{\texfamily go}-part of this function applied to base $b = 3$
 and, say, \num{1024} would develop
 as follows:
 
-\ensuremath{\Varid{go}\;\mathrm{1024}\mathrel{=}\mathrm{1024}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\Varid{go}\;\mathrm{341}\mathrel{=}\mathrm{341}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\Varid{go}\;\mathrm{113}\mathrel{=}\mathrm{113}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{2}\mathbin{:}\Varid{go}\;\mathrm{37}\mathrel{=}\mathrm{37}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{1}\mathbin{:}\Varid{go}\;\mathrm{12}\mathrel{=}\mathrm{12}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{1}\mathbin{:}\mathrm{0}\mathbin{:}\Varid{go}\;\mathrm{4}\mathrel{=}\mathrm{4}\mathbin{`\Varid{quotRem}`}\mathrm{3}}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{1}\mathbin{:}\mathrm{0}\mathbin{:}\mathrm{1}\mathbin{:}\Varid{go}\;\mathrm{1}\mathrel{=}[\mskip1.5mu \mathrm{1}\mskip1.5mu]}\\
-\ensuremath{\mathrm{1}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{2}\mathbin{:}\mathrm{1}\mathbin{:}\mathrm{0}\mathbin{:}\mathrm{1}\mathbin{:}\mathrm{1}},
+\text{\texfamily go\Sp 1024\Sp \Sp =\Sp \Sp 1024\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp go\Sp 341\Sp =\Sp 341\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp go\Sp 113\Sp =\Sp 113\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp 2\Sp :\Sp go\Sp 37\Sp =\Sp 37\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp 2\Sp :\Sp 1\Sp :\Sp go\Sp 12\Sp =\Sp 12\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp 2\Sp :\Sp 1\Sp :\Sp 0\Sp :\Sp go\Sp 4\Sp =\Sp 4\Sp `quotRem`\Sp 3}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp 2\Sp :\Sp 1\Sp :\Sp 0\Sp :\Sp 1\Sp :\Sp go\Sp 1\Sp =\Sp [1]}\\
+\text{\texfamily 1\Sp :\Sp 2\Sp :\Sp 2\Sp :\Sp 1\Sp :\Sp 0\Sp :\Sp 1\Sp :\Sp 1},
 
-which, reversed, is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{2},\mathrm{2},\mathrm{1}\mskip1.5mu]}
+which, reversed, is \text{\texfamily [1,1,0,1,2,2,1]}
 and the correct representation of \num{1000}
 in the ternary system.
 
@@ -4857,82 +4049,32 @@ into an \acronym{rgs}.
 First we fill the number with leading zeros
 until it has the desired size $n$:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{24E}{@{}l@{}}%
-\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{rgs}\mathbin{::}\Conid{Int}\to \Conid{Int}\to \Conid{Int}\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{rgs}\;\Varid{b}\;\Varid{n}\;\Varid{i}\mathrel{=}{}\<[16]%
-\>[16]{}\mathbf{let}\;{}\<[21]%
-\>[21]{}\Varid{r}{}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\Varid{toBaseN}\;\Varid{b}\;\Varid{i}{}\<[E]%
-\\
-\>[21]{}\Varid{d}{}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\Varid{n}\mathbin{-}\Varid{length}\;\Varid{r}{}\<[E]%
-\\
-\>[21]{}\Varid{p}{}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\mathbf{if}\;\Varid{d}\mathbin{>}\mathrm{0}\;\mathbf{then}\;\Varid{take}\;\Varid{d}\;(\Varid{repeat}\;\mathrm{0})\;\mathbf{else}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[16]{}\mathbf{in}\;\mathbf{if}\;\Varid{d}\mathbin{<}\mathrm{0}\;\mathbf{then}\;[\mskip1.5mu \mskip1.5mu]\;\mathbf{else}\;\Varid{p}\plus \Varid{r}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~rgs~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~{\itshape Int}~\char'31~[{\itshape Int}]\\
+\texfamily ~~rgs~b~n~i~=~~{\bfseries let}~~r~~=~~toBaseN~b~i\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~d~~=~~n~-~length~r~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~p~~=~~{\bfseries if}~d~>~0~{\bfseries then}~take~d~(repeat~0)~{\bfseries else}~[]\\
+\texfamily ~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~d~<~0~{\bfseries then}~[]~{\bfseries else}~p~++~r
+\end{tabbing}
 
-Note that, if the length of the result of \ensuremath{\Varid{toBaseN}} exceeds $n$,
+Note that, if the length of the result of \text{\texfamily toBaseN} exceeds $n$,
 the function yields the empty list.
 This, in fact, is an error case that could be handled explicitly.
 On the other hand, returning the empty list
 is a good enough indication for an error
 and we could check for this error in code
-using \ensuremath{\Varid{rgs}} later.
+using \text{\texfamily rgs} later.
 
 We now define a wrapper around this conversion function
 to apply the restrictions:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{17E}{@{}l@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{33}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{33E}{@{}l@{}}%
-\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{toRgs}\mathbin{::}([\mskip1.5mu \Conid{Int}\mskip1.5mu]\to \Conid{Bool})\to {}\<[E]%
-\\
-\>[3]{}\hsindent{9}{}\<[12]%
-\>[12]{}\Conid{Int}\to \Conid{Int}\to \Conid{Int}\to (\Conid{Int},[\mskip1.5mu \Conid{Int}\mskip1.5mu]){}\<[E]%
-\\
-\>[3]{}\Varid{toRgs}\;\Varid{rst}\;\Varid{b}\;\Varid{n}\;\Varid{i}\mathrel{=}\Varid{go}\;(\Varid{rgs}\;\Varid{b}\;\Varid{n}\;\Varid{i}){}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{r}{}\<[17]%
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\neg \;(\Varid{rst}\;\Varid{r}){}\<[33]%
-\>[33]{}\mathrel{=}{}\<[33E]%
-\>[36]{}\Varid{toRgs}\;\Varid{rst}\;\Varid{b}\;\Varid{n}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
-\\
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{otherwise}{}\<[33]%
-\>[33]{}\mathrel{=}{}\<[33E]%
-\>[36]{}(\Varid{i},\Varid{r}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~toRgs~::~([{\itshape Int}]~\char'31~{\itshape Bool})~\char'31~\\
+\texfamily ~~~~~~~~~~~{\itshape Int}~\char'31~{\itshape Int}~\char'31~{\itshape Int}~\char'31~({\itshape Int},~[{\itshape Int}])\\
+\texfamily ~~toRgs~rst~b~n~i~=~go~(rgs~b~n~i)\\
+\texfamily ~~~~{\bfseries where}~go~r~~|~~\char'05~(rst~r)~~=~~toRgs~rst~b~n~(i~+~1)\\
+\texfamily ~~~~~~~~~~~~~~~~|~~otherwise~~~~=~~(i,r)
+\end{tabbing}
 
 This function converts a decimal number
 to an \acronym{rgs} and checks if the result
@@ -4945,50 +4087,14 @@ and the \acronym{rgs}.
 
 We define the growth restriction as follows:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{20E}{@{}l@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{26E}{@{}l@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{rGrowth}\mathbin{::}[\mskip1.5mu \Conid{Int}\mskip1.5mu]\to \Conid{Bool}{}\<[E]%
-\\
-\>[3]{}\Varid{rGrowth}\;{}\<[12]%
-\>[12]{}[\mskip1.5mu \mskip1.5mu]{}\<[20]%
-\>[20]{}\mathrel{=}{}\<[20E]%
-\>[23]{}\Conid{True}{}\<[E]%
-\\
-\>[3]{}\Varid{rGrowth}\;{}\<[12]%
-\>[12]{}(\Varid{x}\mathbin{:}\Varid{xs}){}\<[20]%
-\>[20]{}\mathrel{=}{}\<[20E]%
-\>[23]{}\Varid{go}\;\Varid{x}\;\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\anonymous \;{}\<[18]%
-\>[18]{}[\mskip1.5mu \mskip1.5mu]{}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\Conid{True}{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\Varid{d}\;{}\<[18]%
-\>[18]{}(\Varid{z}\mathbin{:}\Varid{zs}){}\<[26]%
-\>[26]{}\mathrel{=}{}\<[26E]%
-\>[29]{}\mathbf{if}\;\Varid{z}\mathbin{-}\Varid{d}\mathbin{>}\mathrm{1}\;\mathbf{then}\;\Conid{False}{}\<[E]%
-\\
-\>[29]{}\mathbf{else}\;{}\<[35]%
-\>[35]{}\mathbf{let}\;\Varid{d'}\mathrel{=}\Varid{max}\;\Varid{d}\;\Varid{z}\;\mathbf{in}\;\Varid{go}\;\Varid{d'}\;\Varid{zs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~rGrowth~::~[{\itshape Int}]~\char'31~{\itshape Bool}\\
+\texfamily ~~rGrowth~~[]~~~~~~=~~{\itshape True}\\
+\texfamily ~~rGrowth~~(x:xs)~~=~~go~x~xs\\
+\texfamily ~~~~{\bfseries where}~~go~\char95 ~~[]~~~~~~=~~{\itshape True}\\
+\texfamily ~~~~~~~~~~~go~d~~(z:zs)~~=~~{\bfseries if}~z~-~d~>~1~{\bfseries then}~{\itshape False}\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~~{\bfseries let}~d'~=~max~d~z~{\bfseries in}~go~d'~zs
+\end{tabbing}
 
 Since we want to see
 only partitionings with $b$ subsets,
@@ -5001,107 +4107,50 @@ that there must be $b$ different digits
 in the resulting \acronym{rgs}.
 The restriction is easily implemented as:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{hasN}\mathbin{::}\Conid{Int}\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]\to \Conid{Bool}{}\<[E]%
-\\
-\>[3]{}\Varid{hasN}\;\Varid{b}\;\Varid{r}\mathrel{=}\Varid{length}\;(\Varid{nub}\;\Varid{r})\equiv \Varid{b}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~hasN~::~{\itshape Int}~\char'31~[{\itshape Int}]~\char'31~{\itshape Bool}\\
+\texfamily ~~hasN~b~r~=~length~(nub~r)~\char'36~b
+\end{tabbing}
 
 We apply this restrictions in yet another wrapper 
-to call \ensuremath{\Varid{toRgs}}:
+to call \text{\texfamily toRgs}:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{6}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{toRgsN}\mathbin{::}\Conid{Int}\to \Conid{Int}\to \Conid{Int}\to (\Conid{Int},[\mskip1.5mu \Conid{Int}\mskip1.5mu]){}\<[E]%
-\\
-\>[3]{}\Varid{toRgsN}\;\Varid{b}\mathrel{=}\Varid{toRgs}\;\Varid{rst}\;\Varid{b}{}\<[E]%
-\\
-\>[3]{}\hsindent{3}{}\<[6]%
-\>[6]{}\mathbf{where}\;\Varid{rst}\;\Varid{r}\mathrel{=}\Varid{rGrowth}\;\Varid{r}{}\<[31]%
-\>[31]{}\mathrel{\wedge}\Varid{hasN}\;{}\<[40]%
-\>[40]{}\Varid{b}\;\Varid{r}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~toRgsN~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~{\itshape Int}~\char'31~({\itshape Int},~[{\itshape Int}])\\
+\texfamily ~~toRgsN~b~=~toRgs~rst~b\\
+\texfamily ~~~~~{\bfseries where}~rst~r~=~rGrowth~r~~\char'04~hasN~~b~r
+\end{tabbing}
 
 Finally, we can implement a loop
 that counts \acronym{rgs} up from 1 to the last number
 with leading 0:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{17E}{@{}l@{}}%
-\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{31E}{@{}l@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{countRgs}\mathbin{::}\Conid{Int}\to \Conid{Int}\to [\mskip1.5mu [\mskip1.5mu \Conid{Int}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{countRgs}\;\mathrm{1}\;\Varid{n}{}\<[17]%
-\>[17]{}\mathrel{=}{}\<[17E]%
-\>[20]{}[\mskip1.5mu \Varid{rgs}\;\mathrm{1}\;\Varid{n}\;\mathrm{1}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{countRgs}\;\Varid{b}\;\Varid{n}{}\<[17]%
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{b}\equiv \Varid{n}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}[\mskip1.5mu [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mathbin{-}\mathrm{1}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{b}\mathbin{>}{}\<[25]%
-\>[25]{}\Varid{n}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{otherwise}{}\<[31]%
-\>[31]{}\mathrel{=}{}\<[31E]%
-\>[34]{}\Varid{go}\;\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{i}{}\<[17]%
-\>[17]{}\mathrel{=}{}\<[17E]%
-\>[20]{}\mathbf{let}\;(\Varid{j},\Varid{r})\mathrel{=}\Varid{toRgsN}\;\Varid{b}\;\Varid{n}\;\Varid{i}{}\<[E]%
-\\
-\>[20]{}\mathbf{in}\;\mathbf{if}\;\Varid{head}\;\Varid{r}\not\equiv \mathrm{0}\;\mathbf{then}\;[\mskip1.5mu \mskip1.5mu]\;\mathbf{else}\;\Varid{r}\mathbin{:}\Varid{go}\;(\Varid{j}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~countRgs~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~[[{\itshape Int}]]\\
+\texfamily ~~countRgs~1~n~~=~~[rgs~1~n~1]\\
+\texfamily ~~countRgs~b~n~~|~~b~\char'36~n~~~~~=~~[[1..n-1]]\\
+\texfamily ~~~~~~~~~~~~~~~~|~~b~>~~n~~~~~=~~[]\\
+\texfamily ~~~~~~~~~~~~~~~~|~~otherwise~~=~~go~1\\
+\texfamily ~~~~{\bfseries where}~go~i~~=~~{\bfseries let}~(j,r)~=~toRgsN~b~n~i~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~head~r~\char'32~0~{\bfseries then}~[]~{\bfseries else}~r~:~go~(j+1)
+\end{tabbing}
 
 Note that we jump over numbers that do not obey
-the restrictions: we continue always with \ensuremath{\Varid{go}} applied to $j$, 
-the first return value of \ensuremath{\Varid{toRgsN}}.
+the restrictions: we continue always with \text{\texfamily go} applied to $j$, 
+the first return value of \text{\texfamily toRgsN}.
 $j$ does not necessarily equal $i$;
 it depends on how many numbers have been ignored
-by \ensuremath{\Varid{toRgs}} because they did not obey the restrictions.
+by \text{\texfamily toRgs} because they did not obey the restrictions.
 When we call countRgs on 3, the numbers of partitions we want to have,
 and 4, the number of elements in the original set,
 we get the following \acronym{rgs}:
 
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1},\mathrm{2}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{0},\mathrm{2}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{2}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{0}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{2}\mskip1.5mu]},
+\text{\texfamily [0,0,1,2]}\\
+\text{\texfamily [0,1,0,2]}\\
+\text{\texfamily [0,1,1,2]}\\
+\text{\texfamily [0,1,2,0]}\\
+\text{\texfamily [0,1,2,1]}\\
+\text{\texfamily [0,1,2,2]},
 
 which correspond to the partitionings of $\lbrace 1,2,3,4\rbrace$:
 
@@ -5114,50 +4163,15 @@ $\lbrace 1  \rbrace, \lbrace 2  \rbrace, \lbrace 3,4\rbrace$.
 
 This analogy between \acronym{rgs} and partitions is implemented as:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{30E}{@{}l@{}}%
-\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{rgs2set}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Int}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{rgs2set}\;[\mskip1.5mu \mskip1.5mu]\;\anonymous \;{}\<[17]%
-\>[17]{}\Varid{ps}{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{ps}{}\<[E]%
-\\
-\>[3]{}\Varid{rgs2set}\;\anonymous \;{}\<[14]%
-\>[14]{}[\mskip1.5mu \mskip1.5mu]\;\Varid{ps}{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{ps}{}\<[E]%
-\\
-\>[3]{}\Varid{rgs2set}\;(\Varid{r}\mathbin{:}\Varid{rs})\;(\Varid{x}\mathbin{:}\Varid{xs})\;\Varid{ps}{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{rgs2set}\;\Varid{rs}\;\Varid{xs}\;(\Varid{ins}\;\Varid{r}\;\Varid{x}\;\Varid{ps}){}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{ins}\;\anonymous \;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\bot {}\<[E]%
-\\
-\>[12]{}\Varid{ins}\;\mathrm{0}\;\Varid{p}\;(\Varid{z}\mathbin{:}\Varid{zs}){}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}(\Varid{p}\mathbin{:}\Varid{z})\mathbin{:}\Varid{zs}{}\<[E]%
-\\
-\>[12]{}\Varid{ins}\;\Varid{i}\;\Varid{p}\;(\Varid{z}\mathbin{:}\Varid{zs}){}\<[30]%
-\>[30]{}\mathrel{=}{}\<[30E]%
-\>[33]{}\Varid{z}\mathbin{:}\Varid{ins}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{p}\;\Varid{zs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~rgs2set~::~({\itshape Eq}~a)~=>~[{\itshape Int}]~\char'31~[a]~\char'31~[[a]]~\char'31~[[a]]\\
+\texfamily ~~rgs2set~[]~\char95 ~~ps~~~~~~~~~~~=~~ps\\
+\texfamily ~~rgs2set~\char95 ~~[]~ps~~~~~~~~~~~=~~ps\\
+\texfamily ~~rgs2set~(r:rs)~(x:xs)~ps~~~=~~rgs2set~rs~xs~(ins~r~x~ps)\\
+\texfamily ~~~~{\bfseries where}~~ins~\char95 ~\char95 ~[]~~~~~~~~=~~undefined\\
+\texfamily ~~~~~~~~~~~ins~0~p~(z:zs)~~~~=~~(p:z)~:~zs\\
+\texfamily ~~~~~~~~~~~ins~i~p~(z:zs)~~~~=~~z~:~ins~(i-1)~p~zs~
+\end{tabbing}
 
 The function receives three arguments:
 The \acronym{rgs}, the original set we want to partition
@@ -5166,7 +4180,7 @@ should contain $k$ empty lists
 with $k$ the number of partitions we want to obtain. 
 (This pre-condition, actually, is not enforced in this code.)
 Note that the logic of using $k$ empty lists is very similar 
-to the trick we used in \ensuremath{\Varid{twoParatitions}} above.
+to the trick we used in \text{\texfamily twoParatitions} above.
 
 When we have exhausted either the \acronym{rgs} or
 the original set, the result is just $ps$,
@@ -5179,71 +4193,28 @@ to the current position of the \acronym{rgs}
 to the partition that, in its turn, corresponds
 to the digit of the \acronym{rgs} at this position.
 If the digit is 0, we just insert the element into the first list,
-otherwise we recurse (on \ensuremath{\Varid{ins}}) 
+otherwise we recurse (on \text{\texfamily ins}) 
 decrementing the digit by 1.
-Note that \ensuremath{\Varid{ins}} is \ensuremath{\bot } for the case
+Note that \text{\texfamily ins} is \text{\texfamily undefined} for the case
 that the result set is empty before we reach 0.
 This, obviously, would hint to an erroneous \acronym{rgs}
 and, hence, to a coding error.
 
 We now can put everything together:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{21E}{@{}l@{}}%
-\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{22E}{@{}l@{}}%
-\column{23}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{23E}{@{}l@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{41}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{41E}{@{}l@{}}%
-\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{nPartitions}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{nPartitions}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{nPartitions}\;\mathrm{1}\;\Varid{xs}{}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}[\mskip1.5mu [\mskip1.5mu \Varid{xs}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{nPartitions}\;\Varid{k}\;\Varid{xs}{}\<[22]%
-\>[22]{}\mid {}\<[22E]%
-\>[25]{}\Varid{k}\geq \Varid{length}\;\Varid{xs}{}\<[41]%
-\>[41]{}\mathrel{=}{}\<[41E]%
-\>[44]{}[\mskip1.5mu [\mskip1.5mu [\mskip1.5mu \Varid{x}\mskip1.5mu]\mid \Varid{x}\leftarrow \Varid{xs}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[22]{}\mid {}\<[22E]%
-\>[25]{}\Varid{otherwise}{}\<[41]%
-\>[41]{}\mathrel{=}{}\<[41E]%
-\>[44]{}\Varid{go}\;(\Varid{countRgs}\;\Varid{k}\;(\Varid{length}\;\Varid{xs})){}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]{}\<[23]%
-\>[23]{}\mathrel{=}{}\<[23E]%
-\>[26]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;(\Varid{r}\mathbin{:}\Varid{rs}){}\<[23]%
-\>[23]{}\mathrel{=}{}\<[23E]%
-\>[26]{}\Varid{rgs2set}\;\Varid{r}\;\Varid{xs}\;(\Varid{take}\;\Varid{k}\;(\Varid{repeat}\;[\mskip1.5mu \mskip1.5mu]))\mathbin{:}\Varid{go}\;\Varid{rs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~nPartitions~::~({\itshape Eq}~a)~=>~{\itshape Int}~\char'31~[a]~\char'31~[[[a]]]\\
+\texfamily ~~nPartitions~\char95 ~[]~~=~~[]\\
+\texfamily ~~nPartitions~1~xs~~=~~[[xs]]\\
+\texfamily ~~nPartitions~k~xs~~~|~~k~\char'35~length~xs~~=~~[[[x]~|~x~\char'06~xs]]\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~~~~~~=~~go~(countRgs~k~(length~xs))\\
+\texfamily ~~~~{\bfseries where}~~go~[]~~~~~~=~~[]\\
+\texfamily ~~~~~~~~~~~go~(r:rs)~~=~~rgs2set~r~xs~(take~k~(repeat~[]))~:~go~rs
+\end{tabbing}
 
-The function \ensuremath{\Varid{nPartitions}} receives 
+The function \text{\texfamily nPartitions} receives 
 the number of partitions we would like to have, $k$,
-and the original set, \ensuremath{\Varid{xs}}.
+and the original set, \text{\texfamily xs}.
 If the set is empty, the result is empty, too.
 If we just want one partition, we return the set as its only partition.
 If $k$ equals or exceeds the size of the set,
@@ -5251,19 +4222,19 @@ we just return each element in its own set.
 (We could return an error for the case that $k$ exceeds the size
 of the set, but, for sake of simplicity, we allow this case, 
 returning an incomplete result.)
-Otherwise, we call \ensuremath{\Varid{countRgs}}
-and apply \ensuremath{\Varid{rgs2set}} to all elements of the result.
-The set of empty lists we need to start with \ensuremath{\Varid{rgs2set}}
-is created by \ensuremath{\Varid{repeat}\;[\mskip1.5mu \mskip1.5mu]} which creates an infinite list
-containing the empty list -- \ensuremath{[\mskip1.5mu [\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mskip1.5mu],\mathbin{...}\mskip1.5mu]} --
+Otherwise, we call \text{\texfamily countRgs}
+and apply \text{\texfamily rgs2set} to all elements of the result.
+The set of empty lists we need to start with \text{\texfamily rgs2set}
+is created by \text{\texfamily repeat\Sp []} which creates an infinite list
+containing the empty list -- \text{\texfamily [[],[],[],...]} --
 from which we just take $k$, \ie\ the number of partitions.
-The call \ensuremath{\Varid{nPartitions}\;\mathrm{2}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} would
+The call \text{\texfamily nPartitions\Sp 2\Sp [1,2,3]} would
 yield the expected result of all possibilities
-to partition \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3}\mskip1.5mu]} in 2 subsets:
+to partition \text{\texfamily [1,2,3]} in 2 subsets:
 
-\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{2}\mskip1.5mu]}\\
-\ensuremath{[\mskip1.5mu \mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{3},\mathrm{2}\mskip1.5mu]}.
+\text{\texfamily [2,1],[3]}\\
+\text{\texfamily [3,1],[2]}\\
+\text{\texfamily [1],[3,2]}.
 
 This result corresponds to the \acronym{rgs}:
 
@@ -5272,7 +4243,7 @@ $010$ and \\
 $011$.
 
 The order of elements within partitions is explained by the fact
-that \ensuremath{\Varid{ins}} (in \ensuremath{\Varid{rgs2set}}) adds new elements using ``\ensuremath{\mathbin{:}}'' --
+that \text{\texfamily ins} (in \text{\texfamily rgs2set}) adds new elements using ``\text{\texfamily :}'' --
 the element that was first inserted into the list
 is therefore the last one in the resulting partition.
 
@@ -5289,9 +4260,9 @@ the mathematically natural question occurs
 of how many partitions there are for a set of size $n$.
 Well, we have a tool to try that out.
 The following -- \speech{er} -- triangle 
-shows results of calls of \ensuremath{\Varid{nPartitions}}.
+shows results of calls of \text{\texfamily nPartitions}.
 Each line corresponds to the call 
-\ensuremath{[\mskip1.5mu \Varid{length}\;(\Varid{nPartitions}\;\Varid{k}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu])\mid \Varid{k}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]},
+\text{\texfamily [length\Sp (nPartitions\Sp k\Sp [1..n])\Sp |\Sp k\Sp \char'06\Sp [1..n]]},
 where $n$ starts with 1 at the top of the triangle
 and is counted up until 7 at its bottom.
 
@@ -5341,56 +4312,23 @@ resembles Pascal's rule:
 
 This translates into Haskell as:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{18E}{@{}l@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{32E}{@{}l@{}}%
-\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{stirling2}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling2}\;\mathrm{0}\;\anonymous {}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling2}\;\anonymous \;\mathrm{0}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling2}\;\mathrm{1}\;\mathrm{1}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling2}\;\Varid{n}\;\Varid{k}{}\<[18]%
-\>[18]{}\mid {}\<[18E]%
-\>[21]{}\Varid{k}\mathbin{>}\Varid{n}{}\<[32]%
-\>[32]{}\mathrel{=}{}\<[32E]%
-\>[35]{}\mathrm{0}{}\<[E]%
-\\
-\>[18]{}\mid {}\<[18E]%
-\>[21]{}\Varid{otherwise}{}\<[32]%
-\>[32]{}\mathrel{=}{}\<[32E]%
-\>[35]{}\Varid{k}\mathbin{*}{}\<[40]%
-\>[40]{}(\Varid{stirling2}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{k})\mathbin{+}{}\<[E]%
-\\
-\>[40]{}(\Varid{stirling2}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{k}\mathbin{-}\mathrm{1})){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~stirling2~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~stirling2~0~\char95 ~~=~~0\\
+\texfamily ~~stirling2~\char95 ~0~~=~~0\\
+\texfamily ~~stirling2~1~1~~=~~1\\
+\texfamily ~~stirling2~n~k~~|~~k~>~n~~~~~~=~~0\\
+\texfamily ~~~~~~~~~~~~~~~~~|~~otherwise~~=~~k~*~~(stirling2~(n-1)~k)~+\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(stirling2~(n-1)~(k-1))
+\end{tabbing}
 
 The code is almost a one-to-one translation
 of the mathematical formulation.
 However, there is an extra line, namely
-the base case \ensuremath{\Varid{stirling2}\;\anonymous \;\mathrm{0}\mathrel{=}\mathrm{0}}.
+the base case \text{\texfamily stirling2\Sp \char95 \Sp 0\Sp =\Sp 0}.
 This base case must be introduced to avoid
 that we go below zero for $k$ with the rule part
-\ensuremath{\Varid{stirling2}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{k}\mathbin{-}\mathrm{1})}.
+\text{\texfamily stirling2\Sp (n-1)\Sp (k-1)}.
 The natural numbers are not defined for the range
 less than zero and so we have to stop here explicitly.
 
@@ -5516,102 +4454,57 @@ Therefore, not all permutations are relevant,
 but only those that change the order after the first element.
 An orbit permutating function aware of this peculiarity is:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{22E}{@{}l@{}}%
-\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{27}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{27E}{@{}l@{}}%
-\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{permOrbits}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Perm}\;\Varid{a}\to [\mskip1.5mu \Conid{Perm}\;\Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{permOrbits}\;[\mskip1.5mu \mskip1.5mu]{}\<[22]%
-\>[22]{}\mathrel{=}{}\<[22E]%
-\>[25]{}[\mskip1.5mu [\mskip1.5mu \mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{permOrbits}\;(\Varid{o}\mathbin{:}\Varid{oo}){}\<[22]%
-\>[22]{}\mathrel{=}{}\<[22E]%
-\>[25]{}\Varid{concat}\;[\mskip1.5mu \Varid{map}\;(\mathbin{:}\Varid{x})\;(\Varid{oPerms}\;\Varid{o})\mid \Varid{x}\leftarrow \Varid{permOrbits}\;\Varid{oo}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{oPerms}\;[\mskip1.5mu \mskip1.5mu]{}\<[27]%
-\>[27]{}\mathrel{=}{}\<[27E]%
-\>[30]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{oPerms}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[27]%
-\>[27]{}\mathrel{=}{}\<[27E]%
-\>[30]{}[\mskip1.5mu \Varid{x}\mathbin{:}\Varid{ps}\mid \Varid{ps}\leftarrow \Varid{perms}\;\Varid{xs}\mskip1.5mu]{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~permOrbits~::~({\itshape Eq}~a)~=>~{\itshape Perm}~a~\char'31~[{\itshape Perm}~a]\\
+\texfamily ~~permOrbits~[]~~~~~~=~~[[]]\\
+\texfamily ~~permOrbits~(o:oo)~~=~~concat~[map~(:x)~(oPerms~o)~|~x~\char'06~permOrbits~oo]~\\
+\texfamily ~~~~{\bfseries where}~~oPerms~[]~~~~~~=~~[]\\
+\texfamily ~~~~~~~~~~~oPerms~(x:xs)~~=~~[x:ps~|~ps~\char'06~perms~xs]~
+\end{tabbing}
 
 This function just passes through all orbits
 of the input permutation
-creating permutations of each one using \ensuremath{\Varid{oPerms}}.
-It looks a bit weird that we do not just use \ensuremath{\Varid{map}}
+creating permutations of each one using \text{\texfamily oPerms}.
+It looks a bit weird that we do not just use \text{\texfamily map}
 to create that result, but a list comprehension
-to which we even further apply \ensuremath{\Varid{concat}}.
-However, \ensuremath{\Varid{map}} does not yield the desired result.
-\ensuremath{\Varid{map}} would just create a list of permutated orbits --
+to which we even further apply \text{\texfamily concat}.
+However, \text{\texfamily map} does not yield the desired result.
+\text{\texfamily map} would just create a list of permutated orbits --
 but we want to obtain complete cycles each of which
 may consist of more than one orbit.
 For this reason, we create permutations of the head
 and insert all permutations of the head to all results
-of the recursion of \ensuremath{\Varid{permOrbits}}.
+of the recursion of \text{\texfamily permOrbits}.
 
 The function we use for creating permutations of orbits
-is \ensuremath{\Varid{oPerms}}, which applies
-\ensuremath{\Varid{perms}}, all permutations of a list,
+is \text{\texfamily oPerms}, which applies
+\text{\texfamily perms}, all permutations of a list,
 to the tail of the input list.
 The head of the list, hence, remains always the same.
-For instance, \ensuremath{\Varid{oPerms}\;[\mskip1.5mu \mathrm{3},\mathrm{4}\mskip1.5mu]} is just \ensuremath{[\mskip1.5mu \mathrm{3},\mathrm{4}\mskip1.5mu]}.
-\ensuremath{\Varid{oPerms}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{5}\mskip1.5mu]}, however, yields \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{5}\mskip1.5mu]} and \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{2}\mskip1.5mu]}.
+For instance, \text{\texfamily oPerms\Sp [3,\Sp 4]} is just \text{\texfamily [3,4]}.
+\text{\texfamily oPerms\Sp [1,2,5]}, however, yields \text{\texfamily [1,2,5]} and \text{\texfamily [1,5,2]}.
 
 Now, for one possible cycle, we can just apply
-all permutations resulting from \ensuremath{\Varid{permOrbits}}:
+all permutations resulting from \text{\texfamily permOrbits}:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{permsOfCycle}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Perm}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{permsOfCycle}\;\Varid{os}\;\Varid{xs}\mathrel{=}[\mskip1.5mu \Varid{permute}\;\Varid{o}\;\Varid{xs}\mid \Varid{o}\leftarrow \Varid{permOrbits}\;\Varid{os}\mskip1.5mu]{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~permsOfCycle~::~({\itshape Eq}~a)~=>~{\itshape Perm}~a~\char'31~[a]~\char'31~[[a]]\\
+\texfamily ~~permsOfCycle~os~xs~=~[permute~o~xs~|~o~\char'06~permOrbits~os]
+\end{tabbing}
 
 This function creates all permutations that are possible
 given one partitioning of the input set.
 We now map this function on all possible partitionings
 with $k$ subsets:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{permsWithCycles}\mathbin{::}(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{permsWithCycles}\;\Varid{k}\;\Varid{xs}\mathrel{=}\Varid{concat}\;[\mskip1.5mu {}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{permsOfCycle}\;\Varid{x}\;\Varid{xs}\mid \Varid{x}\leftarrow \Varid{nPartitions}\;\Varid{k}\;\Varid{xs}\mskip1.5mu]{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~permsWithCycles~::~({\itshape Eq}~a)~=>~{\itshape Int}~\char'31~[a]~\char'31~[[a]]\\
+\texfamily ~~permsWithCycles~k~xs~=~concat~[\\
+\texfamily ~~~~permsOfCycle~x~xs~|~x~\char'06~nPartitions~k~xs]
+\end{tabbing}
 
 Applied on sets with $n$ elements, for $n = 1 \dots  7$,
-and $k = 1 \dots n$, \ensuremath{\Varid{permsWithCycles}} yields results of length:
+and $k = 1 \dots n$, \text{\texfamily permsWithCycles} yields results of length:
 
 \begin{tabular}{l c c c c c c c c c c c c c c c c c c c c}
 1 &   &   &   &   &    &    &    &     &     &   1 &     &     &    &    &    &   &   &   &   &  \\
@@ -5648,44 +4541,15 @@ and can be calculated as
 
 In Haskell, this would be:
 
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{18E}{@{}l@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{43}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{stirling1}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling1}\;\mathrm{0}\;\anonymous {}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling1}\;\anonymous \;\mathrm{0}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling1}\;\mathrm{1}\;\mathrm{1}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[18E]%
-\>[21]{}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{stirling1}\;\Varid{n}\;\Varid{k}{}\<[18]%
-\>[18]{}\mid {}\<[18E]%
-\>[21]{}\Varid{k}\mathbin{>}\Varid{n}{}\<[32]%
-\>[32]{}\mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[18]{}\mid {}\<[18E]%
-\>[21]{}\Varid{otherwise}{}\<[32]%
-\>[32]{}\mathrel{=}(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{*}{}\<[43]%
-\>[43]{}(\Varid{stirling1}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{k})\mathbin{+}{}\<[E]%
-\\
-\>[43]{}(\Varid{stirling1}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{k}\mathbin{-}\mathrm{1})){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+~~stirling1~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~stirling1~0~\char95 ~~=~~0\\
+\texfamily ~~stirling1~\char95 ~0~~=~~0\\
+\texfamily ~~stirling1~1~1~~=~~1\\
+\texfamily ~~stirling1~n~k~~|~~k~>~n~~~~~~=~0\\
+\texfamily ~~~~~~~~~~~~~~~~~|~~otherwise~~=~(n-1)~*~~(stirling1~(n-1)~k)~+~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(stirling1~(n-1)~(k-1))
+\end{tabbing}
 
 We have seen that the sum of all Stirling numbers of the second kind 
 in one row, \ie\ $\sum_{k=1}^{n}{\stirlingTwo{n}{k}}$,
@@ -5729,23 +4593,12 @@ So, we will have to come back to this topic later.
 
 \section{Eulerian Numbers}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Eulerian}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
-\\
-\>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{tabbing}\texfamily
+{\bfseries module}~{\itshape Eulerian}\\
+\texfamily {\bfseries where}\\
+\texfamily ~~{\bfseries import}~{\itshape Natural}\\
+\texfamily ~~{\bfseries import}~{\itshape Fact}
+\end{tabbing}
 }
 
 \ignore{$\eulerianOne{n}{k}$}
@@ -5754,12 +4607,12 @@ So, we will have to come back to this topic later.
 
 When we discussed Haskell, we studied a beautiful
 sorting algorithm, Hoare's \term{quicksort}.
-We already mentioned that \ensuremath{\Varid{quicksort}}
+We already mentioned that \text{\texfamily quicksort}
 is not the best algorithm in practice 
 and it is this question
 to which we are coming back now.
 
-The reason why \ensuremath{\Varid{quicksort}} is not optimal is
+The reason why \text{\texfamily quicksort} is not optimal is
 that it looks at the world in black and white:
 a sequence is either sorted or it is not.
 But reality is not like this.
@@ -5798,49 +4651,16 @@ and close to order.
 A sorting algorithm that exploits this
 pre-existing order in any input is
 \term{mergesort}. The underlying idea
-of \ensuremath{\Varid{mergesort}} is to merge two ordered lists.
+of \text{\texfamily mergesort} is to merge two ordered lists.
 This can be implemented in Haskell simply as
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{16E}{@{}l@{}}%
-\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{37}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{37E}{@{}l@{}}%
-\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{43}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{43E}{@{}l@{}}%
-\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{merge}\mathbin{::}(\Conid{Ord}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{merge}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{xs}{}\<[16]%
-\>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{merge}\;\Varid{xs}\;[\mskip1.5mu \mskip1.5mu]{}\<[16]%
-\>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{merge}\;(\Varid{x}\mathbin{:}\Varid{xs})\;(\Varid{y}\mathbin{:}\Varid{ys}){}\<[24]%
-\>[24]{}\mid \Varid{x}\leq \Varid{y}{}\<[37]%
-\>[37]{}\mathrel{=}{}\<[37E]%
-\>[40]{}\Varid{x}{}\<[43]%
-\>[43]{}\mathbin{:}{}\<[43E]%
-\>[46]{}\Varid{merge}\;\Varid{xs}\;(\Varid{y}\mathbin{:}\Varid{ys}){}\<[E]%
-\\
-\>[24]{}\mid \Varid{otherwise}{}\<[37]%
-\>[37]{}\mathrel{=}{}\<[37E]%
-\>[40]{}\Varid{y}{}\<[43]%
-\>[43]{}\mathbin{:}{}\<[43E]%
-\>[46]{}\Varid{merge}\;(\Varid{x}\mathbin{:}\Varid{xs})\;\Varid{ys}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~merge~::~({\itshape Ord}~a)~=>~[a]~\char'31~[a]~\char'31~[a]\\
+\texfamily ~~merge~[]~xs~~=~~xs\\
+\texfamily ~~merge~xs~[]~~=~~xs\\
+\texfamily ~~merge~(x:xs)~(y:ys)~~|~x~\char'34~y~~~~~=~~x~~:~~merge~xs~(y:ys)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~|~otherwise~~=~~y~~:~~merge~(x:xs)~ys
+\end{tabbing}
 \end{minipage}
 
 We first treat the base cases
@@ -5850,75 +4670,38 @@ Then we compare the heads of the lists.
 The smaller one goes to the head of the merged list
 and we recurse with what remains.
 
-We now want to use \ensuremath{\Varid{merge}} on an unordered,
+We now want to use \text{\texfamily merge} on an unordered,
 that is to say, incompletely ordered list.
 Therefore, we split the input into a list
 of ordered sublists. 
-Ordered sublists are often referred to as \ensuremath{\Varid{run}}s.
+Ordered sublists are often referred to as \text{\texfamily run}s.
 The positions where one ordered list ends
-and another one begins are called \ensuremath{\Varid{stepdown}}s,
+and another one begins are called \text{\texfamily stepdown}s,
 reflecting the idea that the sequence of 
 increasing elements is interrupted by stepping
 down to a smaller element.
 Here is a Haskell function that splits a list
 into runs:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{21E}{@{}l@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{26E}{@{}l@{}}%
-\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{runs}\mathbin{::}(\Conid{Ord}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{runs}\;[\mskip1.5mu \mskip1.5mu]{}\<[12]%
-\>[12]{}\mathrel{=}{}\<[15]%
-\>[15]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{runs}\;\Varid{xs}{}\<[12]%
-\>[12]{}\mathrel{=}{}\<[15]%
-\>[15]{}\mathbf{let}\;(\Varid{r},\Varid{zs})\mathrel{=}\Varid{run}\;\Varid{xs}\;\mathbf{in}\;\Varid{r}\mathbin{:}\Varid{runs}\;\Varid{zs}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{run}\;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}([\mskip1.5mu \mskip1.5mu],[\mskip1.5mu \mskip1.5mu]){}\<[E]%
-\\
-\>[12]{}\Varid{run}\;[\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}{}\<[21E]%
-\>[24]{}([\mskip1.5mu \Varid{x}\mskip1.5mu],[\mskip1.5mu \mskip1.5mu]){}\<[E]%
-\\
-\>[12]{}\Varid{run}\;(\Varid{x}\mathbin{:}\Varid{y}\mathbin{:}\Varid{zs}){}\<[26]%
-\>[26]{}\mid {}\<[26E]%
-\>[29]{}\Varid{x}\mathbin{>}\Varid{y}{}\<[40]%
-\>[40]{}\mathrel{=}([\mskip1.5mu \Varid{x}\mskip1.5mu],\Varid{y}\mathbin{:}\Varid{zs}){}\<[E]%
-\\
-\>[26]{}\mid {}\<[26E]%
-\>[29]{}\Varid{otherwise}{}\<[40]%
-\>[40]{}\mathrel{=}\mathbf{let}\;(\Varid{r},\Varid{ys})\mathrel{=}\Varid{run}\;(\Varid{y}\mathbin{:}\Varid{zs})\;\mathbf{in}\;(\Varid{x}\mathbin{:}\Varid{r},\Varid{ys}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~runs~::~({\itshape Ord}~a)~=>~[a]~\char'31~[[a]]\\
+\texfamily ~~runs~[]~~=~~[]\\
+\texfamily ~~runs~xs~~=~~{\bfseries let}~(r,zs)~=~run~xs~{\bfseries in}~r~:~runs~zs\\
+\texfamily ~~~~{\bfseries where}~~run~[]~~~=~~([],~[])\\
+\texfamily ~~~~~~~~~~~run~[x]~~=~~([x],[])\\
+\texfamily ~~~~~~~~~~~run~(x:y:zs)~~|~~x~>~y~~~~~~=~([x],y:zs)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~{\bfseries let}~(r,ys)~=~run~(y:zs)~{\bfseries in}~(x:r,ys)
+\end{tabbing}
 \end{minipage}
 
 The function applied to the empty list
 just yields the empty list. 
-Applied to a non-empty list is calls the helper function \ensuremath{\Varid{run}}
-that returns a tuple consisting of two lists of \ensuremath{\Varid{a}}s. 
+Applied to a non-empty list is calls the helper function \text{\texfamily run}
+that returns a tuple consisting of two lists of \text{\texfamily a}s. 
 The first element is then the head of the list
-resulting from \ensuremath{\Varid{runs}} applied to the second list.
+resulting from \text{\texfamily runs} applied to the second list.
 
-The helper function \ensuremath{\Varid{run}} applied on the empty list
+The helper function \text{\texfamily run} applied on the empty list
 yields a tuple of twice the empty list.
 Applied to a list containing only one element,
 it yield a tuple containing this list and the empty list.
@@ -5929,46 +4712,46 @@ $y$ goes to the rest of the list.
 This is a stepdown: the first element $x$ is greater than 
 its successor $y$
 and, hence, the natural order of the sequence is violated.
-Otherwise, we continue with \ensuremath{\Varid{y}\mathbin{:}\Varid{zs}} and insert $x$
+Otherwise, we continue with \text{\texfamily y:zs} and insert $x$
 as the head of the resulting $r$, the first of the tuple.
 This is the case, where the run continues.
 
 Let us look at an example: the permutation
 we already used above $1,3,4,2,5$.
-When we call \ensuremath{\Varid{run}} for the first time, we have:
+When we call \text{\texfamily run} for the first time, we have:
 
-\ensuremath{\Varid{run}\;(\mathrm{1}\mathbin{:}\mathrm{3}\mathbin{:}[\mskip1.5mu \mathrm{4},\mathrm{2},\mathrm{5}\mskip1.5mu])}
+\text{\texfamily run\Sp (1:3:[4,2,5])}
 
-and we enter the \ensuremath{\Varid{otherwise}} alternative with $x=1$:
+and we enter the \text{\texfamily otherwise} alternative with $x=1$:
 
-\ensuremath{\Varid{run}\;(\mathrm{3}\mathbin{:}\mathrm{4}\mathbin{:}[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu])}.
+\text{\texfamily run\Sp (3:4:[2,5])}.
 
-We again enter \ensuremath{\Varid{otherwise}}, this time $x=3$:
+We again enter \text{\texfamily otherwise}, this time $x=3$:
 
-\ensuremath{\Varid{run}\;(\mathrm{4}\mathbin{:}\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{5}\mskip1.5mu])}.
+\text{\texfamily run\Sp (4:2:[5])}.
 
 But this time we have $4 > 2$ and enter
 the first branch, that is we yield
 
-\ensuremath{([\mskip1.5mu \mathrm{4}\mskip1.5mu],\mathrm{2}\mathbin{:}[\mskip1.5mu \mathrm{5}\mskip1.5mu])}.
+\text{\texfamily ([4],2:[5])}.
 
 Going backwards, we see:
 
-\ensuremath{(\mathrm{3}\mathbin{:}[\mskip1.5mu \mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu])}\\
-\ensuremath{(\mathrm{1}\mathbin{:}[\mskip1.5mu \mathrm{3},\mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu])},
+\text{\texfamily (3:[4],[2,5])}\\
+\text{\texfamily (1:[3,4],[2,5])},
 
 which finally appears as result
-of the first call to \ensuremath{\Varid{run}} in \ensuremath{\Varid{runs}},
-which leads to \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{4}\mskip1.5mu]\mathbin{:}\Varid{runs}\;[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu]}.
-\ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu]} is now handled in the same way
-and we obtain the overall result \ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{5}\mskip1.5mu]\mskip1.5mu]}.
+of the first call to \text{\texfamily run} in \text{\texfamily runs},
+which leads to \text{\texfamily [1,3,4]\Sp :\Sp runs\Sp [2,5]}.
+\text{\texfamily [2,5]} is now handled in the same way
+and we obtain the overall result \text{\texfamily [[1,3,4],[2,5]]}.
 This way, thee entire list is split into two runs.
 
 When we look at the other example,
 the permutation that was closer to disorder,
 there are more runs: $5|24|3|1$,
 which is the proper mathematical notation
-for the list \ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{5}\mskip1.5mu],[\mskip1.5mu \mathrm{2},\mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+for the list \text{\texfamily [[5],[2,4],[3],[1]]}
 consisting of four runs.
 If we reverse the list, however,
 the number of runs reduces and 
@@ -6002,131 +4785,86 @@ the algorithm is still good, \viz\ comparable
 to the performance of a cousin of the same size
 without repetitions.
 
-Let us look at an implementation of \ensuremath{\Varid{mergesort}}
+Let us look at an implementation of \text{\texfamily mergesort}
 that exploits order in the input in this sense.
 First, we need a function that merges the runs,
 that is a merge for a list of lists.
-Let us call this function \ensuremath{\Varid{multimerge}}:
+Let us call this function \text{\texfamily multimerge}:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{24E}{@{}l@{}}%
-\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{multimerge}\mathbin{::}(\Conid{Ord}\;\Varid{a})\Rightarrow [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{multimerge}\;[\mskip1.5mu \mskip1.5mu]{}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{multimerge}\;[\mskip1.5mu \Varid{xs}\mskip1.5mu]{}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\Varid{xs}{}\<[E]%
-\\
-\>[3]{}\Varid{multimerge}\;(\Varid{x}\mathbin{:}\Varid{y}\mathbin{:}\Varid{zs}){}\<[24]%
-\>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\Varid{merge}\;(\Varid{merge}\;\Varid{x}\;\Varid{y})\;(\Varid{multimerge}\;\Varid{zs}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~multimerge~::~({\itshape Ord}~a)~=>~[[a]]~\char'31~[a]\\
+\texfamily ~~multimerge~[]~~~~~~~~=~~[]\\
+\texfamily ~~multimerge~[xs]~~~~~~=~~xs\\
+\texfamily ~~multimerge~(x:y:zs)~~=~~merge~(merge~x~y)~(multimerge~zs)
+\end{tabbing}
 \end{minipage}
 
-The function reduces a list of lists of \ensuremath{\Varid{a}}
-to a plain list of \ensuremath{\Varid{a}}.
+The function reduces a list of lists of \text{\texfamily a}
+to a plain list of \text{\texfamily a}.
 For the empty list, it yields the empty list.
 For a list that contains only one single list,
 it yields just that list.
 For a list with more elements,
 it merges the first two lists 
 and merges the resulting list with the list
-that results from \ensuremath{\Varid{multimerging}} the rest.
+that results from \text{\texfamily multimerging} the rest.
 With an example that will become clearer.
 But let us not use the list with two runs,
 because that would not let us see the recursion
-on \ensuremath{\Varid{multimerge}}. Instead, we use the non-optimal
+on \text{\texfamily multimerge}. Instead, we use the non-optimal
 list with four runs.
 We would start with:
 
-\ensuremath{\Varid{multimerge}\;[\mskip1.5mu [\mskip1.5mu \mathrm{5}\mskip1.5mu]\mathbin{:}[\mskip1.5mu \mathrm{2},\mathrm{4}\mskip1.5mu]\mathbin{:}[\mskip1.5mu [\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+\text{\texfamily multimerge\Sp [[5]:[2,4]:[[3],[1]]}
 
 and perform
 
-\ensuremath{\Varid{merge}\;(\Varid{merge}\;[\mskip1.5mu \mathrm{5}\mskip1.5mu]\;[\mskip1.5mu \mathrm{2},\mathrm{4}\mskip1.5mu])\;(\Varid{multimerge}\;[\mskip1.5mu [\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu])},
+\text{\texfamily merge\Sp (merge\Sp [5]\Sp [2,4])\Sp (multimerge\Sp [[3],[1]])},
 
 which is 
 
-\ensuremath{\Varid{merge}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{5}\mskip1.5mu]\;(\Varid{multimerge}\;[\mskip1.5mu [\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu])}
+\text{\texfamily merge\Sp [2,4,5]\Sp (multimerge\Sp [[3],[1]])}
 
-and results in the call to \ensuremath{\Varid{multimerge}}:
+and results in the call to \text{\texfamily multimerge}:
 
-\ensuremath{\Varid{multimerge}\;[\mskip1.5mu [\mskip1.5mu \mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
+\text{\texfamily multimerge\Sp [[3],[1]]}.
 
 This reduces to
 
-\ensuremath{\Varid{merge}\;(\Varid{merge}\;[\mskip1.5mu \mathrm{3}\mskip1.5mu]\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;(\Varid{multimerge}\;[\mskip1.5mu \mskip1.5mu])},
+\text{\texfamily merge\Sp (merge\Sp [3]\Sp [1])\Sp (multimerge\Sp [])},
 
 which is
 
-\ensuremath{\Varid{merge}\;[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu]\;[\mskip1.5mu \mskip1.5mu]},
+\text{\texfamily merge\Sp [1,3]\Sp []},
 
-which, in its turn, is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu]}. 
+which, in its turn, is \text{\texfamily [1,3]}. 
 Going backwards, we obtain
 
-\ensuremath{\Varid{merge}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{5}\mskip1.5mu]\;[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu]},
+\text{\texfamily merge\Sp [2,4,5]\Sp [1,3]},
 
-which is \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}.
+which is \text{\texfamily [1,2,3,4,5]}.
 
 We can now put everything together:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{25E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{mergesort}\mathbin{::}(\Conid{Ord}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[B]{}\Varid{mergesort}\;\Varid{l}\mathrel{=}{}\<[16]%
-\>[16]{}\mathbf{let}\;{}\<[21]%
-\>[21]{}\Varid{rs}{}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}\Varid{runs}\;\Varid{l}{}\<[E]%
-\\
-\>[21]{}\Varid{n'}{}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}\Varid{length}\;\Varid{l}{}\<[E]%
-\\
-\>[21]{}\Varid{n}{}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}\mathbf{if}\;\Varid{even}\;\Varid{n'}\;\mathbf{then}\;\Varid{n'}\;\mathbf{else}\;\Varid{n'}\mathbin{+}\mathrm{1}{}\<[E]%
-\\
-\>[16]{}\hsindent{1}{}\<[17]%
-\>[17]{}\mathbf{in}\;{}\<[21]%
-\>[21]{}\mathbf{if}\;\Varid{length}\;\Varid{rs}\mathbin{>}(\Varid{n}\mathbin{\Varid{`div`}}\mathrm{2})\mathbin{+}\mathrm{1}{}\<[E]%
-\\
-\>[21]{}\mathbf{then}\;\Varid{multimerge}\mathbin{\$}\Varid{runs}\;(\Varid{reverse}\;\Varid{l}){}\<[E]%
-\\
-\>[21]{}\mathbf{else}\;\Varid{multimerge}\;\Varid{rs}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+mergesort~::~({\itshape Ord}~a)~=>~[a]~\char'31~[a]\\
+\texfamily mergesort~l~=~~{\bfseries let}~~rs~~=~~runs~l~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~n'~~=~~length~l\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~n~~~=~~{\bfseries if}~even~n'~{\bfseries then}~n'~{\bfseries else}~n'+1\\
+\texfamily ~~~~~~~~~~~~~~~~{\bfseries in}~~{\bfseries if}~length~rs~>~(n~`div`~2)~+~1~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~{\bfseries then}~multimerge~\$~runs~(reverse~l)~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~{\bfseries else}~multimerge~rs
+\end{tabbing}
 \end{minipage}
 \ignore{$}
 
-We first create the runs for the input list \ensuremath{\Varid{l}}.
-We then compute the length of \ensuremath{\Varid{l}} \ensuremath{\Varid{n'}}.
-If \ensuremath{\Varid{n'}} is not even, we add one,
-just to be sure, we later refer to at least the half of \ensuremath{\Varid{n'}}.
-Then, if the length of the runs is more than half of \ensuremath{\Varid{n}} plus 1,
-then we run \ensuremath{\Varid{multimerge}} on the runs of the reversed input list,
-otherwise, we run \ensuremath{\Varid{multimerge}} on the runs of \ensuremath{\Varid{l}}.
+We first create the runs for the input list \text{\texfamily l}.
+We then compute the length of \text{\texfamily l} \text{\texfamily n'}.
+If \text{\texfamily n'} is not even, we add one,
+just to be sure, we later refer to at least the half of \text{\texfamily n'}.
+Then, if the length of the runs is more than half of \text{\texfamily n} plus 1,
+then we run \text{\texfamily multimerge} on the runs of the reversed input list,
+otherwise, we run \text{\texfamily multimerge} on the runs of \text{\texfamily l}.
 
 There is a well-known mathematical concept 
 that is closely related to the conept of runs:
@@ -6166,7 +4904,7 @@ predecessor.
 
 You perhaps see immediately that Eulerian numbers
 can be used to compute the average running time
-of \ensuremath{\Varid{mergesort}} for input of a given size $n$.
+of \text{\texfamily mergesort} for input of a given size $n$.
 The Eulerian numbers allow us to compute
 the probability of that input having
 1 run, 2 runs, $\dots$, $n$ runs.
@@ -6223,43 +4961,14 @@ to compute the Eulerian numbers, which is
 with $\eulerianOne{0}{m} = \eulerianOne{n}{0} = \eulerianOne{n}{n-1} = 1$.
 In Haskell, this can be implemented as:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{32}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{32E}{@{}l@{}}%
-\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{61}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{eulerian1}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian1}\;\mathrm{0}\;\anonymous {}\<[18]%
-\>[18]{}\mathrel{=}{}\<[21]%
-\>[21]{}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian1}\;\anonymous \;\mathrm{0}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[21]%
-\>[21]{}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian1}\;\Varid{n}\;\Varid{m}{}\<[18]%
-\>[18]{}\mid \Varid{m}\equiv \Varid{n}\mathbin{-}\mathrm{1}{}\<[32]%
-\>[32]{}\mathrel{=}{}\<[32E]%
-\>[35]{}\mathrm{1}{}\<[E]%
-\\
-\>[18]{}\mid \Varid{otherwise}{}\<[32]%
-\>[32]{}\mathrel{=}{}\<[32E]%
-\>[36]{}(\Varid{n}\mathbin{-}\Varid{m})\mathbin{*}\Varid{eulerian1}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{m}\mathbin{-}\mathrm{1}){}\<[E]%
-\\
-\>[32]{}\mathbin{+}{}\<[32E]%
-\>[36]{}(\Varid{m}\mathbin{+}\mathrm{1})\mathbin{*}\Varid{eulerian1}\;(\Varid{n}\mathbin{-}\mathrm{1})\;{}\<[61]%
-\>[61]{}\Varid{m}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~eulerian1~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~eulerian1~0~\char95 ~~=~~1\\
+\texfamily ~~eulerian1~\char95 ~0~~=~~1\\
+\texfamily ~~eulerian1~n~m~~|~m~\char'36~n~-~1~~=~~1\\
+\texfamily ~~~~~~~~~~~~~~~~~|~otherwise~~~=~~~(n-m)~*~eulerian1~(n-1)~(m-1)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+~~~(m+1)~*~eulerian1~(n-1)~~m
+\end{tabbing}
 \end{minipage}
 
 There is also a closed form to compute
@@ -6294,38 +5003,15 @@ hence: $243 - 192 + 15 = 66$.
 It perhaps helps to get the closed form right
 to look at it in Haskell:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{49}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{eu1closed}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{eu1closed}\;\Varid{n}\;\Varid{m}{}\<[18]%
-\>[18]{}\mathrel{=}\Varid{go}\;\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{k}{}\<[18]%
-\>[18]{}\mathrel{=}{}\<[21]%
-\>[21]{}\mathbf{let}\;{}\<[26]%
-\>[26]{}\Varid{a}\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{\uparrow}\Varid{k}{}\<[E]%
-\\
-\>[26]{}\Varid{b}\mathrel{=}\Varid{choose}\;(\Varid{n}\mathbin{+}\mathrm{1})\;\Varid{k}{}\<[E]%
-\\
-\>[26]{}\Varid{c}\mathrel{=}(\Varid{m}\mathbin{+}\mathrm{1}\mathbin{-}\Varid{k})\mathbin{\uparrow}\Varid{n}{}\<[E]%
-\\
-\>[21]{}\mathbf{in}\;(\Varid{a}\mathbin{*}\Varid{b}\mathbin{*}\Varid{c})\mathbin{+}\mathbf{if}\;\Varid{k}\equiv \Varid{m}\;{}\<[49]%
-\>[49]{}\mathbf{then}\;\mathrm{0}{}\<[E]%
-\\
-\>[49]{}\mathbf{else}\;\Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~eu1closed~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~eu1closed~n~m~~=~go~0\\
+\texfamily ~~~~{\bfseries where}~go~k~~~=~~{\bfseries let}~~a~=~(-1)\char94 k\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~b~=~choose~(n+1)~k\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~c~=~(m~+~1~-~k)\char94 n\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~{\bfseries in}~(a~*~b~*~c)~+~{\bfseries if}~k~\char'36~m~~{\bfseries then}~0~\\
+\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~go~(k+1)
+\end{tabbing}
 \end{minipage}
 
 The Eulerian numbers of the second kind 
@@ -6358,25 +5044,12 @@ If $n$ is even, we multiply all even numbers $2\dots n$,
 otherwise, if $n$ is odd, we multiply the odd numbers
 $1\dots n$. In Haskell, this may look like this:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{doublefac}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{doublefac}\;\mathrm{0}{}\<[16]%
-\>[16]{}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{doublefac}\;\mathrm{1}{}\<[16]%
-\>[16]{}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{doublefac}\;\Varid{n}{}\<[16]%
-\>[16]{}\mathrel{=}\Varid{n}\mathbin{*}\Varid{doublefac}\;(\Varid{n}\mathbin{-}\mathrm{2}){}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~doublefac~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~doublefac~0~~=~1\\
+\texfamily ~~doublefac~1~~=~1\\
+\texfamily ~~doublefac~n~~=~n~*~doublefac~(n~-~2)
+\end{tabbing}
 \end{minipage}
 
 For instance, $5!! = 1 \times 3 \times 5 = 15$
@@ -6434,44 +5107,13 @@ of the second kind recursively:
 with $\eulerianTwo{0}{0} = 1$ and $\eulerianTwo{0}{m} = 0$.
 In Haskell this is:
 
-\begin{minipage}{\textwidth}\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{20E}{@{}l@{}}%
-\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{31E}{@{}l@{}}%
-\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{eulerian2}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Natural}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian2}\;\mathrm{0}\;\mathrm{0}{}\<[18]%
-\>[18]{}\mathrel{=}\mathrm{1}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian2}\;\mathrm{0}\;\anonymous {}\<[18]%
-\>[18]{}\mathrel{=}\mathrm{0}{}\<[E]%
-\\
-\>[3]{}\Varid{eulerian2}\;\Varid{n}\;\Varid{m}{}\<[18]%
-\>[18]{}\mathrel{=}(\mathrm{2}\mathbin{*}\Varid{n}\mathbin{-}\Varid{m}\mathbin{-}\mathrm{1}){}\<[31]%
-\>[31]{}\mathbin{*}{}\<[31E]%
-\>[34]{}\Varid{eulerian2}\;{}\<[45]%
-\>[45]{}(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{m}\mathbin{-}\mathrm{1}){}\<[E]%
-\\
-\>[18]{}\hsindent{2}{}\<[20]%
-\>[20]{}\mathbin{+}{}\<[20E]%
-\>[24]{}(\Varid{m}\mathbin{+}\mathrm{1}){}\<[31]%
-\>[31]{}\mathbin{*}{}\<[31E]%
-\>[34]{}\Varid{eulerian2}\;{}\<[45]%
-\>[45]{}(\Varid{n}\mathbin{-}\mathrm{1})\;{}\<[52]%
-\>[52]{}\Varid{m}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+\begin{minipage}{\textwidth}\begin{tabbing}\texfamily
+~~eulerian2~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Natural}\\
+\texfamily ~~eulerian2~0~0~~=~1\\
+\texfamily ~~eulerian2~0~\char95 ~~=~0\\
+\texfamily ~~eulerian2~n~m~~=~(2*n-m-1)~~*~~eulerian2~~(n-1)~(m-1)\\
+\texfamily ~~~~~~~~~~~~~~~~~~~+~~~(m+1)~~*~~eulerian2~~(n-1)~~m
+\end{tabbing}
 \end{minipage}
 
 The Eulerian numbers, as many other things in mathematics,

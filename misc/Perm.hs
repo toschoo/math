@@ -1,3 +1,4 @@
+{-# LANGUAGE GADTs #-}
 module Perm
 where
 
@@ -193,7 +194,8 @@ where
 
   vector2list :: V.IOVector a -> Int -> IO [a]
   vector2list v n = go 0
-    where go i | i == n    = return []
+    where -- go :: Int -> IO [a]
+          go i | i == n    = return []
                | otherwise = do x <- V.unsafeRead v i
                                 (x:) <$> go (i+1) 
                   

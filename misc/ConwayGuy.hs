@@ -363,6 +363,12 @@ where
                           n = fromIntegral p
                           d = fromIntegral k
                        in r * (n/d)
+
+  ------------------------------------------------------------------------
+  -- Wallis' Product
+  ------------------------------------------------------------------------
+  wallis :: Int -> Double
+  wallis i = 2*product [(2*k*2*k)/((2*k-1)*(2*k+1)) | k <- take i [1..]]
   
   ------------------------------------------------------------------------
   -- Another nice formula: sum of fractions of squares
