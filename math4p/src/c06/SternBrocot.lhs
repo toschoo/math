@@ -566,7 +566,8 @@ we see exactly the $(1,4)(3,6)$ permutation
 we saw above, namely |[0,4,2,6,1,5,3,7]|.
 Applied on a generation from the Calkin-Wilf tree,
 we see the corresponding generation from the 
-Stern-Brocot tree. 
+Stern-Brocot tree.
+
 Let |t = calWiTree (-1) (1%1)|,
 we see for 
 
@@ -854,15 +855,16 @@ We implement this as
   mSterbroctree :: Zahl ->  Natural -> Natural -> 
                             Natural -> Natural -> Ratio -> Tree Ratio
   mSterbroctree 0 _ _ _ _ r  =  Node r []
-  mSterbroctree n a b c d r  =  let  rn  = numerator r
-                                     rd  = denominator r
-                                     k1  = (a+rn) % (b+rd)
-                                     k2  = (c+rn) % (d+rd)
-                                in   if k1 < k2
-                                     then  Node r [  mSterbroctree (n-1) a b rn rd k1,
-                                                     mSterbroctree (n-1) c d rn rd k2]
-                                     else  Node r [  mSterbroctree (n-1) c d rn rd k2,
-                                                     mSterbroctree (n-1) a b rn rd k1]
+  mSterbroctree n a b c d r  =  
+    let  rn  = numerator r
+         rd  = denominator r
+         k1  = (a+rn) % (b+rd)
+         k2  = (c+rn) % (d+rd)
+    in   if k1 < k2
+         then  Node r [  mSterbroctree (n-1) a b rn rd k1,
+                         mSterbroctree (n-1) c d rn rd k2]
+         else  Node r [  mSterbroctree (n-1) c d rn rd k2,
+                         mSterbroctree (n-1) a b rn rd k1]
 \end{code}
 \end{minipage}
 

@@ -17,21 +17,16 @@ where
   -- Gamma Function according to e product formula
   ------------------------------------------------------------------------
   gammae :: Int -> Double -> Double
-  gammae i t = f * go 1 (fromIntegral i)
+  gammae i t = f * product [e**(t/n) * (1+(t/n))**(-1) | n <- [1..m]]
     where f = e**((-1)*gamma*t)/t
-          go n m | n >= m    = 1
-                 | otherwise = e**(t/n)
-                               * (1+(t/n))**(-1)
-                               * go (n+1) m
+          m = fromIntegral (i-1)
 
   ------------------------------------------------------------------------
   -- Gamma Function according to product formula
   ------------------------------------------------------------------------
   gammal :: Int -> Double -> Double
-  gammal i t = (1/t) * go 1 (fromIntegral i)
-    where go n m | n > m = 1
-                 | otherwise = (1+1/n)**t / (1+t/n)
-                               * go (n+1) m
+  gammal i t = (1/t) * product [(1+1/n)**t / (1+t/n) | n <- [1..m]]
+    where m = fromIntegral i
 
   ------------------------------------------------------------------------
   -- Computing pi

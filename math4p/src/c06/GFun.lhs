@@ -166,11 +166,8 @@ We can reformulate this equation in Haskell as:
 \begin{minipage}{\textwidth}
 \begin{code}
   gammal :: Natural -> RealN -> RealN
-  gammal i x = (1/x)*go 1 (fromIntegral i)
-    where go n m  |  n >= m     =  1
-                  |  otherwise  =  (1+1/n)**x 
-                                /  (1+x/n) 
-                                *  go (n+1) m
+  gammal i x = (1/x)*product [(1+1/n)**x / (1+x/n) | n <- [1..m]]
+    where m = fromIntegral i
 \end{code}
 \end{minipage}
 
@@ -286,12 +283,9 @@ may look like:
 \begin{minipage}{\textwidth}
 \begin{code}
   gammae :: Natural -> RealN -> RealN
-  gammae i x = f * go 1 (fromIntegral i)
+  gammae i x = f * product [e**(x/n) * (1+(x/n))**(-1) | n <- [1..m]]
     where  f = e**((-1)*gamma*x)/x
-           go n m  | n >= m     =  1
-                   | otherwise  =  e**(x/n)
-                                *  (1+(x/n))**(-1)
-                                *  go (n+1) m
+           m = fromIntegral (i-1)
 \end{code}
 \end{minipage}
 
@@ -314,10 +308,10 @@ Let us see how many iterations we need to approach 1:
 
 and so on. What about 2?
 
-|gammae 1    1   = 0.15761774...|\\
-|gammae 10   1   = 0.82120772...|\\
-|gammae 100  1   = 0.98022710...|\\
-|gammae 1000 1   = 0.99799833...|
+|gammae 1    2   = 0.15761774...|\\
+|gammae 10   2   = 0.82120772...|\\
+|gammae 100  2   = 0.98022710...|\\
+|gammae 1000 2   = 0.99799833...|
 
 It definitely converges slower than Euler's formula.
 For the remainder of this section, we will therefore stick
