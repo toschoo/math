@@ -325,6 +325,9 @@ The sum of the first $n$ natural numbers in Haskell, hence is:
   natSum = (`div` 2) . evenSum
 \end{code}
 
+\section{Arithmetic and Geometric Series}
+%include Arigeo.lhs
+
 \section{The Fibonacci Sequence}
 %include fib.lhs
 

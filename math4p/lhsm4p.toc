@@ -6,22 +6,23 @@
 \contentsline {section}{\numberline {3.1}What are numbers and what should they be?}{15}
 \contentsline {section}{\numberline {3.2}Peano Numbers}{17}
 \contentsline {section}{\numberline {3.3}Decimal Numbers}{19}
-\contentsline {section}{\numberline {3.4}Multiplication}{31}
+\contentsline {section}{\numberline {3.4}Multiplication}{30}
 \contentsline {section}{\numberline {3.5}Division and the Greatest Common Divisor}{35}
-\contentsline {section}{\numberline {3.6}Powers, Roots and Logarithms}{42}
+\contentsline {section}{\numberline {3.6}Powers, Roots and Logarithms}{41}
 \contentsline {section}{\numberline {3.7}Numbers as Strings}{44}
 \contentsline {section}{\numberline {3.8}$\mathbb {N}$}{50}
 \contentsline {section}{\numberline {3.9}Abstract Algebra}{52}
 \contentsline {chapter}{\numberline {4}Induction, Series, Sets and Combinatorics}{57}
 \contentsline {section}{\numberline {4.1}Logistics}{57}
 \contentsline {section}{\numberline {4.2}Induction}{61}
-\contentsline {section}{\numberline {4.3}The Fibonacci Sequence}{65}
-\contentsline {section}{\numberline {4.4}Factorial}{68}
-\contentsline {section}{\numberline {4.5}Random Permutations}{74}
-\contentsline {section}{\numberline {4.6}Binomial Coefficients}{79}
-\contentsline {section}{\numberline {4.7}Combinatorial Problems with Sets}{89}
-\contentsline {section}{\numberline {4.8}Stirling Numbers}{98}
-\contentsline {section}{\numberline {4.9}Eulerian Numbers}{111}
+\contentsline {section}{\numberline {4.3}Arithmetic and Geometric Series}{65}
+\contentsline {section}{\numberline {4.4}The Fibonacci Sequence}{65}
+\contentsline {section}{\numberline {4.5}Factorial}{68}
+\contentsline {section}{\numberline {4.6}Random Permutations}{74}
+\contentsline {section}{\numberline {4.7}Binomial Coefficients}{79}
+\contentsline {section}{\numberline {4.8}Combinatorial Problems with Sets}{88}
+\contentsline {section}{\numberline {4.9}Stirling Numbers}{98}
+\contentsline {section}{\numberline {4.10}Eulerian Numbers}{111}
 \contentsline {chapter}{\numberline {5}Primes}{119}
 \contentsline {section}{\numberline {5.1}Gaps}{119}
 \contentsline {section}{\numberline {5.2}Finding Primes}{121}
@@ -30,9 +31,9 @@
 \contentsline {section}{\numberline {5.5}Factoring Factorials}{135}
 \contentsline {section}{\numberline {5.6}Arithmetic modulo a Prime}{137}
 \contentsline {section}{\numberline {5.7}Congruence}{149}
-\contentsline {section}{\numberline {5.8}Quadratic Residues}{156}
-\contentsline {section}{\numberline {5.9}Generators and Subgroups}{168}
-\contentsline {section}{\numberline {5.10}Primality Tests}{175}
+\contentsline {section}{\numberline {5.8}Quadratic Residues}{155}
+\contentsline {section}{\numberline {5.9}Generators and Subgroups}{167}
+\contentsline {section}{\numberline {5.10}Primality Tests}{174}
 \contentsline {section}{\numberline {5.11}Primes in Cryptography}{183}
 \contentsline {section}{\numberline {5.12}Open Problems}{194}
 \contentsline {chapter}{\numberline {6}The Inverse Element}{203}
@@ -64,7 +65,7 @@
 \contentsline {section}{\numberline {8.2}Polynomial Arithmetic}{351}
 \contentsline {section}{\numberline {8.3}The Difference Engine}{362}
 \contentsline {section}{\numberline {8.4}Differences and Binomial Coefficients}{372}
-\contentsline {section}{\numberline {8.5}Factorial Polynomials}{381}
+\contentsline {section}{\numberline {8.5}Umbral Calculus}{381}
 \contentsline {section}{\numberline {8.6}Roots}{381}
 \contentsline {section}{\numberline {8.7}Vieta's Formula}{388}
 \contentsline {section}{\numberline {8.8}Factoring Polynomials}{388}
@@ -96,15 +97,15 @@
 \contentsline {section}{\numberline {11.1}Geometry Intuition}{413}
 \contentsline {section}{\numberline {11.2}Projective Geometry}{420}
 \contentsline {section}{\numberline {11.3}EC modulo a Prime}{425}
-\contentsline {section}{\numberline {11.4}The EC Discrete Logarithm Problem}{433}
-\contentsline {section}{\numberline {11.5}EC Diffie-Hellman}{437}
-\contentsline {section}{\numberline {11.6}EC Integrated Encryption Scheme}{442}
-\contentsline {section}{\numberline {11.7}EC Digital Signature Algorithm}{445}
-\contentsline {section}{\numberline {11.8}Cryptoanalysis}{448}
-\contentsline {section}{\numberline {11.9}Mr. Frobenius}{448}
-\contentsline {section}{\numberline {11.10}Mr. Schoof}{448}
-\contentsline {section}{\numberline {11.11}Mr. Elkies and Mr. Aktin}{448}
-\contentsline {section}{\numberline {11.12}EC in Practice}{448}
+\contentsline {section}{\numberline {11.4}The EC Discrete Logarithm Problem}{432}
+\contentsline {section}{\numberline {11.5}EC Diffie-Hellman}{436}
+\contentsline {section}{\numberline {11.6}EC Integrated Encryption Scheme}{441}
+\contentsline {section}{\numberline {11.7}EC Digital Signature Algorithm}{444}
+\contentsline {section}{\numberline {11.8}Cryptoanalysis}{447}
+\contentsline {section}{\numberline {11.9}Mr. Frobenius}{447}
+\contentsline {section}{\numberline {11.10}Mr. Schoof}{447}
+\contentsline {section}{\numberline {11.11}Mr. Elkies and Mr. Aktin}{447}
+\contentsline {section}{\numberline {11.12}EC in Practice}{447}
 \contentsline {chapter}{\numberline {12}Complex Numbers}{449}
 \contentsline {section}{\numberline {12.1}i}{449}
 \contentsline {section}{\numberline {12.2}Complex Numbers}{449}

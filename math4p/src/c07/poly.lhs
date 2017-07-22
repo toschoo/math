@@ -6,7 +6,7 @@
 %include DMachine.lhs
 \section{Differences and Binomial Coefficients}
 %include DiffBinom.lhs
-\section{Factorial Polynomials}
+\section{Umbral Calculus}
 %include FacPoly.lhs
 \section{Roots}
 %include Roots.lhs

@@ -23,6 +23,7 @@ ALL	 = cmds.tex \
 	   src/c02/Group.lhs \
 	   src/c03/induction.lhs \
 	   src/c03/sorter.lhs \
+	   src/c03/Arigeo.lhs \
 	   src/c03/fib.lhs \
 	   src/c03/Fact.lhs \
 	   src/c03/Random.lhs \
@@ -102,7 +103,7 @@ INC = -isrc/c02 \
       -isrc/c07 \
       -iscratchpad
 
-toTex = lhs2TeX --tt
+toTex = lhs2TeX --haskell
 
 m4p.pdf:	m4p.tex $(ALL) 
 		$(toTex) m4p.tex > lhsm4p.tex
