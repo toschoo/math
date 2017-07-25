@@ -30,8 +30,9 @@ arif ns = (*) ((h+l)/2)
 -- Geometric sequence
 ---------------------------------------------------------------------------
 geo :: (Num a, Fractional a) => [a] -> a
-geo [] = 0
-geo ns = (h-h*r^n)/(1-r)
+geo []  = 0
+geo [n] = n
+geo ns  = (h-h*r^n)/(1-r)
   where h = head  ns
         s = head (tail ns)
         r = s/h
@@ -42,8 +43,9 @@ geo ns = (h-h*r^n)/(1-r)
 ---------------------------------------------------------------------------
 geof :: (Num a, Fractional a, Floating a, Num b, Integral b) => 
         [a] -> (b -> a)
-geof [] = \_ -> 0
-geof ns = \n -> (1-h*r^n)/(1-r)
+geof []  = \_ -> 0
+geof [n] = \_ -> n
+geof ns  = \n -> (1-h*r^n)/(1-r)
   where h = head  ns
         s = head (tail ns)
         r = s/h
