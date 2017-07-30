@@ -227,6 +227,13 @@ where
   catalan :: Integer -> Integer
   catalan n = let m = 2*n + 1 in choose m n `div` m
 
+  catalan2 :: Integer -> Integer
+  catalan2 0  = 1
+  catalan2 1  = 1
+  catalan2 n  = tn `div` fn
+    where tn = product [n+2..2*n]
+          fn = product [1..n]
+
   -------------------------------------------------------------------------
   -- Collatz Conjecture
   -------------------------------------------------------------------------

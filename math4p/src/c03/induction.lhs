@@ -100,9 +100,9 @@ that it holds for all numbers we are interested in.
 Formally, we prove, for example, that
 $P(n) \rightarrow P(n+1)$,
 where $+1$ is a very common way to advance.
-With $+$, we actually prove that $P$ holds for all $x > n$.
-But we can use induction also for 
-with functions that advance at a different pace,
+With $+1$, we actually prove that $P$ holds for all $x > n$.
+But we can use induction also with
+functions that advance at a different pace,
 for instance, we might want to prove
 that some property holds for even numbers,
 we would then advance with $+2$.
@@ -114,6 +114,11 @@ is true for the base case
 and, second, that it is still true when advancing
 from a number, for which we know that it is true,
 like the base case, to the next number.
+This is very similar to the structure of recursion
+in Haskell where we usually define a base case
+at which recursion stops and a recursion part.
+In fact, |fold| can be seen as an implementation
+of induction.
 
 For the example of the sum of the odd numbers,
 the base case, $n = 1$, is trivially true,
@@ -258,7 +263,7 @@ like the sum of odd and even for $n$,
 but that is not true.
 Note that the sum of the first $n$ 
 either odd or even numbers 
-is in fact number greater than the first $n$ numbers,
+is in fact much greater than the first $n$ numbers,
 since, when we leave out every second number,
 then the result of counting $n$ numbers is much higher
 than counting all numbers, \eg\
@@ -272,7 +277,7 @@ $\sum_{k=1}^{n}2k$. This formula implies
 that, for each $n$, we take twice $n$.
 The sum of all numbers, in consequence, 
 should be the half of the sum of the even, \ie\ 
-$\sum_{k=1}^{n}{(k)} = \frac{n(n+1)}{2}$,
+$\sum_{k=1}^{n}{k}$ where $k = \frac{n(n+1)}{2}$,
 a formula that is sometimes humorously called
 \term{The Little Gauss}.
 
@@ -280,9 +285,11 @@ Once again, we prove by induction.
 The base case, $n=1$, is trivially true:
 $\sum_{k=1}^{1}{k} = 1$ and
 $\frac{1 * (1 + 1)}{2} = \frac{2}{2} = 1$.
-Now assume that 
+Now, that we have established the base case,
+we can assume that there is a number $n$,
+for which
 $\sum_{k=1}^{n}{k} = \frac{n(n+1)}{2}$
-holds for $n$;
+holds;
 then, we have to prove that
 
 \begin{equation}

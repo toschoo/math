@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  22 JUL 2017 15:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  30 JUL 2017 20:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1116,14 +1116,13 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
 (scrreprt)              by `\normalfont \ttfamily ' on input line 629.
 
-[5]
+[5] [6]
 \openout3 = `lhsinduc.ptb'.
 
- [6]
 \openout3 = `lhsinduc.ptb'.
 
 
-Overfull \hbox (1.58595pt too wide) in paragraph at lines 765--783
+Overfull \hbox (1.58595pt too wide) in paragraph at lines 770--788
 \OT1/cmr/m/n/10.95 These are ob-vi-ously no per-fect squares and, com-pared to 
 the odd num-bers ($1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 4\OML/cmm/m/it/10.
 95 ; \OT1/cmr/m/n/10.95 9\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 16\OML/cmm/m/
@@ -1136,139 +1135,142 @@ it/10.95 ; [] $\OT1/cmr/m/n/10.95 ),
  [8]
 \openout3 = `lhsinduc.ptb'.
 
-\openout3 = `lhsinduc.ptb'.
-
  [9]
-\openout3 = `lhsinduc.ptb'.
+Overfull \hbox (9.19934pt too wide) detected at line 1014
+[]
+ []
 
- (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
-File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-)
 [10] [11]
 \openout3 = `lhsinduc.ptb'.
 
  [12]
 \openout3 = `lhsinduc.ptb'.
 
- [13]
-\openout3 = `lhsinduc.ptb'.
-
- [14]
+ [13] (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
+File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
+) [14]
 \openout3 = `lhsinduc.ptb'.
 
  [15]
 \openout3 = `lhsinduc.ptb'.
 
+ [16]
 \openout3 = `lhsinduc.ptb'.
 
- [16] [17] [18]
+ [17]
 \openout3 = `lhsinduc.ptb'.
 
- [19]
+ [18]
+\openout3 = `lhsinduc.ptb'.
+
+\openout3 = `lhsinduc.ptb'.
+
+ [19] [20] [21]
+\openout3 = `lhsinduc.ptb'.
+
+ [22]
 \openout3 = `lhsinduc.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2228--2253
+Underfull \hbox (badness 10000) in paragraph at lines 2440--2465
 
  []
 
-[20]
+[23]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2353--2385
+Underfull \hbox (badness 10000) in paragraph at lines 2565--2597
 
  []
 
 \openout3 = `lhsinduc.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2396--2453
+Underfull \hbox (badness 10000) in paragraph at lines 2608--2665
 
  []
 
-[21] [22] [23] [24]
-Overfull \hbox (14.41966pt too wide) in paragraph at lines 2820--2832
+[24] [25] [26] [27] [28]
+Overfull \hbox (14.41966pt too wide) in paragraph at lines 3032--3044
 [][] 
  []
 
-[25] [26] [27] [28] [29] [30]
+[29] [30] [31] [32] [33]
 \openout3 = `lhsinduc.ptb'.
 
- [31] [32] [33]
+ [34] [35] [36]
 \openout3 = `lhsinduc.ptb'.
 
- [34] [35]
-\openout3 = `lhsinduc.ptb'.
-
- [36]
+ [37] [38] [39]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [37]
 \openout3 = `lhsinduc.ptb'.
 
- [38]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 4107
+ [40]
+\openout3 = `lhsinduc.ptb'.
+
+ [41]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 4319
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 4107.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 4319.
 
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [39] [40]
+ [42] [43]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [41]
+ [44]
+[45]
 \openout3 = `lhsinduc.ptb'.
 
 
-[42]
-Underfull \hbox (badness 10000) in paragraph at lines 4657--4659
+Underfull \hbox (badness 10000) in paragraph at lines 4869--4871
 
  []
 
-[43] [44] [45]
-\openout3 = `lhsinduc.ptb'.
-
- [46]
+[46] [47] [48] [49]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [47]
+ [50]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [48]
+\openout3 = `lhsinduc.ptb'.
+
+ [51]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
 
- [49] [50]
+ [52] [53]
 \openout3 = `lhsinduc.ptb'.
 
- [51] [52]
+ [54] [55]
 \openout3 = `lhsinduc.ptb'.
 
 
-Overfull \hbox (0.81165pt too wide) in paragraph at lines 5646--5648
+Overfull \hbox (0.81165pt too wide) in paragraph at lines 5858--5860
 []\OT1/cmr/m/n/10.95 Now, for one pos-si-ble cy-cle, we can just ap-ply all per
 -mu-ta-tions re-sult-ing from $[]$: 
  []
@@ -1277,58 +1279,57 @@ Overfull \hbox (0.81165pt too wide) in paragraph at lines 5646--5648
 
 \openout3 = `lhsinduc.ptb'.
 
-
-Overfull \hbox (25.36967pt too wide) in paragraph at lines 5685--5694
+[56]
+Overfull \hbox (25.36967pt too wide) in paragraph at lines 5897--5906
 [][] 
  []
 
-[53]
 \openout3 = `lhsinduc.ptb'.
 
- [54]
+[57]
 \openout3 = `lhsinduc.ptb'.
 
- [55]
+ [58]
 \openout3 = `lhsinduc.ptb'.
 
- [56]
-\openout3 = `lhsinduc.ptb'.
-
- [57]
-\openout3 = `lhsinduc.ptb'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 6153--6191
-
- []
-
-[58] [59]
-\openout3 = `lhsinduc.ptb'.
-
+ [59]
 \openout3 = `lhsinduc.ptb'.
 
  [60]
 \openout3 = `lhsinduc.ptb'.
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 6365--6403
+
+ []
+
+[61] [62]
+\openout3 = `lhsinduc.ptb'.
+
+\openout3 = `lhsinduc.ptb'.
+
+ [63]
+\openout3 = `lhsinduc.ptb'.
+
+
 
 Package amsmath Warning: Foreign command \atop;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 6467.
+(amsmath)                 on input line 6679.
 
 
-Overfull \hbox (19.06975pt too wide) in paragraph at lines 6475--6484
+Overfull \hbox (19.06975pt too wide) in paragraph at lines 6687--6696
 [][] 
  []
 
-[61]
+[64]
 \openout3 = `lhsinduc.ptb'.
 
- [62] (./lhsinduc.aux) ) 
+ [65] (./lhsinduc.aux) ) 
 Here is how much of TeX's memory you used:
  35582 strings out of 493029
  849107 string characters out of 6136234
- 1028022 words of memory out of 5000000
+ 1029022 words of memory out of 5000000
  38593 multiletter control sequences out of 15000+600000
  18318 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1351,10 +1352,10 @@ nts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsinduc.pdf (62 pages, 408234 bytes).
+Output written on lhsinduc.pdf (65 pages, 416024 bytes).
 PDF statistics:
- 284 PDF objects out of 1000 (max. 8388607)
- 199 compressed objects within 2 object streams
+ 294 PDF objects out of 1000 (max. 8388607)
+ 205 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
