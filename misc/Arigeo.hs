@@ -9,6 +9,11 @@ ltGauss n = n*(n+1)/2
 
 ---------------------------------------------------------------------------
 -- Little Gauss with coefficient and arbitrary sequence
+-- ----------------------------------------------------
+-- Note: if n is even, the result is trivially an integer.
+--       if n is odd, then h and l are both either even or odd
+--                         and the sum of two odd or two even numbers
+--                         is always even.
 ---------------------------------------------------------------------------
 arith :: (Num a, Fractional a) => [a] -> a
 arith [] = 0
@@ -22,7 +27,7 @@ arith ns = n*(h+l)/2
 ---------------------------------------------------------------------------
 arif :: (Num a, Fractional a) => [a] -> (a -> a)
 arif [] = \_ -> 0
-arif ns = (*) ((h+l)/2)
+arif ns = \n -> n*(h+l)/2
   where h = head   ns
         l = last   ns
 
