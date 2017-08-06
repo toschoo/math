@@ -1181,23 +1181,29 @@ The following Haskell code is an example of such a function:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Note, by the way that this function always returns an integer.
-To prove this we distinguish two cases:
+Note, by the way that the fraction $\frac{n(h+l)}{2}$
+always reduces to an integer.
+If $n$ is even, the numerator is trivially even and the fraction
+is an integer. If $n$ is odd, we have an odd number
+of elements in the sequence and that means that the
+last element of the sequence, $l$, results from adding
+an even number of $d$s to $h$:
 
-\begin{enumerate}
-\item $n$ is even
-\item $n$ is odd.
-\end{enumerate}
+\[
+h, h+d, h+2d.
+\]
 
-If $n$ is even, the numerator is even too and the fraction is,
-hence, an integer.
-If $n$ is odd, then $h$ and $l$ are both either even or odd,
-but not one odd and the other even.
-The sum of two even or two odd numbers, however, is always even.
-In consequence, the numerator is even and the whole fraction
-is an integer.\qed
+If $h$ is odd, then $h+2d$ is odd too,
+since $odd+even=odd$. 
+if $h$ is even, then $h+2d$ is even as well.
+That guarantees that, if $n$ is odd,
+then $h$ and $l$ have the
+same parity. The sum of two numbers of the same
+parity, however, is always even.
+The numerator is therefore even and the fraction
+is an integer.$\qed$
 
-An interesting variant of this function
+An interesting variant of the \ensuremath{\Varid{arith}} function
 is a function that computes a function
 which, in its turn, computes a value for $n$ based on a given
 arithmetically progressing sequence, \ie:
@@ -1236,16 +1242,14 @@ arithmetically progressing sequence, \ie:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-This function creates a function
-from the sequence passed in.
-The function computes the function already
+The function creates the function already
 implemented in \ensuremath{\Varid{arith}}, but with the value
 for $n$ not being fixed to the length 
 of the input sequence, but defined as a
 parameter of the resulting function.
 
 We can create an instance of such a function 
-by calling \ensuremath{\mathbf{let}\;\Varid{f}\mathrel{=}[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13}\mskip1.5mu]}.
+by calling \ensuremath{\mathbf{let}\;\Varid{f}\mathrel{=}\Varid{arif}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13}\mskip1.5mu]}.
 Now we apply f on a set of numbers: \ensuremath{\Varid{map}\;\Varid{f}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}
 and get:
 
@@ -1254,16 +1258,31 @@ and get:
 This looks suspiciously like multiples of 7!
 Why is that again?
 Have a look at the formula: we compute $(h+l)/2$,
-which is the \term{averag} of the number $h$ and $l$.
-The average of the sequence $1\dots 13$ is 7, \ie\
+which is the \term{average} of the numbers $h$ and $l$
+(and, in fact, of the whole sequence).
+The average is 7, \ie\
 $(1+13)/2 = 14/2$. The function, we effectively return
 in \ensuremath{\Varid{arif}} for this sequence, hence, is $f(n) = n\times 7$.
 
+If we shift the sequence one to the right like this:
+\ensuremath{[\mskip1.5mu \mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13},\mathrm{16}\mskip1.5mu]} and create a new $f$ from it,
+we see for \ensuremath{\Varid{map}\;\Varid{f}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}:
+
+\ensuremath{[\mskip1.5mu \mathrm{10},\mathrm{20},\mathrm{30},\mathrm{40},\mathrm{50},\mathrm{60},\mathrm{70},\mathrm{80},\mathrm{90},\mathrm{100}\mskip1.5mu]},
+
+the multiples of 10, since now 10 is the average of the sequence.
+Be aware, however, that this does not work in all cases
+with integers. If we choose a sequence with even numbers,
+\eg\ \ensuremath{[\mskip1.5mu \mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13}\mskip1.5mu]} to generate $f$, but apply $f$ to an odd $n$,
+like this: \ensuremath{\Varid{f}\;\mathrm{3}}, the numerator is not an even number
+and the quotient with 2 is not the correct average
+of the original sequence.
+
 Can we apply the techniques used here for arithmetic progression
 also for other kinds of sequences? 
-One such type of sequence is \term{geometric progressions} 
+One such type of sequence is \term{geometric progression} 
 where each number is greater than its predecessor by a \term{factor}.
-In the following sequence, for instance, each number
+In the following sequence, for example, each number
 is two times its predecessor:
 
 \[
@@ -1274,7 +1293,7 @@ What is the sum of $n$ of such numbers?
 Instead of wildly guessing around 
 like we did in the previous section,
 let us look at the sequence as a single object.
-We can model the sequence as
+We can model the series as
 
 \begin{equation}
 S_n=a + ar + ar^2 + ar^3 + \dots + ar^{n-1}
@@ -1290,30 +1309,32 @@ Again, we can treat $S_n$ as a mathematical object
 and manipulate it. We can of course try to add and subtract
 it to and from itself, but since we are now dealing with
 geometric progression, it quickly turns out that that is
-not attractive. It is more interesting to multiply $S_n$.
-One thing we can do: we can multiply $S_n$ by $r$:
+not attractive. It is more interesting 
+to use multiplication and division.
+
+One thing we can do is, for example,
+to multiply $S_n$ by $r$:
 
 \begin{equation}
 rS_n=ar + ar^2 + ar^3 + \dots + ar^n
 \end{equation}
 
-Now we subtract $S_n - rS_n$ (and arrange equal terms):
+That is the same sequence as we saw before,
+but shifted one to the right.
+
+Now we subtract $rS_n$ from $S_n$ (and arrange equal terms):
 
 \begin{equation}
-\begin{array}{lcclclclcccl}
- S_n-rS_n  &=&   &      & + & ar^{n-1} & + & ar^{n-2} & + & \dots & + & a \\
-           & & - & ar^n & - & ar^{n-1} & - & ar^{n-2} & - & \dots &   & 
+\begin{array}{lcclclclccclcl}
+ S_n-rS_n  &=&   &      & + & ar^{n-1} & + & ar^{n-2} & + & \dots & + & ar & + & a \\
+           & & - & ar^n & - & ar^{n-1} & - & ar^{n-2} & - & \dots & - & ar &   &
 \end{array}
 \end{equation}
 
 We are left with $a-ar^n$.
 But how do we get $S_n$ back?
 Simply by factoring $S_n$ out of $S_n-rS_n$, which leads to
-
-\[
-S_n(1-r).
-\]
-
+$S_n(1-r)$.
 Now, we divide by $1-r$ and get $S_n$:
 
 \begin{equation}
@@ -1331,12 +1352,21 @@ and this equation defines the basic form of a \term{geometric series}.
 When we plug in the sequence $1\dots 32$, we get
 
 \begin{equation}
-S_n = \frac{1-2^6}{1-2} = \frac{-63}{-1} = 63,
+S_n = \frac{1-2^6}{1-2} = \frac{-63}{-1} = 63.
 \end{equation}
 
-so the sum of the powers of 2 from 1 to $2^5$ is 63,
-\ie\ $2^6-1$, a formula you, as a programmer,
+The sum of the powers of 2 from 1 to $2^5$ is 63,
+\ie\ $2^6-1$, or, in more general terms,
+the sum of the powers of 2 from 1 to $2^n$ is
+$2^n-1$, a formula you, as a programmer,
 have certainly seen already.
+
+An important remark to make about the geometric series is
+that it does not work for $r=1$, since in that case
+the denominator becomes 0 and the fraction is not defined.
+This means that we cannot model a sequence of equal numbers,
+\ie\ a geometric progression where each number in the sequence
+is 1 time greater than its predecessor.
 
 Techniques of looking at a sequence of numbers
 in terms of a series,
@@ -1344,19 +1374,21 @@ in terms of a series,
 the very important concept of
 \term{generating functions}.
 The fundamental idea is to turn a bunch of things
-into a single object that can be manipulated.
+into a single object that can be easily manipulated.
 The Hungarian mathematician George Pólya (1887 -- 1985)
 compared them to bags in which to put other things,
-so you can carry many things around without difficulty.
-Herbert Wilf (1931 -- 2012), whom we will meet later,
+so you can carry many things around easily.
+Herbert Wilf (1931 -- 2012), whom we will meet again later,
 said ``a generating function is a clothesline
 on which we hang up a sequence of numbers for display''.
 
-Our shorthand of the geometric series formula was 
+Generating functions are very similar to the geometric
+series.  
+Our shorthand of the geometric series was 
 
-\[
-\sum_{k=0}^{n-1}{ar^k}.
-\]
+\begin{equation}
+S_n = \sum_{k=0}^{n-1}{ar^k}.
+\end{equation}
 
 The equation for an \term{ordinary generating function}, $G$,
 would be:
@@ -1369,8 +1401,8 @@ The main difference, hence, is that $G$ is
 an \term{infinite} series, while our series are finite.
 Anyway, generating functions involve much more advanced
 techniques, in particular we cannot work whith them
-with natural numbers alone. Herbert Wilf even sees
-generating functions as a link between 
+with natural numbers alone. They can even be seen
+as a link between 
 discrete and continuous mathematics.
 We, therefore, need to pause here 
 and resume the topic later.

@@ -228,7 +228,7 @@ numbers to the right-hand side, translates to
 Now we repeat the process, solving the first of these equations
 for $y$, which yields $-4y = -12z-8$ and, after dividing
 both sides by $-4$, $y=3z+2$. We then substitute $y$
-into the third equation yielding $-2(3z+2) + 7z = -2$.
+into the second equation yielding $-2(3z+2) + 7z = -2$.
 Simplifying again leads to $z-4=-2$ and, after adding 4 to both sides,
 $z=2$.
 

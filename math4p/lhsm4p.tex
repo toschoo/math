@@ -5927,9 +5927,9 @@ that it holds for all numbers we are interested in.
 Formally, we prove, for example, that
 $P(n) \rightarrow P(n+1)$,
 where $+1$ is a very common way to advance.
-With $+$, we actually prove that $P$ holds for all $x > n$.
-But we can use induction also for 
-with functions that advance at a different pace,
+With $+1$, we actually prove that $P$ holds for all $x > n$.
+But we can use induction also with
+functions that advance at a different pace,
 for instance, we might want to prove
 that some property holds for even numbers,
 we would then advance with $+2$.
@@ -5941,6 +5941,11 @@ is true for the base case
 and, second, that it is still true when advancing
 from a number, for which we know that it is true,
 like the base case, to the next number.
+This is very similar to the structure of recursion
+in Haskell where we usually define a base case
+at which recursion stops and a recursion part.
+In fact, \ensuremath{\Varid{fold}} can be seen as an implementation
+of induction.
 
 For the example of the sum of the odd numbers,
 the base case, $n = 1$, is trivially true,
@@ -6123,7 +6128,7 @@ like the sum of odd and even for $n$,
 but that is not true.
 Note that the sum of the first $n$ 
 either odd or even numbers 
-is in fact number greater than the first $n$ numbers,
+is in fact much greater than the first $n$ numbers,
 since, when we leave out every second number,
 then the result of counting $n$ numbers is much higher
 than counting all numbers, \eg\
@@ -6137,7 +6142,7 @@ $\sum_{k=1}^{n}2k$. This formula implies
 that, for each $n$, we take twice $n$.
 The sum of all numbers, in consequence, 
 should be the half of the sum of the even, \ie\ 
-$\sum_{k=1}^{n}{(k)} = \frac{n(n+1)}{2}$,
+$\sum_{k=1}^{n}{k}$ where $k = \frac{n(n+1)}{2}$,
 a formula that is sometimes humorously called
 \term{The Little Gauss}.
 
@@ -6145,9 +6150,11 @@ Once again, we prove by induction.
 The base case, $n=1$, is trivially true:
 $\sum_{k=1}^{1}{k} = 1$ and
 $\frac{1 * (1 + 1)}{2} = \frac{2}{2} = 1$.
-Now assume that 
+Now, that we have established the base case,
+we can assume that there is a number $n$,
+for which
 $\sum_{k=1}^{n}{k} = \frac{n(n+1)}{2}$
-holds for $n$;
+holds;
 then, we have to prove that
 
 \begin{equation}
@@ -6215,49 +6222,468 @@ The sum of the first $n$ natural numbers in Haskell, hence is:
 \)\par\noindent\endgroup\resethooks
 }
 
-\ignore{
-Arithmetic
-==========
+In the previous section, we found the \emph{Little Gauss},
+named according to an anecdote about young Gauss where he
+solved the stupid task of adding all number from
+$1\dots 100$ with which the teacher intended to get
+rid of his class for an hour or so in a couple of
+minutes. Our proof technique, induction, was quite good.
+But how did we find the hypotheses to be proved
+in the first place? Well, we just looked at the numbers
+until something sprang into our mind.
+And if nothing ever springs into our mind by just looking
+at the numbers? Well, then there are other techniques...
 
-1 .. n
-Sn = 1 + (1 + 1) + (1 + 2) + (1 + 3) + ... + (1 + n-1)
-Sn = (n - (n-1)) + (n - (n-2)) + ... + (n -1) + 1
+The series, we wanted to solve, was $1+2+3+\dots+n$.
+We could start by finding alternative representations
+of this series, for instance:
 
-Sn+Sn = n(1+n)
-2Sn = n(1+n)
-Sn = s(1 + n)/2
+\begin{equation}
+S_n = 1 + (1+1) + (1+2) + \dots + (1 + n-2) + (1+n-1),
+\end{equation}
 
-a .. a + n
-Sn = a1 + (a1 + 1) + (a1 + 2) + (a1 + 3) + ... + (an + n-1)
-Sn = (an - (n-1)) + (an - (n-2)) + ... + (an - 1) + an
+which we can state a bit differently to eliminate the concrete
+numbers in the first half of the formula, here from right to left:
 
-Sn + Sn = n(a1 + an)
-2Sn = n(a1 + an)
-Sn = n(a1 + an)/2
+\begin{equation}
+2S_n = (1 + (n-1)) + (1 + (n-2)) + \dots + 1 + (n-(n-1)) + 1.
+\end{equation}
 
-a .. a + dn
-Sn = a1 + (a1 + d) + (a1 + 2d) + (a1 + 3d) + ... + (an + (n-1)d)
-Sn = (an - (n-d)) + (an - (n-2d)) + ... + (an - d) + an
+When we plug in a number for $n$, say, 5, we get:
 
-Sn + Sn = n(a1+an)
+\[
+1+(5-1) + 1 + (5-2) + 1 + (5-3) + 1 + (5-4) + 1,
+\]
 
-Arithmetic progression: n(a1+an)/2
+which is $1+4+1+3+1+2+1+1+1$ and, hence, equivalent to
+$5+4+3+2+1$.
 
-Geometric
-=========
-\sum_{k=0}^{n-1}{ar^k} // <-- connection to GF: \sum_{n=0}^{\infy}{a_nx^n}
+But this is not the only way. We could turn it around
+and write:
 
-Sn = a + ar + ar^2 + ar^3 + ... + ar^(n-1)
-rSn = ar + ar^2 + ar^3 + ... + ar^n
-s-rs = s(1-r) = a - ar^n
-s = (a - ar^n) / (1-r)
-for r < 1 and n growing:
-a/(1-r)
+\begin{equation}
+S_n = (n - (n-1)) + (n-(n-2)) + (n-(n-3)) + \dots + (n-1) + n.
+\end{equation}
 
-for a = 1
-1/(1-r)
+When we plug in 5 again, we get
+$5 - 4 + 5 - 3 + 5 - 2 + 5 - 1 + 5$, which is
+$1+2+3+4+5$.
 
-}
+The next point to realise is that a series is a
+\emph{mathematical object} and that means that we can
+manipulate it. We can, for instance, add $S_n$ to itself:
+
+\[
+S_n + S_n = 2S_n.
+\]
+
+To compute the formula for $2S_n$ we can use
+any valid representation of $S_n$, for instance
+we can use the first formula to represent the first $S_n$
+and the second to represent the second $S_n$.
+The following equation shows this addition with
+terms aligned that contain the sub-term $n-k$ for the same $k$:
+
+\begin{equation}
+\begin{array}{lclclclccclcl}
+&2S_n &=&   & (1 + (n-1)) & + & (1 + (n-2)) & + & \dots & + & 1 + (n-(n-1)) & + & 1 \\
+&     & & + & (n - (n-1)) & + & (n-(n-2))   & + & \dots & + & (n-1) & + & n.
+\end{array}
+\end{equation}
+
+We see that in each tuple, the sub-term $n-k$ is added in the first line
+and subtracted in the second. In consequence,
+all these sub-terms fall away. We are left with
+
+\begin{equation}
+\begin{array}{lclclclccclcl}
+&2S_n &=&   & 1 & + & 1 & + & \dots & + & 1 + n & + & 1 \\
+&     & & + & n & + & n & + & \dots & + & 0     & + & n.
+\end{array}
+\end{equation}
+
+This in its turn simplifies to
+
+\begin{equation}
+2S_n = 1 + n + 1 + n + \dots + 1 + n =
+n(1 + n).
+\end{equation}
+
+When we divide by 2, we get the \term{Little Gauss}.
+
+This is a nice technique! Indeed, treating formulas (and even sequences)
+as objects that can be manipulated is a very powerful idea that we will
+encounter over and over again. But can we do more with $S_n$?
+
+An interesting question we could ask is what the sum of
+any subsequence of the natural numbers is, \eg\ what is the sum of
+$5\dots 10$?
+
+The concrete formula would be
+$5+6+7+8+9+10$.
+This can be expressed as
+$5 + (5+1) + (5+2) + (5+3) + (5+4) + (5+5)$. 
+When we make $n$ the length of the sequence, \ie\ $n=10-5+1=6$,
+and $a_1$ the first element of the sequence, \ie\ $a_1=5$,
+we can rewrite this sequence in terms of $S_n$:
+
+\begin{equation}
+S_n = a_1 + (n-1) + a_1 + (n-2) + \dots + a_1 + n+(n-1) + a_1.
+\end{equation}
+
+This corresponds to $5 + 5 + 5 + 4 + 5 + 3 + 5 + 2 + 5 + 1 + 5$ or
+$10 + 9 + 8 + 7 + 6 + 5$.
+
+The other variant of the formula would be (for $a_n=10$)
+
+\begin{equation}
+S_n = a_n - (n - 1) + a_n - (n-2) + \dots (a_n -1) + a_n.
+\end{equation}
+
+This second equation would express the sum as
+$10 - 5 + 10 - 4 + 10 - 3 + 10 - 2 + 10 -1 + 10$, which is
+just $5 + 6 + 7 + 8 + 9 + 10$.
+
+If we use these two variants to calculate $2S_n$, we see
+that all the sub-terms $(n-k)$ fall away, we are left with
+a sequence of the form $a_1 + a_n + a_1 + a_n\dots$.
+Since there are $n$ pairs of $a_1 + a_n$, we can simplify
+to
+
+\[
+n(a_1 + a_n).
+\]
+
+When we divide by 2, we get a more general \emph{Little Gauss}:
+
+\begin{equation}
+S_n = \frac{n(a_1 + a_n)}{2}.
+\end{equation}
+
+Let us test this formula on $5+6+7+8+9+10 = 45$:
+
+\[
+\frac{6\times (5+10)}{2} = 3\times 15 = 45.
+\]
+
+Can we generalise this even further to a formula
+that is not restricted to the sequences that progress
+by a single unit per step, \ie\ for sequences
+where the difference between the elements is a constant
+term greater than 1, \eg\:
+
+\[
+2, 4, 6, 8, 10, \dots
+\]
+
+or
+
+\[
+1, 4, 7, 10, 13, \dots
+\]
+
+In this cases, we cannot express the series in terms of
+$a1 + 1 + a1 + 2\dots$, but we have to account for the
+difference, $d$. We, hence, get a series of the form
+
+\begin{equation}
+S_n = a_1 + (a_1 + d) + (a_1 + 2d) + (a_1 + 3d) + \dots + (a_1 + (n-1)d)
+\end{equation}
+
+and, for the alternative wording of this series:
+
+\begin{equation}
+S_n = a_n - (n-d) + a_n - (n-2d) + a_n - (n-3d) + \dots + a_n - d + a_n.
+\end{equation}
+
+Again, we get tuples with equal sub-terms, but this time, the sub-terms
+are not $n-k$, but $n-kd$. Anyway, all these sub-terms fall away and,
+again, we are left with 
+
+\begin{equation}
+2S_n = n(a_1 + a_n).
+\end{equation}
+
+In other words, the generalised series for 
+any \term{arithmetic progression}
+is exactly the same as the one we saw before for the 
+special case $d=1$.
+
+Let us test this formula: $2+4+6+8+10=30$ is
+
+\[
+\frac{5(2+10)}{2} = \frac{60}{2} = 30.
+\]
+
+For the second case, $1+4+7+10+13=35$:
+
+\[
+\frac{5(1+13)}{2} = \frac{5\times 14}{2} = 5\times 7 = 35.
+\]
+
+We can turn this into a Haskell function that
+computes the sum for any sequence within an arithmetic progression
+(\ie\ a sequence of numbers where each number is $d$ greater
+than its predecessor where $d$ is a constant number).
+The following Haskell code is an example of such a function:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{arith}\mathbin{::}[\mskip1.5mu \Conid{Natural}\mskip1.5mu]\to \Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\Varid{arith}\;[\mskip1.5mu \mskip1.5mu]{}\<[11]%
+\>[11]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[B]{}\Varid{arith}\;\Varid{ns}{}\<[11]%
+\>[11]{}\mathrel{=}\Varid{n}\mathbin{*}(\Varid{h}\mathbin{+}\Varid{l})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{where}\;{}\<[10]%
+\>[10]{}\Varid{n}{}\<[13]%
+\>[13]{}\mathrel{=}\Varid{fronIntegral}\;(\Varid{length}\;\Varid{ns}){}\<[E]%
+\\
+\>[10]{}\Varid{h}{}\<[13]%
+\>[13]{}\mathrel{=}\Varid{head}\;\Varid{ns}{}\<[E]%
+\\
+\>[10]{}\Varid{l}{}\<[13]%
+\>[13]{}\mathrel{=}\Varid{last}\;\Varid{ns}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note, by the way that the fraction $\frac{n(h+l)}{2}$
+always reduces to an integer.
+If $n$ is even, the numerator is trivially even and the fraction
+is an integer. If $n$ is odd, we have an odd number
+of elements in the sequence and that means that the
+last element of the sequence, $l$, results from adding
+an even number of $d$s to $h$:
+
+\[
+h, h+d, h+2d.
+\]
+
+If $h$ is odd, then $h+2d$ is odd too,
+since $odd+even=odd$. 
+if $h$ is even, then $h+2d$ is even as well.
+That guarantees that, if $n$ is odd,
+then $h$ and $l$ have the
+same parity. The sum of two numbers of the same
+parity, however, is always even.
+The numerator is therefore even and the fraction
+is an integer.$\qed$
+
+An interesting variant of the \ensuremath{\Varid{arith}} function
+is a function that computes a function
+which, in its turn, computes a value for $n$ based on a given
+arithmetically progressing sequence, \ie:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{10E}{@{}l@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{arif}\mathbin{::}[\mskip1.5mu \Conid{Natural}\mskip1.5mu]\to (\Conid{Natural}\to \Conid{Natural}){}\<[E]%
+\\
+\>[B]{}\Varid{arif}\;[\mskip1.5mu \mskip1.5mu]{}\<[10]%
+\>[10]{}\mathrel{=}{}\<[10E]%
+\>[13]{}\lambda \anonymous \to \mathrm{0}{}\<[E]%
+\\
+\>[B]{}\Varid{arif}\;\Varid{ns}{}\<[10]%
+\>[10]{}\mathrel{=}{}\<[10E]%
+\>[13]{}\lambda \Varid{n}\to \Varid{n}\mathbin{*}(\Varid{h}\mathbin{+}\Varid{l})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{where}\;{}\<[10]%
+\>[10]{}\Varid{h}{}\<[10E]%
+\>[13]{}\mathrel{=}{}\<[16]%
+\>[16]{}\Varid{head}\;\Varid{ns}{}\<[E]%
+\\
+\>[10]{}\Varid{l}{}\<[10E]%
+\>[13]{}\mathrel{=}{}\<[16]%
+\>[16]{}\Varid{last}\;\Varid{ns}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function creates the function already
+implemented in \ensuremath{\Varid{arith}}, but with the value
+for $n$ not being fixed to the length 
+of the input sequence, but defined as a
+parameter of the resulting function.
+
+We can create an instance of such a function 
+by calling \ensuremath{\mathbf{let}\;\Varid{f}\mathrel{=}\Varid{arif}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13}\mskip1.5mu]}.
+Now we apply f on a set of numbers: \ensuremath{\Varid{map}\;\Varid{f}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}
+and get:
+
+\ensuremath{[\mskip1.5mu \mathrm{7},\mathrm{14},\mathrm{21},\mathrm{28},\mathrm{35},\mathrm{42},\mathrm{49},\mathrm{56},\mathrm{63},\mathrm{70}\mskip1.5mu]}.
+
+This looks suspiciously like multiples of 7!
+Why is that again?
+Have a look at the formula: we compute $(h+l)/2$,
+which is the \term{average} of the numbers $h$ and $l$
+(and, in fact, of the whole sequence).
+The average is 7, \ie\
+$(1+13)/2 = 14/2$. The function, we effectively return
+in \ensuremath{\Varid{arif}} for this sequence, hence, is $f(n) = n\times 7$.
+
+If we shift the sequence one to the right like this:
+\ensuremath{[\mskip1.5mu \mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13},\mathrm{16}\mskip1.5mu]} and create a new $f$ from it,
+we see for \ensuremath{\Varid{map}\;\Varid{f}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}:
+
+\ensuremath{[\mskip1.5mu \mathrm{10},\mathrm{20},\mathrm{30},\mathrm{40},\mathrm{50},\mathrm{60},\mathrm{70},\mathrm{80},\mathrm{90},\mathrm{100}\mskip1.5mu]},
+
+the multiples of 10, since now 10 is the average of the sequence.
+Be aware, however, that this does not work in all cases
+with integers. If we choose a sequence with even numbers,
+\eg\ \ensuremath{[\mskip1.5mu \mathrm{4},\mathrm{7},\mathrm{10},\mathrm{13}\mskip1.5mu]} to generate $f$, but apply $f$ to an odd $n$,
+like this: \ensuremath{\Varid{f}\;\mathrm{3}}, the numerator is not an even number
+and the quotient with 2 is not the correct average
+of the original sequence.
+
+Can we apply the techniques used here for arithmetic progression
+also for other kinds of sequences? 
+One such type of sequence is \term{geometric progression} 
+where each number is greater than its predecessor by a \term{factor}.
+In the following sequence, for example, each number
+is two times its predecessor:
+
+\[
+1, 2, 4, 8, 16, 32, \dots
+\]
+
+What is the sum of $n$ of such numbers?
+Instead of wildly guessing around 
+like we did in the previous section,
+let us look at the sequence as a single object.
+We can model the series as
+
+\begin{equation}
+S_n=a + ar + ar^2 + ar^3 + \dots + ar^{n-1}
+\end{equation}
+
+or, in \emph{short hand}:
+
+\begin{equation}
+S_n = \sum_{k=0}^{n-1}{ar^k}.
+\end{equation}
+
+Again, we can treat $S_n$ as a mathematical object
+and manipulate it. We can of course try to add and subtract
+it to and from itself, but since we are now dealing with
+geometric progression, it quickly turns out that that is
+not attractive. It is more interesting 
+to use multiplication and division.
+
+One thing we can do is, for example,
+to multiply $S_n$ by $r$:
+
+\begin{equation}
+rS_n=ar + ar^2 + ar^3 + \dots + ar^n
+\end{equation}
+
+That is the same sequence as we saw before,
+but shifted one to the right.
+
+Now we subtract $rS_n$ from $S_n$ (and arrange equal terms):
+
+\begin{equation}
+\begin{array}{lcclclclccclcl}
+ S_n-rS_n  &=&   &      & + & ar^{n-1} & + & ar^{n-2} & + & \dots & + & ar & + & a \\
+           & & - & ar^n & - & ar^{n-1} & - & ar^{n-2} & - & \dots & - & ar &   &
+\end{array}
+\end{equation}
+
+We are left with $a-ar^n$.
+But how do we get $S_n$ back?
+Simply by factoring $S_n$ out of $S_n-rS_n$, which leads to
+$S_n(1-r)$.
+Now, we divide by $1-r$ and get $S_n$:
+
+\begin{equation}
+S_n = \frac{a-ar^n}{1-r} = \frac{a(1-r^n)}{1-r}
+\end{equation}
+
+For $a=1$ (like in the example above),
+the equation simplifies to
+
+\begin{equation}
+S_n = \frac{1-r^n}{1-r}
+\end{equation}
+
+and this equation defines the basic form of a \term{geometric series}.
+When we plug in the sequence $1\dots 32$, we get
+
+\begin{equation}
+S_n = \frac{1-2^6}{1-2} = \frac{-63}{-1} = 63.
+\end{equation}
+
+The sum of the powers of 2 from 1 to $2^5$ is 63,
+\ie\ $2^6-1$, or, in more general terms,
+the sum of the powers of 2 from 1 to $2^n$ is
+$2^n-1$, a formula you, as a programmer,
+have certainly seen already.
+
+An important remark to make about the geometric series is
+that it does not work for $r=1$, since in that case
+the denominator becomes 0 and the fraction is not defined.
+This means that we cannot model a sequence of equal numbers,
+\ie\ a geometric progression where each number in the sequence
+is 1 time greater than its predecessor.
+
+Techniques of looking at a sequence of numbers
+in terms of a series,
+\ie\ as the sum of its elements, is the basis of
+the very important concept of
+\term{generating functions}.
+The fundamental idea is to turn a bunch of things
+into a single object that can be easily manipulated.
+The Hungarian mathematician George Pólya (1887 -- 1985)
+compared them to bags in which to put other things,
+so you can carry many things around easily.
+Herbert Wilf (1931 -- 2012), whom we will meet again later,
+said ``a generating function is a clothesline
+on which we hang up a sequence of numbers for display''.
+
+Generating functions are very similar to the geometric
+series.  
+Our shorthand of the geometric series was 
+
+\begin{equation}
+S_n = \sum_{k=0}^{n-1}{ar^k}.
+\end{equation}
+
+The equation for an \term{ordinary generating function}, $G$,
+would be:
+
+\begin{equation}
+G_n = \sum_n^{\infty}{ar^n}.
+\end{equation}
+
+The main difference, hence, is that $G$ is
+an \term{infinite} series, while our series are finite.
+Anyway, generating functions involve much more advanced
+techniques, in particular we cannot work whith them
+with natural numbers alone. They can even be seen
+as a link between 
+discrete and continuous mathematics.
+We, therefore, need to pause here 
+and resume the topic later.
 
 \section{The Fibonacci Sequence}
 \ignore{
@@ -22706,7 +23132,7 @@ The ancient Greek philosopher Zeno of Elea, who lived
 in the $5^{th}$ century \acronym{bc}, devised a number
 of paradoxes that came upon us indirectly through
 the work of Aristotle and its commentators.
-Zeno designed the paradoxes to defend the philosophy
+Zeno designed the paradoxes to defened the philosophy
 of the \term{One} developed by Zeno's teacher Parmenides.
 According to this philosophy everything is One,
 undivisible, motionless, eternal, everywhere and nowhere.
@@ -22727,14 +23153,14 @@ It was the main inspiration for the late-ancient
 it shaped the interpretation of ancient philosophy
 by medieval thinkers.
 Scholars today, however, are not so sure anymore
-what the meaning of this dialog may be.
+what the dialog is about in the first place.
 Some see in it a critical discussion of 
 the theory of forms, others hold it is a collection
-of exercises for students of Plato's academy,
+of exercises for students of Plato's academy
 and again others consider the dialog as highly ironic,
 actually criticising Parmenides and other philosophers
 for using terms that they know from everyday life 
-in a context where the ideas associated with this terms
+in a context where the ideas associated with these terms
 do not hold anymore -- very similar to the therapeutic
 approach of Ludwig Wittgenstein.
 
@@ -22751,7 +23177,8 @@ invest energy to construct them.
 By contrast, mathematical platonists would hold that there
 is a static eternal structure that does not change at all.
 The mathematical objects are out there, perhaps like in
-a gigantic lattice behind the universe.
+a gigantic lattice around the universe or, like a skeleton,
+within the universe.
 It would then be absurd to say that we construct prime numbers.
 We find them travelling along the eternal metaphysical structure
 that is behind of what we can perceive directly with our senses.
@@ -22807,8 +23234,10 @@ The problem can be represented as a sum of the form
 \sum_{i=1}^k{\frac{1}{2^i}}
 \]
 
-After $k=1$ step, we would be $\frac{1}{2}$ of the way
-away from $B$. After $k=2$ steps, the distance would be
+that would describe the distance we have travelled.
+After $k=1$ step, we would have travelled
+$\frac{1}{2}$ of the way. 
+After $k=2$ steps, we would have travelled
 
 \[
 \frac{1}{2} + \frac{1}{2^2}.
@@ -22828,7 +23257,7 @@ For $k=3$ steps, we have
 \frac{6+1}{8} = \frac{7}{8}.
 \]
 
-These tests suggest the general formula
+These experiments suggest the general formula
 
 \begin{equation}\label{eq:Zeno2}
 \sum_{i=1}^k{\frac{1}{2^i}} =
@@ -22844,7 +23273,8 @@ We then have to prove that
 \frac{2^{k+1}-1}{2^{k+1}}.
 \end{equation}
 
-We convert the fractions to a common denominator
+We convert the fractions on the left-hand side
+of the equation to a common denominator
 multiplying the first fraction by 2:
 
 \[
@@ -22855,7 +23285,7 @@ We simplify the numerator:
 $2 \times 2^k = 2^{k+1}$ and
 $2 \times (-1) = -2$; we, hence, have in the numerator
 $2^{k+1} - 2 + 1$, which can be simplified to
-$2^{k+1} - 1$ and leads to the desired result
+$2^{k+1} - 1$. This leads to the desired result
 
 \[
 \frac{2^{k+1} - 1}{2^{k+1}}.\qed
@@ -22872,7 +23302,7 @@ such that
 
 If we went a third of the way on each step
 instead of half of it, we had
-$\frac{1}{3^k} + \frac{1}{3^{k+1}}$, for instance,
+$\frac{1}{3^k} + \frac{1}{3^{k+1}}$, for instance:
 $\frac{1}{3} + \frac{1}{9}$.
 We convert the fraction to a common 
 denominator multiplying the first by 3:
@@ -23001,7 +23431,7 @@ This suggests the general form
 which would nicely explain why we overlooked
 the division in the numerator for the case $n=2$,
 since, here, $n-1 = 1$ and anything
-divided by 1 is just that anything.
+divided by 1 is just that something.
 
 It, again, does not appear to be too difficult to prove
 the result.
@@ -23037,11 +23467,103 @@ leading to
 
 which is the desired result 
 
-\begin{equation}
+\[
 \frac{(n^{k+1} - 1)/(n-1)}{n^{k+1}}.\qed
+\]
+
+Could we not have come 
+to this result in an easier way?
+Well, we should have realised that
+Zeno's problem is just an instance of
+a geometric series. A geometric series
+is defined by the equation
+
+\begin{equation}
+S_n = \frac{a(1-r^k)}{1-r}.
 \end{equation}
 
+In our case, $a$ and $r$ are fractions. For the first case,
+we have $a=\frac{1}{2}$ and $r=\frac{1}{2}$.
+We therefore get
 
+\begin{equation}
+S_n = \frac{\frac{1}{2}(1-\frac{1}{2^k})}{1-\frac{1}{2}}.
+\end{equation}
+
+When we multiply the numerator out,
+we get (just looking at the numerator):
+
+\[
+\frac{1}{2}\left(1-\frac{1}{2^k}\right) = 
+\frac{1}{2}-\frac{1}{2^{k+1}}.
+\]
+
+We multiply $\frac{1}{2}$ by $2^k$ in numerator
+and denominator and add the resulting terms:
+
+\[
+\frac{2^k-1}{2^{k+1}}.
+\]
+
+Now we look at the denominator, which is $1-\frac{1}{2}$.
+This is just $\frac{1}{2}$ and, since dividing by 
+$\frac{1}{2}$ is the same as multiplying by $2$,
+we can reduce the whole fraction to
+
+\[
+\frac{2\times(2^k-1)}{2^{k+1}}.
+\]
+
+The 2 in the numerator cancels against the $2^{k+1}$,
+so we finally get
+
+\begin{equation}
+S_n = \frac{2^k-1}{2^k},
+\end{equation}
+
+the same result we got above with some guessing around.
+
+Now, to generalise the final result we set
+$a=\frac{1}{n}$ and $r=\frac{1}{n}$ and get
+the scary-looking equation
+
+\begin{equation}
+S_n = \frac{\frac{1}{n}\left(1-\frac{1}{n^k}\right)}{1-\frac{1}{n}}.
+\end{equation}
+
+We start by looking at the numerator first again:
+
+\[
+\frac{1}{n}\left(1-\frac{1}{n^k}\right) = 
+\frac{1}{n} - \frac{1}{n^{k+1}} =
+\frac{n^k}{n^{k+1}} - \frac{1}{n^{k+1}} =
+\frac{n^k - 1}{n^{k+1}}.
+\]
+
+The denominator is $1-\frac{1}{n}$, which is the same as
+$\frac{n-1}{n}$.
+Again, instead of dividing by this fraction, we can multiply
+by the inverse $\frac{n}{n-1}$:
+
+\[
+\frac{n^k - 1}{n^{k+1}}\times\frac{n}{n-1} = 
+\frac{\frac{n^{k+1}}{n-1} - \frac{n}{n-1}}{n^{k+1}} =
+\frac{\frac{n^{k+1}-n}{n-1}}{n^{k+1}}
+\]
+
+We can factor $n$ out in the numerator to get
+
+\[
+\frac{ \frac{n\left(n^k-1\right)}{n-1}}{n^{k+1}} =
+\frac{n\frac{n^k-1}{n-1}}{n^{k+1}}
+\]
+
+and, again, cancel $n$ against the denominator 
+resulting at
+
+\begin{equation}
+S_n = \frac{(n^k-1)/(n-1)}{n^k}.
+\end{equation}
 \section{Systems of Linear Equations}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -23282,7 +23804,7 @@ numbers to the right-hand side, translates to
 Now we repeat the process, solving the first of these equations
 for $y$, which yields $-4y = -12z-8$ and, after dividing
 both sides by $-4$, $y=3z+2$. We then substitute $y$
-into the third equation yielding $-2(3z+2) + 7z = -2$.
+into the second equation yielding $-2(3z+2) + 7z = -2$.
 Simplifying again leads to $z-4=-2$ and, after adding 4 to both sides,
 $z=2$.
 

@@ -10,7 +10,7 @@ The ancient Greek philosopher Zeno of Elea, who lived
 in the $5^{th}$ century \acronym{bc}, devised a number
 of paradoxes that came upon us indirectly through
 the work of Aristotle and its commentators.
-Zeno designed the paradoxes to defend the philosophy
+Zeno designed the paradoxes to defened the philosophy
 of the \term{One} developed by Zeno's teacher Parmenides.
 According to this philosophy everything is One,
 undivisible, motionless, eternal, everywhere and nowhere.
@@ -31,14 +31,14 @@ It was the main inspiration for the late-ancient
 it shaped the interpretation of ancient philosophy
 by medieval thinkers.
 Scholars today, however, are not so sure anymore
-what the meaning of this dialog may be.
+what the dialog is about in the first place.
 Some see in it a critical discussion of 
 the theory of forms, others hold it is a collection
-of exercises for students of Plato's academy,
+of exercises for students of Plato's academy
 and again others consider the dialog as highly ironic,
 actually criticising Parmenides and other philosophers
 for using terms that they know from everyday life 
-in a context where the ideas associated with this terms
+in a context where the ideas associated with these terms
 do not hold anymore -- very similar to the therapeutic
 approach of Ludwig Wittgenstein.
 
@@ -55,7 +55,8 @@ invest energy to construct them.
 By contrast, mathematical platonists would hold that there
 is a static eternal structure that does not change at all.
 The mathematical objects are out there, perhaps like in
-a gigantic lattice behind the universe.
+a gigantic lattice around the universe or, like a skeleton,
+within the universe.
 It would then be absurd to say that we construct prime numbers.
 We find them travelling along the eternal metaphysical structure
 that is behind of what we can perceive directly with our senses.
@@ -111,8 +112,10 @@ The problem can be represented as a sum of the form
 \sum_{i=1}^k{\frac{1}{2^i}}
 \]
 
-After $k=1$ step, we would be $\frac{1}{2}$ of the way
-away from $B$. After $k=2$ steps, the distance would be
+that would describe the distance we have travelled.
+After $k=1$ step, we would have travelled
+$\frac{1}{2}$ of the way. 
+After $k=2$ steps, we would have travelled
 
 \[
 \frac{1}{2} + \frac{1}{2^2}.
@@ -132,7 +135,7 @@ For $k=3$ steps, we have
 \frac{6+1}{8} = \frac{7}{8}.
 \]
 
-These tests suggest the general formula
+These experiments suggest the general formula
 
 \begin{equation}\label{eq:Zeno2}
 \sum_{i=1}^k{\frac{1}{2^i}} =
@@ -148,7 +151,8 @@ We then have to prove that
 \frac{2^{k+1}-1}{2^{k+1}}.
 \end{equation}
 
-We convert the fractions to a common denominator
+We convert the fractions on the left-hand side
+of the equation to a common denominator
 multiplying the first fraction by 2:
 
 \[
@@ -159,7 +163,7 @@ We simplify the numerator:
 $2 \times 2^k = 2^{k+1}$ and
 $2 \times (-1) = -2$; we, hence, have in the numerator
 $2^{k+1} - 2 + 1$, which can be simplified to
-$2^{k+1} - 1$ and leads to the desired result
+$2^{k+1} - 1$. This leads to the desired result
 
 \[
 \frac{2^{k+1} - 1}{2^{k+1}}.\qed
@@ -176,7 +180,7 @@ such that
 
 If we went a third of the way on each step
 instead of half of it, we had
-$\frac{1}{3^k} + \frac{1}{3^{k+1}}$, for instance,
+$\frac{1}{3^k} + \frac{1}{3^{k+1}}$, for instance:
 $\frac{1}{3} + \frac{1}{9}$.
 We convert the fraction to a common 
 denominator multiplying the first by 3:
@@ -305,7 +309,7 @@ This suggests the general form
 which would nicely explain why we overlooked
 the division in the numerator for the case $n=2$,
 since, here, $n-1 = 1$ and anything
-divided by 1 is just that anything.
+divided by 1 is just that something.
 
 It, again, does not appear to be too difficult to prove
 the result.
@@ -341,8 +345,100 @@ leading to
 
 which is the desired result 
 
-\begin{equation}
+\[
 \frac{(n^{k+1} - 1)/(n-1)}{n^{k+1}}.\qed
+\]
+
+Could we not have come 
+to this result in an easier way?
+Well, we should have realised that
+Zeno's problem is just an instance of
+a geometric series. A geometric series
+is defined by the equation
+
+\begin{equation}
+S_n = \frac{a(1-r^k)}{1-r}.
 \end{equation}
 
+In our case, $a$ and $r$ are fractions. For the first case,
+we have $a=\frac{1}{2}$ and $r=\frac{1}{2}$.
+We therefore get
 
+\begin{equation}
+S_n = \frac{\frac{1}{2}(1-\frac{1}{2^k})}{1-\frac{1}{2}}.
+\end{equation}
+
+When we multiply the numerator out,
+we get (just looking at the numerator):
+
+\[
+\frac{1}{2}\left(1-\frac{1}{2^k}\right) = 
+\frac{1}{2}-\frac{1}{2^{k+1}}.
+\]
+
+We multiply $\frac{1}{2}$ by $2^k$ in numerator
+and denominator and add the resulting terms:
+
+\[
+\frac{2^k-1}{2^{k+1}}.
+\]
+
+Now we look at the denominator, which is $1-\frac{1}{2}$.
+This is just $\frac{1}{2}$ and, since dividing by 
+$\frac{1}{2}$ is the same as multiplying by $2$,
+we can reduce the whole fraction to
+
+\[
+\frac{2\times(2^k-1)}{2^{k+1}}.
+\]
+
+The 2 in the numerator cancels against the $2^{k+1}$,
+so we finally get
+
+\begin{equation}
+S_n = \frac{2^k-1}{2^k},
+\end{equation}
+
+the same result we got above with some guessing around.
+
+Now, to generalise the final result we set
+$a=\frac{1}{n}$ and $r=\frac{1}{n}$ and get
+the scary-looking equation
+
+\begin{equation}
+S_n = \frac{\frac{1}{n}\left(1-\frac{1}{n^k}\right)}{1-\frac{1}{n}}.
+\end{equation}
+
+We start by looking at the numerator first again:
+
+\[
+\frac{1}{n}\left(1-\frac{1}{n^k}\right) = 
+\frac{1}{n} - \frac{1}{n^{k+1}} =
+\frac{n^k}{n^{k+1}} - \frac{1}{n^{k+1}} =
+\frac{n^k - 1}{n^{k+1}}.
+\]
+
+The denominator is $1-\frac{1}{n}$, which is the same as
+$\frac{n-1}{n}$.
+Again, instead of dividing by this fraction, we can multiply
+by the inverse $\frac{n}{n-1}$:
+
+\[
+\frac{n^k - 1}{n^{k+1}}\times\frac{n}{n-1} = 
+\frac{\frac{n^{k+1}}{n-1} - \frac{n}{n-1}}{n^{k+1}} =
+\frac{\frac{n^{k+1}-n}{n-1}}{n^{k+1}}
+\]
+
+We can factor $n$ out in the numerator to get
+
+\[
+\frac{ \frac{n\left(n^k-1\right)}{n-1}}{n^{k+1}} =
+\frac{n\frac{n^k-1}{n-1}}{n^{k+1}}
+\]
+
+and, again, cancel $n$ against the denominator 
+resulting at
+
+\begin{equation}
+S_n = \frac{(n^k-1)/(n-1)}{n^k}.
+\end{equation}

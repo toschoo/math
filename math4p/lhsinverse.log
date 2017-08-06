@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  22 APR 2017 18:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  6 AUG 2017 19:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -117,6 +117,28 @@ Package: stmaryrd 1994/03/03 St Mary's Road symbol package
 LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
 (Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
 )
+(/usr/share/texmf/tex/latex/polytable/polytable.sty
+Package: polytable 2013/07/18 v0.8.5 `polytable' package (Andres Loeh)
+
+(/usr/share/texmf/tex/latex/polytable/lazylist.sty)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
+\col@sep=\dimen104
+\extrarowheight=\dimen105
+\NC@list=\toks16
+\extratabsurround=\skip48
+\backup@length=\skip49
+)
+\PT@colwidth=\dimen106
+\PT@cols=\count89
+\PT@table=\count90
+\PT@toks=\toks17
+\PT@in=\read1
+\PT@out=\write3
+)
+\mathindent=\dimen107
+\blanklineskip=\skip50
+
 \@input{cmds.aux}
 \openout2 = `cmds.aux'.
 
@@ -143,10 +165,10 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count89
+\Gread@gobject=\count91
 ))
-\Gin@req@height=\dimen104
-\Gin@req@width=\dimen105
+\Gin@req@height=\dimen108
+\Gin@req@width=\dimen109
 )
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucs.sty
 Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
@@ -154,22 +176,22 @@ Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-global.def
 File: uni-global.def 2013/05/13 UCS: Unicode global data
 )
-\uc@secondtry=\count90
-\uc@combtoks=\toks16
-\uc@combtoksb=\toks17
-\uc@temptokena=\toks18
+\uc@secondtry=\count92
+\uc@combtoks=\toks18
+\uc@combtoksb=\toks19
+\uc@temptokena=\toks20
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
-\inpenc@prehook=\toks19
-\inpenc@posthook=\toks20
+\inpenc@prehook=\toks21
+\inpenc@posthook=\toks22
 
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/utf8x.def
 File: utf8x.def 2004/10/17 UCS: Input encoding UTF-8
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/tabto-ltx/tabto.sty
 Package: tabto 2013/03/25  v 1.3  Another tabbing mechanism
-\CurrentLineWidth=\dimen106
+\CurrentLineWidth=\dimen110
 )
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2016/02/24 3.9q The Babel package
@@ -179,8 +201,8 @@ Language: portuges 2008/03/18 v1.2q Portuguese support from the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2016/02/24 3.9q Babel common definitions
-\babel@savecnt=\count91
-\U@D=\dimen107
+\babel@savecnt=\count93
+\U@D=\dimen111
 )
 Package babel Info: Making " an active character on input line 145.
 )
@@ -192,72 +214,72 @@ Language: english 2012/08/20 v3.3p English support from the babel system
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2016/03/03 v2.15a AMS math features
-\@mathmargin=\skip48
+\@mathmargin=\skip51
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen108
+\pmbraise@=\dimen112
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count92
+\inf@bad=\count94
 LaTeX Info: Redefining \frac on input line 199.
-\uproot@=\count93
-\leftroot@=\count94
+\uproot@=\count95
+\leftroot@=\count96
 LaTeX Info: Redefining \overline on input line 297.
-\classnum@=\count95
-\DOTSCASE@=\count96
+\classnum@=\count97
+\DOTSCASE@=\count98
 LaTeX Info: Redefining \ldots on input line 394.
 LaTeX Info: Redefining \dots on input line 397.
 LaTeX Info: Redefining \cdots on input line 518.
 \Mathstrutbox@=\box27
 \strutbox@=\box28
-\big@size=\dimen109
+\big@size=\dimen113
 LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
-\macc@depth=\count97
-\c@MaxMatrixCols=\count98
+\macc@depth=\count99
+\c@MaxMatrixCols=\count100
 \dotsspace@=\muskip10
-\c@parentequation=\count99
-\dspbrk@lvl=\count100
-\tag@help=\toks21
-\row@=\count101
-\column@=\count102
-\maxfields@=\count103
-\andhelp@=\toks22
-\eqnshift@=\dimen110
-\alignsep@=\dimen111
-\tagshift@=\dimen112
-\tagwidth@=\dimen113
-\totwidth@=\dimen114
-\lineht@=\dimen115
-\@envbody=\toks23
-\multlinegap=\skip49
-\multlinetaggap=\skip50
-\mathdisplay@stack=\toks24
+\c@parentequation=\count101
+\dspbrk@lvl=\count102
+\tag@help=\toks23
+\row@=\count103
+\column@=\count104
+\maxfields@=\count105
+\andhelp@=\toks24
+\eqnshift@=\dimen114
+\alignsep@=\dimen115
+\tagshift@=\dimen116
+\tagwidth@=\dimen117
+\totwidth@=\dimen118
+\lineht@=\dimen119
+\@envbody=\toks25
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks26
 LaTeX Info: Redefining \[ on input line 2735.
 LaTeX Info: Redefining \] on input line 2736.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks25
-\thm@bodyfont=\toks26
-\thm@headfont=\toks27
-\thm@notefont=\toks28
-\thm@headpunct=\toks29
-\thm@preskip=\skip51
-\thm@postskip=\skip52
-\thm@headsep=\skip53
-\dth@everypar=\toks30
+\thm@style=\toks27
+\thm@bodyfont=\toks28
+\thm@headfont=\toks29
+\thm@notefont=\toks30
+\thm@headpunct=\toks31
+\thm@preskip=\skip54
+\thm@postskip=\skip55
+\thm@headsep=\skip56
+\dth@everypar=\toks32
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amscd.sty
 Package: amscd 1999/11/29 v2.0 AMS Commutatitive Diagrams
-\athelp@=\toks31
-\minaw@=\dimen116
-\bigaw@=\dimen117
-\minCDarrowwidth=\dimen118
+\athelp@=\toks33
+\minaw@=\dimen120
+\bigaw@=\dimen121
+\minCDarrowwidth=\dimen122
 )
 (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx.sty
 (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
@@ -273,37 +295,37 @@ L3 Module: l3tl 2015/09/29 v6121 L3 Token lists
 L3 Module: l3str 2016/01/03 v6357 L3 Strings
 L3 Module: l3seq 2015/08/05 v5777 L3 Sequences and stacks
 L3 Module: l3int 2016/01/05 v6366 L3 Integers
-\c_max_int=\count104
-\l_tmpa_int=\count105
-\l_tmpb_int=\count106
-\g_tmpa_int=\count107
-\g_tmpb_int=\count108
+\c_max_int=\count106
+\l_tmpa_int=\count107
+\l_tmpb_int=\count108
+\g_tmpa_int=\count109
+\g_tmpb_int=\count110
 L3 Module: l3quark 2015/08/17 v5855 L3 Quarks
 L3 Module: l3prg 2015/11/01 v6216 L3 Control structures
-\g__prg_map_int=\count109
+\g__prg_map_int=\count111
 L3 Module: l3clist 2015/09/02 v5901 L3 Comma separated lists
 L3 Module: l3token 2015/11/11 v6249 L3 Experimental token manipulation
 L3 Module: l3prop 2016/01/05 v6366 L3 Property lists
 L3 Module: l3msg 2015/09/28 v6113 L3 Messages
 L3 Module: l3file 2015/12/03 v6317 L3 File and I/O operations
-\l_iow_line_count_int=\count110
-\l__iow_target_count_int=\count111
-\l__iow_current_line_int=\count112
-\l__iow_current_word_int=\count113
-\l__iow_current_indentation_int=\count114
+\l_iow_line_count_int=\count112
+\l__iow_target_count_int=\count113
+\l__iow_current_line_int=\count114
+\l__iow_current_word_int=\count115
+\l__iow_current_indentation_int=\count116
 L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
-\c_zero_dim=\dimen119
-\c_max_dim=\dimen120
-\l_tmpa_dim=\dimen121
-\l_tmpb_dim=\dimen122
-\g_tmpa_dim=\dimen123
-\g_tmpb_dim=\dimen124
-\c_zero_skip=\skip54
-\c_max_skip=\skip55
-\l_tmpa_skip=\skip56
-\l_tmpb_skip=\skip57
-\g_tmpa_skip=\skip58
-\g_tmpb_skip=\skip59
+\c_zero_dim=\dimen123
+\c_max_dim=\dimen124
+\l_tmpa_dim=\dimen125
+\l_tmpb_dim=\dimen126
+\g_tmpa_dim=\dimen127
+\g_tmpb_dim=\dimen128
+\c_zero_skip=\skip57
+\c_max_skip=\skip58
+\l_tmpa_skip=\skip59
+\l_tmpb_skip=\skip60
+\g_tmpa_skip=\skip61
+\g_tmpb_skip=\skip62
 \c_zero_muskip=\muskip11
 \c_max_muskip=\muskip12
 \l_tmpa_muskip=\muskip13
@@ -311,18 +333,18 @@ L3 Module: l3skip 2016/01/05 v6366 L3 Dimensions and skips
 \g_tmpa_muskip=\muskip15
 \g_tmpb_muskip=\muskip16
 L3 Module: l3keys 2015/11/17 v6284 L3 Key-value interfaces
-\g__keyval_level_int=\count115
-\l_keys_choice_int=\count116
+\g__keyval_level_int=\count117
+\l_keys_choice_int=\count118
 L3 Module: l3fp 2015/08/25 v5890 L3 Floating points
-\c__fp_leading_shift_int=\count117
-\c__fp_middle_shift_int=\count118
-\c__fp_trailing_shift_int=\count119
-\c__fp_big_leading_shift_int=\count120
-\c__fp_big_middle_shift_int=\count121
-\c__fp_big_trailing_shift_int=\count122
-\c__fp_Bigg_leading_shift_int=\count123
-\c__fp_Bigg_middle_shift_int=\count124
-\c__fp_Bigg_trailing_shift_int=\count125
+\c__fp_leading_shift_int=\count119
+\c__fp_middle_shift_int=\count120
+\c__fp_trailing_shift_int=\count121
+\c__fp_big_leading_shift_int=\count122
+\c__fp_big_middle_shift_int=\count123
+\c__fp_big_trailing_shift_int=\count124
+\c__fp_Bigg_leading_shift_int=\count125
+\c__fp_Bigg_middle_shift_int=\count126
+\c__fp_Bigg_trailing_shift_int=\count127
 L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
 \c_empty_box=\box29
 \l_tmpa_box=\box30
@@ -331,13 +353,13 @@ L3 Module: l3box 2015/08/09 v5822 L3 Experimental boxes
 \g_tmpb_box=\box33
 L3 Module: l3coffins 2015/08/06 v5789 L3 Coffin code layer
 \l__coffin_internal_box=\box34
-\l__coffin_internal_dim=\dimen125
-\l__coffin_offset_x_dim=\dimen126
-\l__coffin_offset_y_dim=\dimen127
-\l__coffin_x_dim=\dimen128
-\l__coffin_y_dim=\dimen129
-\l__coffin_x_prime_dim=\dimen130
-\l__coffin_y_prime_dim=\dimen131
+\l__coffin_internal_dim=\dimen129
+\l__coffin_offset_x_dim=\dimen130
+\l__coffin_offset_y_dim=\dimen131
+\l__coffin_x_dim=\dimen132
+\l__coffin_y_dim=\dimen133
+\l__coffin_x_prime_dim=\dimen134
+\l__coffin_y_prime_dim=\dimen135
 \c_empty_coffin=\box35
 \l__coffin_aligned_coffin=\box36
 \l__coffin_aligned_internal_coffin=\box37
@@ -346,95 +368,87 @@ L3 Module: l3coffins 2015/08/06 v5789 L3 Coffin code layer
 \l__coffin_display_coffin=\box40
 \l__coffin_display_coord_coffin=\box41
 \l__coffin_display_pole_coffin=\box42
-\l__coffin_display_offset_dim=\dimen132
-\l__coffin_display_x_dim=\dimen133
-\l__coffin_display_y_dim=\dimen134
+\l__coffin_display_offset_dim=\dimen136
+\l__coffin_display_x_dim=\dimen137
+\l__coffin_display_y_dim=\dimen138
 L3 Module: l3color 2014/08/23 v5354 L3 Experimental color support
 L3 Module: l3sys 2015/09/25 v6087 L3 Experimental system/runtime functions
 L3 Module: l3candidates 2016/01/14 v6376 L3 Experimental additions to l3kernel
-\l__box_top_dim=\dimen135
-\l__box_bottom_dim=\dimen136
-\l__box_left_dim=\dimen137
-\l__box_right_dim=\dimen138
-\l__box_top_new_dim=\dimen139
-\l__box_bottom_new_dim=\dimen140
-\l__box_left_new_dim=\dimen141
-\l__box_right_new_dim=\dimen142
+\l__box_top_dim=\dimen139
+\l__box_bottom_dim=\dimen140
+\l__box_left_dim=\dimen141
+\l__box_right_dim=\dimen142
+\l__box_top_new_dim=\dimen143
+\l__box_bottom_new_dim=\dimen144
+\l__box_left_new_dim=\dimen145
+\l__box_right_new_dim=\dimen146
 \l__box_internal_box=\box43
-\l__coffin_bounding_shift_dim=\dimen143
-\l__coffin_left_corner_dim=\dimen144
-\l__coffin_right_corner_dim=\dimen145
-\l__coffin_bottom_corner_dim=\dimen146
-\l__coffin_top_corner_dim=\dimen147
-\l__coffin_scaled_total_height_dim=\dimen148
-\l__coffin_scaled_width_dim=\dimen149
+\l__coffin_bounding_shift_dim=\dimen147
+\l__coffin_left_corner_dim=\dimen148
+\l__coffin_right_corner_dim=\dimen149
+\l__coffin_bottom_corner_dim=\dimen150
+\l__coffin_top_corner_dim=\dimen151
+\l__coffin_scaled_total_height_dim=\dimen152
+\l__coffin_scaled_width_dim=\dimen153
 L3 Module: l3luatex 2015/11/11 v6250 L3 Experimental LuaTeX-specific functions
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
 File: l3pdfmode.def 2015/11/11 v6250 L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count126
+\l__driver_color_stack_int=\count128
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
 Package: xparse 2016/01/19 v6377 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count127
-\l__xparse_m_args_int=\count128
-\l__xparse_mandatory_args_int=\count129
-\l__xparse_processor_int=\count130
-\l__xparse_v_nesting_int=\count131
+\l__xparse_current_arg_int=\count129
+\l__xparse_m_args_int=\count130
+\l__xparse_mandatory_args_int=\count131
+\l__xparse_processor_int=\count132
+\l__xparse_v_nesting_int=\count133
 )
 Package: siunitx 2016/03/01 v2.6q A comprehensive (SI) units package
 
-(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen150
-\extrarowheight=\dimen151
-\NC@list=\toks32
-\extratabsurround=\skip60
-\backup@length=\skip61
-)
 (/usr/share/texlive/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
 Package: l3keys2e 2016/01/19 v6377 LaTeX2e option processing using LaTeX3 keys
 )
 \l__siunitx_tmp_box=\box44
-\l__siunitx_tmp_dim=\dimen152
-\l__siunitx_tmp_int=\count132
-\l__siunitx_number_mantissa_length_int=\count133
-\l__siunitx_number_uncert_length_int=\count134
-\l__siunitx_round_int=\count135
-\l__siunitx_process_decimal_int=\count136
-\l__siunitx_process_uncertainty_int=\count137
-\l__siunitx_process_fixed_int=\count138
-\l__siunitx_process_integer_min_int=\count139
-\l__siunitx_process_precision_int=\count140
-\l__siunitx_group_min_int=\count141
+\l__siunitx_tmp_dim=\dimen154
+\l__siunitx_tmp_int=\count134
+\l__siunitx_number_mantissa_length_int=\count135
+\l__siunitx_number_uncert_length_int=\count136
+\l__siunitx_round_int=\count137
+\l__siunitx_process_decimal_int=\count138
+\l__siunitx_process_uncertainty_int=\count139
+\l__siunitx_process_fixed_int=\count140
+\l__siunitx_process_integer_min_int=\count141
+\l__siunitx_process_precision_int=\count142
+\l__siunitx_group_min_int=\count143
 \l__siunitx_angle_marker_box=\box45
 \l__siunitx_angle_unit_box=\box46
-\l__siunitx_angle_marker_dim=\dimen153
-\l__siunitx_angle_unit_dim=\dimen154
-\l__siunitx_unit_int=\count142
-\l__siunitx_unit_denominator_int=\count143
-\l__siunitx_unit_numerator_int=\count144
-\l__siunitx_unit_prefix_int=\count145
-\l__siunitx_unit_prefix_base_int=\count146
-\l__siunitx_unit_prefix_gram_int=\count147
-\l__siunitx_number_product_int=\count148
-\c__siunitx_one_fill_skip=\skip62
-\l__siunitx_table_unit_align_skip=\skip63
-\l__siunitx_table_exponent_dim=\dimen155
-\l__siunitx_table_integer_dim=\dimen156
-\l__siunitx_table_mantissa_dim=\dimen157
-\l__siunitx_table_marker_dim=\dimen158
-\l__siunitx_table_result_dim=\dimen159
-\l__siunitx_table_uncert_dim=\dimen160
-\l__siunitx_table_fill_pre_dim=\dimen161
-\l__siunitx_table_fill_post_dim=\dimen162
-\l__siunitx_table_fill_mid_dim=\dimen163
+\l__siunitx_angle_marker_dim=\dimen155
+\l__siunitx_angle_unit_dim=\dimen156
+\l__siunitx_unit_int=\count144
+\l__siunitx_unit_denominator_int=\count145
+\l__siunitx_unit_numerator_int=\count146
+\l__siunitx_unit_prefix_int=\count147
+\l__siunitx_unit_prefix_base_int=\count148
+\l__siunitx_unit_prefix_gram_int=\count149
+\l__siunitx_number_product_int=\count150
+\c__siunitx_one_fill_skip=\skip63
+\l__siunitx_table_unit_align_skip=\skip64
+\l__siunitx_table_exponent_dim=\dimen157
+\l__siunitx_table_integer_dim=\dimen158
+\l__siunitx_table_mantissa_dim=\dimen159
+\l__siunitx_table_marker_dim=\dimen160
+\l__siunitx_table_result_dim=\dimen161
+\l__siunitx_table_uncert_dim=\dimen162
+\l__siunitx_table_fill_pre_dim=\dimen163
+\l__siunitx_table_fill_post_dim=\dimen164
+\l__siunitx_table_fill_mid_dim=\dimen165
 \l__siunitx_table_pre_box=\box47
 \l__siunitx_table_post_box=\box48
 \l__siunitx_table_mantissa_box=\box49
 \l__siunitx_table_result_box=\box50
-\l__siunitx_table_number_align_skip=\skip64
-\l__siunitx_table_text_align_skip=\skip65
+\l__siunitx_table_number_align_skip=\skip65
+\l__siunitx_table_text_align_skip=\skip66
 .................................................
 . LaTeX info: "xparse/define-command"
 . 
@@ -552,7 +566,7 @@ Package: l3keys2e 2016/01/19 v6377 LaTeX2e option processing using LaTeX3 keys
 . 
 . Defining command \__siunitx_bookmark_si:w with sig. 'om' on line 7400.
 .................................................
-\g__file_internal_ior=\read1
+\g__file_internal_ior=\read2
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/translator.sty
 Package: translator 2010/06/12 ver 1.10
@@ -563,9 +577,9 @@ mappings.tex)))
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks33
-\pgfutil@tempdima=\dimen164
-\pgfutil@tempdimb=\dimen165
+\pgfutil@everybye=\toks34
+\pgfutil@tempdima=\dimen166
+\pgfutil@tempdimb=\dimen167
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.t
 ex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
@@ -584,30 +598,30 @@ Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks34
-\pgfkeys@temptoks=\toks35
+\pgfkeys@pathtoks=\toks35
+\pgfkeys@temptoks=\toks36
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
 ex
-\pgfkeys@tmptoks=\toks36
+\pgfkeys@tmptoks=\toks37
 ))
-\pgf@x=\dimen166
-\pgf@y=\dimen167
-\pgf@xa=\dimen168
-\pgf@ya=\dimen169
-\pgf@xb=\dimen170
-\pgf@yb=\dimen171
-\pgf@xc=\dimen172
-\pgf@yc=\dimen173
-\w@pgf@writea=\write3
-\r@pgf@reada=\read2
-\c@pgf@counta=\count149
-\c@pgf@countb=\count150
-\c@pgf@countc=\count151
-\c@pgf@countd=\count152
-\t@pgf@toka=\toks37
-\t@pgf@tokb=\toks38
-\t@pgf@tokc=\toks39
+\pgf@x=\dimen168
+\pgf@y=\dimen169
+\pgf@xa=\dimen170
+\pgf@ya=\dimen171
+\pgf@xb=\dimen172
+\pgf@yb=\dimen173
+\pgf@xc=\dimen174
+\pgf@yc=\dimen175
+\w@pgf@writea=\write4
+\r@pgf@reada=\read3
+\c@pgf@counta=\count151
+\c@pgf@countb=\count152
+\c@pgf@countc=\count153
+\c@pgf@countd=\count154
+\t@pgf@toka=\toks38
+\t@pgf@tokb=\toks39
+\t@pgf@tokc=\toks40
  (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
 )
@@ -623,8 +637,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
 tex
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-\pgfsyssoftpath@smallbuffer@items=\count153
-\pgfsyssoftpath@bigbuffer@items=\count154
+\pgfsyssoftpath@smallbuffer@items=\count155
+\pgfsyssoftpath@bigbuffer@items=\count156
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
@@ -653,12 +667,12 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen174
-\pgfmath@count=\count155
+\pgfmath@dimen=\dimen176
+\pgfmath@count=\count157
 \pgfmath@box=\box52
-\pgfmath@toks=\toks40
-\pgfmath@stack@operand=\toks41
-\pgfmath@stack@operation=\toks42
+\pgfmath@toks=\toks41
+\pgfmath@stack@operand=\toks42
+\pgfmath@stack@operation=\toks43
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
@@ -678,37 +692,37 @@ tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
 thmetics.code.tex)))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count156
+\c@pgfmathroundto@lastzeros=\count158
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
 x
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
-\pgf@picminx=\dimen175
-\pgf@picmaxx=\dimen176
-\pgf@picminy=\dimen177
-\pgf@picmaxy=\dimen178
-\pgf@pathminx=\dimen179
-\pgf@pathmaxx=\dimen180
-\pgf@pathminy=\dimen181
-\pgf@pathmaxy=\dimen182
-\pgf@xx=\dimen183
-\pgf@xy=\dimen184
-\pgf@yx=\dimen185
-\pgf@yy=\dimen186
-\pgf@zx=\dimen187
-\pgf@zy=\dimen188
+\pgf@picminx=\dimen177
+\pgf@picmaxx=\dimen178
+\pgf@picminy=\dimen179
+\pgf@picmaxy=\dimen180
+\pgf@pathminx=\dimen181
+\pgf@pathmaxx=\dimen182
+\pgf@pathminy=\dimen183
+\pgf@pathmaxy=\dimen184
+\pgf@xx=\dimen185
+\pgf@xy=\dimen186
+\pgf@yx=\dimen187
+\pgf@yy=\dimen188
+\pgf@zx=\dimen189
+\pgf@zy=\dimen190
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
 code.tex
 File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
-\pgf@path@lastx=\dimen189
-\pgf@path@lasty=\dimen190
+\pgf@path@lastx=\dimen191
+\pgf@path@lasty=\dimen192
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
 .tex
 File: pgfcorepathusage.code.tex 2014/11/02  (rcs-revision 1.24)
-\pgf@shorten@end@additional=\dimen191
-\pgf@shorten@start@additional=\dimen192
+\pgf@shorten@end@additional=\dimen193
+\pgf@shorten@start@additional=\dimen194
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
 x
@@ -716,19 +730,19 @@ File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
 \pgfpic=\box53
 \pgf@hbox=\box54
 \pgf@layerbox@main=\box55
-\pgf@picture@serial@count=\count157
+\pgf@picture@serial@count=\count159
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
 ode.tex
 File: pgfcoregraphicstate.code.tex 2014/11/02  (rcs-revision 1.12)
-\pgflinewidth=\dimen193
+\pgflinewidth=\dimen195
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
 s.code.tex
 File: pgfcoretransformations.code.tex 2015/08/07  (rcs-revision 1.20)
-\pgf@pt@x=\dimen194
-\pgf@pt@y=\dimen195
-\pgf@pt@temp=\dimen196
+\pgf@pt@x=\dimen196
+\pgf@pt@y=\dimen197
+\pgf@pt@temp=\dimen198
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
@@ -744,12 +758,12 @@ File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
 x
 File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
-\pgfarrowsep=\dimen197
+\pgfarrowsep=\dimen199
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
-\pgf@max=\dimen198
-\pgf@sys@shading@range@num=\count158
+\pgf@max=\dimen256
+\pgf@sys@shading@range@num=\count160
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
@@ -780,8 +794,8 @@ File: pgfmoduleplot.code.tex 2015/08/03  (rcs-revision 1.13)
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
 .sty
 Package: pgfcomp-version-0-65 2007/07/03 v3.0.1a (rcs-revision 1.7)
-\pgf@nodesepstart=\dimen199
-\pgf@nodesepend=\dimen256
+\pgf@nodesepstart=\dimen257
+\pgf@nodesepend=\dimen258
 )
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
 .sty
@@ -795,10 +809,10 @@ Package: pgfcomp-version-1-18 2007/07/23 v3.0.1a (rcs-revision 1.1)
 Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
-\pgffor@iter=\dimen257
-\pgffor@skip=\dimen258
-\pgffor@stack=\toks43
-\pgffor@toks=\toks44
+\pgffor@iter=\dimen259
+\pgffor@skip=\dimen260
+\pgffor@stack=\toks44
+\pgffor@toks=\toks45
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
@@ -806,31 +820,31 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
 .code.tex
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count159
-\pgfplotmarksize=\dimen259
+\pgf@plot@mark@count=\count161
+\pgfplotmarksize=\dimen261
 )
-\tikz@lastx=\dimen260
-\tikz@lasty=\dimen261
-\tikz@lastxsaved=\dimen262
-\tikz@lastysaved=\dimen263
-\tikzleveldistance=\dimen264
-\tikzsiblingdistance=\dimen265
+\tikz@lastx=\dimen262
+\tikz@lasty=\dimen263
+\tikz@lastxsaved=\dimen264
+\tikz@lastysaved=\dimen265
+\tikzleveldistance=\dimen266
+\tikzsiblingdistance=\dimen267
 \tikz@figbox=\box58
 \tikz@figbox@bg=\box59
 \tikz@tempbox=\box60
 \tikz@tempbox@bg=\box61
-\tikztreelevel=\count160
-\tikznumberofchildren=\count161
-\tikznumberofcurrentchild=\count162
-\tikz@fig@count=\count163
+\tikztreelevel=\count162
+\tikznumberofchildren=\count163
+\tikznumberofcurrentchild=\count164
+\tikz@fig@count=\count165
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count164
-\pgfmatrixcurrentcolumn=\count165
-\pgf@matrix@numberofcolumns=\count166
+\pgfmatrixcurrentrow=\count166
+\pgfmatrixcurrentcolumn=\count167
+\pgf@matrix@numberofcolumns=\count168
 )
-\tikz@expandcount=\count167
+\tikz@expandcount=\count169
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarytopaths.code.tex
@@ -842,12 +856,12 @@ Package: pgfplots 2016/01/06 v1.13 Data Visualization (1.13)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
-\t@pgfplots@toka=\toks45
-\t@pgfplots@tokb=\toks46
-\t@pgfplots@tokc=\toks47
-\pgfplots@tmpa=\dimen266
-\c@pgfplots@coordindex=\count168
-\c@pgfplots@scanlineindex=\count169
+\t@pgfplots@toka=\toks46
+\t@pgfplots@tokb=\toks47
+\t@pgfplots@tokc=\toks48
+\pgfplots@tmpa=\dimen268
+\c@pgfplots@coordindex=\count170
+\c@pgfplots@scanlineindex=\count171
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code
 .tex))
@@ -863,7 +877,7 @@ Package pgfplots: loading complementary arithmetics for your pgf version...
 gfsupp_pgflibraryfpu.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
 gfsupp_pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count170
+\c@pgfmathroundto@lastzeros=\count172
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotslists
@@ -872,14 +886,14 @@ tructure.code.tex)
 tructureext.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray
 .code.tex
-\c@pgfplotsarray@tmp=\count171
+\c@pgfplotsarray@tmp=\count173
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatri
 x.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshare
 d.code.tex
-\c@pgfplotstable@counta=\count172
-\t@pgfplotstable@a=\toks48
+\c@pgfplotstable@counta=\count174
+\t@pgfplotstable@a=\toks49
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque
 .code.tex)
@@ -891,7 +905,7 @@ de.tex))
 .tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.sur
 fshading.code.tex
-\c@pgfplotslibrarysurf@no=\count173
+\c@pgfplotslibrarysurf@no=\count175
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surf
 shading.pgfsys-pdftex.def)))
@@ -918,14 +932,14 @@ e.tex)
 zlibrarydecorations.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.cod
 e.tex
-\pgfdecoratedcompleteddistance=\dimen267
-\pgfdecoratedremainingdistance=\dimen268
-\pgfdecoratedinputsegmentcompleteddistance=\dimen269
-\pgfdecoratedinputsegmentremainingdistance=\dimen270
-\pgf@decorate@distancetomove=\dimen271
-\pgf@decorate@repeatstate=\count174
-\pgfdecorationsegmentamplitude=\dimen272
-\pgfdecorationsegmentlength=\dimen273
+\pgfdecoratedcompleteddistance=\dimen269
+\pgfdecoratedremainingdistance=\dimen270
+\pgfdecoratedinputsegmentcompleteddistance=\dimen271
+\pgfdecoratedinputsegmentremainingdistance=\dimen272
+\pgf@decorate@distancetomove=\dimen273
+\pgf@decorate@repeatstate=\count176
+\pgfdecorationsegmentamplitude=\dimen274
+\pgfdecorationsegmentlength=\dimen275
 )
 \tikz@lib@dec@box=\box62
 )
@@ -937,13 +951,13 @@ decorations.pathmorphing.code.tex))
 zlibrarydecorations.pathreplacing.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
 decorations.pathreplacing.code.tex))
-\pgfplots@numplots=\count175
-\pgfplots@xmin@reg=\dimen274
-\pgfplots@xmax@reg=\dimen275
-\pgfplots@ymin@reg=\dimen276
-\pgfplots@ymax@reg=\dimen277
-\pgfplots@zmin@reg=\dimen278
-\pgfplots@zmax@reg=\dimen279
+\pgfplots@numplots=\count177
+\pgfplots@xmin@reg=\dimen276
+\pgfplots@xmax@reg=\dimen277
+\pgfplots@ymin@reg=\dimen278
+\pgfplots@ymax@reg=\dimen279
+\pgfplots@zmin@reg=\dimen280
+\pgfplots@zmax@reg=\dimen281
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibraryplotmarks.code.tex
@@ -956,8 +970,8 @@ File: pgflibraryplotmarks.code.tex 2015/08/03 v3.0.1a (rcs-revision 1.14)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/gra
 phs/tikzlibrarygraphs.code.tex
 File: tikzlibrarygraphs.code.tex 2015/06/05 v3.0.1a (rcs-revision 1.44)
-\tikz@lib@auto@number=\count176
-\tikz@qnode@count=\count177
+\tikz@lib@auto@number=\count178
+\tikz@qnode@count=\count179
 ))
 
 LaTeX Warning: Unused global option(s):
@@ -966,32 +980,32 @@ LaTeX Warning: Unused global option(s):
 (./lhsinverse.aux)
 \openout1 = `lhsinverse.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 107.
+LaTeX Font Info:    ... okay on input line 107.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count178
-\scratchdimen=\dimen280
+\scratchcounter=\count180
+\scratchdimen=\dimen282
 \scratchbox=\box63
-\nofMPsegments=\count179
-\nofMParguments=\count180
-\everyMPshowfont=\toks49
-\MPscratchCnt=\count181
-\MPscratchDim=\dimen281
-\MPnumerator=\count182
-\makeMPintoPDFobject=\count183
-\everyMPtoPDFconversion=\toks50
+\nofMPsegments=\count181
+\nofMParguments=\count182
+\everyMPshowfont=\toks50
+\MPscratchCnt=\count183
+\MPscratchDim=\dimen283
+\MPnumerator=\count184
+\makeMPintoPDFobject=\count185
+\everyMPtoPDFconversion=\toks51
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -1055,22 +1069,23 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.13} into 
 your preamble.
- on input line 53.
+ on input line 107.
 
-\c__siunitx_mathsf_int=\count184
-LaTeX Font Info:    Try loading font information for U+msa on input line 53.
+\c__siunitx_mathsf_int=\count186
+LaTeX Font Info:    Try loading font information for U+msa on input line 107.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 53.
+LaTeX Font Info:    Try loading font information for U+msb on input line 107.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+stmry on input line 53.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 107.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
-\c__siunitx_mathtt_int=\count185
+\c__siunitx_mathtt_int=\count187
 
 chapter 1.
 [1
@@ -1079,149 +1094,1165 @@ chapter 1.
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
-LaTeX Font Info:    Font shape `OT1/cmtex/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/bx/n' tried instead on input line 458.
-
-LaTeX Font Info:    Font shape `OT1/cmtex/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/it' tried instead on input line 458.
+\openout3 = `lhsinverse.ptb'.
 
  [5]
+\openout3 = `lhsinverse.ptb'.
+
+
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-) [6] [7]
-Overfull \hbox (18.64471pt too wide) in paragraph at lines 662--673
-[]$[]$ 
- []
+)
+\openout3 = `lhsinverse.ptb'.
 
-[8]
-Overfull \hbox (7.14734pt too wide) in paragraph at lines 814--824
-[]$[]$ 
- []
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [6]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [7]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [8]
+\openout3 = `lhsinverse.ptb'.
+
 
 [9] [10] [11]
-Overfull \hbox (24.3934pt too wide) in paragraph at lines 1027--1040
-[]$[]$ 
- []
+\openout3 = `lhsinverse.ptb'.
 
-[12]
-Overfull \hbox (14.41966pt too wide) in paragraph at lines 1080--1092
+ [12]
+Overfull \hbox (14.41966pt too wide) in paragraph at lines 1540--1552
 [][] 
  []
 
-[13] [14] [15] [16] [17]
-Overfull \hbox (10.36786pt too wide) in paragraph at lines 1406--1418
-\OT1/cmr/m/n/10.95 pre-vi-ous re-cur-sion. For in-stance, if $\OML/cmm/m/it/10.
-95 n \OT1/cmr/m/n/10.95 = 3$, then we start with []
- []
+[13] [14] [15] [16]
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1770.
 
 
-Overfull \hbox (19.04147pt too wide) in paragraph at lines 1406--1418
-[] \OT1/cmr/m/n/10.95 re-sult-ing in []
- []
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1770.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+[17]
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1856.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1856.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1856.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1857.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1857.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1857.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1899.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1900.
+
+\openout3 = `lhsinverse.ptb'.
 
 [18]
-Overfull \hbox (30.14209pt too wide) in paragraph at lines 1451--1468
-[]$[]$
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1973.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1973.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2000.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2001.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2010--2074
+
  []
 
+\openout3 = `lhsinverse.ptb'.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1451--1468
-
- []
-
-[19] [20] [21] [22]
-Overfull \hbox (24.3934pt too wide) in paragraph at lines 1775--1783
-[]$[]$ 
- []
+[19]
+\openout3 = `lhsinverse.ptb'.
 
 
-Overfull \hbox (12.89603pt too wide) in paragraph at lines 1793--1800
-[]$[]$ 
- []
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2180.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2180.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2184.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2184.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2186.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2186.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2186.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2188.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2188.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2188.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2188.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2197.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2197.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2200.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2200.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2202.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2202.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2202.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2204.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2204.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2204.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2204.
+
+[20]
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2214.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2214.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2217.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2217.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2219.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2219.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2219.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2221.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2221.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2221.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2221.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+[21]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2401.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2401.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2401.
+
+[22]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2448.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2448.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2448.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
 
 [23]
-Overfull \hbox (30.14209pt too wide) in paragraph at lines 1833--1852
-[]$[]$ 
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2672.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2672.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2672.
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ $[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[24] [25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37]
-Missing character: There is no ð in font cmtex10!
-Missing character: There is no ð in font cmtex10!
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][] 
+ []
+
+
+Overfull \hbox (6.88437pt too wide) in paragraph at lines 2606--2673
+ [][][][][][][][][]$ 
+ []
+
+[24]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [37]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
  [38]
-[39]
-Overfull \vbox (1.10881pt too high) has occurred while \output is active []
+\openout3 = `lhsinverse.ptb'.
 
 
-[40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51]
-Overfull \hbox (30.14209pt too wide) in paragraph at lines 3838--3848
-[]$[]$ 
+[39] [40]
+\openout3 = `lhsinverse.ptb'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4014--4108
+
  []
 
-[52] [53] [54]
-Overfull \hbox (2.71973pt too wide) in paragraph at lines 4160--4164
+[41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51] [52]
+\openout3 = `lhsinverse.ptb'.
+
+ [53]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [54] [55]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+
+[56]
+\openout3 = `lhsinverse.ptb'.
+
+
+Overfull \hbox (2.71973pt too wide) in paragraph at lines 5440--5444
 [][] 
  []
 
-[55] [56] [57] [58] [59] [60] [61]
-Overfull \hbox (18.64471pt too wide) in paragraph at lines 4778--4787
-[]$[]$ 
- []
+[57] [58]
+\openout3 = `lhsinverse.ptb'.
 
-[62] [63]
-Overfull \hbox (18.64471pt too wide) in paragraph at lines 4927--4940
-[]$[]$ 
- []
+ [59] [60]
+\openout3 = `lhsinverse.ptb'.
 
-[64]
-Overfull \hbox (17.16292pt too wide) in paragraph at lines 4941--4952
+\openout3 = `lhsinverse.ptb'.
+
+ [61]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [62] [63]
+\openout3 = `lhsinverse.ptb'.
+
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6127.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6127.
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 6127.
+
+[64] [65]
+\openout3 = `lhsinverse.ptb'.
+
+
+Overfull \hbox (2.53668pt too wide) in paragraph at lines 6314--6325
 \OT1/cmr/m/n/10.95 since $\OML/cmm/m/it/10.95 '\OT1/cmr/m/n/10.95 (8) = 4$, and
  $\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/n/10.95 (8) = 2$. We gen-er-ate the groups 
-with []
+with $[] ([] 8) ([] 8)$
  []
 
-[65] [66] [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79]
-Overfull \hbox (15.55562pt too wide) in paragraph at lines 6364--6375
-[]\OT1/cmr/m/n/10.95 We also see that for any power of 2, [] equals [], which i
-s 1; [] []
- []
+\openout3 = `lhsinverse.ptb'.
 
+\openout3 = `lhsinverse.ptb'.
 
-Overfull \hbox (53.95268pt too wide) in paragraph at lines 6447--6456
-\OT1/cmr/m/n/10.95 10111, in-vert-ing all bits, but the first and the last one.
- 10111 is 23 and [].
- []
+[66] [67] [68] [69] [70]
+\openout3 = `lhsinverse.ptb'.
 
-[80] [81] [82] [83] [84] (./lhsinverse.aux) ) 
+ [71] [72]
+\openout3 = `lhsinverse.ptb'.
+
+ [73] [74] [75]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [76]
+\openout3 = `lhsinverse.ptb'.
+
+ [77] [78]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [79]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [80]
+[81] [82] [83]
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+\openout3 = `lhsinverse.ptb'.
+
+ [84] [85] (./lhsinverse.aux) ) 
 Here is how much of TeX's memory you used:
- 35147 strings out of 493029
- 843412 string characters out of 6136234
- 1025024 words of memory out of 5000000
- 38168 multiletter control sequences out of 15000+600000
- 20854 words of font info for 85 fonts, out of 8000000 for 9000
+ 35762 strings out of 493029
+ 851645 string characters out of 6136234
+ 1033067 words of memory out of 5000000
+ 38768 multiletter control sequences out of 15000+600000
+ 24913 words of font info for 96 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,11n,83p,10376b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/ts/.texmf-var/fonts/pk/ljf
-our/public/cm/cmbtt10.657pk></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmtex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9
+</usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb>
-Output written on lhsinverse.pdf (84 pages, 438920 bytes).
+Output written on lhsinverse.pdf (85 pages, 459495 bytes).
 PDF statistics:
- 370 PDF objects out of 1000 (max. 8388607)
- 245 compressed objects within 3 object streams
+ 355 PDF objects out of 1000 (max. 8388607)
+ 247 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
