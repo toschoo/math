@@ -63,6 +63,7 @@ ALL	 = cmds.tex \
 	   src/c06/Realrep.lhs \
 	   src/c06/Real.lhs \
 	   src/c06/GFun.lhs \
+	   src/c06/ClosedFib.lhs \
 	   src/c06/SternBrocot.lhs \
 	   src/c06/Extension.lhs \
 	   src/c06/Cantor2.lhs \
@@ -77,8 +78,8 @@ ALL	 = cmds.tex \
 	   src/c07/PolyFactor.lhs \
 	   src/c07/PolyModFactor.lhs \
 	   src/c07/HenselLifting.lhs \
+	   src/c07/Cantor3.lhs \
 	   src/c07/PartialF.lhs \
-	   src/c07/ClosedFib.lhs \
 	   src/c07/Gnomon.lhs \
 	   src/c08/relfun.lhs \
 	   src/c09/linear.lhs \

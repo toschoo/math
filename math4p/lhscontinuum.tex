@@ -10,6 +10,8 @@
 % Springer Style
 %\documentclass[envcountsame]{llncs}
 
+%% ODER: format ==         = "\mathrel{==}"
+%% ODER: format /=         = "\neq "
 %
 %
 \makeatletter
@@ -41,6 +43,58 @@
 \newcommand{\tex}[1]{\text{\texfamily#1}}	% NEU
 
 \newcommand{\Sp}{\hskip.33334em\relax}
+
+
+\newcommand{\Conid}[1]{\mathit{#1}}
+\newcommand{\Varid}[1]{\mathit{#1}}
+\newcommand{\anonymous}{\kern0.06em \vbox{\hrule\@width.5em}}
+\newcommand{\plus}{\mathbin{+\!\!\!+}}
+\newcommand{\bind}{\mathbin{>\!\!\!>\mkern-6.7mu=}}
+\newcommand{\rbind}{\mathbin{=\mkern-6.7mu<\!\!\!<}}% suggested by Neil Mitchell
+\newcommand{\sequ}{\mathbin{>\!\!\!>}}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\usepackage{polytable}
+
+%mathindent has to be defined
+\@ifundefined{mathindent}%
+  {\newdimen\mathindent\mathindent\leftmargini}%
+  {}%
+
+\def\resethooks{%
+  \global\let\SaveRestoreHook\empty
+  \global\let\ColumnHook\empty}
+\newcommand*{\savecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\savecolumns[#1]}}
+\newcommand*{\restorecolumns}[1][default]%
+  {\g@addto@macro\SaveRestoreHook{\restorecolumns[#1]}}
+\newcommand*{\aligncolumn}[2]%
+  {\g@addto@macro\ColumnHook{\column{#1}{#2}}}
+
+\resethooks
+
+\newcommand{\onelinecommentchars}{\quad-{}- }
+\newcommand{\commentbeginchars}{\enskip\{-}
+\newcommand{\commentendchars}{-\}\enskip}
+
+\newcommand{\visiblecomments}{%
+  \let\onelinecomment=\onelinecommentchars
+  \let\commentbegin=\commentbeginchars
+  \let\commentend=\commentendchars}
+
+\newcommand{\invisiblecomments}{%
+  \let\onelinecomment=\empty
+  \let\commentbegin=\empty
+  \let\commentend=\empty}
+
+\visiblecomments
+
+\newlength{\blanklineskip}
+\setlength{\blanklineskip}{0.66084ex}
+
+\newcommand{\hsindent}[1]{\quad}% default is fixed indentation
+\let\hspre\empty
+\let\hspost\empty
 \newcommand{\NB}{\textbf{NB}}
 \newcommand{\Todo}[1]{$\langle$\textbf{To do:}~#1$\rangle$}
 
@@ -57,12 +111,23 @@
 \chapter{Real Numbers} % c06
 \section{$\sqrt{2}$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Sqrt2}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Sqrt2}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 Until now, we have looked at \term{discrete} numbers,
@@ -169,44 +234,68 @@ The more iterations of this kind we do,
 the better is the approximation. In Haskell:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~heron~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Double}\\
-\texfamily ~~heron~n~s~=~{\bfseries let}~a~~~=~fromIntegral~n~{\bfseries in}~go~s~a~(a/2)\\
-\texfamily ~~~~{\bfseries where}~~go~0~\char95 ~x~~~=~x\\
-\texfamily ~~~~~~~~~~~go~i~a~x~~~|~~xx~=~a~~~~~=~x\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~go~(i-1)~a~((x~+~a/x)/2)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{heron}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{heron}\;\Varid{n}\;\Varid{s}\mathrel{=}\mathbf{let}\;\Varid{a}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{n}\;\mathbf{in}\;\Varid{go}\;\Varid{s}\;\Varid{a}\;(\Varid{a}\mathbin{/}\mathrm{2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\Varid{x}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{a}\;\Varid{x}{}\<[23]%
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{xx}\mathrel{=}\Varid{a}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{x}{}\<[E]%
+\\
+\>[23]{}\mid {}\<[26]%
+\>[26]{}\Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{a}\;((\Varid{x}\mathbin{+}\Varid{a}\mathbin{/}\Varid{x})\mathbin{/}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 The function takes two arguments.
 The first is the number whose square root we want to calculate
 and the second is the number of iterations we want to do.
-We then call \text{\texfamily go} with $s$, the number of iterations,
-$a$, the \text{\texfamily {\itshape Double}} representation of $n$, and our first guess
+We then call \ensuremath{\Varid{go}} with $s$, the number of iterations,
+$a$, the \ensuremath{\Conid{Double}} representation of $n$, and our first guess
 $a/2$.
 
-In \text{\texfamily go}, if we have reached $i=0$, we yield the result $x$.
-Otherwise, we call \text{\texfamily go} again with $i-1$, $a$ and 
+In \ensuremath{\Varid{go}}, if we have reached $i=0$, we yield the result $x$.
+Otherwise, we call \ensuremath{\Varid{go}} again with $i-1$, $a$ and 
 the average of $x$ and $a/x$.
 
 Let us compute $\sqrt{2}$ following this approach for, say,
 five iterations. We first have
 
 \begin{minipage}{\textwidth}
-\text{\texfamily go\Sp 5\Sp 2\Sp 1\Sp \Sp \Sp \Sp \Sp \Sp \Sp \Sp =\Sp go\Sp 4\Sp 2\Sp ((1\Sp +\Sp 2)/2)}\\
-\text{\texfamily go\Sp 4\Sp 2\Sp 1.5\Sp \Sp \Sp \Sp \Sp \Sp =\Sp go\Sp 3\Sp 2\Sp ((1.5\Sp +\Sp 2/1.5)\Sp /\Sp 2)}\\
-\text{\texfamily go\Sp 3\Sp 2\Sp 1.416666\Sp =\Sp go\Sp 2\Sp 2\Sp ((1.416666\Sp +\Sp 2\Sp /\Sp 1.416666)/2)}\\
-\text{\texfamily go\Sp 2\Sp 2\Sp 1.414215\Sp =\Sp go\Sp 1\Sp 2\Sp ((1.414215\Sp +\Sp 2\Sp /\Sp 1.414215)/2)}\\
-\text{\texfamily go\Sp 1\Sp 2\Sp 1.414213\Sp =\Sp go\Sp 0\Sp 2\Sp ((1.414213\Sp +\Sp 2\Sp /\Sp 1.414213)/2)}\\
-\text{\texfamily go\Sp 1\Sp 2\Sp 1.414213\Sp =\Sp 1.414213}.
+\ensuremath{\Varid{go}\;\mathrm{5}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\Varid{go}\;\mathrm{4}\;\mathrm{2}\;((\mathrm{1}\mathbin{+}\mathrm{2})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{4}\;\mathrm{2}\;\mathrm{1.5}\mathrel{=}\Varid{go}\;\mathrm{3}\;\mathrm{2}\;((\mathrm{1.5}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.5})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{3}\;\mathrm{2}\;\mathrm{1.416666}\mathrel{=}\Varid{go}\;\mathrm{2}\;\mathrm{2}\;((\mathrm{1.416666}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.416666})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{2}\;\mathrm{2}\;\mathrm{1.414215}\mathrel{=}\Varid{go}\;\mathrm{1}\;\mathrm{2}\;((\mathrm{1.414215}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414215})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\Varid{go}\;\mathrm{0}\;\mathrm{2}\;((\mathrm{1.414213}\mathbin{+}\mathrm{2}\mathbin{/}\mathrm{1.414213})\mathbin{/}\mathrm{2})}\\
+\ensuremath{\Varid{go}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1.414213}\mathrel{=}\mathrm{1.414213}}.
 \end{minipage}
 
-Note that we do not show the complete \text{\texfamily {\itshape Double}} value,
+Note that we do not show the complete \ensuremath{\Conid{Double}} value,
 but only the first six digits. The results of the last two
 steps, therefore, are identical. They differ, in fact, at the
 twelfth digit: 
-$1.4142135623746899$ (\text{\texfamily heron\Sp 2\Sp 4}) versus
-$1.414213562373095$  (\text{\texfamily heron\Sp 2\Sp 5}). 
+$1.4142135623746899$ (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{4}}) versus
+$1.414213562373095$  (\ensuremath{\Varid{heron}\;\mathrm{2}\;\mathrm{5}}). 
 Note that the result of five iterations has one digit less
 than that of four iterations.
 This is because that after the last digit, 5,
@@ -220,17 +309,28 @@ is in fact not the last digit of the number.
 With slightly higher precision, we would see that the number
 continues like $03\dots$
 
-The result of \text{\texfamily (heron\Sp 2\Sp 5)\char94 2} is fairly close to 2: 
+The result of \ensuremath{(\Varid{heron}\;\mathrm{2}\;\mathrm{5})\mathbin{\uparrow}\mathrm{2}} is fairly close to 2: 
 $1.9999999999999996$.
-It will not get any closer using \text{\texfamily {\itshape Double}} representation.
+It will not get any closer using \ensuremath{\Conid{Double}} representation.
 \section{$\Phi$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Phi}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Phi}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 Another interesting irrational number
@@ -363,27 +463,41 @@ The numerical value is approximately
 We can define it as a constant in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~phi~::~{\itshape Double}\\
-\texfamily ~~phi~=~0.5~*~(1~+~sqrt~5)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{phi}\mathbin{::}\Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{phi}\mathrel{=}\mathrm{0.5}\mathbin{*}(\mathrm{1}\mathbin{+}\Varid{sqrt}\;\mathrm{5}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 We can now define a function that, for any given $a$,
 yields $b$:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~golden~::~{\itshape Double}~\char'31~{\itshape Double}\\
-\texfamily ~~golden~a~=~a~*~phi
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{golden}\mathbin{::}\Conid{Double}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{golden}\;\Varid{a}\mathrel{=}\Varid{a}\mathbin{*}\Varid{phi}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\text{\texfamily golden\Sp 1}, of course, is just $\Phi$, \ie\ 
+\ensuremath{\Varid{golden}\;\mathrm{1}}, of course, is just $\Phi$, \ie\ 
 \num{1.618033988749895}.
-\text{\texfamily golden\Sp 2} is twice that value, namely \num{3.23606797749979}.
+\ensuremath{\Varid{golden}\;\mathrm{2}} is twice that value, namely \num{3.23606797749979}.
 Furthermore, we can state that
-\text{\texfamily 2\Sp /\Sp (golden\Sp 2\Sp -\Sp 2)}, which is $\frac{a}{b-a}$, is
+\ensuremath{\mathrm{2}\mathbin{/}(\Varid{golden}\;\mathrm{2}\mathbin{-}\mathrm{2})}, which is $\frac{a}{b-a}$, is
 again an approximation
 of $\Phi$.
 
@@ -401,12 +515,23 @@ as we will se in the next chapter.
 
 \section{$\pi$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Pi}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Pi}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 $\pi$ is probably the most famous 
@@ -564,15 +689,53 @@ was discovered by Indian mathematician Nilakantha Somayaji
 We can implement this in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~nilak~::~{\itshape Int}~\char'31~{\itshape Double}\\
-\texfamily ~~nilak~i~~|~even~i~~~~~=~~nilak~(i+1)\\
-\texfamily ~~~~~~~~~~~|~otherwise~~=~~go~i~~2~3~4\\
-\texfamily ~~~~{\bfseries where}~~go~0~\char95 ~\char95 ~\char95 ~~=~~3\\
-\texfamily ~~~~~~~~~~~go~n~a~b~c~~=~~{\bfseries let}~k~~|~even~n~~~~=~-4\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~otherwise~=~~4\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~(k/(a*b*c))~+~go~(n-1)~c~(c+1)~(c+2)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{25E}{@{}l@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{49}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{nilak}\mathbin{::}\Conid{Int}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{nilak}\;\Varid{i}{}\<[12]%
+\>[12]{}\mid \Varid{even}\;\Varid{i}{}\<[25]%
+\>[25]{}\mathrel{=}{}\<[25E]%
+\>[28]{}\Varid{nilak}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[E]%
+\\
+\>[12]{}\mid \Varid{otherwise}{}\<[25]%
+\>[25]{}\mathrel{=}{}\<[25E]%
+\>[28]{}\Varid{go}\;\Varid{i}\;{}\<[34]%
+\>[34]{}\mathrm{2}\;\mathrm{3}\;\mathrm{4}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous \;\anonymous \;\anonymous {}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\mathrm{3}{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{n}\;\Varid{a}\;\Varid{b}\;\Varid{c}{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[24E]%
+\>[27]{}\mathbf{let}\;\Varid{k}{}\<[34]%
+\>[34]{}\mid \Varid{even}\;\Varid{n}{}\<[46]%
+\>[46]{}\mathrel{=}\mathbin{-}\mathrm{4}{}\<[E]%
+\\
+\>[34]{}\mid \Varid{otherwise}\mathrel{=}{}\<[49]%
+\>[49]{}\mathrm{4}{}\<[E]%
+\\
+\>[27]{}\mathbf{in}\;(\Varid{k}\mathbin{/}(\Varid{a}\mathbin{*}\Varid{b}\mathbin{*}\Varid{c}))\mathbin{+}\Varid{go}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{c}\;(\Varid{c}\mathbin{+}\mathrm{1})\;(\Varid{c}\mathbin{+}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Here we use a negative term, whenever $n$,
@@ -583,7 +746,7 @@ we perform, for $i$ even, $i+1$
 and hence an odd number
 of steps.
 This way, the series converges to 3.14159
-after about 35 steps, \ie\ \text{\texfamily nilak\Sp 35} is
+after about 35 steps, \ie\ \ensuremath{\Varid{nilak}\;\mathrm{35}} is
 some number that starts with 3.14159.
 
 An even faster convergence is obtained by
@@ -601,15 +764,31 @@ In Haskell this gives rise to a
 very nice recursive function:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~vietep~::~{\itshape Int}~\char'31~{\itshape Double}\\
-\texfamily ~~vietep~i~=~2~/~(go~0~(sqrt~2))\\
-\texfamily ~~~~{\bfseries where}~go~n~t~~|~n~\char'36~i~~~~~=~1\\
-\texfamily ~~~~~~~~~~~~~~~~~~|~otherwise~~=~(t/2)~*~go~(n+1)~(sqrt~(2+t))
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{vietep}\mathbin{::}\Conid{Int}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{vietep}\;\Varid{i}\mathrel{=}\mathrm{2}\mathbin{/}(\Varid{go}\;\mathrm{0}\;(\Varid{sqrt}\;\mathrm{2})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\;\Varid{t}{}\<[19]%
+\>[19]{}\mid \Varid{n}\equiv \Varid{i}{}\<[32]%
+\>[32]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[19]{}\mid \Varid{otherwise}{}\<[32]%
+\>[32]{}\mathrel{=}(\Varid{t}\mathbin{/}\mathrm{2})\mathbin{*}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1})\;(\Varid{sqrt}\;(\mathrm{2}\mathbin{+}\Varid{t})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The approximation 3.14159 is reached with \text{\texfamily vietep\Sp 10}.
+The approximation 3.14159 is reached with \ensuremath{\Varid{vietep}\;\mathrm{10}}.
 
 There are many other series, 
 some focusing on early convergence,
@@ -631,14 +810,38 @@ later on:
 In Haskell this is, for instance:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~leipi~::~{\itshape Int}~\char'31~{\itshape Double}\\
-\texfamily ~~leipi~i~=~4~*~go~0~1\\
-\texfamily ~~~~{\bfseries where}~go~n~d~~|~n~\char'36~i~~~~~=~0\\
-\texfamily ~~~~~~~~~~~~~~~~~~|~otherwise~~=~~{\bfseries let}~x~~|~even~n~~~~=~1\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~otherwise~=~-1~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~x/d~+~go~(n+1)~(d+2)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{leipi}\mathbin{::}\Conid{Int}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{leipi}\;\Varid{i}\mathrel{=}\mathrm{4}\mathbin{*}\Varid{go}\;\mathrm{0}\;\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\;\Varid{d}{}\<[19]%
+\>[19]{}\mid \Varid{n}\equiv \Varid{i}{}\<[32]%
+\>[32]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[19]{}\mid \Varid{otherwise}{}\<[32]%
+\>[32]{}\mathrel{=}{}\<[35]%
+\>[35]{}\mathbf{let}\;\Varid{x}{}\<[42]%
+\>[42]{}\mid \Varid{even}\;\Varid{n}{}\<[54]%
+\>[54]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[42]{}\mid \Varid{otherwise}\mathrel{=}\mathbin{-}\mathrm{1}{}\<[E]%
+\\
+\>[35]{}\mathbf{in}\;\Varid{x}\mathbin{/}\Varid{d}\mathbin{+}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1})\;(\Varid{d}\mathbin{+}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 This series converges really slowly.
@@ -700,14 +903,29 @@ number theory expressing the probability
 of two randomly chosen numbers being coprime to each other.
 \section{$e$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape E}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Fact}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{E}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 The Bernoullis were a family of Huguenots from Antwerp
@@ -818,26 +1036,43 @@ e = \sum_{n=1}^{\infty}{\frac{1}{n!}}.
 We can implement this equation in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~e\char95 ~::~{\itshape Integer}~\char'31~{\itshape Double}\\
-\texfamily ~~e\char95 ~p~=~1~+~sum~[1/(dfac~n)~|~n~\char'06~[1..p]]\\
-\texfamily ~~~~{\bfseries where}~dfac~=~fromInteger~\char'00~fac
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{e\char95 }\mathbin{::}\Conid{Integer}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{e\char95 }\;\Varid{p}\mathrel{=}\mathrm{1}\mathbin{+}\Varid{sum}\;[\mskip1.5mu \mathrm{1}\mathbin{/}(\Varid{dfac}\;\Varid{n})\mid \Varid{n}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{p}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{dfac}\mathrel{=}\Varid{fromInteger}\mathbin{\circ}\Varid{fac}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 After some experiments with this function,
 we see that
 it converges already after 17 recursions
 to a value that does not change with greater
-arguments at \text{\texfamily {\itshape Double}} precision, such that 
-\text{\texfamily e\char95 \Sp 17\Sp \char'36\Sp e\char95 \Sp 18\Sp \char'36\Sp e\char95 \Sp 19\Sp \char'36} $\dots$
-We could then implement \text{\texfamily e} as
+arguments at \ensuremath{\Conid{Double}} precision, such that 
+\ensuremath{\Varid{e\char95 }\;\mathrm{17}\equiv \Varid{e\char95 }\;\mathrm{18}\equiv \Varid{e\char95 }\;\mathrm{19}\equiv } $\dots$
+We could then implement \ensuremath{\Varid{e}} as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~e~::~{\itshape Double}\\
-\texfamily ~~e~=~e\char95 ~17
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{e}\mathbin{::}\Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{e}\mathrel{=}\Varid{e\char95 }\;\mathrm{17}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 The fact that $e$ is related to the factorial
@@ -862,18 +1097,28 @@ To answer this question, we first implement
 Stirling's formula:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~stirfac~::~{\itshape Integer}~\char'31~{\itshape Integer}\\
-\texfamily ~~stirfac~i~=~ceiling~\$~(sqrt~(2*\char'07*n))~*~(n/e)\char94 i\\
-\texfamily ~~~~{\bfseries where}~n~=~fromIntegral~i
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{stirfac}\mathbin{::}\Conid{Integer}\to \Conid{Integer}{}\<[E]%
+\\
+\>[3]{}\Varid{stirfac}\;\Varid{i}\mathrel{=}\Varid{ceiling}\mathbin{\$}(\Varid{sqrt}\;(\mathrm{2}\mathbin{*}\Varid{pi}\mathbin{*}\Varid{n}))\mathbin{*}(\Varid{n}\mathbin{/}\Varid{e})\mathbin{\uparrow}\Varid{i}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{n}\mathrel{=}\Varid{fromIntegral}\;\Varid{i}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Note that we \emph{ceil} the value, instead of
 rounding it just to the next integer value.
 
 Then we define a function to compute the difference
-\text{\texfamily difac\Sp n\Sp =\Sp fac\Sp n\Sp -\Sp stirfac\Sp n}.
+\ensuremath{\Varid{difac}\;\Varid{n}\mathrel{=}\Varid{fac}\;\Varid{n}\mathbin{-}\Varid{stirfac}\;\Varid{n}}.
 The result for the first 15 numbers is
 
 \[
@@ -895,7 +1140,7 @@ The difference grows rapidly and reaches more
 than 3 million with $12!$. But what is the deviation
 in relation to the real value?
 We define the function 
-\text{\texfamily 100\Sp *\Sp (fromIntegral\Sp \$\Sp difac\Sp n)\Sp /\Sp (fromIntegral\Sp \$\Sp fac\Sp n)}
+\ensuremath{\mathrm{100}\mathbin{*}(\Varid{fromIntegral}\mathbin{\$}\Varid{difac}\;\Varid{n})\mathbin{/}(\Varid{fromIntegral}\mathbin{\$}\Varid{fac}\;\Varid{n})}
 to obtain the difference in terms of a percentage
 of the real value. We see starting from 5
 (where the first difference occurs):
@@ -960,23 +1205,43 @@ as $\frac{1}{\frac{1}{2}a + \dots}$.
 Here is an implementation:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~contfrac~::~[{\itshape Quoz}]~\char'31~{\itshape Double}\\
-\texfamily ~~contfrac~[]~~=~1\\
-\texfamily ~~contfrac~[i]~=~fromQuoz~i~\\
-\texfamily ~~contfrac~(i:is)~=~n~+~1~/~(contfrac~is)\\
-\texfamily ~~~~{\bfseries where}~n~=~fromQuoz~i\\
-\texfamily \\
-\texfamily ~~fromQuoz~::~{\itshape Quoz}~\char'31~{\itshape Double}\\
-\texfamily ~~fromQuoz~i~=~{\bfseries case}~i~{\bfseries of}\\
-\texfamily ~~~~~~~~~~~~~~~~({\itshape Pos}~({\itshape Q}~nu~d))~\char'31~fromIntegral~nu~/~fromIntegral~d\\
-\texfamily ~~~~~~~~~~~~~~~~({\itshape Neg}~({\itshape Q}~nu~d))~\char'31~negate~(fromIntegral~nu~/~fromIntegral~d)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{contfrac}\mathbin{::}[\mskip1.5mu \Conid{Quoz}\mskip1.5mu]\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{contfrac}\;[\mskip1.5mu \mskip1.5mu]{}\<[16]%
+\>[16]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\Varid{contfrac}\;[\mskip1.5mu \Varid{i}\mskip1.5mu]\mathrel{=}\Varid{fromQuoz}\;\Varid{i}{}\<[E]%
+\\
+\>[3]{}\Varid{contfrac}\;(\Varid{i}\mathbin{:}\Varid{is})\mathrel{=}\Varid{n}\mathbin{+}\mathrm{1}\mathbin{/}(\Varid{contfrac}\;\Varid{is}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{n}\mathrel{=}\Varid{fromQuoz}\;\Varid{i}{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{fromQuoz}\mathbin{::}\Conid{Quoz}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{fromQuoz}\;\Varid{i}\mathrel{=}\mathbf{case}\;\Varid{i}\;\mathbf{of}{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}(\Conid{Pos}\;(\Conid{Q}\;\Varid{nu}\;\Varid{d}))\to \Varid{fromIntegral}\;\Varid{nu}\mathbin{/}\Varid{fromIntegral}\;\Varid{d}{}\<[E]%
+\\
+\>[3]{}\hsindent{14}{}\<[17]%
+\>[17]{}(\Conid{Neg}\;(\Conid{Q}\;\Varid{nu}\;\Varid{d}))\to \Varid{negate}\;(\Varid{fromIntegral}\;\Varid{nu}\mathbin{/}\Varid{fromIntegral}\;\Varid{d}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-For \text{\texfamily contfrac\Sp [2,1,2,1,1,4,1,1,6]} we get 2.7183,
+For \ensuremath{\Varid{contfrac}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{2},\mathrm{1},\mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{6}\mskip1.5mu]} we get 2.7183,
 which is not bad, but not yet too close to $e$. 
-With \text{\texfamily [2,1,2,1,1,4,1,1,6,1,1,8,1,1,10]} we get \num{2.718281828},
+With \ensuremath{[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{2},\mathrm{1},\mathrm{1},\mathrm{4},\mathrm{1},\mathrm{1},\mathrm{6},\mathrm{1},\mathrm{1},\mathrm{8},\mathrm{1},\mathrm{1},\mathrm{10}\mskip1.5mu]} we get \num{2.718281828},
 which is pretty close.
 
 Examining the sequence a bit further, we see
@@ -988,32 +1253,52 @@ Norwegian algebraist Sophus Lie (1842 -- 1899).
 The Engel expansion can be implemented as follows:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~engelexp~::~[{\itshape Integer}]\\
-\texfamily ~~engelexp~=~2:1:go~1\\
-\texfamily ~~~~{\bfseries where}~go~n~=~(2*n):1:1:go(n+1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{engelexp}\mathbin{::}[\mskip1.5mu \Conid{Integer}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{engelexp}\mathrel{=}\mathrm{2}\mathbin{:}\mathrm{1}\mathbin{:}\Varid{go}\;\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\mathrel{=}(\mathrm{2}\mathbin{*}\Varid{n})\mathbin{:}\mathrm{1}\mathbin{:}\mathrm{1}\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 The following fraction, however, conoverges
 must faster than the Engel expansion:
 $[1,\frac{1}{2},12,5,28,9,44,13]$.
-Note that we take advantage of the datatype \text{\texfamily {\itshape Quoz}}
+Note that we take advantage of the datatype \ensuremath{\Conid{Quoz}}
 to represent a numerator that is not 1.
 This sequence can be generated by means of 
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~fastexp~::~[{\itshape Quoz}]\\
-\texfamily ~~fastexp~=~1:({\itshape Pos}~(1\%2)):go~1\\
-\texfamily ~~~~{\bfseries where}~go~n~=~(16*n-4):(4*n+1):go~(n+1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fastexp}\mathbin{::}[\mskip1.5mu \Conid{Quoz}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{fastexp}\mathrel{=}\mathrm{1}\mathbin{:}(\Conid{Pos}\;(\mathrm{1}\mathbin{\%}\mathrm{2}))\mathbin{:}\Varid{go}\;\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{n}\mathrel{=}(\mathrm{16}\mathbin{*}\Varid{n}\mathbin{-}\mathrm{4})\mathbin{:}(\mathrm{4}\mathbin{*}\Varid{n}\mathbin{+}\mathrm{1})\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 This fraction converges already after 7 steps
 to the value \num{2.718281828}: 
 
-\text{\texfamily contfrac\Sp (take\Sp 7\Sp fastexp)}. 
+\ensuremath{\Varid{contfrac}\;(\Varid{take}\;\mathrm{7}\;\Varid{fastexp})}. 
 
 The area of mathematics where $e$ is really at home
 is analysis and its vast areas of application, 
@@ -1053,12 +1338,23 @@ We will investigate that later.
 
 \section{$\gamma$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Gamma}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Gamma}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 The \term{harmonic series} is defined as
@@ -1082,13 +1378,20 @@ called the \term{harmonic number} $H_k$, then is
 This is easily implemented in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~harmonic~::~{\itshape Natural}~\char'31~{\itshape Double}\\
-\texfamily ~~harmonic~n~=~sum~[1/d~|~d~\char'06~map~fromIntegral~[1..n]]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{harmonic}\mathbin{::}\Conid{Natural}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{harmonic}\;\Varid{n}\mathrel{=}\Varid{sum}\;[\mskip1.5mu \mathrm{1}\mathbin{/}\Varid{d}\mid \Varid{d}\leftarrow \Varid{map}\;\Varid{fromIntegral}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Some harmonic numbers are (\text{\texfamily map\Sp harmonic\Sp [1..10]}):
+Some harmonic numbers are (\ensuremath{\Varid{map}\;\Varid{harmonic}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}):
 
 $1, 1.5, 1.8\overline{3}, 2.08\overline{3}, 2.28\overline{3}, 
  2.44\overline{9}, 2.5928,2.7178, 2.8289, 2.9289.$
@@ -1105,25 +1408,35 @@ and the natural logarithm:
 We can implement this equation as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~harmonatural~::~{\itshape Natural}~\char'31~{\itshape Double}\\
-\texfamily ~~harmonatural~n~=~harmonic~n~-~ln~n\\
-\texfamily ~~~~{\bfseries where}~ln~=~log~\char'00~fromIntegral
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{harmonatural}\mathbin{::}\Conid{Natural}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{harmonatural}\;\Varid{n}\mathrel{=}\Varid{harmonic}\;\Varid{n}\mathbin{-}\Varid{ln}\;\Varid{n}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{ln}\mathrel{=}\Varid{log}\mathbin{\circ}\Varid{fromIntegral}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Applied on the first numbers with
-\text{\texfamily map\Sp harmonatural\Sp [1..10]}, the function
+\ensuremath{\Varid{map}\;\Varid{harmonatural}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}, the function
 does not show interesting results:
 
 $1.0, 0.8068,0.7347,0.697,0.6738,0.6582,0.6469,0.6384,0.6317,0.6263,\dots$
 
 Applied to greater numbers, however, the results approach a constant value:
 
-\text{\texfamily harmonatural\Sp \Sp \Sp \Sp 100\Sp =\Sp 0.58220}\\
-\text{\texfamily harmonatural\Sp \Sp \Sp 1000\Sp =\Sp 0.57771}\\
-\text{\texfamily harmonatural\Sp \Sp 10000\Sp =\Sp 0.57726}\\
-\text{\texfamily harmonatural\Sp 100000\Sp =\Sp 0.57722}
+\ensuremath{\Varid{harmonatural}\;\mathrm{100}\mathrel{=}\mathrm{0.58220}}\\
+\ensuremath{\Varid{harmonatural}\;\mathrm{1000}\mathrel{=}\mathrm{0.57771}}\\
+\ensuremath{\Varid{harmonatural}\;\mathrm{10000}\mathrel{=}\mathrm{0.57726}}\\
+\ensuremath{\Varid{harmonatural}\;\mathrm{100000}\mathrel{=}\mathrm{0.57722}}
 
 With even greater numbers, the difference converges to \num{0.57721}.
 This number, $\gamma$, was first mentioned by -- surprise -- 
@@ -1171,40 +1484,74 @@ It converges quite slow, however.
 If we implement the prime quotient as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~pquoz~::~{\itshape Natural}~\char'31~[{\itshape Double}]\\
-\texfamily ~~pquoz~n~=~[d/p~|~p~\char'06~ps]\\
-\texfamily ~~~~{\bfseries where}~~ps~~=~map~fromIntegral~(takeWhile~(<n)~allprimes)\\
-\texfamily ~~~~~~~~~~~d~~~=~fromIntegral~n
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pquoz}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{pquoz}\;\Varid{n}\mathrel{=}[\mskip1.5mu \Varid{d}\mathbin{/}\Varid{p}\mid \Varid{p}\leftarrow \Varid{ps}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{ps}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{map}\;\Varid{fromIntegral}\;(\Varid{takeWhile}\;(\mathbin{<}\Varid{n})\;\Varid{allprimes}){}\<[E]%
+\\
+\>[12]{}\Varid{d}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{n}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 and its average as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~pquozavg~::~{\itshape Integer}~\char'31~{\itshape Double}\\
-\texfamily ~~pquozavg~n~=~(sum~ds)~/~(fromIntegral~\$~length~ds)\\
-\texfamily ~~~~{\bfseries where}~~qs~~=~pquoz~n\\
-\texfamily ~~~~~~~~~~~ns~~=~map~(fromIntegral~\char'00~ceiling)~qs\\
-\texfamily ~~~~~~~~~~~ds~~=~[n~-~q~|~(n,q)~\char'06~zip~ns~qs]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pquozavg}\mathbin{::}\Conid{Integer}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{pquozavg}\;\Varid{n}\mathrel{=}(\Varid{sum}\;\Varid{ds})\mathbin{/}(\Varid{fromIntegral}\mathbin{\$}\Varid{length}\;\Varid{ds}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{qs}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{pquoz}\;\Varid{n}{}\<[E]%
+\\
+\>[12]{}\Varid{ns}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{map}\;(\Varid{fromIntegral}\mathbin{\circ}\Varid{ceiling})\;\Varid{qs}{}\<[E]%
+\\
+\>[12]{}\Varid{ds}{}\<[16]%
+\>[16]{}\mathrel{=}[\mskip1.5mu \Varid{n}\mathbin{-}\Varid{q}\mid (\Varid{n},\Varid{q})\leftarrow \Varid{zip}\;\Varid{ns}\;\Varid{qs}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 we can experiment with some numbers like
 
-\text{\texfamily pquozavg\Sp 10\Sp =\Sp }$0.3\overline{095238}$\\
-\text{\texfamily pquozavg\Sp 100\Sp =\Sp 0.548731}\\
-\text{\texfamily pquozavg\Sp 1000\Sp =\Sp 0.5590468}\\
-\text{\texfamily pquozavg\Sp 10000\Sp =\Sp 0.5666399}\\
-\text{\texfamily pquozavg\Sp 100000\Sp =\Sp 0.5695143}\\
+\ensuremath{\Varid{pquozavg}\;\mathrm{10}\mathrel{=}}$0.3\overline{095238}$\\
+\ensuremath{\Varid{pquozavg}\;\mathrm{100}\mathrel{=}\mathrm{0.548731}}\\
+\ensuremath{\Varid{pquozavg}\;\mathrm{1000}\mathrel{=}\mathrm{0.5590468}}\\
+\ensuremath{\Varid{pquozavg}\;\mathrm{10000}\mathrel{=}\mathrm{0.5666399}}\\
+\ensuremath{\Varid{pquozavg}\;\mathrm{100000}\mathrel{=}\mathrm{0.5695143}}\\
 $\dots$
 
 With greater and greater numbers, this value
 approaches $\gamma$. Restricting $n$ to prime numbers
 produces good approximations of $\gamma$ much earlier. 
-From 7 on, \text{\texfamily pquozavg} with primes results in numbers of the form
-$0.5\dots$ \text{\texfamily pquozavg\Sp 43\Sp =\Sp 0.57416} 
+From 7 on, \ensuremath{\Varid{pquozavg}} with primes results in numbers of the form
+$0.5\dots$ \ensuremath{\Varid{pquozavg}\;\mathrm{43}\mathrel{=}\mathrm{0.57416}} 
 is already very close to $\gamma$.
 It may be mentioned that 43 is suspiciously close to 42.
 
@@ -1216,55 +1563,88 @@ Peter Gustav Lejeune-Dirichlet (1805 -- 1859),
 is related to the average number of divisors
 of the numbers $1\dots n$.
 We have already defined a function to generate
-the divisors of a number $n$, namely \text{\texfamily divs}.
+the divisors of a number $n$, namely \ensuremath{\Varid{divs}}.
 Now we map this function on all numbers up to $n$:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~divsupn~::~{\itshape Natural}~\char'31~[[{\itshape Natural}]]\\
-\texfamily ~~divsupn~n~=~map~divs~[1..n]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{divsupn}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu [\mskip1.5mu \Conid{Natural}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{divsupn}\;\Varid{n}\mathrel{=}\Varid{map}\;\Varid{divs}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Applied to 10, this function yields:
 
-\text{\texfamily [[1],[1,2],[1,3],[1,2,4],[1,5],[1,2,3,6],[1,7],[1,2,4,8],[1,3,9],[1,2,5,10]]}
+\ensuremath{[\mskip1.5mu [\mskip1.5mu \mathrm{1}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{3}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{5}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{6}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{7}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{4},\mathrm{8}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{9}\mskip1.5mu],[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{5},\mathrm{10}\mskip1.5mu]\mskip1.5mu]}
 
 For modelling Lejeune-Dirichlet's result,
 we further need to count the numbers of divisors
 of each number:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~ndivs~::~{\itshape Integer}~\char'31~[{\itshape Int}]\\
-\texfamily ~~ndivs~=~map~length~\char'00~divsupn
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ndivs}\mathbin{::}\Conid{Integer}\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{ndivs}\mathrel{=}\Varid{map}\;\Varid{length}\mathbin{\circ}\Varid{divsupn}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Applied again to 10, \text{\texfamily ndivs} produces:
+Applied again to 10, \ensuremath{\Varid{ndivs}} produces:
 
-\text{\texfamily [1,2,2,3,2,4,2,4,3,4]}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{2},\mathrm{3},\mathrm{2},\mathrm{4},\mathrm{2},\mathrm{4},\mathrm{3},\mathrm{4}\mskip1.5mu]}
 
 Now we compute the average of this list using
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~dirichlet~::~{\itshape Integer}~\char'31~{\itshape Double}\\
-\texfamily ~~dirichlet~n~~~=~s~/~l\\
-\texfamily ~~~~{\bfseries where}~~~ds~~=~ndivs~n\\
-\texfamily ~~~~~~~~~~~~l~~~=~fromIntegral~\$~length~ds\\
-\texfamily ~~~~~~~~~~~~s~~~=~fromIntegral~\$~sum~ds
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{dirichlet}\mathbin{::}\Conid{Integer}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{dirichlet}\;\Varid{n}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{s}\mathbin{/}\Varid{l}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[13]%
+\>[13]{}\Varid{ds}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{ndivs}\;\Varid{n}{}\<[E]%
+\\
+\>[13]{}\Varid{l}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\$}\Varid{length}\;\Varid{ds}{}\<[E]%
+\\
+\>[13]{}\Varid{s}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\$}\Varid{sum}\;\Varid{ds}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-For \text{\texfamily dirichlet\Sp 10} we see 2.7.
+For \ensuremath{\Varid{dirichlet}\;\mathrm{10}} we see 2.7.
 This does not appear too spectacular.
 Greater numbers show:
 
-\text{\texfamily dirichlet\Sp 100\Sp =\Sp 4.759}\\
-\text{\texfamily dirichlet\Sp 250\Sp =\Sp 5.684}\\
-\text{\texfamily dirichlet\Sp 500\Sp =\Sp 6.38}\\
-\text{\texfamily dirichelt\Sp 1000\Sp =\Sp 7.069}
+\ensuremath{\Varid{dirichlet}\;\mathrm{100}\mathrel{=}\mathrm{4.759}}\\
+\ensuremath{\Varid{dirichlet}\;\mathrm{250}\mathrel{=}\mathrm{5.684}}\\
+\ensuremath{\Varid{dirichlet}\;\mathrm{500}\mathrel{=}\mathrm{6.38}}\\
+\ensuremath{\Varid{dirichelt}\;\mathrm{1000}\mathrel{=}\mathrm{7.069}}
 
 As we can see, the number is slowly increasing
 resembling a log function or, more specifically,
@@ -1278,7 +1658,7 @@ $\ln 1000  = 6.907$
 
 For greater and greater numbers,
 the difference of 
-the \text{\texfamily dirichlet} function and 
+the \ensuremath{\Varid{dirichlet}} function and 
 the natural logarithm approaches
 
 \begin{equation}
@@ -1340,13 +1720,26 @@ than $10^{242080}$.
 A number big enough, for my taste, to speak of \speech{irrational}.
 \section{Representation of Real Numbers}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Realrep}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 The set of real numbers $\mathbb{R}$ is
@@ -1413,9 +1806,9 @@ $9 \times 0.\overline{3} = 2.\overline{9}$
 are actually the same! A correct implementation
 must take this into account.
 Try it with Haskell, you will see that
-\text{\texfamily 9*0.3333333333333333} is indeed 3.
+\ensuremath{\mathrm{9}\mathbin{*}\mathrm{0.3333333333333333}} is indeed 3.
 It will not work if you forget a three.
-The precision of the \text{\texfamily {\itshape Double}} number type is 16
+The precision of the \ensuremath{\Conid{Double}} number type is 16
 digits after the decimal point. With only 15 threes,
 the result will be 2.9999999999999997.
 
@@ -1463,9 +1856,15 @@ as the following definition,
 two natural numbers:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries data}~{\itshape RealN}~=~{\itshape R}~{\itshape Natural}~{\itshape Natural}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{data}\;\Conid{RealN}\mathrel{=}\Conid{R}\;\Conid{Natural}\;\Conid{Natural}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 The first number represents the integral part.
@@ -1493,7 +1892,7 @@ to obtain the number represented by this datatype.
 Since our datatype uses a natural number,
 we have to negate it to find the exponent we need.
 
-For instance, the number \text{\texfamily {\itshape R}\Sp 25\Sp 2}
+For instance, the number \ensuremath{\Conid{R}\;\mathrm{25}\;\mathrm{2}}
 corresponds to $25\times 10^{-2}$,
 which we can reduce stepwise to
 $2.5 \times 10^{-1}$ and $0.25 \times 10^0$.
@@ -1501,88 +1900,186 @@ A meaningful way to show this datatype would
 therefore be:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Show}~{\itshape RealN}~{\bfseries where}\\
-\texfamily ~~~~show~({\itshape R}~a~e)~=~show~a~++~\char34 *10\char94 (-\char34 ~++~show~e~++~\char34 )\char34 
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Show}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\tt \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 There are obviously many ways to represent the same
 number with this number type. 
 1, for instance, can be represented as
 
-\text{\texfamily one\Sp =\Sp {\itshape R}\Sp 1\Sp \Sp \Sp \Sp 0}\\
-\text{\texfamily one\Sp =\Sp {\itshape R}\Sp 10\Sp \Sp \Sp 1}\\
-\text{\texfamily one\Sp =\Sp {\itshape R}\Sp 100\Sp \Sp 2}\\
-\text{\texfamily one\Sp =\Sp {\itshape R}\Sp 1000\Sp 3}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1}\;\mathrm{0}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{10}\;\mathrm{1}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{100}\;\mathrm{2}}\\
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1000}\;\mathrm{3}}\\
 $\dots$
 
 To keep numbers as concise as possible, we define a function
 to simplify numbers with redundant zeros:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~simplify~::~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~simplify~({\itshape R}~0~\char95 )~=~{\itshape R}~0~0\\
-\texfamily ~~simplify~({\itshape R}~a~e)~~|~~e~>~0~~\char'04\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~a~`rem`~10~\char'36~0~~=~~simplify~({\itshape R}~(a~`div`~10)~(e-1))\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~|~~otherwise~~~~~~~~=~~{\itshape R}~a~e
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{21E}{@{}l@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{31E}{@{}l@{}}%
+\column{41}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{41E}{@{}l@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{simplify}\mathbin{::}\Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{simplify}\;(\Conid{R}\;\mathrm{0}\;\anonymous )\mathrel{=}\Conid{R}\;\mathrm{0}\;\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{simplify}\;(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[21]%
+\>[21]{}\mid {}\<[21E]%
+\>[24]{}\Varid{e}\mathbin{>}\mathrm{0}{}\<[31]%
+\>[31]{}\mathrel{\wedge}{}\<[31E]%
+\\
+\>[24]{}\Varid{a}\mathbin{\Varid{`rem`}}\mathrm{10}\equiv \mathrm{0}{}\<[41]%
+\>[41]{}\mathrel{=}{}\<[41E]%
+\>[44]{}\Varid{simplify}\;(\Conid{R}\;(\Varid{a}\mathbin{\Varid{`div`}}\mathrm{10})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
+\\
+\>[21]{}\mid {}\<[21E]%
+\>[24]{}\Varid{otherwise}{}\<[41]%
+\>[41]{}\mathrel{=}{}\<[41E]%
+\>[44]{}\Conid{R}\;\Varid{a}\;\Varid{e}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 As long as the exponent is greater 0 and the base $a$
 is divisible by 10, we reduce the exponent by one
 and divide $a$ by 10. In other words, we remove unnecessary zeros.
-The following constructor uses \text{\texfamily simplify} to create
+The following constructor uses \ensuremath{\Varid{simplify}} to create
 clean real numbers:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~real~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape RealN}\\
-\texfamily ~~real~i~e~=~simplify~({\itshape R}~i~e)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{real}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{real}\;\Varid{i}\;\Varid{e}\mathrel{=}\Varid{simplify}\;(\Conid{R}\;\Varid{i}\;\Varid{e}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 \section{$\mathbb{R}$}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Real}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.Ratio}~((\%))\\
-\texfamily ~~{\bfseries import}~qualified~{\itshape {\itshape Data}.Ratio}~as~{\itshape R}~(numerator,denominator)\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}~hiding~(rdiv,~(\%))\\
-\texfamily ~~{\bfseries import}~{\itshape Realrep}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Debug}.Trace}~(trace)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Ratio}\;((\mathbin{\%})){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{\Conid{Data}.Ratio}\;\Varid{as}\;\Conid{R}\;(\Varid{numerator},\Varid{denominator}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}\;\Varid{hiding}\;(\Varid{rdiv},(\mathbin{\%})){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Debug}.Trace}\;(\Varid{trace}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 We now define how to check two real numbers
 for equality:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Eq}~{\itshape RealN}~{\bfseries where}~\\
-\texfamily ~~~~r1@({\itshape R}~a~e1)~\char'36~r2@({\itshape R}~b~e2)~~|~e1~\char'36~e2~~=~a~\char'36~b\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~e1~>~~e2~~=~r1~\char'36~blowup~e1~r2\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~e1~<~~e2~~=~blowup~e2~r1~\char'36~r2
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Eq}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\equiv \Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[33]%
+\>[33]{}\mid \Varid{e1}\equiv \Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\equiv \Varid{b}{}\<[E]%
+\\
+\>[33]{}\mid \Varid{e1}\mathbin{>}{}\<[41]%
+\>[41]{}\Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{r1}\equiv \Varid{blowup}\;\Varid{e1}\;\Varid{r2}{}\<[E]%
+\\
+\>[33]{}\mid \Varid{e1}\mathbin{<}{}\<[41]%
+\>[41]{}\Varid{e2}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{blowup}\;\Varid{e2}\;\Varid{r1}\equiv \Varid{r2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 If the exponents are equal, then we 
 trivially compare the coefficients.
 Otherwise, we first expand the number
-with the smaller exponent using \text{\texfamily blowup}:
+with the smaller exponent using \ensuremath{\Varid{blowup}}:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~blowup~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~blowup~~i~({\itshape R}~r~e)~~|~i~\char'34~e~~~~~=~{\itshape R}~r~e\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~|~otherwise~~=~{\itshape R}~(r*10\char94 (i-e))~i~
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{blowup}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{blowup}\;{}\<[11]%
+\>[11]{}\Varid{i}\;(\Conid{R}\;\Varid{r}\;\Varid{e}){}\<[22]%
+\>[22]{}\mid \Varid{i}\leq \Varid{e}{}\<[35]%
+\>[35]{}\mathrel{=}\Conid{R}\;\Varid{r}\;\Varid{e}{}\<[E]%
+\\
+\>[22]{}\mid \Varid{otherwise}{}\<[35]%
+\>[35]{}\mathrel{=}\Conid{R}\;(\Varid{r}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{i}\mathbin{-}\Varid{e}))\;\Varid{i}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-That is simple! If the target \text{\texfamily i} is greater
+That is simple! If the target \ensuremath{\Varid{i}} is greater
 than the current exponent of the number,
 we just multiply the coefficient by
 10 raised to the difference of the target exponent
@@ -1593,33 +2090,114 @@ We continue with comparison,
 which follows exactly the same logic:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Ord}~{\itshape RealN}~{\bfseries where}\\
-\texfamily ~~~~compare~r1@({\itshape R}~a~e1)~r2@({\itshape R}~b~e2)~~|~e1~\char'36~e2~~=~compare~a~b\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~e1~>~~e2~~=~compare~r1~(blowup~e1~r2)\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~e1~<~~e2~~=~compare~(blowup~e2~r1)~r2
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{46}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{50}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Ord}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{compare}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[38]%
+\>[38]{}\mid \Varid{e1}\equiv \Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\\
+\>[38]{}\mid \Varid{e1}\mathbin{>}{}\<[46]%
+\>[46]{}\Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;\Varid{r1}\;(\Varid{blowup}\;\Varid{e1}\;\Varid{r2}){}\<[E]%
+\\
+\>[38]{}\mid \Varid{e1}\mathbin{<}{}\<[46]%
+\>[46]{}\Varid{e2}{}\<[50]%
+\>[50]{}\mathrel{=}\Varid{compare}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Now we make \text{\texfamily {\itshape RealN}} instance of \text{\texfamily {\itshape Num}}:
+Now we make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Num}}:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Num}~{\itshape RealN}~{\bfseries where}\\
-\texfamily ~~~~({\itshape R}~a~e1)~+~({\itshape R}~b~e2)~~|~~e1~\char'36~e2~~~=~simplify~\$~{\itshape R}~(a+b)~e1\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~e1~>~~e2~~~=~simplify~\$~{\itshape R}~(a+b*10\char94 (e1-e2))~e1\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~simplify~\$~{\itshape R}~(a*10\char94 (e2-e1)+b)~e2\\
-\texfamily ~~~~({\itshape R}~a~e1)~-~({\itshape R}~b~e2)~~|~~e1~\char'36~e2~\char'04\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~a~~\char'35~b~~~~=~simplify~\$~{\itshape R}~(a-b)~e1\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~e1~\char'36~e2~~~=~error~\char34 subtraction~beyond~zero!\char34 \\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~e1~>~~e2~~~=~simplify~\$~({\itshape R}~a~e1)~-~({\itshape R}~(b*10\char94 (e1-e2))~e1)\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~=~simplify~\$~({\itshape R}~(a*10\char94 (e2-e1))~e2)~-~({\itshape R}~b~e2)\\
-\texfamily ~~~~({\itshape R}~a~e1)~*~({\itshape R}~b~e2)~=~real~(a*b)~(e1+e2)\\
-\texfamily ~~~~negate~~r~~~~~~~=~r~{\rmfamily-{}-  we cannot negate natural numbers}\\
-\texfamily ~~~~abs~~~~~r~~~~~~~=~r\\
-\texfamily ~~~~signum~~r~~~~~~~=~r\\
-\texfamily ~~~~fromInteger~i~~~=~{\itshape R}~(fromIntegral~i)~0
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{26E}{@{}l@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Num}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{+}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[26]%
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b})\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
+\>[35]{}\Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{+}\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{otherwise}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e2}\mathbin{-}\Varid{e1})\mathbin{+}\Varid{b})\;\Varid{e2}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{-}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[26]%
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}\mathrel{\wedge}{}\<[E]%
+\\
+\>[29]{}\Varid{a}{}\<[32]%
+\>[32]{}\geq \Varid{b}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}\Conid{R}\;(\Varid{a}\mathbin{-}\Varid{b})\;\Varid{e1}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 subtraction~beyond~zero!\char34}{}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
+\>[35]{}\Varid{e2}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{-}(\Conid{R}\;(\Varid{b}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e1}\mathbin{-}\Varid{e2}))\;\Varid{e1}){}\<[E]%
+\\
+\>[26]{}\mid {}\<[26E]%
+\>[29]{}\Varid{otherwise}{}\<[40]%
+\>[40]{}\mathrel{=}\Varid{simplify}\mathbin{\$}(\Conid{R}\;(\Varid{a}\mathbin{*}\mathrm{10}\mathbin{\uparrow}(\Varid{e2}\mathbin{-}\Varid{e1}))\;\Varid{e2})\mathbin{-}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\Conid{R}\;\Varid{a}\;\Varid{e1})\mathbin{*}(\Conid{R}\;\Varid{b}\;\Varid{e2})\mathrel{=}\Varid{real}\;(\Varid{a}\mathbin{*}\Varid{b})\;(\Varid{e1}\mathbin{+}\Varid{e2}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{negate}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}\mbox{\onelinecomment  we cannot negate natural numbers}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{abs}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{signum}\;{}\<[13]%
+\>[13]{}\Varid{r}{}\<[21]%
+\>[21]{}\mathrel{=}\Varid{r}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{fromInteger}\;\Varid{i}{}\<[21]%
+\>[21]{}\mathrel{=}\Conid{R}\;(\Varid{fromIntegral}\;\Varid{i})\;\mathrm{0}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Addition is again the same logic.
@@ -1629,10 +2207,10 @@ If the exponents differ,
 we first convert the smaller number
 to the greater exponent.
 
-For subtraction, note that we define \text{\texfamily {\itshape RealN}}
+For subtraction, note that we define \ensuremath{\Conid{RealN}}
 like numbers before without negatives. To consider
 signedness, we still have to use the datatype 
-\text{\texfamily {\itshape Signed}\Sp {\itshape RealN}}.
+\ensuremath{\Conid{Signed}\;\Conid{RealN}}.
 Consequently, we have to rule out the case
 where the first number is smaller than the second one.
 
@@ -1645,22 +2223,38 @@ the natural number type.
 Some simple examples may convince you that this
 is the right way to go.
 $1 \times 0.1$, for instance, is 0.1.
-In terms of our \text{\texfamily {\itshape RealN}} type, this corresponds to
-\text{\texfamily ({\itshape R}\Sp 1\Sp 0)\Sp *\Sp ({\itshape R}\Sp 1\Sp 1)\Sp \char'36\Sp ({\itshape R}\Sp (1*1)\Sp (0+1)}.
+In terms of our \ensuremath{\Conid{RealN}} type, this corresponds to
+\ensuremath{(\Conid{R}\;\mathrm{1}\;\mathrm{0})\mathbin{*}(\Conid{R}\;\mathrm{1}\;\mathrm{1})\equiv (\Conid{R}\;(\mathrm{1}\mathbin{*}\mathrm{1})\;(\mathrm{0}\mathbin{+}\mathrm{1})}.
 
-The next task is to make \text{\texfamily {\itshape RealN}} instance of
-\text{\texfamily {\itshape Fractional}}: 
+The next task is to make \ensuremath{\Conid{RealN}} instance of
+\ensuremath{\Conid{Fractional}}: 
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Fractional}~{\itshape RealN}~{\bfseries where}\\
-\texfamily ~~~~(/)~=~rdiv~17~\\
-\texfamily ~~~~fromRational~r~=~~({\itshape R}~(fromIntegral~\$~{\itshape R}.numerator~~~r)~0)~/~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~({\itshape R}~(fromIntegral~\$~{\itshape R}.denominator~r)~0)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{56}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Fractional}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}(\mathbin{/})\mathrel{=}\Varid{rdiv}\;\mathrm{17}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{fromRational}\;\Varid{r}\mathrel{=}{}\<[23]%
+\>[23]{}(\Conid{R}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{\Conid{R}.numerator}\;{}\<[56]%
+\>[56]{}\Varid{r})\;\mathrm{0})\mathbin{/}{}\<[E]%
+\\
+\>[23]{}(\Conid{R}\;(\Varid{fromIntegral}\mathbin{\$}\Varid{\Conid{R}.denominator}\;\Varid{r})\;\mathrm{0}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The method \text{\texfamily fromRational} is quite simple.
+The method \ensuremath{\Varid{fromRational}} is quite simple.
 We just create two real numbers, 
 the numerator of the original fraction and its denominator,
 and the we divide them. What we need to do this,
@@ -1670,26 +2264,74 @@ complicated than the other arithmetic operations.
 We define it as follows:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~rdiv~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~rdiv~n~r1@({\itshape R}~a~e1)~r2@({\itshape R}~b~e2)~~|~~e1~<~e2~=~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rdiv~n~(blowup~e2~r1)~r2\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~a~~<~b~\char'04~e1~\char'36~e2~=~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~rdiv~n~(blowup~(e2+1)~r1)~r2\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~=~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~simplify~({\itshape R}~(go~n~a~b)~(e1~-~e2~+~n))\\
-\texfamily ~~~~{\bfseries where}~~go~i~x~y~~|~~i~\char'34~0~=~0\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~|~~otherwise~=~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries case}~x~`quotRem`~y~{\bfseries of}\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~(q,0)~\char'31~10\char94 i~*~q\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~(q,r)~\char'31~{\bfseries let}~~(r',e)~~=~borrow~r~y\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~q'~~~~~~=~10\char94 i~*~q\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~e~>~i~~{\bfseries then}~q'~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~q'~+~go~(i-e)~r'~y
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{22E}{@{}l@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{48}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{rdiv}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{rdiv}\;\Varid{n}\;\Varid{r1}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e1})\;\Varid{r2}\mathord{@}(\Conid{R}\;\Varid{b}\;\Varid{e2}){}\<[35]%
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{e1}\mathbin{<}\Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;\Varid{e2}\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{a}{}\<[41]%
+\>[41]{}\mathbin{<}\Varid{b}\mathrel{\wedge}\Varid{e1}\equiv \Varid{e2}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{rdiv}\;\Varid{n}\;(\Varid{blowup}\;(\Varid{e2}\mathbin{+}\mathrm{1})\;\Varid{r1})\;\Varid{r2}{}\<[E]%
+\\
+\>[35]{}\mid {}\<[38]%
+\>[38]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[38]{}\Varid{simplify}\;(\Conid{R}\;(\Varid{go}\;\Varid{n}\;\Varid{a}\;\Varid{b})\;(\Varid{e1}\mathbin{-}\Varid{e2}\mathbin{+}\Varid{n})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}\;\Varid{y}{}\<[22]%
+\>[22]{}\mid {}\<[22E]%
+\>[25]{}\Varid{i}\leq \mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[22]{}\mid {}\<[22E]%
+\>[25]{}\Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[25]{}\mathbf{case}\;\Varid{x}\mathbin{`\Varid{quotRem}`}\Varid{y}\;\mathbf{of}{}\<[E]%
+\\
+\>[25]{}\hsindent{1}{}\<[26]%
+\>[26]{}(\Varid{q},\mathrm{0})\to \mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[25]{}\hsindent{1}{}\<[26]%
+\>[26]{}(\Varid{q},\Varid{r})\to \mathbf{let}\;{}\<[40]%
+\>[40]{}(\Varid{r'},\Varid{e}){}\<[48]%
+\>[48]{}\mathrel{=}\Varid{borrow}\;\Varid{r}\;\Varid{y}{}\<[E]%
+\\
+\>[40]{}\Varid{q'}{}\<[48]%
+\>[48]{}\mathrel{=}\mathrm{10}\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{q}{}\<[E]%
+\\
+\>[26]{}\hsindent{9}{}\<[35]%
+\>[35]{}\mathbf{in}\;\mathbf{if}\;\Varid{e}\mathbin{>}\Varid{i}\;{}\<[48]%
+\>[48]{}\mathbf{then}\;\Varid{q'}{}\<[E]%
+\\
+\>[48]{}\mathbf{else}\;\Varid{q'}\mathbin{+}\Varid{go}\;(\Varid{i}\mathbin{-}\Varid{e})\;\Varid{r'}\;\Varid{y}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\text{\texfamily rdiv} has one more argument 
+\ensuremath{\Varid{rdiv}} has one more argument 
 than the arithmetic operations seen before.
 This additional argument, $n$, defines the
 precision of the result.
@@ -1703,141 +2345,244 @@ either because its exponent or its
 coefficient is smaller, we blow it up
 so that it is at least the same size.
 Then we calculate the new coefficient
-by means of \text{\texfamily go} and the new exponent as
+by means of \ensuremath{\Varid{go}} and the new exponent as
 the difference of the first and the second exponent
 plus the expected precision.
 Note that division has the inverse effect on the size
 of the exponents as multiplication.
 When we look again at the example 1 and 0.1,
 we have $1 / 0.1 = 10$, which translates to
-\text{\texfamily ({\itshape R}\Sp 1\Sp 0)\Sp /\Sp ({\itshape R}\Sp 1\Sp 1)\Sp =\Sp {\itshape R}\Sp (1/1)\Sp (0-1)}, which
-of course is the same as \text{\texfamily {\itshape R}\Sp 10\Sp 0}.
+\ensuremath{(\Conid{R}\;\mathrm{1}\;\mathrm{0})\mathbin{/}(\Conid{R}\;\mathrm{1}\;\mathrm{1})\mathrel{=}\Conid{R}\;(\mathrm{1}\mathbin{/}\mathrm{1})\;(\mathrm{0}\mathbin{-}\mathrm{1})}, which
+of course is the same as \ensuremath{\Conid{R}\;\mathrm{10}\;\mathrm{0}}.
 
-The inner function \text{\texfamily go} proceeds until \text{\texfamily i},
-which initially is \text{\texfamily n}, becomes 0 or smaller.
-In each step, we divide \text{\texfamily x}, initially the coefficient
-of the first number, and \text{\texfamily y}, the coefficient of the
+The inner function \ensuremath{\Varid{go}} proceeds until \ensuremath{\Varid{i}},
+which initially is \ensuremath{\Varid{n}}, becomes 0 or smaller.
+In each step, we divide \ensuremath{\Varid{x}}, initially the coefficient
+of the first number, and \ensuremath{\Varid{y}}, the coefficient of the
 second number. If the result leaves no remainder,
-we are done. We just raise \text{\texfamily q} to the power of 
+we are done. We just raise \ensuremath{\Varid{q}} to the power of 
 the step in question. Otherwise, we continue
-dividing the remainder \text{\texfamily r} by \text{\texfamily y}. But before
-we continue, we borrow from \text{\texfamily y}, that is,
-we increase \text{\texfamily r} until it is at least \text{\texfamily y}.
-\text{\texfamily i} is then decremented by the number of zeros
+dividing the remainder \ensuremath{\Varid{r}} by \ensuremath{\Varid{y}}. But before
+we continue, we borrow from \ensuremath{\Varid{y}}, that is,
+we increase \ensuremath{\Varid{r}} until it is at least \ensuremath{\Varid{y}}.
+\ensuremath{\Varid{i}} is then decremented by the number of zeros
 we borrowed this way.
-If we run out of \text{\texfamily i}, so to speak, that is
-if $e > i$, then we terminate with \text{\texfamily q} raised
+If we run out of \ensuremath{\Varid{i}}, so to speak, that is
+if $e > i$, then we terminate with \ensuremath{\Varid{q}} raised
 to the current step.
 
-\text{\texfamily borrow} is just the same as \text{\texfamily blowup} applied
+\ensuremath{\Varid{borrow}} is just the same as \ensuremath{\Varid{blowup}} applied
 to two natural numbers:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~borrow~::~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~({\itshape Natural},{\itshape Natural})\\
-\texfamily ~~borrow~a~b~~|~a~\char'35~b~~~~~=~~(a,0)\\
-\texfamily ~~~~~~~~~~~~~~|~otherwise~~=~~{\bfseries let}~(x,e)~=~borrow~(10*a)~b~{\bfseries in}~(x,e+1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{28E}{@{}l@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{borrow}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to (\Conid{Natural},\Conid{Natural}){}\<[E]%
+\\
+\>[3]{}\Varid{borrow}\;\Varid{a}\;\Varid{b}{}\<[15]%
+\>[15]{}\mid \Varid{a}\geq \Varid{b}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}(\Varid{a},\mathrm{0}){}\<[E]%
+\\
+\>[15]{}\mid \Varid{otherwise}{}\<[28]%
+\>[28]{}\mathrel{=}{}\<[28E]%
+\>[31]{}\mathbf{let}\;(\Varid{x},\Varid{e})\mathrel{=}\Varid{borrow}\;(\mathrm{10}\mathbin{*}\Varid{a})\;\Varid{b}\;\mathbf{in}\;(\Varid{x},\Varid{e}\mathbin{+}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-We now make \text{\texfamily {\itshape RealN}} instance of \text{\texfamily {\itshape Real}}.
+We now make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Real}}.
 We need to define just one method, namely
-how to convert \text{\texfamily {\itshape RealN}} to \text{\texfamily {\itshape Rational}}, which
+how to convert \ensuremath{\Conid{RealN}} to \ensuremath{\Conid{Rational}}, which
 we do just by creating a fraction with 
 the coefficient of the real number in the numerator
 and 10 raised to the exponent in the denominator.
-The rest is done by the \text{\texfamily {\itshape Rational}} number type:
+The rest is done by the \ensuremath{\Conid{Rational}} number type:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries instance}~{\itshape Real}~{\itshape RealN}~{\bfseries where}\\
-\texfamily ~~~~toRational~({\itshape R}~r~e)~=~i~\%~(10\char94 x)\\
-\texfamily ~~~~~~{\bfseries where}~~i~~=~fromIntegral~r~::~{\itshape Integer}\\
-\texfamily ~~~~~~~~~~~~~x~~=~fromIntegral~e~::~{\itshape Integer}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{instance}\;\Conid{Real}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{toRational}\;(\Conid{R}\;\Varid{r}\;\Varid{e})\mathrel{=}\Varid{i}\mathbin{\%}(\mathrm{10}\mathbin{\uparrow}\Varid{x}){}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\mathbf{where}\;{}\<[14]%
+\>[14]{}\Varid{i}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{r}\mathbin{::}\Conid{Integer}{}\<[E]%
+\\
+\>[14]{}\Varid{x}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\;\Varid{e}\mathbin{::}\Conid{Integer}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 We further add a function to convert
-real numbers to our \text{\texfamily {\itshape Ratio}} type:
+real numbers to our \ensuremath{\Conid{Ratio}} type:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~r2R~::~{\itshape RealN}~\char'31~{\itshape Ratio}\\
-\texfamily ~~r2R~({\itshape R}~a~e)~=~ratio~a~(10\char94 e)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{r2R}\mathbin{::}\Conid{RealN}\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{r2R}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{ratio}\;\Varid{a}\;(\mathrm{10}\mathbin{\uparrow}\Varid{e}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 We also add a function to convert our real number type
-to the standard \text{\texfamily {\itshape Double}} type:
+to the standard \ensuremath{\Conid{Double}} type:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~r2d~::~{\itshape RealN}~\char'31~{\itshape Double}\\
-\texfamily ~~r2d~r@({\itshape R}~a~e)~~|~e~>~16~~~~~=~r2d~(roundr~16~r)\\
-\texfamily ~~~~~~~~~~~~~~~~~|~otherwise~~=~(fromIntegral~a)~/~10\char94 e
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{r2d}\mathbin{::}\Conid{RealN}\to \Conid{Double}{}\<[E]%
+\\
+\>[3]{}\Varid{r2d}\;\Varid{r}\mathord{@}(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[18]%
+\>[18]{}\mid \Varid{e}\mathbin{>}\mathrm{16}{}\<[31]%
+\>[31]{}\mathrel{=}\Varid{r2d}\;(\Varid{roundr}\;\mathrm{16}\;\Varid{r}){}\<[E]%
+\\
+\>[18]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}(\Varid{fromIntegral}\;\Varid{a})\mathbin{/}\mathrm{10}\mathbin{\uparrow}\Varid{e}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 An inconvenience is that we have to round 
 a number given in our number type so it fits
-into a \text{\texfamily {\itshape Double}}.
-For this, we assume that the \text{\texfamily {\itshape Double}} has a precision
+into a \ensuremath{\Conid{Double}}.
+For this, we assume that the \ensuremath{\Conid{Double}} has a precision
 of 16 decimal digits. This is not quite true.
-The \text{\texfamily {\itshape Double}} type has room for 16 digits.
+The \ensuremath{\Conid{Double}} type has room for 16 digits.
 But if the first digits after the decimal point 
-are zeros, the \text{\texfamily {\itshape Double}} type will present this
+are zeros, the \ensuremath{\Conid{Double}} type will present this
 as a number raised to a negative exponent, just
 as we do with our real type. In this case,
-the \text{\texfamily {\itshape Double}} type may have a much higher precision
+the \ensuremath{\Conid{Double}} type may have a much higher precision
 than 16. For our purpose, however, this is not too
 relevant. 
 
 So, here is how we round: 
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~roundr~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~roundr~n~({\itshape R}~a~e)~~|~n~\char'35~e~~~~~=~{\itshape R}~a~e\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~|~otherwise~~=~~{\bfseries let}~~b~~=~a~`div`~10\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~l~~=~a~-~10*b\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~d~~|~l~<~5~~~~~=~0\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~otherwise~=~1\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~roundr~n~({\itshape R}~(b+d)~(e-1))
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{57}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{roundr}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;\Varid{a}\;\Varid{e}){}\<[21]%
+\>[21]{}\mid \Varid{n}\geq \Varid{e}{}\<[34]%
+\>[34]{}\mathrel{=}\Conid{R}\;\Varid{a}\;\Varid{e}{}\<[E]%
+\\
+\>[21]{}\mid \Varid{otherwise}{}\<[34]%
+\>[34]{}\mathrel{=}{}\<[37]%
+\>[37]{}\mathbf{let}\;{}\<[42]%
+\>[42]{}\Varid{b}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\mathbin{\Varid{`div`}}\mathrm{10}{}\<[E]%
+\\
+\>[42]{}\Varid{l}{}\<[45]%
+\>[45]{}\mathrel{=}\Varid{a}\mathbin{-}\mathrm{10}\mathbin{*}\Varid{b}{}\<[E]%
+\\
+\>[42]{}\Varid{d}{}\<[45]%
+\>[45]{}\mid \Varid{l}\mathbin{<}\mathrm{5}{}\<[57]%
+\>[57]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[45]{}\mid \Varid{otherwise}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[37]{}\mathbf{in}\;\Varid{roundr}\;\Varid{n}\;(\Conid{R}\;(\Varid{b}\mathbin{+}\Varid{d})\;(\Varid{e}\mathbin{-}\mathrm{1})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-That is, we first get the least significant digit \text{\texfamily l} as
-$l = a - 10 * (div~a~10)$, where, if \text{\texfamily div} is the Euclidian division,
+That is, we first get the least significant digit \ensuremath{\Varid{l}} as
+$l = a - 10 * (div~a~10)$, where, if \ensuremath{\Varid{div}} is the Euclidian division,
 the last digit of $a$ remains.
 If the last digit is less than 5, we just drop it off.
 Otherwise, we add 1 to the whole number.
 If we now define
 
-\text{\texfamily one\Sp =\Sp {\itshape R}\Sp 1\Sp 0}\\
-\text{\texfamily three\Sp =\Sp {\itshape R}\Sp 3\Sp 0}\\
-\text{\texfamily third\Sp =\Sp one\Sp /\Sp three},
+\ensuremath{\Varid{one}\mathrel{=}\Conid{R}\;\mathrm{1}\;\mathrm{0}}\\
+\ensuremath{\Varid{three}\mathrel{=}\Conid{R}\;\mathrm{3}\;\mathrm{0}}\\
+\ensuremath{\Varid{third}\mathrel{=}\Varid{one}\mathbin{/}\Varid{three}},
 
-then \text{\texfamily roundr\Sp 16\Sp (three\Sp *\Sp third)} yields 1, as desired.
+then \ensuremath{\Varid{roundr}\;\mathrm{16}\;(\Varid{three}\mathbin{*}\Varid{third})} yields 1, as desired.
 
 Finally, we define
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries type}~{\itshape SReal}~=~{\itshape Signed}~{\itshape RealN}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{SReal}\mathrel{=}\Conid{Signed}\;\Conid{RealN}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 and have a fulfledged real number datatype.
 \section{Real Factorials}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape GFun}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}\\
-\texfamily ~~{\bfseries import}~{\itshape Real}\\
-\texfamily ~~{\bfseries import}~{\itshape Gamma}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{GFun}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Gamma}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 As we have already done in the domain of integers,
@@ -1936,24 +2681,33 @@ with $\Gamma(1)=1$.
 We can model this in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~gamman~::~{\itshape Natural}~\char'31~{\itshape Natural}\\
-\texfamily ~~gamman~0~=~undefined\\
-\texfamily ~~gamman~1~=~1\\
-\texfamily ~~gamman~n~=~(n-1)*gamman~(n-1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gamman}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{gamman}\;\mathrm{0}\mathrel{=}\bot {}\<[E]%
+\\
+\>[3]{}\Varid{gamman}\;\mathrm{1}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\Varid{gamman}\;\Varid{n}\mathrel{=}(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{*}\Varid{gamman}\;(\Varid{n}\mathbin{-}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 When we apply this to the numbers $1\dots 10$,
-\text{\texfamily map\Sp gamman\Sp [1..10]},
+\ensuremath{\Varid{map}\;\Varid{gamman}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
 we see: 
 
-\text{\texfamily [1,1,2,6,24,120,720,5040,40320,362880]}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{2},\mathrm{6},\mathrm{24},\mathrm{120},\mathrm{720},\mathrm{5040},\mathrm{40320},\mathrm{362880}\mskip1.5mu]}
 
 There is a snag. Here are the factorials,
-created with \text{\texfamily map\Sp fac\Sp [1..10]}:
+created with \ensuremath{\Varid{map}\;\Varid{fac}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}:
 
-\text{\texfamily [1,2,6,24,120,720,5040,40320,362880,3628800]}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{6},\mathrm{24},\mathrm{120},\mathrm{720},\mathrm{5040},\mathrm{40320},\mathrm{362880},\mathrm{3628800}\mskip1.5mu]}
 
 The $\Gamma$ function, hence, creates the factorials,
 but shifted down by one. Indeed, we have
@@ -1962,10 +2716,10 @@ but shifted down by one. Indeed, we have
 \Gamma(n+1) = n!
 \end{equation}
 
-With \text{\texfamily [gamman\Sp (n+1)\Sp |\Sp n\Sp \char'06\Sp [1..10]]}, we finally see
+With \ensuremath{[\mskip1.5mu \Varid{gamman}\;(\Varid{n}\mathbin{+}\mathrm{1})\mid \Varid{n}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\mskip1.5mu]}, we finally see
 the factorials in their correct places in the sequence:
 
-\text{\texfamily [1,2,6,24,120,720,5040,40320,362880,3628800]}
+\ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{6},\mathrm{24},\mathrm{120},\mathrm{720},\mathrm{5040},\mathrm{40320},\mathrm{362880},\mathrm{3628800}\mskip1.5mu]}
 
 That the $\Gamma$ function is defined like this,
 is for historical reasons and does not need to bother
@@ -1973,7 +2727,7 @@ us here. We only have to keep in mind that, whenever
 we want to make the connection from $\Gamma$ to factorial,
 we need to increment $n$ by 1.
 
-Well, the \text{\texfamily gamman} function above
+Well, the \ensuremath{\Varid{gamman}} function above
 shows us just another way to express
 factorials for natural numbers. But we wanted to find
 a function for real numbers.
@@ -1995,23 +2749,33 @@ was found already by Euler:
 We can reformulate this equation in Haskell as:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~gammal~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~gammal~i~x~=~(1/x)*product~[(1+1/n)**x~/~(1+x/n)~|~n~\char'06~[1..m]]\\
-\texfamily ~~~~{\bfseries where}~m~=~fromIntegral~i
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gammal}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{gammal}\;\Varid{i}\;\Varid{x}\mathrel{=}(\mathrm{1}\mathbin{/}\Varid{x})\mathbin{*}\Varid{product}\;[\mskip1.5mu (\mathrm{1}\mathbin{+}\mathrm{1}\mathbin{/}\Varid{n})\mathbin{**}\Varid{x}\mathbin{/}(\mathrm{1}\mathbin{+}\Varid{x}\mathbin{/}\Varid{n})\mid \Varid{n}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{m}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{m}\mathrel{=}\Varid{fromIntegral}\;\Varid{i}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The function receives a \text{\texfamily {\itshape Natural}} and a \text{\texfamily {\itshape RealN}}.
-The \text{\texfamily {\itshape Natural}}, $i$, is just the number of iterations
+The function receives a \ensuremath{\Conid{Natural}} and a \ensuremath{\Conid{RealN}}.
+The \ensuremath{\Conid{Natural}}, $i$, is just the number of iterations
 we want to perform, since we do not have the time
 to go through all iterations of the infinite product.
-The \text{\texfamily go} function implements the product itself.
+The \ensuremath{\Varid{go}} function implements the product itself.
 Finally we multiply $\frac{1}{x}$ and we are done.
 
 Let us look at how precise this function can mimic $n!$
 for a given number of iterations. 
-When we apply \text{\texfamily gammal} on $x=1$,
+When we apply \ensuremath{\Varid{gammal}} on $x=1$,
 then we obviously get 1, since we compute
 
 \[
@@ -2022,27 +2786,27 @@ then we obviously get 1, since we compute
 1\times 1\times 1\times\dots = 1.
 \]
 
-Indeed, \text{\texfamily gammal\Sp 1\Sp 1} immediately yields 1.
-Next, we try \text{\texfamily gammal\Sp 1\Sp 2} and get 
+Indeed, \ensuremath{\Varid{gammal}\;\mathrm{1}\;\mathrm{1}} immediately yields 1.
+Next, we try \ensuremath{\Varid{gammal}\;\mathrm{1}\;\mathrm{2}} and get 
 \[
 0.\overline{6}
 \]
 That is far off the expected value 1.
 We increase the number of iterations and try
-\text{\texfamily gammal\Sp 10\Sp 2}:
+\ensuremath{\Varid{gammal}\;\mathrm{10}\;\mathrm{2}}:
 
 \[
 0.91666666\dots
 \]
 
 Already better, but still not 1.
-We try \text{\texfamily gammal\Sp 100\Sp 2} and see:
+We try \ensuremath{\Varid{gammal}\;\mathrm{100}\;\mathrm{2}} and see:
 
 \[
 0.99019607\dots
 \]
 
-and \text{\texfamily gammal\Sp 1000\Sp 2}:
+and \ensuremath{\Varid{gammal}\;\mathrm{1000}\;\mathrm{2}}:
 
 \[
 0.99900199\dots
@@ -2059,14 +2823,14 @@ with \num{1000} iterations, we see:
 The first two values are fairly close to the expected results.
 $\Gamma(5)$ and $\Gamma(6)$, which should be
 24 and 120, however, are clearly off.
-We try \text{\texfamily gammal\Sp 10000\Sp 5} and see:
+We try \ensuremath{\Varid{gammal}\;\mathrm{10000}\;\mathrm{5}} and see:
 
 \[
 23.97601798\dots
 \]
 
 Not good, but much better.
-What about \text{\texfamily gammal\Sp 10000\Sp 6}?
+What about \ensuremath{\Varid{gammal}\;\mathrm{10000}\;\mathrm{6}}?
 Here it is:
 
 \[
@@ -2112,18 +2876,31 @@ In Haskell, his definition of the $\Gamma$ function
 may look like:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~gammae~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~gammae~i~x~=~f~*~product~[e**(x/n)~*~(1+(x/n))**(-1)~|~n~\char'06~[1..m]]\\
-\texfamily ~~~~{\bfseries where}~~f~=~e**((-1)*\char'11*x)/x\\
-\texfamily ~~~~~~~~~~~m~=~fromIntegral~(i-1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gammae}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{gammae}\;\Varid{i}\;\Varid{x}\mathrel{=}\Varid{f}\mathbin{*}\Varid{product}\;[\mskip1.5mu \Varid{e}\mathbin{**}(\Varid{x}\mathbin{/}\Varid{n})\mathbin{*}(\mathrm{1}\mathbin{+}(\Varid{x}\mathbin{/}\Varid{n}))\mathbin{**}(\mathbin{-}\mathrm{1})\mid \Varid{n}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{m}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{f}\mathrel{=}\Varid{e}\mathbin{**}((\mathbin{-}\mathrm{1})\mathbin{*}\Varid{gamma}\mathbin{*}\Varid{x})\mathbin{/}\Varid{x}{}\<[E]%
+\\
+\>[12]{}\Varid{m}\mathrel{=}\Varid{fromIntegral}\;(\Varid{i}\mathbin{-}\mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 An important difference to the first formula is
 that, from this one, it is not obvious that it
 should result in 1 for $x=1$. Let us give it a try.
-\text{\texfamily gammae\Sp 1\Sp 1}:
+\ensuremath{\Varid{gammae}\;\mathrm{1}\;\mathrm{1}}:
 
 \[
 0.56145836\dots
@@ -2133,16 +2910,16 @@ That is an ugly result! Already for 1, it
 diverges from the expected result by almost $\frac{1}{2}$!
 Let us see how many iterations we need to approach 1:
 
-\text{\texfamily gammae\Sp 10\Sp \Sp \Sp 1\Sp \Sp \Sp =\Sp 0.95043595...}\\
-\text{\texfamily gammae\Sp 100\Sp \Sp 1\Sp \Sp \Sp =\Sp 0.99500219...}\\
-\text{\texfamily gammae\Sp 1000\Sp 1\Sp \Sp \Sp =\Sp 0.99949804...}
+\ensuremath{\Varid{gammae}\;\mathrm{10}\;\mathrm{1}\mathrel{=}\mathrm{0.95043595}\mathbin{...}}\\
+\ensuremath{\Varid{gammae}\;\mathrm{100}\;\mathrm{1}\mathrel{=}\mathrm{0.99500219}\mathbin{...}}\\
+\ensuremath{\Varid{gammae}\;\mathrm{1000}\;\mathrm{1}\mathrel{=}\mathrm{0.99949804}\mathbin{...}}
 
 and so on. What about 2?
 
-\text{\texfamily gammae\Sp 1\Sp \Sp \Sp \Sp 2\Sp \Sp \Sp =\Sp 0.15761774...}\\
-\text{\texfamily gammae\Sp 10\Sp \Sp \Sp 2\Sp \Sp \Sp =\Sp 0.82120772...}\\
-\text{\texfamily gammae\Sp 100\Sp \Sp 2\Sp \Sp \Sp =\Sp 0.98022710...}\\
-\text{\texfamily gammae\Sp 1000\Sp 2\Sp \Sp \Sp =\Sp 0.99799833...}
+\ensuremath{\Varid{gammae}\;\mathrm{1}\;\mathrm{2}\mathrel{=}\mathrm{0.15761774}\mathbin{...}}\\
+\ensuremath{\Varid{gammae}\;\mathrm{10}\;\mathrm{2}\mathrel{=}\mathrm{0.82120772}\mathbin{...}}\\
+\ensuremath{\Varid{gammae}\;\mathrm{100}\;\mathrm{2}\mathrel{=}\mathrm{0.98022710}\mathbin{...}}\\
+\ensuremath{\Varid{gammae}\;\mathrm{1000}\;\mathrm{2}\mathrel{=}\mathrm{0.99799833}\mathbin{...}}
 
 It definitely converges slower than Euler's formula.
 For the remainder of this section, we will therefore stick
@@ -2163,13 +2940,13 @@ integers, for instance:
 
 So, $\Gamma(0)$ and $\Gamma(-1)$ yield $\pm\infty$.
 What about $\frac{1}{2}$?
-Using \text{\texfamily gammal}, we see the following results:
+Using \ensuremath{\Varid{gammal}}, we see the following results:
 
 \begin{minipage}{\textwidth}
-\text{\texfamily gammal\Sp \Sp \Sp \Sp 1\Sp 0.5\Sp =\Sp 1.8856...}\\
-\text{\texfamily gammal\Sp \Sp \Sp 10\Sp 0.5\Sp =\Sp 1.7927...}\\
-\text{\texfamily gammal\Sp \Sp 100\Sp 0.5\Sp =\Sp 1.7746...}\\
-\text{\texfamily gammal\Sp 1000\Sp 0.5\Sp =\Sp 1.7726...}\\
+\ensuremath{\Varid{gammal}\;\mathrm{1}\;\mathrm{0.5}\mathrel{=}\mathrm{1.8856}\mathbin{...}}\\
+\ensuremath{\Varid{gammal}\;\mathrm{10}\;\mathrm{0.5}\mathrel{=}\mathrm{1.7927}\mathbin{...}}\\
+\ensuremath{\Varid{gammal}\;\mathrm{100}\;\mathrm{0.5}\mathrel{=}\mathrm{1.7746}\mathbin{...}}\\
+\ensuremath{\Varid{gammal}\;\mathrm{1000}\;\mathrm{0.5}\mathrel{=}\mathrm{1.7726}\mathbin{...}}\\
 \end{minipage}
 
 It will finally approach: 
@@ -2181,7 +2958,7 @@ It will finally approach:
 Is it possible that $\Gamma(0.5)$ yields such a boring number?
 Well, is it such boring? Look what happens (with one million iterations):
 
-\text{\texfamily gammal\Sp 1000000\Sp 0.5\Sp *\Sp gammal\Sp 1000000\Sp 0.5\Sp =\Sp 3.14159...}
+\ensuremath{\Varid{gammal}\;\mathrm{1000000}\;\mathrm{0.5}\mathbin{*}\Varid{gammal}\;\mathrm{1000000}\;\mathrm{0.5}\mathrel{=}\mathrm{3.14159}\mathbin{...}}
 
 That is $\pi$! So $\Gamma(0.5) = \sqrt{\pi}$. Not bad!
 The occurrence of both, $e$ and $\gamma$, in Weierstrass' formula
@@ -2226,15 +3003,39 @@ We, hence, have for odd numbers $n$:
 which can be implemented in Haskell as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~gammaho~::~{\itshape Natural}~\char'31~{\itshape RealN}\\
-\texfamily ~~gammaho~1~=~sqrt~\char'07\\
-\texfamily ~~gammaho~n~~|~even~n~~~~~=~error~\char34 not~an~odd~number!\char34 \\
-\texfamily ~~~~~~~~~~~~~|~otherwise~~=~rff~(n-2)~/~2**i~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~*~sqrt~\char'07\\
-\texfamily ~~~~{\bfseries where}~~rff~~=~fromIntegral~\char'00~facfac\\
-\texfamily ~~~~~~~~~~~i~~~~=~fromIntegral~((n-1)~`div`~2)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{gammaho}\mathbin{::}\Conid{Natural}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{gammaho}\;\mathrm{1}\mathrel{=}\Varid{sqrt}\;\Varid{pi}{}\<[E]%
+\\
+\>[3]{}\Varid{gammaho}\;\Varid{n}{}\<[14]%
+\>[14]{}\mid \Varid{even}\;\Varid{n}{}\<[27]%
+\>[27]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~an~odd~number!\char34}{}\<[E]%
+\\
+\>[14]{}\mid \Varid{otherwise}{}\<[27]%
+\>[27]{}\mathrel{=}\Varid{rff}\;(\Varid{n}\mathbin{-}\mathrm{2})\mathbin{/}\mathrm{2}\mathbin{**}\Varid{i}{}\<[E]%
+\\
+\>[27]{}\mathbin{*}\Varid{sqrt}\;\Varid{pi}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{rff}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\circ}\Varid{facfac}{}\<[E]%
+\\
+\>[12]{}\Varid{i}{}\<[17]%
+\>[17]{}\mathrel{=}\Varid{fromIntegral}\;((\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 The $\Gamma$ function shows many of such suprising properties.
@@ -2244,53 +3045,63 @@ such as the Riemann zeta function, have been found.
 
 But let us now go on to the definition of real binomial coefficients
 using the $\Gamma$ function.
-To this end, we define a new \text{\texfamily choose} function, namely:
+To this end, we define a new \ensuremath{\Varid{choose}} function, namely:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~chooser~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}~\char'31~{\itshape RealN}\\
-\texfamily ~~chooser~i~n~k~=~~gammal~i~(n+1)~/~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~(gammal~i~(k+1)~*~gammal~i~(n-k+1))
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{chooser}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to \Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{chooser}\;\Varid{i}\;\Varid{n}\;\Varid{k}\mathrel{=}{}\<[20]%
+\>[20]{}\Varid{gammal}\;\Varid{i}\;(\Varid{n}\mathbin{+}\mathrm{1})\mathbin{/}{}\<[E]%
+\\
+\>[20]{}(\Varid{gammal}\;\Varid{i}\;(\Varid{k}\mathbin{+}\mathrm{1})\mathbin{*}\Varid{gammal}\;\Varid{i}\;(\Varid{n}\mathbin{-}\Varid{k}\mathbin{+}\mathrm{1})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Again, we try this function on integers.
 For instance:
 
 \begin{minipage}{\textwidth}
-\text{\texfamily choose\Sp 2\Sp 1\Sp =\Sp 2}\\
-\text{\texfamily choose\Sp 3\Sp 1\Sp =\Sp 3}\\
-\text{\texfamily choose\Sp 3\Sp 2\Sp =\Sp 3}\\
-\text{\texfamily choose\Sp 5\Sp 2\Sp =\Sp 10}\\
-\text{\texfamily choose\Sp 5\Sp 3\Sp =\Sp 10}\\
-\text{\texfamily choose\Sp 7\Sp 2\Sp =\Sp 21}\\
-\text{\texfamily choose\Sp 7\Sp 3\Sp =\Sp 35}
+\ensuremath{\Varid{choose}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{2}}\\
+\ensuremath{\Varid{choose}\;\mathrm{3}\;\mathrm{1}\mathrel{=}\mathrm{3}}\\
+\ensuremath{\Varid{choose}\;\mathrm{3}\;\mathrm{2}\mathrel{=}\mathrm{3}}\\
+\ensuremath{\Varid{choose}\;\mathrm{5}\;\mathrm{2}\mathrel{=}\mathrm{10}}\\
+\ensuremath{\Varid{choose}\;\mathrm{5}\;\mathrm{3}\mathrel{=}\mathrm{10}}\\
+\ensuremath{\Varid{choose}\;\mathrm{7}\;\mathrm{2}\mathrel{=}\mathrm{21}}\\
+\ensuremath{\Varid{choose}\;\mathrm{7}\;\mathrm{3}\mathrel{=}\mathrm{35}}
 \end{minipage}
 
-We start with $\binom{2}{1}=2$, using \text{\texfamily chooser}
+We start with $\binom{2}{1}=2$, using \ensuremath{\Varid{chooser}}
 
-\text{\texfamily chooser\Sp 1\Sp 2\Sp 1\Sp =\Sp 1.5}
+\ensuremath{\Varid{chooser}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.5}}
 
 Far off. So, again, we increase the number of iterations:
 
 \begin{minipage}{\textwidth}
-\text{\texfamily chooser\Sp \Sp \Sp \Sp \Sp 1\Sp 2\Sp 1\Sp =\Sp 1.5}\\
-\text{\texfamily chooser\Sp \Sp \Sp \Sp 10\Sp 2\Sp 1\Sp =\Sp 1.8461...}\\
-\text{\texfamily chooser\Sp \Sp \Sp 100\Sp 2\Sp 1\Sp =\Sp 1.9805...}\\
-\text{\texfamily chooser\Sp \Sp 1000\Sp 2\Sp 1\Sp =\Sp 1.9980...}\\
-\text{\texfamily chooser\Sp 10000\Sp 2\Sp 1\Sp =\Sp 1.9998...}
+\ensuremath{\Varid{chooser}\;\mathrm{1}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.5}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.8461}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{100}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9805}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{1000}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9980}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{2}\;\mathrm{1}\mathrel{=}\mathrm{1.9998}\mathbin{...}}
 \end{minipage}
 
 After \num{10000} iterations, we come pretty close.
 Let us try the other examples with \num{10000} iterations:
 
 \begin{minipage}{\textwidth}
-\text{\texfamily chooser\Sp 10000\Sp 3\Sp 1\Sp =\Sp 2.9994...}\\
-\text{\texfamily chooser\Sp 10000\Sp 3\Sp 2\Sp =\Sp 2.9994...}\\
-\text{\texfamily chooser\Sp 10000\Sp 5\Sp 2\Sp =\Sp 9.9940...}\\
-\text{\texfamily chooser\Sp 10000\Sp 5\Sp 3\Sp =\Sp 9.9940...}\\
-\text{\texfamily chooser\Sp 10000\Sp 7\Sp 2\Sp =\Sp 10.9790...}\\
-\text{\texfamily chooser\Sp 10000\Sp 7\Sp 3\Sp =\Sp 34.9580...}
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{3}\;\mathrm{1}\mathrel{=}\mathrm{2.9994}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{3}\;\mathrm{2}\mathrel{=}\mathrm{2.9994}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{5}\;\mathrm{2}\mathrel{=}\mathrm{9.9940}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{5}\;\mathrm{3}\mathrel{=}\mathrm{9.9940}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{7}\;\mathrm{2}\mathrel{=}\mathrm{10.9790}\mathbin{...}}\\
+\ensuremath{\Varid{chooser}\;\mathrm{10000}\;\mathrm{7}\;\mathrm{3}\mathrel{=}\mathrm{34.9580}\mathbin{...}}
 \end{minipage}
 
 which is fairly close for all these numbers.
@@ -2308,20 +3119,377 @@ come back to the $\Gamma$-function and its applications later on.
 https://en.wikipedia.org/wiki/Binomial_coefficient#Two_real_or_complex_valued_arguments
 Check numerical results against RealN!!!
 }
+\section{The Closed Form of the Fibonacci Sequence}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{ClosedFib}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+There is a pending problem from the second chapter:
+is there a closed form of the Fibonacci sequence?
+Meanwhile, we have learnt almost everything to answer
+this question -- and what we have not yet learnt,
+well, we just ignore it.
+
+The method we choose is \term{ordinary generating funcions}
+(\acronym{ogf}).
+As you may remember, an \acronym{ogf}
+turns an infinite sequence of the form
+$a_1,a_2,\dots$
+into an infinite series of the form
+
+\[
+\sum_{n=0}^{\infty}{a_nx^n}.
+\]
+
+The sequence of the Fibonacci numbers begins with
+
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, \dots,
+
+where each number is the sum of its two predecessors 
+bootstrapping with 0, 1.
+
+We call the $n^{th}$ Fibonacci number $F_n$;
+we have for example
+
+\[
+F_0 = 0, 
+F_1 = 1, 
+F_2 = 1, 
+F_3 = 2, 
+F_4 = 3, 
+F_5 = 5, 
+F_6 = 8, 
+F_7 = 13
+\]
+
+and so on.
+
+The \acronym{ogf} for this sequence is
+
+\[
+\sum_{n=0}^{\infty}{F_nx^n},
+\]
+
+\ie:
+
+\[
+F_0 + F_1x + F_2x^2 + F_3x^3 + F_4x^4 + \dots
+\]
+
+In the following we will try to find other series
+that can express the same result, such that
+
+\begin{equation}
+\sum_{n=0}^{\infty}{F_nx^n} =
+\sum_{n=0}^{\infty}{a_nx^n},
+\end{equation}
+
+so that we can conjecture (and later prove)
+that $F_n = a_n$.
+
+We start our journey by defining our generating function $G$:
+
+\begin{equation}
+G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
+\end{equation}
+
+This $G$ that we can carry around like a bag.
+As before with geometric series, we multipl
+$G$ by $x$ and get:
+
+\begin{equation}
+xG(x) = F_0x + F_1x^2 + F_2x^3 + F_3x^4 + \dots
+\end{equation}
+
+As a result, the exponents of the $x$es increase.
+Before we had $F_0$, now we have $F_0x$;
+we had $F_1x$, now we have $F_1x^2$ and so on.
+Because that is so much fun, we just repeat
+the process and multiply $xG$ once again
+by $x$ yielding $x^2G$:
+
+\begin{equation}
+x^2G(x) = F_0x^2 + F_1x^3 + F_2x^4 + F_3x^5 + \dots
+\end{equation}
+
+After that we subtract:
+
+\begin{equation}
+G(x) - xG(x) - x^2G(x) = (1-x-x^2)G(x).
+\end{equation}
+
+What happens to the terms now?
+In the following equation, terms with equal $x$es
+arranged together:
+
+\begin{align*}
+(1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
+              &   & (&    &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) & - \\
+              &   & (&    &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) &
+\end{align*}
+
+We see as a result that terms with equal $x$es form groups with 
+three Fibonacci numbers: in the first line 
+(starting with the column for $x^2$), we have $F_n$,
+in the second line, we have at the same position $F_{n-1}$ and,
+in the third line at this position, we have $F_{n-2}$.
+Now, $F_n = F_{n-1} + F_{n-2}$.
+But, here, we compute $F_n - F_{n-1} - F_{n-2}$.
+So, what we do is $F_{n-1} + F_{n-2} - F_{n-1} - F_{n-2}$.
+In other words, we eliminate $F_n$.
+We are therefore left with
+
+\begin{equation}
+(1-x-x^2)G(x) = F_0 + F_1x - F_0x.
+\end{equation}
+
+But since $F_0 = 0$, this is just
+
+\begin{equation}
+(1-x-x^2)G(x) = x.
+\end{equation}
+
+We solve for $G$, \ie\ we divide by $1-x-x^2$ and get
+
+\begin{equation}\label{eq:G1}
+G(x) = \frac{x}{1-x-x^2}.
+\end{equation}
+
+That is a nice looking formula! But not the end of the story.
+The next thing we do is to factor the denominator.
+Since this is a polynomial of $2^{nd}$ degree,
+we can do this by \term{completing the square}
+as we did before in a certain section of this chapter
+whose title is a spoiler to the punch line of what
+we are doing here.
+
+Anyway, let us complete the square. We have the equation:
+
+\begin{equation}
+-x^2 - x + 1 = 0.
+\end{equation}
+
+We bring 1 to the right-hand side and devide by $-1$:
+
+\begin{equation}
+x^2 + x = 1.
+\end{equation}
+
+Now, we add the missing term, which is half of the
+second coefficient squared. The second coefficient,
+the one before the $x$, is just 1. Half of it is $\frac{1}{2}$
+and squared that is $\frac{1}{4}$:
+
+\begin{equation}
+x^2 + x + \frac{1}{4} = 1 + \frac{1}{4} = \frac{5}{4}.
+\end{equation}
+
+We take the square root of both sides and get:
+
+\begin{equation}
+x + \frac{1}{2} = \frac{\pm\sqrt{5}}{2}.
+\end{equation}
+
+The last step is to bring $\frac{1}{2}$ to the right-hand side:
+
+\begin{equation}
+x = \frac{\pm\sqrt{5}-1}{2}.
+\end{equation}
+
+Bang!
+
+No bang? \acronym{ok}, let us examine the beast on the right-hand side.
+When we take the negative root, we have:
+
+\[
+\frac{-1-\sqrt{5}}{2}.
+\]
+
+You might remember the number $\frac{1+\sqrt{5}}{2}$,
+which is called $\Phi$ or the \term{golden ratio}.
+Well, the number we see for the negative root is
+the $-\Phi$, the additive inverse of the golden ratio.
+
+What about the positive root? That is
+
+\[
+\frac{-1+\sqrt{5}}{2}
+\]
+
+and, thus, the negative of the conjugate of $\Phi$,
+$\overline{\Phi}$.
+The conjugate of $\Phi$ is 
+
+\begin{equation}
+\overline{\Phi} = \frac{1 - \sqrt{5}}{2}.
+\end{equation}
+
+Two nice properties that we will need later follow immediately:
+
+\begin{equation}
+\Phi + \overline{\Phi} = 1
+\end{equation}
+
+and
+
+\begin{equation}
+\Phi - \overline{\Phi} = \sqrt{5}.
+\end{equation}
+
+We can now rewrite equation \ref{eq:G1} as
+
+\begin{equation}\label{eq:G2}
+G(x) = \frac{x}{(x+\Phi)(x+\overline{\Phi})},
+\end{equation}
+
+where the denominator has been replaced by 
+the product of its factors.
+If this is not entirely clear to you,
+do not worry. The relation of root and factors
+of polynomials is one of the main topics
+of the next chapter.
+
+Now comes a very cute step.
+We will split the fraction into two fractions.
+The reason why we do it is that we want to
+make each of them look like a geometric series.
+
+The way how we do it is the inverse of
+adding fractions. When we add fractions,
+we multiply the denominator of one fraction
+by the denominator of the other.
+(In fact, we use the greatest common divisor
+of the two denominators.)
+For instance:
+
+\begin{equation}
+\frac{DA+CB}{CD} = \frac{A}{C} + \frac{B}{D}.
+\end{equation}
+
+When we apply this to equation \ref{eq:G2},
+we get
+
+\begin{equation}\label{eq:G3}
+G(x) = \frac{x}{(x+\Phi)(x+\overline{\Phi})} = 
+\frac{A}{x+\Phi} + \frac{B}{x+\overline{\Phi}}
+\end{equation}
+
+To get to know $A$ and $B$, we multiply both sides
+by the denominator $(x+\Phi)(x+\overline{\Phi})$
+and get
+
+\begin{equation}
+x = A(x+\overline{\Phi}) + B(x+\Phi).
+\end{equation}
+
+In order to solve for $A$ we set $x=-\Phi$ to let $B$ disappear:
+
+\begin{equation}
+-\Phi = A(-\Phi+\overline{\Phi}).
+\end{equation}
+
+The second property introduced above leads to
+$-\Phi+\overline{\Phi} = -\sqrt{5}$ and,
+after dividing this, we get
+
+\begin{equation}
+A = \frac{-\Phi}{-\sqrt{5}} = \frac{\Phi}{\sqrt{5}}.
+\end{equation}
+
+In order to solve for $B$ we set $x=-\overline{\Phi}$ to let $A$ disappear:
+
+\begin{equation}
+-\overline{\Phi} = B(-\overline{\Phi}+\Phi).
+\end{equation}
+
+Since $\Phi-\overline{\Phi} = \sqrt{5}$, we get this time:
+
+\begin{equation}
+B = -\frac{\overline{\Phi}}{\sqrt{5}}.
+\end{equation}
+
+We, hence, can rewrite \ref{eq:G3} as
+
+\begin{equation}\label{eq:G4}
+G(x) = \frac{1}{\sqrt{5}}\left(
+       \frac{\Phi}{x+\Phi} + 
+       \frac{-\overline{\Phi}}{x+\overline{\Phi}}\right)
+\end{equation}
+
+where we factored $\frac{1}{\sqrt{5}}$ out.
+
+
+
+
+
+
+
+\ignore{
+- factor denominator using roots:
+  - (x+1/2+sqrt(5)/2) 
+  - (x+1/2-sqrt(5)/2)
+  = -1(x-phi)(x+phi')
+- explain phi and phi'
+- then use partial fractions to get A/(x+phi) + B/(x+phi')
+- then make it look like a geometric series
+- and translate it back to sum
+- result is fi2
+- for integers fi = fi2, since for large n phi' is tiny
+
+- golden ratio: (1+sqrt(5))/2
+- fib formula:  ((1+sqrt(5))/2)^n/(sqrt(5)
+
+https://www.youtube.com/watch?v=5BnuG-fR3kE
+}
+
+
+
 \section{The Stern-Brocot Tree} 
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape SternBrocot}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.List}~(sort,nub)\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.Tree}\\
-\texfamily ~~{\bfseries import}~{\itshape Cantor1}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}\\
-\texfamily ~~{\bfseries import}~{\itshape Realrep}\\
-\texfamily ~~{\bfseries import}~{\itshape Real}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{SternBrocot}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{sort},\Varid{nub}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Tree}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Cantor1}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 Achille Brocot (1817 -- 1878) was part of a clockmaker dynasty
@@ -2369,27 +3537,51 @@ result in rational numbers. The process to compute
 such a continued fraction can be captured in Haskell as:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~contfracr~::~[{\itshape Ratio}]~\char'31~{\itshape Ratio}\\
-\texfamily ~~contfracr~~[]~~~~~~=~0\\
-\texfamily ~~contfracr~~[i]~~~~~=~i~\\
-\texfamily ~~contfracr~~(i:is)~~=~i~+~(invert~\$~contfracr~is)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{contfracr}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}[\mskip1.5mu \mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}[\mskip1.5mu \Varid{i}\mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\Varid{i}{}\<[E]%
+\\
+\>[3]{}\Varid{contfracr}\;{}\<[14]%
+\>[14]{}(\Varid{i}\mathbin{:}\Varid{is}){}\<[22]%
+\>[22]{}\mathrel{=}\Varid{i}\mathbin{+}(\Varid{invert}\mathbin{\$}\Varid{contfracr}\;\Varid{is}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Here, \text{\texfamily invert} is a function to create the multiplicative
+Here, \ensuremath{\Varid{invert}} is a function to create the multiplicative
 inverse of a fraction, \ie\ $invert(\frac{n}{d}) = \frac{d}{n}$
 or in Haskell:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~invert~::~{\itshape Ratio}~\char'31~{\itshape Ratio}\\
-\texfamily ~~invert~({\itshape Q}~n~d)~=~{\itshape Q}~d~n
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{invert}\mathbin{::}\Conid{Ratio}\to \Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{invert}\;(\Conid{Q}\;\Varid{n}\;\Varid{d})\mathrel{=}\Conid{Q}\;\Varid{d}\;\Varid{n}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 As you will see immediately, 
-the expression \text{\texfamily (invert\Sp \$\Sp contfracr\Sp is)},
+the expression \ensuremath{(\Varid{invert}\mathbin{\$}\Varid{contfracr}\;\Varid{is})},
 corresponds to 
 \ignore{$}
 
@@ -2406,15 +3598,40 @@ from any continued fraction given in list notation
 two new continued fractions:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~brocotkids~::~[{\itshape Ratio}]~\char'31~([{\itshape Ratio}],[{\itshape Ratio}])\\
-\texfamily ~~brocotkids~r~~=~~{\bfseries let}~~h~~~=~init~r\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~l~~~=~last~r\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~s~~~=~length~r\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~k1~~=~h++[l+1]\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~k2~~=~h++[l-1,2]\\
-\texfamily ~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~even~s~{\bfseries then}~(k1,k2)~{\bfseries else}~(k2,k1)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{brocotkids}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to ([\mskip1.5mu \Conid{Ratio}\mskip1.5mu],[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\Varid{brocotkids}\;\Varid{r}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\mathbf{let}\;{}\<[25]%
+\>[25]{}\Varid{h}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{init}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{l}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{last}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{s}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{length}\;\Varid{r}{}\<[E]%
+\\
+\>[25]{}\Varid{k1}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{h}\plus [\mskip1.5mu \Varid{l}\mathbin{+}\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\Varid{k2}{}\<[29]%
+\>[29]{}\mathrel{=}\Varid{h}\plus [\mskip1.5mu \Varid{l}\mathbin{-}\mathrm{1},\mathrm{2}\mskip1.5mu]{}\<[E]%
+\\
+\>[20]{}\mathbf{in}\;\mathbf{if}\;\Varid{even}\;\Varid{s}\;\mathbf{then}\;(\Varid{k1},\Varid{k2})\;\mathbf{else}\;(\Varid{k2},\Varid{k1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 This function yields two lists, $k_1$ and $k_2$.
@@ -2424,11 +3641,11 @@ to which, in the case of $k_1$, one number is appended,
 namely the last element of the input list plus 1,
 or, in the case of $k_2$, two numbers are appended, namely
 the last element minus 1 and 2. 
-For the input list \text{\texfamily [0,1]}, 
+For the input list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}, 
 which is just 1,
 for instance,
-$k_1$ is \text{\texfamily [0,2]}, which is $\frac{1}{2}$, and
-$k_2$ is \text{\texfamily [0,0,2]}, which is $\frac{1}{\frac{1}{2}} = 2$.
+$k_1$ is \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{2}\mskip1.5mu]}, which is $\frac{1}{2}$, and
+$k_2$ is \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{2}\mskip1.5mu]}, which is $\frac{1}{\frac{1}{2}} = 2$.
 
 When we compare the paritiy of 
 the length of the lists,
@@ -2438,10 +3655,10 @@ In particular, if the input list is even,
 then $k_1$ is even and $k_2$ is odd; if it is odd,
 then $k_1$ is odd and $k_2$ is even.
 
-Now, we see for an even list like \text{\texfamily [a,b]} that there is an 
+Now, we see for an even list like \ensuremath{[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]} that there is an 
 integer, $a$, to which the inverse of the second number,
 $b$ is added. If $b$ grows, then the overall result shrinks.
-The structure of an odd list is like \text{\texfamily [a,b,c]}.
+The structure of an odd list is like \ensuremath{[\mskip1.5mu \Varid{a},\Varid{b},\Varid{c}\mskip1.5mu]}.
 Again, the integer $a$ is added to the inverse of
 what follows in the list.
 But this time, if $c$ grows, the inverse of $c$,
@@ -2453,7 +3670,7 @@ and, if it is odd, then the value is greater.
 You can easily convince yourself that for $k_2$
 this is exactly the other way round.
 In consequence, the numerical value of 
-the left list returned by \text{\texfamily brocotkids}
+the left list returned by \ensuremath{\Varid{brocotkids}}
 is always smaller than that of the input list
 and that of the right one is greater.
 
@@ -2464,26 +3681,59 @@ continue with the left kid; if it is smaller,
 we continue with the right kid. Here is an implementation:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~approx~::~{\itshape Natural}~\char'31~{\itshape RealN}~\char'31~[{\itshape Ratio}]\\
-\texfamily ~~approx~i~d~=~go~i~[0,1]~\\
-\texfamily ~~~~{\bfseries where}~~go~::~{\itshape Natural}~\char'31~[{\itshape Ratio}]~\char'31~[{\itshape Ratio}]\\
-\texfamily ~~~~~~~~~~~go~0~\char95 ~~=~[]\\
-\texfamily ~~~~~~~~~~~go~j~r~~=~~{\bfseries let}~~k@({\itshape Q}~a~b)~=~contfracr~r~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~d'~=~(fromIntegral~a)~/~(fromIntegral~b)\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~(k1,k2)~=~brocotkids~r\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~d'~\char'36~d~~{\bfseries then}~[{\itshape Q}~a~b]\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~{\bfseries if}~d'~<~d~~{\bfseries then}~~k:go~(j-1)~k2\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries else}~~k:go~(j-1)~k1
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{54}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{60}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{approx}\mathbin{::}\Conid{Natural}\to \Conid{RealN}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{approx}\;\Varid{i}\;\Varid{d}\mathrel{=}\Varid{go}\;\Varid{i}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\mathrm{0}\;\anonymous {}\<[20]%
+\>[20]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{j}\;\Varid{r}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[23]%
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{k}\mathord{@}(\Conid{Q}\;\Varid{a}\;\Varid{b})\mathrel{=}\Varid{contfracr}\;\Varid{r}{}\<[E]%
+\\
+\>[28]{}\Varid{d'}\mathrel{=}(\Varid{fromIntegral}\;\Varid{a})\mathbin{/}(\Varid{fromIntegral}\;\Varid{b}){}\<[E]%
+\\
+\>[28]{}(\Varid{k1},\Varid{k2})\mathrel{=}\Varid{brocotkids}\;\Varid{r}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;\mathbf{if}\;\Varid{d'}\equiv \Varid{d}\;{}\<[38]%
+\>[38]{}\mathbf{then}\;[\mskip1.5mu \Conid{Q}\;\Varid{a}\;\Varid{b}\mskip1.5mu]{}\<[E]%
+\\
+\>[38]{}\mathbf{else}\;\mathbf{if}\;\Varid{d'}\mathbin{<}\Varid{d}\;{}\<[54]%
+\>[54]{}\mathbf{then}\;{}\<[60]%
+\>[60]{}\Varid{k}\mathbin{:}\Varid{go}\;(\Varid{j}\mathbin{-}\mathrm{1})\;\Varid{k2}{}\<[E]%
+\\
+\>[54]{}\mathbf{else}\;{}\<[60]%
+\>[60]{}\Varid{k}\mathbin{:}\Varid{go}\;(\Varid{j}\mathbin{-}\mathrm{1})\;\Varid{k1}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
  
 This function takes two arguments.
 The first, a natural number, 
 defines the number of iterations we want to do.
 The second is the real number we want to approximate.
-We start the internal \text{\texfamily go} with $i$ and the list \text{\texfamily [0,1]}.
-In \text{\texfamily go}, as long as $j > 0$, 
+We start the internal \ensuremath{\Varid{go}} with $i$ and the list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}.
+In \ensuremath{\Varid{go}}, as long as $j > 0$, 
 we compute the rational number that corresponds to the input list;
 then we compute the corresponding real number.
 If the number we computed this way
@@ -2494,7 +3744,7 @@ if it is greater, we continue with $k_1$.
 
 The function yields the whole trajectory whose
 last number is the best approximation with $n$ iterations.
-The result of \text{\texfamily approx\Sp 10\Sp \char'07}, for instance is:
+The result of \ensuremath{\Varid{approx}\;\mathrm{10}\;\Varid{pi}}, for instance is:
 
 \[
 1,2,3,4,\frac{7}{2},
@@ -2507,11 +3757,11 @@ The result of \text{\texfamily approx\Sp 10\Sp \char'07}, for instance is:
 
 The last fraction $\frac{22}{7}$ is approximately
 3.142857, which still is a bit away from 3.141592.
-We reach 3.1415 with \text{\texfamily approx\Sp 25\Sp \char'07}, for which 
+We reach 3.1415 with \ensuremath{\Varid{approx}\;\mathrm{25}\;\Varid{pi}}, for which 
 the last fraction is $\frac{333}{106} = 3.141509$. 
 This way, we can come as close to $\pi$ as we wish.
 
-Since, with the \text{\texfamily brocotkids} function, we always
+Since, with the \ensuremath{\Varid{brocotkids}} function, we always
 create two follow-ups for the input list,
 we can easily define a binary tree where, for each node,
 $k_1$ is the left subtree and $k_2$ is the right subtree.
@@ -2523,36 +3773,67 @@ from the discussion of the Calkin-Wilf tree.
 The Stern-Brocot tree can be defined as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~{\bfseries type}~{\itshape SterBroc}~=~{\itshape Tree}~[{\itshape Ratio}]\\
-\texfamily \\
-\texfamily ~~sterbroc~~::~{\itshape Zahl}~\char'31~[{\itshape Ratio}]~\char'31~{\itshape SterBroc}\\
-\texfamily ~~sterbroc~~i~r~~|~i~\char'36~0~~~~~=~~{\itshape Node}~r~[]\\
-\texfamily ~~~~~~~~~~~~~~~~~|~otherwise~~=~~{\bfseries let}~(k1,k2)~=~brocotkids~r\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\itshape Node}~r~[~~sterbroc~(i-1)~k1,\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~sterbroc~(i-1)~k2]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{31E}{@{}l@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\mathbf{type}\;\Conid{SterBroc}\mathrel{=}\Conid{Tree}\;[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\[\blanklineskip]%
+\>[3]{}\Varid{sterbroc}{}\<[13]%
+\>[13]{}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to \Conid{SterBroc}{}\<[E]%
+\\
+\>[3]{}\Varid{sterbroc}\;{}\<[13]%
+\>[13]{}\Varid{i}\;\Varid{r}{}\<[18]%
+\>[18]{}\mid \Varid{i}\equiv \mathrm{0}{}\<[31]%
+\>[31]{}\mathrel{=}{}\<[31E]%
+\>[34]{}\Conid{Node}\;\Varid{r}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[18]{}\mid \Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}{}\<[31E]%
+\>[34]{}\mathbf{let}\;(\Varid{k1},\Varid{k2})\mathrel{=}\Varid{brocotkids}\;\Varid{r}{}\<[E]%
+\\
+\>[34]{}\mathbf{in}\;\Conid{Node}\;\Varid{r}\;[\mskip1.5mu {}\<[47]%
+\>[47]{}\Varid{sterbroc}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{k1},{}\<[E]%
+\\
+\>[47]{}\Varid{sterbroc}\;(\Varid{i}\mathbin{-}\mathrm{1})\;\Varid{k2}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The function \text{\texfamily sterbroc} takes an integer argument
+The function \ensuremath{\Varid{sterbroc}} takes an integer argument
 to define the number of generations we want to create and
-an initial list of \text{\texfamily {\itshape Ratio}}. If we have exhausted the number
-of generations, we create the final \text{\texfamily {\itshape Node}} without kids.
-Otherwise, we create the \text{\texfamily brocotkids} and continue with
-\text{\texfamily sterbroc} on $k_1$ and $k_2$.
+an initial list of \ensuremath{\Conid{Ratio}}. If we have exhausted the number
+of generations, we create the final \ensuremath{\Conid{Node}} without kids.
+Otherwise, we create the \ensuremath{\Varid{brocotkids}} and continue with
+\ensuremath{\Varid{sterbroc}} on $k_1$ and $k_2$.
 If we start with a negative number, we will generate 
 infinitely many generations.
 
 We can now convert the continued fractions in the nodes
-to fractions by \text{\texfamily fmap}ing \text{\texfamily contfracr} on them. Here is a function
-that creates the Stern-Brocot Tree from root node \text{\texfamily [0,1]}
+to fractions by \ensuremath{\Varid{fmap}}ing \ensuremath{\Varid{contfracr}} on them. Here is a function
+that creates the Stern-Brocot Tree from root node \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}
 labled with fractions:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~sterbrocTree~::~{\itshape Zahl}~\char'31~{\itshape Tree}~{\itshape Ratio}\\
-\texfamily ~~sterbrocTree~i~=~fmap~contfracr~(sterbroc~i~[0,1])
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sterbrocTree}\mathbin{::}\Conid{Zahl}\to \Conid{Tree}\;\Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{sterbrocTree}\;\Varid{i}\mathrel{=}\Varid{fmap}\;\Varid{contfracr}\;(\Varid{sterbroc}\;\Varid{i}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 For the first five generations, this tree is
@@ -2719,7 +4000,7 @@ how can we permute the generations of the Stern-Brocot tree
 to obtain the generations of the Calkin-Wilf tree and vice versa?
 Let us look at an example.
 The $4^{th}$ generation of the Calkin-Wilf tree is\\
-\text{\texfamily getKids\Sp 4\Sp (calWiTree\Sp 4\Sp ({\itshape Q}\Sp 1\Sp 1))}: 
+\ensuremath{\Varid{getKids}\;\mathrm{4}\;(\Varid{calWiTree}\;\mathrm{4}\;(\Conid{Q}\;\mathrm{1}\;\mathrm{1}))}: 
 
 \[
 \frac{1}{4},
@@ -2733,7 +4014,7 @@ The $4^{th}$ generation of the Calkin-Wilf tree is\\
 \]
 
 The $4^{th}$ generation of the Stern-Brocot tree is\\
-\text{\texfamily getKids\Sp 4\Sp (sterbroctree\Sp 4)}: 
+\ensuremath{\Varid{getKids}\;\mathrm{4}\;(\Varid{sterbroctree}\;\mathrm{4})}: 
 
 \[
 \frac{1}{4},
@@ -2812,34 +4093,83 @@ zeros and convert back to decimal numbers.
 This can be nicely expressed by the function
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~bitrev~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~{\itshape Int}\\
-\texfamily ~~bitrev~x~=~~fromIntegral~\char'00~fromBinary~~~~~~~\char'00~\\
-\texfamily ~~~~~~~~~~~~~~cleanz~\char'00~~reverse~\char'00~fillup~x~0~~\char'00~\\
-\texfamily ~~~~~~~~~~~~~~toBinary~\char'00~fromIntegral
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{47E}{@{}l@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bitrev}\mathbin{::}\Conid{Int}\to \Conid{Int}\to \Conid{Int}{}\<[E]%
+\\
+\>[3]{}\Varid{bitrev}\;\Varid{x}\mathrel{=}{}\<[15]%
+\>[15]{}\Varid{fromIntegral}\mathbin{\circ}\Varid{fromBinary}{}\<[47]%
+\>[47]{}\mathbin{\circ}{}\<[47E]%
+\\
+\>[15]{}\Varid{cleanz}\mathbin{\circ}{}\<[25]%
+\>[25]{}\Varid{reverse}\mathbin{\circ}\Varid{fillup}\;\Varid{x}\;\mathrm{0}{}\<[47]%
+\>[47]{}\mathbin{\circ}{}\<[47E]%
+\\
+\>[15]{}\Varid{toBinary}\mathbin{\circ}\Varid{fromIntegral}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-where \text{\texfamily fillup} is defined as
+where \ensuremath{\Varid{fillup}} is defined as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~fillup~::~{\itshape Int}~\char'31~{\itshape Int}~\char'31~[{\itshape Int}]~\char'31~[{\itshape Int}]\\
-\texfamily ~~fillup~i~z~is~~|~~length~is~\char'36~i~~=~is\\
-\texfamily ~~~~~~~~~~~~~~~~~|~~otherwise~~~~~~~=~fillup~i~z~(z:is)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{18E}{@{}l@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fillup}\mathbin{::}\Conid{Int}\to \Conid{Int}\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{fillup}\;\Varid{i}\;\Varid{z}\;\Varid{is}{}\<[18]%
+\>[18]{}\mid {}\<[18E]%
+\>[21]{}\Varid{length}\;\Varid{is}\equiv \Varid{i}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{is}{}\<[E]%
+\\
+\>[18]{}\mid {}\<[18E]%
+\>[21]{}\Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}\Varid{fillup}\;\Varid{i}\;\Varid{z}\;(\Varid{z}\mathbin{:}\Varid{is}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-and \text{\texfamily cleanz} as 
+and \ensuremath{\Varid{cleanz}} as 
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~cleanz~::~[{\itshape Int}]~\char'31~[{\itshape Int}]\\
-\texfamily ~~cleanz~[]~~~~~~=~[]\\
-\texfamily ~~cleanz~[0]~~~~~=~[0]\\
-\texfamily ~~cleanz~(0:is)~~=~cleanz~is\\
-\texfamily ~~cleanz~is~~~~~~=~is
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{cleanz}\mathbin{::}[\mskip1.5mu \Conid{Int}\mskip1.5mu]\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cleanz}\;[\mskip1.5mu \mskip1.5mu]{}\<[18]%
+\>[18]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cleanz}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[18]%
+\>[18]{}\mathrel{=}[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{cleanz}\;(\mathrm{0}\mathbin{:}\Varid{is}){}\<[18]%
+\>[18]{}\mathrel{=}\Varid{cleanz}\;\Varid{is}{}\<[E]%
+\\
+\>[3]{}\Varid{cleanz}\;\Varid{is}{}\<[18]%
+\>[18]{}\mathrel{=}\Varid{is}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 To apply this, we first have to calculate
@@ -2850,53 +4180,87 @@ then the size of the greatest number is just
 $\log_2 n$, the binary logarithm of $n$.
 For $n=8$, for instance, this is 3.
 With this out of the way, we can define
-a bit reversal of the indexes of any set \text{\texfamily [a]} as:
+a bit reversal of the indexes of any set \ensuremath{[\mskip1.5mu \Varid{a}\mskip1.5mu]} as:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~idxbitrev~::~[a]~\char'31~[{\itshape Int}]\\
-\texfamily ~~idxbitrev~xs~=~~{\bfseries let}~~l~~=~fromIntegral~\$~length~xs\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~x~~=~round~\$~logBase~2~(fromIntegral~l)\\
-\texfamily ~~~~~~~~~~~~~~~~~~{\bfseries in}~~[bitrev~x~i~|~i~\char'06~[0..l-1]]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{idxbitrev}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Conid{Int}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{idxbitrev}\;\Varid{xs}\mathrel{=}{}\<[19]%
+\>[19]{}\mathbf{let}\;{}\<[24]%
+\>[24]{}\Varid{l}{}\<[27]%
+\>[27]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\$}\Varid{length}\;\Varid{xs}{}\<[E]%
+\\
+\>[24]{}\Varid{x}{}\<[27]%
+\>[27]{}\mathrel{=}\Varid{round}\mathbin{\$}\Varid{logBase}\;\mathrm{2}\;(\Varid{fromIntegral}\;\Varid{l}){}\<[E]%
+\\
+\>[19]{}\mathbf{in}\;{}\<[23]%
+\>[23]{}[\mskip1.5mu \Varid{bitrev}\;\Varid{x}\;\Varid{i}\mid \Varid{i}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{l}\mathbin{-}\mathrm{1}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 and use this function to permute the original input list:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~bitreverse~::~[a]~\char'31~[a]\\
-\texfamily ~~bitreverse~xs~=~go~xs~(idxbitrev~xs)\\
-\texfamily ~~~~{\bfseries where}~~go~\char95 ~[]~~~~~~~=~[]\\
-\texfamily ~~~~~~~~~~~go~zs~(p:ps)~~=~zs!!p~:~go~zs~ps
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bitreverse}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{bitreverse}\;\Varid{xs}\mathrel{=}\Varid{go}\;\Varid{xs}\;(\Varid{idxbitrev}\;\Varid{xs}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[26]%
+\>[26]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{zs}\;(\Varid{p}\mathbin{:}\Varid{ps}){}\<[26]%
+\>[26]{}\mathrel{=}\Varid{zs}\mathbin{!!}\Varid{p}\mathbin{:}\Varid{go}\;\Varid{zs}\;\Varid{ps}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Applied on the list \text{\texfamily [0,1,2,3,4,5,6,7]},
+Applied on the list \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5},\mathrm{6},\mathrm{7}\mskip1.5mu]},
 we see exactly the $(1,4)(3,6)$ permutation
-we saw above, namely \text{\texfamily [0,4,2,6,1,5,3,7]}.
+we saw above, namely \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{4},\mathrm{2},\mathrm{6},\mathrm{1},\mathrm{5},\mathrm{3},\mathrm{7}\mskip1.5mu]}.
 Applied on a generation from the Calkin-Wilf tree,
 we see the corresponding generation from the 
 Stern-Brocot tree.
 
-Let \text{\texfamily t\Sp =\Sp calWiTree\Sp (-1)\Sp (1\%1)},
+Let \ensuremath{\Varid{t}\mathrel{=}\Varid{calWiTree}\;(\mathbin{-}\mathrm{1})\;(\mathrm{1}\mathbin{\%}\mathrm{1})},
 we see for 
 
 \begin{center}
 \begingroup
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{|c|c|}\hline
-\text{\texfamily getKids\Sp 3\Sp t} & 
+\ensuremath{\Varid{getKids}\;\mathrm{3}\;\Varid{t}} & 
 $\frac{1}{3},
  \frac{3}{2},
  \frac{2}{3},
  \frac{3}{1}$ \\\hline
-\text{\texfamily bitreverse\Sp (getKids\Sp 3\Sp t)} &
+\ensuremath{\Varid{bitreverse}\;(\Varid{getKids}\;\mathrm{3}\;\Varid{t})} &
 $\frac{1}{3},
  \frac{2}{3},
  \frac{3}{2},
  \frac{3}{1}$\\\hline
-\text{\texfamily getKids\Sp 4\Sp t} & 
+\ensuremath{\Varid{getKids}\;\mathrm{4}\;\Varid{t}} & 
 $\frac{1}{4},
  \frac{4}{3},
  \frac{3}{5},
@@ -2905,7 +4269,7 @@ $\frac{1}{4},
  \frac{5}{3},
  \frac{3}{4}, 
  \frac{4}{1}$ \\\hline
-\text{\texfamily bitreverse\Sp (getKids\Sp 4\Sp t)} &
+\ensuremath{\Varid{bitreverse}\;(\Varid{getKids}\;\mathrm{4}\;\Varid{t})} &
 $\frac{1}{4},
  \frac{2}{5},
  \frac{3}{5},
@@ -2926,11 +4290,21 @@ We create this sequence in exaclty the same way
 we did for the CalkinWilf tree, namely
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~enumQsb~::~[{\itshape Ratio}]\\
-\texfamily ~~enumQsb~=~go~1~\$~sterbrocTree~(-1)~\\
-\texfamily ~~~~{\bfseries where}~go~i~t~=~getKids~i~t~++~go~(i+1)~t
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{enumQsb}\mathbin{::}[\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{enumQsb}\mathrel{=}\Varid{go}\;\mathrm{1}\mathbin{\$}\Varid{sterbrocTree}\;(\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{i}\;\Varid{t}\mathrel{=}\Varid{getKids}\;\Varid{i}\;\Varid{t}\plus \Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{t}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}\ignore{$}
 
 The numerators of the sequence derived in this way
@@ -2938,7 +4312,7 @@ from the Calkin-Wilf tree equal the well-known Stern sequence.
 Is there another well-known sequence that is equivalent
 to the numerators of the Stern-Brocot tree sequence?
 Let us ask the On-line Encyclopedia with the first segment
-of that sequence generated by \text{\texfamily map\Sp numerator\Sp (take\Sp 20\Sp enumQsb)}:
+of that sequence generated by \ensuremath{\Varid{map}\;\Varid{numerator}\;(\Varid{take}\;\mathrm{20}\;\Varid{enumQsb})}:
 
 \[
 1,1,2,1,2,3,3,1,2,3,3,4,5,5,4,1,2,3,3,4,5,5,4,5,7.
@@ -2957,15 +4331,25 @@ $F_3$ contains $0,\frac{1}{3},\frac{2}{3},1$ and so on.
 
 A direct way to implement this could be to combine all numbers
 from $0\dots n$ in the numerator with all numbers $1\dots n$
-in the denominator that are smaller than 1 and to sort and \text{\texfamily nub}
+in the denominator that are smaller than 1 and to sort and \ensuremath{\Varid{nub}}
 the resulting list, like this:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~farey2~::~{\itshape Natural}~\char'31~[{\itshape Ratio}]\\
-\texfamily ~~farey2~n~=~sort~(nub~\$~~filter~(\char'34~1)~\$~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~concatMap~(\char'10x~\char'31~map~(x\%)~[1..n])~[0..n])
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{farey2}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{farey2}\;\Varid{n}\mathrel{=}\Varid{sort}\;(\Varid{nub}\mathbin{\$}{}\<[27]%
+\>[27]{}\Varid{filter}\;(\leq \mathrm{1})\mathbin{\$}{}\<[E]%
+\\
+\>[27]{}\Varid{concatMap}\;(\lambda \Varid{x}\to \Varid{map}\;(\Varid{x}\mathbin{\%})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 With this approach, we create a lot of fractions
@@ -2974,14 +4358,38 @@ A more interesting approach, also in the light of the topic
 of this section, is the following:
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~farey~::~{\itshape Natural}~\char'31~[{\itshape Ratio}]\\
-\texfamily ~~farey~n~=~0~:~sort~(go~1~\$~sterbrocTree~(-1))\\
-\texfamily ~~~~{\bfseries where}~~go~k~t~~=~~{\bfseries let}~~g~=~getKids~k~t\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~l~=~filter~fltr~g\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~{\bfseries in}~{\bfseries if}~null~l~{\bfseries then}~l~{\bfseries else}~l++go~(k+1)~t\\
-\texfamily ~~~~~~~~~~~fltr~k~~=~~k~\char'34~1~\char'04~n~\char'35~denominator~k~
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{20E}{@{}l@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{farey}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{farey}\;\Varid{n}\mathrel{=}\mathrm{0}\mathbin{:}\Varid{sort}\;(\Varid{go}\;\mathrm{1}\mathbin{\$}\Varid{sterbrocTree}\;(\mathbin{-}\mathrm{1})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{k}\;\Varid{t}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[20E]%
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{g}\mathrel{=}\Varid{getKids}\;\Varid{k}\;\Varid{t}{}\<[E]%
+\\
+\>[28]{}\Varid{l}\mathrel{=}\Varid{filter}\;\Varid{fltr}\;\Varid{g}{}\<[E]%
+\\
+\>[23]{}\mathbf{in}\;\mathbf{if}\;\Varid{null}\;\Varid{l}\;\mathbf{then}\;\Varid{l}\;\mathbf{else}\;\Varid{l}\plus \Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1})\;\Varid{t}{}\<[E]%
+\\
+\>[12]{}\Varid{fltr}\;\Varid{k}{}\<[20]%
+\>[20]{}\mathrel{=}{}\<[20E]%
+\>[23]{}\Varid{k}\leq \mathrm{1}\mathrel{\wedge}\Varid{n}\geq \Varid{denominator}\;\Varid{k}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}\ignore{$}
 
 Here, we iterate over the generations of the Stern-Brocot tree
@@ -3118,19 +4526,55 @@ F_7 = \left\lbrace 0,
 We can implement this as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~nxtFarey~::~{\itshape Natural}~\char'31~[{\itshape Ratio}]~\char'31~[{\itshape Ratio}]\\
-\texfamily ~~nxtFarey~n~[]~~~=~[]\\
-\texfamily ~~nxtFarey~n~[r]~~=~[r]\\
-\texfamily ~~nxtFarey~n~(a:b:rs)~~|~~denominator~a~+~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~denominator~b~\char'36~n~~=~nxtFarey~n~(a:x:b:rs)\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~|~~otherwise~~~~~~~~~~~=~a:nxtFarey~n~(b:rs)\\
-\texfamily ~~~~{\bfseries where}~x~=~~{\bfseries let}~~n1~=~numerator~a\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~n2~=~numerator~b\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~d1~=~denominator~a\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~d2~=~denominator~b\\
-\texfamily ~~~~~~~~~~~~~~~{\bfseries in}~~(n1+n2)~\%~(d1+d2)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{47}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{nxtFarey}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]\to [\mskip1.5mu \Conid{Ratio}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{nxtFarey}\;\Varid{n}\;[\mskip1.5mu \mskip1.5mu]{}\<[19]%
+\>[19]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{nxtFarey}\;\Varid{n}\;[\mskip1.5mu \Varid{r}\mskip1.5mu]{}\<[19]%
+\>[19]{}\mathrel{=}[\mskip1.5mu \Varid{r}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{nxtFarey}\;\Varid{n}\;(\Varid{a}\mathbin{:}\Varid{b}\mathbin{:}\Varid{rs}){}\<[24]%
+\>[24]{}\mid {}\<[24E]%
+\>[27]{}\Varid{denominator}\;\Varid{a}\mathbin{+}{}\<[E]%
+\\
+\>[27]{}\Varid{denominator}\;\Varid{b}\equiv \Varid{n}{}\<[47]%
+\>[47]{}\mathrel{=}\Varid{nxtFarey}\;\Varid{n}\;(\Varid{a}\mathbin{:}\Varid{x}\mathbin{:}\Varid{b}\mathbin{:}\Varid{rs}){}\<[E]%
+\\
+\>[24]{}\mid {}\<[24E]%
+\>[27]{}\Varid{otherwise}{}\<[47]%
+\>[47]{}\mathrel{=}\Varid{a}\mathbin{:}\Varid{nxtFarey}\;\Varid{n}\;(\Varid{b}\mathbin{:}\Varid{rs}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{x}\mathrel{=}{}\<[16]%
+\>[16]{}\mathbf{let}\;{}\<[21]%
+\>[21]{}\Varid{n1}\mathrel{=}\Varid{numerator}\;\Varid{a}{}\<[E]%
+\\
+\>[21]{}\Varid{n2}\mathrel{=}\Varid{numerator}\;\Varid{b}{}\<[E]%
+\\
+\>[21]{}\Varid{d1}\mathrel{=}\Varid{denominator}\;\Varid{a}{}\<[E]%
+\\
+\>[21]{}\Varid{d2}\mathrel{=}\Varid{denominator}\;\Varid{b}{}\<[E]%
+\\
+\>[16]{}\mathbf{in}\;{}\<[20]%
+\>[20]{}(\Varid{n1}\mathbin{+}\Varid{n2})\mathbin{\%}(\Varid{d1}\mathbin{+}\Varid{d2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
  
 In fact, we can construct the Stern-Brocot tree
@@ -3161,21 +4605,64 @@ likewise constructed by addition with 0.
 We implement this as
 
 \begin{minipage}{\textwidth}
-\begin{tabbing}\texfamily
-~~mSterbroctree~::~{\itshape Zahl}~\char'31~~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~{\itshape Natural}~\char'31~{\itshape Natural}~\char'31~{\itshape Ratio}~\char'31~{\itshape Tree}~{\itshape Ratio}\\
-\texfamily ~~mSterbroctree~0~\char95 ~\char95 ~\char95 ~\char95 ~r~~=~~{\itshape Node}~r~[]\\
-\texfamily ~~mSterbroctree~n~a~b~c~d~r~~=~~\\
-\texfamily ~~~~{\bfseries let}~~rn~~=~numerator~r\\
-\texfamily ~~~~~~~~~rd~~=~denominator~r\\
-\texfamily ~~~~~~~~~k1~~=~(a+rn)~\%~(b+rd)\\
-\texfamily ~~~~~~~~~k2~~=~(c+rn)~\%~(d+rd)\\
-\texfamily ~~~~{\bfseries in}~~~{\bfseries if}~k1~<~k2\\
-\texfamily ~~~~~~~~~{\bfseries then}~~{\itshape Node}~r~[~~mSterbroctree~(n-1)~a~b~rn~rd~k1,\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~mSterbroctree~(n-1)~c~d~rn~rd~k2]\\
-\texfamily ~~~~~~~~~{\bfseries else}~~{\itshape Node}~r~[~~mSterbroctree~(n-1)~c~d~rn~rd~k2,\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~mSterbroctree~(n-1)~a~b~rn~rd~k1]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{30E}{@{}l@{}}%
+\column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mSterbroctree}\mathbin{::}\Conid{Zahl}\to {}\<[29]%
+\>[29]{}\Conid{Natural}\to \Conid{Natural}\to {}\<[E]%
+\\
+\>[29]{}\Conid{Natural}\to \Conid{Natural}\to \Conid{Ratio}\to \Conid{Tree}\;\Conid{Ratio}{}\<[E]%
+\\
+\>[3]{}\Varid{mSterbroctree}\;\mathrm{0}\;\anonymous \;\anonymous \;\anonymous \;\anonymous \;\Varid{r}{}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\>[33]{}\Conid{Node}\;\Varid{r}\;[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mSterbroctree}\;\Varid{n}\;\Varid{a}\;\Varid{b}\;\Varid{c}\;\Varid{d}\;\Varid{r}{}\<[30]%
+\>[30]{}\mathrel{=}{}\<[30E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{let}\;{}\<[10]%
+\>[10]{}\Varid{rn}{}\<[14]%
+\>[14]{}\mathrel{=}\Varid{numerator}\;\Varid{r}{}\<[E]%
+\\
+\>[10]{}\Varid{rd}{}\<[14]%
+\>[14]{}\mathrel{=}\Varid{denominator}\;\Varid{r}{}\<[E]%
+\\
+\>[10]{}\Varid{k1}{}\<[14]%
+\>[14]{}\mathrel{=}(\Varid{a}\mathbin{+}\Varid{rn})\mathbin{\%}(\Varid{b}\mathbin{+}\Varid{rd}){}\<[E]%
+\\
+\>[10]{}\Varid{k2}{}\<[14]%
+\>[14]{}\mathrel{=}(\Varid{c}\mathbin{+}\Varid{rn})\mathbin{\%}(\Varid{d}\mathbin{+}\Varid{rd}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{in}\;{}\<[10]%
+\>[10]{}\mathbf{if}\;\Varid{k1}\mathbin{<}\Varid{k2}{}\<[E]%
+\\
+\>[10]{}\mathbf{then}\;{}\<[16]%
+\>[16]{}\Conid{Node}\;\Varid{r}\;[\mskip1.5mu {}\<[26]%
+\>[26]{}\Varid{mSterbroctree}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{a}\;\Varid{b}\;\Varid{rn}\;\Varid{rd}\;\Varid{k1},{}\<[E]%
+\\
+\>[26]{}\Varid{mSterbroctree}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{c}\;\Varid{d}\;\Varid{rn}\;\Varid{rd}\;\Varid{k2}\mskip1.5mu]{}\<[E]%
+\\
+\>[10]{}\mathbf{else}\;{}\<[16]%
+\>[16]{}\Conid{Node}\;\Varid{r}\;[\mskip1.5mu {}\<[26]%
+\>[26]{}\Varid{mSterbroctree}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{c}\;\Varid{d}\;\Varid{rn}\;\Varid{rd}\;\Varid{k2},{}\<[E]%
+\\
+\>[26]{}\Varid{mSterbroctree}\;(\Varid{n}\mathbin{-}\mathrm{1})\;\Varid{a}\;\Varid{b}\;\Varid{rn}\;\Varid{rd}\;\Varid{k1}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Note that we have to use two pairs of natural numbers
@@ -3191,16 +4678,35 @@ introduced at the beginning of the section.
 
 \section{Field Extension}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Extension}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~qualified~{\itshape {\itshape Data}.Ratio}~as~{\itshape R}~(numerator,denominator)\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}~hiding~(rdiv)\\
-\texfamily ~~{\bfseries import}~{\itshape Realrep}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Debug}.Trace}~(trace)
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Extension}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{\Conid{Data}.Ratio}\;\Varid{as}\;\Conid{R}\;(\Varid{numerator},\Varid{denominator}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}\;\Varid{hiding}\;(\Varid{rdiv}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Realrep}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Debug}.Trace}\;(\Varid{trace}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 A very common activity of mathematicians is solving equations.
@@ -3390,18 +4896,36 @@ with $r$ being a constant rational number, \ie\ $r\in\mathbb{Q}$.
 If you want to look at the concrete numbers,
 you may reformulate this in terms of Haskell list comprehension:
 
-\begin{tabbing}\texfamily
-[~~(fromRational~a)~~+~\\
-\texfamily ~~~(fromRational~b)~~*~(sqrt~r)~|~~a~~\char'06~enumQ,~\\
-\texfamily ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~b~~\char'06~enumQ]
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{BE}{@{}l@{}}%
+\column{4}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{36}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}[\mskip1.5mu {}\<[BE]%
+\>[4]{}(\Varid{fromRational}\;\Varid{a}){}\<[22]%
+\>[22]{}\mathbin{+}{}\<[E]%
+\\
+\>[4]{}(\Varid{fromRational}\;\Varid{b}){}\<[22]%
+\>[22]{}\mathbin{*}(\Varid{sqrt}\;\Varid{r})\mid {}\<[36]%
+\>[36]{}\Varid{a}{}\<[39]%
+\>[39]{}\leftarrow \Varid{enumQ},{}\<[E]%
+\\
+\>[36]{}\Varid{b}{}\<[39]%
+\>[39]{}\leftarrow \Varid{enumQ}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 
 Do not be confused by the fact
 that, in Haskell, we have to convert $a$ and $b$ to real numbers.
 Haskell has no built-in notion of field extension.
-Numbers are either rational or real. Since \text{\texfamily sqrt\Sp r} is \text{\texfamily {\itshape RealN}},
+Numbers are either rational or real. Since \ensuremath{\Varid{sqrt}\;\Varid{r}} is \ensuremath{\Conid{RealN}},
 we have to convert
-everything to \text{\texfamily {\itshape RealN}}. The result, however, shows
+everything to \ensuremath{\Conid{RealN}}. The result, however, shows
 what the numbers in the new field look like ``in reality'',
 whatever that is supposed to mean.
 
@@ -3853,17 +5377,38 @@ examples of such numbers.
 %\section{p-adic Numbers}
 \section{The Continuum}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Cantor2}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.List}~(nub,sort)\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.Tree}\\
-\texfamily ~~{\bfseries import}~{\itshape Fact}\\
-\texfamily ~~{\bfseries import}~{\itshape Binom}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Cantor2}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{sort}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Tree}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Binom}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 So. How many real numbers are there?
@@ -4134,17 +5679,38 @@ https://en.wikipedia.org/wiki/Georg_Cantor%27s_first_set_theory_article
 }
 \section{Review of the Number Zoo}
 \ignore{
-\begin{tabbing}\texfamily
-{\bfseries module}~{\itshape Zoo}\\
-\texfamily {\bfseries where}\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.List}~(nub,sort)\\
-\texfamily ~~{\bfseries import}~{\itshape {\itshape Data}.Tree}\\
-\texfamily ~~{\bfseries import}~{\itshape Fact}\\
-\texfamily ~~{\bfseries import}~{\itshape Binom}\\
-\texfamily ~~{\bfseries import}~{\itshape Natural}\\
-\texfamily ~~{\bfseries import}~{\itshape Zahl}\\
-\texfamily ~~{\bfseries import}~{\itshape Quoz}
-\end{tabbing}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Zoo}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{sort}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.Tree}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Fact}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Binom}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Quoz}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
 }
 
 We have, in the previous chapters,

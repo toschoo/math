@@ -17,5 +17,5 @@
 %include PolyModFactor.lhs
 \section{Hensel Lifting}
 %include HenselLifting.lhs
-\section{The closed Form of the Fibonacci Sequence}
-%include ClosedFib.lhs
+\section{Enumerating the Algebraic Numbers}
+%include Cantor3.lhs

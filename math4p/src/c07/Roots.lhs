@@ -288,7 +288,7 @@ The computation leads to a loss of precision
 in representing the terms. Indeed, considering
 terms raised to the $20^{th}$ power and multiplied
 by large coefficients, the number 1148 appears to
-be a tiny inprecision.
+be a tiny imprecision.
 
 We can work around this, using rational numbers:
 
@@ -301,7 +301,7 @@ So, we try
 
 and get the correct result |1%1|.
 The function with this parameters
-returns almost instantanious. That is
+returns almost instantly. That is
 because the average of 0.5 and 1.5 is already 1.
 The function finds the root in the first step.
 A more serious challenge is
@@ -408,7 +408,7 @@ Polynomials may be represented as the product
 of their factors (just like integers).
 We have experienced with Wilkinson's polynomial
 that the factor representation may be much more
-convenient that the usual representation with
+convenient than the usual representation with
 coefficients. Wilkinson's polynomial expressed
 as a product was just
 
@@ -437,7 +437,7 @@ algebraists did for centuries was to find
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
-than 5. For higher degrees, there are not such
+than 5. For higher degrees, there are no such
 formulas. This dicovery is perhaps much more
 important than the single formulas developed
 over the centuries for polynomials of the first
@@ -447,7 +447,7 @@ to the discovery are the foundations of modern
 
 But first things first. To understand why there
 cannot be general formulas for solving polynomials
-higher degrees, we need to understand polynomials
+of higher degrees, we need to understand polynomials
 much better. First, we will look at the formula
 to solve polynomials of the second degree.
 Note that we skip the first degree, since 

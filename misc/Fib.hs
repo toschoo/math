@@ -27,6 +27,14 @@ where
   fi n = round (phi^n'/sqrt 5)
     where n' = fromIntegral n
 
+  fi2 :: Integer -> Integer
+  fi2 n = round ((phi^n' - phi'^n')/sqrt 5)
+    where n' = fromIntegral n
+
+  fir :: Integer -> Double 
+  fir n = (phi^n - phi'^n)/sqrt 5
+
+
   g :: Double -> Double
   g x = x / (1 - x - x^2)
 

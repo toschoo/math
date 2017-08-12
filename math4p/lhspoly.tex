@@ -3933,7 +3933,7 @@ The computation leads to a loss of precision
 in representing the terms. Indeed, considering
 terms raised to the $20^{th}$ power and multiplied
 by large coefficients, the number 1148 appears to
-be a tiny inprecision.
+be a tiny imprecision.
 
 We can work around this, using rational numbers:
 
@@ -3946,7 +3946,7 @@ So, we try
 
 and get the correct result \ensuremath{\mathrm{1}\mathbin{\%}\mathrm{1}}.
 The function with this parameters
-returns almost instantanious. That is
+returns almost instantly. That is
 because the average of 0.5 and 1.5 is already 1.
 The function finds the root in the first step.
 A more serious challenge is
@@ -4097,7 +4097,7 @@ Polynomials may be represented as the product
 of their factors (just like integers).
 We have experienced with Wilkinson's polynomial
 that the factor representation may be much more
-convenient that the usual representation with
+convenient than the usual representation with
 coefficients. Wilkinson's polynomial expressed
 as a product was just
 
@@ -4126,7 +4126,7 @@ algebraists did for centuries was to find
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
-than 5. For higher degrees, there are not such
+than 5. For higher degrees, there are no such
 formulas. This dicovery is perhaps much more
 important than the single formulas developed
 over the centuries for polynomials of the first
@@ -4136,7 +4136,7 @@ to the discovery are the foundations of modern
 
 But first things first. To understand why there
 cannot be general formulas for solving polynomials
-higher degrees, we need to understand polynomials
+of higher degrees, we need to understand polynomials
 much better. First, we will look at the formula
 to solve polynomials of the second degree.
 Note that we skip the first degree, since 
@@ -5821,70 +5821,16 @@ Examples:
   so, -2 (=5) and -1 (=6) are roots
   lift the roots to whatever you want using hlift
 }
-\section{The closed Form of the Fibonacci Sequence}
+\section{Enumerating the Algebraic Numbers}
 \ignore{
-\begingroup\par\noindent\advance\leftskip\mathindent\(
-\begin{pboxed}\SaveRestoreHook
-\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{ClosedFib}{}\<[E]%
-\\
-\>[B]{}\mathbf{where}{}\<[E]%
-\ColumnHook
-\end{pboxed}
-\)\par\noindent\endgroup\resethooks
+module Cantor3
+where
+  import PolyModFactor
 }
-
-\begin{equation}
-G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
-\end{equation}
-
-\begin{equation}
-G(x) = 0 + x + x^2 + 2x^3 + 3x^4 + 5x^5 + 8x^6 + \dots
-\end{equation}
-
-\begin{equation}
-xG(x) = F_0x + F_1x^2 + F_2x^3 + F_3x^4 + \dots
-\end{equation}
-
-\begin{equation}
-x^2G(x) = F_0x^2 + F_1x^3 + F_2x^4 + F_3x^5 + \dots
-\end{equation}
-
-\begin{equation}
-G(x) - xG(x) - x^2G(x) = (1-x-x^2)G(x).
-\end{equation}
-
-\begin{align*}
-(1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
-              &   & (&    &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) & - \\
-              &   & (&    &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) &
-\end{align*}
-
-\begin{align*}
-(1-x-x^2)G(x) & = & F_0 & + (F_1 - F_0)x \\
-              &   &     & + (F_2 - F_1 - F_0)x^2 \\
-              &   &     & + (F_3 - F_2 - F_1)x^3 \\
-              &   &     & + \dots
-\end{align*}
-
-\begin{equation}
-(1-x-x^2)G(x) = x.
-\end{equation}
-
-\begin{equation}
-G(x) = \frac{x}{1-x-x^2}.
-\end{equation}
-
 \ignore{
-- factor denominator using roots:
-  - (x+1/2+sqrt(5)/2) 
-  - (x+1/2-sqrt(5)/2)
-- then use partial fractions
+https://en.wikipedia.org/wiki/Georg_Cantor%27s_first_set_theory_article
+http://www.digizeitschriften.de/dms/img/?PID=GDZPPN002155583&physid=phys268#navi
 }
-
-
-
 
 
 \end{document}
