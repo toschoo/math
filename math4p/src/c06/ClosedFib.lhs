@@ -2,7 +2,7 @@
 \begin{code}
 module ClosedFib
 where
-
+  import Phi
 \end{code}
 }
 
@@ -424,10 +424,122 @@ We, therefore, conjecture that coefficients must be equal:
 F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
 \end{equation}
 
+We can use this implement a much more efficient
+implementation of |fib|. The na\"ive version
+we implemented in chapter 2 went like this:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fib :: Natural -> Natural
+  fib 0 = 0
+  fib 1 = 1
+  fib n = fib (n-1) + fib (n-2)
+\end{code}
+\end{minipage}
+
+The formula above clearly indicates that the result
+is a double. So, we need a function that yields a
+double value:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fir :: Natural -> RealN
+  fir n = (Phi^n - Phi'^n)/sqrt 5
+\end{code}
+\end{minipage}
+
+We apply the function to some numbers like this: 
+|map fir [0..9]| and see
+
+|[0.0,1.0,1.0,2.0,3.0,5.0,8.0,13.0,21.0,34.0]|.
+
+Until here everything is as expected.
+But when we go on (|map fir [10..14]|):
+
+|[54.999,89.0,143.999,
+ 232.999,377.00000000000006]|
+
+We see that some numbers are slightly off
+the expected result; sometimes above sometimes
+below. Indeed, why should we expect clear-cut
+integers in the first place?
+
+Let us look at the small numbers to better understand
+what happens. For $n=0$, we get $(1-1)/\sqrt{5}$.
+That is just zero. For $n=1$, we get $\sqrt{5}/\sqrt{5}$,
+which is 1. For $n=2$, a bit surprisingly, we get 
+$\Phi^2 = 2.6180\dots$ and
+$\overline{\Phi}^2 = 0.3819\dots$.
+$\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$.
+which happens to be $\sqrt{5}$ again and, thus,
+we get 1.
+For $n=3$, we get
+$\Phi^3 - \overline{\Phi}^3 = 4.4721\dots$,
+which happens to be $2\sqrt{5}$. We, hence, get exactly 2.
+Here are the next values:
+
+$\Phi^4 - \overline{\Phi}^4 = 3\sqrt{5}$\\
+$\Phi^5 - \overline{\Phi}^5 = 5\sqrt{5}$\\
+$\Phi^6 - \overline{\Phi}^6 = 8\sqrt{5}$\\
+$\Phi^7 - \overline{\Phi}^7 = 13\sqrt{5}$.
+
+In summary, we have
+
+\begin{equation}
+\Phi^n - \overline{\Phi}^n = F_n\sqrt{5}.
+\end{equation}
+
+But, of course, we are working with limited precision
+and thus get slightly off with growing numbers.
+The solution is just to round to the nearest integer.
+Once we do that, we can consider a simplification.
+Since $||\overline{\Phi}||$, the absolute value
+of the conjugate of $\Phi$, is a number less than 1,
+its powers with growing exponents become smaller and
+smaller and, thus do not affect the result, which is
+rounded to the nearest integer anyway.
+Therefore, we can leave it away. 
+The simplified formula would be
+
+\[
+\frac{\Phi^n}{\sqrt{5}}.
+\]
+
+We need to be careful with small numbers, though.
+The first results with this formula are
+
+|[0.447,0.723,1.170,1.894,3.065,4.959,8.024,12.984,21.009,33.994,55.003]|.
+
+They are close enough to the expected value 
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34 and 55
+to yield the correct result
+rounding to the nearest integer.
+The implementation of the closed form of the Fibonacci sequence
+in Haskell finally is:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fi :: Natural -> Natural
+  fi n = round (phi^n/sqrt 5)
+\end{code}
+\end{minipage}
+
+Compare the speed of |fib| and |fi| applied to big numbers.
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fratio :: Integer -> RealN
+  fratio n = np / nn
+    where  np = fromInteger (fi (n+1))
+           nn = fromInteger (fi n)
+
+\end{code}
+\end{minipage}
+
+
 \ignore{
-- implement in haskell leaving out the conjugate
-- show that it works, but leave proof by induction as an exercise
 - write a program that computes the ratios between two consecutive F
+  fratio
 -- Kepler
 
 

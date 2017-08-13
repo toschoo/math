@@ -3126,10 +3126,14 @@ Check numerical results against RealN!!!
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\mathbf{module}\;\Conid{ClosedFib}{}\<[E]%
 \\
 \>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Phi}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -3547,29 +3551,164 @@ So, now, finally, here comes the punch line:
 \end{equation}
 
 We, here, have two series that are supposed to be equal.
-We, therefore, conjecture that the the coeffiencts are equal:
+We, therefore, conjecture that coefficients must be equal:
 
 \begin{equation}
 F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
 \end{equation}
 
+We can use this implement a much more efficient
+implementation of \ensuremath{\Varid{fib}}. The na\"ive version
+we implemented in chapter 2 went like this:
 
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fib}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{fib}\;\mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{fib}\;\mathrm{1}\mathrel{=}\mathrm{1}{}\<[E]%
+\\
+\>[3]{}\Varid{fib}\;\Varid{n}\mathrel{=}\Varid{fib}\;(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{+}\Varid{fib}\;(\Varid{n}\mathbin{-}\mathrm{2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The formula above clearly indicates that the result
+is a double. So, we need a function that yields a
+double value:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fir}\mathbin{::}\Conid{Natural}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{fir}\;\Varid{n}\mathrel{=}(\Conid{Phi}\mathbin{\uparrow}\Varid{n}\mathbin{-}\Conid{Phi'}\mathbin{\uparrow}\Varid{n})\mathbin{/}\Varid{sqrt}\;\mathrm{5}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+We apply the function to some numbers like this: 
+\ensuremath{\Varid{map}\;\Varid{fir}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{9}\mskip1.5mu]} and see
+
+\ensuremath{[\mskip1.5mu \mathrm{0.0},\mathrm{1.0},\mathrm{1.0},\mathrm{2.0},\mathrm{3.0},\mathrm{5.0},\mathrm{8.0},\mathrm{13.0},\mathrm{21.0},\mathrm{34.0}\mskip1.5mu]}.
+
+Until here everything is as expected.
+But when we go on (\ensuremath{\Varid{map}\;\Varid{fir}\;[\mskip1.5mu \mathrm{10}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}):
+
+\ensuremath{[\mskip1.5mu \mathrm{54.999},\mathrm{89.0},\mathrm{143.999},\mathrm{232.999},\mathrm{377.00000000000006}\mskip1.5mu]}
+
+We see that some numbers are slightly off
+the expected result; sometimes above sometimes
+below. Indeed, why should we expect clear-cut
+integers in the first place?
+
+Let us look at the small numbers to better understand
+what happens. For $n=0$, we get $(1-1)/\sqrt{5}$.
+That is just zero. For $n=1$, we get $\sqrt{5}/\sqrt{5}$,
+which is 1. For $n=2$, a bit surprisingly, we get 
+$\Phi^2 = 2.6180\dots$ and
+$\overline{\Phi}^2 = 0.3819\dots$.
+$\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$.
+which happens to be $\sqrt{5}$ again and, thus,
+we get 1.
+For $n=3$, we get
+$\Phi^3 - \overline{\Phi}^3 = 4.4721\dots$,
+which happens to be $2\sqrt{5}$. We, hence, get exactly 2.
+Here are the next values:
+
+$\Phi^4 - \overline{\Phi}^4 = 3\sqrt{5}$\\
+$\Phi^5 - \overline{\Phi}^5 = 5\sqrt{5}$\\
+$\Phi^6 - \overline{\Phi}^6 = 8\sqrt{5}$\\
+$\Phi^7 - \overline{\Phi}^7 = 13\sqrt{5}$.
+
+In summary, we have
+
+\begin{equation}
+\Phi^n - \overline{\Phi}^n = F_n\sqrt{5}.
+\end{equation}
+
+But, of course, we are working with limited precision
+and thus get slightly off with growing numbers.
+The solution is just to round to the nearest integer.
+Once we do that, we can consider a simplification.
+Since $|\overline{\Phi}|$, the absolute value
+of the conjugate of $\Phi$, is a number less than 1,
+its powers with growing exponents become smaller and
+smaller and, thus do not affect the result, which is
+rounded to the nearest integer anyway.
+Therefore, we can leave it away. 
+The simplified formula would be
+
+\[
+\frac{\Phi^n}{\sqrt{5}}.
+\]
+
+We need to be careful with small numbers, though.
+The first results with this formula are
+
+\ensuremath{[\mskip1.5mu \mathrm{0.447},\mathrm{0.723},\mathrm{1.170},\mathrm{1.894},\mathrm{3.065},\mathrm{4.959},\mathrm{8.024},\mathrm{12.984},\mathrm{21.009},\mathrm{33.994},\mathrm{55.003}\mskip1.5mu]}.
+
+They are close enough to the expected value 
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34 and 55
+to yield the correct result
+rounding to the nearest integer.
+The implementation of the closed form of the Fibonacci sequence
+in Haskell finally is:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fi}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{fi}\;\Varid{n}\mathrel{=}\Varid{round}\;(\Varid{phi}\mathbin{\uparrow}\Varid{n}\mathbin{/}\Varid{sqrt}\;\mathrm{5}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Compare the speed of \ensuremath{\Varid{fib}} and \ensuremath{\Varid{fi}} applied to big numbers.
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fratio}\mathbin{::}\Conid{Integer}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{fratio}\;\Varid{n}\mathrel{=}\Varid{np}\mathbin{/}\Varid{nn}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{np}\mathrel{=}\Varid{fromInteger}\;(\Varid{fi}\;(\Varid{n}\mathbin{+}\mathrm{1})){}\<[E]%
+\\
+\>[12]{}\Varid{nn}\mathrel{=}\Varid{fromInteger}\;(\Varid{fi}\;\Varid{n}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 
 \ignore{
-- factor denominator using roots:
-  - (x+1/2+sqrt(5)/2) 
-  - (x+1/2-sqrt(5)/2)
-  = -1(x-phi)(x+phi')
-- explain phi and phi'
-- then use partial fractions to get A/(x+phi) + B/(x+phi')
-- then make it look like a geometric series
-- and translate it back to sum
-- result is fi2
-- for integers fi = fi2, since for large n phi' is tiny
+- write a program that computes the ratios between two consecutive F
+  fratio
+-- Kepler
 
-- golden ratio: (1+sqrt(5))/2
-- fib formula:  ((1+sqrt(5))/2)^n/(sqrt(5)
 
 https://www.youtube.com/watch?v=5BnuG-fR3kE
 }

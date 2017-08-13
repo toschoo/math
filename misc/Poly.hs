@@ -826,6 +826,7 @@ where
               1 -> solvel p
               2 -> solve2 p
               -- 3 -> solve3 p
+              -- 4 -> solve4 p
               _ -> error "I don't know how to solve this polynomial"
 
   solvel :: (Num a,Fractional a) => Poly a -> [a]
