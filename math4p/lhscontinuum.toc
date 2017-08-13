@@ -1,0 +1,15 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}The Continuum}{2}
+\contentsline {section}{\numberline {1.1}$\sqrt {2}$}{2}
+\contentsline {section}{\numberline {1.2}$\Phi $}{4}
+\contentsline {section}{\numberline {1.3}$\pi $}{6}
+\contentsline {section}{\numberline {1.4}$e$}{10}
+\contentsline {section}{\numberline {1.5}$\gamma $}{15}
+\contentsline {section}{\numberline {1.6}Representation of Real Numbers}{19}
+\contentsline {section}{\numberline {1.7}$\mathbb {R}$}{21}
+\contentsline {section}{\numberline {1.8}Real Factorials}{25}
+\contentsline {section}{\numberline {1.9}The Closed Form of the Fibonacci Sequence}{32}
+\contentsline {section}{\numberline {1.10}The Stern-Brocot Tree}{38}
+\contentsline {section}{\numberline {1.11}Field Extension}{47}
+\contentsline {section}{\numberline {1.12}The Continuum}{57}
+\contentsline {section}{\numberline {1.13}Review of the Number Zoo}{61}

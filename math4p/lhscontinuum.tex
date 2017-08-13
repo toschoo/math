@@ -108,7 +108,9 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{8pt}
 
-\chapter{Real Numbers} % c06
+\tableofcontents
+
+\chapter{The Continuum} % c06
 \section{$\sqrt{2}$}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -3272,17 +3274,37 @@ as we did before in a certain section of this chapter
 whose title is a spoiler to the punch line of what
 we are doing here.
 
+Completing the square is a method that gives us the
+\term{roots} of the polynomial, \ie\ the values of $x$
+for which the whole expression becomes zero.
+For reasons that will be discussed at length in the next
+chapter, for any root $r$ of a polynomial,
+$(x-r)$ is a factor.
+
 Anyway, let us complete the square. We have the equation:
 
 \begin{equation}
 -x^2 - x + 1 = 0.
 \end{equation}
 
-We bring 1 to the right-hand side and devide by $-1$:
+We bring 1 to the right-hand side and get:
+
+\begin{equation}
+-x^2 - x = -1.
+\end{equation}
+
+It is tempting to multiply by -1 to make everything positive.
+But remember that this equation is the denominator of a fraction.
+We cannot simply multiply the denominaotr by -1 without doing
+the same with the numerator. That would change the sign of
+the fraction. We therefore factor -1 out and make a mental note
+that we have to multiply it in again at the end of the calculations.
+With -1 factored out we get:
 
 \begin{equation}
 x^2 + x = 1.
 \end{equation}
+
 
 Now, we add the missing term, which is half of the
 second coefficient squared. The second coefficient,
@@ -3317,7 +3339,7 @@ When we take the negative root, we have:
 You might remember the number $\frac{1+\sqrt{5}}{2}$,
 which is called $\Phi$ or the \term{golden ratio}.
 Well, the number we see for the negative root is
-the $-\Phi$, the additive inverse of the golden ratio.
+$-\Phi$, the additive inverse of the golden ratio.
 
 What about the positive root? That is
 
@@ -3333,7 +3355,7 @@ The conjugate of $\Phi$ is
 \overline{\Phi} = \frac{1 - \sqrt{5}}{2}.
 \end{equation}
 
-Two nice properties that we will need later follow immediately:
+Two nice properties that we will use later follow immediately:
 
 \begin{equation}
 \Phi + \overline{\Phi} = 1
@@ -3345,16 +3367,53 @@ and
 \Phi - \overline{\Phi} = \sqrt{5}.
 \end{equation}
 
+By completing the square, we found two roots,
+namely $-\Phi$ and $-\overline{\Phi}$.
+That implies that $(x + \Phi)$ and $(x + \overline{\Phi})$
+are factors of $(1 - x - x^2)$.
+Let us check if this is true. We multiply
+$(x + \Phi)(x + \overline{\Phi})$ and get
+
+\[
+x^2 + \overline{\Phi}x + \Phi x + \overline{\Phi}\Phi.
+\]
+
+According to the first property above,
+$\overline{\Phi} + \Phi = 1$.
+But what about $\overline{\Phi}\times \Phi$?
+Let us look:
+
+\begin{equation}
+\Phi\overline{\Phi} = \frac{1+\sqrt{5}}{2}\times\frac{1-\sqrt{5}}{2} = 
+\frac{(1+\sqrt{5})(1-\sqrt{5})}{4} = 
+\frac{1-\sqrt{5}+\sqrt{5}-5}{4} =
+\frac{-4}{4} = -1.
+\end{equation}
+
+The overall product of the factors, hence, is
+
+\[
+x^2 + x - 1.
+\]
+
+Oops! We forgot the -1 we factored out above!
+The correct result rather is
+
+\[
+-(x^2 + x - 1).
+\]
+
+
 We can now rewrite equation \ref{eq:G1} as
 
 \begin{equation}\label{eq:G2}
-G(x) = \frac{x}{(x+\Phi)(x+\overline{\Phi})},
+G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})},
 \end{equation}
 
 where the denominator has been replaced by 
 the product of its factors.
 If this is not entirely clear to you,
-do not worry. The relation of root and factors
+do not worry. The relation of roots and factors
 of polynomials is one of the main topics
 of the next chapter.
 
@@ -3379,7 +3438,7 @@ When we apply this to equation \ref{eq:G2},
 we get
 
 \begin{equation}\label{eq:G3}
-G(x) = \frac{x}{(x+\Phi)(x+\overline{\Phi})} = 
+G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})} = 
 \frac{A}{x+\Phi} + \frac{B}{x+\overline{\Phi}}
 \end{equation}
 
@@ -3388,47 +3447,111 @@ by the denominator $(x+\Phi)(x+\overline{\Phi})$
 and get
 
 \begin{equation}
-x = A(x+\overline{\Phi}) + B(x+\Phi).
+-x = A(x+\overline{\Phi}) + B(x+\Phi).
 \end{equation}
+
+Note that we moved the minus sign up to the numerator,
+so the right-hand side of the equation keeps clear.
 
 In order to solve for $A$ we set $x=-\Phi$ to let $B$ disappear:
 
 \begin{equation}
--\Phi = A(-\Phi+\overline{\Phi}).
+\Phi = A(-\Phi+\overline{\Phi}).
 \end{equation}
+
+Note the effect of the minus sign on the left side of the equation.
 
 The second property introduced above leads to
 $-\Phi+\overline{\Phi} = -\sqrt{5}$ and,
 after dividing this, we get
 
 \begin{equation}
-A = \frac{-\Phi}{-\sqrt{5}} = \frac{\Phi}{\sqrt{5}}.
+A = \frac{\Phi}{-\sqrt{5}} = -\frac{\Phi}{\sqrt{5}}.
 \end{equation}
 
 In order to solve for $B$ we set $x=-\overline{\Phi}$ to let $A$ disappear:
 
 \begin{equation}
--\overline{\Phi} = B(-\overline{\Phi}+\Phi).
+\overline{\Phi} = B(-\overline{\Phi}+\Phi).
 \end{equation}
 
 Since $\Phi-\overline{\Phi} = \sqrt{5}$, we get this time:
 
 \begin{equation}
-B = -\frac{\overline{\Phi}}{\sqrt{5}}.
+B = \frac{\overline{\Phi}}{\sqrt{5}}.
 \end{equation}
 
-We, hence, can rewrite \ref{eq:G3} as
+We, hence, can rewrite equation \ref{eq:G3} 
+(with $\frac{1}{\sqrt{5}}$ factored out) as
 
 \begin{equation}\label{eq:G4}
 G(x) = \frac{1}{\sqrt{5}}\left(
-       \frac{\Phi}{x+\Phi} + 
-       \frac{-\overline{\Phi}}{x+\overline{\Phi}}\right)
+       -\frac{\Phi}{x+\Phi} + 
+       \frac{\overline{\Phi}}{x+\overline{\Phi}}\right)
 \end{equation}
 
-where we factored $\frac{1}{\sqrt{5}}$ out.
+To see the progress we made, remember that our intention is
+to make the resulting formula look like geometric series.
+A geometric series, in its most basic form, looks like
 
+\begin{equation}
+\sum_{n=0}^{\infty}{a_nx^n} = \frac{1}{1-r},
+\end{equation}
 
+for $a_0 = 1$.
 
+So, let us try to get rid of the numerators.
+We can achieve that, by dividing both,
+numerator and denominator by the numerator:
+
+\begin{equation}
+G(x) = \frac{1}{\sqrt{5}}\left(
+       -\frac{1}{\frac{1}{\Phi}x+1} + 
+       \frac{1}{\frac{1}{\overline{\Phi}}x+1}\right)
+\end{equation}
+
+There is another nice property of $\Phi$ and $\overline{\Phi}$
+that we have not yet mentioned.
+The term $\frac{1}{\Phi}$ is the multiplicative inverse of $\Phi$.
+We have seen above that $\Phi\overline{\Phi}$ is -1.
+The multiplicative inverse of $\Phi$ must therefore be
+the additive inverse of $\overline{\Phi}$:
+
+\begin{equation}
+\frac{1}{\Phi} = \frac{1}{\frac{1+\sqrt{5}}{2}} =
+\frac{2}{1+\sqrt{5}} = -\overline{\Phi}.
+\end{equation}
+
+Correspondingly, the multiplicative inverse of $\overline{\Phi}$
+is the additive inverse of $\Phi$, which, of course, is $-\Phi$.
+
+We, hence, can reduce the equation above to
+
+\begin{equation}
+G(x) = \frac{1}{\sqrt{5}}\left(
+       -\frac{1}{1-\overline{\Phi}x} + 
+       \frac{1}{1-{\Phi}x}\right)
+\end{equation}
+
+This, now, really looks like two geometric series,
+one with $r = \overline{\Phi}x$,
+the other with $r = \Phi x$.
+So, now, finally, here comes the punch line:
+
+\begin{equation}
+\sum_{n=0}^{\infty}{F_nx^n} =
+\frac{1}{\sqrt{5}}\left(
+\sum_{n=0}^{\infty}{(\Phi x)^n} -
+\sum_{n=0}^{\infty}{(\overline{\Phi}x)^n}\right) =
+\sum_{n=0}^{\infty}{\frac{(\Phi^n - \overline{\Phi}^n)}{\sqrt{5}}x^n}.
+\end{equation}
+
+We, here, have two series that are supposed to be equal.
+We, therefore, conjecture that the the coeffiencts are equal:
+
+\begin{equation}
+F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
+\end{equation}
 
 
 
