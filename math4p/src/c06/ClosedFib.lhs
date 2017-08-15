@@ -166,11 +166,15 @@ We bring 1 to the right-hand side and get:
 
 It is tempting to multiply by -1 to make everything positive.
 But remember that this equation is the denominator of a fraction.
-We cannot simply multiply the denominaotr by -1 without doing
+We cannot simply multiply the denominator by -1 without doing
 the same with the numerator. That would change the sign of
 the fraction. We therefore factor -1 out and make a mental note
 that we have to multiply it in again at the end of the calculations.
 With -1 factored out we get:
+
+\ignore{
+is the rationale correct?
+}
 
 \begin{equation}
 x^2 + x = 1.
@@ -438,8 +442,8 @@ we implemented in chapter 2 went like this:
 \end{minipage}
 
 The formula above clearly indicates that the result
-is a double. So, we need a function that yields a
-double value:
+is a real number. The implementation in Haskell 
+needs to take that into account:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -467,12 +471,13 @@ integers in the first place?
 Let us look at the small numbers to better understand
 what happens. For $n=0$, we get $(1-1)/\sqrt{5}$.
 That is just zero. For $n=1$, we get $\sqrt{5}/\sqrt{5}$,
-which is 1. For $n=2$, a bit surprisingly, we get 
+which is 1. For $n=2$ we get, a bit surprisingly,
 $\Phi^2 = 2.6180\dots$ and
-$\overline{\Phi}^2 = 0.3819\dots$.
-$\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$.
+$\overline{\Phi}^2 = 0.3819\dots$
+Now, $\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$,
 which happens to be $\sqrt{5}$ again and, thus,
 we get 1.
+
 For $n=3$, we get
 $\Phi^3 - \overline{\Phi}^3 = 4.4721\dots$,
 which happens to be $2\sqrt{5}$. We, hence, get exactly 2.
@@ -486,9 +491,11 @@ $\Phi^7 - \overline{\Phi}^7 = 13\sqrt{5}$.
 In summary, we have
 
 \begin{equation}
-\Phi^n - \overline{\Phi}^n = F_n\sqrt{5}.
+\Phi^n - \overline{\Phi}^n = F_n\sqrt{5},
 \end{equation}
 
+which is exactly according to the equation
+we have found.
 But, of course, we are working with limited precision
 and thus get slightly off with growing numbers.
 The solution is just to round to the nearest integer.
@@ -498,7 +505,7 @@ of the conjugate of $\Phi$, is a number less than 1,
 its powers with growing exponents become smaller and
 smaller and, thus do not affect the result, which is
 rounded to the nearest integer anyway.
-Therefore, we can leave it away. 
+Therefore, we can leave it out. 
 The simplified formula would be
 
 \[
@@ -525,6 +532,231 @@ in Haskell finally is:
 \end{minipage}
 
 Compare the speed of |fib| and |fi| applied to big numbers.
+
+But, again, how can it be that a formula involving
+things like the $\sqrt{5}$ always results in an integer?
+To answer this question, we may observe what is going on
+in the formula algebraicly. When we create powers of
+$\Phi$, we compute
+
+\begin{equation}
+\Phi^2 = \left(\frac{1+\sqrt{5}}{2}\right)
+         \left(\frac{1+\sqrt{5}}{2}\right)
+\end{equation}
+
+When we treat the integers and the roots as
+distinct quantities that cannot be mixed,
+we will see the coefficients of those quantities
+as discrete objects next to each other.
+We could express the formula above as
+
+\[
+\left(\frac{a+b}{c}\right)
+\left(\frac{d+e}{f}\right) =
+\frac{ad+5be + ad+be}{cf}.
+\]
+
+The point is that $a$ and $d$ are just normal integers,
+whereas $b$ and $e$ are multiples of $\sqrt{5}$.
+When we multiply $a$ and $d$, we get back an integer.
+When we multiply $a$ and $e$ or $b$ and $d$,
+we get back a multiple of $\sqrt{5}$.
+When we multiply $b$ and $e$, which both are
+multiples of $\sqrt{5}$, we get back an ordinary integer,
+since $\sqrt{5}\times\sqrt{5} = 5$.
+
+We can model this in Haskell quite easily:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  data Phi a = Phi a a a
+    deriving (Show,Eq)
+\end{code}
+\end{minipage}
+
+This is just a data type consisting of three components.
+Here is how we would model $\Phi$ and $\overline{\Phi}$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  one :: Phi Integer
+  one = Phi 1 1 2
+
+  one' :: Phi Integer
+  one' = Phi 1 (-1) 2
+\end{code}
+\end{minipage}
+
+The first component represents the multiples of the integer;
+the second component represents the multiples of $\sqrt{5}$;
+the last component represents the denominator.
+Here is a clean constructor for this data type:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mkPhi :: (Num a, Integral a) => a -> a -> a -> Phi a
+  mkPhi a b c  =  Phi (a `div` g) (b `div` g) (c `div` g)
+    where  k   =  gcd a c
+           m   =  gcd b c
+           g   =  gcd k m
+\end{code}
+\end{minipage}
+
+This function just reduces the fraction to the canonical
+form where numerator and denominator do not share divisors.
+Here is how we add two of these beasts:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  add :: (Num a, Integral a) => Phi a -> Phi a -> Phi a
+  add (Phi a b c) (Phi d e f) = mkPhi (f*a + c*d) (f*b + c*e) (c*f)
+\end{code}
+\end{minipage}
+
+and how we negate one of those:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  neg :: (Num a, Integral a) => Phi a -> Phi a
+  neg (Phi a b c) = mkPhi (-a) (-b) c
+\end{code}
+\end{minipage}
+
+The multiplication formula already introduced above
+is implemented like this:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mul :: (Num a, Integral a) => Phi a -> Phi a -> Phi a
+  mul (Phi a b c) (Phi d e f) = mkPhi (a*d + 5*b*e) (a*e + b*d) (c*f)
+\end{code}
+\end{minipage}
+
+\ignore{
+show the basic properties:
+phi + phi' = 1
+phi - phi' = sqrt(5)
+phi x phi' = -1
+phi x -phi' = 1
+}
+
+Power is now simply built on top of |mul|:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  pow :: Phi Integer -> Int -> Phi Integer
+  pow p n = foldl' mul p $ take (n-1) (repeat p)
+\end{code}
+\end{minipage}
+
+Let us test:
+
+|pow one 1|: |Phi 1 1 2| (this is just one)\\
+|pow one 2|: |Phi 3 1 2|\\
+|pow one 3|: |Phi 2 1 1|\\
+|pow one 4|: |Phi 7 3 2|
+
+and so on.
+
+|pow one' 1|: |Phi 1 (-1) 2|\\
+|pow one' 2|: |Phi 3 (-1) 2|\\
+|pow one' 3|: |Phi 2 (-1) 1|\\
+|pow one' 4|: |Phi 7 (-3) 2|.
+
+The results are identical except for the negative
+sign before the second component, the multiples of
+$\sqrt{5}$. Of course, when we negate the powers
+of |one'|, we will move the minus sign from the
+second to the first component:
+
+|neg(pow one' 1)|: |Phi (-1) 1 2|\\
+|neg(pow one' 2)|: |Phi (-3) 1 2|\\
+|neg(pow one' 3)|: |Phi (-2) 1 1|\\
+|neg(pow one' 4)|: |Phi (-7) 3 2|.
+
+Now, we devise a function that builds triples of the form
+$(\Phi^n, \overline{\Phi}^n, \Phi^n-\overline{\Phi}^n)$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  triple :: Int -> (Phi Integer, Phi Integer, Phi Integer)
+  triple n = (p, q, d)
+    where  p  =  pow one n
+           q  =  pow one' n
+           d  =  add p (neg q)
+\end{code}
+\end{minipage}
+
+The following output was generated with a pretty printer
+(you are certainly able to implement yourself):
+mapping |triple| on |[1..20]|
+
+\begin{minipage}{\textwidth}
+\begin{center}
+\begingroup
+\tt
+(+00001 +00001 +00002) (+00001 -00001 +00002) (+00000 +00001 +00001)\\
+(+00003 +00001 +00002) (+00003 -00001 +00002) (+00000 +00001 +00001)\\
+(+00002 +00001 +00001) (+00002 -00001 +00001) (+00000 +00002 +00001)\\
+(+00007 +00003 +00002) (+00007 -00003 +00002) (+00000 +00003 +00001)\\
+(+00011 +00005 +00002) (+00011 -00005 +00002) (+00000 +00005 +00001)\\
+(+00009 +00004 +00001) (+00009 -00004 +00001) (+00000 +00008 +00001)\\
+(+00029 +00013 +00002) (+00029 -00013 +00002) (+00000 +00013 +00001)\\
+(+00047 +00021 +00002) (+00047 -00021 +00002) (+00000 +00021 +00001)\\
+(+00038 +00017 +00001) (+00038 -00017 +00001) (+00000 +00034 +00001)\\
+(+00123 +00055 +00002) (+00123 -00055 +00002) (+00000 +00055 +00001)\\
+(+00199 +00089 +00002) (+00199 -00089 +00002) (+00000 +00089 +00001)\\
+(+00161 +00072 +00001) (+00161 -00072 +00001) (+00000 +00144 +00001)\\
+(+00521 +00233 +00002) (+00521 -00233 +00002) (+00000 +00233 +00001)\\
+(+00843 +00377 +00002) (+00843 -00377 +00002) (+00000 +00377 +00001)\\
+(+00682 +00305 +00001) (+00682 -00305 +00001) (+00000 +00610 +00001)\\
+(+02207 +00987 +00002) (+02207 -00987 +00002) (+00000 +00987 +00001)\\
+(+03571 +01597 +00002) (+03571 -01597 +00002) (+00000 +01597 +00001)\\
+(+02889 +01292 +00001) (+02889 -01292 +00001) (+00000 +02584 +00001)\\
+(+09349 +04181 +00002) (+09349 -04181 +00002) (+00000 +04181 +00001)\\
+(+15127 +06765 +00002) (+15127 -06765 +00002) (+00000 +06765 +00001)
+\endgroup
+\end{center}
+\end{minipage}
+
+The powers of $\Phi$ and $\overline{\Phi}$, as already mentioned,
+are equal with the exception of the sign of the multiples of $\sqrt{5}$.
+When we subtract $\overline{\Phi}$ from $\Phi$, the integers will
+disappear and we will \emph{add} the absolute values of the multiples
+of $\sqrt{5}$. When we add two equal numbers, we obtain an even number.
+Observe that, for most cases, already $\Phi$ and its conjugate
+have a fibonacci number as multiple of $\sqrt{5}$. In those cases,
+the denominator is 2. We, hence, add two Fibonacci numbers to obtain
+$2F_n$, which, divided by 2, results in $F_n$.
+In some cases, we do not see a Fibonacci number. That Occurs in
+exactly those instances where the Fibonacci number itself is even.
+In all those cases,
+the denominator is 1 -- and, thus, we get an even Fibonacci number.
+In fact, every third Fibonacci number is even. (Why?)
+When you look at the denominators of the powers of $\Phi$,
+you see the pattern $2, 2, 1$ repeating over and over again.
+Where you see 1, you see an even Fibonacci number.
+
+But why is that so? Have we not just swapped one enigma
+for the other? 
+
+When we push this analysis forward, we will see
+that everything boils down to combinations of terms
+in the distribution law and, hence, to the binomial theorem.
+Indeed, we can express Fibonacci numbers in terms of 
+binomial coefficients of the form:
+
+\begin{equation}
+F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
+\end{equation}
+
+Well, that is possible.
+Here is a last try to explain what the Golden Ratio and
+the Fibonacci sequence have in common.
+ 
+
+
+
 
 \begin{minipage}{\textwidth}
 \begin{code}

@@ -46,7 +46,7 @@
 \contentsline {section}{\numberline {6.7}Binomial Coefficients are Integers}{252}
 \contentsline {section}{\numberline {6.8}Euler's Totient Function}{263}
 \contentsline {section}{\numberline {6.9}How many Fractions?}{279}
-\contentsline {chapter}{\numberline {7}Real Numbers}{295}
+\contentsline {chapter}{\numberline {7}The Continuum}{295}
 \contentsline {section}{\numberline {7.1}$\sqrt {2}$}{295}
 \contentsline {section}{\numberline {7.2}$\Phi $}{297}
 \contentsline {section}{\numberline {7.3}$\pi $}{299}
@@ -56,99 +56,100 @@
 \contentsline {section}{\numberline {7.7}$\mathbb {R}$}{314}
 \contentsline {section}{\numberline {7.8}Real Factorials}{318}
 \contentsline {section}{\numberline {7.9}The Stern-Brocot Tree}{325}
-\contentsline {section}{\numberline {7.10}Field Extension}{334}
-\contentsline {section}{\numberline {7.11}The Continuum}{344}
-\contentsline {section}{\numberline {7.12}Review of the Number Zoo}{348}
-\contentsline {part}{\numberline {II}Algebra and Geometry}{351}
-\contentsline {chapter}{\numberline {8}Polynomials}{353}
-\contentsline {section}{\numberline {8.1}Numeral Systems}{353}
-\contentsline {section}{\numberline {8.2}Polynomial Arithmetic}{359}
-\contentsline {section}{\numberline {8.3}The Difference Engine}{370}
-\contentsline {section}{\numberline {8.4}Differences and Binomial Coefficients}{380}
-\contentsline {section}{\numberline {8.5}Umbral Calculus}{389}
-\contentsline {section}{\numberline {8.6}Roots}{389}
-\contentsline {section}{\numberline {8.7}Vieta's Formula}{396}
-\contentsline {section}{\numberline {8.8}Factoring Polynomials}{396}
-\contentsline {section}{\numberline {8.9}Factoring Polynomials in a finite Field}{400}
-\contentsline {section}{\numberline {8.10}Hensel Lifting}{414}
-\contentsline {section}{\numberline {8.11}The closed Form of the Fibonacci Sequence}{414}
-\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{417}
-\contentsline {section}{\numberline {9.1}Relations}{417}
-\contentsline {section}{\numberline {9.2}Equivalence Classes}{417}
-\contentsline {section}{\numberline {9.3}Functions}{417}
-\contentsline {section}{\numberline {9.4}Plotting Functions}{417}
-\contentsline {section}{\numberline {9.5}Slopes and Intersects}{417}
-\contentsline {section}{\numberline {9.6}Trigonometry}{417}
-\contentsline {section}{\numberline {9.7}Navigation}{417}
-\contentsline {section}{\numberline {9.8}Conic Sections}{417}
-\contentsline {section}{\numberline {9.9}Algebra and Geometry}{417}
-\contentsline {chapter}{\numberline {10}Linear Algebra}{419}
-\contentsline {section}{\numberline {10.1}Vectors}{419}
-\contentsline {section}{\numberline {10.2}Vector Spaces}{419}
-\contentsline {section}{\numberline {10.3}Clustering}{419}
-\contentsline {section}{\numberline {10.4}Linear Maps and Operators}{419}
-\contentsline {section}{\numberline {10.5}The Matrix}{419}
-\contentsline {section}{\numberline {10.6}Eigenvalues}{419}
-\contentsline {section}{\numberline {10.7}Inner Products and their Operators}{419}
-\contentsline {section}{\numberline {10.8}Polynomials and Vector Spaces}{419}
-\contentsline {section}{\numberline {10.9}Determinants}{419}
-\contentsline {section}{\numberline {10.10}Support Vector Machines}{419}
-\contentsline {chapter}{\numberline {11}Elliptic Curves}{421}
-\contentsline {section}{\numberline {11.1}Geometry Intuition}{421}
-\contentsline {section}{\numberline {11.2}Projective Geometry}{428}
-\contentsline {section}{\numberline {11.3}EC modulo a Prime}{433}
-\contentsline {section}{\numberline {11.4}The EC Discrete Logarithm Problem}{440}
-\contentsline {section}{\numberline {11.5}EC Diffie-Hellman}{444}
-\contentsline {section}{\numberline {11.6}EC Integrated Encryption Scheme}{449}
-\contentsline {section}{\numberline {11.7}EC Digital Signature Algorithm}{452}
-\contentsline {section}{\numberline {11.8}Cryptoanalysis}{455}
-\contentsline {section}{\numberline {11.9}Mr. Frobenius}{455}
-\contentsline {section}{\numberline {11.10}Mr. Schoof}{455}
-\contentsline {section}{\numberline {11.11}Mr. Elkies and Mr. Aktin}{455}
-\contentsline {section}{\numberline {11.12}EC in Practice}{455}
-\contentsline {chapter}{\numberline {12}Complex Numbers}{457}
-\contentsline {section}{\numberline {12.1}i}{457}
-\contentsline {section}{\numberline {12.2}Complex Numbers}{457}
-\contentsline {section}{\numberline {12.3}The complex Plane}{457}
-\contentsline {section}{\numberline {12.4}Polar Form}{457}
-\contentsline {section}{\numberline {12.5}$\mathbb {C}$}{457}
-\contentsline {section}{\numberline {12.6}Gaussian Integers}{457}
-\contentsline {section}{\numberline {12.7}$\mathbb {Q}(i)$}{457}
-\contentsline {section}{\numberline {12.8}...}{457}
-\contentsline {section}{\numberline {12.9}Complex Vector Spaces}{457}
-\contentsline {section}{\numberline {12.10}...}{457}
-\contentsline {section}{\numberline {12.11}Quantum Mechanics}{457}
-\contentsline {section}{\numberline {12.12}Hypercomplex Numbers}{457}
-\contentsline {chapter}{\numberline {13}Quadratics, Cubics and Quartics}{459}
-\contentsline {section}{\numberline {13.1}Quadratic Equations}{459}
-\contentsline {section}{\numberline {13.2}The fundamental Theorem of Algebra}{459}
-\contentsline {section}{\numberline {13.3}Cubics and Quartics}{459}
-\contentsline {section}{\numberline {13.4}Quintics}{459}
-\contentsline {section}{\numberline {13.5}Galois Theory}{459}
-\contentsline {section}{\numberline {13.6}Field Theory}{459}
-\contentsline {section}{\numberline {13.7}Postmodern Algebra}{459}
-\contentsline {section}{\numberline {13.8}Category Theory}{459}
-\contentsline {chapter}{\numberline {14}Euclid and beyond}{461}
-\contentsline {section}{\numberline {14.1}Euclid's Geometry}{461}
-\contentsline {section}{\numberline {14.2}The Parallel Postulate}{461}
-\contentsline {section}{\numberline {14.3}Non-Euclidian Geometries}{461}
-\contentsline {section}{\numberline {14.4}Lost in Hilbert Space}{461}
-\contentsline {section}{\numberline {14.5}Geometry and Relativity}{461}
-\contentsline {section}{\numberline {14.6}Affine Geometry}{461}
-\contentsline {section}{\numberline {14.7}Projective Geometry}{461}
-\contentsline {section}{\numberline {14.8}Graph Theory}{461}
-\contentsline {section}{\numberline {14.9}Topology}{461}
-\contentsline {part}{\numberline {III}Analysis}{463}
-\contentsline {chapter}{\numberline {15}The Calculus}{465}
-\contentsline {section}{\numberline {15.1}The Method of Exhaustion}{465}
-\contentsline {section}{\numberline {15.2}Area below a Curve}{465}
-\contentsline {section}{\numberline {15.3}Basic Rules of Integration}{465}
-\contentsline {section}{\numberline {15.4}Minima, Maxima and Slopes}{465}
-\contentsline {section}{\numberline {15.5}Basic Rules of Derivation}{465}
-\contentsline {section}{\numberline {15.6}The fundamental Theorem of the Calculus}{465}
-\contentsline {section}{\numberline {15.7}More Rules}{465}
-\contentsline {chapter}{\numberline {16}Curve Sketching}{467}
-\contentsline {chapter}{\numberline {17}Advanced Function Analysis}{469}
-\contentsline {chapter}{\numberline {18}Generating Functions}{471}
-\contentsline {chapter}{\numberline {19}Applied Mathematics}{473}
-\contentsline {chapter}{\numberline {20}Prospects}{475}
+\contentsline {section}{\numberline {7.10}The Closed Form of the Fibonacci Sequence}{334}
+\contentsline {section}{\numberline {7.11}Field Extension}{345}
+\contentsline {section}{\numberline {7.12}The Continuum}{355}
+\contentsline {section}{\numberline {7.13}Review of the Number Zoo}{359}
+\contentsline {part}{\numberline {II}Algebra and Geometry}{363}
+\contentsline {chapter}{\numberline {8}Polynomials}{365}
+\contentsline {section}{\numberline {8.1}Numeral Systems}{365}
+\contentsline {section}{\numberline {8.2}Polynomial Arithmetic}{371}
+\contentsline {section}{\numberline {8.3}The Difference Engine}{382}
+\contentsline {section}{\numberline {8.4}Differences and Binomial Coefficients}{392}
+\contentsline {section}{\numberline {8.5}Umbral Calculus}{401}
+\contentsline {section}{\numberline {8.6}Roots}{401}
+\contentsline {section}{\numberline {8.7}Vieta's Formula}{408}
+\contentsline {section}{\numberline {8.8}Factoring Polynomials}{408}
+\contentsline {section}{\numberline {8.9}Factoring Polynomials in a finite Field}{412}
+\contentsline {section}{\numberline {8.10}Hensel Lifting}{426}
+\contentsline {section}{\numberline {8.11}Enumerating the Algebraic Numbers}{426}
+\contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{427}
+\contentsline {section}{\numberline {9.1}Relations}{427}
+\contentsline {section}{\numberline {9.2}Equivalence Classes}{427}
+\contentsline {section}{\numberline {9.3}Functions}{427}
+\contentsline {section}{\numberline {9.4}Plotting Functions}{427}
+\contentsline {section}{\numberline {9.5}Slopes and Intersects}{427}
+\contentsline {section}{\numberline {9.6}Trigonometry}{427}
+\contentsline {section}{\numberline {9.7}Navigation}{427}
+\contentsline {section}{\numberline {9.8}Conic Sections}{427}
+\contentsline {section}{\numberline {9.9}Algebra and Geometry}{427}
+\contentsline {chapter}{\numberline {10}Linear Algebra}{429}
+\contentsline {section}{\numberline {10.1}Vectors}{429}
+\contentsline {section}{\numberline {10.2}Vector Spaces}{429}
+\contentsline {section}{\numberline {10.3}Clustering}{429}
+\contentsline {section}{\numberline {10.4}Linear Maps and Operators}{429}
+\contentsline {section}{\numberline {10.5}The Matrix}{429}
+\contentsline {section}{\numberline {10.6}Eigenvalues}{429}
+\contentsline {section}{\numberline {10.7}Inner Products and their Operators}{429}
+\contentsline {section}{\numberline {10.8}Polynomials and Vector Spaces}{429}
+\contentsline {section}{\numberline {10.9}Determinants}{429}
+\contentsline {section}{\numberline {10.10}Support Vector Machines}{429}
+\contentsline {chapter}{\numberline {11}Elliptic Curves}{431}
+\contentsline {section}{\numberline {11.1}Geometry Intuition}{431}
+\contentsline {section}{\numberline {11.2}Projective Geometry}{438}
+\contentsline {section}{\numberline {11.3}EC modulo a Prime}{443}
+\contentsline {section}{\numberline {11.4}The EC Discrete Logarithm Problem}{450}
+\contentsline {section}{\numberline {11.5}EC Diffie-Hellman}{454}
+\contentsline {section}{\numberline {11.6}EC Integrated Encryption Scheme}{459}
+\contentsline {section}{\numberline {11.7}EC Digital Signature Algorithm}{462}
+\contentsline {section}{\numberline {11.8}Cryptoanalysis}{465}
+\contentsline {section}{\numberline {11.9}Mr. Frobenius}{465}
+\contentsline {section}{\numberline {11.10}Mr. Schoof}{465}
+\contentsline {section}{\numberline {11.11}Mr. Elkies and Mr. Aktin}{465}
+\contentsline {section}{\numberline {11.12}EC in Practice}{465}
+\contentsline {chapter}{\numberline {12}Complex Numbers}{467}
+\contentsline {section}{\numberline {12.1}i}{467}
+\contentsline {section}{\numberline {12.2}Complex Numbers}{467}
+\contentsline {section}{\numberline {12.3}The complex Plane}{467}
+\contentsline {section}{\numberline {12.4}Polar Form}{467}
+\contentsline {section}{\numberline {12.5}$\mathbb {C}$}{467}
+\contentsline {section}{\numberline {12.6}Gaussian Integers}{467}
+\contentsline {section}{\numberline {12.7}$\mathbb {Q}(i)$}{467}
+\contentsline {section}{\numberline {12.8}...}{467}
+\contentsline {section}{\numberline {12.9}Complex Vector Spaces}{467}
+\contentsline {section}{\numberline {12.10}...}{467}
+\contentsline {section}{\numberline {12.11}Quantum Mechanics}{467}
+\contentsline {section}{\numberline {12.12}Hypercomplex Numbers}{467}
+\contentsline {chapter}{\numberline {13}Quadratics, Cubics and Quartics}{469}
+\contentsline {section}{\numberline {13.1}Quadratic Equations}{469}
+\contentsline {section}{\numberline {13.2}The fundamental Theorem of Algebra}{469}
+\contentsline {section}{\numberline {13.3}Cubics and Quartics}{469}
+\contentsline {section}{\numberline {13.4}Quintics}{469}
+\contentsline {section}{\numberline {13.5}Galois Theory}{469}
+\contentsline {section}{\numberline {13.6}Field Theory}{469}
+\contentsline {section}{\numberline {13.7}Postmodern Algebra}{469}
+\contentsline {section}{\numberline {13.8}Category Theory}{469}
+\contentsline {chapter}{\numberline {14}Euclid and beyond}{471}
+\contentsline {section}{\numberline {14.1}Euclid's Geometry}{471}
+\contentsline {section}{\numberline {14.2}The Parallel Postulate}{471}
+\contentsline {section}{\numberline {14.3}Non-Euclidian Geometries}{471}
+\contentsline {section}{\numberline {14.4}Lost in Hilbert Space}{471}
+\contentsline {section}{\numberline {14.5}Geometry and Relativity}{471}
+\contentsline {section}{\numberline {14.6}Affine Geometry}{471}
+\contentsline {section}{\numberline {14.7}Projective Geometry}{471}
+\contentsline {section}{\numberline {14.8}Graph Theory}{471}
+\contentsline {section}{\numberline {14.9}Topology}{471}
+\contentsline {part}{\numberline {III}Analysis}{473}
+\contentsline {chapter}{\numberline {15}The Calculus}{475}
+\contentsline {section}{\numberline {15.1}The Method of Exhaustion}{475}
+\contentsline {section}{\numberline {15.2}Area below a Curve}{475}
+\contentsline {section}{\numberline {15.3}Basic Rules of Integration}{475}
+\contentsline {section}{\numberline {15.4}Minima, Maxima and Slopes}{475}
+\contentsline {section}{\numberline {15.5}Basic Rules of Derivation}{475}
+\contentsline {section}{\numberline {15.6}The fundamental Theorem of the Calculus}{475}
+\contentsline {section}{\numberline {15.7}More Rules}{475}
+\contentsline {chapter}{\numberline {16}Curve Sketching}{477}
+\contentsline {chapter}{\numberline {17}Advanced Function Analysis}{479}
+\contentsline {chapter}{\numberline {18}Generating Functions}{481}
+\contentsline {chapter}{\numberline {19}Applied Mathematics}{483}
+\contentsline {chapter}{\numberline {20}Prospects}{485}

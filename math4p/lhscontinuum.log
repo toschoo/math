@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  13 AUG 2017 20:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  15 AUG 2017 20:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1469,21 +1469,11 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 [30]
 \openout3 = `lhscontinuum.ptb'.
 
- [31] [32] [33] [34] [35] [36] [37]
+ [31]
 \openout3 = `lhscontinuum.ptb'.
 
-\openout3 = `lhscontinuum.ptb'.
-
- [38]
-\openout3 = `lhscontinuum.ptb'.
-
- [39]
-\openout3 = `lhscontinuum.ptb'.
-
-\openout3 = `lhscontinuum.ptb'.
-
- [40]
-Overfull \hbox (1.38446pt too wide) in paragraph at lines 3827--3830
+ [32]
+Overfull \hbox (1.38446pt too wide) in paragraph at lines 3233--3236
 []\OT1/cmr/m/n/10.95 Here, $[]$ is a func-tion to cre-ate the mul-ti-plica-tive
  in-verse of a frac-tion, \OT1/cmr/m/it/10.95 i.e. $\OML/cmm/m/it/10.95 invert\
 OT1/cmr/m/n/10.95 ([]) =
@@ -1493,76 +1483,121 @@ OT1/cmr/m/n/10.95 ([]) =
 
 \openout3 = `lhscontinuum.ptb'.
 
-[41]
+[33]
 \openout3 = `lhscontinuum.ptb'.
 
 \openout3 = `lhscontinuum.ptb'.
 
- [42]
+ [34]
 \openout3 = `lhscontinuum.ptb'.
 
- [43] [44]
-\openout3 = `lhscontinuum.ptb'.
-
-\openout3 = `lhscontinuum.ptb'.
-
-\openout3 = `lhscontinuum.ptb'.
-
-\openout3 = `lhscontinuum.ptb'.
-
-\openout3 = `lhscontinuum.ptb'.
-
- [45]
+ [35] [36]
 \openout3 = `lhscontinuum.ptb'.
 
 \openout3 = `lhscontinuum.ptb'.
 
 \openout3 = `lhscontinuum.ptb'.
 
- [46] [47]
 \openout3 = `lhscontinuum.ptb'.
 
 \openout3 = `lhscontinuum.ptb'.
 
- [48] [49] [50] [51]
+ [37]
 \openout3 = `lhscontinuum.ptb'.
 
- [52] [53] [54] [55]
-[56] [57] [58] [59] [60]
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+ [38] [39]
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+ [40] [41] [42] [43] [44] [45] [46] [47]
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+
+[48]
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+ [49]
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+\openout3 = `lhscontinuum.ptb'.
+
+ [50]
+\openout3 = `lhscontinuum.ptb'.
+
+
+
+Class scrreprt Warning: Usage of deprecated font command `\tt'!
+(scrreprt)              You should note, that in 1994 font command `\tt' has
+(scrreprt)              been defined for compatiblitiy to Script 2.0 only.
+(scrreprt)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrreprt)              shouldn't use such commands any longer and within
+(scrreprt)              KOMA-Script usage of `\tt' is definitely deprecated.
+(scrreprt)              See `fntguide.pdf' for more information about
+(scrreprt)              recommended font commands.
+(scrreprt)              Note also, that KOMA-Script will remove the definition
+(scrreprt)              of `\tt' anytime until release of about version 3.20.
+(scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
+(scrreprt)              by `\normalfont \ttfamily ' on input line 5168.
+
+[51]
+\openout3 = `lhscontinuum.ptb'.
+
+ [52] [53] [54]
+\openout3 = `lhscontinuum.ptb'.
+
+ [55] [56] [57] [58] [59] [60] [61] [62] [63]
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-1.def
 File: uni-1.def 2013/05/13 UCS: Unicode data U+0100..U+01FF
-) [61] [62] [63]
-[64] (./lhscontinuum.aux) ) 
+) [64] [65] [66]
+[67] [68] (./lhscontinuum.aux) ) 
 Here is how much of TeX's memory you used:
- 36960 strings out of 493029
- 874080 string characters out of 6136234
- 1048777 words of memory out of 5000000
- 39969 multiletter control sequences out of 15000+600000
+ 36970 strings out of 493029
+ 874234 string characters out of 6136234
+ 1048779 words of memory out of 5000000
+ 39979 multiletter control sequences out of 15000+600000
  22038 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,10n,103p,10378b,1835s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhscontinuum.pdf (64 pages, 386050 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+
+Output written on lhscontinuum.pdf (68 pages, 395089 bytes).
 PDF statistics:
- 291 PDF objects out of 1000 (max. 8388607)
- 203 compressed objects within 3 object streams
+ 304 PDF objects out of 1000 (max. 8388607)
+ 212 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -8,8 +8,8 @@
 \contentsline {section}{\numberline {1.6}Representation of Real Numbers}{19}
 \contentsline {section}{\numberline {1.7}$\mathbb {R}$}{21}
 \contentsline {section}{\numberline {1.8}Real Factorials}{25}
-\contentsline {section}{\numberline {1.9}The Closed Form of the Fibonacci Sequence}{32}
-\contentsline {section}{\numberline {1.10}The Stern-Brocot Tree}{40}
-\contentsline {section}{\numberline {1.11}Field Extension}{49}
-\contentsline {section}{\numberline {1.12}The Continuum}{59}
-\contentsline {section}{\numberline {1.13}Review of the Number Zoo}{63}
+\contentsline {section}{\numberline {1.9}The Stern-Brocot Tree}{32}
+\contentsline {section}{\numberline {1.10}The Closed Form of the Fibonacci Sequence}{41}
+\contentsline {section}{\numberline {1.11}Field Extension}{52}
+\contentsline {section}{\numberline {1.12}The Continuum}{62}
+\contentsline {section}{\numberline {1.13}Review of the Number Zoo}{66}
