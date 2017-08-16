@@ -164,12 +164,12 @@ We bring 1 to the right-hand side and get:
 -x^2 - x = -1.
 \end{equation}
 
-It is tempting to multiply by -1 to make everything positive.
-But remember that this equation is the denominator of a fraction.
-We cannot simply multiply the denominator by -1 without doing
-the same with the numerator. That would change the sign of
-the fraction. We therefore factor -1 out and make a mental note
+To ease our task, we factor -1 out and make a mental note
 that we have to multiply it in again at the end of the calculations.
+(If this is all Greek to you, don't worry!
+We will discuss completing the square at much more detail
+in the next chapter!)
+
 With -1 factored out we get:
 
 \ignore{
