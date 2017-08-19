@@ -183,3 +183,4 @@ where
             | a == c    = 1
             | 2*a == c  = 2
             | otherwise = 0
+

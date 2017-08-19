@@ -57,9 +57,9 @@
 \contentsline {section}{\numberline {7.8}Real Factorials}{318}
 \contentsline {section}{\numberline {7.9}The Stern-Brocot Tree}{325}
 \contentsline {section}{\numberline {7.10}The Closed Form of the Fibonacci Sequence}{334}
-\contentsline {section}{\numberline {7.11}Field Extension}{345}
-\contentsline {section}{\numberline {7.12}The Continuum}{355}
-\contentsline {section}{\numberline {7.13}Review of the Number Zoo}{359}
+\contentsline {section}{\numberline {7.11}Field Extension}{346}
+\contentsline {section}{\numberline {7.12}The Continuum}{356}
+\contentsline {section}{\numberline {7.13}Review of the Number Zoo}{360}
 \contentsline {part}{\numberline {II}Algebra and Geometry}{363}
 \contentsline {chapter}{\numberline {8}Polynomials}{365}
 \contentsline {section}{\numberline {8.1}Numeral Systems}{365}

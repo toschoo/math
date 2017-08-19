@@ -29035,7 +29035,7 @@ we get
 \end{equation}
 
 This is a quadratic equation and,
-with some phantasy, we even
+with some fantasy, we even
 recognise the fragment of a binomial formula on the
 left side. A complete binomial formula would be
 
@@ -29076,7 +29076,7 @@ reflects the fact that the square root
 of 5 (or any other number) may be positive
 or negative. Both solutions are possible.
 However, since we are looking for a positive
-relation, we only consider the positive solution
+relation, we only consider the positive root
 and ignore the other one. We can therefore simplify to
 
 \begin{equation}
@@ -29135,7 +29135,7 @@ of $\Phi$.
 
 That is very nice. But there is more to come.
 $\Phi$, in fact, is intimately connected to the Fibonacci sequence,
-as we will se in the next chapter.
+as we will see in this chapter.
 
 
 
@@ -29572,8 +29572,7 @@ Johann Bernoulli (1667 -- 1748) who worked mainly
 in calculus and tutored famous mathematicians like 
 Guillaume L'Hôpital, but whose greatest contribution
 to the history of math was perhaps to recognise 
-the enormous talent of another of his pupils 
-whose name was Leonhard Euler. 
+the talent of another of his pupils, one Leonhard Euler. 
 
 His brother Jacob Bernoulli (1655 -- 1705),
 who worked, as his brother, in calculus, but
@@ -33061,8 +33060,9 @@ We start our journey by defining our generating function $G$:
 G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
 \end{equation}
 
-This $G$ that we can carry around like a bag.
-As before with geometric series, we multipl
+This $G$ is our bag in which we can carry
+around the components of the infinite Fibonacci sequence.
+As before with geometric series, we multiply
 $G$ by $x$ and get:
 
 \begin{equation}
@@ -33087,8 +33087,8 @@ G(x) - xG(x) - x^2G(x) = (1-x-x^2)G(x).
 \end{equation}
 
 What happens to the terms now?
-In the following equation, terms with equal $x$es
-arranged together:
+In the following equation, we arrange terms 
+with equal $x$es together in the same column:
 
 \begin{align*}
 (1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
@@ -33124,7 +33124,7 @@ G(x) = \frac{x}{1-x-x^2}.
 \end{equation}
 
 That is a nice looking formula! But not the end of the story.
-The next thing we do is to factor the denominator.
+The next thing we do is factoring the denominator.
 Since this is a polynomial of $2^{nd}$ degree,
 we can do this by \term{completing the square}
 as we did before in a certain section of this chapter
@@ -33150,12 +33150,9 @@ We bring 1 to the right-hand side and get:
 -x^2 - x = -1.
 \end{equation}
 
-It is tempting to multiply by -1 to make everything positive.
-But remember that this equation is the denominator of a fraction.
-We cannot simply multiply the denominator by -1 without doing
-the same with the numerator. That would change the sign of
-the fraction. We therefore factor -1 out and make a mental note
+To ease our task, we factor -1 out and make a mental note
 that we have to multiply it in again at the end of the calculations.
+
 With -1 factored out we get:
 
 \ignore{
@@ -33353,7 +33350,7 @@ G(x) = \frac{1}{\sqrt{5}}\left(
 
 To see the progress we made, remember that our intention is
 to make the resulting formula look like geometric series.
-A geometric series, in its most basic form, looks like
+A geometric series, in its most basic form, is
 
 \begin{equation}
 \sum_{n=0}^{\infty}{a_nx^n} = \frac{1}{1-r},
@@ -33371,8 +33368,6 @@ G(x) = \frac{1}{\sqrt{5}}\left(
        \frac{1}{\frac{1}{\overline{\Phi}}x+1}\right)
 \end{equation}
 
-There is another nice property of $\Phi$ and $\overline{\Phi}$
-that we have not yet mentioned.
 The term $\frac{1}{\Phi}$ is the multiplicative inverse of $\Phi$.
 We have seen above that $\Phi\overline{\Phi}$ is -1.
 The multiplicative inverse of $\Phi$ must therefore be
@@ -33407,14 +33402,14 @@ So, now, finally, here comes the punch line:
 \sum_{n=0}^{\infty}{\frac{(\Phi^n - \overline{\Phi}^n)}{\sqrt{5}}x^n}.
 \end{equation}
 
-We, here, have two series that are supposed to be equal.
-We, therefore, conjecture that coefficients must be equal:
+We now have two series that are supposed to be equal.
+We, therefore, conjecture that the coefficients must be equal:
 
 \begin{equation}
 F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
 \end{equation}
 
-We can use this implement a much more efficient
+We can use this to write a much more efficient
 implementation of \ensuremath{\Varid{fib}}. The na\"ive version
 we implemented in chapter 2 went like this:
 
@@ -33504,14 +33499,14 @@ Once we do that, we can consider a simplification.
 Since $|\overline{\Phi}|$, the absolute value
 of the conjugate of $\Phi$, is a number less than 1,
 its powers with growing exponents become smaller and
-smaller and, thus do not affect the result, which is
+smaller and, thus, do not affect the result, which is
 rounded to the nearest integer anyway.
 Therefore, we can leave it out. 
 The simplified formula would be
 
-\[
-\frac{\Phi^n}{\sqrt{5}}.
-\]
+\begin{equation}
+F_n = \left\lbrack\frac{\Phi^n}{\sqrt{5}}\right\rbrack.
+\end{equation}
 
 We need to be careful with small numbers, though.
 The first results with this formula are
@@ -33686,8 +33681,27 @@ and how we negate one of those:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The multiplication formula already introduced above
-is implemented like this:
+When we add \ensuremath{\Varid{one}} and \ensuremath{\Varid{one'}} like this \ensuremath{\Varid{add}\;\Varid{one}\;\Varid{one'}},
+we get:
+
+\ensuremath{\Conid{Phi}\;\mathrm{1}\;\mathrm{0}\;\mathrm{1}}.
+
+Here, the $\sqrt{5}$ component is 0, 
+while the integer component and the denomintator are 1.
+This, hence, is the representation of 1.
+
+When we subtract \ensuremath{\Varid{one'}} from \ensuremath{\Varid{one}} like this:
+\ensuremath{\Varid{add}\;\Varid{one}\;(\Varid{neg}\;\Varid{one'})}, we get:
+
+\ensuremath{\Conid{Phi}\;\mathrm{0}\;\mathrm{1}\;\mathrm{1}}.
+
+Here, the integer component is 0,
+while the $\sqrt{5}$ component and the denominator are 1.
+This, hence, is the representation of $\sqrt{5}$.
+These result represent the two properties of
+$\Phi$ and $\overline{\Phi}$ we introduced above.
+
+The multiplication formula is implemented like this:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -33703,13 +33717,17 @@ is implemented like this:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\ignore{
-show the basic properties:
-phi + phi' = 1
-phi - phi' = sqrt(5)
-phi x phi' = -1
-phi x -phi' = 1
-}
+What happens, when we multiply \ensuremath{\Varid{one}} by \ensuremath{\Varid{one'}}?
+We perform \ensuremath{\Varid{mul}\;\Varid{one}\;\Varid{one'}} and see:
+
+\ensuremath{\Conid{Phi}\;(\mathbin{-}\mathrm{1})\;\mathrm{0}\;\mathrm{1}},
+
+the additive inverse of $\Phi + \overline{\Phi}$, which, of course,
+is -1.
+
+When we perform \ensuremath{\Varid{mul}\;\Varid{one}\;(\Varid{neg}\;\Varid{one'})}, we get 1 again:
+
+\ensuremath{\Conid{Phi}\;\mathrm{1}\;\mathrm{0}\;\mathrm{1}}.
 
 Power is now simply built on top of \ensuremath{\Varid{mul}}:
 
@@ -33825,17 +33843,22 @@ are equal with the exception of the sign of the multiples of $\sqrt{5}$.
 When we subtract $\overline{\Phi}$ from $\Phi$, the integers will
 disappear and we will \emph{add} the absolute values of the multiples
 of $\sqrt{5}$. When we add two equal numbers, we obtain an even number.
+This explains why the formula always results in an integer.
+
 Observe that, for most cases, already $\Phi$ and its conjugate
-have a fibonacci number as multiple of $\sqrt{5}$. In those cases,
+have a Fibonacci number as multiple of $\sqrt{5}$. In those cases,
 the denominator is 2. We, hence, add two Fibonacci numbers to obtain
 $2F_n$, which, divided by 2, results in $F_n$.
-In some cases, we do not see a Fibonacci number. That Occurs in
+
+In some cases, we do not see a Fibonacci number. That occurs in
 exactly those instances where the Fibonacci number itself is even.
 In all those cases,
 the denominator is 1 -- and, thus, we get an even Fibonacci number.
-In fact, every third Fibonacci number is even. (Why?)
+In fact, every third Fibonacci number is even, 
+because it is the sum
+of two odd Fibonacci numbers.
 When you look at the denominators of the powers of $\Phi$,
-you see the pattern $2, 2, 1$ repeating over and over again.
+you see the sequence $2, 2, 1$ repeating over and over again.
 Where you see 1, you see an even Fibonacci number.
 
 But why is that so? Have we not just swapped one enigma
@@ -33851,13 +33874,15 @@ binomial coefficients of the form:
 F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
 \end{equation}
 
-Well, that is possible.
-Here is a last try to explain what the Golden Ratio and
-the Fibonacci sequence have in common.
- 
-
-
-
+Well, that leads us into deep water.
+A much more direct try to explain 
+how the golden ratio and
+the Fibonacci sequence are related
+is to look at the ratio of subsequent
+Fibonacci numbers.
+We can implement a simple function
+that, for the $n^{th}$ Fibonacci number, $F_n$,
+computes the ratio $F_{n+1}/F_{n}$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -33881,13 +33906,47 @@ the Fibonacci sequence have in common.
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+When we apply this function like \ensuremath{\Varid{map}\;\Varid{fratio}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
+we see:
+
+\ensuremath{[\mskip1.5mu \mathrm{1.0},\mathrm{2.0},\mathrm{1.5},\mathrm{1.66666},\mathrm{1.6},\mathrm{1.625},\mathrm{1.61538},\mathrm{1.61904},\mathrm{1.61764},\mathrm{1.61818}\mskip1.5mu]}.
+
+We see that the ratio $F_{n+1}/F_n$ approaches $\Phi$.
+This, indeed, makes a lot of sense, since each number
+is the sum of its two predecessors. After some time, 
+for any Fibonacci number $F_n$,
+the ratio $F_n/F_{n-1}$ is the same as $F_{n+1}/F_n$.
+Since $F_{n+1} = F_n + F_{n-1}$, this is
+the golden ratio.
+
+For small numbers, this ratio does not manifest,
+because we need to bootstrap the sequence somewhere.
+But as soon as the impresicion introduced by small numbers
+levels out, the ratio is established.
+Using the built-in type Double, we reach $\Phi$ with \ensuremath{\Varid{fratio}\;\mathrm{40}}.
+We find this number with the following expression:
+
+\ensuremath{\mathrm{1}\mathbin{+}(\Varid{last}\;(\Varid{takeWhile}\;(\lambda \Varid{n}\to \Varid{fratio}\;\Varid{n}\not\equiv \Varid{phi})\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]))}
+
+The fact that the ratio of subsequent Fibonacci numbers
+approaches the golden ratio
+was already known to German astronomer
+and mathematician Johannes Kepler (1571 -- 1630)
+who was also court astrologer of the German emperor
+and astrologer and advisor of warlord Wallenstein.
+Kepler's studies in astronomy were paramount for
+the acceptance of the Copernican model
+(even though they were not accepted by most of
+his contemporaries including Galileo);
+with the idea of formulating the movement of the planets
+in terms of physical laws, he was also a forerunner
+of Isaac Newton.
+Kepler observed that 8 relates to 5 as 13 relates to 8,
+21 to 13, 34 to 21 and 55 to 34, clearly referring
+to the Fibonacci sequence.
+
 
 \ignore{
-- write a program that computes the ratios between two consecutive F
-  fratio
--- Kepler
-
-
 https://www.youtube.com/watch?v=5BnuG-fR3kE
 }
 
@@ -34011,8 +34070,9 @@ the theory of solving equations. For the special case of
 linear equations, that is equations without exponents,
 rational coefficients lead to rational solutions. The reason is
 that the operations we need to solve linear equations are
-just the four arithmetic operations addition, subtraction,
-multiplication and division. A simple equation of the form
+only the field operations addition and multiplication, which,
+thanks to invertibility, include subtraction and division.
+A simple equation of the form
 
 \begin{equation}
 ax + b = 0
@@ -34082,7 +34142,7 @@ S = \left\lbrace 0,1,\frac{1}{2},2,\frac{1}{3},3,
 This, obviously, would not lead to a field, since
 not for every $a\in S$ $a\sqrt{2} \in S$.
 $2\times \sqrt{2}$, for instance, is not in the field;
-$\frac{1}{2}\times \sqrt{2}$, too, is not in the field
+$\frac{1}{2}\times \sqrt{2}$ is not in the field either
 and so on.
 In fact, for almost no $a\in S$, closure is fulfilled.
 It is fulfilled only for 0, the identity
@@ -34779,7 +34839,7 @@ This may perhaps be translated into sloppy common speech as
 \acronym{ch} is irrelevant, at least in the context
 of the standard axiomatic system.
 
-Without out too much phantasy, 
+Without out too much fantasy, 
 we can go beyond \acronym{ch} and suspect 
 that there is a general rule that
 for any $n \in \mathbb{N}: \aleph_n=2^{\aleph_{n-1}}$.

@@ -163,7 +163,7 @@ This may perhaps be translated into sloppy common speech as
 \acronym{ch} is irrelevant, at least in the context
 of the standard axiomatic system.
 
-Without out too much phantasy, 
+Without out too much fantasy, 
 we can go beyond \acronym{ch} and suspect 
 that there is a general rule that
 for any $n \in \mathbb{N}: \aleph_n=2^{\aleph_{n-1}}$.

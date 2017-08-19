@@ -77,7 +77,7 @@ we get
 \end{equation}
 
 This is a quadratic equation and,
-with some phantasy, we even
+with some fantasy, we even
 recognise the fragment of a binomial formula on the
 left side. A complete binomial formula would be
 
@@ -118,7 +118,7 @@ reflects the fact that the square root
 of 5 (or any other number) may be positive
 or negative. Both solutions are possible.
 However, since we are looking for a positive
-relation, we only consider the positive solution
+relation, we only consider the positive root
 and ignore the other one. We can therefore simplify to
 
 \begin{equation}
@@ -163,7 +163,7 @@ of $\Phi$.
 
 That is very nice. But there is more to come.
 $\Phi$, in fact, is intimately connected to the Fibonacci sequence,
-as we will se in the next chapter.
+as we will see in this chapter.
 
 
 

@@ -21,8 +21,7 @@ Johann Bernoulli (1667 -- 1748) who worked mainly
 in calculus and tutored famous mathematicians like 
 Guillaume L'Hôpital, but whose greatest contribution
 to the history of math was perhaps to recognise 
-the enormous talent of another of his pupils 
-whose name was Leonhard Euler. 
+the talent of another of his pupils, one Leonhard Euler. 
 
 His brother Jacob Bernoulli (1655 -- 1705),
 who worked, as his brother, in calculus, but

@@ -75,8 +75,9 @@ We start our journey by defining our generating function $G$:
 G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
 \end{equation}
 
-This $G$ that we can carry around like a bag.
-As before with geometric series, we multipl
+This $G$ is our bag in which we can carry
+around the components of the infinite Fibonacci sequence.
+As before with geometric series, we multiply
 $G$ by $x$ and get:
 
 \begin{equation}
@@ -101,8 +102,8 @@ G(x) - xG(x) - x^2G(x) = (1-x-x^2)G(x).
 \end{equation}
 
 What happens to the terms now?
-In the following equation, terms with equal $x$es
-arranged together:
+In the following equation, we arrange terms 
+with equal $x$es together in the same column:
 
 \begin{align*}
 (1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
@@ -138,7 +139,7 @@ G(x) = \frac{x}{1-x-x^2}.
 \end{equation}
 
 That is a nice looking formula! But not the end of the story.
-The next thing we do is to factor the denominator.
+The next thing we do is factoring the denominator.
 Since this is a polynomial of $2^{nd}$ degree,
 we can do this by \term{completing the square}
 as we did before in a certain section of this chapter
@@ -166,9 +167,6 @@ We bring 1 to the right-hand side and get:
 
 To ease our task, we factor -1 out and make a mental note
 that we have to multiply it in again at the end of the calculations.
-(If this is all Greek to you, don't worry!
-We will discuss completing the square at much more detail
-in the next chapter!)
 
 With -1 factored out we get:
 
@@ -367,7 +365,7 @@ G(x) = \frac{1}{\sqrt{5}}\left(
 
 To see the progress we made, remember that our intention is
 to make the resulting formula look like geometric series.
-A geometric series, in its most basic form, looks like
+A geometric series, in its most basic form, is
 
 \begin{equation}
 \sum_{n=0}^{\infty}{a_nx^n} = \frac{1}{1-r},
@@ -385,8 +383,6 @@ G(x) = \frac{1}{\sqrt{5}}\left(
        \frac{1}{\frac{1}{\overline{\Phi}}x+1}\right)
 \end{equation}
 
-There is another nice property of $\Phi$ and $\overline{\Phi}$
-that we have not yet mentioned.
 The term $\frac{1}{\Phi}$ is the multiplicative inverse of $\Phi$.
 We have seen above that $\Phi\overline{\Phi}$ is -1.
 The multiplicative inverse of $\Phi$ must therefore be
@@ -421,14 +417,14 @@ So, now, finally, here comes the punch line:
 \sum_{n=0}^{\infty}{\frac{(\Phi^n - \overline{\Phi}^n)}{\sqrt{5}}x^n}.
 \end{equation}
 
-We, here, have two series that are supposed to be equal.
-We, therefore, conjecture that coefficients must be equal:
+We now have two series that are supposed to be equal.
+We, therefore, conjecture that the coefficients must be equal:
 
 \begin{equation}
 F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
 \end{equation}
 
-We can use this implement a much more efficient
+We can use this to write a much more efficient
 implementation of |fib|. The na\"ive version
 we implemented in chapter 2 went like this:
 
@@ -503,14 +499,14 @@ Once we do that, we can consider a simplification.
 Since $||\overline{\Phi}||$, the absolute value
 of the conjugate of $\Phi$, is a number less than 1,
 its powers with growing exponents become smaller and
-smaller and, thus do not affect the result, which is
+smaller and, thus, do not affect the result, which is
 rounded to the nearest integer anyway.
 Therefore, we can leave it out. 
 The simplified formula would be
 
-\[
-\frac{\Phi^n}{\sqrt{5}}.
-\]
+\begin{equation}
+F_n = \left\lbrack\frac{\Phi^n}{\sqrt{5}}\right\rbrack.
+\end{equation}
 
 We need to be careful with small numbers, though.
 The first results with this formula are
@@ -622,8 +618,27 @@ and how we negate one of those:
 \end{code}
 \end{minipage}
 
-The multiplication formula already introduced above
-is implemented like this:
+When we add |one| and |one'| like this |add one one'|,
+we get:
+
+|Phi 1 0 1|.
+
+Here, the $\sqrt{5}$ component is 0, 
+while the integer component and the denomintator are 1.
+This, hence, is the representation of 1.
+
+When we subtract |one'| from |one| like this:
+|add one (neg one')|, we get:
+
+|Phi 0 1 1|.
+
+Here, the integer component is 0,
+while the $\sqrt{5}$ component and the denominator are 1.
+This, hence, is the representation of $\sqrt{5}$.
+These result represent the two properties of
+$\Phi$ and $\overline{\Phi}$ we introduced above.
+
+The multiplication formula is implemented like this:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -632,13 +647,17 @@ is implemented like this:
 \end{code}
 \end{minipage}
 
-\ignore{
-show the basic properties:
-phi + phi' = 1
-phi - phi' = sqrt(5)
-phi x phi' = -1
-phi x -phi' = 1
-}
+What happens, when we multiply |one| by |one'|?
+We perform |mul one one'| and see:
+
+|Phi (-1) 0 1|,
+
+the additive inverse of $\Phi + \overline{\Phi}$, which, of course,
+is -1.
+
+When we perform |mul one (neg one')|, we get 1 again:
+
+|Phi 1 0 1|.
 
 Power is now simply built on top of |mul|:
 
@@ -724,17 +743,22 @@ are equal with the exception of the sign of the multiples of $\sqrt{5}$.
 When we subtract $\overline{\Phi}$ from $\Phi$, the integers will
 disappear and we will \emph{add} the absolute values of the multiples
 of $\sqrt{5}$. When we add two equal numbers, we obtain an even number.
+This explains why the formula always results in an integer.
+
 Observe that, for most cases, already $\Phi$ and its conjugate
-have a fibonacci number as multiple of $\sqrt{5}$. In those cases,
+have a Fibonacci number as multiple of $\sqrt{5}$. In those cases,
 the denominator is 2. We, hence, add two Fibonacci numbers to obtain
 $2F_n$, which, divided by 2, results in $F_n$.
-In some cases, we do not see a Fibonacci number. That Occurs in
+
+In some cases, we do not see a Fibonacci number. That occurs in
 exactly those instances where the Fibonacci number itself is even.
 In all those cases,
 the denominator is 1 -- and, thus, we get an even Fibonacci number.
-In fact, every third Fibonacci number is even. (Why?)
+In fact, every third Fibonacci number is even, 
+because it is the sum
+of two odd Fibonacci numbers.
 When you look at the denominators of the powers of $\Phi$,
-you see the pattern $2, 2, 1$ repeating over and over again.
+you see the sequence $2, 2, 1$ repeating over and over again.
 Where you see 1, you see an even Fibonacci number.
 
 But why is that so? Have we not just swapped one enigma
@@ -750,13 +774,15 @@ binomial coefficients of the form:
 F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
 \end{equation}
 
-Well, that is possible.
-Here is a last try to explain what the Golden Ratio and
-the Fibonacci sequence have in common.
- 
-
-
-
+Well, that leads us into deep water.
+A much more direct try to explain 
+how the golden ratio and
+the Fibonacci sequence are related
+is to look at the ratio of subsequent
+Fibonacci numbers.
+We can implement a simple function
+that, for the $n^{th}$ Fibonacci number, $F_n$,
+computes the ratio $F_{n+1}/F_{n}$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -764,17 +790,50 @@ the Fibonacci sequence have in common.
   fratio n = np / nn
     where  np = fromInteger (fi (n+1))
            nn = fromInteger (fi n)
-
 \end{code}
 \end{minipage}
 
+When we apply this function like |map fratio [1..10]|,
+we see:
+
+|[1.0,2.0,1.5,1.66666,1.6,1.625,1.61538,1.61904,1.61764,1.61818]|.
+
+We see that the ratio $F_{n+1}/F_n$ approaches $\Phi$.
+This, indeed, makes a lot of sense, since each number
+is the sum of its two predecessors. After some time, 
+for any Fibonacci number $F_n$,
+the ratio $F_n/F_{n-1}$ is the same as $F_{n+1}/F_n$.
+Since $F_{n+1} = F_n + F_{n-1}$, this is
+the golden ratio.
+
+For small numbers, this ratio does not manifest,
+because we need to bootstrap the sequence somewhere.
+But as soon as the impresicion introduced by small numbers
+levels out, the ratio is established.
+Using the built-in type Double, we reach $\Phi$ with |fratio 40|.
+We find this number with the following expression:
+
+|1 + (last (takeWhile (\n -> fratio n /= phi) [1..]))|
+
+The fact that the ratio of subsequent Fibonacci numbers
+approaches the golden ratio
+was already known to German astronomer
+and mathematician Johannes Kepler (1571 -- 1630)
+who was also court astrologer of the German emperor
+and astrologer and advisor of warlord Wallenstein.
+Kepler's studies in astronomy were paramount for
+the acceptance of the Copernican model
+(even though they were not accepted by most of
+his contemporaries including Galileo);
+with the idea of formulating the movement of the planets
+in terms of physical laws, he was also a forerunner
+of Isaac Newton.
+Kepler observed that 8 relates to 5 as 13 relates to 8,
+21 to 13, 34 to 21 and 55 to 34, clearly referring
+to the Fibonacci sequence.
+
 
 \ignore{
-- write a program that computes the ratios between two consecutive F
-  fratio
--- Kepler
-
-
 https://www.youtube.com/watch?v=5BnuG-fR3kE
 }
 

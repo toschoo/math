@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  16 AUG 2017 20:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  19 AUG 2017 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1126,9 +1126,10 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 
 \openout3 = `lhscontinuum.ptb'.
 
- [12] [13]
+ [12]
 \openout3 = `lhscontinuum.ptb'.
 
+ [13]
 \openout3 = `lhscontinuum.ptb'.
 
 \openout3 = `lhscontinuum.ptb'.
@@ -1173,7 +1174,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1187,7 +1188,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1201,7 +1202,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1215,7 +1216,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1229,7 +1230,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1243,7 +1244,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 1916.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 1915.
 
 \openout3 = `lhscontinuum.ptb'.
 
@@ -1271,7 +1272,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 2201.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2200.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1285,7 +1286,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 2201.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2200.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1299,77 +1300,77 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 2201.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 2200.
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  $[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
+Overfull \hbox (15.67502pt too wide) in paragraph at lines 2125--2201
  [][][][][][][][][]$ 
  []
 
@@ -1402,7 +1403,7 @@ Overfull \hbox (15.67502pt too wide) in paragraph at lines 2126--2202
 \openout3 = `lhscontinuum.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2948--2952
+Underfull \hbox (badness 10000) in paragraph at lines 2947--2951
 
  []
 
@@ -1422,7 +1423,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 3039.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 3038.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1436,7 +1437,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 3039.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 3038.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1450,7 +1451,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 3039.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 3038.
 
 
 Class scrreprt Warning: Usage of deprecated font command `\tt'!
@@ -1464,7 +1465,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 3039.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 3038.
 
 [30]
 \openout3 = `lhscontinuum.ptb'.
@@ -1473,7 +1474,7 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 \openout3 = `lhscontinuum.ptb'.
 
  [32]
-Overfull \hbox (1.38446pt too wide) in paragraph at lines 3233--3236
+Overfull \hbox (1.38446pt too wide) in paragraph at lines 3232--3235
 []\OT1/cmr/m/n/10.95 Here, $[]$ is a func-tion to cre-ate the mul-ti-plica-tive
  in-verse of a frac-tion, \OT1/cmr/m/it/10.95 i.e. $\OML/cmm/m/it/10.95 invert\
 OT1/cmr/m/n/10.95 ([]) =
@@ -1536,9 +1537,9 @@ OT1/cmr/m/n/10.95 ([]) =
 
 \openout3 = `lhscontinuum.ptb'.
 
+ [50]
 \openout3 = `lhscontinuum.ptb'.
 
- [50]
 \openout3 = `lhscontinuum.ptb'.
 
 
@@ -1554,23 +1555,23 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 (scrreprt)              Note also, that KOMA-Script will remove the definition
 (scrreprt)              of `\tt' anytime until release of about version 3.20.
 (scrreprt)              But for now, KOMA-Script will replace deprecated `\tt'
-(scrreprt)              by `\normalfont \ttfamily ' on input line 5168.
+(scrreprt)              by `\normalfont \ttfamily ' on input line 5186.
 
-[51]
+[51] [52]
 \openout3 = `lhscontinuum.ptb'.
 
- [52] [53] [54]
+ [53] [54] [55]
 \openout3 = `lhscontinuum.ptb'.
 
- [55] [56] [57] [58] [59] [60] [61] [62] [63]
+ [56] [57] [58] [59] [60] [61] [62] [63] [64]
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-1.def
 File: uni-1.def 2013/05/13 UCS: Unicode data U+0100..U+01FF
-) [64] [65] [66]
-[67] [68] (./lhscontinuum.aux) ) 
+) [65] [66] [67]
+[68] [69] (./lhscontinuum.aux) ) 
 Here is how much of TeX's memory you used:
  36970 strings out of 493029
  874234 string characters out of 6136234
- 1048779 words of memory out of 5000000
+ 1048614 words of memory out of 5000000
  39979 multiletter control sequences out of 15000+600000
  22038 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1594,10 +1595,10 @@ i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 
-Output written on lhscontinuum.pdf (68 pages, 395196 bytes).
+Output written on lhscontinuum.pdf (69 pages, 398055 bytes).
 PDF statistics:
- 304 PDF objects out of 1000 (max. 8388607)
- 212 compressed objects within 3 object streams
+ 307 PDF objects out of 1000 (max. 8388607)
+ 214 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

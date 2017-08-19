@@ -96,8 +96,9 @@ the theory of solving equations. For the special case of
 linear equations, that is equations without exponents,
 rational coefficients lead to rational solutions. The reason is
 that the operations we need to solve linear equations are
-just the four arithmetic operations addition, subtraction,
-multiplication and division. A simple equation of the form
+only the field operations addition and multiplication, which,
+thanks to invertibility, include subtraction and division.
+A simple equation of the form
 
 \begin{equation}
 ax + b = 0
@@ -167,7 +168,7 @@ S = \left\lbrace 0,1,\frac{1}{2},2,\frac{1}{3},3,
 This, obviously, would not lead to a field, since
 not for every $a\in S$ $a\sqrt{2} \in S$.
 $2\times \sqrt{2}$, for instance, is not in the field;
-$\frac{1}{2}\times \sqrt{2}$, too, is not in the field
+$\frac{1}{2}\times \sqrt{2}$ is not in the field either
 and so on.
 In fact, for almost no $a\in S$, closure is fulfilled.
 It is fulfilled only for 0, the identity
