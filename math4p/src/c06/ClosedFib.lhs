@@ -69,7 +69,7 @@ that can express the same result, such that
 so that we can conjecture (and later prove)
 that $F_n = a_n$.
 
-We start our journey by defining our generating function $G$:
+We start our journey by defining generating function $G$:
 
 \begin{equation}
 G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
@@ -106,9 +106,9 @@ In the following equation, we arrange terms
 with equal $x$es together in the same column:
 
 \begin{align*}
-(1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
-              &   & (&    &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) & - \\
-              &   & (&    &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) &
+& (1-x-x^2)G(x) & = & (& F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) \\
+&               & - & (&     &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) \\
+&               & - & (&     &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) 
 \end{align*}
 
 We see as a result that terms with equal $x$es form groups with 
@@ -221,43 +221,43 @@ What about the positive root? That is
 \]
 
 and, thus, the negative of the conjugate of $\Phi$,
-$\overline{\Phi}$.
+$\Psi$.
 The conjugate of $\Phi$ is 
 
 \begin{equation}
-\overline{\Phi} = \frac{1 - \sqrt{5}}{2}.
+\Psi = \frac{1 - \sqrt{5}}{2}.
 \end{equation}
 
 Two nice properties that we will use later follow immediately:
 
 \begin{equation}
-\Phi + \overline{\Phi} = 1
+\Phi + \Psi = 1
 \end{equation}
 
 and
 
 \begin{equation}
-\Phi - \overline{\Phi} = \sqrt{5}.
+\Phi - \Psi = \sqrt{5}.
 \end{equation}
 
 By completing the square, we found two roots,
-namely $-\Phi$ and $-\overline{\Phi}$.
-That implies that $(x + \Phi)$ and $(x + \overline{\Phi})$
+namely $-\Phi$ and $-\Psi$.
+That implies that $(x + \Phi)$ and $(x + \Psi)$
 are factors of $(1 - x - x^2)$.
 Let us check if this is true. We multiply
-$(x + \Phi)(x + \overline{\Phi})$ and get
+$(x + \Phi)(x + \Psi)$ and get
 
 \[
-x^2 + \overline{\Phi}x + \Phi x + \overline{\Phi}\Phi.
+x^2 + \Psi x + \Phi x + \Psi\Phi.
 \]
 
 According to the first property above,
-$\overline{\Phi} + \Phi = 1$.
-But what about $\overline{\Phi}\times \Phi$?
+$\Psi + \Phi = 1$.
+But what about $\Psi\times \Phi$?
 Let us look:
 
 \begin{equation}
-\Phi\overline{\Phi} = \frac{1+\sqrt{5}}{2}\times\frac{1-\sqrt{5}}{2} = 
+\Phi\Psi = \frac{1+\sqrt{5}}{2}\times\frac{1-\sqrt{5}}{2} = 
 \frac{(1+\sqrt{5})(1-\sqrt{5})}{4} = 
 \frac{1-\sqrt{5}+\sqrt{5}-5}{4} =
 \frac{-4}{4} = -1.
@@ -280,7 +280,7 @@ The correct result rather is
 We can now rewrite equation \ref{eq:G1} as
 
 \begin{equation}\label{eq:G2}
-G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})},
+G(x) = \frac{x}{-(x+\Phi)(x+\Psi)},
 \end{equation}
 
 where the denominator has been replaced by 
@@ -311,16 +311,16 @@ When we apply this to equation \ref{eq:G2},
 we get
 
 \begin{equation}\label{eq:G3}
-G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})} = 
-\frac{A}{x+\Phi} + \frac{B}{x+\overline{\Phi}}
+G(x) = \frac{x}{-(x+\Phi)(x+\Psi)} = 
+\frac{A}{x+\Phi} + \frac{B}{x+\Psi}
 \end{equation}
 
 To get to know $A$ and $B$, we multiply both sides
-by the denominator $(x+\Phi)(x+\overline{\Phi})$
+by the denominator $(x+\Phi)(x+\Psi)$
 and get
 
 \begin{equation}
--x = A(x+\overline{\Phi}) + B(x+\Phi).
+-x = A(x+\Psi) + B(x+\Phi).
 \end{equation}
 
 Note that we moved the minus sign up to the numerator,
@@ -329,29 +329,29 @@ so the right-hand side of the equation keeps clear.
 In order to solve for $A$ we set $x=-\Phi$ to let $B$ disappear:
 
 \begin{equation}
-\Phi = A(-\Phi+\overline{\Phi}).
+\Phi = A(-\Phi+\Psi).
 \end{equation}
 
 Note the effect of the minus sign on the left side of the equation.
 
 The second property introduced above leads to
-$-\Phi+\overline{\Phi} = -\sqrt{5}$ and,
-after dividing this, we get
+$-\Phi+\Psi = -\sqrt{5}$ and,
+after dividing on both sides, we get
 
 \begin{equation}
 A = \frac{\Phi}{-\sqrt{5}} = -\frac{\Phi}{\sqrt{5}}.
 \end{equation}
 
-In order to solve for $B$ we set $x=-\overline{\Phi}$ to let $A$ disappear:
+In order to solve for $B$ we set $x=-\Psi$ to let $A$ disappear:
 
 \begin{equation}
-\overline{\Phi} = B(-\overline{\Phi}+\Phi).
+\Psi = B(-\Psi+\Phi).
 \end{equation}
 
-Since $\Phi-\overline{\Phi} = \sqrt{5}$, we get this time:
+Since $\Phi-\Psi = \sqrt{5}$, we get this time:
 
 \begin{equation}
-B = \frac{\overline{\Phi}}{\sqrt{5}}.
+B = \frac{\Psi}{\sqrt{5}}.
 \end{equation}
 
 We, hence, can rewrite equation \ref{eq:G3} 
@@ -360,7 +360,7 @@ We, hence, can rewrite equation \ref{eq:G3}
 \begin{equation}\label{eq:G4}
 G(x) = \frac{1}{\sqrt{5}}\left(
        -\frac{\Phi}{x+\Phi} + 
-       \frac{\overline{\Phi}}{x+\overline{\Phi}}\right)
+       \frac{\Psi}{x+\Psi}\right)
 \end{equation}
 
 To see the progress we made, remember that our intention is
@@ -380,32 +380,32 @@ numerator and denominator by the numerator:
 \begin{equation}
 G(x) = \frac{1}{\sqrt{5}}\left(
        -\frac{1}{\frac{1}{\Phi}x+1} + 
-       \frac{1}{\frac{1}{\overline{\Phi}}x+1}\right)
+       \frac{1}{\frac{1}{\Psi}x+1}\right)
 \end{equation}
 
 The term $\frac{1}{\Phi}$ is the multiplicative inverse of $\Phi$.
-We have seen above that $\Phi\overline{\Phi}$ is -1.
+We have seen above that $\Phi\Psi$ is -1.
 The multiplicative inverse of $\Phi$ must therefore be
-the additive inverse of $\overline{\Phi}$:
+the additive inverse of $\Psi$:
 
 \begin{equation}
 \frac{1}{\Phi} = \frac{1}{\frac{1+\sqrt{5}}{2}} =
-\frac{2}{1+\sqrt{5}} = -\overline{\Phi}.
+\frac{2}{1+\sqrt{5}} = -\Psi.
 \end{equation}
 
-Correspondingly, the multiplicative inverse of $\overline{\Phi}$
+Correspondingly, the multiplicative inverse of $\Psi$
 is the additive inverse of $\Phi$, which, of course, is $-\Phi$.
 
 We, hence, can reduce the equation above to
 
 \begin{equation}
 G(x) = \frac{1}{\sqrt{5}}\left(
-       -\frac{1}{1-\overline{\Phi}x} + 
+       -\frac{1}{1-\Psi x} + 
        \frac{1}{1-{\Phi}x}\right)
 \end{equation}
 
 This, now, really looks like two geometric series,
-one with $r = \overline{\Phi}x$,
+one with $r = \Psi x$,
 the other with $r = \Phi x$.
 So, now, finally, here comes the punch line:
 
@@ -413,15 +413,15 @@ So, now, finally, here comes the punch line:
 \sum_{n=0}^{\infty}{F_nx^n} =
 \frac{1}{\sqrt{5}}\left(
 \sum_{n=0}^{\infty}{(\Phi x)^n} -
-\sum_{n=0}^{\infty}{(\overline{\Phi}x)^n}\right) =
-\sum_{n=0}^{\infty}{\frac{(\Phi^n - \overline{\Phi}^n)}{\sqrt{5}}x^n}.
+\sum_{n=0}^{\infty}{(\Psi x)^n}\right) =
+\sum_{n=0}^{\infty}{\frac{(\Phi^n - \Psi^n)}{\sqrt{5}}x^n}.
 \end{equation}
 
-We now have two series that are supposed to be equal.
+We have two series that are supposed to be equal.
 We, therefore, conjecture that the coefficients must be equal:
 
 \begin{equation}
-F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
+F_n = \frac{\Phi^n - \Psi^n}{\sqrt{5}}.
 \end{equation}
 
 We can use this to write a much more efficient
@@ -459,7 +459,7 @@ But when we go on (|map fir [10..14]|):
 |[54.999,89.0,143.999,
  232.999,377.00000000000006]|
 
-We see that some numbers are slightly off
+we see that some numbers are slightly off
 the expected result; sometimes above sometimes
 below. Indeed, why should we expect clear-cut
 integers in the first place?
@@ -469,25 +469,25 @@ what happens. For $n=0$, we get $(1-1)/\sqrt{5}$.
 That is just zero. For $n=1$, we get $\sqrt{5}/\sqrt{5}$,
 which is 1. For $n=2$ we get, a bit surprisingly,
 $\Phi^2 = 2.6180\dots$ and
-$\overline{\Phi}^2 = 0.3819\dots$
-Now, $\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$,
+$\Psi^2 = 0.3819\dots$
+Now, $\Phi^2 - \Psi^2 = 2.2360\dots$,
 which happens to be $\sqrt{5}$ again and, thus,
 we get 1.
 
 For $n=3$, we get
-$\Phi^3 - \overline{\Phi}^3 = 4.4721\dots$,
+$\Phi^3 - \Psi^3 = 4.4721\dots$,
 which happens to be $2\sqrt{5}$. We, hence, get exactly 2.
 Here are the next values:
 
-$\Phi^4 - \overline{\Phi}^4 = 3\sqrt{5}$\\
-$\Phi^5 - \overline{\Phi}^5 = 5\sqrt{5}$\\
-$\Phi^6 - \overline{\Phi}^6 = 8\sqrt{5}$\\
-$\Phi^7 - \overline{\Phi}^7 = 13\sqrt{5}$.
+$\Phi^4 - \Psi^4 = 3\sqrt{5}$\\
+$\Phi^5 - \Psi^5 = 5\sqrt{5}$\\
+$\Phi^6 - \Psi^6 = 8\sqrt{5}$\\
+$\Phi^7 - \Psi^7 = 13\sqrt{5}$.
 
 In summary, we have
 
 \begin{equation}
-\Phi^n - \overline{\Phi}^n = F_n\sqrt{5},
+\Phi^n - \Psi^n = F_n\sqrt{5},
 \end{equation}
 
 which is exactly according to the equation
@@ -496,7 +496,7 @@ But, of course, we are working with limited precision
 and thus get slightly off with growing numbers.
 The solution is just to round to the nearest integer.
 Once we do that, we can consider a simplification.
-Since $||\overline{\Phi}||$, the absolute value
+Since $||\Psi||$, the absolute value
 of the conjugate of $\Phi$, is a number less than 1,
 its powers with growing exponents become smaller and
 smaller and, thus, do not affect the result, which is
@@ -570,8 +570,11 @@ We can model this in Haskell quite easily:
 \end{code}
 \end{minipage}
 
-This is just a data type consisting of three components.
-Here is how we would model $\Phi$ and $\overline{\Phi}$:
+This is a data type consisting of three components.
+The first component represents the integers;
+the second component represents the multiples of $\sqrt{5}$;
+the last component represents the denominator.
+Here is how we would model $\Phi$ and $\Psi$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -583,9 +586,6 @@ Here is how we would model $\Phi$ and $\overline{\Phi}$:
 \end{code}
 \end{minipage}
 
-The first component represents the multiples of the integer;
-the second component represents the multiples of $\sqrt{5}$;
-the last component represents the denominator.
 Here is a clean constructor for this data type:
 
 \begin{minipage}{\textwidth}
@@ -618,7 +618,7 @@ and how we negate one of those:
 \end{code}
 \end{minipage}
 
-When we add |one| and |one'| like this |add one one'|,
+When we add |one| and |one'| (|add one one'|),
 we get:
 
 |Phi 1 0 1|.
@@ -635,8 +635,8 @@ When we subtract |one'| from |one| like this:
 Here, the integer component is 0,
 while the $\sqrt{5}$ component and the denominator are 1.
 This, hence, is the representation of $\sqrt{5}$.
-These result represent the two properties of
-$\Phi$ and $\overline{\Phi}$ we introduced above.
+These results represent the two properties of
+$\Phi$ and $\Psi$ we introduced above.
 
 The multiplication formula is implemented like this:
 
@@ -652,7 +652,7 @@ We perform |mul one one'| and see:
 
 |Phi (-1) 0 1|,
 
-the additive inverse of $\Phi + \overline{\Phi}$, which, of course,
+the additive inverse of $\Phi + \Psi$, which, of course,
 is -1.
 
 When we perform |mul one (neg one')|, we get 1 again:
@@ -664,7 +664,7 @@ Power is now simply built on top of |mul|:
 \begin{minipage}{\textwidth}
 \begin{code}
   pow :: Phi Integer -> Int -> Phi Integer
-  pow p n = foldl' mul p $ take (n-1) (repeat p)
+  pow p n = foldl' mul p (take (n-1) (repeat p))
 \end{code}
 \end{minipage}
 
@@ -694,7 +694,7 @@ second to the first component:
 |neg(pow one' 4)|: |Phi (-7) 3 2|.
 
 Now, we devise a function that builds triples of the form
-$(\Phi^n, \overline{\Phi}^n, \Phi^n-\overline{\Phi}^n)$:
+$(\Phi^n, \Psi^n, \Phi^n-\Psi^n)$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -738,19 +738,21 @@ mapping |triple| on |[1..20]|
 \end{center}
 \end{minipage}
 
-The powers of $\Phi$ and $\overline{\Phi}$, as already mentioned,
+The powers of $\Phi$ and $\Psi$, as already mentioned,
 are equal with the exception of the sign of the multiples of $\sqrt{5}$.
-When we subtract $\overline{\Phi}$ from $\Phi$, the integers will
+When we subtract $\Psi$ from $\Phi$, the integers will
 disappear and we will \emph{add} the absolute values of the multiples
 of $\sqrt{5}$. When we add two equal numbers, we obtain an even number.
-This explains why the formula always results in an integer.
+Since the denominator is 2,
+this explains why the formula always results in an integer.
 
 Observe that, for most cases, already $\Phi$ and its conjugate
 have a Fibonacci number as multiple of $\sqrt{5}$. In those cases,
 the denominator is 2. We, hence, add two Fibonacci numbers to obtain
 $2F_n$, which, divided by 2, results in $F_n$.
 
-In some cases, we do not see a Fibonacci number. That occurs in
+In some cases, we do not see a Fibonacci number,
+but half of it, \ie\ $F_n/2$. That occurs in
 exactly those instances where the Fibonacci number itself is even.
 In all those cases,
 the denominator is 1 -- and, thus, we get an even Fibonacci number.
@@ -793,7 +795,7 @@ computes the ratio $F_{n+1}/F_{n}$:
 \end{code}
 \end{minipage}
 
-When we apply this function like |map fratio [1..10]|,
+When we apply this function (|map fratio [1..10]|),
 we see:
 
 |[1.0,2.0,1.5,1.66666,1.6,1.625,1.61538,1.61904,1.61764,1.61818]|.
