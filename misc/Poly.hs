@@ -818,6 +818,22 @@ where
   wilkinson = prodp mul [P [-i,1] | i <- [1..20]]
 
   -------------------------------------------------------------------------
+  -- Vietà's Formulas
+  -------------------------------------------------------------------------
+  {-
+  vieta :: [Double] -> [Double]
+  vieta rs = go 0
+    where go n | n == l    = []
+               | otherwise = f n (sympoly rs n) rs : go (n+1)
+          l = length rs
+          f _ _ [] = 0
+          f _ [] _ = 0
+          f i (s:ss) xs = let r = sum [s * x | x <- (drop i xs)]
+                           in if i == 0 then r
+                                        else r + f i ss (drop i xs)
+  -}
+ 
+  -------------------------------------------------------------------------
   -- Solving equations
   -------------------------------------------------------------------------
   solve :: Poly Double -> [Double]
@@ -831,7 +847,6 @@ where
 
   solvel :: (Num a,Fractional a) => Poly a -> [a]
   solvel (P [b,a]) = [-b/a]
-  solvel _         = error "oops!"
 
   solve2 :: Poly Double -> [Double]
   solve2 p@(P [c,b,a]) | dis p < 0 = []

@@ -104,23 +104,6 @@ where
   harmonic n = 1/d + harmonic (n-1)
     where d = fromIntegral n
 
-  phi :: Double
-  phi = 0.5 * (1 + sqrt 5)
-
-  fib :: Integer -> Integer
-  fib 0 = 0
-  fib 1 = 1
-  fib n = fib (n-2) + fib (n-1)
-
-  fibApx :: Integer -> (Integer, Integer)
-  fibApx n = let n' = fromIntegral n 
-              in (floor   $ phi^(n'-2), 
-                  ceiling $ phi^(n'-1))
-
-  fi :: Integer -> Integer
-  fi n = let n' = fromIntegral n
-          in round (phi^n'/sqrt 5)
-
   myseries :: Integer -> Integer -> (Integer,Integer)
   myseries n 0 = (1,1)
   myseries n k = ((n^k - 1) `div` (n - 1), n^k)

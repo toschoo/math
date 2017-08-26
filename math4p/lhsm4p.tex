@@ -33054,7 +33054,7 @@ that can express the same result, such that
 so that we can conjecture (and later prove)
 that $F_n = a_n$.
 
-We start our journey by defining our generating function $G$:
+We start our journey by defining generating function $G$:
 
 \begin{equation}
 G(x) = F_0 + F_1x + F_2x^2 + F_3x^3 + \dots
@@ -33091,9 +33091,9 @@ In the following equation, we arrange terms
 with equal $x$es together in the same column:
 
 \begin{align*}
-(1-x-x^2)G(x) & = & (&F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) & - \\
-              &   & (&    &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) & - \\
-              &   & (&    &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) &
+& (1-x-x^2)G(x) & = & (& F_0 & + & F_1x & + & F_2x^2 & + & F_3x^3 & + & \dots) \\
+&               & - & (&     &   & F_0x & + & F_1x^2 & + & F_2x^3 & + & \dots) \\
+&               & - & (&     &   &      & + & F_0x^2 & + & F_1x^3 & + & \dots) 
 \end{align*}
 
 We see as a result that terms with equal $x$es form groups with 
@@ -33206,43 +33206,43 @@ What about the positive root? That is
 \]
 
 and, thus, the negative of the conjugate of $\Phi$,
-$\overline{\Phi}$.
+$\Psi$.
 The conjugate of $\Phi$ is 
 
 \begin{equation}
-\overline{\Phi} = \frac{1 - \sqrt{5}}{2}.
+\Psi = \frac{1 - \sqrt{5}}{2}.
 \end{equation}
 
 Two nice properties that we will use later follow immediately:
 
 \begin{equation}
-\Phi + \overline{\Phi} = 1
+\Phi + \Psi = 1
 \end{equation}
 
 and
 
 \begin{equation}
-\Phi - \overline{\Phi} = \sqrt{5}.
+\Phi - \Psi = \sqrt{5}.
 \end{equation}
 
 By completing the square, we found two roots,
-namely $-\Phi$ and $-\overline{\Phi}$.
-That implies that $(x + \Phi)$ and $(x + \overline{\Phi})$
+namely $-\Phi$ and $-\Psi$.
+That implies that $(x + \Phi)$ and $(x + \Psi)$
 are factors of $(1 - x - x^2)$.
 Let us check if this is true. We multiply
-$(x + \Phi)(x + \overline{\Phi})$ and get
+$(x + \Phi)(x + \Psi)$ and get
 
 \[
-x^2 + \overline{\Phi}x + \Phi x + \overline{\Phi}\Phi.
+x^2 + \Psi x + \Phi x + \Psi\Phi.
 \]
 
 According to the first property above,
-$\overline{\Phi} + \Phi = 1$.
-But what about $\overline{\Phi}\times \Phi$?
+$\Psi + \Phi = 1$.
+But what about $\Psi\times \Phi$?
 Let us look:
 
 \begin{equation}
-\Phi\overline{\Phi} = \frac{1+\sqrt{5}}{2}\times\frac{1-\sqrt{5}}{2} = 
+\Phi\Psi = \frac{1+\sqrt{5}}{2}\times\frac{1-\sqrt{5}}{2} = 
 \frac{(1+\sqrt{5})(1-\sqrt{5})}{4} = 
 \frac{1-\sqrt{5}+\sqrt{5}-5}{4} =
 \frac{-4}{4} = -1.
@@ -33265,7 +33265,7 @@ The correct result rather is
 We can now rewrite equation \ref{eq:G1} as
 
 \begin{equation}\label{eq:G2}
-G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})},
+G(x) = \frac{x}{-(x+\Phi)(x+\Psi)},
 \end{equation}
 
 where the denominator has been replaced by 
@@ -33296,16 +33296,16 @@ When we apply this to equation \ref{eq:G2},
 we get
 
 \begin{equation}\label{eq:G3}
-G(x) = \frac{x}{-(x+\Phi)(x+\overline{\Phi})} = 
-\frac{A}{x+\Phi} + \frac{B}{x+\overline{\Phi}}
+G(x) = \frac{x}{-(x+\Phi)(x+\Psi)} = 
+\frac{A}{x+\Phi} + \frac{B}{x+\Psi}
 \end{equation}
 
 To get to know $A$ and $B$, we multiply both sides
-by the denominator $(x+\Phi)(x+\overline{\Phi})$
+by the denominator $(x+\Phi)(x+\Psi)$
 and get
 
 \begin{equation}
--x = A(x+\overline{\Phi}) + B(x+\Phi).
+-x = A(x+\Psi) + B(x+\Phi).
 \end{equation}
 
 Note that we moved the minus sign up to the numerator,
@@ -33314,29 +33314,29 @@ so the right-hand side of the equation keeps clear.
 In order to solve for $A$ we set $x=-\Phi$ to let $B$ disappear:
 
 \begin{equation}
-\Phi = A(-\Phi+\overline{\Phi}).
+\Phi = A(-\Phi+\Psi).
 \end{equation}
 
 Note the effect of the minus sign on the left side of the equation.
 
 The second property introduced above leads to
-$-\Phi+\overline{\Phi} = -\sqrt{5}$ and,
-after dividing this, we get
+$-\Phi+\Psi = -\sqrt{5}$ and,
+after dividing on both sides, we get
 
 \begin{equation}
 A = \frac{\Phi}{-\sqrt{5}} = -\frac{\Phi}{\sqrt{5}}.
 \end{equation}
 
-In order to solve for $B$ we set $x=-\overline{\Phi}$ to let $A$ disappear:
+In order to solve for $B$ we set $x=-\Psi$ to let $A$ disappear:
 
 \begin{equation}
-\overline{\Phi} = B(-\overline{\Phi}+\Phi).
+\Psi = B(-\Psi+\Phi).
 \end{equation}
 
-Since $\Phi-\overline{\Phi} = \sqrt{5}$, we get this time:
+Since $\Phi-\Psi = \sqrt{5}$, we get this time:
 
 \begin{equation}
-B = \frac{\overline{\Phi}}{\sqrt{5}}.
+B = \frac{\Psi}{\sqrt{5}}.
 \end{equation}
 
 We, hence, can rewrite equation \ref{eq:G3} 
@@ -33345,7 +33345,7 @@ We, hence, can rewrite equation \ref{eq:G3}
 \begin{equation}\label{eq:G4}
 G(x) = \frac{1}{\sqrt{5}}\left(
        -\frac{\Phi}{x+\Phi} + 
-       \frac{\overline{\Phi}}{x+\overline{\Phi}}\right)
+       \frac{\Psi}{x+\Psi}\right)
 \end{equation}
 
 To see the progress we made, remember that our intention is
@@ -33365,32 +33365,32 @@ numerator and denominator by the numerator:
 \begin{equation}
 G(x) = \frac{1}{\sqrt{5}}\left(
        -\frac{1}{\frac{1}{\Phi}x+1} + 
-       \frac{1}{\frac{1}{\overline{\Phi}}x+1}\right)
+       \frac{1}{\frac{1}{\Psi}x+1}\right)
 \end{equation}
 
 The term $\frac{1}{\Phi}$ is the multiplicative inverse of $\Phi$.
-We have seen above that $\Phi\overline{\Phi}$ is -1.
+We have seen above that $\Phi\Psi$ is -1.
 The multiplicative inverse of $\Phi$ must therefore be
-the additive inverse of $\overline{\Phi}$:
+the additive inverse of $\Psi$:
 
 \begin{equation}
 \frac{1}{\Phi} = \frac{1}{\frac{1+\sqrt{5}}{2}} =
-\frac{2}{1+\sqrt{5}} = -\overline{\Phi}.
+\frac{2}{1+\sqrt{5}} = -\Psi.
 \end{equation}
 
-Correspondingly, the multiplicative inverse of $\overline{\Phi}$
+Correspondingly, the multiplicative inverse of $\Psi$
 is the additive inverse of $\Phi$, which, of course, is $-\Phi$.
 
 We, hence, can reduce the equation above to
 
 \begin{equation}
 G(x) = \frac{1}{\sqrt{5}}\left(
-       -\frac{1}{1-\overline{\Phi}x} + 
+       -\frac{1}{1-\Psi x} + 
        \frac{1}{1-{\Phi}x}\right)
 \end{equation}
 
 This, now, really looks like two geometric series,
-one with $r = \overline{\Phi}x$,
+one with $r = \Psi x$,
 the other with $r = \Phi x$.
 So, now, finally, here comes the punch line:
 
@@ -33398,15 +33398,15 @@ So, now, finally, here comes the punch line:
 \sum_{n=0}^{\infty}{F_nx^n} =
 \frac{1}{\sqrt{5}}\left(
 \sum_{n=0}^{\infty}{(\Phi x)^n} -
-\sum_{n=0}^{\infty}{(\overline{\Phi}x)^n}\right) =
-\sum_{n=0}^{\infty}{\frac{(\Phi^n - \overline{\Phi}^n)}{\sqrt{5}}x^n}.
+\sum_{n=0}^{\infty}{(\Psi x)^n}\right) =
+\sum_{n=0}^{\infty}{\frac{(\Phi^n - \Psi^n)}{\sqrt{5}}x^n}.
 \end{equation}
 
-We now have two series that are supposed to be equal.
+We have two series that are supposed to be equal.
 We, therefore, conjecture that the coefficients must be equal:
 
 \begin{equation}
-F_n = \frac{\Phi^n - \overline{\Phi}^n}{\sqrt{5}}.
+F_n = \frac{\Phi^n - \Psi^n}{\sqrt{5}}.
 \end{equation}
 
 We can use this to write a much more efficient
@@ -33459,7 +33459,7 @@ But when we go on (\ensuremath{\Varid{map}\;\Varid{fir}\;[\mskip1.5mu \mathrm{10
 
 \ensuremath{[\mskip1.5mu \mathrm{54.999},\mathrm{89.0},\mathrm{143.999},\mathrm{232.999},\mathrm{377.00000000000006}\mskip1.5mu]}
 
-We see that some numbers are slightly off
+we see that some numbers are slightly off
 the expected result; sometimes above sometimes
 below. Indeed, why should we expect clear-cut
 integers in the first place?
@@ -33469,25 +33469,25 @@ what happens. For $n=0$, we get $(1-1)/\sqrt{5}$.
 That is just zero. For $n=1$, we get $\sqrt{5}/\sqrt{5}$,
 which is 1. For $n=2$ we get, a bit surprisingly,
 $\Phi^2 = 2.6180\dots$ and
-$\overline{\Phi}^2 = 0.3819\dots$
-Now, $\Phi^2 - \overline{\Phi}^2 = 2.2360\dots$,
+$\Psi^2 = 0.3819\dots$
+Now, $\Phi^2 - \Psi^2 = 2.2360\dots$,
 which happens to be $\sqrt{5}$ again and, thus,
 we get 1.
 
 For $n=3$, we get
-$\Phi^3 - \overline{\Phi}^3 = 4.4721\dots$,
+$\Phi^3 - \Psi^3 = 4.4721\dots$,
 which happens to be $2\sqrt{5}$. We, hence, get exactly 2.
 Here are the next values:
 
-$\Phi^4 - \overline{\Phi}^4 = 3\sqrt{5}$\\
-$\Phi^5 - \overline{\Phi}^5 = 5\sqrt{5}$\\
-$\Phi^6 - \overline{\Phi}^6 = 8\sqrt{5}$\\
-$\Phi^7 - \overline{\Phi}^7 = 13\sqrt{5}$.
+$\Phi^4 - \Psi^4 = 3\sqrt{5}$\\
+$\Phi^5 - \Psi^5 = 5\sqrt{5}$\\
+$\Phi^6 - \Psi^6 = 8\sqrt{5}$\\
+$\Phi^7 - \Psi^7 = 13\sqrt{5}$.
 
 In summary, we have
 
 \begin{equation}
-\Phi^n - \overline{\Phi}^n = F_n\sqrt{5},
+\Phi^n - \Psi^n = F_n\sqrt{5},
 \end{equation}
 
 which is exactly according to the equation
@@ -33496,7 +33496,7 @@ But, of course, we are working with limited precision
 and thus get slightly off with growing numbers.
 The solution is just to round to the nearest integer.
 Once we do that, we can consider a simplification.
-Since $|\overline{\Phi}|$, the absolute value
+Since $|\Psi|$, the absolute value
 of the conjugate of $\Phi$, is a number less than 1,
 its powers with growing exponents become smaller and
 smaller and, thus, do not affect the result, which is
@@ -33586,8 +33586,11 @@ We can model this in Haskell quite easily:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-This is just a data type consisting of three components.
-Here is how we would model $\Phi$ and $\overline{\Phi}$:
+This is a data type consisting of three components.
+The first component represents the integers;
+the second component represents the multiples of $\sqrt{5}$;
+the last component represents the denominator.
+Here is how we would model $\Phi$ and $\Psi$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -33607,9 +33610,6 @@ Here is how we would model $\Phi$ and $\overline{\Phi}$:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The first component represents the multiples of the integer;
-the second component represents the multiples of $\sqrt{5}$;
-the last component represents the denominator.
 Here is a clean constructor for this data type:
 
 \begin{minipage}{\textwidth}
@@ -33681,7 +33681,7 @@ and how we negate one of those:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-When we add \ensuremath{\Varid{one}} and \ensuremath{\Varid{one'}} like this \ensuremath{\Varid{add}\;\Varid{one}\;\Varid{one'}},
+When we add \ensuremath{\Varid{one}} and \ensuremath{\Varid{one'}} (\ensuremath{\Varid{add}\;\Varid{one}\;\Varid{one'}}),
 we get:
 
 \ensuremath{\Conid{Phi}\;\mathrm{1}\;\mathrm{0}\;\mathrm{1}}.
@@ -33698,8 +33698,8 @@ When we subtract \ensuremath{\Varid{one'}} from \ensuremath{\Varid{one}} like th
 Here, the integer component is 0,
 while the $\sqrt{5}$ component and the denominator are 1.
 This, hence, is the representation of $\sqrt{5}$.
-These result represent the two properties of
-$\Phi$ and $\overline{\Phi}$ we introduced above.
+These results represent the two properties of
+$\Phi$ and $\Psi$ we introduced above.
 
 The multiplication formula is implemented like this:
 
@@ -33722,7 +33722,7 @@ We perform \ensuremath{\Varid{mul}\;\Varid{one}\;\Varid{one'}} and see:
 
 \ensuremath{\Conid{Phi}\;(\mathbin{-}\mathrm{1})\;\mathrm{0}\;\mathrm{1}},
 
-the additive inverse of $\Phi + \overline{\Phi}$, which, of course,
+the additive inverse of $\Phi + \Psi$, which, of course,
 is -1.
 
 When we perform \ensuremath{\Varid{mul}\;\Varid{one}\;(\Varid{neg}\;\Varid{one'})}, we get 1 again:
@@ -33739,7 +33739,7 @@ Power is now simply built on top of \ensuremath{\Varid{mul}}:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{pow}\mathbin{::}\Conid{Phi}\;\Conid{Integer}\to \Conid{Int}\to \Conid{Phi}\;\Conid{Integer}{}\<[E]%
 \\
-\>[3]{}\Varid{pow}\;\Varid{p}\;\Varid{n}\mathrel{=}\Varid{foldl'}\;\Varid{mul}\;\Varid{p}\mathbin{\$}\Varid{take}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{repeat}\;\Varid{p}){}\<[E]%
+\>[3]{}\Varid{pow}\;\Varid{p}\;\Varid{n}\mathrel{=}\Varid{foldl'}\;\Varid{mul}\;\Varid{p}\;(\Varid{take}\;(\Varid{n}\mathbin{-}\mathrm{1})\;(\Varid{repeat}\;\Varid{p})){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -33771,7 +33771,7 @@ second to the first component:
 \ensuremath{\Varid{neg}\;(\Varid{pow}\;\Varid{one'}\;\mathrm{4})}: \ensuremath{\Conid{Phi}\;(\mathbin{-}\mathrm{7})\;\mathrm{3}\;\mathrm{2}}.
 
 Now, we devise a function that builds triples of the form
-$(\Phi^n, \overline{\Phi}^n, \Phi^n-\overline{\Phi}^n)$:
+$(\Phi^n, \Psi^n, \Phi^n-\Psi^n)$:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -33838,19 +33838,21 @@ mapping \ensuremath{\Varid{triple}} on \ensuremath{[\mskip1.5mu \mathrm{1}\mathi
 \end{center}
 \end{minipage}
 
-The powers of $\Phi$ and $\overline{\Phi}$, as already mentioned,
+The powers of $\Phi$ and $\Psi$, as already mentioned,
 are equal with the exception of the sign of the multiples of $\sqrt{5}$.
-When we subtract $\overline{\Phi}$ from $\Phi$, the integers will
+When we subtract $\Psi$ from $\Phi$, the integers will
 disappear and we will \emph{add} the absolute values of the multiples
 of $\sqrt{5}$. When we add two equal numbers, we obtain an even number.
-This explains why the formula always results in an integer.
+Since the denominator is 2,
+this explains why the formula always results in an integer.
 
 Observe that, for most cases, already $\Phi$ and its conjugate
 have a Fibonacci number as multiple of $\sqrt{5}$. In those cases,
 the denominator is 2. We, hence, add two Fibonacci numbers to obtain
 $2F_n$, which, divided by 2, results in $F_n$.
 
-In some cases, we do not see a Fibonacci number. That occurs in
+In some cases, we do not see a Fibonacci number,
+but half of it, \ie\ $F_n/2$. That occurs in
 exactly those instances where the Fibonacci number itself is even.
 In all those cases,
 the denominator is 1 -- and, thus, we get an even Fibonacci number.
@@ -33873,6 +33875,28 @@ binomial coefficients of the form:
 \begin{equation}
 F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
 \end{equation}
+
+which can be implemented in Haskell as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bifi}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{bifi}\;\mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{bifi}\;\Varid{n}\mathrel{=}\Varid{sum}\;[\mskip1.5mu \Varid{choose}\;(\Varid{n}\mathbin{-}\Varid{k}\mathbin{-}\mathrm{1})\;\Varid{k}\mid \Varid{k}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n2}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{n2}\mathrel{=}(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Well, that leads us into deep water.
 A much more direct try to explain 
@@ -33906,7 +33930,7 @@ computes the ratio $F_{n+1}/F_{n}$:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-When we apply this function like \ensuremath{\Varid{map}\;\Varid{fratio}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
+When we apply this function (\ensuremath{\Varid{map}\;\Varid{fratio}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}),
 we see:
 
 \ensuremath{[\mskip1.5mu \mathrm{1.0},\mathrm{2.0},\mathrm{1.5},\mathrm{1.66666},\mathrm{1.6},\mathrm{1.625},\mathrm{1.61538},\mathrm{1.61904},\mathrm{1.61764},\mathrm{1.61818}\mskip1.5mu]}.
@@ -38745,8 +38769,8 @@ positive number depending on the signedness of the input value
 and that of the coefficient.
 The trivial polynomial $x^3$, for instance, is negative for
 negative values and positive for positive values. The slightly
-less trivial polynomial $x^3 + 9$ has its root at -3, while
-$x^3 - 9$ has its root at 3.
+less trivial polynomial $x^3 + 27$ has a root at 3, while
+$x^3 - 27$ has a root at -3.
 
 In summary, we can say that even polynomials do not necessarily
 have negative values and, hence, do not need to have a root.
@@ -38754,7 +38778,7 @@ Odd polynomials, on the other hand, usually have both, negative
 and positive values, and, hence, must have a root.
 
 Those are strong claims. They are true, because polynomials
-belong to a specific set of \term{functions}, 
+belong to a specific class of \term{functions}, 
 namely \term{continuous} functions.
 That, basically, means that they have no \emph{holes}, \ie\
 for any value $x$ of a certain number type there is a result $y$
@@ -38774,7 +38798,7 @@ the result grows much faster than the input -- but the growth
 is regular.
 
 These properties appear to be ``natural'' at the first sight.
-But there are functions that do not fulful these criteria.
+But there are functions that do not fulfil these criteria.
 In the next chapter, when we properly define the term \term{function},
 we will actually see functions with holes and jumps.
 
@@ -38800,7 +38824,7 @@ are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
 There are also polynomials with a quite confusing behaviour that
-make it hard to guess the roots, for instance, Wilkinson's polynomial
+make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
 
@@ -38839,7 +38863,7 @@ The first terms are
 x^{20} - 210x^{19} + 20615x^{18} - 1256850x^{17} \dots
 \]
 
-When we apply Wilkinson's polynomial to the integers $1\dots 10$, we see:
+When we apply Wilkinson's polynomial to the integers $1\dots 25$, we see:
 
 \ensuremath{\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{2432902008176640000},}\\
 \ensuremath{\mathrm{51090942171709440000},\mathrm{562000363888803840000},\mathrm{4308669456480829440000},}\\
@@ -38961,10 +38985,12 @@ Here is an implementation:
 The function receives four arguments.
 The first is the polynomial.
 The second is a tolerance.
-When we reach a result that is smaller
-than the tolerance, we return the result.
+When, on applying the polynomial,
+we get a result that is smaller
+than the tolerance, we return the obtained $x$ value.
 $a$ and $b$ are the starting values.
 
+\begin{minipage}{\textwidth}
 We distinguish three cases:
 \begin{itemize}
 \item The result for the new value, $c$, 
@@ -38978,6 +39004,7 @@ We distinguish three cases:
       equals the sign of $b$. In this case,
       we replace $b$ by $c$.
 \end{itemize}
+\end{minipage}
 
 We try \ensuremath{\Varid{bisect}} on the polynomial $x^2$ with
 the initial guess $a=-1$ and $b=1$ (because we
@@ -39134,7 +39161,7 @@ of iterations.
 The function terminates when we have 
 reached either the intended precision or 
 the number of repetitions, $m$.
-Otherwise, we repeat with $m-1$ and with
+Otherwise, we repeat with $m-1$ and
 $a - \frac{\pi(a)}{\pi'(a)}$.
 
 For the polynomial $x^2 - 4$, we call first
@@ -39206,13 +39233,13 @@ of Wilkinson's polynomial.
 
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
-the next section to its study. Anyway, what
+some of the next sections to its study. Anyway, what
 algebraists did for centuries was to find
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
 than 5. For higher degrees, there are no such
-formulas. This dicovery is perhaps much more
+formulas. This discovery is perhaps much more
 important than the single formulas developed
 over the centuries for polynomials of the first
 four degrees. In fact, the concepts that led
@@ -39224,10 +39251,377 @@ cannot be general formulas for solving polynomials
 of higher degrees, we need to understand polynomials
 much better. First, we will look at the formula
 to solve polynomials of the second degree.
-Note that we skip the first degree, since 
-finding the roots of polynomials
-of the first degree is just solving linear
-equations.
+
+Polynomials of the first degree are just 
+linear equations of the form
+
+\begin{equation}
+ax + b = 0.
+\end{equation}
+
+We can easily solve by subtracting $b$ and dividing
+by $a$:
+
+\begin{equation}
+x = -\frac{b}{a}.
+\end{equation}
+
+In Haskell, this is just:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{solve1}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Fractional}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{solve1}\;(\Conid{P}\;[\mskip1.5mu \Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}[\mskip1.5mu \mathbin{-}\Varid{b}\mathbin{/}\Varid{a}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Note the order of $a$ and $b$ in the definition of the polynomial.
+This is consistent with the equation we gave above,
+since, in our definition of polynomials in Haskell,
+the head of the list of the coefficients is the coefficient
+of $x^0$.
+
+Polynomials of the second degree can be solved with a technique
+we already used in the previous chapter, namely
+\term{completing the square}. We will now apply this technique
+on symbols and, as a result, will obtain a formula that can
+be applied on all polynomials of the second degree.
+We start with the equation
+
+\begin{equation}
+ax^2 + bx + c = 0.
+\end{equation}
+
+We subtract $c$ and divide by $a$ obtaining:
+
+\begin{equation}
+x^2 + \frac{b}{a}x = -\frac{c}{a}.
+\end{equation}
+
+Now, we want to get a binomial formula on the left-hand side
+of the equation. A binomial formula has the form:
+
+\begin{equation}
+(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta + \beta^2.
+\end{equation}
+
+When we set $\alpha = x$, we have on the right-hand side:
+
+\[
+x^2 + 2\beta x + \beta^2.
+\]
+
+In our equation, we see the term $\frac{b}{a}x$ at the position
+where, here, we have $2\beta x$.
+We, therefore, have $\frac{b}{a} = 2\beta$ 
+and $\beta = \frac{b}{2a}$.
+The missing term, hence, is 
+$(\frac{b}{2a})^2 = \frac{b^2}{4a^2}$.
+We add this term to both sides of the equation:
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = -\frac{c}{a} + \frac{b^2}{4a^2}.
+\end{equation}
+
+We can simplify the right-hand side of the equation a bit:
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = \frac{b^2-4ac}{4a^2}.
+\end{equation}
+
+To get rid of all the squares, we now take the squareroot
+on both sides of the equation. Since we have a binomial
+formula on the left-hand side, we get:
+
+\begin{equation}
+x + \frac{b}{2a} = \frac{\pm\sqrt{b^2-4ac}}{2a}.
+\end{equation}
+
+When we solve this equation for $x$, we get
+
+\begin{equation}
+x = \frac{-b \pm\sqrt{b^2-4ac}}{2a}.
+\end{equation}
+
+Voilà, this is the formula for solving polynomials of
+the second degree.
+
+We immediately see that polynomials with rational coefficients
+may have irrational roots, because the solution involves
+a squareroot, which leads either to an integer or
+an irrational number.
+
+We also see that polynomials of the second degree
+may have two roots, namely the result of the expression
+on the right-hand side, when we take the positive root,
+\ie\ 
+
+\[
+\frac{-b+\sqrt{b^2-4ac}}{2a},
+\]
+
+and the one, when we take the negative root, \ie
+
+\[
+\frac{-b-\sqrt{b^2-4ac}}{2a}.
+\]
+
+However, when the squareroot is zero
+then it makes no difference whether we add
+or subtract. The squareroot becomes zero, when
+the expression
+$b^2-4ac$ is zero. So, when this expression
+is zero, there is only one root.
+
+But there is one more thing:
+When the expression $b^2-4ac$ is negative,
+then we will try to take a squareroot from
+a negative term and that is not defined,
+since a number multiplied by itself is always
+positive, independent of that number itself being
+positive or negative.
+
+Well, it is not defined for \emph{real} numbers.
+When we assume that $\sqrt{-1}$
+is actually a legal expression, we could
+\term{extend} the field of the real numbers
+to another, more complex field that
+includes this beast. 
+We have already looked at how to extend fields
+in the previous chapter and we will indeed
+do this extension for $\mathbb{R}$ to create
+the \term{complex numbers}, $\mathbb{C}$.
+In that field, polynomials of the second degree
+always have 1 or 2 solutions.
+But, again, first steps first.
+
+The expression $b^2-4ac$ is called the
+\term{discriminant} of the polynomial,
+because it describes how many roots
+there are: 2, 1 or (in $\mathbb{R}$) none.
+The discriminant for polynomials
+with real coefficients
+may be implemented in Haskell as follows:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{dis}\mathbin{::}\Conid{Poly}\;\Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\\
+\>[3]{}\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}\Varid{b}\mathbin{\uparrow}\mathrm{2}\mathbin{-}\mathrm{4}\mathbin{*}\Varid{a}\mathbin{*}\Varid{c}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+On top of this we implement a \term{root counter}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{countRoots}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to \Conid{Int}{}\<[E]%
+\\
+\>[3]{}\Varid{countRoots}\;\Varid{p}{}\<[17]%
+\>[17]{}\mid {}\<[17E]%
+\>[20]{}\Varid{dis}\;\Varid{p}\mathbin{>}\mathrm{0}{}\<[31]%
+\>[31]{}\mathrel{=}\mathrm{2}{}\<[E]%
+\\
+\>[17]{}\mid {}\<[17E]%
+\>[20]{}\Varid{dis}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[31]%
+\>[31]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[17]{}\mid {}\<[17E]%
+\>[20]{}\Varid{otherwise}{}\<[31]%
+\>[31]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The polynomial $x^2 + 4$, for instance,
+has no roots in $\mathbb{R}$, since
+
+\ensuremath{\Varid{countRoots}\;(\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])}
+
+gives 0.
+Indeed $0^2 - 4\times 1\times 4$ is negative.
+
+The polynomial $x^2 - 4$, by contrast has
+
+\ensuremath{\Varid{countRoots}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])},
+
+2 roots.
+Indeed, $0^2 - (4\times 1\times -4)$ is
+$0 + 16$ and, hence, positive.
+
+The polynomial $x^2$ has 1 root,
+since
+
+\ensuremath{\Varid{countRoots}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])}
+
+is 1.
+Indeed, $0^2 - 4\times 1 \times 0$ is 0.
+
+We finally implement the solution for
+polynomials of the second degree:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{25E}{@{}l@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{solve2}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{solve2}\;\Varid{p}\mathord{@}(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu]){}\<[25]%
+\>[25]{}\mid {}\<[25E]%
+\>[28]{}\Varid{dis}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[39]%
+\>[39]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\mid {}\<[25E]%
+\>[28]{}\Varid{x1}\not\equiv \Varid{x2}{}\<[39]%
+\>[39]{}\mathrel{=}[\mskip1.5mu \Varid{x1},\Varid{x2}\mskip1.5mu]{}\<[E]%
+\\
+\>[25]{}\mid {}\<[25E]%
+\>[28]{}\Varid{otherwise}{}\<[39]%
+\>[39]{}\mathrel{=}[\mskip1.5mu \Varid{x1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{d}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{sqrt}\;(\Varid{dis}\;\Varid{p}){}\<[E]%
+\\
+\>[12]{}\Varid{x1}{}\<[16]%
+\>[16]{}\mathrel{=}(\mathbin{-}\Varid{b}\mathbin{+}\Varid{d})\mathbin{/}\mathrm{2}\mathbin{*}\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{x2}{}\<[16]%
+\>[16]{}\mathrel{=}(\mathbin{-}\Varid{b}\mathbin{-}\Varid{d})\mathbin{/}\mathrm{2}\mathbin{*}\Varid{a}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+When we call \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])},
+that is we solve the polynomial $x^2$,
+we get the root \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]}, which is one root
+as predicted.
+
+To solve the polynomial $x^2 + 4$, we call
+\ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])} and get \ensuremath{[\mskip1.5mu \mskip1.5mu]}; as predicted,
+this polynomials has no roots. 
+It is everywhere positive.
+
+The polynomial $x^2 - 4$, by contrast,
+shall have two roots. We call
+\ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])} and get \ensuremath{[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{2}\mskip1.5mu]}.
+When we check this by applying the polynomial
+to 2 and -2 like \ensuremath{\Varid{map}\;(\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu]))\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{2}\mskip1.5mu]},
+we get \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0}\mskip1.5mu]}.
+
+What about the polynomial $-x^2 - x + 1$, which
+we factored in the previous chapter?
+We try \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathbin{-}\mathrm{1},\mathbin{-}\mathrm{1}\mskip1.5mu])} and get
+
+\ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{1.618033988749895},\mathrm{0.6180339887498949}\mskip1.5mu]},
+
+which is $-\Phi$ and $-\Psi$, just as we saw before.
+
+Which polynomial has the roots $\Phi$ and $\Psi$?
+Well, let us try:
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\Varid{psi},\mathrm{1}\mskip1.5mu])}
+
+yields: 
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1.0},\mathbin{-}\mathrm{2.23606797749979},\mathrm{1.0}\mskip1.5mu]},
+
+which corresponds to $x^2 -\sqrt{5} + 1$.
+The coefficients in this result are
+1 for $x^2$, $-\sqrt{5}$ for $-\Phi - \Psi$
+and 1 for $(-\Phi)(-\Psi)$.
+
+What is the result for the ``simple''
+polynomial $x^2 + x + 1$?
+We try with \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])} and get
+\ensuremath{[\mskip1.5mu \mskip1.5mu]} -- the empty list.
+Indeed, $1^2 - 4\times 1\times 1$ is negative!
+
+Let us pretend to be optimistic like the ``reckoning masters''
+in the 15 and 16 hundreds. We already have a formula to compute
+the roots for polynomials of the first two degrees.
+It will certainly be easy to find formulas for the remaining
+(infinitely many) degrees. We can then define a function
+of the form:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{12E}{@{}l@{}}%
+\column{15}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{solve}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{0}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{1}\mathrel{=}\Varid{solve1}\;\Varid{p}{}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{2}\mathrel{=}\Varid{solve2}\;\Varid{p}{}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{3}\mathrel{=}\bot {}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{4}\mathrel{=}\bot {}\<[E]%
+\\
+\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
+\>[12]{}\mid {}\<[12E]%
+\>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{5}\mathrel{=}\bot {}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+and so on.
+With this optimism, our goal is to replace
+the \ensuremath{\bot } implementations by functions
+of the form \ensuremath{\Varid{solve3}}, \ensuremath{\Varid{solve4}}, \etc\
+We come back to this endevour in a later chapter.
+
 \section{Vieta's Formula}
 \section{Factoring Polynomials}
 \ignore{

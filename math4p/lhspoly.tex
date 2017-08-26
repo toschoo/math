@@ -4266,10 +4266,10 @@ and the one, when we take the negative root, \ie
 \frac{-b-\sqrt{b^2-4ac}}{2a}.
 \]
 
-However, when the expression squareroot is zero
-then there it makes difference whether we add
+However, when the squareroot is zero
+then it makes no difference whether we add
 or subtract. The squareroot becomes zero, when
-the expression  
+the expression
 $b^2-4ac$ is zero. So, when this expression
 is zero, there is only one root.
 
@@ -4418,9 +4418,50 @@ polynomials of the second degree:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\ignore {
-examples x2, x2 - 4, x^2 + 4, -x^2 - x + 1, x^2 + x - 1
-}
+When we call \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])},
+that is we solve the polynomial $x^2$,
+we get the root \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]}, which is one root
+as predicted.
+
+To solve the polynomial $x^2 + 4$, we call
+\ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])} and get \ensuremath{[\mskip1.5mu \mskip1.5mu]}; as predicted,
+this polynomials has no roots. 
+It is everywhere positive.
+
+The polynomial $x^2 - 4$, by contrast,
+shall have two roots. We call
+\ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])} and get \ensuremath{[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{2}\mskip1.5mu]}.
+When we check this by applying the polynomial
+to 2 and -2 like \ensuremath{\Varid{map}\;(\Varid{apply}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu]))\;[\mskip1.5mu \mathrm{2},\mathbin{-}\mathrm{2}\mskip1.5mu]},
+we get \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0}\mskip1.5mu]}.
+
+What about the polynomial $-x^2 - x + 1$, which
+we factored in the previous chapter?
+We try \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathbin{-}\mathrm{1},\mathbin{-}\mathrm{1}\mskip1.5mu])} and get
+
+\ensuremath{[\mskip1.5mu \mathbin{-}\mathrm{1.618033988749895},\mathrm{0.6180339887498949}\mskip1.5mu]},
+
+which is $-\Phi$ and $-\Psi$, just as we saw before.
+
+Which polynomial has the roots $\Phi$ and $\Psi$?
+Well, let us try:
+
+\ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\Varid{psi},\mathrm{1}\mskip1.5mu])}
+
+yields: 
+
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1.0},\mathbin{-}\mathrm{2.23606797749979},\mathrm{1.0}\mskip1.5mu]},
+
+which corresponds to $x^2 -\sqrt{5} + 1$.
+The coefficients in this result are
+1 for $x^2$, $-\sqrt{5}$ for $-\Phi - \Psi$
+and 1 for $(-\Phi)(-\Psi)$.
+
+What is the result for the ``simple''
+polynomial $x^2 + x + 1$?
+We try with \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])} and get
+\ensuremath{[\mskip1.5mu \mskip1.5mu]} -- the empty list.
+Indeed, $1^2 - 4\times 1\times 1$ is negative!
 
 Let us pretend to be optimistic like the ``reckoning masters''
 in the 15 and 16 hundreds. We already have a formula to compute

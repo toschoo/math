@@ -568,10 +568,10 @@ and the one, when we take the negative root, \ie
 \frac{-b-\sqrt{b^2-4ac}}{2a}.
 \]
 
-However, when the expression squareroot is zero
-then there it makes difference whether we add
+However, when the squareroot is zero
+then it makes no difference whether we add
 or subtract. The squareroot becomes zero, when
-the expression  
+the expression
 $b^2-4ac$ is zero. So, when this expression
 is zero, there is only one root.
 
@@ -662,9 +662,50 @@ polynomials of the second degree:
 \end{code}
 \end{minipage}
 
-\ignore {
-examples x2, x2 - 4, x^2 + 4, -x^2 - x + 1, x^2 + x - 1
-}
+When we call |solve2 (P [0,0,1])|,
+that is we solve the polynomial $x^2$,
+we get the root |[0]|, which is one root
+as predicted.
+
+To solve the polynomial $x^2 + 4$, we call
+|solve2 (P [4,0,1])| and get |[]|; as predicted,
+this polynomials has no roots. 
+It is everywhere positive.
+
+The polynomial $x^2 - 4$, by contrast,
+shall have two roots. We call
+|solve2 (P [-4,0,1])| and get |[2,-2]|.
+When we check this by applying the polynomial
+to 2 and -2 like |map (apply (P [-4,0,1])) [2,-2]|,
+we get |[0,0]|.
+
+What about the polynomial $-x^2 - x + 1$, which
+we factored in the previous chapter?
+We try |solve2 (P [1,-1,-1])| and get
+
+|[-1.618033988749895,0.6180339887498949]|,
+
+which is $-\Phi$ and $-\Psi$, just as we saw before.
+
+Which polynomial has the roots $\Phi$ and $\Psi$?
+Well, let us try:
+
+|mul (P [-phi,1]) (P [-psi,1])|
+
+yields: 
+
+|P [1.0,-2.23606797749979,1.0]|,
+
+which corresponds to $x^2 -\sqrt{5} + 1$.
+The coefficients in this result are
+1 for $x^2$, $-\sqrt{5}$ for $-\Phi - \Psi$
+and 1 for $(-\Phi)(-\Psi)$.
+
+What is the result for the ``simple''
+polynomial $x^2 + x + 1$?
+We try with |solve2 (P [1,1,1])| and get
+|[]| -- the empty list.
+Indeed, $1^2 - 4\times 1\times 1$ is negative!
 
 Let us pretend to be optimistic like the ``reckoning masters''
 in the 15 and 16 hundreds. We already have a formula to compute
