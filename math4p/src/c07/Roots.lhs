@@ -67,8 +67,8 @@ positive number depending on the signedness of the input value
 and that of the coefficient.
 The trivial polynomial $x^3$, for instance, is negative for
 negative values and positive for positive values. The slightly
-less trivial polynomial $x^3 + 9$ has its root at -3, while
-$x^3 - 9$ has its root at 3.
+less trivial polynomial $x^3 + 27$ has a root at 3, while
+$x^3 - 27$ has a root at -3.
 
 In summary, we can say that even polynomials do not necessarily
 have negative values and, hence, do not need to have a root.
@@ -76,7 +76,7 @@ Odd polynomials, on the other hand, usually have both, negative
 and positive values, and, hence, must have a root.
 
 Those are strong claims. They are true, because polynomials
-belong to a specific set of \term{functions}, 
+belong to a specific class of \term{functions}, 
 namely \term{continuous} functions.
 That, basically, means that they have no \emph{holes}, \ie\
 for any value $x$ of a certain number type there is a result $y$
@@ -96,7 +96,7 @@ the result grows much faster than the input -- but the growth
 is regular.
 
 These properties appear to be ``natural'' at the first sight.
-But there are functions that do not fulful these criteria.
+But there are functions that do not fulfil these criteria.
 In the next chapter, when we properly define the term \term{function},
 we will actually see functions with holes and jumps.
 
@@ -122,7 +122,7 @@ are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
 There are also polynomials with a quite confusing behaviour that
-make it hard to guess the roots, for instance, Wilkinson's polynomial
+make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
 
@@ -154,7 +154,7 @@ The first terms are
 x^{20} - 210x^{19} + 20615x^{18} - 1256850x^{17} \dots
 \]
 
-When we apply Wilkinson's polynomial to the integers $1\dots 10$, we see:
+When we apply Wilkinson's polynomial to the integers $1\dots 25$, we see:
 
 |0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2432902008176640000,|\\
 |51090942171709440000,562000363888803840000,4308669456480829440000,|\\
@@ -231,10 +231,12 @@ Here is an implementation:
 The function receives four arguments.
 The first is the polynomial.
 The second is a tolerance.
-When we reach a result that is smaller
-than the tolerance, we return the result.
+When, on applying the polynomial,
+we get a result that is smaller
+than the tolerance, we return the obtained $x$ value.
 $a$ and $b$ are the starting values.
 
+\begin{minipage}{\textwidth}
 We distinguish three cases:
 \begin{itemize}
 \item The result for the new value, $c$, 
@@ -248,6 +250,7 @@ We distinguish three cases:
       equals the sign of $b$. In this case,
       we replace $b$ by $c$.
 \end{itemize}
+\end{minipage}
 
 We try |bisect| on the polynomial $x^2$ with
 the initial guess $a=-1$ and $b=1$ (because we
@@ -360,7 +363,7 @@ of iterations.
 The function terminates when we have 
 reached either the intended precision or 
 the number of repetitions, $m$.
-Otherwise, we repeat with $m-1$ and with
+Otherwise, we repeat with $m-1$ and
 $a - \frac{\pi(a)}{\pi'(a)}$.
 
 For the polynomial $x^2 - 4$, we call first
@@ -432,13 +435,13 @@ of Wilkinson's polynomial.
 
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
-the next section to its study. Anyway, what
+some of the next sections to its study. Anyway, what
 algebraists did for centuries was to find
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
 than 5. For higher degrees, there are no such
-formulas. This dicovery is perhaps much more
+formulas. This discovery is perhaps much more
 important than the single formulas developed
 over the centuries for polynomials of the first
 four degrees. In fact, the concepts that led
@@ -450,7 +453,241 @@ cannot be general formulas for solving polynomials
 of higher degrees, we need to understand polynomials
 much better. First, we will look at the formula
 to solve polynomials of the second degree.
-Note that we skip the first degree, since 
-finding the roots of polynomials
-of the first degree is just solving linear
-equations.
+
+Polynomials of the first degree are just 
+linear equations of the form
+
+\begin{equation}
+ax + b = 0.
+\end{equation}
+
+We can easily solve by subtracting $b$ and dividing
+by $a$:
+
+\begin{equation}
+x = -\frac{b}{a}.
+\end{equation}
+
+In Haskell, this is just:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  solve1 :: (Num a, Fractional a) => Poly a -> [a]
+  solve1 (P [b,a]) = [-b/a]
+\end{code}
+\end{minipage}
+
+Note the order of $a$ and $b$ in the definition of the polynomial.
+This is consistent with the equation we gave above,
+since, in our definition of polynomials in Haskell,
+the head of the list of the coefficients is the coefficient
+of $x^0$.
+
+Polynomials of the second degree can be solved with a technique
+we already used in the previous chapter, namely
+\term{completing the square}. We will now apply this technique
+on symbols and, as a result, will obtain a formula that can
+be applied on all polynomials of the second degree.
+We start with the equation
+
+\begin{equation}
+ax^2 + bx + c = 0.
+\end{equation}
+
+We subtract $c$ and divide by $a$ obtaining:
+
+\begin{equation}
+x^2 + \frac{b}{a}x = -\frac{c}{a}.
+\end{equation}
+
+Now, we want to get a binomial formula on the left-hand side
+of the equation. A binomial formula has the form:
+
+\begin{equation}
+(\alpha + \beta)^2 = \alpha^2 + 2\alpha\beta + \beta^2.
+\end{equation}
+
+When we set $\alpha = x$, we have on the right-hand side:
+
+\[
+x^2 + 2\beta x + \beta^2.
+\]
+
+In our equation, we see the term $\frac{b}{a}x$ at the position
+where, here, we have $2\beta x$.
+We, therefore, have $\frac{b}{a} = 2\beta$ 
+and $\beta = \frac{b}{2a}$.
+The missing term, hence, is 
+$(\frac{b}{2a})^2 = \frac{b^2}{4a^2}$.
+We add this term to both sides of the equation:
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = -\frac{c}{a} + \frac{b^2}{4a^2}.
+\end{equation}
+
+We can simplify the right-hand side of the equation a bit:
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = \frac{b^2-4ac}{4a^2}.
+\end{equation}
+
+To get rid of all the squares, we now take the squareroot
+on both sides of the equation. Since we have a binomial
+formula on the left-hand side, we get:
+
+\begin{equation}
+x + \frac{b}{2a} = \frac{\pm\sqrt{b^2-4ac}}{2a}.
+\end{equation}
+
+When we solve this equation for $x$, we get
+
+\begin{equation}
+x = \frac{-b \pm\sqrt{b^2-4ac}}{2a}.
+\end{equation}
+
+Voilà, this is the formula for solving polynomials of
+the second degree.
+
+We immediately see that polynomials with rational coefficients
+may have irrational roots, because the solution involves
+a squareroot, which leads either to an integer or
+an irrational number.
+
+We also see that polynomials of the second degree
+may have two roots, namely the result of the expression
+on the right-hand side, when we take the positive root,
+\ie\ 
+
+\[
+\frac{-b+\sqrt{b^2-4ac}}{2a},
+\]
+
+and the one, when we take the negative root, \ie
+
+\[
+\frac{-b-\sqrt{b^2-4ac}}{2a}.
+\]
+
+However, when the expression squareroot is zero
+then there it makes difference whether we add
+or subtract. The squareroot becomes zero, when
+the expression  
+$b^2-4ac$ is zero. So, when this expression
+is zero, there is only one root.
+
+But there is one more thing:
+When the expression $b^2-4ac$ is negative,
+then we will try to take a squareroot from
+a negative term and that is not defined,
+since a number multiplied by itself is always
+positive, independent of that number itself being
+positive or negative.
+
+Well, it is not defined for \emph{real} numbers.
+When we assume that $\sqrt{-1}$
+is actually a legal expression, we could
+\term{extend} the field of the real numbers
+to another, more complex field that
+includes this beast. 
+We have already looked at how to extend fields
+in the previous chapter and we will indeed
+do this extension for $\mathbb{R}$ to create
+the \term{complex numbers}, $\mathbb{C}$.
+In that field, polynomials of the second degree
+always have 1 or 2 solutions.
+But, again, first steps first.
+
+The expression $b^2-4ac$ is called the
+\term{discriminant} of the polynomial,
+because it describes how many roots
+there are: 2, 1 or (in $\mathbb{R}$) none.
+The discriminant for polynomials
+with real coefficients
+may be implemented in Haskell as follows:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  dis :: Poly RealN -> RealN
+  dis (P [c,b,a]) = b^2 - 4*a*c
+\end{code}
+\end{minipage}
+
+On top of this we implement a \term{root counter}:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  countRoots :: Poly Double -> Int
+  countRoots p  |  dis p > 0  = 2
+                |  dis p < 0  = 0
+                |  otherwise  = 1
+\end{code}
+\end{minipage}
+
+The polynomial $x^2 + 4$, for instance,
+has no roots in $\mathbb{R}$, since
+
+|countRoots (P [4,0,1])|
+
+gives 0.
+Indeed $0^2 - 4\times 1\times 4$ is negative.
+
+The polynomial $x^2 - 4$, by contrast has
+
+|countRoots (P [-4,0,1])|,
+
+2 roots.
+Indeed, $0^2 - (4\times 1\times -4)$ is
+$0 + 16$ and, hence, positive.
+
+The polynomial $x^2$ has 1 root,
+since
+
+|countRoots (P [0,0,1])|
+
+is 1.
+Indeed, $0^2 - 4\times 1 \times 0$ is 0.
+
+We finally implement the solution for
+polynomials of the second degree:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  solve2 :: Poly Double -> [Double]
+  solve2 p@(P [c,b,a])  |  dis p < 0  = []
+                        |  x1 /= x2   = [x1,x2]
+                        |  otherwise  = [x1]
+    where  d   = sqrt (dis p)
+           x1  = (-b + d) / 2*a
+           x2  = (-b - d) / 2*a
+\end{code}
+\end{minipage}
+
+\ignore {
+examples x2, x2 - 4, x^2 + 4, -x^2 - x + 1, x^2 + x - 1
+}
+
+Let us pretend to be optimistic like the ``reckoning masters''
+in the 15 and 16 hundreds. We already have a formula to compute
+the roots for polynomials of the first two degrees.
+It will certainly be easy to find formulas for the remaining
+(infinitely many) degrees. We can then define a function
+of the form:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  solve :: Poly Double -> [Double]
+  solve p  |  degree p == 0 = []
+  solve p  |  degree p == 1 = solve1 p
+  solve p  |  degree p == 2 = solve2 p
+  solve p  |  degree p == 3 = undefined
+  solve p  |  degree p == 4 = undefined
+  solve p  |  degree p == 5 = undefined
+\end{code}
+\end{minipage}
+
+and so on.
+With this optimism, our goal is to replace
+the |undefined| implementations by functions
+of the form |solve3|, |solve4|, \etc\
+We come back to this endevour in a later chapter.
+

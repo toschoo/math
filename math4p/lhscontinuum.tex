@@ -5246,6 +5246,28 @@ binomial coefficients of the form:
 F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
 \end{equation}
 
+which can be implemented in Haskell as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{bifi}\mathbin{::}\Conid{Natural}\to \Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{bifi}\;\mathrm{0}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{bifi}\;\Varid{n}\mathrel{=}\Varid{sum}\;[\mskip1.5mu \Varid{choose}\;(\Varid{n}\mathbin{-}\Varid{k}\mathbin{-}\mathrm{1})\;\Varid{k}\mid \Varid{k}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n2}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{n2}\mathrel{=}(\Varid{n}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 Well, that leads us into deep water.
 A much more direct try to explain 
 how the golden ratio and

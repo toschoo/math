@@ -830,17 +830,24 @@ where
               _ -> error "I don't know how to solve this polynomial"
 
   solvel :: (Num a,Fractional a) => Poly a -> [a]
-  solvel (P [a,b]) = [-b/a]
+  solvel (P [b,a]) = [-b/a]
   solvel _         = error "oops!"
 
   solve2 :: Poly Double -> [Double]
-  solve2 (P [a,b,c]) | det < 0   = []
-                     | otherwise = let d  = sqrt det
-                                       x1 = (-b + d) / 2*a
-                                       x2 = (-b - d) / 2*a
-                        in if x1 /= x2 then [x1,x2] else [x1]
-    where det = b^2 - 4*a*c 
-  solve2 _           = error "oops!"
+  solve2 p@(P [c,b,a]) | dis p < 0 = []
+                       | x1 /= x2  = [x1,x2]
+                       | otherwise = [x1]
+    where d  = sqrt (dis p)
+          x1 = (-b + d) / 2*a
+          x2 = (-b - d) / 2*a
+
+  dis :: Poly Double -> Double
+  dis (P [c,b,a]) = b^2 - 4*a*c
+
+  countRoots :: Poly Double -> Int
+  countRoots p | dis p > 0 = 2
+               | dis p < 0 = 0
+               | otherwise = 1
 
   -- not correct...
   {-

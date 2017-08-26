@@ -4,6 +4,7 @@ where
   import Data.List (foldl')
   import Debug.Trace (trace)
   import Text.Printf
+  import qualified Binom as B
 
   ------------------------------------------------------------------------
   -- Naive fibonacci
@@ -79,6 +80,13 @@ where
 
   g' :: Double -> Double
   g' x = (1/(sqrt 5)) * (1/(1-x*phi) - 1/(1-x*phi'))
+
+  ------------------------------------------------------------------------
+  -- Binomial Fib
+  ------------------------------------------------------------------------
+  bifi :: Integer -> Integer
+  bifi n = sum [B.choose (n-k-1) k | k <- [0..n2]]
+    where n2 = (n-1) `div` 2
 
   ------------------------------------------------------------------------
   -- Write a program that shows the coefficients for

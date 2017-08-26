@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  19 AUG 2017 18:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  26 AUG 2017 14:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1576,23 +1576,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 3767--3771
  [41] [42]
 \openout3 = `lhspoly.ptb'.
 
- [43] [44] [45] [46]
+ [43] [44]
+\openout3 = `lhspoly.ptb'.
+
+ [45]
+(/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
+File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
+) [46]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [47] [48] [49] [50]
+ [47]
 \openout3 = `lhspoly.ptb'.
 
- [51]
-Underfull \hbox (badness 10000) in paragraph at lines 4849--4850
+ [48]
+[49]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [50]
+\openout3 = `lhspoly.ptb'.
+
+ [51] [52] [53] [54]
+\openout3 = `lhspoly.ptb'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5178--5179
 
  []
 
-[52]
-Underfull \hbox (badness 10000) in paragraph at lines 4869--4870
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 5198--5199
 
  []
 
@@ -1600,13 +1618,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 4869--4870
 
 \openout3 = `lhspoly.ptb'.
 
-[53] [54] [55] [56]
+[56] [57] [58] [59]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [57]
-Overfull \hbox (44.6902pt too wide) in paragraph at lines 5326--5331
+ [60]
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 5655--5660
 \OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
 ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
 10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
@@ -1616,20 +1634,20 @@ m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML
 0.95 1 ])$
  []
 
-[58] [59] [60]
+[61] [62] [63]
 \openout3 = `lhspoly.ptb'.
 
- [61]
+ [64]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [62] [63] (./lhspoly.aux) ) 
+ [65] [66] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 35184 strings out of 493029
- 845851 string characters out of 6136234
- 1035064 words of memory out of 5000000
- 38208 multiletter control sequences out of 15000+600000
+ 35687 strings out of 493029
+ 851107 string characters out of 6136234
+ 1034064 words of memory out of 5000000
+ 38708 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,10n,99p,10373b,649s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1650,10 +1668,10 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (63 pages, 352265 bytes).
+Output written on lhspoly.pdf (66 pages, 362734 bytes).
 PDF statistics:
- 279 PDF objects out of 1000 (max. 8388607)
- 195 compressed objects within 2 object streams
+ 289 PDF objects out of 1000 (max. 8388607)
+ 201 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

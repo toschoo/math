@@ -776,6 +776,17 @@ binomial coefficients of the form:
 F_n = \sum_{k=0}^{\frac{n-1}{2}}{\binom{n-k-1}{k}}
 \end{equation}
 
+which can be implemented in Haskell as
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  bifi :: Natural -> Natural
+  bifi 0 = 0
+  bifi n = sum [choose (n-k-1) k | k <- [0..n2]]
+    where n2 = (n-1) `div` 2
+\end{code}
+\end{minipage}
+
 Well, that leads us into deep water.
 A much more direct try to explain 
 how the golden ratio and

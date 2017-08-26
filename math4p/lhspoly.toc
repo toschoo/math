@@ -6,8 +6,8 @@
 \contentsline {section}{\numberline {1.4}Differences and Binomial Coefficients}{29}
 \contentsline {section}{\numberline {1.5}Umbral Calculus}{38}
 \contentsline {section}{\numberline {1.6}Roots}{38}
-\contentsline {section}{\numberline {1.7}Vieta's Formula}{45}
-\contentsline {section}{\numberline {1.8}Factoring Polynomials}{45}
-\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{49}
-\contentsline {section}{\numberline {1.10}Hensel Lifting}{63}
-\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{63}
+\contentsline {section}{\numberline {1.7}Vieta's Formula}{48}
+\contentsline {section}{\numberline {1.8}Factoring Polynomials}{48}
+\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{52}
+\contentsline {section}{\numberline {1.10}Hensel Lifting}{66}
+\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{66}

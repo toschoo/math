@@ -10,6 +10,6 @@
 \contentsline {section}{\numberline {1.8}Real Factorials}{25}
 \contentsline {section}{\numberline {1.9}The Stern-Brocot Tree}{32}
 \contentsline {section}{\numberline {1.10}The Closed Form of the Fibonacci Sequence}{41}
-\contentsline {section}{\numberline {1.11}Field Extension}{53}
+\contentsline {section}{\numberline {1.11}Field Extension}{54}
 \contentsline {section}{\numberline {1.12}The Continuum}{64}
 \contentsline {section}{\numberline {1.13}Review of the Number Zoo}{67}
