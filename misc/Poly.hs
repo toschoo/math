@@ -5,7 +5,7 @@
 module Poly
 where
 
-  import           Data.List (nub,foldl')
+  import           Data.List (nub,foldl',sortBy,groupBy)
   import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Control.Concurrent
@@ -819,19 +819,21 @@ where
 
   -------------------------------------------------------------------------
   -- Vietà's Formulas
+  -------------------
+  -- 1) create the powerset of the roots
+  -- 2) sort them by size
+  -- 3) drop the first (the empty set)
+  -- 4) group sets of equal length
+  -- 5) build the products of each group
+  -- 6) sum them
   -------------------------------------------------------------------------
-  {-
   vieta :: [Double] -> [Double]
-  vieta rs = go 0
-    where go n | n == l    = []
-               | otherwise = f n (sympoly rs n) rs : go (n+1)
-          l = length rs
-          f _ _ [] = 0
-          f _ [] _ = 0
-          f i (s:ss) xs = let r = sum [s * x | x <- (drop i xs)]
-                           in if i == 0 then r
-                                        else r + f i ss (drop i xs)
-  -}
+  vieta = c . g . d . s . Perm.ps
+    where d   = drop 1
+          g   = groupBy (\x y -> length x == length y)
+          s   = sortBy (\x y -> length x `compare` length y)
+          c p = [(-1)^n * sum (map product x) | (x,n) <- zip p [0..]] 
+          
  
   -------------------------------------------------------------------------
   -- Solving equations
