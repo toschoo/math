@@ -755,7 +755,7 @@ where
   -------------------------------------------------------------------------
   -- Talyor Series (real numbers)
   -------------------------------------------------------------------------
-  taylor :: Integer -> Double -> Poly Double  -> Poly Double 
+  taylor :: (Show a, Fractional a, Real a) => Integer -> a -> Poly a -> Poly a
   taylor i a = go 0
     where go n f | n == i = P [0]
                  | otherwise = 
@@ -818,7 +818,7 @@ where
   wilkinson = prodp mul [P [-i,1] | i <- [1..20]]
 
   -------------------------------------------------------------------------
-  -- Vietà's Formulas
+  -- Vieta's Formulas
   -------------------
   -- 1) create the powerset of the roots
   -- 2) sort them by size
@@ -826,8 +826,9 @@ where
   -- 4) group sets of equal length
   -- 5) build the products of each group
   -- 6) sum them
+  -- 7) multiply them by (-1)^n
   -------------------------------------------------------------------------
-  vieta :: [Double] -> [Double]
+  vieta :: (Real a) => [a] -> [a]
   vieta = c . g . d . s . Perm.ps
     where d   = drop 1
           g   = groupBy (\x y -> length x == length y)
@@ -838,7 +839,7 @@ where
   -------------------------------------------------------------------------
   -- Solving equations
   -------------------------------------------------------------------------
-  solve :: Poly Double -> [Double]
+  solve :: (Real a, Floating a, Fractional a) => Poly a -> [a]
   solve p = case degree p of
               0 -> coeffs p
               1 -> solvel p
@@ -850,7 +851,7 @@ where
   solvel :: (Num a,Fractional a) => Poly a -> [a]
   solvel (P [b,a]) = [-b/a]
 
-  solve2 :: Poly Double -> [Double]
+  solve2 :: (Real a, Floating a, Fractional a) => Poly a -> [a]
   solve2 p@(P [c,b,a]) | dis p < 0 = []
                        | x1 /= x2  = [x1,x2]
                        | otherwise = [x1]
@@ -858,10 +859,10 @@ where
           x1 = (-b + d) / 2*a
           x2 = (-b - d) / 2*a
 
-  dis :: Poly Double -> Double
+  dis :: (Num a) => Poly a -> a 
   dis (P [c,b,a]) = b^2 - 4*a*c
 
-  countRoots :: Poly Double -> Int
+  countRoots :: (Num a, Ord a) => Poly a -> Int
   countRoots p | dis p > 0 = 2
                | dis p < 0 = 0
                | otherwise = 1

@@ -56,7 +56,7 @@ namely when they have terms with negative coefficients that,
 for smaller numbers,
 result in numbers that are greater than those resulting from
 the term of highest degree. 
-The polynomial $x^2 - 4$, for instance, is negative
+The polynomial $x^2 - 4$, once again, is negative
 in the interval $]-2\dots 2[$. It, therefore, must have two roots:
 one at -2, where the polynomial results become negative, and the other at 2,
 where the polynomial results become positive again.
@@ -67,8 +67,8 @@ positive number depending on the signedness of the input value
 and that of the coefficient.
 The trivial polynomial $x^3$, for instance, is negative for
 negative values and positive for positive values. The slightly
-less trivial polynomial $x^3 + 27$ has a root at 3, while
-$x^3 - 27$ has a root at -3.
+less trivial polynomial $x^3 + 27$ has a root at -3, while
+$x^3 - 27$ has a root at 3.
 
 In summary, we can say that even polynomials do not necessarily
 have negative values and, hence, do not need to have a root.
@@ -111,7 +111,7 @@ the result is in the same base set, too.
 
 Furthermore, the form of polynomials guarantees that they develop
 in a certain way. For very large numbers (negative or positive), 
-it is the term with the greatest exponents, \ie\ the degree 
+it is the term with the greatest exponent, \ie\ the degree 
 of the polynomial, that most significantly determines the
 outcome, that is, the result for very large numbers
 approaches the result for the term with the largest exponent. 
@@ -426,12 +426,11 @@ is zero, then the whole product becomes zero.
 For the root problem, this means that, 
 when we have the factors, we can find a value
 for $x$, so that any of the factors becomes zero
-and this value is then a root, because it makes
-the product and, as such, the whole polynomial zero.
+and this value is then a root.
 Any integer in the range $[1\dots 20]$ would make
 one of the factors of Wilkinson's polynomial zero.
 The integers $[1\dots 20]$ are therefore the roots
-of Wilkinson's polynomial.
+of this polynomial.
 
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
@@ -472,7 +471,7 @@ In Haskell, this is just:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  solve1 :: (Num a, Fractional a) => Poly a -> [a]
+  solve1 :: (Fractional a) => Poly a -> [a]
   solve1 (P [b,a]) = [-b/a]
 \end{code}
 \end{minipage}
@@ -487,7 +486,7 @@ Polynomials of the second degree can be solved with a technique
 we already used in the previous chapter, namely
 \term{completing the square}. We will now apply this technique
 on symbols and, as a result, will obtain a formula that can
-be applied on all polynomials of the second degree.
+be applied on any polynomial of second degree.
 We start with the equation
 
 \begin{equation}
@@ -531,7 +530,7 @@ We can simplify the right-hand side of the equation a bit:
 x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = \frac{b^2-4ac}{4a^2}.
 \end{equation}
 
-To get rid of all the squares, we now take the squareroot
+To get rid of all the squares, we now take the square root
 on both sides of the equation. Since we have a binomial
 formula on the left-hand side, we get:
 
@@ -550,7 +549,7 @@ the second degree.
 
 We immediately see that polynomials with rational coefficients
 may have irrational roots, because the solution involves
-a squareroot, which leads either to an integer or
+a square root, which leads either to an integer or
 an irrational number.
 
 We also see that polynomials of the second degree
@@ -568,16 +567,16 @@ and the one, when we take the negative root, \ie
 \frac{-b-\sqrt{b^2-4ac}}{2a}.
 \]
 
-However, when the squareroot is zero
+However, when the square root is zero
 then it makes no difference whether we add
-or subtract. The squareroot becomes zero, when
+or subtract. The square root becomes zero, when
 the expression
 $b^2-4ac$ is zero. So, when this expression
 is zero, there is only one root.
 
 But there is one more thing:
 When the expression $b^2-4ac$ is negative,
-then we will try to take a squareroot from
+then we will try to take a square root from
 a negative term and that is not defined,
 since a number multiplied by itself is always
 positive, independent of that number itself being
@@ -599,7 +598,7 @@ But, again, first steps first.
 
 The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
-because it describes how many roots
+because it determines how many roots
 there are: 2, 1 or (in $\mathbb{R}$) none.
 The discriminant for polynomials
 with real coefficients
@@ -607,7 +606,7 @@ may be implemented in Haskell as follows:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  dis :: Poly RealN -> RealN
+  dis :: (Num a) => Poly a -> a
   dis (P [c,b,a]) = b^2 - 4*a*c
 \end{code}
 \end{minipage}
@@ -616,7 +615,7 @@ On top of this we implement a \term{root counter}:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  countRoots :: Poly Double -> Int
+  countRoots :: (Num a, Ord a) => Poly a -> Int
   countRoots p  |  dis p > 0  = 2
                 |  dis p < 0  = 0
                 |  otherwise  = 1
@@ -636,7 +635,7 @@ The polynomial $x^2 - 4$, by contrast has
 |countRoots (P [-4,0,1])|,
 
 2 roots.
-Indeed, $0^2 - (4\times 1\times -4)$ is
+Indeed, $0^2 - 4\times 1\times -4$ is
 $0 + 16$ and, hence, positive.
 
 The polynomial $x^2$ has 1 root,
@@ -652,7 +651,7 @@ polynomials of the second degree:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  solve2 :: Poly Double -> [Double]
+  solve2 :: (Floating a, Fractional a, Real a) => Poly a -> [a]
   solve2 p@(P [c,b,a])  |  dis p < 0  = []
                         |  x1 /= x2   = [x1,x2]
                         |  otherwise  = [x1]
@@ -697,8 +696,8 @@ yields:
 |P [1.0,-2.23606797749979,1.0]|,
 
 which corresponds to $x^2 -\sqrt{5} + 1$.
-The coefficients in this result are
-1 for $x^2$, $-\sqrt{5}$ for $-\Phi - \Psi$
+The coefficients are
+1 for $x^2$, $-\sqrt{5}$ for $(-\Phi-\Psi)x$
 and 1 for $(-\Phi)(-\Psi)$.
 
 What is the result for the ``simple''
@@ -716,7 +715,7 @@ of the form:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  solve :: Poly Double -> [Double]
+  solve :: (Fractional a, Floating a, Real a) => Poly a -> [a]
   solve p  |  degree p == 0 = []
   solve p  |  degree p == 1 = solve1 p
   solve p  |  degree p == 2 = solve2 p

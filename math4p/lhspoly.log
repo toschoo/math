@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  26 AUG 2017 15:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  27 AUG 2017 14:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1604,12 +1604,12 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 \openout3 = `lhspoly.ptb'.
 
  [55]
-Underfull \hbox (badness 10000) in paragraph at lines 5219--5220
+Underfull \hbox (badness 10000) in paragraph at lines 5218--5219
 
  []
 
 [56]
-Underfull \hbox (badness 10000) in paragraph at lines 5239--5240
+Underfull \hbox (badness 10000) in paragraph at lines 5238--5239
 
  []
 
@@ -1623,7 +1623,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 5239--5240
 \openout3 = `lhspoly.ptb'.
 
  [61]
-Overfull \hbox (44.6902pt too wide) in paragraph at lines 5696--5701
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 5695--5700
 \OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
 ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
 10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
@@ -1667,7 +1667,7 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (67 pages, 365186 bytes).
+Output written on lhspoly.pdf (67 pages, 365161 bytes).
 PDF statistics:
  293 PDF objects out of 1000 (max. 8388607)
  204 compressed objects within 3 object streams

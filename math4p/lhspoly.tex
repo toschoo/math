@@ -3651,7 +3651,7 @@ namely when they have terms with negative coefficients that,
 for smaller numbers,
 result in numbers that are greater than those resulting from
 the term of highest degree. 
-The polynomial $x^2 - 4$, for instance, is negative
+The polynomial $x^2 - 4$, once again, is negative
 in the interval $]-2\dots 2[$. It, therefore, must have two roots:
 one at -2, where the polynomial results become negative, and the other at 2,
 where the polynomial results become positive again.
@@ -3662,8 +3662,8 @@ positive number depending on the signedness of the input value
 and that of the coefficient.
 The trivial polynomial $x^3$, for instance, is negative for
 negative values and positive for positive values. The slightly
-less trivial polynomial $x^3 + 27$ has a root at 3, while
-$x^3 - 27$ has a root at -3.
+less trivial polynomial $x^3 + 27$ has a root at -3, while
+$x^3 - 27$ has a root at 3.
 
 In summary, we can say that even polynomials do not necessarily
 have negative values and, hence, do not need to have a root.
@@ -3706,7 +3706,7 @@ the result is in the same base set, too.
 
 Furthermore, the form of polynomials guarantees that they develop
 in a certain way. For very large numbers (negative or positive), 
-it is the term with the greatest exponents, \ie\ the degree 
+it is the term with the greatest exponent, \ie\ the degree 
 of the polynomial, that most significantly determines the
 outcome, that is, the result for very large numbers
 approaches the result for the term with the largest exponent. 
@@ -4117,12 +4117,11 @@ is zero, then the whole product becomes zero.
 For the root problem, this means that, 
 when we have the factors, we can find a value
 for $x$, so that any of the factors becomes zero
-and this value is then a root, because it makes
-the product and, as such, the whole polynomial zero.
+and this value is then a root.
 Any integer in the range $[1\dots 20]$ would make
 one of the factors of Wilkinson's polynomial zero.
 The integers $[1\dots 20]$ are therefore the roots
-of Wilkinson's polynomial.
+of this polynomial.
 
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
@@ -4167,7 +4166,7 @@ In Haskell, this is just:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{solve1}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Fractional}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{solve1}\mathbin{::}(\Conid{Fractional}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{solve1}\;(\Conid{P}\;[\mskip1.5mu \Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}[\mskip1.5mu \mathbin{-}\Varid{b}\mathbin{/}\Varid{a}\mskip1.5mu]{}\<[E]%
 \ColumnHook
@@ -4185,7 +4184,7 @@ Polynomials of the second degree can be solved with a technique
 we already used in the previous chapter, namely
 \term{completing the square}. We will now apply this technique
 on symbols and, as a result, will obtain a formula that can
-be applied on all polynomials of the second degree.
+be applied on any polynomial of second degree.
 We start with the equation
 
 \begin{equation}
@@ -4229,7 +4228,7 @@ We can simplify the right-hand side of the equation a bit:
 x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = \frac{b^2-4ac}{4a^2}.
 \end{equation}
 
-To get rid of all the squares, we now take the squareroot
+To get rid of all the squares, we now take the square root
 on both sides of the equation. Since we have a binomial
 formula on the left-hand side, we get:
 
@@ -4248,7 +4247,7 @@ the second degree.
 
 We immediately see that polynomials with rational coefficients
 may have irrational roots, because the solution involves
-a squareroot, which leads either to an integer or
+a square root, which leads either to an integer or
 an irrational number.
 
 We also see that polynomials of the second degree
@@ -4266,16 +4265,16 @@ and the one, when we take the negative root, \ie
 \frac{-b-\sqrt{b^2-4ac}}{2a}.
 \]
 
-However, when the squareroot is zero
+However, when the square root is zero
 then it makes no difference whether we add
-or subtract. The squareroot becomes zero, when
+or subtract. The square root becomes zero, when
 the expression
 $b^2-4ac$ is zero. So, when this expression
 is zero, there is only one root.
 
 But there is one more thing:
 When the expression $b^2-4ac$ is negative,
-then we will try to take a squareroot from
+then we will try to take a square root from
 a negative term and that is not defined,
 since a number multiplied by itself is always
 positive, independent of that number itself being
@@ -4297,7 +4296,7 @@ But, again, first steps first.
 
 The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
-because it describes how many roots
+because it determines how many roots
 there are: 2, 1 or (in $\mathbb{R}$) none.
 The discriminant for polynomials
 with real coefficients
@@ -4309,7 +4308,7 @@ may be implemented in Haskell as follows:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{dis}\mathbin{::}\Conid{Poly}\;\Conid{RealN}\to \Conid{RealN}{}\<[E]%
+\>[3]{}\Varid{dis}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}\Varid{b}\mathbin{\uparrow}\mathrm{2}\mathbin{-}\mathrm{4}\mathbin{*}\Varid{a}\mathbin{*}\Varid{c}{}\<[E]%
 \ColumnHook
@@ -4329,7 +4328,7 @@ On top of this we implement a \term{root counter}:
 \column{20}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{31}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{countRoots}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to \Conid{Int}{}\<[E]%
+\>[3]{}\Varid{countRoots}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Int}{}\<[E]%
 \\
 \>[3]{}\Varid{countRoots}\;\Varid{p}{}\<[17]%
 \>[17]{}\mid {}\<[17E]%
@@ -4361,7 +4360,7 @@ The polynomial $x^2 - 4$, by contrast has
 \ensuremath{\Varid{countRoots}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{4},\mathrm{0},\mathrm{1}\mskip1.5mu])},
 
 2 roots.
-Indeed, $0^2 - (4\times 1\times -4)$ is
+Indeed, $0^2 - 4\times 1\times -4$ is
 $0 + 16$ and, hence, positive.
 
 The polynomial $x^2$ has 1 root,
@@ -4388,7 +4387,7 @@ polynomials of the second degree:
 \column{28}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{39}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{solve2}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{solve2}\mathbin{::}(\Conid{Floating}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Real}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{solve2}\;\Varid{p}\mathord{@}(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu]){}\<[25]%
 \>[25]{}\mid {}\<[25E]%
@@ -4453,8 +4452,8 @@ yields:
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1.0},\mathbin{-}\mathrm{2.23606797749979},\mathrm{1.0}\mskip1.5mu]},
 
 which corresponds to $x^2 -\sqrt{5} + 1$.
-The coefficients in this result are
-1 for $x^2$, $-\sqrt{5}$ for $-\Phi - \Psi$
+The coefficients are
+1 for $x^2$, $-\sqrt{5}$ for $(-\Phi-\Psi)x$
 and 1 for $(-\Phi)(-\Psi)$.
 
 What is the result for the ``simple''
@@ -4479,7 +4478,7 @@ of the form:
 \column{12E}{@{}l@{}}%
 \column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{solve}\mathbin{::}\Conid{Poly}\;\Conid{Double}\to [\mskip1.5mu \Conid{Double}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{solve}\mathbin{::}(\Conid{Fractional}\;\Varid{a},\Conid{Floating}\;\Varid{a},\Conid{Real}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
