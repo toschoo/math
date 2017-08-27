@@ -11,6 +11,7 @@
 \section{Roots}
 %include Roots.lhs
 \section{Vieta's Formula}
+%include Vieta.lhs
 \section{Factoring Polynomials}
 %include PolyFactor.lhs
 \section{Factoring Polynomials in a finite Field}

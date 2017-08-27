@@ -4515,6 +4515,81 @@ of the form \ensuremath{\Varid{solve3}}, \ensuremath{\Varid{solve4}}, \etc\
 We come back to this endevour in a later chapter.
 
 \section{Vieta's Formula}
+\ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Vieta}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Roots}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+\ignore{
+- previous chapter we saw (x - phi)(x - psi) leads to
+  1x + (-phi-psi)x + (-phi)(-psi)
+- also: (x+2)(x-2)
+  1x + (2-2)x + -2*2
+- indeed, this is a kind of generalised binomial theorem:
+  instead of (x+a)(x+a) -> 1 2ax aa,
+  we have    (x+a)(x+b) -> 1 (a+b)x ab
+- role of "a", i.e. the coefficient of the highest degree
+- role of negation
+- once again, everything boils down to the possible combinations
+  of factors in multiplication...
+- (x+a)(x+b)(x+c)
+  xxx + xxc + xxb + xbc + axx + axc + ...
+- elementary symmetric polynomials
+  => all possible distinct combinations
+- this is the powerset (without the empty set)
+- each "type" (defined by size of the set) is sum'd up
+- implementation
+- Lagrange's formula
+}
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{vieta}\mathbin{::}(\Conid{Real}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{vieta}\mathrel{=}\Varid{c}\mathbin{\circ}\Varid{g}\mathbin{\circ}\Varid{d}\mathbin{\circ}\Varid{s}\mathbin{\circ}\Varid{\Conid{Perm}.ps}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{d}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{drop}\;\mathrm{1}{}\<[E]%
+\\
+\>[12]{}\Varid{g}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{groupBy}\;(\lambda \Varid{x}\;\Varid{y}\to \Varid{length}\;\Varid{x}\equiv \Varid{length}\;\Varid{y}){}\<[E]%
+\\
+\>[12]{}\Varid{s}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}\Varid{sortBy}\;(\lambda \Varid{x}\;\Varid{y}\to \Varid{length}\;\Varid{x}\mathbin{`\Varid{compare}`}\Varid{length}\;\Varid{y}){}\<[E]%
+\\
+\>[12]{}\Varid{c}\;\Varid{p}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}[\mskip1.5mu (\mathbin{-}\mathrm{1})\mathbin{\uparrow}\Varid{n}\mathbin{*}\Varid{sum}\;(\Varid{map}\;\Varid{product}\;\Varid{x})\mid (\Varid{x},\Varid{n})\leftarrow \Varid{zip}\;\Varid{p}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 \section{Factoring Polynomials}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(

@@ -75,6 +75,7 @@ ALL	 = cmds.tex \
 	   src/c07/DiffBinom.lhs \
 	   src/c07/FacPoly.lhs \
 	   src/c07/Roots.lhs \
+	   src/c07/Vieta.lhs \
 	   src/c07/PolyFactor.lhs \
 	   src/c07/PolyModFactor.lhs \
 	   src/c07/HenselLifting.lhs \
