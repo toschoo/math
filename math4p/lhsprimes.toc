@@ -1,0 +1,14 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Primes}{2}
+\contentsline {section}{\numberline {1.1}Gaps}{2}
+\contentsline {section}{\numberline {1.2}Finding Primes}{4}
+\contentsline {section}{\numberline {1.3}The fundamental Theorem of Arithmetic}{9}
+\contentsline {section}{\numberline {1.4}Factoring}{13}
+\contentsline {section}{\numberline {1.5}Factoring Factorials}{18}
+\contentsline {section}{\numberline {1.6}Arithmetic modulo a Prime}{20}
+\contentsline {section}{\numberline {1.7}Congruence}{32}
+\contentsline {section}{\numberline {1.8}Quadratic Residues}{38}
+\contentsline {section}{\numberline {1.9}Generators and Subgroups}{50}
+\contentsline {section}{\numberline {1.10}Primality Tests}{57}
+\contentsline {section}{\numberline {1.11}Primes in Cryptography}{66}
+\contentsline {section}{\numberline {1.12}Open Problems}{77}

@@ -206,7 +206,7 @@ is not feasible for large numbers.
 
 The next bunch of ideas 
 would use an implication of that fact,
-such as the \term{freshman's dream}:
+such as \term{freshman's dream}:
 
 \begin{equation}
 (a + b)^p \equiv a^p + b^p \pmod{p}
@@ -320,26 +320,28 @@ that the last exit before the last square
 must be either 
 $a^d \equiv -1 \pmod{p}$ or 
 $a^d \equiv  1 \pmod{p}$.
+
 The second case, however, where $a^d$ is 1,
-can only occur if $a^s$ was 1 or $p-1$ right from the beginning
-or if somewhere on the way from $a^s$ to $a^d$,
-the whole expression becomes $p-1$.
+can only occur (for $p$ prime)
+if $a^s$ was 1 or $p-1$ right from the beginning
+or, if somewhere on the way from $a^s$ to $a^d$,
+the whole expression became $p-1$.
 We know this for sure from Wilson's theorem:
 For every number $a$ in the range $1\dots p-1$,
 there is an inverse $a'$, such that $aa' \equiv 1 \pmod{p}$
 and there are only two numbers for which $a = a'$,
 namely 1 and $p-1$.
 Squaring a number that is neither 1 nor $p-1$, therefore,
-cannot result in 1.
+cannot result in 1 (if $p$ is prime).
+
 There are thus only two ways for $a^{2d}$ to become 1:
 either $a^s$ was 1 right from the beginning,
 then squaring will not change anything;
 or, at some point, 
 $a^d$ is $p-1$ (which may be obtained by squaring two numbers) and then,
 in the next step, 1.
-It is impossible, however, 
-that, if $a^s$ was not 1 nor $p-1$,
-that 1 pops up on the way, without $p-1$ having occurred before.
+It is impossible for 1 to pop up on the way
+without $p-1$ occurring before -- if $p$ is prime.
 
 This is the idea of Rabin-Miller:
 It finds an odd number $s$ and a number $t$
@@ -639,7 +641,6 @@ this:
   rmptest 1  = return False
   rmptest 2  = return True
   rmptest n  | even n     = return False
-             | n < 64     = return (wprime (fromIntegral n))
              | otherwise  = rabinMiller 64 n
 \end{code}\end{minipage}
 

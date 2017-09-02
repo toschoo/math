@@ -10,7 +10,7 @@
 %include FacPoly.lhs
 \section{Roots}
 %include Roots.lhs
-\section{Vieta's Formula}
+\section{Vieta's Formulas}
 %include Vieta.lhs
 \section{Factoring Polynomials}
 %include PolyFactor.lhs

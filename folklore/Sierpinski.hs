@@ -4,7 +4,7 @@ module Sierpinski where
   -- Sierpinski Triangle Demonstrator
   ------------------------------------------------------------------------
 
-  import qualified SOE as SOE
+  import qualified Graphics.SOE as SOE
 
   -- a point -------------------------------------------------------------
   type Point = (Int, Int)
@@ -118,8 +118,8 @@ module Sierpinski where
   getKey :: SOE.Window -> IO Char
   getKey w = do e <- SOE.getWindowEvent w
                 case e of
-                  SOE.Key k _    -> return k
-                  _              -> getKey w
+                  SOE.Key k False -> return k
+                  _               -> getKey w
 
   ------------------------------------------------------------------------
   -- IO: Start demonstration

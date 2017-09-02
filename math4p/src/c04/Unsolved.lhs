@@ -256,9 +256,9 @@ $\gcd(a^{\frac{t}{2}} - 1, n)$ or
 $\gcd(a^{\frac{t}{2}} + 1, n)$
 will produce at least one factor of $n$.
 
-This does not work in all cases, however.
+This does not work in all cases, though.
 First, $t$ must be even;
-otherwise $\frac{t}{2}$ would not be natural number.
+otherwise $\frac{t}{2}$ would not be a natural number.
 If $t$ is odd, we therefore have to look for another $a$.
 Second, $a$ must be coprime to $n$.
 On the other hand, If $a$ is not coprime to $n$,
@@ -266,7 +266,12 @@ then we have already found a factor of $n$,
 namely the $\gcd$ of $n$ and $a$.
 Third, $a^{\frac{t}{2}}$ should not be
 $n-1$, since in that case
-$a^t$ is trivially $1 \pmod{n}$.
+$a^t$ is trivially $1 \pmod{n}$;
+we would have 
+$a^{\frac{t}{2}}\times a^{\frac{t}{2}} =
+(n-1)(n-1) = n - 2n + 1$, which $\pmod n$
+is just 1.
+
 Finally, $n$ should be squarefree.
 If $n$ is not squarefree,
 some numbers $a$ will fulfil the equation
@@ -386,6 +391,20 @@ I am not sure, in fact,
 if even quantum alchemists 
 understand quantum alchemy.
 
+The idea to apply Fourier analysis to finding
+prime factors leads to a fascinating
+view on numbers. Fourier analysis shows the
+simple wave functions that together lead to
+the complicated function we provide as input.
+In other words, each prime factor establishes
+a simple repetitive pattern; but since composite
+numbers have many prime factors, these patterns
+superpose each other, so they are hard to recognise.
+The subgroups of the group of remainders of a number
+are exactly these basic ``waves'' that together
+compose the main group and, as such, the composite
+number in question.
+
 The result of the quantum Fourier analysis,
 as always in quantum computing,
 is correct with a certain probability.
@@ -402,7 +421,8 @@ Shocking is rather the fact
 that there actually is a quantum algorithm
 that solves mathematical problems that cannot be solved (yet)
 on classic computers.
-This may be a hard boundary that cannot be passed,
+
+There may even be a hard boundary that cannot be passed,
 so that we have to accept that 
 there are problems that can be solved
 in the classic world and others than can be solved
@@ -444,7 +464,7 @@ were already compiled in the early $18^{th}$ century.
 From some of such tables Legendre conjectured
 that $\Pi$ is somehow related to the
 natural logarithm (a beast we already met
-without much explanations in the first chapter).
+several times).
 Specifically, he proposed that 
 $\Pi(n) = \frac{n}{\ln(n) + c}$,
 where $c$ is some constant.

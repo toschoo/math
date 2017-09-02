@@ -43,4 +43,4 @@ where
   order n a = go 2 (a*a)
     where go r a' | a' `rem` n == 1 = r
                   | r >= n          = error "group exhausted"
-                  | otherwise       = go (r+1) (a'*a)
+                  | otherwise       = go (r+1) ((a'*a) `rem` n)

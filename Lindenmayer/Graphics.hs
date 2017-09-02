@@ -1,6 +1,6 @@
 module Lindenmayer.Graphics where
   
-  import qualified SOE                as SOE
+  import qualified Graphics.SOE       as SOE
   import qualified Lindenmayer.Common as Com 
   import qualified Lindenmayer.Config as Config
   import qualified Lindenmayer.Model  as Mod
