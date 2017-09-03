@@ -842,14 +842,14 @@ where
   solve :: (Real a, Floating a, Fractional a) => Poly a -> [a]
   solve p = case degree p of
               0 -> coeffs p
-              1 -> solvel p
+              1 -> solve1 p
               2 -> solve2 p
               -- 3 -> solve3 p
               -- 4 -> solve4 p
               _ -> error "I don't know how to solve this polynomial"
 
-  solvel :: (Num a,Fractional a) => Poly a -> [a]
-  solvel (P [b,a]) = [-b/a]
+  solve1 :: (Num a,Fractional a) => Poly a -> [a]
+  solve1 (P [b,a]) = [-b/a]
 
   solve2 :: (Real a, Floating a, Fractional a) => Poly a -> [a]
   solve2 p@(P [c,b,a]) | dis p < 0 = []
