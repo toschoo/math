@@ -7822,7 +7822,7 @@ a^t - 1 \equiv 0 \pmod{n}.
 
 Then we factor the left-hand side of the equation:
 
-\begin{equation}
+\begin{equation}\label{eq:Shor1}
 (a^{\frac{t}{2}} - 1)(a^{\frac{t}{2}} + 1) \equiv 0 \pmod{n}.
 \end{equation}
 
@@ -7844,13 +7844,15 @@ Second, $a$ must be coprime to $n$.
 On the other hand, If $a$ is not coprime to $n$,
 then we have already found a factor of $n$,
 namely the $\gcd$ of $n$ and $a$.
-Third, $a^{\frac{t}{2}}$ should not be
-$n-1$, since in that case
-$a^t$ is trivially $1 \pmod{n}$;
-we would have 
-$a^{\frac{t}{2}}\times a^{\frac{t}{2}} =
-(n-1)(n-1) = n - 2n + 1$, which $\pmod n$
-is just 1.
+Third, $a^{\frac{t}{2}}$ should neither be
+$n-1$ nor 1, since in that case \ref{eq:Shor1}
+is trivally 0.
+We do not need to care about 1, because
+we already know
+that the size of the group is $t$,
+\ie\ $t$ is the first number such that
+$a^t \equiv 1 \pmod{n}$.
+But we have to check for $n-1$.
 
 Finally, $n$ should be squarefree.
 If $n$ is not squarefree,
