@@ -833,7 +833,7 @@ where
     where d   = drop 1
           g   = groupBy (\x y -> length x == length y)
           s   = sortBy (\x y -> length x `compare` length y)
-          c p = [(-1)^n * sum (map product x) | (x,n) <- zip p [0..]] 
+          c p = [(-1)^n * sum (map product x) | (x,n) <- zip p [1..]] 
           
  
   -------------------------------------------------------------------------

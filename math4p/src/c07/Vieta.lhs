@@ -6,10 +6,6 @@ where
 \end{code}
 }
 
-\ignore{
-- Lagrange's formula
-}
-
 The binomial theorem describes regularities 
 in the coefficients that turn up
 when multiplying a polynomial (repeatedly) by it itself.
@@ -44,7 +40,7 @@ the concrete example $(x+1)(x-1)$. We set
 $a=1$ and $b=-1$ and see:
 
 \begin{equation}
-x^2 + (1-1)x + (1\times -1) = x^2 - 1.
+x^2 + (1-1)x + (1\times (-1)) = x^2 - 1.
 \end{equation}
 
 That appears to be correct. But who are 
@@ -215,16 +211,17 @@ for the third one, we see the sum of all triple products
 and then we see a single quadruple product.
 
 When we now bring the negative sign of the roots in
-(we used their additive inverse) and
+(we used their additive inverses) and
 the first coefficient, the we get the following
 sequence of formulas:
 
 \begin{subequations}\label{eq:vieta1}
 \begin{align}
 x_1 + x_2 + \dots + x_n & = & -\frac{a_{n-1}}{a_n}\\
-(x_1x_2 + x_1x_3 + \dots + x_1x_n) + 
-(x_2x_3 + \dots + x_2x_n) +
+(x_1x_2 + \dots + x_1x_n) + 
+(x_2x_3 + \dots + x_2x_n) + \dots + 
 x_{n-1}x_n & = & \frac{a_{n-2}}{a_n}\\
+\dots & = & \dots\\
 (x_1x_2 \dots x_n) & = & (-1)^n\frac{a_0}{a_n}
 \end{align}
 \end{subequations}
@@ -244,16 +241,16 @@ and mathematician François Viète (1540 -- 1603)
 whom we already know as author of an elegant
 formula to express $\pi$.
 
-Anyway, what are those constructs on the left-hand
+But what are those constructs on the left-hand
 side of the formulas? One answer is:
 those are \term{elementary symmetric polynomials},
 which are building blocks for \term{symmetric polynomials}.
 Symmetric polynomials will be very important for us
-farther down the road. At the moment, they only delay
-the answer to the question.
+further down the road. At the moment, they only delay
+a good answer to the question\dots
 
-The better answer at this stage is
-that those beasts are sums of
+A better answer at this stage is
+that those beasts are the sums of
 all \emph{distinct} combinations
 of the roots in 1-tuples, 2-tuples, 3-tuples
 and so on.
@@ -293,24 +290,27 @@ problems induced by the distributive law.
 
 Let us devise a function 
 that gives us the right-hand sides of Vieta's formula,
-when we provide the left-hand side.
+when we provide the left-hand sides.
 That is, we write a function that receives the list
-of roots of the polynomial and the returns the list
-of the coefficients divided by $a$, the first coefficient.
+of roots of the polynomial and that returns the list
+of the coefficients divided by the first coefficient.
 
 On the first sight, it seems to be tricky to get
-the sums of products right. But, in fact, a simple
-isomorphism can help us out. We know that the sum
-of all binomial coefficients for a given $n$ is
-$2^n$. The elements are all possible $k$-combinations
-of the $n$ elements without duplicates, \ie\
-$ab$ is the same as $ba$.
-This, however, is just the powerset of the set
-of roots ordered by cardinality.
+the sums of products right. But, in fact, we already
+know everything we need. 
+What we want to do is to generate
+all possible $k$-combinations for $k=1\dots n$
+of the $n$ elements, but without duplicates, \ie\
+$ab$ is the same as $ba$ (since multiplication
+is commutative).
+This, however, is the structure of the powerset,
+which, for a set with $n$ elements, contains indeed
+$2^n$ subsets -- just the number of all possibilities
+to choose $k$ out of $n$ for $k=0\dots n$.
 
 For instance, the set of roots 
 $\lbrace\alpha,\beta,\gamma,\delta\rbrace$
-has the powerset (already ordered according
+has the powerset (ordered according
 to the size of the subsets):
 
 \begin{minipage}{\textwidth}
@@ -341,7 +341,8 @@ the coefficients by
 dropping $\emptyset$ (which 
 represents $a$ in a monic polynomial)
 and then adding up the products of
-each subset. The following function
+the subsets of the same size. 
+The following function
 does that:
 
 \begin{minipage}{\textwidth}
@@ -351,7 +352,7 @@ does that:
     where  d    =  drop 1
            g    =  groupBy (\x y -> length x == length y)
            s    =  sortBy (\x y -> length x `compare` length y)
-           c p  =  [(-1)^n * sum (map product x) | (x,n) <- zip p [0..]] 
+           c p  =  [(-1)^n * sum (map product x) | (x,n) <- zip p [1..]] 
 \end{code}
 \end{minipage}
 
@@ -360,25 +361,87 @@ We then sort it by the lengths of the subsets (that is
 the \term{cardinalities} in set theory jargon) and
 drop the first one (the empty set).
 We then introduce one more level of separation,
-\ie\ we group the subsets by their size, and, then,
-we create a new set
-by first zipping the result, so that each
+\ie\ we group the subsets by their size.
+From this result, we create a new set
+by zipping the result with the natural numbers
+starting from 1 so that each
 group of equal length gets paired with a
-natural number $n$ starting from 0.
-We map |product| on these lists and 
+number $n$.
+We, then, map |product| on these lists and 
 add the resulting products together.
 Finally, we multiply this number by -1
-raised to the power of $n$. This last step
-takes care of signedness:
-the sign of every second result is turned around.
-Those are all results with an odd number of factors.
+raised to the power of $n$. 
+
+This last step
+takes care of signedness.
+Since, in the linear factors, we use the
+additive inverses of the roots,
+the effect of the signs of the roots
+must be flipped around.
+Therefore, we turn
+the sign of every second result, namely
+those with an odd number of factors.
 The negative signs of the roots
 that enter products with an even number of factors
-cancel out.
+cancel out by themselves.
 
 Let us look at some examples.
+We start with our favourite: $x^2 + x - 1$.
+We call |vieta [-phi, -psi]| and get
 
-\ignore{
-some demonstrations
-}
+|[1.0,-1.0]|.
+
+That are the coefficient of $x$ and the constant -1.
+To complicate, we check some variants of
+those roots:
+
+\begin{itemize}
+\item |vieta [phi, -psi]| gives $-\sqrt{5}, 1$ and, hence, the polynomial
+$x^2 - \sqrt{5} + 1$, whose roots are indeed $\Phi$ and $-\Psi$.
+
+\item |vieta [-phi, psi]| gives $\sqrt{5}, 1$ and that is the polynomial
+$x^2 + \sqrt{5} + 1$, whose roots are $-\Phi$ and $\Psi$.
+
+\item |vieta [phi, psi]| gives $-1, -1$, the polynomial
+$x^2 - x - 1$, whose roots are $\Phi$ and $\Psi$.
+\end{itemize}
+
+A simpler example that shows the signedness of roots and coefficients
+is $x^2 - 1$. |vieta [1,-1]| gives |[0,-1]|, which, indeed,
+corresponds to $x^2  - 1$.
+
+What about a third-degree polynomial,
+\eg\ $(x+1)(x+1)(x+1) = x^3 + 3x^2 + 3x + 1$?
+We call |vieta [-1,-1,-1]| and see |[3,3,1]|.
+
+Another experiment: we compute
+|mul (P [1,1]) (mul (P [2,1]) (P [3,1]))|,
+which is $(x+1)(x+2)(x+3)$ and get
+|P [6,11,6,1]|, which represents the polynomial
+$x^3 + 6x^2 + 11x + 6$.
+We call |vieta [-1,-2,-3]| and get |[6,11,6]|.
+
+A fifth-degree polynomial:
+|prodp mul [P [1,1], P [2,1], P [3,1], P [4,1], P [5,1]]|:
+|P [120,274,225,85,15,1]|, that is
+
+\[
+x^5 + 15x^4 + 85x^3 + 225x^2 + 274x + 120.
+\]
+
+|vieta [-1,-2,-3,-4,-5]|: |[15,85,225,274,120]|.
+
+Well, we can go on playing around like this forever.
+The point of Vieta's formulas, however, is not so
+much practical. It is not an efficient way to compute
+roots from coefficients or coefficients from roots.
+That should be clear immediately, when we look at
+the Haskell function |vieta|. It generates the
+powerset of the set of roots -- and that cannot be
+efficient at least for large (or better worded perhaps:
+unsmall) numbers.
+Vieta's formulas, instead, are a theoretical device.
+They help to understand the relation between
+coefficients and roots and they will play an important
+role in our further investigations.
 
