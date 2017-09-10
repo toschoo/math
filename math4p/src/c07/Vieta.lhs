@@ -12,7 +12,7 @@ where
 
 The binomial theorem describes regularities 
 in the coefficients that turn up
-when multiplying equal polynomials with each other.
+when multiplying a polynomial (repeatedly) by it itself.
 For the simple case $(a+b)(a+b)$, we get the result
 $(a^2 + 2ab + b^2)$. The linear factors of polynomials
 have a similar structure: sums of two numbers that are
@@ -40,7 +40,7 @@ interpreted as 1, for the number of occurrences of
 $a^2$. We, hence, get $1, 2, 1$.
 
 Let us check the theoretic result against
-the concete example $(x+1)(x-1)$. We set
+the concrete example $(x+1)(x-1)$. We set
 $a=1$ and $b=-1$ and see:
 
 \begin{equation}
@@ -51,15 +51,15 @@ That appears to be correct. But who are
 those $a$ and $b$ guys that appear in
 the formula? Well, those are the additive
 inverses of the roots of the polynomial in
-question, since, if $(x+a)\dots$ are the linear
+question, since, if $(x+a)(x+b)\dots$ are the linear
 factors, then the polynomial becomes 0 if any
 of those factors becomes 0. The factor $(x+a)$,
 obviously, becomes 0 if $x=-a$. $-a$ is therefore
 a root of the polynomial. It follows that we
-have direct relation between the roots and
+have a direct relation between the roots and
 the coefficients.
 
-As a first approximiation (which is wrong!),
+As a first approximation (which is wrong!),
 we could describe a second degree polynomial 
 with the roots
 $\alpha$ and $\beta$ as:
@@ -97,13 +97,13 @@ The polynomial $x^2 + 5 + 6$ has the roots
 x^2 + (2+3)x + (-2\times(-3)) = x^2 + 5x + 6.
 \end{equation}
 
-Note, by the way, the multiplication $12\times 13 = 156$,
-which, once again, shows the similarity of numbers and
-polynomials.
+Note, by the way, the multiplication $12\times 13 = 156$.
+Once again, this is a nice illustration of the similarity 
+of numbers and polynomials.
 
 Now, what about the polynomial
 $-x^2 - x + 1$.
-We know that it has the same roots as
+We know it has the same roots as
 the polynomial
 $x^2 + x - 1$.
 But how can we get the coefficients from the roots
@@ -113,7 +113,7 @@ Well, until now, we have looked only at \term{monic}
 polynomials, that is polynomials with the first coefficient
 being 1. But the polynomial $-x^2 - x + 1$ is not monic.
 The first coefficient is -1. In fact, the complete
-factorisation of this polynimoal is
+factorisation of this polynomial is
 
 \[
 -1(x+\Phi)(x+\Psi).
@@ -133,17 +133,19 @@ ax^2 - \frac{\alpha+\beta}{a}x + \frac{\alpha\beta}{a}.
 \]
 
 When we now test with roots $\alpha=-\Phi$ and $\beta=-\Psi$
-and $a=-1$,
+and coefficient $a=-1$,
 we get
 
 \[
 -x^2 - \frac{-\Phi-\Psi}{-1}x + \frac{(-\Phi)(-\Psi)}{-1} = 
 -x^2 - \frac{-1}{-1}x + \frac{-1}{-1} =
--x^2 - x + 1.
+-x^2 - x + 1
 \]
 
+and everything appears to be in joint again.
+
 When we advance beyond degree 2,
-how should these formula evolve?
+how should these formulas evolve?
 Let us look at roots in terms of linear factors.
 For a polynomial of degree $n$, we have up to $n$ factors
 of the form
@@ -155,9 +157,9 @@ of the form
 When we multiply that out, we get combinations
 as products and sums of products
 of the coefficients of the linear factors
-$\alpha, \beta, \dots$
+$\alpha, \beta, \gamma, \dots$
 (which are the inverses of the roots 
-of the resulting polynomial), \etc:
+of the resulting polynomial):
 
 \[
 (x^2 + \beta x + \alpha x + \alpha\beta)(x+\gamma),
@@ -205,15 +207,15 @@ and get
 \end{array}
 \]
 
-It, indeed, continues the pattern we saw above.
-For the first coefficients we see the simple sum 
+The result, indeed, continues the pattern we saw above.
+For the first coefficient we see the simple sum 
 of all the linear coefficients;
 for the second one, we see the sum of all tuple products;
 for the third one, we see the sum of all triple products
 and then we see a single quadruple product.
 
 When we now bring the negative sign of the roots in
-(we used their additive additive inverse above) and
+(we used their additive inverse) and
 the first coefficient, the we get the following
 sequence of formulas:
 
@@ -239,7 +241,7 @@ with roots $x_1, x_2, \dots, x_n$.
 The equations \ref{eq:vieta1} are known as
 \term{Vieta's formulas}, after the French lawyer
 and mathematician François Viète (1540 -- 1603)
-who we already know as author of an elegant
+whom we already know as author of an elegant
 formula to express $\pi$.
 
 Anyway, what are those constructs on the left-hand
@@ -247,7 +249,7 @@ side of the formulas? One answer is:
 those are \term{elementary symmetric polynomials},
 which are building blocks for \term{symmetric polynomials}.
 Symmetric polynomials will be very important for us
-in the future. At the moment, they only delay
+farther down the road. At the moment, they only delay
 the answer to the question.
 
 The better answer at this stage is
@@ -255,7 +257,7 @@ that those beasts are sums of
 all \emph{distinct} combinations
 of the roots in 1-tuples, 2-tuples, 3-tuples
 and so on.
-For the first case we called `1-tuples'
+For the first case, the `1-tuples',
 that is just the sum of all the roots;
 for the second case, the `2-tuples',
 we have all combinations of 
@@ -266,19 +268,28 @@ of \emph{3 elements out of $n$} and so on.
 
 You probably guess where this is leading us.
 When we have four roots,
-the first coefficient is basically the sum
-of $\binom{n}{1} = n$ terms;
+the first coefficient,
+the one in front of $x^{n-1}$,
+is basically the sum
+of $\binom{4}{1} = 4$ terms;
 the second coefficient is the sum of
-$\binom{n}{2}$ terms; for instance, with 4 roots,
-we get $\binom{n}{2} = 6$ terms.
+$\binom{4}{2} = 6$ terms;
 the third coefficient is the sum of
-$\binom{n}{3}$ terms; for 4 roots:
-$\binom{4}{3} = 4$ and so on.
-Overall we get $\sum_{k=0}^n{\binom{n}{k}} = 2^n$
-terms (including the imagined 1 in front of $x^n$)
-for $n$ roots. 
-Once again, algebra boils down to combinatoric
-problems induced by the associative law.
+$\binom{4}{3} = 4$ terms and
+the last coefficient,
+the one without an $x$, is the sum of
+only $\binom{4}{4} = 1$ term.
+
+In general, for $n$ roots, we get,
+for the $k^{th}$ coefficient,
+$\binom{n}{k}$ terms
+of products of $k$ roots.
+Those are $\sum_{k=0}^n{\binom{n}{k}} = 2^n$
+terms in total 
+(including the coefficient in front of $x^n$,
+which corresponds to $\binom{n}{0}=1$).
+Once again, algebra boils down to combinatorial
+problems induced by the distributive law.
 
 Let us devise a function 
 that gives us the right-hand sides of Vieta's formula,
@@ -291,11 +302,11 @@ On the first sight, it seems to be tricky to get
 the sums of products right. But, in fact, a simple
 isomorphism can help us out. We know that the sum
 of all binomial coefficients for a given $n$ is
-$2^n$. The elements are all possible combinations
+$2^n$. The elements are all possible $k$-combinations
 of the $n$ elements without duplicates, \ie\
 $ab$ is the same as $ba$.
 This, however, is just the powerset of the set
-of roots ordered by cardinalities.
+of roots ordered by cardinality.
 
 For instance, the set of roots 
 $\lbrace\alpha,\beta,\gamma,\delta\rbrace$
@@ -346,11 +357,11 @@ does that:
 
 We first create the powerset (|Perm.ps|).
 We then sort it by the lengths of the subsets (that is
-the cardinalities in set theory jargon) and
+the \term{cardinalities} in set theory jargon) and
 drop the first one (the empty set).
 We then introduce one more level of separation,
 \ie\ we group the subsets by their size, and, then,
-we create a new set (\ie\ list)
+we create a new set
 by first zipping the result, so that each
 group of equal length gets paired with a
 natural number $n$ starting from 0.
@@ -364,6 +375,8 @@ Those are all results with an odd number of factors.
 The negative signs of the roots
 that enter products with an even number of factors
 cancel out.
+
+Let us look at some examples.
 
 \ignore{
 some demonstrations
