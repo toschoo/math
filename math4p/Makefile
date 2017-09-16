@@ -73,7 +73,7 @@ ALL	 = cmds.tex \
 	   src/c07/PolyArith.lhs \
 	   src/c07/DMachine.lhs \
 	   src/c07/DiffBinom.lhs \
-	   src/c07/FacPoly.lhs \
+	   src/c07/Umbral.lhs \
 	   src/c07/Roots.lhs \
 	   src/c07/Vieta.lhs \
 	   src/c07/PolyFactor.lhs \

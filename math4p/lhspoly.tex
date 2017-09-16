@@ -3573,7 +3573,7 @@ and this completes the proof.\qed
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{FacPoly}{}\<[E]%
+\>[B]{}\mathbf{module}\;\Conid{Umbral}{}\<[E]%
 \\
 \>[B]{}\mathbf{where}{}\<[E]%
 \\
@@ -3583,14 +3583,26 @@ and this completes the proof.\qed
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 }
+
 \ignore{
-- falling factorial
-  these are polynomials
-- express polynomials as factorial polynomials
-- identities
-- "umbral" calculus
-- Taylor's theorem and Taylor's series
-- Stirling numbers + combinatorics interpretation
+=> Factorial polynomials
+=> compute simply
+=> compute with recursion
+=> show 'umbral' derivative
+   - explain the term 'umbral calculus'
+=> relation to Pascal's formula
+=> show that powers can be expessed as sums
+   of factorial polynomials
+=> proof
+=> stirling numbers of the second kind => proof (inductive)
+=> polynomials as factorial polynomials
+=> proof: unique factorisation of polynomials
+          into factorial polynomials
+=> recursive formula:
+   stirling numbers of the first kind
+=> compute stirling numbers of the first kind faster
+?> more identities?
+?> Taylor's theorem and Taylor's series
 }
 \section{Roots}
 \ignore{
@@ -4842,7 +4854,7 @@ to the size of the subsets):
 \begin{minipage}{\textwidth}
 \begin{gather*}
 \lbrace
-\emptyset,\\
+\varnothing,\\
 \lbrace\alpha\rbrace,
 \lbrace\beta \rbrace,
 \lbrace\gamma\rbrace,
@@ -4864,7 +4876,7 @@ to the size of the subsets):
 
 We can transform the powerset into 
 the coefficients by
-dropping $\emptyset$ (which 
+dropping $\varnothing$ (which 
 represents $a$ in a monic polynomial)
 and then adding up the products of
 the subsets of the same size. 

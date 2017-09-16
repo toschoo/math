@@ -7,7 +7,7 @@
 \section{Differences and Binomial Coefficients}
 %include DiffBinom.lhs
 \section{Umbral Calculus}
-%include FacPoly.lhs
+%include Umbral.lhs
 \section{Roots}
 %include Roots.lhs
 \section{Vieta's Formulas}

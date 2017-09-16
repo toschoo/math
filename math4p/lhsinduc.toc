@@ -1,0 +1,12 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Induction, Series, Sets and Combinatorics}{2}
+\contentsline {section}{\numberline {1.1}Logistics}{2}
+\contentsline {section}{\numberline {1.2}Induction}{6}
+\contentsline {section}{\numberline {1.3}Arithmetic and Geometric Series}{10}
+\contentsline {section}{\numberline {1.4}The Fibonacci Sequence}{16}
+\contentsline {section}{\numberline {1.5}Factorial}{19}
+\contentsline {section}{\numberline {1.6}Random Permutations}{26}
+\contentsline {section}{\numberline {1.7}Binomial Coefficients}{30}
+\contentsline {section}{\numberline {1.8}Combinatorial Problems with Sets}{40}
+\contentsline {section}{\numberline {1.9}Stirling Numbers}{49}
+\contentsline {section}{\numberline {1.10}Eulerian Numbers}{62}

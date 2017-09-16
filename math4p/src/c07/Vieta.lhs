@@ -316,7 +316,7 @@ to the size of the subsets):
 \begin{minipage}{\textwidth}
 \begin{gather*}
 \lbrace
-\emptyset,\\
+\varnothing,\\
 \lbrace\alpha\rbrace,
 \lbrace\beta \rbrace,
 \lbrace\gamma\rbrace,
@@ -338,7 +338,7 @@ to the size of the subsets):
 
 We can transform the powerset into 
 the coefficients by
-dropping $\emptyset$ (which 
+dropping $\varnothing$ (which 
 represents $a$ in a monic polynomial)
 and then adding up the products of
 the subsets of the same size. 
