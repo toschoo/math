@@ -11,6 +11,7 @@ where
   -- generate the linear factors of x^(n)
   -------------------------------------------------------------------------
   fpfacs :: (Integral a) => a -> [Poly a]
+  fpfacs 0 = [P [1]]
   fpfacs n = [poly [-k,1] | k <- [0..n-1]]
 
   -------------------------------------------------------------------------
@@ -68,20 +69,20 @@ where
   -- create the terms of the power x^n 
   -- as pairs (stirling2 n k, x^(k))
   -------------------------------------------------------------------------
-  fpPowFactors :: Integer -> [(Integer, Poly Integer)]
-  fpPowFactors n =  [(Perm.stirling2 n k, facpoly k) | k <- [1..n]]
+  fpPowTerms :: Integer -> [(Integer, Poly Integer)]
+  fpPowTerms n =  [(Perm.stirling2 n k, facpoly k) | k <- [1..n]]
 
   -------------------------------------------------------------------------
-  -- create the facpoly factors of polynomial
+  -- create the facpoly terms of polynomial
   -- a_1x^n +  a_2x^(n-1) + ...
   -- [scale (a_1 * stirling2 n k) (facpoly k), ...]
   -------------------------------------------------------------------------
-  fpPolyFactors :: Poly Integer -> [Poly Integer]
-  fpPolyFactors (P cs) = first ++ concat (go 1 $ tail cs)
+  fpPolyTerms :: Poly Integer -> [Poly Integer]
+  fpPolyTerms (P cs) = first ++ concat (go 1 $ tail cs)
     where s c (n,p) = scale (c*n) p
           go _ [] = []
           go k (x:xs) | x == 0    = go (k+1) xs
-                      | otherwise = map (s x) (fpPowFactors k) :
+                      | otherwise = map (s x) (fpPowTerms k) :
                                     go (k+1) xs
           first = case cs of
                     [] -> []
