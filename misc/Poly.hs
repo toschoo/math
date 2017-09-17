@@ -271,10 +271,9 @@ where
   -------------------------------------------------------------------------
   -- Derivatives (generic)
   -------------------------------------------------------------------------
-  derivative :: (Eq a, Num a) => (a -> a -> a) -> Poly a -> Poly a
-  derivative o (P as) = P (cleanz (go $ zip [1..] (drop 1 as)))
-    where go []         = []
-          go ((x,c):cs) = (z `o` c) : go cs where z = fromIntegral x
+  derivative :: (Eq a, Num a, Enum a) => (a -> a -> a) -> Poly a -> Poly a
+  derivative o (P as) = P (cleanz (map op $ zip [1..] (drop 1 as)))
+    where op (x,c) = x `o` c
 
   -------------------------------------------------------------------------
   -- Squarefree
@@ -649,13 +648,11 @@ where
   -- predict
   -------------------------------------------------------------------------
   predict :: [[Integer]] -> [Integer] -> Maybe Integer
+  predict ds [] = Nothing
   predict ds xs = case go (reverse ds) of
                     0  -> Nothing
                     d  -> Just (d + (last xs))
-    where go []   = 0
-          go [[]] = 0
-          go [a]  = last a
-          go (a:cs) = last a + go cs
+    where go = foldl' (\x c -> last c + x) 0
 
   -------------------------------------------------------------------------
   -- Predict Degree
@@ -755,7 +752,8 @@ where
   -------------------------------------------------------------------------
   -- Talyor Series (real numbers)
   -------------------------------------------------------------------------
-  taylor :: (Show a, Fractional a, Real a) => Integer -> a -> Poly a -> Poly a
+  taylor :: (Show a, Fractional a, Real a, Enum a) => 
+            Integer -> a -> Poly a -> Poly a
   taylor i a = go 0
     where go n f | n == i = P [0]
                  | otherwise = 

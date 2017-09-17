@@ -16,11 +16,12 @@ The ingenious Isaac Newton studied the relation
 between sequences and their differences 
 intensely and came up with a formula. Before we go right
 to it, let us observe on our own.
-The following table shows, in the first line, 
+The following table shows the values and differences
+of a certain polynomial. In the first line, it shows
 the value of $n$, \ie\ the value to which the polynomial
 is applied; in the second line, we see the result
 for this $n$; in the first column we have the first
-value from the sequence and from the difference lists:
+values from the sequence and its difference lists:
 
 \begin{center}
 \begingroup
@@ -54,7 +55,7 @@ the values in the sequence by formulas of the type:
 
 The next question would then be: what are those numbers?
 But, here, I have to ask you to look a bit more closely at the table.
-What we see is left-to-right:
+What we see in the columns left-to-right is:
 
 \begin{center}
 \begin{tabular}{cccccccccc}
@@ -181,7 +182,7 @@ When we can express the binomial coefficients
 in terms of polynomials and apply them
 to the formula used above, we will get the polynomial out
 that generates this sequence.
-Here is a function that does it:
+Here is a function that does that:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -204,7 +205,7 @@ the base of our polynomial.
 If $k=0$, the binomial is 1, since for all binomials:
 $\binom{n}{0} = 1$. We, hence, return a constant polynomial
 consisting of the factor. This corresponds to 
-$h_0 \times \binom{n}{0}$. The result is just $h$.
+$h_0 \times \binom{n}{0}$. The result is just $h_0$.
 Note that we convert the coefficients to rational numbers,
 since that is the type the function is supposed to yield.
 
@@ -423,13 +424,15 @@ sequences are 65, 162 and 132.
 We call the function as |subst (2,65,162,132) (cn H 5)|
 and see
 
-2,65,65,162,65,162,132,162,65,162,132,162,132,132,162,\\
-  65,162,132,162,132,132,162,132,132,132,162.
+\begin{minipage}{\textwidth}
+2, 65, 65, 162, 65, 162, 132, 162, 65, 162, 132, 162, 132, 132, 162,
+65, 162, 132, 162, 132, 132, 162, 132, 132, 132, 162.
+\end{minipage}
 
 When we sum this together,
 |sum (subst (2,65,162,132) (cn H 5))|,
 we get 3267, which is indeed the number appearing at
-position 5 in the sequence (starting to count with 0).
+position 5 in the sequence (starting to count from 0).
 
 We implement one more function: |ccn|, for
 ``count cn'':
@@ -570,7 +573,7 @@ creates
 
 \[
 \binom{n}{0}H, \binom{n}{1}X, \binom{n}{2}Y 
-\text{and} \binom{n}{3}Z
+\text{ and } \binom{n}{3}Z
 \]
 
 (and the previous calls to |cn H (n-1)|, |cn H (n-2)|,

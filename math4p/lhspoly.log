@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  16 SEP 2017 20:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  17 SEP 2017 14:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1479,12 +1479,7 @@ d by $[] (\OML/cmm/m/it/10.95 ^^U\OT1/cmr/m/it/10.95 x \OMS/cmsy/m/n/10.95 ! []
 
 \openout3 = `lhspoly.ptb'.
 
- [19]
-Underfull \hbox (badness 10000) in paragraph at lines 1971--1976
-
- []
-
-[20]
+ [19] [20]
 \openout3 = `lhspoly.ptb'.
 
  [21]
@@ -1499,7 +1494,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1971--1976
 \openout3 = `lhspoly.ptb'.
 
 
-Overfull \hbox (16.63568pt too wide) in paragraph at lines 2496--2500
+Overfull \hbox (16.63568pt too wide) in paragraph at lines 2500--2504
 []\OT1/cmr/m/n/10.95 For the se-quence of the un-known poly-no-mial, we ob-tain
  $\OT1/cmr/m/it/10.95 M \OT1/cmr/m/n/10.95 [ [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/
 m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1
@@ -1515,7 +1510,7 @@ n/10.95 [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1
 \openout3 = `lhspoly.ptb'.
 
 
-Overfull \hbox (14.12941pt too wide) in paragraph at lines 2581--2587
+Overfull \hbox (14.12941pt too wide) in paragraph at lines 2585--2591
 \OT1/cmr/m/n/10.95 poly-no-mial of de-gree 1. We try with $[] [] [] [] ([] []) 
 [] [] ([] []) ([] [])$
  []
@@ -1523,14 +1518,10 @@ Overfull \hbox (14.12941pt too wide) in paragraph at lines 2581--2587
 [26]
 \openout3 = `lhspoly.ptb'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2657--2686
-
- []
-
-[27] [28] [29] [30]
+ [27] [28] [29]
 \openout3 = `lhspoly.ptb'.
 
+ [30]
 \openout3 = `lhspoly.ptb'.
 
  [31]
@@ -1552,21 +1543,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 2657--2686
 \openout3 = `lhspoly.ptb'.
 
  [35]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3448
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3445
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3448.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3445.
 
  [36] [37] [38]
 [39]
 \openout3 = `lhspoly.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3779--3783
+Underfull \hbox (badness 10000) in paragraph at lines 3776--3780
 
  []
 
@@ -1597,7 +1588,7 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 \openout3 = `lhspoly.ptb'.
 
  [53]
-Overfull \hbox (6.7068pt too wide) in paragraph at lines 4973--4976
+Overfull \hbox (6.7068pt too wide) in paragraph at lines 4970--4973
 []\OT1/cmr/m/n/10.95 A sim-pler ex-am-ple that shows the signed-ness of roots a
 nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 /m/n/10.95 1$. $[] [ 1\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 1 ]$
@@ -1615,12 +1606,12 @@ nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 \openout3 = `lhspoly.ptb'.
 
  [61]
-Underfull \hbox (badness 10000) in paragraph at lines 5712--5713
+Underfull \hbox (badness 10000) in paragraph at lines 5709--5710
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5732--5733
+Underfull \hbox (badness 10000) in paragraph at lines 5729--5730
 
  []
 
@@ -1636,7 +1627,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 5732--5733
 \openout3 = `lhspoly.ptb'.
 
 
-Overfull \hbox (44.6902pt too wide) in paragraph at lines 6189--6194
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 6186--6191
 \OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
 ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
 10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
@@ -1656,10 +1647,10 @@ m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML
 
  [71] [72] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 35690 strings out of 493029
- 851142 string characters out of 6136234
+ 35685 strings out of 493029
+ 851065 string characters out of 6136234
  1035063 words of memory out of 5000000
- 38711 multiletter control sequences out of 15000+600000
+ 38706 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,10n,99p,10373b,649s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1680,7 +1671,7 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (72 pages, 382191 bytes).
+Output written on lhspoly.pdf (72 pages, 382257 bytes).
 PDF statistics:
  308 PDF objects out of 1000 (max. 8388607)
  214 compressed objects within 3 object streams
