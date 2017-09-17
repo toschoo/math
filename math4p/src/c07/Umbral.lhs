@@ -99,10 +99,31 @@ Note, by the way, the last coefficient in each polynomial.
 Those are factorials. More precisely, the last coefficient
 of $x^{(n)}$ is $(n-1)!$
 Does this pattern remind you of something?
-No? Anyway, we will look into it later.
+Not? Don't worry, we will look into it later.
+
+From the factors we created using |fpfacs|, we see that
+the factorial polynomials, just like ordinary factorials
+can be defined recursively like this:
+
+\begin{equation}
+x^{(k)} = (x-k+1)x^{(k-1)},
+\end{equation}
+
+which we can translate to Haskell as
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  rfacpoly :: (Integral a) => a -> Poly a
+  rfacpoly 0 = P [1]
+  rfacpoly n = mul (rfacpoly (n-1)) (P [-(n-1),1])
+\end{code}
+\end{minipage}
+
+This function gives exactly the same results as |facpoly|,
+but is, of course, less efficient.
 
 \ignore{
-=> compute with recursion
+=> show the formula for computing the differences (4.1 & 4.2)
 => show 'umbral' derivative
    - explain the term 'umbral calculus'
 => relation to Pascal's formula (4.5)

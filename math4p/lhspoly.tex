@@ -3689,10 +3689,39 @@ Note, by the way, the last coefficient in each polynomial.
 Those are factorials. More precisely, the last coefficient
 of $x^{(n)}$ is $(n-1)!$
 Does this pattern remind you of something?
-No? Anyway, we will look into it later.
+Not? Don't worry, we will look into it later.
+
+From the factors we created using \ensuremath{\Varid{fpfacs}}, we see that
+the factorial polynomials, just like ordinary factorials
+can be defined recursively like this:
+
+\begin{equation}
+x^{(k)} = (x-k+1)x^{(k-1)},
+\end{equation}
+
+which we can translate to Haskell as
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{rfacpoly}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{rfacpoly}\;\mathrm{0}\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{rfacpoly}\;\Varid{n}\mathrel{=}\Varid{mul}\;(\Varid{rfacpoly}\;(\Varid{n}\mathbin{-}\mathrm{1}))\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}(\Varid{n}\mathbin{-}\mathrm{1}),\mathrm{1}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This function gives exactly the same results as \ensuremath{\Varid{facpoly}},
+but is, of course, less efficient.
 
 \ignore{
-=> compute with recursion
+=> show the formula for computing the differences (4.1 & 4.2)
 => show 'umbral' derivative
    - explain the term 'umbral calculus'
 => relation to Pascal's formula (4.5)
