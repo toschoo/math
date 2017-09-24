@@ -145,7 +145,7 @@ of numbers and then compute the differences,
 we could try to find a formula that expresses
 the differences for a given polynomial.
 When we look at the formula $x^{(3)}$,
-we can just apply values two consecutive values
+we can just apply two consecutive values
 and compute their difference, \eg:
 
 \begin{align*}
@@ -182,7 +182,7 @@ From this we get
 Now we apply the polynomial $3x^2 - 3x$
 on the same sequence (minus one,
 because |diffs| has one element less
-than the sequence it is applied on): 
+than the sequence it is applied to): 
 |mapply (P [0,-3,3]) [0..10]|
 and get
 
@@ -238,17 +238,17 @@ $x^{(3)}$. To be sure that the equation
 \Delta_{x^{(n)}} = nx^{(n-1)},
 \end{equation}
 
+holds for all factorial polynomials,
 \ie\ that the differences of $x^{(n)}$
 equal $nx^{(n-1)}$,
-holds for all factorial polynomials,
 we first need to show it for the general case.
 
 To do this, we start as above. We plug in
 the ``value'' $a$ and compute:
 
 \begin{align*}
-\Delta_{a^{(n)}} & = & (a+1) & a(a-1)\dots(a-n+2) & \\
-                 & - &       & a(a-1)\dots(a-n+2) & (a-n+1)\\
+\Delta_{a^{(n)}} & = & (a+1) & & & a(a-1)\dots(a-n+2) & \\
+                 & - &       & & & a(a-1)\dots(a-n+2) & (a-n+1)\\
 \end{align*}
 
 When we look at the right-hand side of this equation,
@@ -303,7 +303,8 @@ This corresponds to
 \end{equation}
 
 When we join the fractions on the left-hand side,
-we get the formula to compute the differences of $k^{(n+1)}$:
+we get in the numerator the formula to compute 
+the differences of $k^{(n+1)}$:
 
 \[
 \frac{(k+1)^{(n+1)} - k^{(n+1)}}{(n+1)!} =
@@ -316,8 +317,19 @@ we see
 
 \begin{equation}
 \binom{k+1}{n+1} - \binom{k}{n+1} =
-\frac{\Delta_{k^{(n+1)}}}{(n+1)!} =
-\frac{(n+1){k^{(n)}}}{(n+1)!} = 
+\frac{(n+1){k^{(n)}}}{(n+1)!}.
+\end{equation}
+
+We now see that there is one factor
+that appears in numerator and denominator,
+namely $n+1$. When we cancel $n+1$ out
+we need to
+reduce $(n+1)!$ in the denominator by this factor.
+$(n+1)!$, however, is $(n+1)n!$.
+We therefore get:
+
+\begin{equation}
+\binom{k+1}{n+1} - \binom{k}{n+1} =
 \frac{{k^{(n)}}}{n!} = 
 \binom{k}{n}.\qed
 \end{equation}
@@ -330,7 +342,7 @@ For instance, $x^2$ is $xx$, while
 $x^{(2)}$ is $x(x-1)$. The falling factorial of $n$,
 hence, is smaller than the corresponding power $n$.
 We can even say precisely how much smaller it is.
-We just have to look into the list of factorial
+We just have to look at the list of factorial
 polynomials we have created above:
 
 \begin{equation}
@@ -339,7 +351,7 @@ x^{(2)} = x(x-1) = x^2 - x.
 
 So, we could express $x^2$ as
 $x^{(2)} + x$ adding the part that
-we subtract from $x^2$ above.
+we subtract from $x^2$ to get $x^{(2)}$.
 If we wanted to express $x^2$ strictly
 in terms of falling factorials, we could say: 
 
@@ -361,7 +373,7 @@ we have
 x^3 = x^{(3)} + 3x^2 - 2x.
 \end{equation}
 
-Using the previous result, we come to
+Using the previous result, we arrive at
 
 \begin{equation}
 x^3 = x^{(3)} + 3(x^{(2)} + x^{(1)}) - 2x^{(1)} =
@@ -416,13 +428,14 @@ Regrouping we get
 
 There are two ways for a sum to become zero.
 Either all terms are zero or, for each term
-that is not zero, there is exactly one term
-that is its additive inverse.
-However, we are here dealing with a polynomial.
+that is not zero, the additive inverse
+appears somewhere in the sum, either as
+one term or as the sum of several terms.
+But we are here dealing with a polynomial.
 Whether a term is the additive inverse of another
 depends on the value we fill in for $x$.
 But the formula requires that the left-hand side
-is zero for any value we fill in for $x$.
+is zero for any value we may fill in for $x$.
 We are therefore left with the first option:
 all terms must be zero.
 
@@ -435,7 +448,7 @@ and when it is not, namely when
 $x=0, x=1, x=2, \dots, x=n-1$.
 In any other case, it is not zero.
 In those cases, $(A_n-B_n)$ must be zero
-to make the term zero. But that is only the case,
+to make the term zero. But that can only happen,
 if $A_n = B_n$.
 For this term, the first and the second
 representations must therefore be equal.
@@ -453,10 +466,156 @@ This way, we remove one term after the other,
 until there are no more terms left.
 That shows that the two representations are equal.\qed
 
+So, we have proved that powers can be represented
+uniquely by factorial polynomials. Here is a list
+of such representations starting from $x^1$:
+
+\begin{center}
+\begin{tabular}{c}
+$x^{(1)}$ \\
+$x^{(2)} + x^{(1)}$ \\
+$x^{(3)} + 3x^{(2)} + x^{(1)}$\\
+$x^{(4)} + 6x^{(3)} + 7x^{(2)} + x^{(1)}$\\
+$x^{(5)} + 10x^{(4)} + 25x^{(3)} +15x^{(2)} + x^{(1)}$ \\
+$x^{(6)} + 15x^{(5)} + 65x^{(4)} + 90x^{(3)} + 31x^{(2)} + x^{(1)}$ \\
+$x^{(7)} + 21x^{(6)} + 140x^{(5)} + 350x^{(4)} + 301x^{(3)} + 63x^{(2)} + x^{(1)}$  
+\end{tabular}
+\end{center}
+
+Those of you that still suffer from triangle paranoia:
+you have probably realised that this is already the second
+triangle appearing in this section.
+When you scroll back to certain triangle-intense chapters,
+you will, after some time, recognise the coefficients above as 
+\term{Stirling numbers of the second kind}.
+Of course the table above is inverted, because we start
+with the largest $k$ in $x^{(k)}$ going down to $k=1$,
+while the triangle for the Stirling numbers shows
+the coefficients in the order 
+$\stirlingTwo{n}{1} \dots \stirlingTwo{n}{n}$.
+As a reminder, here they are:
+
+\begin{tabular}{l c c c c c c c c c c c c c c c c c c c c}
+1 &   &   &   &   &    &    &    &     &     &   1 &     &     &    &    &    &   &   &   &   &  \\
+2 &   &   &   &   &    &    &    &     &   1 &     &   1 &     &    &    &    &   &   &   &   &  \\
+3 &   &   &   &   &    &    &    &   2 &     &   3 &     &   1 &    &    &    &   &   &   &   &  \\
+4 &   &   &   &   &    &    &  6 &     &  11 &     &   6 &     &  1 &    &    &   &   &   &   &  \\
+5 &   &   &   &   &    & 24 &    &  50 &     &  35 &     &  10 &    &  1 &    &   &   &   &   &  \\
+6 &   &   &   &   & 120&    &274 &     & 225 &     &  85 &     & 15 &    &  1 &   &   &   &   &  \\   
+7 &   &   &   &720&    &1764&    &1624 &     & 735 &     & 175 &    & 21 &    & 1 &   &   &   &  
+\end{tabular}
+
+Well, we see for the some cases that the coefficients
+of the factorial polynomials that sum up to powers are
+Stirling numbers. Can we prove it?
+
+We give it a try with a proof by induction.
+Any of the examples above serves as a base case that shows that
+
+\begin{equation}
+x^n = \stirlingTwo{n}{n}x^{(n)} + \stirlingTwo{n}{n-1}x^{(n-1)} + \dots + \stirlingTwo{n}{1}x^{(1)}.
+\end{equation}
+
+We need to show that, if this equation holds for $x^n$, it holds for $x^{n+1}$:
+
+\begin{equation}
+x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
+          \stirlingTwo{n+1}{n}x^{(n)} + \dots + 
+          \stirlingTwo{n+1}{1}x^{(1)}
+\end{equation}
+
+We start with the base case and multiply $x$ on both sides.
+On the left-hand side, we get $x^{n+1}$. But what do we get
+on the right-hand side?
+Well, for each term $x^{(k)}$, we get $xx^{(k)}$.
+We have never really thought about what the result of $xx^{(k)}$ is.
+We only know that $(x-k)x^{(k)} = x^{(k+1)}$.
+So, let us stick to what we know and try to get it in.
+A simple way is to express $x$ as an expression with a cameo of $x-k$,
+for instance: $x = x-k+k$.
+With this expression, we have $(x-k+k)x^{(k)}$.
+We distribute $x^{(k)}$ over the sum and get
+
+\[
+(x-k)x^{(k)} + kx^{(k)} = x^{(k+1)} + kx^{(k)}.
+\]
+
+On the right-hand side, we, hence, get such a sum for each term:
+
+\[
+\stirlingTwo{n+1}{n+1}\left(x^{(n+1)} + nx^{(n)}\right) + 
+\stirlingTwo{n+1}{n}\left(x^{(n)} + (n-1)x^{(n-1)}\right) + \dots + 
+\stirlingTwo{n+1}{1}\left(x^{(2)} + 1 x^{(1)}\right)
+\]
+
+We can now regroup the terms, so that the elements with equal
+``exponents'' appear together. This gives pairs composed
+of the $x^{(k)}$ that was already there and the new one
+that we generated by multiplying by $x$:
+
+\begin{align*}
+\stirlingTwo{n}{n}x^{(n+1)} & + \\
+n\stirlingTwo{n}{n}x^{(n)}  + 
+\stirlingTwo{n}{n-1}x^{(n)} & + \\
+(n-1)\stirlingTwo{n}{n-1}x^{(n-1)} + 
+\stirlingTwo{n}{n-2}x^{(n-1)} & + \\
+\dots & + \\
+\stirlingTwo{n}{1}x^{(1)} &
+\end{align*}
+
+We regroup a bit more, in particular, we
+factor the $x^{(k)}$ out, so that we obtain
+factors that consist only of expression containing
+Stirling numbers in front of the $x$es:
+
+\begin{align*}
+\stirlingTwo{n}{n}x^{(n+1)} & + \\
+\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)} & + \\ 
+\dots & + \\
+\stirlingTwo{n}{1}x^{(1)} &
+\end{align*}
+
+You might remember the identity
+
+\begin{equation}
+\stirlingTwo{n+1}{k+1} = k\stirlingTwo{n}{k+1} + \stirlingTwo{n}{k},
+\end{equation}
+
+which is ``Pascal's rule'' for Stirling numbers of the second kind.
+This is exactly what we see in each group! Just make sure that
+what you see in the factor in front of each $x^{(k)}$ is $k$,
+\eg\
+
+\[
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)}
+\]
+
+where $k = n-1$.
+
+Now, all terms that show this pattern,
+can be simplified to
+
+\[
+\stirlingTwo{n+1}{k+1}
+\]
+
+leaving only the first and the last term.
+But since the first and the last are $\stirlingTwo{n}{n}$ and
+$\stirlingTwo{n}{1}$ respectively, which are both just 1,
+that is not a problem. We get as desired
+
+\begin{equation}
+x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
+          \stirlingTwo{n+1}{n}x^{(n)} + \dots + 
+          \stirlingTwo{n+1}{1}x^{(1)}\qed
+\end{equation}
+
+and that completes the proof.
+
+
+
 \ignore{
-=> now show some more representations (in a triangle)
-=> for those of you that are already suffer from
-   triangle paranoia: stirling numbers of the second kind
 => stirling numbers of the second kind => proof (inductive), 4.17-4.18
    using the stirling number formula
 => recursive formula:

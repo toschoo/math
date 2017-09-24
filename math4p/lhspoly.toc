@@ -5,9 +5,9 @@
 \contentsline {section}{\numberline {1.3}The Difference Engine}{19}
 \contentsline {section}{\numberline {1.4}Differences and Binomial Coefficients}{29}
 \contentsline {section}{\numberline {1.5}Umbral Calculus}{38}
-\contentsline {section}{\numberline {1.6}Roots}{44}
-\contentsline {section}{\numberline {1.7}Vieta's Formulas}{55}
-\contentsline {section}{\numberline {1.8}Factoring Polynomials}{61}
-\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{65}
-\contentsline {section}{\numberline {1.10}Hensel Lifting}{79}
-\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{79}
+\contentsline {section}{\numberline {1.6}Roots}{47}
+\contentsline {section}{\numberline {1.7}Vieta's Formulas}{58}
+\contentsline {section}{\numberline {1.8}Factoring Polynomials}{64}
+\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{68}
+\contentsline {section}{\numberline {1.10}Hensel Lifting}{82}
+\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{82}
