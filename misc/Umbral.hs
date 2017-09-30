@@ -6,6 +6,8 @@ where
 
   import qualified Perm as Perm
   import           Poly
+  import           Data.List (sortOn, groupBy, zipWith)
+  import           Data.Function (on)
 
   -------------------------------------------------------------------------
   -- generate the linear factors of x^(n)
@@ -70,15 +72,15 @@ where
   -- as pairs (stirling2 n k, x^(k))
   -------------------------------------------------------------------------
   fpPowTerms :: Integer -> [(Integer, Poly Integer)]
-  fpPowTerms n =  [(Perm.stirling2 n k, facpoly k) | k <- [1..n]]
+  fpPowTerms n =  [(Perm.stirling2 n k, facpoly k) | k <- [0..n]]
 
   -------------------------------------------------------------------------
-  -- create the facpoly terms of polynomial
+  -- create the facpoly terms of polynomials
   -- a_1x^n +  a_2x^(n-1) + ...
   -- [scale (a_1 * stirling2 n k) (facpoly k), ...]
   -------------------------------------------------------------------------
-  fpPolyTerms :: Poly Integer -> [Poly Integer]
-  fpPolyTerms (P cs) = first ++ concat (go 1 $ tail cs)
+  fpPolyScaled :: Poly Integer -> [Poly Integer]
+  fpPolyScaled (P cs) = first ++ concat (go 1 $ tail cs)
     where s c (n,p) = scale (c*n) p
           go _ [] = []
           go k (x:xs) | x == 0    = go (k+1) xs
@@ -86,4 +88,29 @@ where
                                     go (k+1) xs
           first = case cs of
                     [] -> []
-                    (x:xs) -> [scale x (facpoly 0)]
+                    (x:_) -> [scale x (facpoly 0)]
+
+  -------------------------------------------------------------------------
+  -- create the facpoly terms of polynomials 
+  -- as pairs of coefficient and polynomial
+  -------------------------------------------------------------------------
+  fpPolyTerms :: Poly Integer -> [(Integer,Poly Integer)]
+  fpPolyTerms (P cs) = [foldl ab (0,P[0]) p | p <- p2]
+    where s c (n,p) = (c*n, p)
+          p1 = first ++ concat (go 1 $ tail cs)
+          p2 = groupBy ((==) `on` snd) $ sortOn (degree . snd) p1
+          ab a b = (fst a + fst b, snd b)
+          first = case cs of
+                    [] -> []
+                    (x:_) -> [(x,(facpoly 0))]
+          go _ [] = []
+          go k (x:xs) | x == 0    = go (k+1) xs
+                      | otherwise = map (s x) (fpPowTerms k) :
+                                    go (k+1) xs
+
+  -------------------------------------------------------------------------
+  -- inverse of the previous
+  -------------------------------------------------------------------------
+  sumFpPolyTerms :: [(Integer, Poly Integer)] -> Poly Integer
+  sumFpPolyTerms ps = sump (map expand ps)
+    where expand (a,b) = sump (take (fromIntegral a) (repeat b))
