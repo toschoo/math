@@ -613,11 +613,143 @@ x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
 
 and that completes the proof.
 
+The following function exploits Stirling numbers
+to compute powers by means of factorial polynomials:
 
+\begin{minipage}{\textwidth}
+\begin{code}
+  stirpow :: Natural -> Poly Natural
+  stirpow n = sump [scale (Perm.stirling2 n k) (facpoly k) | k <- [1..n]]
+\end{code}
+\end{minipage}
+
+This function is a lame function, of course.
+Powers are not difficult to compute at all,
+so why using factorial polynomials in the first place?
+More interesting, at least from theoretical perspective,
+is the following function that for a given power
+shows the factorial polynomials and the coefficients
+indicating how often each factorial polynomial appears
+in the power:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fpPowTerms :: Natural -> [(Natural, Poly Natural)]
+  fpPowTerms 0  =  [(1,P [1])]
+  fpPowTerms n  =  [(Perm.stirling2 n k, facpoly k) | k <- [0..n]]
+\end{code}
+\end{minipage}
 
 \ignore{
-=> stirling numbers of the second kind => proof (inductive), 4.17-4.18
-   using the stirling number formula
+why do we need to handle the case n=0 explicitly?
+}
+
+The function makes use of the |stirling2| function that we defined
+in the first chapter and so, we are obliged to use the concrete type
+|Natural|.
+
+Here is a function to test the results:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  sumFpPolyTerms :: [(Integer, Poly Integer)] -> Poly Integer
+  sumFpPolyTerms ps = sump (map expand ps)
+    where expand (a,b) = sump (take (fromIntegral a) (repeat b))
+\end{code}
+\end{minipage}
+
+The function is quite simple. Basically, it just sums up the list
+of polynomials that we pass in. Interesting, however, is the |expand|
+subfunction. For a tuple $(n,p)$ where $n$ is a number and $p$ is a
+polynomial, |expand| repeats $p$ $n$ times. We could very well
+just scale $p$ by $n$. But, I think, the expanding function shows
+much better what is going on.
+
+Here is a test for the first 10 powers,
+|map (sumFpPolyTerms . fpPowTerms) [0..9]|:
+
+\begin{minipage}{\textwidth}
+\begin{center}
+|P [1]|\\
+|P [0,1]|\\
+|P [0,0,1]|\\
+|P [0,0,0,1]|\\
+|P [0,0,0,0,1]|\\
+|P [0,0,0,0,0,1]|\\
+|P [0,0,0,0,0,0,1]|\\
+|P [0,0,0,0,0,0,0,1]|\\
+|P [0,0,0,0,0,0,0,0,1]|\\
+|P [0,0,0,0,0,0,0,0,0,1]|\\
+\end{center}
+\end{minipage}
+
+Once we can represent powers by factorial polynomials,
+we are able to represent any polynomial by factorial polynomials,
+since polynomials are just sums of scaled powers of $x$.
+Here is a function that does that:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  fpPolyTerms :: Poly Integer -> [(Integer,Poly Integer)]
+  fpPolyTerms (P cs)  = [foldl ab (0,P[0]) p | p <- p2]
+    where s c (n,p)   = (c*n, p)
+          p1          = first ++ concat (go 1 (tail cs))
+          p2          = groupBy ((==) `on` snd) (sortOn (degree . snd) p1)
+          ab a b      = (fst a + fst b, snd b)
+          first       =  case cs of
+                         [] -> []
+                         (x:_) -> [(x,(facpoly 0))]
+          go _ []     = []
+          go k (x:xs)  |  x == 0     =  go (k+1) xs
+                       |  otherwise  =  map (s x) (fpPowTerms k) : go (k+1) xs
+\end{code}
+\end{minipage}
+
+\ignore{
+describe this function
+}
+
+We test sum polynomials and see
+
+\begin{minipage}{\textwidth}
+|sumFpPolyTerms (fpPolyTerms (P [0,0,0,0,1]))|\\
+|P [0,0,0,0,1]|\\
+|sumFpPolyTerms (fpPolyTerms (P [1,1,1,1,1]))|\\
+|P [1,1,1,1,1]|\\
+|sumFpPolyTerms (fpPolyTerms (P [5,4,3,2,1]))|\\
+|P [5,4,3,2,1]|\\
+|sumFpPolyTerms (fpPolyTerms (P [1,2,3,4,5]))|\\
+|P [1,2,3,4,5]|
+\end{minipage}
+
+In the next experiment we retrieve the coefficients
+for polynomials of the form 
+$x^n + x^{n-1} + \dots + 1$.
+We apply
+|map (map fst . fpPolyTerms)|
+to
+
+\begin{minipage}{\textwidth}
+\begin{center}
+ |[P [1],|\\
+ | P [1,1],|\\
+ | P [1,1,1],|\\
+ | P [1,1,1,1],|\\
+ | P [1,1,1,1,1],|\\
+ | P [1,1,1,1,1,1]]|
+ | P [1,1,1,1,1,1,1]]|
+\end{center}
+\end{minipage}
+
+and obtain
+
+\begin{minipage}{\textwidth}
+\begin{center}
+[1],[1,1],[1,2,1],[1,3,4,1],[1,4,11,7,1],[1,5,26,32,11,1],[1,6,57,122,76,16,1]
+\end{center}
+\end{minipage}
+
+\ignore{
 => recursive formula:
    stirling numbers of the first kind 4.12
 => compute stirling numbers of the first kind faster

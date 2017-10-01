@@ -4992,6 +4992,7 @@ To illustrate that let us look at an
 algorithm that generates all possibilities to
 partition a set into two partitions:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5036,6 +5037,7 @@ partition a set into two partitions:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 This innocent looking lines of code are quite tricky.
 The basic idea is implemented in \ensuremath{\Varid{p2}}:
@@ -5309,6 +5311,7 @@ like \ensuremath{\Varid{length}} or \ensuremath{\Varid{take}} quite often;
 with \ensuremath{\Conid{Natural}}, we would have to add a lot of conversions,
 which is much harder to read.}
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5330,6 +5333,7 @@ which is much harder to read.}
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 The \ensuremath{\Varid{go}}-part of this function applied to base $b = 3$
 and, say, \num{1024} would develop
@@ -5354,6 +5358,7 @@ into an \acronym{rgs}.
 First we fill the number with leading zeros
 until it has the desired size $n$:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5384,6 +5389,7 @@ until it has the desired size $n$:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Note that, if the length of the result of \ensuremath{\Varid{toBaseN}} exceeds $n$,
 the function yields the empty list.
@@ -5396,6 +5402,7 @@ using \ensuremath{\Varid{rgs}} later.
 We now define a wrapper around this conversion function
 to apply the restrictions:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5430,6 +5437,7 @@ to apply the restrictions:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 This function converts a decimal number
 to an \acronym{rgs} and checks if the result
@@ -5442,6 +5450,7 @@ and the \acronym{rgs}.
 
 We define the growth restriction as follows:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5486,6 +5495,7 @@ We define the growth restriction as follows:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Since we want to see
 only partitionings with $b$ subsets,
@@ -5498,6 +5508,7 @@ that there must be $b$ different digits
 in the resulting \acronym{rgs}.
 The restriction is easily implemented as:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5509,10 +5520,12 @@ The restriction is easily implemented as:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 We apply this restrictions in yet another wrapper 
 to call \ensuremath{\Varid{toRgs}}:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5532,11 +5545,13 @@ to call \ensuremath{\Varid{toRgs}}:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Finally, we can implement a loop
 that counts \acronym{rgs} up from 1 to the last number
 with leading 0:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5582,6 +5597,7 @@ with leading 0:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Note that we jump over numbers that do not obey
 the restrictions: we continue always with \ensuremath{\Varid{go}} applied to $j$, 
@@ -5593,24 +5609,29 @@ When we call countRgs on 3, the numbers of partitions we want to have,
 and 4, the number of elements in the original set,
 we get the following \acronym{rgs}:
 
+\begin{minipage}{\textwidth}
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1},\mathrm{2}\mskip1.5mu]}\\
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{0},\mathrm{2}\mskip1.5mu]}\\
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{2}\mskip1.5mu]}\\
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{0}\mskip1.5mu]}\\
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{2}\mskip1.5mu]},
+\end{minipage}
 
 which correspond to the partitionings of $\lbrace 1,2,3,4\rbrace$:
 
+\begin{minipage}{\textwidth}
 $\lbrace 1,2\rbrace, \lbrace 3  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1,3\rbrace, \lbrace 2  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2,3\rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1,4\rbrace, \lbrace 2  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2,4\rbrace, \lbrace 3  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2  \rbrace, \lbrace 3,4\rbrace$.
+\end{minipage}
 
 This analogy between \acronym{rgs} and partitions is implemented as:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5655,6 +5676,7 @@ This analogy between \acronym{rgs} and partitions is implemented as:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 The function receives three arguments:
 The \acronym{rgs}, the original set we want to partition
@@ -5685,6 +5707,7 @@ and, hence, to a coding error.
 
 We now can put everything together:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5737,6 +5760,7 @@ We now can put everything together:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 The function \ensuremath{\Varid{nPartitions}} receives 
 the number of partitions we would like to have, $k$,
@@ -5838,6 +5862,7 @@ resembles Pascal's rule:
 
 This translates into Haskell as:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -5880,6 +5905,7 @@ This translates into Haskell as:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 The code is almost a one-to-one translation
 of the mathematical formulation.
@@ -5973,7 +5999,7 @@ he started to fear for his life again, because
 he discovered a trade secret of the glassmakers of Venice
 and returned to England with the help of his friend
 Isaac Newton. Much of Stirling's work
-is in fact tightly coupled with that of Newton.
+is in fact tightly related to that of Newton.
 Stirling very much promoted Newton's discoveries and methods,
 for instance
 in his book \term{Methodus differentialis}.
@@ -6013,6 +6039,7 @@ Therefore, not all permutations are relevant,
 but only those that change the order after the first element.
 An orbit permutating function aware of this peculiarity is:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -6048,6 +6075,7 @@ An orbit permutating function aware of this peculiarity is:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 This function just passes through all orbits
 of the input permutation
@@ -6074,6 +6102,7 @@ For instance, \ensuremath{\Varid{oPerms}\;[\mskip1.5mu \mathrm{3},\mathrm{4}\msk
 Now, for one possible cycle, we can just apply
 all permutations resulting from \ensuremath{\Varid{permOrbits}}:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -6085,12 +6114,14 @@ all permutations resulting from \ensuremath{\Varid{permOrbits}}:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 This function creates all permutations that are possible
 given one partitioning of the input set.
 We now map this function on all possible partitionings
 with $k$ subsets:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -6106,6 +6137,7 @@ with $k$ subsets:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 Applied on sets with $n$ elements, for $n = 1 \dots  7$,
 and $k = 1 \dots n$, \ensuremath{\Varid{permsWithCycles}} yields results of length:
@@ -6145,6 +6177,7 @@ and can be calculated as
 
 In Haskell, this would be:
 
+\begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
@@ -6183,6 +6216,7 @@ In Haskell, this would be:
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 We have seen that the sum of all Stirling numbers of the second kind 
 in one row, \ie\ $\sum_{k=1}^{n}{\stirlingTwo{n}{k}}$,

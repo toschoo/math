@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  16 SEP 2017 13:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  1 OCT 2017 18:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1249,7 +1249,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 \openout3 = `lhsinduc.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5085--5087
+Underfull \hbox (badness 10000) in paragraph at lines 5087--5089
 
  []
 
@@ -1260,7 +1260,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 5085--5087
 
 \openout3 = `lhsinduc.ptb'.
 
- [54]
+
+Overfull \vbox (0.2957pt too high) has occurred while \output is active []
+
+
+[54]
 \openout3 = `lhsinduc.ptb'.
 
 \openout3 = `lhsinduc.ptb'.
@@ -1281,7 +1285,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 5085--5087
 \openout3 = `lhsinduc.ptb'.
 
 
-Overfull \hbox (0.81165pt too wide) in paragraph at lines 6074--6076
+Overfull \hbox (0.81165pt too wide) in paragraph at lines 6102--6104
 []\OT1/cmr/m/n/10.95 Now, for one pos-si-ble cy-cle, we can just ap-ply all per
 -mu-ta-tions re-sult-ing from $[]$: 
  []
@@ -1291,7 +1295,7 @@ Overfull \hbox (0.81165pt too wide) in paragraph at lines 6074--6076
 \openout3 = `lhsinduc.ptb'.
 
 [60]
-Overfull \hbox (25.36967pt too wide) in paragraph at lines 6113--6122
+Overfull \hbox (25.36967pt too wide) in paragraph at lines 6145--6154
 [][] 
  []
 
@@ -1310,7 +1314,7 @@ Overfull \hbox (25.36967pt too wide) in paragraph at lines 6113--6122
 \openout3 = `lhsinduc.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6581--6619
+Underfull \hbox (badness 10000) in paragraph at lines 6615--6653
 
  []
 
@@ -1326,10 +1330,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 6581--6619
 
 Package amsmath Warning: Foreign command \atop;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 6895.
+(amsmath)                 on input line 6929.
 
 
-Overfull \hbox (19.06975pt too wide) in paragraph at lines 6903--6912
+Overfull \hbox (19.06975pt too wide) in paragraph at lines 6937--6946
 [][] 
  []
 
@@ -1340,7 +1344,7 @@ Overfull \hbox (19.06975pt too wide) in paragraph at lines 6903--6912
 Here is how much of TeX's memory you used:
  35601 strings out of 493029
  849485 string characters out of 6136234
- 1029021 words of memory out of 5000000
+ 1028021 words of memory out of 5000000
  38609 multiletter control sequences out of 15000+600000
  18318 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1363,7 +1367,7 @@ nts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lhsinduc.pdf (69 pages, 425912 bytes).
+Output written on lhsinduc.pdf (69 pages, 425941 bytes).
 PDF statistics:
  307 PDF objects out of 1000 (max. 8388607)
  214 compressed objects within 3 object streams

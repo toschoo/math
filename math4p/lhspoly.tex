@@ -4218,11 +4218,224 @@ x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
 
 and that completes the proof.
 
+The following function exploits Stirling numbers
+to compute powers by means of factorial polynomials:
 
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{stirpow}\mathbin{::}\Conid{Natural}\to \Conid{Poly}\;\Conid{Natural}{}\<[E]%
+\\
+\>[3]{}\Varid{stirpow}\;\Varid{n}\mathrel{=}\Varid{sump}\;[\mskip1.5mu \Varid{scale}\;(\Varid{\Conid{Perm}.stirling2}\;\Varid{n}\;\Varid{k})\;(\Varid{facpoly}\;\Varid{k})\mid \Varid{k}\leftarrow [\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This function is a lame function, of course.
+Powers are not difficult to compute at all,
+so why using factorial polynomials in the first place?
+More interesting, at least from theoretical perspective,
+is the following function that for a given power
+shows the factorial polynomials and the coefficients
+indicating how often each factorial polynomial appears
+in the power:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{17E}{@{}l@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fpPowTerms}\mathbin{::}\Conid{Natural}\to [\mskip1.5mu (\Conid{Natural},\Conid{Poly}\;\Conid{Natural})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{fpPowTerms}\;\mathrm{0}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}[\mskip1.5mu (\mathrm{1},\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{fpPowTerms}\;\Varid{n}{}\<[17]%
+\>[17]{}\mathrel{=}{}\<[17E]%
+\>[20]{}[\mskip1.5mu (\Varid{\Conid{Perm}.stirling2}\;\Varid{n}\;\Varid{k},\Varid{facpoly}\;\Varid{k})\mid \Varid{k}\leftarrow [\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{n}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
 
 \ignore{
-=> stirling numbers of the second kind => proof (inductive), 4.17-4.18
-   using the stirling number formula
+why do we need to handle the case n=0 explicitly?
+}
+
+The function makes use of the \ensuremath{\Varid{stirling2}} function that we defined
+in the first chapter and so, we are obliged to use the concrete type
+\ensuremath{\Conid{Natural}}.
+
+Here is a function to test the results:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sumFpPolyTerms}\mathbin{::}[\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]\to \Conid{Poly}\;\Conid{Integer}{}\<[E]%
+\\
+\>[3]{}\Varid{sumFpPolyTerms}\;\Varid{ps}\mathrel{=}\Varid{sump}\;(\Varid{map}\;\Varid{expand}\;\Varid{ps}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{expand}\;(\Varid{a},\Varid{b})\mathrel{=}\Varid{sump}\;(\Varid{take}\;(\Varid{fromIntegral}\;\Varid{a})\;(\Varid{repeat}\;\Varid{b})){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function is quite simple. Basically, it just sums up the list
+of polynomials that we pass in. Interesting, however, is the \ensuremath{\Varid{expand}}
+subfunction. For a tuple $(n,p)$ where $n$ is a number and $p$ is a
+polynomial, \ensuremath{\Varid{expand}} repeats $p$ $n$ times. We could very well
+just scale $p$ by $n$. But, I think, the expanding function shows
+much better what is going on.
+
+Here is a test for the first 10 powers,
+\ensuremath{\Varid{map}\;(\Varid{sumFpPolyTerms}\mathbin{\circ}\Varid{fpPowTerms})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{9}\mskip1.5mu]}:
+
+\begin{minipage}{\textwidth}
+\begin{center}
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\end{center}
+\end{minipage}
+
+Once we can represent powers by factorial polynomials,
+we are able to represent any polynomial by factorial polynomials,
+since polynomials are just sums of scaled powers of $x$.
+Here is a function that does that:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{24E}{@{}l@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{38E}{@{}l@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{fpPolyTerms}\mathbin{::}\Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu (\Conid{Integer},\Conid{Poly}\;\Conid{Integer})\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{fpPolyTerms}\;(\Conid{P}\;\Varid{cs}){}\<[23]%
+\>[23]{}\mathrel{=}[\mskip1.5mu \Varid{foldl}\;\Varid{ab}\;(\mathrm{0},\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu])\;\Varid{p}\mid \Varid{p}\leftarrow \Varid{p2}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{s}\;\Varid{c}\;(\Varid{n},\Varid{p}){}\<[23]%
+\>[23]{}\mathrel{=}(\Varid{c}\mathbin{*}\Varid{n},\Varid{p}){}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{p1}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{first}\plus \Varid{concat}\;(\Varid{go}\;\mathrm{1}\;(\Varid{tail}\;\Varid{cs})){}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{p2}{}\<[23]%
+\>[23]{}\mathrel{=}\Varid{groupBy}\;((\equiv )\mathbin{`\Varid{on}`}\Varid{snd})\;(\Varid{sortOn}\;(\Varid{degree}\mathbin{\circ}\Varid{snd})\;\Varid{p1}){}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{ab}\;\Varid{a}\;\Varid{b}{}\<[23]%
+\>[23]{}\mathrel{=}(\Varid{fst}\;\Varid{a}\mathbin{+}\Varid{fst}\;\Varid{b},\Varid{snd}\;\Varid{b}){}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{first}{}\<[23]%
+\>[23]{}\mathrel{=}{}\<[26]%
+\>[26]{}\mathbf{case}\;\Varid{cs}\;\mathbf{of}{}\<[E]%
+\\
+\>[26]{}[\mskip1.5mu \mskip1.5mu]\to [\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[26]{}(\Varid{x}\mathbin{:\char95 })\to [\mskip1.5mu (\Varid{x},(\Varid{facpoly}\;\mathrm{0}))\mskip1.5mu]{}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[23]%
+\>[23]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[5]{}\hsindent{6}{}\<[11]%
+\>[11]{}\Varid{go}\;\Varid{k}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[24]%
+\>[24]{}\mid {}\<[24E]%
+\>[27]{}\Varid{x}\equiv \mathrm{0}{}\<[38]%
+\>[38]{}\mathrel{=}{}\<[38E]%
+\>[41]{}\Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1})\;\Varid{xs}{}\<[E]%
+\\
+\>[24]{}\mid {}\<[24E]%
+\>[27]{}\Varid{otherwise}{}\<[38]%
+\>[38]{}\mathrel{=}{}\<[38E]%
+\>[41]{}\Varid{map}\;(\Varid{s}\;\Varid{x})\;(\Varid{fpPowTerms}\;\Varid{k})\mathbin{:}\Varid{go}\;(\Varid{k}\mathbin{+}\mathrm{1})\;\Varid{xs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+\ignore{
+describe this function
+}
+
+We test sum polynomials and see
+
+\begin{minipage}{\textwidth}
+\ensuremath{\Varid{sumFpPolyTerms}\;(\Varid{fpPolyTerms}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]))}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Varid{sumFpPolyTerms}\;(\Varid{fpPolyTerms}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]))}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Varid{sumFpPolyTerms}\;(\Varid{fpPolyTerms}\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu]))}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\Varid{sumFpPolyTerms}\;(\Varid{fpPolyTerms}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]))}\\
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{5}\mskip1.5mu]}
+\end{minipage}
+
+In the next experiment we retrieve the coefficients
+for polynomials of the form 
+$x^n + x^{n-1} + \dots + 1$.
+We apply
+\ensuremath{\Varid{map}\;(\Varid{map}\;\Varid{fst}\mathbin{\circ}\Varid{fpPolyTerms})}
+to
+
+\begin{minipage}{\textwidth}
+\begin{center}
+ \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu],}\\
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],}\\
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],}\\
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],}\\
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],}\\
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+\end{center}
+\end{minipage}
+
+and obtain
+
+\begin{minipage}{\textwidth}
+\begin{center}
+[1],[1,1],[1,2,1],[1,3,4,1],[1,4,11,7,1],[1,5,26,32,11,1],[1,6,57,122,76,16,1]
+\end{center}
+\end{minipage}
+
+\ignore{
 => recursive formula:
    stirling numbers of the first kind 4.12
 => compute stirling numbers of the first kind faster

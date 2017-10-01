@@ -44,6 +44,7 @@ To illustrate that let us look at an
 algorithm that generates all possibilities to
 partition a set into two partitions:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   twoPartitions :: (Eq a) => [a] -> [([a],[a])]
   twoPartitions  =  fltr . p2
@@ -53,6 +54,7 @@ partition a set into two partitions:
            fltr   =  filter (\p -> not (  null (fst p) ||
                                           null (snd p)))
 \end{code}
+\end{minipage}
 
 This innocent looking lines of code are quite tricky.
 The basic idea is implemented in |p2|:
@@ -326,6 +328,7 @@ like |length| or |take| quite often;
 with |Natural|, we would have to add a lot of conversions,
 which is much harder to read.}
 
+\begin{minipage}{\textwidth}
 \begin{code}
   toBaseN :: Int -> Int -> [Int]
   toBaseN b = reverse . go 
@@ -333,6 +336,7 @@ which is much harder to read.}
                   (0,r) -> [r]
                   (q,r) -> r : go q
 \end{code}
+\end{minipage}
 
 The |go|-part of this function applied to base $b = 3$
 and, say, \num{1024} would develop
@@ -357,6 +361,7 @@ into an \acronym{rgs}.
 First we fill the number with leading zeros
 until it has the desired size $n$:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   rgs :: Int -> Int -> Int -> [Int]
   rgs b n i =  let  r  =  toBaseN b i
@@ -364,6 +369,7 @@ until it has the desired size $n$:
                     p  =  if d > 0 then take d (repeat 0) else []
                in if d < 0 then [] else p ++ r
 \end{code}
+\end{minipage}
 
 Note that, if the length of the result of |toBaseN| exceeds $n$,
 the function yields the empty list.
@@ -376,6 +382,7 @@ using |rgs| later.
 We now define a wrapper around this conversion function
 to apply the restrictions:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   toRgs :: ([Int] -> Bool) -> 
            Int -> Int -> Int -> (Int, [Int])
@@ -383,6 +390,7 @@ to apply the restrictions:
     where go r  |  not (rst r)  =  toRgs rst b n (i + 1)
                 |  otherwise    =  (i,r)
 \end{code}
+\end{minipage}
 
 This function converts a decimal number
 to an \acronym{rgs} and checks if the result
@@ -395,6 +403,7 @@ and the \acronym{rgs}.
 
 We define the growth restriction as follows:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   rGrowth :: [Int] -> Bool
   rGrowth  []      =  True
@@ -403,6 +412,7 @@ We define the growth restriction as follows:
            go d  (z:zs)  =  if z - d > 1 then False
                             else  let d' = max d z in go d' zs
 \end{code}
+\end{minipage}
 
 Since we want to see
 only partitionings with $b$ subsets,
@@ -415,24 +425,29 @@ that there must be $b$ different digits
 in the resulting \acronym{rgs}.
 The restriction is easily implemented as:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   hasN :: Int -> [Int] -> Bool
   hasN b r = length (nub r) == b
 \end{code}
+\end{minipage}
 
 We apply this restrictions in yet another wrapper 
 to call |toRgs|:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   toRgsN :: Int -> Int -> Int -> (Int, [Int])
   toRgsN b = toRgs rst b
      where rst r = rGrowth r  && hasN  b r
 \end{code}
+\end{minipage}
 
 Finally, we can implement a loop
 that counts \acronym{rgs} up from 1 to the last number
 with leading 0:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   countRgs :: Int -> Int -> [[Int]]
   countRgs 1 n  =  [rgs 1 n 1]
@@ -442,6 +457,7 @@ with leading 0:
     where go i  =  let (j,r) = toRgsN b n i 
                    in if head r /= 0 then [] else r : go (j+1)
 \end{code} 
+\end{minipage}
 
 Note that we jump over numbers that do not obey
 the restrictions: we continue always with |go| applied to $j$, 
@@ -453,24 +469,29 @@ When we call countRgs on 3, the numbers of partitions we want to have,
 and 4, the number of elements in the original set,
 we get the following \acronym{rgs}:
 
+\begin{minipage}{\textwidth}
 |[0,0,1,2]|\\
 |[0,1,0,2]|\\
 |[0,1,1,2]|\\
 |[0,1,2,0]|\\
 |[0,1,2,1]|\\
 |[0,1,2,2]|,
+\end{minipage}
 
 which correspond to the partitionings of $\lbrace 1,2,3,4\rbrace$:
 
+\begin{minipage}{\textwidth}
 $\lbrace 1,2\rbrace, \lbrace 3  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1,3\rbrace, \lbrace 2  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2,3\rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1,4\rbrace, \lbrace 2  \rbrace, \lbrace 4  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2,4\rbrace, \lbrace 3  \rbrace$\\
 $\lbrace 1  \rbrace, \lbrace 2  \rbrace, \lbrace 3,4\rbrace$.
+\end{minipage}
 
 This analogy between \acronym{rgs} and partitions is implemented as:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   rgs2set :: (Eq a) => [Int] -> [a] -> [[a]] -> [[a]]
   rgs2set [] _  ps           =  ps
@@ -480,6 +501,7 @@ This analogy between \acronym{rgs} and partitions is implemented as:
            ins 0 p (z:zs)    =  (p:z) : zs
            ins i p (z:zs)    =  z : ins (i-1) p zs 
 \end{code}
+\end{minipage}
 
 The function receives three arguments:
 The \acronym{rgs}, the original set we want to partition
@@ -510,6 +532,7 @@ and, hence, to a coding error.
 
 We now can put everything together:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   nPartitions :: (Eq a) => Int -> [a] -> [[[a]]]
   nPartitions _ []  =  []
@@ -519,6 +542,7 @@ We now can put everything together:
     where  go []      =  []
            go (r:rs)  =  rgs2set r xs (take k (repeat [])) : go rs
 \end{code}
+\end{minipage}
 
 The function |nPartitions| receives 
 the number of partitions we would like to have, $k$,
@@ -620,6 +644,7 @@ resembles Pascal's rule:
 
 This translates into Haskell as:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   stirling2 :: Natural -> Natural -> Natural
   stirling2 0 _  =  0
@@ -629,6 +654,7 @@ This translates into Haskell as:
                  |  otherwise  =  k *  (stirling2 (n-1) k) +
                                        (stirling2 (n-1) (k-1))
 \end{code}
+\end{minipage}
 
 The code is almost a one-to-one translation
 of the mathematical formulation.
@@ -722,7 +748,7 @@ he started to fear for his life again, because
 he discovered a trade secret of the glassmakers of Venice
 and returned to England with the help of his friend
 Isaac Newton. Much of Stirling's work
-is in fact tightly coupled with that of Newton.
+is in fact tightly related to that of Newton.
 Stirling very much promoted Newton's discoveries and methods,
 for instance
 in his book \term{Methodus differentialis}.
@@ -762,6 +788,7 @@ Therefore, not all permutations are relevant,
 but only those that change the order after the first element.
 An orbit permutating function aware of this peculiarity is:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   permOrbits :: (Eq a) => Perm a -> [Perm a]
   permOrbits []      =  [[]]
@@ -769,6 +796,7 @@ An orbit permutating function aware of this peculiarity is:
     where  oPerms []      =  []
            oPerms (x:xs)  =  [x:ps | ps <- perms xs] 
 \end{code}
+\end{minipage}
 
 This function just passes through all orbits
 of the input permutation
@@ -795,21 +823,25 @@ For instance, |oPerms [3, 4]| is just |[3,4]|.
 Now, for one possible cycle, we can just apply
 all permutations resulting from |permOrbits|:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   permsOfCycle :: (Eq a) => Perm a -> [a] -> [[a]]
   permsOfCycle os xs = [permute o xs | o <- permOrbits os]
 \end{code}
+\end{minipage}
 
 This function creates all permutations that are possible
 given one partitioning of the input set.
 We now map this function on all possible partitionings
 with $k$ subsets:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   permsWithCycles :: (Eq a) => Int -> [a] -> [[a]]
   permsWithCycles k xs = concat [
     permsOfCycle x xs | x <- nPartitions k xs]
 \end{code}
+\end{minipage}
 
 Applied on sets with $n$ elements, for $n = 1 \dots  7$,
 and $k = 1 \dots n$, |permsWithCycles| yields results of length:
@@ -849,6 +881,7 @@ and can be calculated as
 
 In Haskell, this would be:
 
+\begin{minipage}{\textwidth}
 \begin{code}
   stirling1 :: Natural -> Natural -> Natural
   stirling1 0 _  =  0
@@ -858,6 +891,7 @@ In Haskell, this would be:
                  |  otherwise  = (n-1) *  (stirling1 (n-1) k) + 
                                           (stirling1 (n-1) (k-1))
 \end{code}
+\end{minipage}
 
 We have seen that the sum of all Stirling numbers of the second kind 
 in one row, \ie\ $\sum_{k=1}^{n}{\stirlingTwo{n}{k}}$,

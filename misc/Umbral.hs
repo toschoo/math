@@ -72,7 +72,8 @@ where
   -- as pairs (stirling2 n k, x^(k))
   -------------------------------------------------------------------------
   fpPowTerms :: Integer -> [(Integer, Poly Integer)]
-  fpPowTerms n =  [(Perm.stirling2 n k, facpoly k) | k <- [0..n]]
+  fpPowTerms 0 =  [(1,P[1])]
+  fpPowTerms n =  [(Perm.stirling2 n k, facpoly k) | k <- [1..n]]
 
   -------------------------------------------------------------------------
   -- create the facpoly terms of polynomials
