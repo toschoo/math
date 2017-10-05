@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  5 OCT 2017 20:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  5 OCT 2017 23:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1565,11 +1565,6 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 \openout3 = `lhspoly.ptb'.
 
  [41] [42] [43] [44]
-Overfull \hbox (25.36967pt too wide) in paragraph at lines 4103--4112
-[][] 
- []
-
-
 Overfull \hbox (7.5636pt too wide) detected at line 4154
 [] [] \OT1/cmr/m/n/10.95 + [] [] + [] + [] []
  []
@@ -1588,7 +1583,7 @@ Overfull \hbox (7.5636pt too wide) detected at line 4154
 \openout3 = `lhspoly.ptb'.
 
  [51]
-Underfull \hbox (badness 10000) in paragraph at lines 4645--4649
+Underfull \hbox (badness 10000) in paragraph at lines 4662--4666
 
  []
 
@@ -1618,7 +1613,7 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 \openout3 = `lhspoly.ptb'.
 
  [64]
-Overfull \hbox (6.7068pt too wide) in paragraph at lines 5839--5842
+Overfull \hbox (6.7068pt too wide) in paragraph at lines 5856--5859
 []\OT1/cmr/m/n/10.95 A sim-pler ex-am-ple that shows the signed-ness of roots a
 nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 /m/n/10.95 1$. $[] [ 1\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 1 ]$
@@ -1635,12 +1630,12 @@ nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 \openout3 = `lhspoly.ptb'.
 
  [72]
-Underfull \hbox (badness 10000) in paragraph at lines 6578--6579
+Underfull \hbox (badness 10000) in paragraph at lines 6595--6596
 
  []
 
 [73]
-Underfull \hbox (badness 10000) in paragraph at lines 6598--6599
+Underfull \hbox (badness 10000) in paragraph at lines 6615--6616
 
  []
 
@@ -1654,7 +1649,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 6598--6599
 \openout3 = `lhspoly.ptb'.
 
  [78]
-Overfull \hbox (44.6902pt too wide) in paragraph at lines 7055--7060
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 7072--7077
 \OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
 ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
 10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
@@ -1698,7 +1693,7 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (84 pages, 412276 bytes).
+Output written on lhspoly.pdf (84 pages, 412260 bytes).
 PDF statistics:
  347 PDF objects out of 1000 (max. 8388607)
  241 compressed objects within 3 object streams
