@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {1.5}Umbral Calculus}{38}
 \contentsline {section}{\numberline {1.6}Roots}{49}
 \contentsline {section}{\numberline {1.7}Vieta's Formulas}{60}
-\contentsline {section}{\numberline {1.8}Factoring Polynomials}{65}
-\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{69}
-\contentsline {section}{\numberline {1.10}Hensel Lifting}{83}
-\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{83}
+\contentsline {section}{\numberline {1.8}Factoring Polynomials}{66}
+\contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{70}
+\contentsline {section}{\numberline {1.10}Hensel Lifting}{84}
+\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{84}

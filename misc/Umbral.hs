@@ -96,22 +96,15 @@ where
   -- as pairs of coefficient and polynomial
   -------------------------------------------------------------------------
   fpPolyTerms :: Poly Integer -> [(Integer,Poly Integer)]
-  fpPolyTerms (P cs) = [foldl ab (0,P[0]) p | p <- p2]
-    where s c (n,p) = (c*n, p)
-          p1 = first ++ concat (go 1 $ tail cs)
-          p2 = groupBy ((==) `on` snd) $ sortOn (degree . snd) p1
+  fpPolyTerms (P cs) = [foldl ab p0 p | p <- p2]
+    where p0 = (0,P[0])
+          p1 = concat [map (s c) (fpPowTerms k) | (c,k) <- zip cs [0..]]
+          p2 = groupBy ((==) `on` snd) $ sortOn  (degree . snd) p1
           ab a b = (fst a + fst b, snd b)
-          first = case cs of
-                    [] -> []
-                    (x:_) -> [(x,(facpoly 0))]
-          go _ [] = []
-          go k (x:xs) | x == 0    = go (k+1) xs
-                      | otherwise = map (s x) (fpPowTerms k) :
-                                    go (k+1) xs
+          s c (n,p) = (c*n, p)
 
   -------------------------------------------------------------------------
   -- inverse of the previous
   -------------------------------------------------------------------------
   sumFpPolyTerms :: [(Integer, Poly Integer)] -> Poly Integer
-  sumFpPolyTerms ps = sump (map expand ps)
-    where expand (a,b) = sump (take (fromIntegral a) (repeat b))
+  sumFpPolyTerms = sump . map (uncurry scale)
