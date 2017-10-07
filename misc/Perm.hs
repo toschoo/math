@@ -212,6 +212,16 @@ where
   stirlings1 :: Integer -> [Integer]
   stirlings1 n = map (stirling1 n) [1..n]
 
+  stirling1s :: Integer -> Integer -> Integer
+  stirling1s 0 _ = 0
+  stirling1s 1 1 = 1
+  stirling1s n k | k > n     = 0
+                 | otherwise = -(n-1) * (stirling1s (n-1) k) + 
+                                        (stirling1s (n-1) (k-1))
+
+  stirlings1s :: Integer -> [Integer]
+  stirlings1s n = map (stirling1s n) [1..n]
+
   stirling2 :: Integer -> Integer -> Integer
   stirling2 0 _ = 0
   stirling2 1 1 = 1

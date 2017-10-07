@@ -40,9 +40,7 @@ where
   -- compute the coefficients of x^(n)
   -------------------------------------------------------------------------
   stir1poly :: Integer -> Poly Integer
-  stir1poly n = poly [(s k) * Perm.stirling1 n k | k <- [0..n]]
-    where s k | even n    = (-1)^k
-              | otherwise = (-1)^(k+1)
+  stir1poly n = poly [Perm.stirling1s n k | k <- [0..n]]
 
   -------------------------------------------------------------------------
   -- Test it
@@ -59,6 +57,13 @@ where
     where P cs = facpoly n
           i = fromIntegral k
           s = head (drop i cs)
+
+  stirling1s :: (Integral a) => a -> a -> a
+  stirling1s n k | k > n     = 0
+                 | k == n    = 1
+                 | otherwise =  hdcf n
+    where hdcf = head . drop i . coeffs . facpoly
+          i    = fromIntegral k
 
   -------------------------------------------------------------------------
   -- compute the power x^n using a sum of scaled x^(k)
