@@ -130,6 +130,10 @@ and computer scientist. The Wilkinson polynomial is defined as
 w(x) = \prod_{i=1}^{20}{(x-i)}.
 \end{equation}
 
+\ignore{
+this is the factorial polynomial |facpoly 21|
+}
+
 We can generate it in terms of our polynomial type as
 
 \begin{minipage}{\textwidth}
@@ -141,12 +145,14 @@ We can generate it in terms of our polynomial type as
 
 It looks like this:
 
+\begin{minipage}{\textwidth}
 |P [|\\
 |  2432902008176640000,-8752948036761600000,13803759753640704000,      |\\
 |  -12870931245150988800,8037811822645051776,-3599979517947607200,     |\\
 |  1206647803780373360,-311333643161390640,63030812099294896,          |\\
 |  -10142299865511450,1307535010540395,-135585182899530,11310276995381,|\\
 |  -756111184500,40171771630,-1672280820,53327946,-1256850,20615,-210,1]|
+\end{minipage}
 
 The first terms are
 

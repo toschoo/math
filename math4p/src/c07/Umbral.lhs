@@ -63,7 +63,7 @@ just as the factorials, can be defined recursively.
 The following equation describes the recursive formula:
 
 \begin{equation}
-x^{(n)} = (x-n+1)x^{(n-1)},
+x^{(n+1)} = (x-n)x^{(n)},
 \end{equation}
 
 which we can translate to Haskell as
@@ -80,20 +80,24 @@ The recursive formula is, of course, not an efficient
 computing tool. For the factorial polynomial $x^{(n)}$,
 we would need $n$ recursive steps, namely
 $x^{(n-1)}(x-n+1)$,
-$x^{(n-2)}(x-n)$, \dots,
+$x^{(n-2)}(x-n+2)$, \dots,
 $x^{(0)}x$.
 To compute, for instance, $n=3$,
 we need to compute:
 
-\begin{align*}
+\[
+\begin{array}{lclcl}
 x^{(1)} & = & x^{(0)}x &=& x\\
 x^{(2)} & = & x(x-1) &=& (x^2 - x)\\
 x^{(3)} & = & (x^2-x)(x-2) &=& (x^3 - 3x^2 + 2x)
-\end{align*}
+\end{array}
+\]
 
 A better way to compute the polynomial,
 once we have its factors, is to just multiply
-them out:
+them out, like: |prodp mul|.
+The following implementation first creates
+the factors and then builds their product:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -104,11 +108,10 @@ them out:
 
 The two functions, |rfacpoly| and |facpoly|,
 create exactly the same result.
-When we apply one of them to |[0..7]| 
+When we apply one of them to |[1..7]| 
 as above we get
 
 \begin{minipage}{\textwidth}
-|facpoly 0|: |P [1]|\\
 |facpoly 1|: |P [0,1]|\\
 |facpoly 2|: |P [0,-1,1]|\\ 
 |facpoly 3|: |P [0,2,-3,1]|\\ 
@@ -122,7 +125,6 @@ which corresponds to the polynomials (in mathematical notation):
 
 \begin{center}
 \begin{tabular}{c}
-$1$ \\
 $x$ \\
 $x^2 - x$ \\
 $x^3 - 3x^2 + 2x$ \\
@@ -148,19 +150,22 @@ When we look at the formula $x^{(3)}$,
 we can just apply two consecutive values
 and compute their difference, \eg:
 
-\begin{align*}
+\[
+\begin{array}{ccl}
 &   & 3^{(3)} - 2^{(3)} \\
 & = & (3^3 - 3\times 3^2 + 2\times 3) -
     (2^3 - 3\times 2^2 + 2\times 2)\\
 & = & (27 - 27 + 6) - (8 - 12 + 4) \\
 & = & 6 - 0\\
 & = & 6.
-\end{align*}
+\end{array}
+\]
 
 Instead of using concrete numbers, we can use
 a placeholder like $a$:
 
-\begin{align*}
+\[
+\begin{array}{ccl}
 &   & (a+1)^{(3)} - a^{(3)}\\
 & = & ((a+1)^3 - 3(a+1)^2 + 2(a+1)) -
       (a^3 - 3a^2 + 2a)\\
@@ -169,7 +174,8 @@ a placeholder like $a$:
 & = & (a^3 - a) - 
       (a^3 - 3a^2 + 2a)\\
 & = & 3a^2 - 3a
-\end{align*}
+\end{array}
+\]
 
 Let us test this result.
 We first apply $x^{(3)}$ on a sequence
@@ -193,20 +199,20 @@ The same sequence.
 But what is so special about the result
 $3x^2 - 3x$ in the first place?
 Well, we can factor 3 out and get
-$3(x^2 - x)$, whose second part,
-$x^2 - x$, is $x^{(2)}$ and whose
-first part is 3. In other words,
+$3(x^2 - x)$, whose second part is $x^{(2)}$
+and whose first part is $n=3$. In other words,
 what we see here is that the differences
 of $x^{(n)}$ can be computed by
-the polynomial $nx^{(n-1)}$.
-That, again, is at least conceptionally
-very similar to the derivative.
-Of course, the derivative of a polynomial
-deals with powers. The polynomial $x^n$ is,
+the polynomial $nx^{(n-1)}$ and that formula
+is very similar to the concept of the derivative.
+Of course, it is not really the derivative,
+since the derivative of a polynomial
+deals with powers. The derivative 
+of the polynomial $x^n$ is,
 according to the power rule, $nx^{n-1}$.
 We see the same pattern here, but the
 exponent is not really an exponent,
-but the falling factorial.
+but a falling factorial.
 
 Systems that establish a calculus
 that follows the same rules as the
@@ -244,15 +250,26 @@ equal $nx^{(n-1)}$,
 we first need to show it for the general case.
 
 To do this, we start as above. We plug in
-the ``value'' $a$ and compute:
+the ``value'' $a$ and compute the difference
+$(a+1)^{(n)} - a^{(n)}$. When we expand the
+formula for the falling factorial, we get
 
+\[
+\begin{array}{lcclll}
+\Delta_{a^{(n)}} & = &   & (a+1) & a(a-1)\dots(a-n+2) & \\
+                 &   & - &       & a(a-1)\dots(a-n+2) & (a-n+1)\\
+\end{array}
+\]
+
+\ignore{
 \begin{align*}
 \Delta_{a^{(n)}} & = & (a+1) & & & a(a-1)\dots(a-n+2) & \\
                  & - &       & & & a(a-1)\dots(a-n+2) & (a-n+1)\\
 \end{align*}
+}
 
-When we look at the right-hand side of this equation,
-we see that there is a middle part that is identical
+On the right-hand side of this equation
+we see a middle part that is identical
 in both lines, namely $a(a-1)\dots(a-n+2)$,
 which is composed of the common factors of
 $(a+1)^{(n)}$ and $a^{(n)}$.
@@ -266,15 +283,11 @@ by setting $b=a(a-1)\dots(a-n+2)$ and obtain:
 
 By regrouping, we get $(a+1-a+n-1)b$.
 In the sum, we have $a$ and $-a$ as well as 1 and $-1$.
-These terms, hence, cancel out and we are left with:
-
-\begin{equation}
-  \Delta_{a^{(n)}} = (a+1-a+n-1)b = nb.
-\end{equation}
-
+These terms, hence, cancel out and we are left with
+$\Delta_{a^{(n)}} = nb$.
 But $b$ is $a(a-1)\dots(a-n+2)$, \ie\ the same
 as the second line, but with one factor removed, namely
-$(a-n+1)$. That, however, is $a^{(n-1)}$ and, thus,
+$(a-n+1)$. That, in its turn, is $a^{(n-1)}$ and, thus,
 we have
 
 \begin{equation}
@@ -320,7 +333,8 @@ we see
 \frac{(n+1){k^{(n)}}}{(n+1)!}.
 \end{equation}
 
-We now see that there is one factor
+We now see in the fraction on the right-hand side 
+that there is one factor
 that appears in numerator and denominator,
 namely $n+1$. When we cancel $n+1$ out
 we need to
@@ -388,11 +402,12 @@ x^4 = x^{(4)} + 6x^3 - 11x^2 + 6x
 
 and, hence,
 
-\begin{equation}
-x^4 = 
-x^{(4)} + 6(x^{(3)} + 3x^{(2)} + x^{(1)}) - 11(x^{(2)} + x^{(1)}) + 6x^{(1)} =
-x^{(4)} + 6x^{(3)} + 7x^{(2)} + x^{(1)}.
-\end{equation}
+\[
+\begin{array}{lcl}
+x^4 & = & x^{(4)} + 6(x^{(3)} + 3x^{(2)} + x^{(1)}) - 11(x^{(2)} + x^{(1)}) + 6x^{(1)} \\
+    & = & x^{(4)} + 6x^{(3)} + 7x^{(2)} + x^{(1)}.
+\end{array}
+\]
 
 In this way, we can go on and create formulas for all powers
 (and, once we have shown that we can express powers by
@@ -406,10 +421,12 @@ To prove this, suppose that, for a power $x^n$,
 there were two different representations as sums of
 factorial polynomials, such that
 
-\begin{align}
+\begin{equation}
+\begin{array}{lcl}
 x^n & = & A_1x^{(1)} + A_2x^{(2)} + \dots + A_nx^{(n)}\\
     & = & B_1x^{(1)} + B_2x^{(2)} + \dots + B_nx^{(n)}.
-\end{align}
+\end{array}
+\end{equation}
 
 When we subtract one representation from the other,
 the result shall be zero, since both represent the
@@ -466,7 +483,7 @@ This way, we remove one term after the other,
 until there are no more terms left.
 That shows that the two representations are equal.\qed
 
-So, we have proved that powers can be represented
+We have proved that powers can be represented
 uniquely by factorial polynomials. Here is a list
 of such representations starting from $x^1$:
 
@@ -486,7 +503,7 @@ Those of you that still suffer from triangle paranoia:
 you have probably realised that this is already the second
 triangle appearing in this section.
 When you scroll back to certain triangle-intense chapters,
-you will, after some time, recognise the coefficients above as 
+you will recognise the coefficients above as 
 \term{Stirling numbers of the second kind}.
 Of course the table above is inverted, because we start
 with the largest $k$ in $x^{(k)}$ going down to $k=1$,
@@ -505,18 +522,18 @@ As a reminder, here they are:
 7 &   &   &   & 1 &    & 63 &    & 301 &     & 350 &     & 140 &    & 21 &    & 1 &   &   &   &  
 \end{tabular}
 
-Well, we see for the some cases that the coefficients
+Well, we see for some cases that the coefficients
 of the factorial polynomials that sum up to powers are
 Stirling numbers. Can we prove it?
 
-We give it a try with a proof by induction.
-Any of the examples above serves as a base case that shows that
+Let's give it a try with a proof by induction.
+Any of the examples above serves as base case that shows that
 
 \begin{equation}
 x^n = \stirlingTwo{n}{n}x^{(n)} + \stirlingTwo{n}{n-1}x^{(n-1)} + \dots + \stirlingTwo{n}{1}x^{(1)}.
 \end{equation}
 
-We need to show that, if this equation holds for $x^n$, it holds for $x^{n+1}$:
+We need to show that, if this equation holds for $x^n$, it holds for $x^{n+1}$ that
 
 \begin{equation}
 x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
@@ -549,10 +566,26 @@ On the right-hand side, we, hence, get such a sum for each term:
 \]
 
 We can now regroup the terms, so that the elements with equal
-``exponents'' appear together. This gives pairs composed
+``exponents'' appear together. This yields pairs composed
 of the $x^{(k)}$ that was already there and the new one
 that we generated by multiplying by $x$:
 
+\[
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{array}{lc}
+\stirlingTwo{n}{n}x^{(n+1)} & + \\
+n\stirlingTwo{n}{n}x^{(n)}  + 
+\stirlingTwo{n}{n-1}x^{(n)} & + \\
+(n-1)\stirlingTwo{n}{n-1}x^{(n-1)} + 
+\stirlingTwo{n}{n-2}x^{(n-1)} & + \\
+\dots & + \\
+\stirlingTwo{n}{1}x^{(1)} &
+\end{array}
+\endgroup
+\]
+
+\ignore{
 \begin{align*}
 \stirlingTwo{n}{n}x^{(n+1)} & + \\
 n\stirlingTwo{n}{n}x^{(n)}  + 
@@ -562,12 +595,27 @@ n\stirlingTwo{n}{n}x^{(n)}  +
 \dots & + \\
 \stirlingTwo{n}{1}x^{(1)} &
 \end{align*}
+}
 
 We regroup a bit more, in particular, we
 factor the $x^{(k)}$ out, so that we obtain
-factors that consist only of expression containing
+factors that consist only of expressions containing
 Stirling numbers in front of the $x$es:
 
+\[
+\begingroup
+\renewcommand{\arraystretch}{2}
+\begin{array}{lc}
+\stirlingTwo{n}{n}x^{(n+1)} & + \\
+\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)} & + \\ 
+\dots & + \\
+\stirlingTwo{n}{1}x^{(1)} &
+\end{array}
+\endgroup
+\]
+
+\ignore{
 \begin{align*}
 \stirlingTwo{n}{n}x^{(n+1)} & + \\
 \left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
@@ -575,6 +623,7 @@ Stirling numbers in front of the $x$es:
 \dots & + \\
 \stirlingTwo{n}{1}x^{(1)} &
 \end{align*}
+}
 
 You might remember the identity
 
@@ -584,14 +633,14 @@ You might remember the identity
 
 which is ``Pascal's rule'' for Stirling numbers of the second kind.
 This is exactly what we see in each group! Just make sure that
-what you see in the factor in front of each $x^{(k)}$ is $k$,
-\eg\
+what you see in the factor in front of each $x^{(k)}$ is $k$.
+For instance, in the formula
 
 \[
 \left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)}
 \]
 
-where $k = n-1$.
+we have $k = n-1$.
 
 Now, all terms that show this pattern,
 can be simplified to
@@ -606,7 +655,7 @@ $\stirlingTwo{n}{1}$ respectively, which are both just 1,
 that is not a problem. We get as desired
 
 \begin{equation}
-x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)}
+x^{n+1} = \stirlingTwo{n+1}{n+1}x^{(n+1)} +
           \stirlingTwo{n+1}{n}x^{(n)} + \dots + 
           \stirlingTwo{n+1}{1}x^{(1)}\qed
 \end{equation}
@@ -628,8 +677,8 @@ Powers are not difficult to compute at all,
 so why using factorial polynomials in the first place?
 More interesting, at least from theoretical perspective,
 is the opposite function that, for a given power,
-shows the factorial polynomials and their coefficients
-indicating how often each factorial polynomial appears:
+shows the factorial polynomials and the coefficients that
+indicate how often each factorial polynomial appears:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -691,18 +740,22 @@ Here is a function that does that:
 The function looks a bit confusing on the first sight.
 It is not too horrible, though.
 We start by computing $p1$.
-This function applies |fpPowTerms| on the exponents
-of the original polynomials and multiplies the
-coefficients of the original with the coefficients
+We apply |fpPowTerms| on the exponents
+of the original polynomial (|[0..]|)
+and multiply the 
+coefficients of the original 
+(|cs|)
+with the coefficients
 that tell us how often each factorial polynomials
 occurs in the respective power.
-This is done by function $s$.
+The latter is done by function $s$ which is mapped
+on the result of |fpPowTerms|.
 The result is a list of lists of pairs $(n,p)$,
 where $n$ is a |Natural| and $p$ a polynomial.
 We concat this list, so we obtain a flat list
 of polynomials.
 
-In the next step, we compute $p$ by sorting
+In the next step, we compute $p2$ by sorting
 this flat list by the degree of the polynomials.
 We then group by the polynomials, so that we
 get a list of lists of equal polynomials with
@@ -757,7 +810,7 @@ and get
 This again is a triangle and it is the simplest
 that we can obtain this way, since the input
 coefficients are all 1.
-One could assume that other polynomials could now
+One could think that other polynomials could now
 be generated by means of these coefficients
 just multiplying the coeficients of the polynomial
 with these ones.
@@ -765,14 +818,14 @@ Unfortunately, that is too simple.
 The coefficients here indicate only
 how often each factorial polynomial appears
 in the respective polynomial;
-they are not coefficients of the polynomial
-(which are all 1).
+they are not coefficients of that polynomial
+(which are all 1 anyway).
 
 The sequence as such is the result of a matrix
 multiplication (a topic we will study soon) with
 one matrix being a lower-left triangle of ones
 and the other a lower-left triangle containing
-the Stirling numbers of the second kind like this:
+the Stirling numbers of the second kind:
 
 \begin{equation}
 \begin{pmatrix}
@@ -800,9 +853,8 @@ the Stirling numbers of the second kind like this:
 \end{pmatrix}
 \end{equation}
 
-with the first column of the triangle presented above missing.
-
 \ignore{
+with the first column of the triangle presented above missing.
 why is it missing???
 }
 
@@ -836,8 +888,15 @@ The recursive formula to compute these numbers is
 \stirlingOne{n+1}{k+1} = -n\stirlingOne{n}{k} + \stirlingOne{n}{k-1}.
 \end{equation}
 
-As for unsigned Stirling numbers (of the first kind),
-we have $\stirlingOne{n}{k} = 0$ if $k=0 \lor k > n$.
+Note that, when the first Stirling number, $\stirlingOne{n}{k}$,
+on the right-hand side is positive,
+then the second, $\stirlingOne{n}{k-1}$, 
+is negative. Since we multiply the first by a negative
+number, the first term becomes positive, when the Stirling number is
+negative and negative otherwise. Therefore, both terms are either
+negative or positive and the absolute value of the whole expression
+does not change compared
+to the unsigned Stirling number.
 
 So, can we prove that the coefficients of factorial polynomials
 are Stirling numbers of the first kind?
@@ -853,7 +912,7 @@ x^{(n)} = \stirlingOne{n}{n}x^n +
 where the Stirling numbers, here, are to be understood as signed.
 
 We need to prove that, if that equation holds, 
-then the following holds too:
+then the following holds as well:
 
 \begin{equation}\label{eq:stir1fac2}
 x^{(n+1)} = \stirlingOne{n+1}{n+1}x^{n+1} + 
@@ -929,7 +988,7 @@ $\stirlingOne{n}{n} = \stirlingOne{n+1}{n+1} = 1$.
 For the last term, we know that 
 $\stirlingOne{n}{1} = \pm(n-1)!$.
 In the last term, we hence see the product 
-$(-n)(n-1)!$, which is $-(n)!$.
+$(-n)(\pm((n-1)!))$, which is $-(\pm(n!))$.
 If, for $n$, the factorial was positive,
 it will now be negative. If it was negative,
 it will now be positive.
@@ -944,11 +1003,12 @@ When factorial polynomials are used to represent
 powers, we need to scale them by factors
 that count the number of ways to partition a set
 into a given number of distinct subsets.
+
 Furthermore, we can express any polynomial
 by combinations of scaled factorial polynomials
 and the coefficients of those
 are products of the differences and
-the binomial coefficients that count
+the binomial coefficients which count
 the number of ways to choose $k$ out of $n$.
 ``The Lord is subtle'' said Einstein,
 ``but he is not plain mean''.
