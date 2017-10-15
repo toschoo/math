@@ -3,6 +3,7 @@
 module NumSystem
 where
   import System.Random(randomRIO)
+  import Random
   import Natural
   import Quoz
   import Real
@@ -13,7 +14,7 @@ A numeral system consists of a finite set of digits, $D$,
 and a base, $b$, for which $b=||D||$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
-The cardinality of $D$ in this case, hence, is 2.
+The cardinality of $D$ is 2 and therefore $b=2$.
 The decimal system uses the digits $D=\lbrace 0\dots 9\rbrace$ and,
 thus, has the base $b=10$.
 The hexadecimal system uses the digits $D=\lbrace 0\dots 15\rbrace$,
@@ -28,8 +29,8 @@ of digits. The string
 \]
 
 for instance, may represent a number in the binary system.
-(It could be a number in decimal format, too, though.)
-The string 
+It could be a number in decimal format, too, though.
+However, the string 
 
 \[
 170,
@@ -238,7 +239,7 @@ implementation in Haskell:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  type Poly a = P [a]
+  data Poly a = P [a]
     deriving (Show)
 \end{code}
 \end{minipage}
@@ -248,7 +249,7 @@ We add a safe constructor:
 \begin{minipage}{\textwidth}
 \begin{code}
   poly :: (Eq a, Num a) => [a] -> Poly a
-  poly [] = error "not a polynomial"
+  poly [] = P [0]
   poly as = P (cleanz as)
 
   cleanz :: (Eq a, Num a) => [a] -> [a]
@@ -370,7 +371,7 @@ $5x^4 + 3x^2 + 1$  &
 \end{center}
 
 An important concept related to polynomials is the 
-\term{degree}. The degree is a measurement of the
+\term{degree}. The degree is a measure of the
 \emph{size} of the polynomial. In concrete terms,
 it is the greatest exponent in the polynomial.
 For us, it is the weight of the right-most element
@@ -409,7 +410,8 @@ coefficients:
 \end{minipage}
 
 The function receives a |Natural| and an |Int|.
-The |Int| indicates the degree of the polynomial
+The |Int| indicates the number of coefficients
+of the polynomial
 we want to obtain. The |Natural| is used to
 restrict the size of the coefficients we want
 to see in the polynomial.

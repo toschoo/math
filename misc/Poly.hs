@@ -154,9 +154,7 @@ where
   -- Mapping (a*) on a list of coefficients
   -------------------------------------------------------------------------
   mul1 :: Num a => (a -> a -> a) -> Int -> [a] -> a -> [a]
-  mul1 o i as a = zeros i ++ go as a
-    where go [] _     = []
-          go (c:cs) x = c `o` x : go cs x 
+  mul1 o i cs a = zeros i ++ [c `o` a | c <- cs]
 
   -------------------------------------------------------------------------
   -- Multiply a list of coefficients (infinite field)
@@ -702,16 +700,11 @@ where
   findGen ds = L.backsub . L.echelon . findCoeffs ds 
 
   findCoeffs :: [[Integer]] -> [Integer] -> L.Matrix Integer
-  findCoeffs ds sq = L.M (go 0 sq)
+  findCoeffs ds sq = L.M [genCoeff d n x | (n,x) <- zip [0..d] sq]
     where d = fromIntegral (length ds)
-          go _ []  = []
-          go n (x:xs) | n > d     = []
-                      | otherwise = genCoeff d n x : go (n+1) xs 
 
   genCoeff :: Integer -> Integer -> Integer -> [Integer]
-  genCoeff m n x = go 0 x
-    where go i z | i >  m    = [z]
-                 | otherwise = n^i : go (i+1) z
+  genCoeff m n x = map (n^) [0..m] ++ [x]
 
   testGauss :: Poly Integer -> L.Matrix Integer
   testGauss p = L.echelon $ findCoeffs ds sq

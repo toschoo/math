@@ -178,6 +178,7 @@ suite:	$(SUITE)/tstNum  \
 	$(SUITE)/tstZahl \
 	$(SUITE)/tstRat  \
 	$(SUITE)/tstReal 
+#	$(SUITE)/tstPoly 
 
 run:	suite
 	$(SUITE)/tstNum
@@ -185,6 +186,7 @@ run:	suite
 	$(SUITE)/tstZahl
 	$(SUITE)/tstRat
 	$(SUITE)/tstReal
+#	$(SUITE)/tstPoly 
 	
 $(SUITE)/tstNum:	$(ALL) $(SUITE)/tstNum.hs
 			$(GHC) $(SUITE)/tstNum
@@ -200,6 +202,9 @@ $(SUITE)/tstZahl:	$(ALL) $(SUITE)/tstZahl.hs
 	
 $(SUITE)/tstReal:	$(ALL) $(SUITE)/tstReal.hs
 			$(GHC) $(SUITE)/tstReal
+	
+$(SUITE)/tstPoly:	$(ALL) $(SUITE)/tstPoly.hs
+			$(GHC) $(SUITE)/tstPoly
 
 clean:
 	rm -f src/*/*.hi

@@ -12,7 +12,7 @@ where
 \end{code}
 }
 
-The ingenious Isaac Newton studied the relation
+Isaac Newton studied the relation
 between sequences and their differences 
 intensely and came up with a formula. Before we go right
 to it, let us observe on our own.

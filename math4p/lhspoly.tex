@@ -126,6 +126,9 @@
 \>[3]{}\mathbf{import}\;\Conid{\Conid{System}.Random}\;(\Varid{randomRIO}){}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Random}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
@@ -142,7 +145,7 @@ A numeral system consists of a finite set of digits, $D$,
 and a base, $b$, for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
-The cardinality of $D$ in this case, hence, is 2.
+The cardinality of $D$ is 2 and therefore $b=2$.
 The decimal system uses the digits $D=\lbrace 0\dots 9\rbrace$ and,
 thus, has the base $b=10$.
 The hexadecimal system uses the digits $D=\lbrace 0\dots 15\rbrace$,
@@ -157,8 +160,8 @@ of digits. The string
 \]
 
 for instance, may represent a number in the binary system.
-(It could be a number in decimal format, too, though.)
-The string 
+It could be a number in decimal format, too, though.
+However, the string 
 
 \[
 170,
@@ -372,7 +375,7 @@ implementation in Haskell:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\mathbf{type}\;\Conid{Poly}\;\Varid{a}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\>[3]{}\mathbf{data}\;\Conid{Poly}\;\Varid{a}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{deriving}\;(\Conid{Show}){}\<[E]%
@@ -394,7 +397,7 @@ We add a safe constructor:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{poly}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
-\>[3]{}\Varid{poly}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Varid{error}\;\text{\tt \char34 not~a~polynomial\char34}{}\<[E]%
+\>[3]{}\Varid{poly}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{poly}\;\Varid{as}\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;\Varid{as}){}\<[E]%
 \\[\blanklineskip]%
@@ -587,7 +590,7 @@ $5x^4 + 3x^2 + 1$  &
 \end{center}
 
 An important concept related to polynomials is the 
-\term{degree}. The degree is a measurement of the
+\term{degree}. The degree is a measure of the
 \emph{size} of the polynomial. In concrete terms,
 it is the greatest exponent in the polynomial.
 For us, it is the weight of the right-most element
@@ -649,7 +652,8 @@ coefficients:
 \end{minipage}
 
 The function receives a \ensuremath{\Conid{Natural}} and an \ensuremath{\Conid{Int}}.
-The \ensuremath{\Conid{Int}} indicates the degree of the polynomial
+The \ensuremath{\Conid{Int}} indicates the number of coefficients
+of the polynomial
 we want to obtain. The \ensuremath{\Conid{Natural}} is used to
 restrict the size of the coefficients we want
 to see in the polynomial.
@@ -672,6 +676,9 @@ we will study polynomial arithmetic.
 \>[B]{}\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{foldl'}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
@@ -681,10 +688,13 @@ we will study polynomial arithmetic.
 \>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Modular}{}\<[E]%
+\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{Modular}\;\Varid{as}\;\Conid{M}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -770,7 +780,7 @@ subtraction. Here is a valid implementation:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Note that \ensuremath{\Varid{sump}} function, which implements \ensuremath{\Varid{sum}} for polynomials.
+Note the \ensuremath{\Varid{sump}} function, which implements \ensuremath{\Varid{sum}} for polynomials.
 Here is one more function that might be useful 
 later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coefficients:
 
@@ -789,7 +799,7 @@ later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coeffic
 \end{minipage}
 
 \term{Punktrechnung}, \ie\ multiplication and division,
-are a bit more complex -- because of the distribution law.
+is a bit more complex -- because of the distribution law.
 Let us start with the simple case where we distribute
 a monomial over a polynomial:
 
@@ -798,29 +808,14 @@ a monomial over a polynomial:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{25E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{mul1}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{as}\;\Varid{a}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus \Varid{go}\;\Varid{as}\;\Varid{a}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\anonymous {}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;(\Varid{c}\mathbin{:}\Varid{cs})\;\Varid{x}{}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}\Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mathbin{:}\Varid{go}\;\Varid{cs}\;\Varid{x}{}\<[E]%
+\>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{cs}\;\Varid{x}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus [\mskip1.5mu \Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
 \\[\blanklineskip]%
 \>[3]{}\Varid{zeros}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\mathbin{\$}\Varid{repeat}\;\mathrm{0}{}\<[E]%
+\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\;(\Varid{repeat}\;\mathrm{0}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -834,9 +829,9 @@ is combined with the single term.
 This corresponds to the operation:
 
 \begin{equation}
-\begin{array}{rcrcrcccr}
-dx^m & \times & ax^n      & + & bx^{n-1}    & + & \dots & + & c\\
-     & =      & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
+\begin{array}{lcrlclcccl}
+dx^m & \times & ( & ax^n      & + & bx^{n-1}    & + & \dots & + & c)\\
+     & =      &   & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
 \end{array}
 \end{equation}
 
@@ -959,7 +954,7 @@ Here is the whole algorithm:
 \\
 \>[12]{}\Varid{ms}{}\<[16]%
 \>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mathrel{\vee}(\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
+\>[19]{}[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mid (\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -1255,7 +1250,7 @@ contains only the constant 0.
 In this case, there is no remainder: $b$ divides $a$.
 
 Otherwise, we divide the \ensuremath{\Varid{last}} of $r$ by the \ensuremath{\Varid{last}} of $b$.
-Note that those are the term with the highest degree
+Note that those are the terms with the highest degree
 in each polynomial.
 This division is just a number division of the two
 coefficients. We still have to compute the new exponent,
@@ -1297,7 +1292,7 @@ such as \ensuremath{\Varid{divides}}:
 \column{33}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{divides}\mathbin{::}{}\<[15]%
-\>[15]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[15]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
 \>[15]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
 \\
@@ -1328,12 +1323,12 @@ the remainder:
 \column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{remp}\mathbin{::}{}\<[12]%
-\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
-\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{remp}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[15]%
-\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{d}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
+\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{divp}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -1420,16 +1415,17 @@ we multiply \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}
 
 \ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu])}
 
-does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}.
+does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]},
+but polynomials with fractions as coefficients.
 The reason is that the \acronym{gcd} is an operation
 defined on integers, but we implemented it on top
-of fractionals. That is often not what we want.
-Anyway, here, we will actually use the \acronym{gcd} 
-only in finite fields. 
-Until now, we have discussed polynomials in infinite fields.
-We now turn our attention to polynomial arithmetic
-in a finite field and, hence, to modular polynomial arithmetic.
+of fractionals. That is not what we want.
+In fact, we confuse concepts: the \acronym{gcd} is
+a concept defined on integral numbers, not on fractions.
 
+And this is the prompt to 
+turn our attention to polynomial arithmetic
+over a finite field and, thus, to modular polynomial arithmetic.
 With modular arithmetic, all coefficients in the polynomial
 are modulo $n$. That means we have to reduce those numbers.
 This, of course, does only make sense with integers.
@@ -1496,13 +1492,17 @@ For division, we reuse the \ensuremath{\Varid{inverse}} function:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{modiv}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
 \\
 \>[3]{}\Varid{modiv}\;\Varid{p}\;\Varid{n}\;\Varid{d}\mathrel{=}\Varid{modmul}\;\Varid{p}\;\Varid{n}\;\Varid{d'}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{d'}\mathrel{=}\Varid{\Conid{M}.inverse}\;\Varid{d}\;\Varid{p}{}\<[E]%
+\>[5]{}\mathbf{where}\;\Varid{d'}\mathrel{=}\Varid{fromIntegral}\;(\Varid{\Conid{M}.inverse}\;{}\<[41]%
+\>[41]{}(\Varid{fromIntegral}\;\Varid{d})\;{}\<[E]%
+\\
+\>[41]{}(\Varid{fromIntegral}\;\Varid{p})){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -1639,6 +1639,22 @@ Multiplication:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+and product:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mulmlist}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{c1}\;\Varid{c2}\mathrel{=}\Varid{coeffs}\mathbin{\$}\Varid{mulmp}\;\Varid{p}\;(\Conid{P}\;\Varid{c1})\;(\Conid{P}\;\Varid{c2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 We repeat the multiplication from above 
 
 \ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])} 
@@ -1725,7 +1741,12 @@ Division:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\acronym{gcd}:
+Division works exactly like the variant for infinite fields,
+except that we now use the modulo inverse 
+instead of fractional division
+for division of coefficients.
+
+Here is the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1810,8 +1831,8 @@ Finally, power:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Here is a nice variant of Pascal's triangle generated by
-\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
+Here is a nice variant of Pascal's triangle generated by\\
+\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]))\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
 
 \begin{minipage}{\textwidth}
 \begin{center}
@@ -1832,8 +1853,6 @@ Here is a nice variant of Pascal's triangle generated by
 \end{center}
 \end{minipage}
 
-It is especially interesting to look at greater powers 
-using exponents that are multiples of 7.
 Before we continue with modular arithmetic,
 which we need indeed to understand some of the deeper problems
 related to polynomials, we will
@@ -2103,7 +2122,7 @@ Applied on the sequence above, \ensuremath{\Varid{diffs}} yields:
 
 What is so special about it?
 Perhaps, nothing. But let us repeat the process
-using this sequence. It yields:
+using this result. The repetition yields:
 
 14,50,110,194,302,434,590,770,974
 
@@ -2123,7 +2142,7 @@ $x^4$, a polynomial of degree 4.
 Is that coincidence?
 
 For further investigation, we implement
-the complete difference machine, which takes differences,
+the complete difference engine, which takes differences,
 until it reaches a constant sequence.
 
 \begin{minipage}{\textwidth}
@@ -2154,9 +2173,6 @@ until it reaches a constant sequence.
 \>[12]{}\Varid{ds}\mathrel{=}\Varid{diffs}\;\Varid{cs}{}\<[E]%
 \\
 \>[12]{}\Varid{constant}\;[\mskip1.5mu \mskip1.5mu]{}\<[29]%
-\>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
-\\
-\>[12]{}\Varid{constant}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[29]%
 \>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
 \\
 \>[12]{}\Varid{constant}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[29]%
@@ -2293,7 +2309,7 @@ that value is multiplied.
 
 The first element in the sequence, the one created by applying
 the polynomial to 0, is just the last coefficient,
-the one ``without'' an $x$, since the other terms ``disappear'',
+the one ``without'' any $x$, since the other terms ``disappear'',
 when we apply to 0. Consider for example a polynomial of the form
 $x^2 + x + a$. When we apply it to 0,
 we get $0^2 + 0 + a = c$, where $c$ is the first
@@ -2349,33 +2365,10 @@ sequence with a given degree:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{20E}{@{}l@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{34E}{@{}l@{}}%
-\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{genCoeff}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathrel{=}\Varid{go}\;\mathrm{0}\;\Varid{x}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}{}\<[20]%
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{i}\mathbin{>}{}\<[28]%
-\>[28]{}\Varid{d}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}[\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[E]%
-\\
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{otherwise}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}\Varid{n}\mathbin{\uparrow}\Varid{i}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{x}{}\<[E]%
+\>[3]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathrel{=}\Varid{map}\;(\Varid{n}\mathbin{\uparrow})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{d}\mskip1.5mu]\plus [\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -2384,12 +2377,8 @@ sequence with a given degree:
 Here, $d$ is the degree of the polynomial,
 $n$ is the value to which the polynomial is applied
 and $x$ is the result, \ie\ the value from the sequence.
-The local function \ensuremath{\Varid{go}} repeats from 0 to $d$,
-raising $n$, the input value, to the current weight
-and adding it to the resulting list.
-At the end, when we have reached a value greater 
-than the degree, we add the value from the sequence
-as known constant yielding one line of the system
+We create the sequence $n^i$, for $0 \le i \le d$ and
+add $x$ yielding one line of the system
 of linear equations.
 
 When we apply \ensuremath{\Varid{genCoeff}} on the the sequence
@@ -2407,7 +2396,7 @@ Note that the results are very regular:
 we see constant 1 in the first column,
 the natural numbers in the second column,
 the squares in the third, the cubes in the fourth and
-the powers of 4 in the fifth and sixth column.
+$n^4$ in the fifth and sixth column.
 Those are just the values for $x^i$, 
 for $i \in \lbrace 0\dots 4\rbrace$.
 Since the value in the sixth column, the one we took
@@ -2415,7 +2404,7 @@ from the sequence, equals the value in the fifth column,
 we can already guess that the polynomial is simply $x^4$.
 Here is another sequence, generated by a secret polynomial:
 
-14,62,396,1544,4322,9834,19472,34916,58134,91382,137204
+14, 62, 396, 1544, 4322, 9834, 19472, 34916, 58134, 91382, 137204
 
 We compute the difference lists using 
 \ensuremath{\Varid{dengine}} as \ensuremath{\Varid{ds}} and compute the degree of the polynomial
@@ -2430,7 +2419,10 @@ Now we call \ensuremath{\Varid{genCoeff}} on the first four elements of the sequ
 \ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{4}\;\mathrm{4322}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{4322}\mskip1.5mu]}
 \end{minipage}
 
-We use \ensuremath{\Varid{genCoeff}} to create a matrix representing
+We already see that this is a less trivial case:
+the last two numbers are not equal!
+
+Now we use \ensuremath{\Varid{genCoeff}} to create a matrix representing
 the entire system of equations:
 
 \begin{minipage}{\textwidth}
@@ -2440,35 +2432,14 @@ the entire system of equations:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{25E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{39E}{@{}l@{}}%
-\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{findCoeffs}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{\Conid{L}.Matrix}\;\Conid{Zahl}{}\<[E]%
 \\
-\>[3]{}\Varid{findCoeffs}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Conid{\Conid{L}.M}\;(\Varid{go}\;\mathrm{0}\;\Varid{seq}){}\<[E]%
+\>[3]{}\Varid{findCoeffs}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Conid{\Conid{L}.M}\;[\mskip1.5mu \Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mid (\Varid{n},\Varid{x})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{d}\mskip1.5mu]\;\Varid{sq}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{d}\mathrel{=}\Varid{fromIntegral}\;(\Varid{length}\;\Varid{ds}){}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\Varid{n}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[25]%
-\>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{n}\mathbin{>}\Varid{d}{}\<[39]%
-\>[39]{}\mathrel{=}{}\<[39E]%
-\>[42]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{otherwise}{}\<[39]%
-\>[39]{}\mathrel{=}{}\<[39E]%
-\>[42]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1})\;\Varid{xs}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -2570,8 +2541,9 @@ Let us test again:
 48,334,1148,2778,5512,9638,15444,23218,33248,45822,61228
 
 The next difference sequence should then be generated
-by a polynomial of degree 2. We try with
-\ensuremath{\mathbf{let}\;\Varid{ds'}\mathrel{=}\Varid{tail}\;\Varid{ds}\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds'})\;(\Varid{head}\;\Varid{ds'})} and get
+by a polynomial of degree 2. We try with\\
+\ensuremath{\mathbf{let}\;\Varid{ds'}\mathrel{=}\Varid{tail}\;\Varid{ds}\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds'})\;(\Varid{head}\;\Varid{ds'})}\\
+ and get
 \ensuremath{[\mskip1.5mu \mathrm{286}\mathbin{\%}\mathrm{1},\mathrm{384}\mathbin{\%}\mathrm{1},\mathrm{144}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
 which corresponds to the polynomial 
 $144x^2 + 384x + 286$.
@@ -2584,8 +2556,8 @@ which, indeed, is the third difference sequence.
 
 Finally, the last but one sequence, the last
 that is not constant, should be generated by a polynomial
-of degree 1. We try with
-\ensuremath{\mathbf{let}\;\Varid{ds''}\mathrel{=}\Varid{tail}\;(\Varid{tail}\;\Varid{ds})\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds''})\;(\Varid{head}\;\Varid{ds''})}
+of degree 1. We try with\\
+\ensuremath{\mathbf{let}\;\Varid{ds''}\mathrel{=}\Varid{tail}\;(\Varid{tail}\;\Varid{ds})\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds''})\;(\Varid{head}\;\Varid{ds''})}\\
 and get \ensuremath{\mathrm{528}\mathbin{\%}\mathrm{1},\mathrm{288}\mathbin{\%}\mathrm{1}}
 which corresponds to the polynomial $288x + 528$.
 
@@ -2774,7 +2746,7 @@ sequence
 \)\par\noindent\endgroup\resethooks
 }
 
-The ingenious Isaac Newton studied the relation
+Isaac Newton studied the relation
 between sequences and their differences 
 intensely and came up with a formula. Before we go right
 to it, let us observe on our own.

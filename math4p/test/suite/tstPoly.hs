@@ -9,7 +9,8 @@ where
   import Control.Monad (when)
   import Data.List (nub, sort, delete)
 
-  import Poly
+  import Random
+  import PolyArith
   import Math.Polynomial
 
   ------------------------------------------------------------------------

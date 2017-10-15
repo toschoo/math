@@ -2,11 +2,13 @@
 \begin{code}
 module PolyArith
 where
+  import Data.List (nub,foldl')
   import Natural
   import Quoz
   import Real
+  import Zahl
   import NumSystem
-  import Modular
+  import qualified Modular as M
 \end{code}
 }
 
@@ -61,7 +63,7 @@ subtraction. Here is a valid implementation:
 \end{code}
 \end{minipage}
 
-Note that |sump| function, which implements |sum| for polynomials.
+Note the |sump| function, which implements |sum| for polynomials.
 Here is one more function that might be useful 
 later on; it folds |strichlist| on a list of lists of coefficients:
 
@@ -73,19 +75,17 @@ later on; it folds |strichlist| on a list of lists of coefficients:
 \end{minipage}
 
 \term{Punktrechnung}, \ie\ multiplication and division,
-are a bit more complex -- because of the distribution law.
+is a bit more complex -- because of the distribution law.
 Let us start with the simple case where we distribute
 a monomial over a polynomial:
 
 \begin{minipage}{\textwidth}
 \begin{code}
   mul1 :: Num a => (a -> a -> a) -> Int -> [a] -> a -> [a]
-  mul1 o i as a = zeros i ++ go as a
-    where  go [] _      =  []
-           go (c:cs) x  =  c `o` x : go cs x 
+  mul1 o i cs x = zeros i ++ [c `o` x | c <- cs]
 
   zeros :: Num a => Int -> [a]
-  zeros i = take i $ repeat 0
+  zeros i = take i (repeat 0)
 \end{code}
 \end{minipage}
 
@@ -97,9 +97,9 @@ is combined with the single term.
 This corresponds to the operation:
 
 \begin{equation}
-\begin{array}{rcrcrcccr}
-dx^m & \times & ax^n      & + & bx^{n-1}    & + & \dots & + & c\\
-     & =      & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
+\begin{array}{lcrlclcccl}
+dx^m & \times & ( & ax^n      & + & bx^{n-1}    & + & \dots & + & c)\\
+     & =      &   & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
 \end{array}
 \end{equation}
 
@@ -187,7 +187,7 @@ Here is the whole algorithm:
              |  otherwise  =  P (strichf (+) ms)
     where  d1  =  degree p1
            d2  =  degree p2
-           ms  =  [mul1 (*) i (coeffs p1) p || (i,p) <- zip [0..] (coeffs p2)]
+           ms  =  [mul1 (*) i (coeffs p1) p | (i,p) <- zip [0..] (coeffs p2)]
 \end{code}
 \end{minipage}
 
@@ -395,7 +395,7 @@ contains only the constant 0.
 In this case, there is no remainder: $b$ divides $a$.
 
 Otherwise, we divide the |last| of $r$ by the |last| of $b$.
-Note that those are the term with the highest degree
+Note that those are the terms with the highest degree
 in each polynomial.
 This division is just a number division of the two
 coefficients. We still have to compute the new exponent,
@@ -427,7 +427,7 @@ such as |divides|:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  divides ::  (Show a, Num a, Eq a, Ord a) => 
+  divides ::  (Show a, Num a, Eq a, Fractional a, Ord a) => 
               Poly a -> Poly a -> Bool
   divides a b =  case b `divp`  a of
                  (_,P [0])  ->  True
@@ -439,9 +439,9 @@ the remainder:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  remp ::  (Show a, Num a, Eq a, Ord a) => 
-           Poly a -> Poly a -> Bool
-  remp a b =  let (_,r) = b `d` a in r
+  remp ::  (Show a, Num a, Eq a, Fractional a, Ord a) => 
+           Poly a -> Poly a -> Poly a
+  remp a b =  let (_,r) = b `divp` a in r
 \end{code}
 \end{minipage}
 
@@ -493,16 +493,17 @@ we multiply |P [1,2,1]| by another polynomial, say,
 
 |gcdp (P [1,5,10,10,5,1]) (P [1,4,8,8,3])|
 
-does not yield the expected result |P [1,2,1]|.
+does not yield the expected result |P [1,2,1]|,
+but polynomials with fractions as coefficients.
 The reason is that the \acronym{gcd} is an operation
 defined on integers, but we implemented it on top
-of fractionals. That is often not what we want.
-Anyway, here, we will actually use the \acronym{gcd} 
-only in finite fields. 
-Until now, we have discussed polynomials in infinite fields.
-We now turn our attention to polynomial arithmetic
-in a finite field and, hence, to modular polynomial arithmetic.
+of fractionals. That is not what we want.
+In fact, we confuse concepts: the \acronym{gcd} is
+a concept defined on integral numbers, not on fractions.
 
+And this is the prompt to 
+turn our attention to polynomial arithmetic
+over a finite field and, thus, to modular polynomial arithmetic.
 With modular arithmetic, all coefficients in the polynomial
 are modulo $n$. That means we have to reduce those numbers.
 This, of course, does only make sense with integers.
@@ -535,7 +536,8 @@ For division, we reuse the |inverse| function:
 \begin{code}
   modiv :: Zahl -> Zahl -> Zahl -> Zahl
   modiv p n d = modmul p n d'
-    where d' = M.inverse d p
+    where d' = fromIntegral (M.inverse  (fromIntegral d) 
+                                        (fromIntegral p))
 \end{code}
 \end{minipage}
 
@@ -614,6 +616,15 @@ Multiplication:
 \end{code}
 \end{minipage}
 
+and product:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mulmlist :: Zahl -> [Zahl] -> [Zahl] -> [Zahl]
+  mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
+\end{code}
+\end{minipage}
+
 We repeat the multiplication from above 
 
 |mul (P [1,2,3,4]) (P [5,6,7,8])| 
@@ -653,7 +664,12 @@ Division:
 \end{code}
 \end{minipage}
 
-\acronym{gcd}:
+Division works exactly like the variant for infinite fields,
+except that we now use the modulo inverse 
+instead of fractional division
+for division of coefficients.
+
+Here is the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -692,8 +708,8 @@ Finally, power:
 \end{code}
 \end{minipage}
 
-Here is a nice variant of Pascal's triangle generated by
-|map (\x -> powmp 7 x (P [1,1]) [1..14]|:
+Here is a nice variant of Pascal's triangle generated by\\
+|map (\x -> powmp 7 x (P [1,1])) [1..14]|:
 
 \begin{minipage}{\textwidth}
 \begin{center}
@@ -714,8 +730,6 @@ Here is a nice variant of Pascal's triangle generated by
 \end{center}
 \end{minipage}
 
-It is especially interesting to look at greater powers 
-using exponents that are multiples of 7.
 Before we continue with modular arithmetic,
 which we need indeed to understand some of the deeper problems
 related to polynomials, we will
