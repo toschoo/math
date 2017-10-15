@@ -146,9 +146,10 @@ Instead of just applying the polynomial to a sequence
 of numbers and then compute the differences,
 we could try to find a formula that expresses
 the differences for a given polynomial.
-When we look at the formula $x^{(3)}$,
-we can just apply two consecutive values
-and compute their difference, \eg:
+When we take a formula like $x^{(3)}$,
+we can compute its differences by
+applying two consecutive values
+and compute the difference of the results, \eg:
 
 \[
 \begin{array}{ccl}
@@ -214,16 +215,16 @@ We see the same pattern here, but the
 exponent is not really an exponent,
 but a falling factorial.
 
-Systems that establish a calculus
+A system that establishes a calculus
 that follows the same rules as the
 \term{infinitesimal} calculus, to which
-the derivative belongs, are often called
-\term{umbral calculus}. Most typical for
-umbral calculus are systems of computations
+the derivative belongs, is often called
+\term{umbral calculus}. Most typical 
+\term{umbral calculi} are systems of computations
 based on \term{Bernoulli polynomials} and 
 \term{Bernoulli numbers}.
 But factorial polynomials, too, establish
-an umbral calculus.
+an \term{umbral calculus}.
 
 Here is a Haskell function to compute
 the umbral derivative of the factorial polynomial
@@ -287,7 +288,7 @@ These terms, hence, cancel out and we are left with
 $\Delta_{a^{(n)}} = nb$.
 But $b$ is $a(a-1)\dots(a-n+2)$, \ie\ the same
 as the second line, but with one factor removed, namely
-$(a-n+1)$. That, in its turn, is $a^{(n-1)}$ and, thus,
+$(a-n+1)$. That, however, is $a^{(n-1)}$ and, thus,
 we have
 
 \begin{equation}
@@ -499,7 +500,7 @@ $x^{(7)} + 21x^{(6)} + 140x^{(5)} + 350x^{(4)} + 301x^{(3)} + 63x^{(2)} + x^{(1)
 \end{tabular}
 \end{center}
 
-Those of you that still suffer from triangle paranoia:
+Those of you who still suffer from triangle paranoia:
 you have probably realised that this is already the second
 triangle appearing in this section.
 When you scroll back to certain triangle-intense chapters,
@@ -598,7 +599,7 @@ n\stirlingTwo{n}{n}x^{(n)}  +
 }
 
 We regroup a bit more, in particular, we
-factor the $x^{(k)}$ out, so that we obtain
+factor $x^{(k)}$ out, so that we obtain
 factors that consist only of expressions containing
 Stirling numbers in front of the $x$es:
 
@@ -632,8 +633,9 @@ You might remember the identity
 \end{equation}
 
 which is ``Pascal's rule'' for Stirling numbers of the second kind.
-This is exactly what we see in each group! Just make sure that
-what you see in the factor in front of each $x^{(k)}$ is $k$.
+This is exactly what we see in each group! Compare the factors
+in front of the first Stirling number that read $n$, $n-1$ and so on
+with what you see in the Stirling number in the place of $k$ (\ie\ in the bottom).
 For instance, in the formula
 
 \[
@@ -745,8 +747,8 @@ of the original polynomial (|[0..]|)
 and multiply the 
 coefficients of the original 
 (|cs|)
-with the coefficients
-that tell us how often each factorial polynomials
+and the coefficients
+that tell us how often each factorial polynomial
 occurs in the respective power.
 The latter is done by function $s$ which is mapped
 on the result of |fpPowTerms|.
@@ -756,16 +758,17 @@ We concat this list, so we obtain a flat list
 of polynomials.
 
 In the next step, we compute $p2$ by sorting
+and then grouping
 this flat list by the degree of the polynomials.
-We then group by the polynomials, so that we
-get a list of lists of equal polynomials with
-different coefficients.
+The result is a list of lists of polynomials 
+of equal degree with
+differing coefficients.
 
 In the final step we sum the coefficients of
 each such groups starting with zero
 |p0 = (0,P[0])|. 
 
-We test test this function by factoring
+We test this function by factoring
 arbitrary polynomials into their terms and
 summing the result together again:
 
@@ -885,7 +888,7 @@ of the first kind:
 The recursive formula to compute these numbers is
 
 \begin{equation}
-\stirlingOne{n+1}{k+1} = -n\stirlingOne{n}{k} + \stirlingOne{n}{k-1}.
+\stirlingOne{n+1}{k+1} = -n\stirlingOne{n}{k+1} + \stirlingOne{n}{k}.
 \end{equation}
 
 Note that, when the first Stirling number, $\stirlingOne{n}{k}$,
@@ -949,11 +952,6 @@ For each term, we distribute the factors over the sum $x-n$:
 and regroup so that we get pairs of terms 
 with equal $x$es:
 
-\ignore{
-try with array. might be nicer!
-}
- 
-
 \[
 \begingroup
 \renewcommand{\arraystretch}{1.5}
@@ -964,6 +962,22 @@ try with array. might be nicer!
   & \dots              &       & &                    &       & + \\
 -n&\stirlingOne{n}{2}  &x^{2}  &+&\stirlingOne{n}{1}  &x^{2}  & + \\
 -n&\stirlingOne{n}{1}  &x      & &                    &       & 
+\end{array}
+\endgroup
+\]
+
+When we factor the $x$es out again, we get
+
+\[
+\begingroup
+\renewcommand{\arraystretch}{1.5}
+\begin{array}{crlc}
+  &\stirlingOne{n}{n}                                      &x^{n+1}& + \\
+  &\left(-n\stirlingOne{n}{n} + \stirlingOne{n}{n-1}\right)&x^n    & + \\
+  &\left(-n\stirlingOne{n}{n-1}+\stirlingOne{n}{n-2}\right)&x^{n-1}& + \\
+  & \dots                                                  &       & + \\
+  &\left(-n\stirlingOne{n}{2} + \stirlingOne{n}{1}\right)  &x^{2}  & + \\
+  &-n\stirlingOne{n}{1}                                    &x      & 
 \end{array}
 \endgroup
 \]

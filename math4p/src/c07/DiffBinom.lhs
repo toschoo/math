@@ -94,7 +94,6 @@ To predict a value way ahead we need to generate
 number by number before we are there.
 With Newton's trick, we could compute any number
 in the sequence in one step.
-
 All we have to do is to get the |head|s of the sequences
 and to calculate the formula:
 
@@ -166,7 +165,7 @@ Now we perform some tests:
 |newton 13 d s| gives  379874.
 \end{minipage}
 
-The approach, hence, seems to work.
+The approach seems to work.
 But there is more.
 The function |newton| gives us a closed form 
 to compute any number in the sequence,
@@ -397,10 +396,13 @@ the result looks weird. For |cn H 5|, for example, we see
 |[H,X,X,Y,X,Y,Z,Y,X,Y,Z,Y,Z,Z,Y,X,Y,Z,Y,Z,Z,Y,Z,Z,Z,Y]|,
 
 which is somewhat confusing. The result, however,
-is correct. When we generate a random polynomial of degree 3,
-say, |P [2,28,15,22]|, this is the polynomial
-$22x^3 + 15x^2 + 28x + 2$, we get the sequence
+is correct. We can illustrate that by comparing
+the result with a real polynomial of degree 3, say,
+|P [2,28,15,22]|, this is the polynomial
+$22x^3 + 15x^2 + 28x + 2$; 
+this polynomial generates the sequence
 2, 67, 294, 815, 1762, 3267, 5462, 8479, 12450, 17507, 23782.
+
 We now define a function that substitutes the symbols
 of our model by the heads of the sequence and the
 difference lists:

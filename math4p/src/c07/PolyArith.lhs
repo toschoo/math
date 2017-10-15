@@ -74,6 +74,23 @@ later on; it folds |strichlist| on a list of lists of coefficients:
 \end{code}
 \end{minipage}
 
+What if we add a polynomial to itself more than once?
+With numbers, that would be multiplication.
+With polynomials, this is a bit different.
+There is in fact an operation that is between
+\term{strichrechnung} and \term{punktrechnung},
+namely \term{scaling}. Scaling maps multiplication by $n$,
+for $n$ some integer,
+on all coefficients and, as such, corresponds
+to adding a polynomial $n$ times to itself:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  scale :: (Num a) => a -> Poly a -> Poly a 
+  scale n (P cs) = P (map (n*) cs)
+\end{code}
+\end{minipage}
+
 \term{Punktrechnung}, \ie\ multiplication and division,
 is a bit more complex -- because of the distribution law.
 Let us start with the simple case where we distribute
