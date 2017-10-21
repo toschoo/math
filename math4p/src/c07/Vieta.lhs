@@ -350,8 +350,8 @@ does that:
   vieta :: (Real a) => [a] -> [a]
   vieta = c . g . d . s . Perm.ps
     where  d    =  drop 1
-           g    =  groupBy (\x y -> length x == length y)
-           s    =  sortBy (\x y -> length x `compare` length y)
+           g    =  groupBy ((==) `on` length)
+           s    =  sortOn length
            c p  =  [(-1)^n * sum (map product x) | (x,n) <- zip p [1..]] 
 \end{code}
 \end{minipage}
@@ -396,13 +396,13 @@ To complicate, we check some variants of
 those roots:
 
 \begin{itemize}
-\item |vieta [phi, -psi]| gives $-\sqrt{5}, 1$ and, hence, the polynomial
+\item |vieta [phi, -psi]| gives $[-\sqrt{5}, 1]$ and, hence, the polynomial
 $x^2 - \sqrt{5} + 1$, whose roots are indeed $\Phi$ and $-\Psi$.
 
-\item |vieta [-phi, psi]| gives $\sqrt{5}, 1$ and that is the polynomial
+\item |vieta [-phi, psi]| gives $[\sqrt{5}, 1]$ and that is the polynomial
 $x^2 + \sqrt{5} + 1$, whose roots are $-\Phi$ and $\Psi$.
 
-\item |vieta [phi, psi]| gives $-1, -1$, the polynomial
+\item |vieta [phi, psi]| gives $[-1, -1]$, the polynomial
 $x^2 - x - 1$, whose roots are $\Phi$ and $\Psi$.
 \end{itemize}
 
@@ -420,6 +420,10 @@ which is $(x+1)(x+2)(x+3)$ and get
 |P [6,11,6,1]|, which represents the polynomial
 $x^3 + 6x^2 + 11x + 6$.
 We call |vieta [-1,-2,-3]| and get |[6,11,6]|.
+(You may have realised that the coefficients are 
+unsigned Stirling numbers of the first kind and
+now might want to contemplate 
+why those guys show up again\dots)
 
 A fifth-degree polynomial:
 |prodp mul [P [1,1], P [2,1], P [3,1], P [4,1], P [5,1]]|:

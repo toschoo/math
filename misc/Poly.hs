@@ -5,7 +5,8 @@
 module Poly
 where
 
-  import           Data.List (nub,foldl',sortBy,groupBy)
+  import           Data.Function (on)
+  import           Data.List (nub,foldl',sortBy,groupBy,sortOn)
   import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Control.Concurrent
@@ -822,8 +823,8 @@ where
   vieta :: (Real a) => [a] -> [a]
   vieta = c . g . d . s . Perm.ps
     where d   = drop 1
-          g   = groupBy (\x y -> length x == length y)
-          s   = sortBy (\x y -> length x `compare` length y)
+          g   = groupBy ((==) `on`  length) -- \x y -> length x == length y)
+          s   = sortOn length -- (\x y -> length x `compare` length y)
           c p = [(-1)^n * sum (map product x) | (x,n) <- zip p [1..]] 
           
  

@@ -115,11 +115,11 @@ method.
 Kronecker's method is a distinct-degree approach. 
 That is, it searches for the factors of a given degree.
 We start by applying the polynomial to $n$ distinct values,
-for $n$ the degree of the polynomial plus 1.
+for $n$ the degree of the factors plus 1.
 That is because, to represent a polynomial of degree $d$,
 we need $d+1$ coefficients, \eg\ |P [0,0,1]| has three
 coefficients and represents the polynomial $x^2$, which is
-of degree two.
+of degree 2.
 
 The rationale of applying the polynomial is the following:
 When the polynomial we want to factor generates
@@ -232,7 +232,7 @@ and get:
 
 Those are the polynomials $x+3$, $-x+3$, $x-3$ and $-x-3$.
 By convention, we exclude the polynomials starting with
-a negative coefficients by factoring out -1 first.
+a negative coefficient by factoring -1 out.
 However, we can easily see that all of them are actually
 factors of $x^2 - 9$, since
 
@@ -301,10 +301,4 @@ polynomials in a finite field in the next section.
 Let us here assume that we already knew such a method.
 We could then call it to factor a given polynomial
 in a finite field and then reinterpret the result
-for the domain we started with.
-
-\ignore{
-TODO:
-- application to integers: hensel's lemma
-}
-
+in the domain we started with.

@@ -103,11 +103,8 @@ we will actually see functions with holes and jumps.
 The reason that polynomials behave regularily is that we only
 use basic arithmetic functions in their definition: we add, multiply
 and raise to powers. 
-Those operations together with the integers form monoids and,
-with rational and real numbers, they form groups.
-Both, monoids and groups, are closed over their base set.
-We can therefore be sure that, for any input value from the base set,
-the result is in the same base set, too.
+All those operations are closed, \ie\ their results lie
+in the same fields as their inputs. 
 
 Furthermore, the form of polynomials guarantees that they develop
 in a certain way. For very large numbers (negative or positive), 
@@ -121,7 +118,7 @@ must be understood relative to the coefficients. If the coefficients
 are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
-There are also polynomials with a quite confusing behaviour that
+There are polynomials with a quite confusing behaviour that
 make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
@@ -130,10 +127,7 @@ and computer scientist. The Wilkinson polynomial is defined as
 w(x) = \prod_{i=1}^{20}{(x-i)}.
 \end{equation}
 
-\ignore{
-this is the factorial polynomial |facpoly 21|
-}
-
+It is thus a factorial polynomial, namely $x^{(21)}$.
 We can generate it in terms of our polynomial type as
 
 \begin{minipage}{\textwidth}
@@ -190,9 +184,10 @@ expression becomes 0. So, for the value $x=3$, we would have
 2 \times 1 \times 0 \times \dots \times -17 = 0.
 \]
 
-The results when applying the polynomial, however,
+When we look at the coefficients, however,
+the results
 look quite irregular and, on the first sight,
-completely unrelated to the coefficients.
+completely unrelated.
 When we say that polynomials show a regular behaviour,
 that must be taken with a grain of salt.
 Anyway, that they behave like this 
@@ -329,7 +324,7 @@ the correct result.
 The most widely known open method is Newton's method,
 also called Newton-Raphson method.
 It was first developed by Newton in about 1670
-and, then, by Joseph Raphson in 1690.
+and then, in 1690, again by Joseph Raphson.
 Newton's version was probably not known to Raphson,
 since Newton did not publish his work.
 Raphson's version, on the other hand, is
@@ -600,8 +595,14 @@ do this extension for $\mathbb{R}$ to create
 the \term{complex numbers}, $\mathbb{C}$.
 In that field, polynomials of the second degree
 always have 1 or 2 solutions.
-But, again, first steps first.
 
+For instance the polynomial $x^2 + 1$ is never
+negative and, therefore, has no roots in $\mathbb{R}$.
+But when we assume that there is a number, say, $i$,
+for which $i^2=-1$, then this value $i$ would
+make the polynomial zero: $i^2 + 1 = -1 + 1 = 0$.
+
+But, again, first things first.
 The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
 because it determines how many roots

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  15 OCT 2017 19:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  21 OCT 2017 19:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1532,7 +1532,7 @@ Overfull \hbox (47.26964pt too wide) in paragraph at lines 4535--4544
 \openout3 = `lhspoly.ptb'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4873--4877
+Underfull \hbox (badness 10000) in paragraph at lines 4867--4871
 
  []
 
@@ -1563,7 +1563,7 @@ File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 \openout3 = `lhspoly.ptb'.
 
  [67]
-Overfull \hbox (6.7068pt too wide) in paragraph at lines 6067--6070
+Overfull \hbox (6.7068pt too wide) in paragraph at lines 6068--6071
 []\OT1/cmr/m/n/10.95 A sim-pler ex-am-ple that shows the signed-ness of roots a
 nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 /m/n/10.95 1$. $[] [ 1\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 1 ]$
@@ -1580,12 +1580,12 @@ nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 \openout3 = `lhspoly.ptb'.
 
  [75]
-Underfull \hbox (badness 10000) in paragraph at lines 6806--6807
+Underfull \hbox (badness 10000) in paragraph at lines 6805--6806
 
  []
 
 [76]
-Underfull \hbox (badness 10000) in paragraph at lines 6826--6827
+Underfull \hbox (badness 10000) in paragraph at lines 6825--6826
 
  []
 
@@ -1599,7 +1599,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 6826--6827
 \openout3 = `lhspoly.ptb'.
 
  [81]
-Overfull \hbox (44.6902pt too wide) in paragraph at lines 7283--7288
+Overfull \hbox (44.6902pt too wide) in paragraph at lines 7282--7287
 \OT1/cmr/m/n/10.95 of de-gree 8 and is square-free (and, per def-i-ni-tion, mon
 ic). The call $[] 2 (\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ 0\OML/cmm/m/it/
 10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/
@@ -1621,7 +1621,7 @@ m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML
 Here is how much of TeX's memory you used:
  35682 strings out of 493029
  851016 string characters out of 6136234
- 1034063 words of memory out of 5000000
+ 1035063 words of memory out of 5000000
  38703 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1643,7 +1643,7 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (87 pages, 417573 bytes).
+Output written on lhspoly.pdf (87 pages, 417844 bytes).
 PDF statistics:
  357 PDF objects out of 1000 (max. 8388607)
  248 compressed objects within 3 object streams
