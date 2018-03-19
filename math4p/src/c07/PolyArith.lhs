@@ -24,7 +24,8 @@ Key is to realise that the structure of polynomials
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
 of some number and a power of $x$.
-When we add (or subtract) two polynomials, we just sort them
+When we add (or subtract) two polynomials,
+we just merge them keeping order
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
 
@@ -49,9 +50,6 @@ subtraction. Here is a valid implementation:
   sub :: (Num a, Eq a) => Poly a -> Poly a -> Poly a
   sub = strich (-)
 
-  sump :: (Num a, Eq a) => [Poly a] -> Poly a
-  sump = foldl' add (P [0])
-
   strich :: (Num a, Eq a) => (a -> a -> a) -> Poly a -> Poly a -> Poly a
   strich o (P x) (P y)  = P (strichlist o x y)
 
@@ -63,7 +61,16 @@ subtraction. Here is a valid implementation:
 \end{code}
 \end{minipage}
 
-Note the |sump| function, which implements |sum| for polynomials.
+Based on addition, we can also implement |sum|
+for polynomials:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  sump :: (Num a, Eq a) => [Poly a] -> Poly a
+  sump = foldl' add (P [0])
+\end{code}
+\end{minipage}
+
 Here is one more function that might be useful 
 later on; it folds |strichlist| on a list of lists of coefficients:
 
@@ -87,7 +94,7 @@ to adding a polynomial $n$ times to itself:
 \begin{minipage}{\textwidth}
 \begin{code}
   scale :: (Num a) => a -> Poly a -> Poly a 
-  scale n (P cs) = P (map (n*) cs)
+  scale n (P cs) = poly (map (n*) cs)
 \end{code}
 \end{minipage}
 
@@ -191,8 +198,10 @@ which is
 This means that
 
 \begin{equation}
-(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) =
-32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\begin{split}
+(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) \\
+= 32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\end{split}
 \end{equation}
 
 Here is the whole algorithm:
@@ -229,16 +238,23 @@ Here is the code:
 
 The function |powp| receives a natural number,
 that is the exponent, and a polynomial.
-We kick off by calling |go| with the exponent, $f$,
+We kick off by calling |go| with the exponent $f$,
 a base polynomial |P [1]|, \ie\ unity, and the polynomial
 we want to raise to the power of |f|.
 If $f=0$, we are done and return the base polynomial.
 This reflects the case $x^0=1$.
 If $f=1$, we multiply the base polynomial by the input polynomial.
+It we have called |powp| with one, this has no effect,
+since the base polynomial, in this case, is unity.
+
 Otherwise, if the exponent is even,
 we halve it, pass the base polynomial on and square the input.
-Otherwise, we pass the product of the base polynomial and the input
-on instead of the base polynomial as it is.
+Otherwise, if the exponent is odd,
+we subtract one form the exponent and half the result
+and pass the product of the base polynomial and the input
+on instead of the base polynomial as it is and,
+of course, still square the input.
+
 This implementation differs a bit from the implementation
 we presented before for numbers, but it implements the same
 algorithm.
@@ -265,9 +281,11 @@ which is
 |P [1,5,10,10,5,1]|,
 
 the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
-You might have noticed that our Haskell notation
+
+You might have noticed that the different
+states of the algorithm given in our Haskell notation
 shows the binomial coefficients $\binom{n}{k}$ for
-$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+$n=1$, $n=2$, $n=4$ and $n=5$.
 We never see $n=3$, which would be 
 |P [1,3,3,1]|, because we leave the multiplication
 |mul (P [1,1]) (P [1,2,1])| out.
@@ -277,7 +295,7 @@ is more efficient than multiplying five times.
 With growing exponents, the saving quickly grows
 to a significant order.
 
-Division is, as usual, a bit more complicated than multiplication.
+Division is, as usual, still more complicated than multiplication.
 But it is not too different from number division. First,
 we define polynomial division as Euclidean division, that is
 we search the solution for the equation
@@ -331,7 +349,8 @@ and subtract that from what remains from $a$:
 \end{equation}
 
 We continue with $-2x^3$, which, divided by
-$x^2$ is $-2x$. 
+$x^2$ is $-2x$. This goes to the result:
+$4x^3 - x^2 - 2x$.
 We multiply $-2x \times (x^2 + 1) = -2x^3 - 2x$
 and subtract:
 
@@ -343,8 +362,6 @@ and subtract:
 \end{array}
 \end{equation}
 
-The result now is 
-$4x^3 - x^2 - 2x$.
 We continue with $2x^2$, which,
 divided by $x^2$ is 2. 
 We multiply $2\times (x^2 + 1) = 2x^2 + 2$
@@ -439,6 +456,10 @@ $4x^3-x^2-2x+2$ and $2x - 3$.
 This is the same result we obtained above 
 with the manual procedure.
 
+\ignore{
+consider to go through the whole example
+}
+
 From here on, we can implement functions based on division,
 such as |divides|:
 
@@ -497,8 +518,7 @@ is $x^3 + 3x^2 + 3x + 1$.
 Since polynomials consisting of binomial coefficients of $n$,
 where $n$ is the degree of the polynomial,
 are always a product
-of polynomials composed of smaller binomial coefficients
-in the same way,
+of polynomials composed of smaller binomial coefficients,
 the \acronym{gcd} of two polynomials
 consisting only of binomial coefficients,
 is always the smaller of the two.
@@ -676,15 +696,14 @@ Division:
                            d   =  degree (P r) - db
                            ts  =  zeros d ++ [t]
                            m   =  mulmlist p ts bs
-                      in go  [c `mmod` p | c <- cleanz $ strichlist (+) q ts]
-                             [c `mmod` p | c <- cleanz $ strichlist (-) r m ]
+                      in go  (cleanz [c `mmod` p | c <- strichlist (+) q ts])
+                             (cleanz [c `mmod` p | c <- strichlist (-) r m ])
 \end{code}
 \end{minipage}
 
 Division works exactly like the variant for infinite fields,
-except that we now use the modulo inverse 
-instead of fractional division
-for division of coefficients.
+except that we now use multiplication with the modulo inverse 
+instead of fractional division.
 
 Here is the \acronym{gcd}:
 
@@ -696,6 +715,11 @@ Here is the \acronym{gcd}:
                |  otherwise = let (_,r) = divmp p a b in gcdmp p b r
 \end{code}
 \end{minipage}
+
+\ignore{
+what about gcdmp 7 (P [1,4,1,1,3])
+with either P [1,2,1] or P [1,2,3]???
+}
 
 Let us try |gcdmp| on the variation we already tested above. 
 We multiply the polynomial

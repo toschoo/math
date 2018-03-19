@@ -10,8 +10,8 @@ where
 \end{code}
 }
 
-A numeral system consists of a finite set of digits, $D$,
-and a base, $b$, for which $b=||D||$, \ie\ $b$ is the cardinality of $D$.
+A numeral system consists of a finite set of digits $D$
+and a base $b$ for which $b=||D||$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
 The cardinality of $D$ is 2 and therefore $b=2$.
@@ -29,8 +29,8 @@ of digits. The string
 \]
 
 for instance, may represent a number in the binary system.
-It could be a number in decimal format, too, though.
-However, the string 
+It could be a number in decimal or hexadecimal format, too.
+The string 
 
 \[
 170,
@@ -39,7 +39,7 @@ However, the string
 by contrast, cannot be a binary number, because
 it contains the digit 7, which is not element of $D$
 in the binary system.
-It can represent a decimal (or a hexadecimal number).
+It can represent a number in the decimal (or the hexadecimal) system. 
 The string
 
 \[
@@ -47,7 +47,7 @@ aa,
 \]
 
 can represent a number in the hexadecimal system
-(but not one of in the binary or decimal system).
+but not one in the binary or decimal system.
 
 We interpret such a string, \ie\ convert it
 to the decimal system, by rewriting it 
@@ -58,9 +58,9 @@ a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
 \]
 
 where $a_i$ are the digits that appear in the string,
-$b$ is the base and $n$ is position of the left-most digit
+$b$ is the base and $n$ the position of the left-most digit
 starting to count with 0 on the right-hand side of the string.
-The string $10101010$ in binary notation,hence, is interpreted as
+The string $10101010$ in binary notation, hence, is interpreted as
 
 \[
 1\times 2^7 + 0\times 2^6 + 1\times 2^5 + 0\times 2^4 + 
@@ -73,7 +73,7 @@ which can be simplified to
 2^7 + 2^5 + 2^3 + 2,
 \]
 
-which, in its turn, is
+which, in turn, is
 
 \[
 128 + 32 + 8 + 2 = 170.
@@ -87,13 +87,15 @@ The string 170 in decimal notation is interpreted as
 
 Interpreting a string in the notation it is written in
 yields just that string.
+
 The string $aa$ in hexadecimal notation is interpreted as
 
 \[
 a\times 16 + a.
 \]
 
-The digit $a$, however, is just 10. We, hence, get the equation
+The digit $a$ corresponds to 10 in the decimal system.
+We, therefore, get the equation
 
 \[
 10\times 16 + 10 = 160 + 10 = 170.
@@ -102,8 +104,8 @@ The digit $a$, however, is just 10. We, hence, get the equation
 What do we get, when we relax some of the constraints
 defining a numeral system?
 Instead of using a finite set of digits,
-we could use a number field, $F$, (finite or infinite)
-so that any member of that field qualifies as coefficient
+we could use a number field $F$ (finite or infinite)
+so that any member of that field qualifies as a coefficient
 in the formulas we used above to interpret numbers
 in the decimal system. We would then relax the rule
 that the base must be the cardinality of the field.
@@ -123,11 +125,11 @@ or shorter:
 
 with $a_i, x \in F$.
 
-Such beasts are indeed well-known. They are very prominent, in fact,
-and their name is \term{polynomial}.
+Such beasts are indeed well-known
+and their name is \term{polynomials}.
 
 The name \emph{poly}nomial stems from the fact
-that polynomials may be composed of many terms;
+that they may be composed of many terms;
 a monomial, by contrast, is a polynomial 
 that consists of only one term.
 For instance,
@@ -194,8 +196,7 @@ Usually, it is harder to recognise this kind of relations
 numbers have with the binomial theorem (and, hence, with polynomials),
 because most binomial coefficients are too big to be represented
 by a single-digit number. Already in the product $14\times 14$,
-the binomial coefficients are hidden. Let us look at this multiplication
-treated as the polynomial $(x+a)$ with $x=10$ and $a=4$:
+the binomial coefficients are `hidden':
 
 \[
 (10 + 4) (10 + 4) = 
@@ -209,20 +210,24 @@ $100 + 2\times 40 + 16 = 100 + 80 + 16 = 196$.
 
 Indeed, polynomials are not numbers.
 Those are different concepts.
+
 Another important difference is that polynomials do not establish
 a clear order. For any two distinct numbers, we can clearly say
 which of the two is the greater and which is the smaller one.
 We cannot decide that based on the formula of the polynomial alone.
 One way to decide quickly which of two numbers is the grater one
 is to look at the number of their digits. The one with more digits
-is necessarily the greater one. In any numeral system it holds that:
+is necessarily the greater of the two.
+In any numeral system it holds that:
 
 \[
 a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0
 \]
 
 independent of the values of the $a$s and the $c$s.
-For polynomials, this is not true. Consider the following example:
+This is because the base $b$ is fixed.
+In the case of polynomials, this is not true.
+Consider the following example:
 
 \[
 x^3 + x^2 + x + 1 > 100x^2?
@@ -282,6 +287,8 @@ But, here, we store them in the order:
 \[
 x^0 + x^1 + \dots + x^{n-1} + x^n.
 \]
+
+We will soon see why that is an advantage.
 
 The following function gets the list of coefficients back:
 
@@ -376,7 +383,7 @@ An important concept related to polynomials is the
 it is the greatest exponent in the polynomial.
 For us, it is the weight of the right-most element
 in the polynomial or, much simpler, the length
-of the list of coefficients minus one -- since,
+of the list of coefficients minus one -- since
 we start with zero!
 The following function computes the degree
 of a given polynomial:

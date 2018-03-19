@@ -141,8 +141,8 @@
 \)\par\noindent\endgroup\resethooks
 }
 
-A numeral system consists of a finite set of digits, $D$,
-and a base, $b$, for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
+A numeral system consists of a finite set of digits $D$
+and a base $b$ for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
 The cardinality of $D$ is 2 and therefore $b=2$.
@@ -160,8 +160,8 @@ of digits. The string
 \]
 
 for instance, may represent a number in the binary system.
-It could be a number in decimal format, too, though.
-However, the string 
+It could be a number in decimal or hexadecimal format, too.
+The string 
 
 \[
 170,
@@ -170,7 +170,7 @@ However, the string
 by contrast, cannot be a binary number, because
 it contains the digit 7, which is not element of $D$
 in the binary system.
-It can represent a decimal (or a hexadecimal number).
+It can represent a number in the decimal (or the hexadecimal) system. 
 The string
 
 \[
@@ -178,7 +178,7 @@ aa,
 \]
 
 can represent a number in the hexadecimal system
-(but not one of in the binary or decimal system).
+but not one in the binary or decimal system.
 
 We interpret such a string, \ie\ convert it
 to the decimal system, by rewriting it 
@@ -189,9 +189,9 @@ a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
 \]
 
 where $a_i$ are the digits that appear in the string,
-$b$ is the base and $n$ is position of the left-most digit
+$b$ is the base and $n$ the position of the left-most digit
 starting to count with 0 on the right-hand side of the string.
-The string $10101010$ in binary notation,hence, is interpreted as
+The string $10101010$ in binary notation, hence, is interpreted as
 
 \[
 1\times 2^7 + 0\times 2^6 + 1\times 2^5 + 0\times 2^4 + 
@@ -204,7 +204,7 @@ which can be simplified to
 2^7 + 2^5 + 2^3 + 2,
 \]
 
-which, in its turn, is
+which, in turn, is
 
 \[
 128 + 32 + 8 + 2 = 170.
@@ -218,13 +218,15 @@ The string 170 in decimal notation is interpreted as
 
 Interpreting a string in the notation it is written in
 yields just that string.
+
 The string $aa$ in hexadecimal notation is interpreted as
 
 \[
 a\times 16 + a.
 \]
 
-The digit $a$, however, is just 10. We, hence, get the equation
+The digit $a$ corresponds to 10 in the decimal system.
+We, therefore, get the equation
 
 \[
 10\times 16 + 10 = 160 + 10 = 170.
@@ -233,8 +235,8 @@ The digit $a$, however, is just 10. We, hence, get the equation
 What do we get, when we relax some of the constraints
 defining a numeral system?
 Instead of using a finite set of digits,
-we could use a number field, $F$, (finite or infinite)
-so that any member of that field qualifies as coefficient
+we could use a number field $F$ (finite or infinite)
+so that any member of that field qualifies as a coefficient
 in the formulas we used above to interpret numbers
 in the decimal system. We would then relax the rule
 that the base must be the cardinality of the field.
@@ -254,11 +256,11 @@ or shorter:
 
 with $a_i, x \in F$.
 
-Such beasts are indeed well-known. They are very prominent, in fact,
-and their name is \term{polynomial}.
+Such beasts are indeed well-known
+and their name is \term{polynomials}.
 
 The name \emph{poly}nomial stems from the fact
-that polynomials may be composed of many terms;
+that they may be composed of many terms;
 a monomial, by contrast, is a polynomial 
 that consists of only one term.
 For instance,
@@ -325,8 +327,7 @@ Usually, it is harder to recognise this kind of relations
 numbers have with the binomial theorem (and, hence, with polynomials),
 because most binomial coefficients are too big to be represented
 by a single-digit number. Already in the product $14\times 14$,
-the binomial coefficients are hidden. Let us look at this multiplication
-treated as the polynomial $(x+a)$ with $x=10$ and $a=4$:
+the binomial coefficients are `hidden':
 
 \[
 (10 + 4) (10 + 4) = 
@@ -340,20 +341,24 @@ $100 + 2\times 40 + 16 = 100 + 80 + 16 = 196$.
 
 Indeed, polynomials are not numbers.
 Those are different concepts.
+
 Another important difference is that polynomials do not establish
 a clear order. For any two distinct numbers, we can clearly say
 which of the two is the greater and which is the smaller one.
 We cannot decide that based on the formula of the polynomial alone.
 One way to decide quickly which of two numbers is the grater one
 is to look at the number of their digits. The one with more digits
-is necessarily the greater one. In any numeral system it holds that:
+is necessarily the greater of the two.
+In any numeral system it holds that:
 
 \[
 a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0
 \]
 
 independent of the values of the $a$s and the $c$s.
-For polynomials, this is not true. Consider the following example:
+This is because the base $b$ is fixed.
+In the case of polynomials, this is not true.
+Consider the following example:
 
 \[
 x^3 + x^2 + x + 1 > 100x^2?
@@ -444,6 +449,8 @@ But, here, we store them in the order:
 \[
 x^0 + x^1 + \dots + x^{n-1} + x^n.
 \]
+
+We will soon see why that is an advantage.
 
 The following function gets the list of coefficients back:
 
@@ -595,7 +602,7 @@ An important concept related to polynomials is the
 it is the greatest exponent in the polynomial.
 For us, it is the weight of the right-most element
 in the polynomial or, much simpler, the length
-of the list of coefficients minus one -- since,
+of the list of coefficients minus one -- since
 we start with zero!
 The following function computes the degree
 of a given polynomial:
@@ -712,7 +719,8 @@ Key is to realise that the structure of polynomials
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
 of some number and a power of $x$.
-When we add (or subtract) two polynomials, we just sort them
+When we add (or subtract) two polynomials,
+we just merge them keeping order
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
 
@@ -749,10 +757,6 @@ subtraction. Here is a valid implementation:
 \\
 \>[3]{}\Varid{sub}\mathrel{=}\Varid{strich}\;(\mathbin{-}){}\<[E]%
 \\[\blanklineskip]%
-\>[3]{}\Varid{sump}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
-\\
-\>[3]{}\Varid{sump}\mathrel{=}\Varid{foldl'}\;\Varid{add}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[E]%
-\\[\blanklineskip]%
 \>[3]{}\Varid{strich}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{strich}\;\Varid{o}\;(\Conid{P}\;\Varid{x})\;(\Conid{P}\;\Varid{y}){}\<[25]%
@@ -780,7 +784,23 @@ subtraction. Here is a valid implementation:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Note the \ensuremath{\Varid{sump}} function, which implements \ensuremath{\Varid{sum}} for polynomials.
+Based on addition, we can also implement \ensuremath{\Varid{sum}}
+for polynomials:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sump}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{sump}\mathrel{=}\Varid{foldl'}\;\Varid{add}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 Here is one more function that might be useful 
 later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coefficients:
 
@@ -816,7 +836,7 @@ to adding a polynomial $n$ times to itself:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{scale}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
-\>[3]{}\Varid{scale}\;\Varid{n}\;(\Conid{P}\;\Varid{cs})\mathrel{=}\Conid{P}\;(\Varid{map}\;(\Varid{n}\mathbin{*})\;\Varid{cs}){}\<[E]%
+\>[3]{}\Varid{scale}\;\Varid{n}\;(\Conid{P}\;\Varid{cs})\mathrel{=}\Varid{poly}\;(\Varid{map}\;(\Varid{n}\mathbin{*})\;\Varid{cs}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -930,8 +950,10 @@ which is
 This means that
 
 \begin{equation}
-(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) =
-32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\begin{split}
+(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) \\
+= 32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\end{split}
 \end{equation}
 
 Here is the whole algorithm:
@@ -1037,16 +1059,23 @@ Here is the code:
 
 The function \ensuremath{\Varid{powp}} receives a natural number,
 that is the exponent, and a polynomial.
-We kick off by calling \ensuremath{\Varid{go}} with the exponent, $f$,
+We kick off by calling \ensuremath{\Varid{go}} with the exponent $f$,
 a base polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}, \ie\ unity, and the polynomial
 we want to raise to the power of \ensuremath{\Varid{f}}.
 If $f=0$, we are done and return the base polynomial.
 This reflects the case $x^0=1$.
 If $f=1$, we multiply the base polynomial by the input polynomial.
+It we have called \ensuremath{\Varid{powp}} with one, this has no effect,
+since the base polynomial, in this case, is unity.
+
 Otherwise, if the exponent is even,
 we halve it, pass the base polynomial on and square the input.
-Otherwise, we pass the product of the base polynomial and the input
-on instead of the base polynomial as it is.
+Otherwise, if the exponent is odd,
+we subtract one form the exponent and half the result
+and pass the product of the base polynomial and the input
+on instead of the base polynomial as it is and,
+of course, still square the input.
+
 This implementation differs a bit from the implementation
 we presented before for numbers, but it implements the same
 algorithm.
@@ -1073,9 +1102,11 @@ which is
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]},
 
 the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
-You might have noticed that our Haskell notation
+
+You might have noticed that the different
+states of the algorithm given in our Haskell notation
 shows the binomial coefficients $\binom{n}{k}$ for
-$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+$n=1$, $n=2$, $n=4$ and $n=5$.
 We never see $n=3$, which would be 
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}, because we leave the multiplication
 \ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])} out.
@@ -1085,7 +1116,7 @@ is more efficient than multiplying five times.
 With growing exponents, the saving quickly grows
 to a significant order.
 
-Division is, as usual, a bit more complicated than multiplication.
+Division is, as usual, still more complicated than multiplication.
 But it is not too different from number division. First,
 we define polynomial division as Euclidean division, that is
 we search the solution for the equation
@@ -1139,7 +1170,8 @@ and subtract that from what remains from $a$:
 \end{equation}
 
 We continue with $-2x^3$, which, divided by
-$x^2$ is $-2x$. 
+$x^2$ is $-2x$. This goes to the result:
+$4x^3 - x^2 - 2x$.
 We multiply $-2x \times (x^2 + 1) = -2x^3 - 2x$
 and subtract:
 
@@ -1151,8 +1183,6 @@ and subtract:
 \end{array}
 \end{equation}
 
-The result now is 
-$4x^3 - x^2 - 2x$.
 We continue with $2x^2$, which,
 divided by $x^2$ is 2. 
 We multiply $2\times (x^2 + 1) = 2x^2 + 2$
@@ -1301,6 +1331,10 @@ $4x^3-x^2-2x+2$ and $2x - 3$.
 This is the same result we obtained above 
 with the manual procedure.
 
+\ignore{
+consider to go through the whole example
+}
+
 From here on, we can implement functions based on division,
 such as \ensuremath{\Varid{divides}}:
 
@@ -1426,8 +1460,7 @@ is $x^3 + 3x^2 + 3x + 1$.
 Since polynomials consisting of binomial coefficients of $n$,
 where $n$ is the degree of the polynomial,
 are always a product
-of polynomials composed of smaller binomial coefficients
-in the same way,
+of polynomials composed of smaller binomial coefficients,
 the \acronym{gcd} of two polynomials
 consisting only of binomial coefficients,
 is always the smaller of the two.
@@ -1757,18 +1790,17 @@ Division:
 \>[35]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{ts}\;\Varid{bs}{}\<[E]%
 \\
 \>[23]{}\mathbf{in}\;\Varid{go}\;{}\<[30]%
-\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts}\mskip1.5mu]\;{}\<[E]%
+\>[30]{}(\Varid{cleanz}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts}\mskip1.5mu])\;{}\<[E]%
 \\
-\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}\mskip1.5mu]{}\<[E]%
+\>[30]{}(\Varid{cleanz}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}\mskip1.5mu]){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
 Division works exactly like the variant for infinite fields,
-except that we now use the modulo inverse 
-instead of fractional division
-for division of coefficients.
+except that we now use multiplication with the modulo inverse 
+instead of fractional division.
 
 Here is the \acronym{gcd}:
 
@@ -1796,6 +1828,11 @@ Here is the \acronym{gcd}:
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
+
+\ignore{
+what about gcdmp 7 (P [1,4,1,1,3])
+with either P [1,2,1] or P [1,2,3]???
+}
 
 Let us try \ensuremath{\Varid{gcdmp}} on the variation we already tested above. 
 We multiply the polynomial
@@ -4209,12 +4246,13 @@ Stirling numbers in front of the $x$es:
 \[
 \begingroup
 \renewcommand{\arraystretch}{2}
-\begin{array}{lc}
-\stirlingTwo{n}{n}x^{(n+1)} & + \\
-\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
-\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)} & + \\ 
-\dots & + \\
-\stirlingTwo{n}{1}x^{(1)} &
+\begin{array}{rlc}
+\stirlingTwo{n}{n} & x^{(n+1)} & + \\
+\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right) & x^{(n)} & + \\
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right) & x^{(n-1)} & + \\ 
+\dots & & + \\
+\left(2\stirlingTwo{n}{2} + \stirlingTwo{n}{1}\right) & x^{2} & + \\ 
+\stirlingTwo{n}{1} & x^{(1)} &
 \end{array}
 \endgroup
 \]

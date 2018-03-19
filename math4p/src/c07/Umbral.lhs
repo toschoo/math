@@ -606,12 +606,13 @@ Stirling numbers in front of the $x$es:
 \[
 \begingroup
 \renewcommand{\arraystretch}{2}
-\begin{array}{lc}
-\stirlingTwo{n}{n}x^{(n+1)} & + \\
-\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
-\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)} & + \\ 
-\dots & + \\
-\stirlingTwo{n}{1}x^{(1)} &
+\begin{array}{rlc}
+\stirlingTwo{n}{n} & x^{(n+1)} & + \\
+\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right) & x^{(n)} & + \\
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right) & x^{(n-1)} & + \\ 
+\dots & & + \\
+\left(2\stirlingTwo{n}{2} + \stirlingTwo{n}{1}\right) & x^{2} & + \\ 
+\stirlingTwo{n}{1} & x^{(1)} &
 \end{array}
 \endgroup
 \]
