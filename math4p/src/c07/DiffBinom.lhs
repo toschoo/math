@@ -17,9 +17,9 @@ between sequences and their differences
 intensely and came up with a formula. Before we go right
 to it, let us observe on our own.
 The following table shows the values and differences
-of a certain polynomial. In the first line, it shows
+of a certain polynomial. In the first row, it shows
 the value of $n$, \ie\ the value to which the polynomial
-is applied; in the second line, we see the result
+is applied; in the second row, we see the result
 for this $n$; in the first column we have the first
 values from the sequence and its difference lists:
 
@@ -201,7 +201,8 @@ and the second one is $k$ in $\binom{n}{k}$.
 Note that we do not need $n$, since $n$ is the unknown,
 the base of our polynomial.
 
-If $k=0$, the binomial is 1, since for all binomials:
+If $k=0$, the binomial is 1,
+since for all binomial coefficients:
 $\binom{n}{0} = 1$. We, hence, return a constant polynomial
 consisting of the factor. This corresponds to 
 $h_0 \times \binom{n}{0}$. The result is just $h_0$.
@@ -218,7 +219,7 @@ polynomials |P [0,h]|.
 
 Otherwise, we go into the recursive |go| function.
 The function receives one rational number, namely $k$
-(which, de facto, is an integer)
+(which, de facto, is an integer).
 The base case is $k=1$. In that case we yield |P [0,1]|,
 which is just $n$.
 Otherwise, we create the polynomial
@@ -297,7 +298,8 @@ We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
 completely and is, on the other hand, somewhat simpler
 than a model based on a polynomial of degree 4,
-like the one we have studied above.
+like the one we have studied above --
+not to mention a model for polynomials of any degree.
 
 The model consists of a data type:
 
@@ -421,7 +423,7 @@ difference lists:
 \end{code}
 \end{minipage}
 
-The head of the sequence is 2; the head of the difference
+The head of the sequence is 2; the heads of the difference
 sequences are 65, 162 and 132.
 We call the function as |subst (2,65,162,132) (cn H 5)|
 and see
@@ -585,7 +587,7 @@ then |cn H (n+1)| creates
 
 \[
 \binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y 
-\text{and} \binom{n+1}{3}Z.
+\text{ and } \binom{n+1}{3}Z.
 \]
 
 Note that the number of |H| does not increase,
