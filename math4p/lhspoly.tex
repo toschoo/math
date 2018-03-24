@@ -4649,7 +4649,7 @@ with equal $x$es:
   &\stirlingOne{n}{n}  &x^{n+1}& &                    &       & + \\
 -n&\stirlingOne{n}{n}  &x^n    &+&\stirlingOne{n}{n-1}&x^n    & + \\
 -n&\stirlingOne{n}{n-1}&x^{n-1}&+&\stirlingOne{n}{n-2}&x^{n-1}& + \\
-  & \dots              &       & &                    &       & + \\
+  &                    &       & &\dots               &       & + \\
 -n&\stirlingOne{n}{2}  &x^{2}  &+&\stirlingOne{n}{1}  &x^{2}  & + \\
 -n&\stirlingOne{n}{1}  &x      & &                    &       & 
 \end{array}
@@ -4780,9 +4780,10 @@ are transformed into positive values by $x^2$, the smallest value
 that we can reach is the result for $x=0$, which is $0+1=1$.
 
 On the other hand, even polynomials may have negative values,
-namely when they have terms with negative coefficients that, 
-for smaller numbers,
-result in numbers that are greater than those resulting from
+namely when they have terms with coefficients that, 
+for small absolute values,
+result in negative numbers whose absolute value
+is greater than those resulting from
 the term of highest degree. 
 The polynomial $x^2 - 4$, once again, is negative
 in the interval $]-2\dots 2[$. It, therefore, must have two roots:
@@ -4829,7 +4830,7 @@ In the next chapter, when we properly define the term \term{function},
 we will actually see functions with holes and jumps.
 
 The reason that polynomials behave regularily is that we only
-use basic arithmetic functions in their definition: we add, multiply
+use basic arithmetic operations in their definition: we add, multiply
 and raise to powers. 
 All those operations are closed, \ie\ their results lie
 in the same fields as their inputs. 
@@ -4846,8 +4847,8 @@ must be understood relative to the coefficients. If the coefficients
 are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
-There are polynomials with a quite confusing behaviour that
-make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
+There are polynomials whose behaviour is hard to predict,
+for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
 
@@ -4938,8 +4939,7 @@ Bracketing methods start with two distinct values
 somewhere on the ``left'' and the ``right'' of
 the root. Bracketing methods, hence, require a
 pre-knowledge about where, more or less, a root
-is located. We then choose two values that limit
-this interval on the lower and on the upper side.
+is located. 
 
 The simplest variant of bracketing is the \term{bisect}
 algorithm. It is very similar to Heron's method
@@ -5101,6 +5101,7 @@ comes up with the result
 which is pretty close to 1 and, hence,
 the correct result.
 
+Open methods need only one value.
 The most widely known open method is Newton's method,
 also called Newton-Raphson method.
 It was first developed by Newton in about 1670
@@ -5182,7 +5183,9 @@ The natural number \ensuremath{\Varid{m}} is a delimiter.
 It is not guaranteed that the value increases
 in precision with always more repetitions.
 It may get worse at some point.
-It is therefore useful to restrict the number
+It is therefore useful --
+and a lesson learnt from experimenting with
+\ensuremath{\Varid{bisect}} -- to restrict the number
 of iterations.
 
 The function terminates when we have 
@@ -5260,7 +5263,7 @@ of this polynomial.
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
 some of the next sections to its study. Anyway, what
-algebraists did for centuries was to find
+algebraists did for centuries was searching
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
@@ -5270,7 +5273,7 @@ important than the single formulas developed
 over the centuries for polynomials of the first
 four degrees. In fact, the concepts that led
 to the discovery are the foundations of modern
-(and postmodern) algebra. 
+(and \term{postmodern}) algebra. 
 
 But first things first. To understand why there
 cannot be general formulas for solving polynomials
@@ -5349,7 +5352,7 @@ where, here, we have $2\beta x$.
 We, therefore, have $\frac{b}{a} = 2\beta$ 
 and $\beta = \frac{b}{2a}$.
 The missing term, hence, is 
-$(\frac{b}{2a})^2 = \frac{b^2}{4a^2}$.
+$\left(\frac{b}{2a}\right)^2 = \frac{b^2}{4a^2}$.
 We add this term to both sides of the equation:
 
 \begin{equation}
@@ -5424,8 +5427,9 @@ We have already looked at how to extend fields
 in the previous chapter and we will indeed
 do this extension for $\mathbb{R}$ to create
 the \term{complex numbers}, $\mathbb{C}$.
-In that field, polynomials of the second degree
-always have 1 or 2 solutions.
+In that field, the root of a negative number
+is indeed defined and we have a valid result
+in both cases.
 
 For instance the polynomial $x^2 + 1$ is never
 negative and, therefore, has no roots in $\mathbb{R}$.
@@ -5558,7 +5562,7 @@ polynomials of the second degree:
 \end{minipage}
 
 When we call \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])},
-that is we solve the polynomial $x^2$,
+that is, we solve the polynomial $x^2$,
 we get the root \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]}, which is one root
 as predicted.
 
@@ -5624,23 +5628,18 @@ of the form:
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{0}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{1}\mathrel{=}\Varid{solve1}\;\Varid{p}{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{2}\mathrel{=}\Varid{solve2}\;\Varid{p}{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{3}\mathrel{=}\bot {}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{4}\mathrel{=}\bot {}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{5}\mathrel{=}\bot {}\<[E]%
 \ColumnHook
@@ -5677,7 +5676,7 @@ in the coefficients that turn up
 when multiplying a polynomial (repeatedly) by it itself.
 For the simple case $(a+b)(a+b)$, we get the result
 $(a^2 + 2ab + b^2)$. The linear factors of polynomials
-have a similar structure: sums of two numbers that are
+have a similar structure: sums of numbers that are
 multiplied with each other, \eg:
 
 \begin{equation}
@@ -5904,7 +5903,7 @@ with roots $x_1, x_2, \dots, x_n$.
 The equations \ref{eq:vieta1} are known as
 \term{Vieta's formulas}, after the French lawyer
 and mathematician François Viète (1540 -- 1603)
-whom we already know as author of an elegant
+who we already know as author of an elegant
 formula to express $\pi$.
 
 But what are those constructs on the left-hand
@@ -6137,7 +6136,7 @@ powerset of the set of roots -- and that cannot be
 efficient at least for large (or better worded perhaps:
 unsmall) numbers.
 Vieta's formulas, instead, are a theoretical device.
-They help to understand the relation between
+They help us understand the relation between
 coefficients and roots and they will play an important
 role in our further investigations.
 
@@ -6182,7 +6181,7 @@ where
 The integers form a unique factorisation domain,
 with the units 1 and -1 and the primes 
 $\pm 2, \pm 3, \pm 5, \pm 7, \dots$
-We can easily verify that 1 and -1 obey to
+We can easily verify that 1 and -1 obey
 the definition of unit, 
 when we assume that each one is its own inverse.
 We can also agree that the primes are primes
@@ -6276,7 +6275,7 @@ of degree 2.
 
 The rationale of applying the polynomial is the following:
 When the polynomial we want to factor generates
-a given set of values, then the product of the factors
+a certain set of values, then the product of the factors
 of that polynomial must generate the same values.
 Any factor must, hence, consist of divisors of those values. 
 The number of integer divisors
@@ -6340,7 +6339,7 @@ From this we obtain a (potentially very large)
 list of $n$-tuples that we then convert
 into polynomials. From that list,
 we finally filter those polynomials
-for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv \mathrm{0}}, where $p$ is the
+for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv (\anonymous ,\mathrm{0})}, where $p$ is the
 input polynomial and $k$ the candidate in 
 the list of polynomials. Here is an implementation
 (using lists instead of $n$-tuples):
@@ -6484,10 +6483,12 @@ so we apply the polynomial to three values, say,
 We run \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]} 
 and, after a short while, we get:
 
+\begin{minipage}{\textwidth}
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+\end{minipage}
 
 which corresponds to the polynomials
 $x^2+x+1$, $2x^2+2x+2$,
@@ -6527,7 +6528,7 @@ Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
 
-We will discuss the methods for factorising
+We will discuss the methods for factoring
 polynomials in a finite field in the next section.
 Let us here assume that we already knew such a method.
 We could then call it to factor a given polynomial

@@ -11,7 +11,7 @@ in the coefficients that turn up
 when multiplying a polynomial (repeatedly) by it itself.
 For the simple case $(a+b)(a+b)$, we get the result
 $(a^2 + 2ab + b^2)$. The linear factors of polynomials
-have a similar structure: sums of two numbers that are
+have a similar structure: sums of numbers that are
 multiplied with each other, \eg:
 
 \begin{equation}
@@ -238,7 +238,7 @@ with roots $x_1, x_2, \dots, x_n$.
 The equations \ref{eq:vieta1} are known as
 \term{Vieta's formulas}, after the French lawyer
 and mathematician François Viète (1540 -- 1603)
-whom we already know as author of an elegant
+who we already know as author of an elegant
 formula to express $\pi$.
 
 But what are those constructs on the left-hand
@@ -445,7 +445,7 @@ powerset of the set of roots -- and that cannot be
 efficient at least for large (or better worded perhaps:
 unsmall) numbers.
 Vieta's formulas, instead, are a theoretical device.
-They help to understand the relation between
+They help us understand the relation between
 coefficients and roots and they will play an important
 role in our further investigations.
 

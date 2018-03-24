@@ -52,9 +52,10 @@ are transformed into positive values by $x^2$, the smallest value
 that we can reach is the result for $x=0$, which is $0+1=1$.
 
 On the other hand, even polynomials may have negative values,
-namely when they have terms with negative coefficients that, 
-for smaller numbers,
-result in numbers that are greater than those resulting from
+namely when they have terms with coefficients that, 
+for small absolute values,
+result in negative numbers whose absolute value
+is greater than those resulting from
 the term of highest degree. 
 The polynomial $x^2 - 4$, once again, is negative
 in the interval $]-2\dots 2[$. It, therefore, must have two roots:
@@ -101,7 +102,7 @@ In the next chapter, when we properly define the term \term{function},
 we will actually see functions with holes and jumps.
 
 The reason that polynomials behave regularily is that we only
-use basic arithmetic functions in their definition: we add, multiply
+use basic arithmetic operations in their definition: we add, multiply
 and raise to powers. 
 All those operations are closed, \ie\ their results lie
 in the same fields as their inputs. 
@@ -118,8 +119,8 @@ must be understood relative to the coefficients. If the coefficients
 are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
-There are polynomials with a quite confusing behaviour that
-make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
+There are polynomials whose behaviour is hard to predict,
+for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
 
@@ -203,8 +204,7 @@ Bracketing methods start with two distinct values
 somewhere on the ``left'' and the ``right'' of
 the root. Bracketing methods, hence, require a
 pre-knowledge about where, more or less, a root
-is located. We then choose two values that limit
-this interval on the lower and on the upper side.
+is located. 
 
 The simplest variant of bracketing is the \term{bisect}
 algorithm. It is very similar to Heron's method
@@ -321,6 +321,7 @@ comes up with the result
 which is pretty close to 1 and, hence,
 the correct result.
 
+Open methods need only one value.
 The most widely known open method is Newton's method,
 also called Newton-Raphson method.
 It was first developed by Newton in about 1670
@@ -358,7 +359,9 @@ The natural number |m| is a delimiter.
 It is not guaranteed that the value increases
 in precision with always more repetitions.
 It may get worse at some point.
-It is therefore useful to restrict the number
+It is therefore useful --
+and a lesson learnt from experimenting with
+|bisect| -- to restrict the number
 of iterations.
 
 The function terminates when we have 
@@ -436,7 +439,7 @@ of this polynomial.
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
 some of the next sections to its study. Anyway, what
-algebraists did for centuries was to find
+algebraists did for centuries was searching
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
@@ -446,7 +449,7 @@ important than the single formulas developed
 over the centuries for polynomials of the first
 four degrees. In fact, the concepts that led
 to the discovery are the foundations of modern
-(and postmodern) algebra. 
+(and \term{postmodern}) algebra. 
 
 But first things first. To understand why there
 cannot be general formulas for solving polynomials
@@ -518,7 +521,7 @@ where, here, we have $2\beta x$.
 We, therefore, have $\frac{b}{a} = 2\beta$ 
 and $\beta = \frac{b}{2a}$.
 The missing term, hence, is 
-$(\frac{b}{2a})^2 = \frac{b^2}{4a^2}$.
+$\left(\frac{b}{2a}\right)^2 = \frac{b^2}{4a^2}$.
 We add this term to both sides of the equation:
 
 \begin{equation}
@@ -593,8 +596,9 @@ We have already looked at how to extend fields
 in the previous chapter and we will indeed
 do this extension for $\mathbb{R}$ to create
 the \term{complex numbers}, $\mathbb{C}$.
-In that field, polynomials of the second degree
-always have 1 or 2 solutions.
+In that field, the root of a negative number
+is indeed defined and we have a valid result
+in both cases.
 
 For instance the polynomial $x^2 + 1$ is never
 negative and, therefore, has no roots in $\mathbb{R}$.
@@ -669,7 +673,7 @@ polynomials of the second degree:
 \end{minipage}
 
 When we call |solve2 (P [0,0,1])|,
-that is we solve the polynomial $x^2$,
+that is, we solve the polynomial $x^2$,
 we get the root |[0]|, which is one root
 as predicted.
 
@@ -724,11 +728,11 @@ of the form:
 \begin{code}
   solve :: (Fractional a, Floating a, Real a) => Poly a -> [a]
   solve p  |  degree p == 0 = []
-  solve p  |  degree p == 1 = solve1 p
-  solve p  |  degree p == 2 = solve2 p
-  solve p  |  degree p == 3 = undefined
-  solve p  |  degree p == 4 = undefined
-  solve p  |  degree p == 5 = undefined
+           |  degree p == 1 = solve1 p
+           |  degree p == 2 = solve2 p
+           |  degree p == 3 = undefined
+           |  degree p == 4 = undefined
+           |  degree p == 5 = undefined
 \end{code}
 \end{minipage}
 

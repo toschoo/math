@@ -29,7 +29,7 @@ where
 The integers form a unique factorisation domain,
 with the units 1 and -1 and the primes 
 $\pm 2, \pm 3, \pm 5, \pm 7, \dots$
-We can easily verify that 1 and -1 obey to
+We can easily verify that 1 and -1 obey
 the definition of unit, 
 when we assume that each one is its own inverse.
 We can also agree that the primes are primes
@@ -123,7 +123,7 @@ of degree 2.
 
 The rationale of applying the polynomial is the following:
 When the polynomial we want to factor generates
-a given set of values, then the product of the factors
+a certain set of values, then the product of the factors
 of that polynomial must generate the same values.
 Any factor must, hence, consist of divisors of those values. 
 The number of integer divisors
@@ -167,7 +167,7 @@ From this we obtain a (potentially very large)
 list of $n$-tuples that we then convert
 into polynomials. From that list,
 we finally filter those polynomials
-for which |p `divp` k == 0|, where $p$ is the
+for which |p `divp` k == (_ ,0)|, where $p$ is the
 input polynomial and $k$ the candidate in 
 the list of polynomials. Here is an implementation
 (using lists instead of $n$-tuples):
@@ -253,10 +253,12 @@ so we apply the polynomial to three values, say,
 We run |kronecker (P [2,1,1,0,1,1]) [2,2,6]| 
 and, after a short while, we get:
 
+\begin{minipage}{\textwidth}
 |P [1 % 1,1 % 1,1 % 1]|\\
 |P [2 % 1,2 % 1,2 % 1]|\\
 |P [(-1) % 1,(-1) % 1,(-1) % 1]|\\
 |P [(-2) % 1,(-2) % 1,(-2) % 1]|,
+\end{minipage}
 
 which corresponds to the polynomials
 $x^2+x+1$, $2x^2+2x+2$,
@@ -296,7 +298,7 @@ Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
 
-We will discuss the methods for factorising
+We will discuss the methods for factoring
 polynomials in a finite field in the next section.
 Let us here assume that we already knew such a method.
 We could then call it to factor a given polynomial

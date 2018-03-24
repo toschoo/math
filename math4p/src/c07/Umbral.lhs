@@ -932,7 +932,7 @@ with equal $x$es:
   &\stirlingOne{n}{n}  &x^{n+1}& &                    &       & + \\
 -n&\stirlingOne{n}{n}  &x^n    &+&\stirlingOne{n}{n-1}&x^n    & + \\
 -n&\stirlingOne{n}{n-1}&x^{n-1}&+&\stirlingOne{n}{n-2}&x^{n-1}& + \\
-  & \dots              &       & &                    &       & + \\
+  &                    &       & &\dots               &       & + \\
 -n&\stirlingOne{n}{2}  &x^{2}  &+&\stirlingOne{n}{1}  &x^{2}  & + \\
 -n&\stirlingOne{n}{1}  &x      & &                    &       & 
 \end{array}
