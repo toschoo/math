@@ -12,7 +12,7 @@ developed by the American mathematician
 Elwyn Berlekamp in the late Sixties
 and the \term{Cantor-Zassenhaus algorithm}
 developed in the late Seventies and early Eighties
-by David Cantor, an American methematician,
+by David Cantor, an American mathematician,
 not to be confused with Georg Cantor, and
 Hans Zassenhaus (1912 -- 1991), a German-American
 mathematician.
@@ -74,26 +74,22 @@ the following holds:
 f^{\varphi(m)} \equiv 1 \pmod{m}.
 \end{equation}
 
-This is easy to prove.
 The resulting structure $K[x]/(m)$
 has a multiplicative
 group $K_m^*$ (just as the integers $\pmod{n}$).
 The members of this group are all polynomials
 that do not share divisors with $m$ and $\varphi(m)$
 is the cardinality of this group.
-From $gcd(m,f) = 1$, it follows that
-$f_m = f \mod{m} \in K_m^*$.
-We, for sure, have 
-$f_m^{\varphi(m)} \equiv 1 \pmod{m}$, since 
-$\varphi(m)$ is the size of the group.
-This equivalence may hold also for other numbers, $a$,
+The equivalence may hold also for other numbers, $a$,
 such that $f^a \equiv 1 \pmod{m}$, but
 according to Lagrange's theorem 
 (that the cardinality of subgroups of $G$ divides
 the cardinality of $G$), all these numbers $a$
-must divide $\varphi(m)$, the size of the group,
-and we unmistakenly have
-$f^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
+must divide $\varphi(m)$, the size of the group.
+But independent of the possibility that
+other number may fulfil the equivalence,
+we unmistakenly have
+$f^{\varphi(m)} \equiv 1 \pmod{m}$.
 
 From this theorem, Fermat's little theorem
 follows. Let $K$ be a field with $q$ elements; when using
@@ -143,11 +139,11 @@ of degree $<d$ there are, namely $r=q^d$.
 For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is |P [0]|,
-which we must exclude, when asking for $\varphi(g)$,
-since, for this polynomial, 
-division is not defined.
+which we must exclude, when asking for $\varphi(g)$
+(since, for this polynomial, 
+division is not defined).
 For the irreducible polynomial $g$, we therefore
-have $r-1$ elements that do not share divisors with $g$,
+have $r-1$ polynomials that do not share divisors with $g$,
 \ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
 we have 
 
@@ -192,7 +188,7 @@ Here is a Haskell implementation:
            x       =  P [0,1]
            go i z  =  let z' = powmp p p z
                       in  case pmmod p (addp p z' (P [0,p-1])) u of
-                          P [_]  ->  i == d
+                          P [0]  ->  i == d
                           g      ->  if i < d  then go (i+1) (pmmod p z' u)
                                                else False
 \end{code}
@@ -215,19 +211,15 @@ We take the result modulo the input polynomial |u|.
 This corresponds to
 $x^{p^d} - x$ for degree $d=1$.
 
-If the result is a constant polynomial 
+If the result is |P [0]|, \ie\ zero,
 and the degree counter $i$ equals $d$,
 then equation \ref{eq:polyFacIrrTest} is fulfilled.
-(Note that we consider any constant polynomial as zero,
-since a constant polynomial is just the content,
-which usually should have been removed before we start
-to search factors.)
 Otherwise, if the degree counter does not equal $d$,
 this polynomial fulfils the equation with a ``wrong'' degree.
 This is possible only if the input was not irreducible
 in the first place.
 
-Finally, if we have a remainder that is not constant,
+Finally, if we have a remainder that is not zero,
 we either continue (if we have not yet reached the degree
 in question) or, if we had already reached the final degree,
 we return with False, since the polynomial 
@@ -262,7 +254,7 @@ it will have -1, which is 6 in this case,
 as last but one coefficient.
 Taking this modulo to the random polynomial $g$,
 we get the polynomial |P [0,3,6]|, which is 
-$6x^2 + 3x$ and certainly not constant.
+$6x^2 + 3x$ and definitely not constant.
 $g$ is therefore not irreducible.
 
 Let us try another one:
@@ -280,17 +272,31 @@ is irreducible.
 The formula, however, is not only interesting
 for testing irreducibility.
 What the formula states is in fact that
-all irreducible polynomials of degree $d$
+all irreducible polynomials up to degree $d$
 are factors of $x^{q^d} - x$.
-Whenever we construct this expression,
-we have created the product of all 
-irreducible polynomials of degree $d$.
 The irreducible factors of the polynomial we want to factor
 are part of this product and we can get them out
 just by asking for the greatest common divisor
 of $x^{p^d} - x$ and the polynomial we want to factor.
 This would give us the product of all factors
 of our polynomial of a given degree.
+
+Consider for example the polynomials modulo 2
+of degree 2 in the table above. There is only
+one irreducible polynomial in this row, namely
+|P [1,1,1]|. We compute $x^4 - x$, which
+is |P [0,1,0,0,1]| and now divide this one
+by |P [1,1,1]|:
+
+|divmp 2 (P [0,1,0,0,1]) (P [1,1,1])|
+
+The result is |P [0,1,1]|,
+yet another polynomial of degree 2.
+This one, however, is not irreducible.
+It can be factored into the polynomials
+|P [1,1]| and |P [0,1]|. $x^4 - x$, hence,
+can be factored into three irreducible polynomials,
+one of degree 2 and two of degree 1.
 
 We need to add one more qualification however.
 Since we are searching for a \term{unique}
@@ -307,7 +313,7 @@ Here is an implementation:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  monicp :: Integer -> Poly Integer -> Poly Integer
+  monicp :: Natural -> Poly Natural -> Poly Natural
   monicp p u =  let  cs  = coeffs u
                      k   = last cs `M.inverse` p
                 in P (map (modmul p k) cs)
@@ -407,8 +413,6 @@ into three parts using the equality
 t^{p^d} - t = t(t^{(p^d-1)/2} + 1)(t^{(p^d-1)/2} - 1).
 \end{equation}
 
-Make sure that the equality holds 
-by multiplying the right-hand side out.
 By a careful choice of $t$, we can make sure that the factors
 are likely to be more or less equally distributed among the
 latter two factors. That, indeed, would reduce the problem significantly.
@@ -435,7 +439,7 @@ we will hit a common factor.
 There is an issue, however, for $p=2$.
 Because in that case, 
 $t^{(p^d-1)/2} - 1 = t^{(p^d-1)/2} + 1$.
-Consider, to illustrate that, a polynomial modulo 2, for instance
+Consider a polynomial modulo 2, for instance
 |P [0,1,1]| and $d=3$. Then we have 
 
 \[
@@ -563,12 +567,12 @@ $u/\gcd$.
 
 Let us try this for the result |(1,P [2,4,1])| we obtained
 earlier from applying |ddfac| on |P [5,4,3,1,1]|.
-|cz 7 1 (P [2,4,1])| gives 
+We call |cz 7 1 (P [2,4,1])| and see
 
 |[P [6,1],P [5,1]]|,
 
 two irreducible polynomials of degree 1.
-The complete factorisation of |P [5,4,3,1,1]|, hence, is
+The complete factorisation of |P [5,4,3,1,1]| is therefore
 
 |[P [6,1],P [5,1],P [6,4,1]]|,
 
@@ -594,39 +598,51 @@ which just computes $w$ as $t + t^2 + t^4 + \dots t^{2^{d-1}}$.
 Let us try |ddfac| and |cz| with a polynomial modulo 2,
 \eg\ |P [0,1,1,1,0,0,1,1,1]|, which is of degree 8 and
 is squarefree (and, per definition, monic).
-The call |ddfac 2 (P [0,1,1,1,0,0,1,1,1])| gives
+The call 
+
+|ddfac 2 (P [0,1,1,1,0,0,1,1,1])|
+
+gives
 us three chunks of factors:
 
 |[(1,P [0,1,1]),(2,P [1,1,1]),(4,P [1,1,1,1,1])]|.
 
 We see at once that the second and third polynomials
-are already irreducible, since they already have 
+are already irreducible, since they have 
 the specified degree. The first one, however, is
 of degree 2, but shall contain factors of degree 1.
 So, let us see what |cz 2 1 (P [0,1,1])| will yield:
 
 |[P [0,1],P [1,1]]|.
 
-The complete factorisation of |P [0,1,1,1,0,0,1,1,1]|,
-hence, is
+The complete factorisation of |P [0,1,1,1,0,0,1,1,1]|
+is therefore
 
 |[P [0,1],P [1,1],P [1,1,1],P [1,1,1,1,1]]|.
+
+We can test with
+
+|prodp (mulmp 2) [P [0,1],P [1,1],P [1,1,1],P [1,1,1,1,1]]|
+
+which indeed results in |P [0,1,1,1,0,0,1,1,1]|.
 
 Now, we still have to solve the problem of polynomials
 containing squared factors, \ie\ repeated roots.
 There is in fact a method to find such factors
 adopted from calculus and, again, related to the
-derivative. The point is that a polynomial and
-its derivative share only those divisors that
-appear more than once in the factorisation.
+derivative. It is based on the observation
+that a polynomial $\pi$ and
+its derivative $\pi'$ share only those factors that
+appear more than once in the factorisation
+of $\pi$.
 We have not enough knowledge on derivatives yet to
-prove that here rigorously, but we can give an
+prove that here rigorously, but we can get an
 intuition.
 
 Consider a polynomial with the factorisation
 
 \[
-(x+a)(x+b)\dots
+(x+a)(x+b)
 \]
 
 This is a product and, to find the derivative
@@ -634,7 +650,7 @@ of this polynomial, we need to apply the \term{product rule}
 (which we will study in part 3). The product rule states that
 
 \begin{equation}
-(f \times g)' = fg' + f'g,
+(fg)' = fg' + f'g,
 \end{equation}
 
 \ie\ the derivative of the product of $f$ and $g$
@@ -642,30 +658,33 @@ is the sum of the product of $f$ and the derivative of $g$
 and the product of the derivative of $f$ and $g$.
 
 The derivatives of the individual factors $(x+a)(x+b)$
-all reduce to 1, since for $f = x^1 + a$,
+in this example all reduce to 1, since for $f = x^1 + a$,
 $f' = 1\times x^0 = 1$. The product of factors, hence,
 turns into a sum of factors:
 
 \[
-1\times(x+a) + 1\times(x+b) = (x+a) + (x+b).
+1\times(x+a) + 1\times(x+b) = (x+a) + (x+b)
+= 2x + a + b.
 \]
 
-Let us compute the polynomial
-with the factors $(x+a)(x+b)$. The polynomial is
-$x^2 + ax + bx + ab$. Its derivative is
-$2x + a + b$. When we apply the product rule to
-the factors, we get $(x+a)+(x+b)= x+a+x+b = 2x+a+b$,
+Let us check this result:
+when we build the product of the factors
+$(x+a)(x+b)$, we get the polynomial
+$x^2 + (a+b)x + ab$. Its derivative is
+$2x + a + b$,
 which is indeed the same result.
 
 It is intuitively clear that the sum of the factors
-is not the same as the product of those same factors
-and, even further, that none of the factors is preserved.
-They all disappear in favour of others they do not
+is not the same as the product of those same factors.
+Furthermore, the factors are irreducible and do not
+share divisors among each other; they are coprime.
+In consequence, the original factors disappear
+in favour of others they also do not
 share divisors with, because, since the factors are
 coprime to each other, they do not share divisors
 with their sum either.
 
-To elaborate on this, consider now polynomials
+Now consider polynomials
 with more than two factors of the form
 
 \[
@@ -673,7 +692,7 @@ abc\dots,
 \]
 
 where $a$, $b$ and $c$ stand for irreducible polynomials like
-$(x+\alpha)$, $(x+\beta)$ and so on.
+$(x+\alpha)$, $(x+\beta)$, $(x+\gamma)$ and so on.
 
 We apply the product rule on the first two factors
 and get:
@@ -694,20 +713,28 @@ $c'$, with the original $ab$ and get:
 We see that we end up with the sum of the products
 of the original factors, with the current factor $i$
 substituted by something else, namely the derivative
-of this factor. This can be represented nicely as:
+of this factor. For the example above where
+the derivative was 1, we would have:
+
+\[
+bc + ac + ab.
+\]
+
+The general result can be represented by
+the following remarkable formula:
 
 \begin{equation}\label{eq:polyFacProductRule}
 \left(\prod_{i=0}^k{a_i}\right)' = 
 \sum_{i=0}^k{\left(a_i'\prod_{j\neq i}{a_j}\right)}
 \end{equation}
 
-There is a remarkable similarity to the structure
+There is a striking similarity to the structure
 we found in analysing the Chinese remainder theorem,
 when we divided the product of all remainders by
 the current remainder. Just as in the Chinese remainder
 theorem, each of the terms resulting from the product
 rule is coprime to the original factor at the same position,
-since it is the product of irreducible factors 
+since it is the product of all other irreducible factors 
 (which, hence, are coprime to each other) and the derivative
 of that factor, which, for sure, does not share
 divisors with the original factor at that position.
@@ -721,8 +748,8 @@ the following polynomial
 
 then this factor is preserved. The product rule
 will create the factor $x+a+x+a=2x+2a$, which
-is a multiple of the original factor, which,
-in its turn, is therefore preserved.
+is the original factor scaled up. This factor
+is therefore preserved.
 
 Suppose we want to compute the factorisation
 of 
@@ -732,10 +759,9 @@ f = a_1a_2^2a_3^3\dots a_k^k,
 \end{equation}
 
 where the $a$s represent the products of all
-the factors raised to the indicated exponent,
-then, since the derivative preserves the factors,
-the $\gcd$ of $f$ and its derivative $f'$
-(whatever that looks like) is:
+the factors that are raised to the same exponent,
+then, since the derivative preserves the repeated factors,
+the $\gcd$ of $f$ and its derivative $f'$ is:
 
 \begin{equation}\label{eq:polyFacYun1}
 \gcd(f,f') = a_2^1a_3^2\dots a_k^{k-1},
@@ -753,7 +779,7 @@ all the factors reduced to their first power.
 Now, if we continue this scheme using
 the $\gcd(f,f')$ and $f/\gcd(f,f')$ as input,
 we would get \ref{eq:polyFacYun1} 
-reduced one more ($a_3a_4^2\dots$) and
+reduced once more ($a_3a_4^2\dots$) and
 \ref{eq:polyFacYun2} with the head chopped off
 ($a_2a_3\dots$). The quotient of the two
 versions of \ref{eq:polyFacYun2}, \ie\
@@ -762,8 +788,12 @@ versions of \ref{eq:polyFacYun2}, \ie\
 \frac{a_1a_2a_3\dots}{a_2a_3\dots},
 \]
 
-would give us the head. The head, however,
-is the product of all factors with a given exponent.
+would give us the head.
+This leads to an iterative algorithm
+where we can process the factors with
+different exponents one by one advancing
+by chopping off the factors that we have already
+treated on each step.
 
 In a finite field, this, unfortunately does not
 work in all cases. Problematic are all coefficients
@@ -782,7 +812,7 @@ derivative disappears.
 What we can do, however, is to keep the coefficients
 with exponents that are multiples of the modulus
 separated from those that are not.
-As in the algorithm for infinte fields, we would
+We would still
 iteratively compute two sequences of values,
 namely $T_{k+1} = T_k/V_{k+1}$ with $T_1 = \gcd(f,f')$
 and $V_{k+1} = \gcd(T_k,V_k)$ with $V_1 = f/T_1$.
@@ -817,7 +847,7 @@ For the cases $p\mid i$, we will end up, when we have reduced
 $V_k$ to a constant polynomial, with a product of all the powers
 of the $a$s with exponents that are multiples of $p$.
 
-To get these $a$s out, we divide all all exponents by $p$ 
+To get these $a$s out, we divide all exponents by $p$ 
 and repeat the whole algorithm. For the return value, \ie\ the
 factors, we need to remember the original exponent,
 but that is easily done as shown below.
@@ -916,8 +946,27 @@ Finally, we are ready to put everything together:
 \end{code}
 \end{minipage}
 
-Hans Zassenhaus worked most of his life as a computeralgeabrist and
-was important for the development of this area of mathematics and
+The function returns a list of pairs.
+The first of the pair is the exponent of the factor
+that, in its turn, is the second of the pair.
+
+We first test whether the polynomial is irreducible.
+If so, we just return that polynomial as its only factor.
+
+Otherwise, we create a list of exponents and factors
+using |squarefactormod| and pass the factors
+(without the exponents) to  |ddfac| creating pairs
+of exponent and the result of |ddfac|.
+On this list, we map cz performing some acrobatics
+to pass the correct parameters, since the result
+of |ddfac| is a list of pairs itself, namely of pairs
+|(degree, factor product)|.
+Finally, we reassign the exponent per result
+creating the list that we return to the caller
+of |cantorzassenhaus|.
+
+Hans Zassenhaus worked most of his life as computeralgebraist and
+pioneered this area of mathematics and
 computer science. He was born in Germany before the second world war
 and studied mathematics under Emil Artin, one of the founders of
 modern algebra. Zassenhaus' father was strongly influenced by
@@ -937,8 +986,6 @@ this position, maintained contact between
 prisioners and helped smuggling medicine, tobacco and food
 into the prisons. For her efforts during and after the war,
 she was nominated for the Nobel Peace Prize in 1974. 
-Unfortunately, the societal engagement of the Zassenhaus siblings
-is hardly remembered today.
 
 \ignore{
 TODO:

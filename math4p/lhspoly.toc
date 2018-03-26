@@ -9,5 +9,5 @@
 \contentsline {section}{\numberline {1.7}Vieta's Formulas}{63}
 \contentsline {section}{\numberline {1.8}Factoring Polynomials}{69}
 \contentsline {section}{\numberline {1.9}Factoring Polynomials in a finite Field}{73}
-\contentsline {section}{\numberline {1.10}Hensel Lifting}{87}
-\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{87}
+\contentsline {section}{\numberline {1.10}Hensel Lifting}{88}
+\contentsline {section}{\numberline {1.11}Enumerating the Algebraic Numbers}{88}
