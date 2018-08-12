@@ -32,3 +32,13 @@ heron n s = let a = fromIntegral n
 
 heron2 :: Double -> Double -> Double
 heron2 n x = (x + n/x) / 2
+
+---------------------------------------------------------------------------
+-- StdDev
+---------------------------------------------------------------------------
+stddev :: [Double] -> Double
+stddev [] = 0
+stddev l = sqrt ((sum [(x-a)^2 | x <- l]) / (n-1))
+  where a = (sum l)/n
+        n = fromIntegral (length l)
+
