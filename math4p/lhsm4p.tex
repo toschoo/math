@@ -35287,6 +35287,9 @@ Here is an overview over our number types:
 \>[3]{}\mathbf{import}\;\Conid{\Conid{System}.Random}\;(\Varid{randomRIO}){}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Random}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
@@ -35299,11 +35302,11 @@ Here is an overview over our number types:
 \)\par\noindent\endgroup\resethooks
 }
 
-A numeral system consists of a finite set of digits, $D$,
-and a base, $b$, for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
+A numeral system consists of a finite set of digits $D$
+and a base $b$ for which $b=|D|$, \ie\ $b$ is the cardinality of $D$.
 The binary system, for instance, 
 uses the digits $D=\lbrace 0,1\rbrace$.
-The cardinality of $D$ in this case, hence, is 2.
+The cardinality of $D$ is 2 and therefore $b=2$.
 The decimal system uses the digits $D=\lbrace 0\dots 9\rbrace$ and,
 thus, has the base $b=10$.
 The hexadecimal system uses the digits $D=\lbrace 0\dots 15\rbrace$,
@@ -35318,7 +35321,7 @@ of digits. The string
 \]
 
 for instance, may represent a number in the binary system.
-(It could be a number in decimal format, too, though.)
+It could be a number in decimal or hexadecimal format, too.
 The string 
 
 \[
@@ -35328,7 +35331,7 @@ The string
 by contrast, cannot be a binary number, because
 it contains the digit 7, which is not element of $D$
 in the binary system.
-It can represent a decimal (or a hexadecimal number).
+It can represent a number in the decimal (or the hexadecimal) system. 
 The string
 
 \[
@@ -35336,7 +35339,7 @@ aa,
 \]
 
 can represent a number in the hexadecimal system
-(but not one of in the binary or decimal system).
+but not one in the binary or decimal system.
 
 We interpret such a string, \ie\ convert it
 to the decimal system, by rewriting it 
@@ -35347,9 +35350,9 @@ a_nb^n + a_{n-1}b^{n-1} + \dots + a_0b^0,
 \]
 
 where $a_i$ are the digits that appear in the string,
-$b$ is the base and $n$ is position of the left-most digit
+$b$ is the base and $n$ the position of the left-most digit
 starting to count with 0 on the right-hand side of the string.
-The string $10101010$ in binary notation,hence, is interpreted as
+The string $10101010$ in binary notation, hence, is interpreted as
 
 \[
 1\times 2^7 + 0\times 2^6 + 1\times 2^5 + 0\times 2^4 + 
@@ -35362,7 +35365,7 @@ which can be simplified to
 2^7 + 2^5 + 2^3 + 2,
 \]
 
-which, in its turn, is
+which, in turn, is
 
 \[
 128 + 32 + 8 + 2 = 170.
@@ -35376,13 +35379,15 @@ The string 170 in decimal notation is interpreted as
 
 Interpreting a string in the notation it is written in
 yields just that string.
+
 The string $aa$ in hexadecimal notation is interpreted as
 
 \[
 a\times 16 + a.
 \]
 
-The digit $a$, however, is just 10. We, hence, get the equation
+The digit $a$ corresponds to 10 in the decimal system.
+We, therefore, get the equation
 
 \[
 10\times 16 + 10 = 160 + 10 = 170.
@@ -35391,8 +35396,8 @@ The digit $a$, however, is just 10. We, hence, get the equation
 What do we get, when we relax some of the constraints
 defining a numeral system?
 Instead of using a finite set of digits,
-we could use a number field, $F$, (finite or infinite)
-so that any member of that field qualifies as coefficient
+we could use a number field $F$ (finite or infinite)
+so that any member of that field qualifies as a coefficient
 in the formulas we used above to interpret numbers
 in the decimal system. We would then relax the rule
 that the base must be the cardinality of the field.
@@ -35412,11 +35417,11 @@ or shorter:
 
 with $a_i, x \in F$.
 
-Such beasts are indeed well-known. They are very prominent, in fact,
-and their name is \term{polynomial}.
+Such beasts are indeed well-known
+and their name is \term{polynomials}.
 
 The name \emph{poly}nomial stems from the fact
-that polynomials may be composed of many terms;
+that they may be composed of many terms;
 a monomial, by contrast, is a polynomial 
 that consists of only one term.
 For instance,
@@ -35483,8 +35488,7 @@ Usually, it is harder to recognise this kind of relations
 numbers have with the binomial theorem (and, hence, with polynomials),
 because most binomial coefficients are too big to be represented
 by a single-digit number. Already in the product $14\times 14$,
-the binomial coefficients are hidden. Let us look at this multiplication
-treated as the polynomial $(x+a)$ with $x=10$ and $a=4$:
+the binomial coefficients are `hidden':
 
 \[
 (10 + 4) (10 + 4) = 
@@ -35498,20 +35502,24 @@ $100 + 2\times 40 + 16 = 100 + 80 + 16 = 196$.
 
 Indeed, polynomials are not numbers.
 Those are different concepts.
+
 Another important difference is that polynomials do not establish
 a clear order. For any two distinct numbers, we can clearly say
 which of the two is the greater and which is the smaller one.
 We cannot decide that based on the formula of the polynomial alone.
 One way to decide quickly which of two numbers is the grater one
 is to look at the number of their digits. The one with more digits
-is necessarily the greater one. In any numeral system it holds that:
+is necessarily the greater of the two.
+In any numeral system it holds that:
 
 \[
 a_3b^3 + a_2b^2 + a_1b + a_0 > c_2b^2 + c_1b + c_0
 \]
 
 independent of the values of the $a$s and the $c$s.
-For polynomials, this is not true. Consider the following example:
+This is because the base $b$ is fixed.
+In the case of polynomials, this is not true.
+Consider the following example:
 
 \[
 x^3 + x^2 + x + 1 > 100x^2?
@@ -35533,7 +35541,7 @@ implementation in Haskell:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\mathbf{type}\;\Conid{Poly}\;\Varid{a}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\>[3]{}\mathbf{data}\;\Conid{Poly}\;\Varid{a}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{deriving}\;(\Conid{Show}){}\<[E]%
@@ -35555,7 +35563,7 @@ We add a safe constructor:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{poly}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
-\>[3]{}\Varid{poly}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Varid{error}\;\text{\tt \char34 not~a~polynomial\char34}{}\<[E]%
+\>[3]{}\Varid{poly}\;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{poly}\;\Varid{as}\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;\Varid{as}){}\<[E]%
 \\[\blanklineskip]%
@@ -35602,6 +35610,8 @@ But, here, we store them in the order:
 \[
 x^0 + x^1 + \dots + x^{n-1} + x^n.
 \]
+
+We will soon see why that is an advantage.
 
 The following function gets the list of coefficients back:
 
@@ -35748,12 +35758,12 @@ $5x^4 + 3x^2 + 1$  &
 \end{center}
 
 An important concept related to polynomials is the 
-\term{degree}. The degree is a measurement of the
+\term{degree}. The degree is a measure of the
 \emph{size} of the polynomial. In concrete terms,
 it is the greatest exponent in the polynomial.
 For us, it is the weight of the right-most element
 in the polynomial or, much simpler, the length
-of the list of coefficients minus one -- since,
+of the list of coefficients minus one -- since
 we start with zero!
 The following function computes the degree
 of a given polynomial:
@@ -35810,7 +35820,8 @@ coefficients:
 \end{minipage}
 
 The function receives a \ensuremath{\Conid{Natural}} and an \ensuremath{\Conid{Int}}.
-The \ensuremath{\Conid{Int}} indicates the degree of the polynomial
+The \ensuremath{\Conid{Int}} indicates the number of coefficients
+of the polynomial
 we want to obtain. The \ensuremath{\Conid{Natural}} is used to
 restrict the size of the coefficients we want
 to see in the polynomial.
@@ -35833,6 +35844,9 @@ we will study polynomial arithmetic.
 \>[B]{}\mathbf{where}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{\Conid{Data}.List}\;(\Varid{nub},\Varid{foldl'}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{Natural}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
@@ -35842,10 +35856,13 @@ we will study polynomial arithmetic.
 \>[3]{}\mathbf{import}\;\Conid{Real}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Zahl}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
 \>[3]{}\mathbf{import}\;\Conid{NumSystem}{}\<[E]%
 \\
 \>[B]{}\hsindent{3}{}\<[3]%
-\>[3]{}\mathbf{import}\;\Conid{Modular}{}\<[E]%
+\>[3]{}\mathbf{import}\;\Varid{qualified}\;\Conid{Modular}\;\Varid{as}\;\Conid{M}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -35863,7 +35880,8 @@ Key is to realise that the structure of polynomials
 is already defined by \term{strichrechnung}:
 it is composed of terms each of which is a product
 of some number and a power of $x$.
-When we add (or subtract) two polynomials, we just sort them
+When we add (or subtract) two polynomials,
+we just merge them keeping order
 according to the exponents of their terms
 and add (or subtract) terms with equal exponents:
 
@@ -35900,10 +35918,6 @@ subtraction. Here is a valid implementation:
 \\
 \>[3]{}\Varid{sub}\mathrel{=}\Varid{strich}\;(\mathbin{-}){}\<[E]%
 \\[\blanklineskip]%
-\>[3]{}\Varid{sump}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
-\\
-\>[3]{}\Varid{sump}\mathrel{=}\Varid{foldl'}\;\Varid{add}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[E]%
-\\[\blanklineskip]%
 \>[3]{}\Varid{strich}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{strich}\;\Varid{o}\;(\Conid{P}\;\Varid{x})\;(\Conid{P}\;\Varid{y}){}\<[25]%
@@ -35931,7 +35945,23 @@ subtraction. Here is a valid implementation:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Note that \ensuremath{\Varid{sump}} function, which implements \ensuremath{\Varid{sum}} for polynomials.
+Based on addition, we can also implement \ensuremath{\Varid{sum}}
+for polynomials:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sump}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{sump}\mathrel{=}\Varid{foldl'}\;\Varid{add}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 Here is one more function that might be useful 
 later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coefficients:
 
@@ -35949,8 +35979,32 @@ later on; it folds \ensuremath{\Varid{strichlist}} on a list of lists of coeffic
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+What if we add a polynomial to itself more than once?
+With numbers, that would be multiplication.
+With polynomials, this is a bit different.
+There is in fact an operation that is between
+\term{strichrechnung} and \term{punktrechnung},
+namely \term{scaling}. Scaling maps multiplication by $n$,
+for $n$ some integer,
+on all coefficients and, as such, corresponds
+to adding a polynomial $n$ times to itself:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{scale}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{scale}\;\Varid{n}\;(\Conid{P}\;\Varid{cs})\mathrel{=}\Varid{poly}\;(\Varid{map}\;(\Varid{n}\mathbin{*})\;\Varid{cs}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 \term{Punktrechnung}, \ie\ multiplication and division,
-are a bit more complex -- because of the distribution law.
+is a bit more complex -- because of the distribution law.
 Let us start with the simple case where we distribute
 a monomial over a polynomial:
 
@@ -35959,29 +36013,14 @@ a monomial over a polynomial:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{25E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{mul1}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{as}\;\Varid{a}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus \Varid{go}\;\Varid{as}\;\Varid{a}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\anonymous {}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;(\Varid{c}\mathbin{:}\Varid{cs})\;\Varid{x}{}\<[25]%
-\>[25]{}\mathrel{=}{}\<[25E]%
-\>[28]{}\Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mathbin{:}\Varid{go}\;\Varid{cs}\;\Varid{x}{}\<[E]%
+\>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{cs}\;\Varid{x}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus [\mskip1.5mu \Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
 \\[\blanklineskip]%
 \>[3]{}\Varid{zeros}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\mathbin{\$}\Varid{repeat}\;\mathrm{0}{}\<[E]%
+\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\;(\Varid{repeat}\;\mathrm{0}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -35995,9 +36034,9 @@ is combined with the single term.
 This corresponds to the operation:
 
 \begin{equation}
-\begin{array}{rcrcrcccr}
-dx^m & \times & ax^n      & + & bx^{n-1}    & + & \dots & + & c\\
-     & =      & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
+\begin{array}{lcrlclcccl}
+dx^m & \times & ( & ax^n      & + & bx^{n-1}    & + & \dots & + & c)\\
+     & =      &   & adx^{m+n} & + & bdx^{n-1+m} & + & \dots & + & cdx^m
 \end{array}
 \end{equation}
 
@@ -36072,8 +36111,10 @@ which is
 This means that
 
 \begin{equation}
-(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) =
-32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\begin{split}
+(4x^3 + 3x^2 + 2x + 1) \times (8x^3 + 7x^2 + 6x + 5) \\
+= 32x^6 + 52x^5 + 61x^4 + 60x^3 + 34x^2 + 16x + 5.
+\end{split}
 \end{equation}
 
 Here is the whole algorithm:
@@ -36120,7 +36161,7 @@ Here is the whole algorithm:
 \\
 \>[12]{}\Varid{ms}{}\<[16]%
 \>[16]{}\mathrel{=}{}\<[16E]%
-\>[19]{}[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mathrel{\vee}(\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
+\>[19]{}[\mskip1.5mu \Varid{mul1}\;(\mathbin{*})\;\Varid{i}\;(\Varid{coeffs}\;\Varid{p1})\;\Varid{p}\mid (\Varid{i},\Varid{p})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{coeffs}\;\Varid{p2})\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -36179,16 +36220,23 @@ Here is the code:
 
 The function \ensuremath{\Varid{powp}} receives a natural number,
 that is the exponent, and a polynomial.
-We kick off by calling \ensuremath{\Varid{go}} with the exponent, $f$,
+We kick off by calling \ensuremath{\Varid{go}} with the exponent $f$,
 a base polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]}, \ie\ unity, and the polynomial
 we want to raise to the power of \ensuremath{\Varid{f}}.
 If $f=0$, we are done and return the base polynomial.
 This reflects the case $x^0=1$.
 If $f=1$, we multiply the base polynomial by the input polynomial.
+It we have called \ensuremath{\Varid{powp}} with one, this has no effect,
+since the base polynomial, in this case, is unity.
+
 Otherwise, if the exponent is even,
 we halve it, pass the base polynomial on and square the input.
-Otherwise, we pass the product of the base polynomial and the input
-on instead of the base polynomial as it is.
+Otherwise, if the exponent is odd,
+we subtract one form the exponent and half the result
+and pass the product of the base polynomial and the input
+on instead of the base polynomial as it is and,
+of course, still square the input.
+
 This implementation differs a bit from the implementation
 we presented before for numbers, but it implements the same
 algorithm.
@@ -36215,9 +36263,11 @@ which is
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu]},
 
 the polynomial $x^5 + 5x^4 + 10x^3 + 10x^2 + 5x + 1$.
-You might have noticed that our Haskell notation
+
+You might have noticed that the different
+states of the algorithm given in our Haskell notation
 shows the binomial coefficients $\binom{n}{k}$ for
-$n=0$, $n=1$, $n=2$, $n=4$ and $n=5$.
+$n=1$, $n=2$, $n=4$ and $n=5$.
 We never see $n=3$, which would be 
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{3},\mathrm{3},\mathrm{1}\mskip1.5mu]}, because we leave the multiplication
 \ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu])} out.
@@ -36227,7 +36277,7 @@ is more efficient than multiplying five times.
 With growing exponents, the saving quickly grows
 to a significant order.
 
-Division is, as usual, a bit more complicated than multiplication.
+Division is, as usual, still more complicated than multiplication.
 But it is not too different from number division. First,
 we define polynomial division as Euclidean division, that is
 we search the solution for the equation
@@ -36281,7 +36331,8 @@ and subtract that from what remains from $a$:
 \end{equation}
 
 We continue with $-2x^3$, which, divided by
-$x^2$ is $-2x$. 
+$x^2$ is $-2x$. This goes to the result:
+$4x^3 - x^2 - 2x$.
 We multiply $-2x \times (x^2 + 1) = -2x^3 - 2x$
 and subtract:
 
@@ -36293,8 +36344,6 @@ and subtract:
 \end{array}
 \end{equation}
 
-The result now is 
-$4x^3 - x^2 - 2x$.
 We continue with $2x^2$, which,
 divided by $x^2$ is 2. 
 We multiply $2\times (x^2 + 1) = 2x^2 + 2$
@@ -36416,7 +36465,7 @@ contains only the constant 0.
 In this case, there is no remainder: $b$ divides $a$.
 
 Otherwise, we divide the \ensuremath{\Varid{last}} of $r$ by the \ensuremath{\Varid{last}} of $b$.
-Note that those are the term with the highest degree
+Note that those are the terms with the highest degree
 in each polynomial.
 This division is just a number division of the two
 coefficients. We still have to compute the new exponent,
@@ -36443,6 +36492,10 @@ $4x^3-x^2-2x+2$ and $2x - 3$.
 This is the same result we obtained above 
 with the manual procedure.
 
+\ignore{
+consider to go through the whole example
+}
+
 From here on, we can implement functions based on division,
 such as \ensuremath{\Varid{divides}}:
 
@@ -36458,7 +36511,7 @@ such as \ensuremath{\Varid{divides}}:
 \column{33}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{divides}\mathbin{::}{}\<[15]%
-\>[15]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[15]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
 \>[15]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
 \\
@@ -36489,12 +36542,12 @@ the remainder:
 \column{15}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{remp}\mathbin{::}{}\<[12]%
-\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
+\>[12]{}(\Conid{Show}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
-\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Bool}{}\<[E]%
+\>[12]{}\Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{remp}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[15]%
-\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{d}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
+\>[15]{}\mathbf{let}\;(\anonymous ,\Varid{r})\mathrel{=}\Varid{b}\mathbin{`\Varid{divp}`}\Varid{a}\;\mathbf{in}\;\Varid{r}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -36568,8 +36621,7 @@ is $x^3 + 3x^2 + 3x + 1$.
 Since polynomials consisting of binomial coefficients of $n$,
 where $n$ is the degree of the polynomial,
 are always a product
-of polynomials composed of smaller binomial coefficients
-in the same way,
+of polynomials composed of smaller binomial coefficients,
 the \acronym{gcd} of two polynomials
 consisting only of binomial coefficients,
 is always the smaller of the two.
@@ -36581,16 +36633,17 @@ we multiply \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}
 
 \ensuremath{\Varid{gcdp}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{5},\mathrm{10},\mathrm{10},\mathrm{5},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{8},\mathrm{8},\mathrm{3}\mskip1.5mu])}
 
-does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}.
+does not yield the expected result \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]},
+but polynomials with fractions as coefficients.
 The reason is that the \acronym{gcd} is an operation
 defined on integers, but we implemented it on top
-of fractionals. That is often not what we want.
-Anyway, here, we will actually use the \acronym{gcd} 
-only in finite fields. 
-Until now, we have discussed polynomials in infinite fields.
-We now turn our attention to polynomial arithmetic
-in a finite field and, hence, to modular polynomial arithmetic.
+of fractionals. That is not what we want.
+In fact, we confuse concepts: the \acronym{gcd} is
+a concept defined on integral numbers, not on fractions.
 
+And this is the prompt to 
+turn our attention to polynomial arithmetic
+over a finite field and, thus, to modular polynomial arithmetic.
 With modular arithmetic, all coefficients in the polynomial
 are modulo $n$. That means we have to reduce those numbers.
 This, of course, does only make sense with integers.
@@ -36657,13 +36710,17 @@ For division, we reuse the \ensuremath{\Varid{inverse}} function:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{41}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{modiv}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
 \\
 \>[3]{}\Varid{modiv}\;\Varid{p}\;\Varid{n}\;\Varid{d}\mathrel{=}\Varid{modmul}\;\Varid{p}\;\Varid{n}\;\Varid{d'}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;\Varid{d'}\mathrel{=}\Varid{\Conid{M}.inverse}\;\Varid{d}\;\Varid{p}{}\<[E]%
+\>[5]{}\mathbf{where}\;\Varid{d'}\mathrel{=}\Varid{fromIntegral}\;(\Varid{\Conid{M}.inverse}\;{}\<[41]%
+\>[41]{}(\Varid{fromIntegral}\;\Varid{d})\;{}\<[E]%
+\\
+\>[41]{}(\Varid{fromIntegral}\;\Varid{p})){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -36800,6 +36857,22 @@ Multiplication:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
+and product:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mulmlist}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{c1}\;\Varid{c2}\mathrel{=}\Varid{coeffs}\mathbin{\$}\Varid{mulmp}\;\Varid{p}\;(\Conid{P}\;\Varid{c1})\;(\Conid{P}\;\Varid{c2}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
 We repeat the multiplication from above 
 
 \ensuremath{\Varid{mul}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])} 
@@ -36878,15 +36951,19 @@ Division:
 \>[35]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{ts}\;\Varid{bs}{}\<[E]%
 \\
 \>[23]{}\mathbf{in}\;\Varid{go}\;{}\<[30]%
-\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts}\mskip1.5mu]\;{}\<[E]%
+\>[30]{}(\Varid{cleanz}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{strichlist}\;(\mathbin{+})\;\Varid{q}\;\Varid{ts}\mskip1.5mu])\;{}\<[E]%
 \\
-\>[30]{}[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cleanz}\mathbin{\$}\Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}\mskip1.5mu]{}\<[E]%
+\>[30]{}(\Varid{cleanz}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{strichlist}\;(\mathbin{-})\;\Varid{r}\;\Varid{m}\mskip1.5mu]){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-\acronym{gcd}:
+Division works exactly like the variant for infinite fields,
+except that we now use multiplication with the modulo inverse 
+instead of fractional division.
+
+Here is the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -36971,8 +37048,8 @@ Finally, power:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Here is a nice variant of Pascal's triangle generated by
-\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
+Here is a nice variant of Pascal's triangle generated by\\
+\ensuremath{\Varid{map}\;(\lambda \Varid{x}\to \Varid{powmp}\;\mathrm{7}\;\Varid{x}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]))\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{14}\mskip1.5mu]}:
 
 \begin{minipage}{\textwidth}
 \begin{center}
@@ -36993,8 +37070,6 @@ Here is a nice variant of Pascal's triangle generated by
 \end{center}
 \end{minipage}
 
-It is especially interesting to look at greater powers 
-using exponents that are multiples of 7.
 Before we continue with modular arithmetic,
 which we need indeed to understand some of the deeper problems
 related to polynomials, we will
@@ -37156,13 +37231,18 @@ and so on.
 
 Things become more interesting, when we deviate
 from binomial coefficients. The sequence
-produced by \ensuremath{\Varid{mappy}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}, for instance,
-does not resemble such a simple sequence:
+produced by \ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]}, for instance,
+does not resemble such a simple pattern:
+
 1, 10, 49, 142, 313, 586, 985, 1534, 2257, 3178, 4321.
+
 Even the Online Encyclopedia has nothing interesting
 to say about it.
-The same is true for \ensuremath{\Varid{mappy}\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
-which is 5, 26, 109, 302, 653, 1210, 2021, 3134, 4597, 6458, 8765.
+
+The same is true for \ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{8}\mskip1.5mu])\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]},
+which is 
+
+5, 26, 109, 302, 653, 1210, 2021, 3134, 4597, 6458, 8765.
 
 This raises another interesting question:
 given a sequence, is there a method by which 
@@ -37222,7 +37302,7 @@ It would take as input a sequence of the form
 
 0,1,16,81,256,625,1296,2401,4096,6561,10000
 
-and compute the differences between the single numbers:
+and compute the differences between the individual numbers:
 
 \begin{equation}
 \begin{array}{rcrcr}
@@ -37264,15 +37344,15 @@ Applied on the sequence above, \ensuremath{\Varid{diffs}} yields:
 
 What is so special about it?
 Perhaps, nothing. But let us repeat the process
-using this sequence. It yields:
+using this result. The repetition yields:
 
 14,50,110,194,302,434,590,770,974
 
-And once again:
+One more time:
 
 36,60,84,108,132,156,180,204
 
-And one more time:
+And once again:
 
 24,24,24,24,24,24,24
 
@@ -37284,7 +37364,7 @@ $x^4$, a polynomial of degree 4.
 Is that coincidence?
 
 For further investigation, we implement
-the complete difference machine, which takes differences,
+the complete difference engine, which takes differences,
 until it reaches a constant sequence.
 
 \begin{minipage}{\textwidth}
@@ -37315,9 +37395,6 @@ until it reaches a constant sequence.
 \>[12]{}\Varid{ds}\mathrel{=}\Varid{diffs}\;\Varid{cs}{}\<[E]%
 \\
 \>[12]{}\Varid{constant}\;[\mskip1.5mu \mskip1.5mu]{}\<[29]%
-\>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
-\\
-\>[12]{}\Varid{constant}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[29]%
 \>[29]{}\mathrel{=}\Conid{True}{}\<[E]%
 \\
 \>[12]{}\Varid{constant}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[29]%
@@ -37373,7 +37450,7 @@ compute $3439 + 1202 = 4641$. This, finally, is the difference
 to the next value in the input sequence, which, hence, is
 $10000 + 4641 = 14641$ and, indeed, $11^4$.
 Even without knowing the polynomial that actually generates
-the sequence, we are now able to continue this sequence.
+the sequence, we are now able to continue it.
 Here is a function that does that for us:
 
 \begin{minipage}{\textwidth}
@@ -37430,8 +37507,7 @@ Here are some more examples:
 \ensuremath{\mathbf{let}\;\Varid{s}\mathrel{=}\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]\;\mathbf{in}\;\Varid{predict}\;(\Varid{dengine}\;\Varid{s})\;\Varid{s}}: 161051
 \end{minipage}
 
-Let us go back to the question of how to find the polynomial
-given the sequence that this polynomial generates.
+But how can we find the polynomial itself that generates the given sequence?
 With the help of the difference engine, we already know
 the degree of the polynomial. 
 Supposed, we know that the first element in the sequence
@@ -37454,10 +37530,11 @@ that value is multiplied.
 
 The first element in the sequence, the one created by applying
 the polynomial to 0, is just the last coefficient,
-the one ``without'' an $x$, since the other terms ``disappear'',
+the one ``without'' any $x$, since the other terms ``disappear'',
 when we apply to 0. Consider for example a polynomial of the form
 $x^2 + x + a$. When we apply it to 0,
 we get $0^2 + 0 + a = c$, where $c$ is the first
+(or, in this notation, the last)
 value in the sequence. Thus, $a=c$.
 
 The second element is 1 applied to the formula and, therefore,
@@ -37510,33 +37587,10 @@ sequence with a given degree:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{20}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{20E}{@{}l@{}}%
-\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{34E}{@{}l@{}}%
-\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{genCoeff}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathrel{=}\Varid{go}\;\mathrm{0}\;\Varid{x}{}\<[E]%
-\\
-\>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\mathbf{where}\;{}\<[12]%
-\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{x}{}\<[20]%
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{i}\mathbin{>}{}\<[28]%
-\>[28]{}\Varid{d}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}[\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[E]%
-\\
-\>[20]{}\mid {}\<[20E]%
-\>[23]{}\Varid{otherwise}{}\<[34]%
-\>[34]{}\mathrel{=}{}\<[34E]%
-\>[37]{}\Varid{n}\mathbin{\uparrow}\Varid{i}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{x}{}\<[E]%
+\>[3]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathrel{=}\Varid{map}\;(\Varid{n}\mathbin{\uparrow})\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{d}\mskip1.5mu]\plus [\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -37545,12 +37599,8 @@ sequence with a given degree:
 Here, $d$ is the degree of the polynomial,
 $n$ is the value to which the polynomial is applied
 and $x$ is the result, \ie\ the value from the sequence.
-The local function \ensuremath{\Varid{go}} repeats from 0 to $d$,
-raising $n$, the input value, to the current weight
-and adding it to the resulting list.
-At the end, when we have reached a value greater 
-than the degree, we add the value from the sequence
-as known constant yielding one line of the system
+We create the sequence $n^i$, for $0 \le i \le d$ and
+append $x$ yielding one line of the system
 of linear equations.
 
 When we apply \ensuremath{\Varid{genCoeff}} on the the sequence
@@ -37568,7 +37618,7 @@ Note that the results are very regular:
 we see constant 1 in the first column,
 the natural numbers in the second column,
 the squares in the third, the cubes in the fourth and
-the powers of 4 in the fifth and sixth column.
+$n^4$ in the fifth and sixth column.
 Those are just the values for $x^i$, 
 for $i \in \lbrace 0\dots 4\rbrace$.
 Since the value in the sixth column, the one we took
@@ -37576,7 +37626,7 @@ from the sequence, equals the value in the fifth column,
 we can already guess that the polynomial is simply $x^4$.
 Here is another sequence, generated by a secret polynomial:
 
-14,62,396,1544,4322,9834,19472,34916,58134,91382,137204
+14, 62, 396, 1544, 4322, 9834, 19472, 34916, 58134, 91382, 137204
 
 We compute the difference lists using 
 \ensuremath{\Varid{dengine}} as \ensuremath{\Varid{ds}} and compute the degree of the polynomial
@@ -37591,7 +37641,10 @@ Now we call \ensuremath{\Varid{genCoeff}} on the first four elements of the sequ
 \ensuremath{\Varid{genCoeff}\;\mathrm{4}\;\mathrm{4}\;\mathrm{4322}} resulting in \ensuremath{[\mskip1.5mu \mathrm{1},\mathrm{4},\mathrm{16},\mathrm{64},\mathrm{256},\mathrm{4322}\mskip1.5mu]}
 \end{minipage}
 
-We use \ensuremath{\Varid{genCoeff}} to create a matrix representing
+We already see that this is a less trivial case:
+the last two numbers are not equal!
+
+Now we use \ensuremath{\Varid{genCoeff}} to create a matrix representing
 the entire system of equations:
 
 \begin{minipage}{\textwidth}
@@ -37601,35 +37654,14 @@ the entire system of equations:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{25}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{25E}{@{}l@{}}%
-\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}c<{\hspost}@{}}%
-\column{39E}{@{}l@{}}%
-\column{42}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{findCoeffs}\mathbin{::}[\mskip1.5mu [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to \Conid{\Conid{L}.Matrix}\;\Conid{Zahl}{}\<[E]%
 \\
-\>[3]{}\Varid{findCoeffs}\;\Varid{ds}\;\Varid{seq}\mathrel{=}\Conid{\Conid{L}.M}\;(\Varid{go}\;\mathrm{0}\;\Varid{seq}){}\<[E]%
+\>[3]{}\Varid{findCoeffs}\;\Varid{ds}\;\Varid{sq}\mathrel{=}\Conid{\Conid{L}.M}\;[\mskip1.5mu \Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mid (\Varid{n},\Varid{x})\leftarrow \Varid{zip}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\Varid{d}\mskip1.5mu]\;\Varid{sq}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{d}\mathrel{=}\Varid{fromIntegral}\;(\Varid{length}\;\Varid{ds}){}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[12]{}\Varid{go}\;\Varid{n}\;(\Varid{x}\mathbin{:}\Varid{xs}){}\<[25]%
-\>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{n}\mathbin{>}\Varid{d}{}\<[39]%
-\>[39]{}\mathrel{=}{}\<[39E]%
-\>[42]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
-\\
-\>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{otherwise}{}\<[39]%
-\>[39]{}\mathrel{=}{}\<[39E]%
-\>[42]{}\Varid{genCoeff}\;\Varid{d}\;\Varid{n}\;\Varid{x}\mathbin{:}\Varid{go}\;(\Varid{n}\mathbin{+}\mathrm{1})\;\Varid{xs}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -37693,11 +37725,15 @@ puts all the bits together to find the generating polynomial:
 
 Applied on the difference list and the sequence
 generated by $x^4$, \ensuremath{\Varid{findGen}} yields:
+
 \ensuremath{[\mskip1.5mu \mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{0}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
 which indeed corresponds to the polynomial $x^4$. 
 For the sequence generated by the unknown polynomial,
 we get:
+
 \ensuremath{[\mskip1.5mu \mathrm{14}\mathbin{\%}\mathrm{1},\mathrm{9}\mathbin{\%}\mathrm{1},\mathrm{11}\mathbin{\%}\mathrm{1},\mathrm{16}\mathbin{\%}\mathrm{1},\mathrm{12}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
 which corresponds to the polynomial
 $12x^4 + 16x^3 + 11x^2 + 9x + 14$.
 Let us test:
@@ -37719,9 +37755,11 @@ The first difference sequence of our formerly unknown polynomial is
 The next three difference sequences could be derived
 from this sequence -- so, we can assume that this sequence
 is generated by a polynomial of degree 3. Let us see
-what \ensuremath{\Varid{findGen}\;(\Varid{tail}\;\Varid{ds})\;(\Varid{head}\;\Varid{ds})} yields with \ensuremath{\Varid{ds}}
-being the list of difference sequences of that polynomial:
+what \ensuremath{\Varid{findGen}\;(\Varid{tail}\;\Varid{ds})\;(\Varid{head}\;\Varid{ds})} yields (with \ensuremath{\Varid{ds}}
+being the list of difference sequences of that polynomial):
+
 \ensuremath{[\mskip1.5mu \mathrm{48}\mathbin{\%}\mathrm{1},\mathrm{118}\mathbin{\%}\mathrm{1},\mathrm{120}\mathbin{\%}\mathrm{1},\mathrm{48}\mathbin{\%}\mathrm{1}\mskip1.5mu]}, 
+
 which corresponds to the polynomial 
 $48x^3 + 120x^2 + 118x + 48$.
 Let us test again:
@@ -37731,9 +37769,12 @@ Let us test again:
 48,334,1148,2778,5512,9638,15444,23218,33248,45822,61228
 
 The next difference sequence should then be generated
-by a polynomial of degree 2. We try with
-\ensuremath{\mathbf{let}\;\Varid{ds'}\mathrel{=}\Varid{tail}\;\Varid{ds}\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds'})\;(\Varid{head}\;\Varid{ds'})} and get
+by a polynomial of degree 2. We try with\\
+\ensuremath{\mathbf{let}\;\Varid{ds'}\mathrel{=}\Varid{tail}\;\Varid{ds}\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds'})\;(\Varid{head}\;\Varid{ds'})}\\
+ and get
+
 \ensuremath{[\mskip1.5mu \mathrm{286}\mathbin{\%}\mathrm{1},\mathrm{384}\mathbin{\%}\mathrm{1},\mathrm{144}\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+
 which corresponds to the polynomial 
 $144x^2 + 384x + 286$.
 
@@ -37745,9 +37786,12 @@ which, indeed, is the third difference sequence.
 
 Finally, the last but one sequence, the last
 that is not constant, should be generated by a polynomial
-of degree 1. We try with
-\ensuremath{\mathbf{let}\;\Varid{ds''}\mathrel{=}\Varid{tail}\;(\Varid{tail}\;\Varid{ds})\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds''})\;(\Varid{head}\;\Varid{ds''})}
-and get \ensuremath{\mathrm{528}\mathbin{\%}\mathrm{1},\mathrm{288}\mathbin{\%}\mathrm{1}}
+of degree 1. We try with\\
+\ensuremath{\mathbf{let}\;\Varid{ds''}\mathrel{=}\Varid{tail}\;(\Varid{tail}\;\Varid{ds})\;\mathbf{in}\;\Varid{findGen}\;(\Varid{tail}\;\Varid{ds''})\;(\Varid{head}\;\Varid{ds''})}\\
+and get 
+
+\ensuremath{\mathrm{528}\mathbin{\%}\mathrm{1},\mathrm{288}\mathbin{\%}\mathrm{1}}
+
 which corresponds to the polynomial $288x + 528$.
 
 \ensuremath{\Varid{mapply}\;(\Conid{P}\;[\mskip1.5mu \mathrm{528},\mathrm{288}\mskip1.5mu])\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}\mathrm{10}\mskip1.5mu]} yields:
@@ -37763,7 +37807,7 @@ is a polynomial $\pi'$ of degree $n-1$ that measures
 the \term{rate of change} or \term{slope} of $\pi$.
 The derivative expresses the rate of change precisely
 for any point in $\pi$. We will look at this with
-much more attention in the next chapter; 
+much more attention in the next section; 
 the third part will then be entirely dedicated 
 to derivatives and
 related concepts.
@@ -37798,7 +37842,8 @@ The derivative of the polynomial $x^4$, for instance,
 is $4x^3$; in the notation of our polynomial type,
 we have \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} and its derivative \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{0},\mathrm{4}\mskip1.5mu]}.
 The derivative of $4x^3$ is $12x^2$, whose derivative then
-is $24x$, whose derivative is just $24$.
+is $24x$, whose derivative is just $24$ (a number you have
+already seen in this very section!).
 The deriviative of our polynomial
 
 \[
@@ -37826,10 +37871,14 @@ Here is a function to compute the derivative:
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{derivative}\mathbin{::}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Enum}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\>[3]{}\Varid{derivative}\mathbin{::}{}\<[18]%
+\>[18]{}(\Conid{Eq}\;\Varid{a},\Conid{Num}\;\Varid{a},\Conid{Enum}\;\Varid{a})\Rightarrow {}\<[E]%
 \\
-\>[3]{}\Varid{derivative}\;(\Conid{P}\;\Varid{as})\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;(\Varid{map}\;\Varid{op}\;(\Varid{zip}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{drop}\;\mathrm{1}\;\Varid{as})))){}\<[E]%
+\>[18]{}(\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{derivative}\;\Varid{o}\;(\Conid{P}\;\Varid{as})\mathrel{=}\Conid{P}\;(\Varid{cleanz}\;(\Varid{map}\;\Varid{op}\;(\Varid{zip}\;[\mskip1.5mu \mathrm{1}\mathinner{\ldotp\ldotp}\mskip1.5mu]\;(\Varid{drop}\;\mathrm{1}\;\Varid{as})))){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
@@ -37838,6 +37887,11 @@ Here is a function to compute the derivative:
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
+
+Note that we keep the implementation of \ensuremath{\Varid{derivative}}
+flexible. Instead of hardcoding $\times$,
+we use a function parameter `\ensuremath{\Varid{o}}', so we can pass in the operation
+we need. We will later see how this is useful.
 
 What is the sequence generated by the derivative of our polynomial?
 Well, we define the derivative as
@@ -37848,7 +37902,7 @@ apply it using \ensuremath{\Varid{mapply}\;\Varid{p'}\;[\mskip1.5mu \mathrm{0}\m
 
 Quite different from the first difference sequence we saw above!
 
-What about the second derivative? we define as
+What about the second derivative? We define
 \ensuremath{\mathbf{let}\;\Varid{p''}\mathrel{=}\Varid{derivative}\;\Varid{p'}} and get \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{22},\mathrm{96},\mathrm{144}\mskip1.5mu]}.
 This polynomial creates the sequence
 
@@ -37935,14 +37989,14 @@ sequence
 \)\par\noindent\endgroup\resethooks
 }
 
-The ingenious Isaac Newton studied the relation
+Isaac Newton studied the relation
 between sequences and their differences 
 intensely and came up with a formula. Before we go right
 to it, let us observe on our own.
 The following table shows the values and differences
-of a certain polynomial. In the first line, it shows
+of a certain polynomial. In the first row, it shows
 the value of $n$, \ie\ the value to which the polynomial
-is applied; in the second line, we see the result
+is applied; in the second row, we see the result
 for this $n$; in the first column we have the first
 values from the sequence and its difference lists:
 
@@ -38017,7 +38071,6 @@ To predict a value way ahead we need to generate
 number by number before we are there.
 With Newton's trick, we could compute any number
 in the sequence in one step.
-
 All we have to do is to get the \ensuremath{\Varid{head}}s of the sequences
 and to calculate the formula:
 
@@ -38110,7 +38163,7 @@ Now we perform some tests:
 \ensuremath{\Varid{newton}\;\mathrm{13}\;\Varid{d}\;\Varid{s}} gives  379874.
 \end{minipage}
 
-The approach, hence, seems to work.
+The approach seems to work.
 But there is more.
 The function \ensuremath{\Varid{newton}} gives us a closed form 
 to compute any number in the sequence,
@@ -38174,7 +38227,8 @@ and the second one is $k$ in $\binom{n}{k}$.
 Note that we do not need $n$, since $n$ is the unknown,
 the base of our polynomial.
 
-If $k=0$, the binomial is 1, since for all binomials:
+If $k=0$, the binomial is 1,
+since for all binomial coefficients:
 $\binom{n}{0} = 1$. We, hence, return a constant polynomial
 consisting of the factor. This corresponds to 
 $h_0 \times \binom{n}{0}$. The result is just $h_0$.
@@ -38191,7 +38245,7 @@ polynomials \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{h}\mskip1.5mu]
 
 Otherwise, we go into the recursive \ensuremath{\Varid{go}} function.
 The function receives one rational number, namely $k$
-(which, de facto, is an integer)
+(which, de facto, is an integer).
 The base case is $k=1$. In that case we yield \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]},
 which is just $n$.
 Otherwise, we create the polynomial
@@ -38293,7 +38347,8 @@ We use as a model a polynomial of degree 3;
 that model is sufficiently complex to simulate the problem
 completely and is, on the other hand, somewhat simpler
 than a model based on a polynomial of degree 4,
-like the one we have studied above.
+like the one we have studied above --
+not to mention a model for polynomials of any degree.
 
 The model consists of a data type:
 
@@ -38423,10 +38478,13 @@ the result looks weird. For \ensuremath{\Varid{cn}\;\Conid{H}\;\mathrm{5}}, for 
 \ensuremath{[\mskip1.5mu \Conid{H},\Conid{X},\Conid{X},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{X},\Conid{Y},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Y},\Conid{Z},\Conid{Z},\Conid{Z},\Conid{Y}\mskip1.5mu]},
 
 which is somewhat confusing. The result, however,
-is correct. When we generate a random polynomial of degree 3,
-say, \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{28},\mathrm{15},\mathrm{22}\mskip1.5mu]}, this is the polynomial
-$22x^3 + 15x^2 + 28x + 2$, we get the sequence
+is correct. We can illustrate that by comparing
+the result with a real polynomial of degree 3, say,
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{28},\mathrm{15},\mathrm{22}\mskip1.5mu]}, this is the polynomial
+$22x^3 + 15x^2 + 28x + 2$; 
+this polynomial generates the sequence
 2, 67, 294, 815, 1762, 3267, 5462, 8479, 12450, 17507, 23782.
+
 We now define a function that substitutes the symbols
 of our model by the heads of the sequence and the
 difference lists:
@@ -38462,7 +38520,7 @@ difference lists:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-The head of the sequence is 2; the head of the difference
+The head of the sequence is 2; the heads of the difference
 sequences are 65, 162 and 132.
 We call the function as \ensuremath{\Varid{subst}\;(\mathrm{2},\mathrm{65},\mathrm{162},\mathrm{132})\;(\Varid{cn}\;\Conid{H}\;\mathrm{5})}
 and see
@@ -38638,7 +38696,7 @@ then \ensuremath{\Varid{cn}\;\Conid{H}\;(\Varid{n}\mathbin{+}\mathrm{1})} create
 
 \[
 \binom{n+1}{0}H, \binom{n+1}{1}X, \binom{n+1}{2}Y 
-\text{and} \binom{n+1}{3}Z.
+\text{ and } \binom{n+1}{3}Z.
 \]
 
 Note that the number of \ensuremath{\Conid{H}} does not increase,
@@ -38896,7 +38954,7 @@ $ x^7 - 21x^6 + 175x^5 - 735x^4 + 1624x^3 - 1764x^2 + 720x$
 
 Note, by the way, the last coefficient in each polynomial.
 Those are factorials. More precisely, the last coefficient
-of $x^{(n)}$ is $(n-1)!$
+of $x^{(n)}$ is $(n-1)!$.
 Does this pattern remind you of something?
 Not? Don't worry, we will look into it later.
 
@@ -38905,9 +38963,10 @@ Instead of just applying the polynomial to a sequence
 of numbers and then compute the differences,
 we could try to find a formula that expresses
 the differences for a given polynomial.
-When we look at the formula $x^{(3)}$,
-we can just apply two consecutive values
-and compute their difference, \eg:
+When we take a formula like $x^{(3)}$,
+we can compute its differences by
+applying two consecutive values
+and compute the difference of the results, \eg:
 
 \[
 \begin{array}{ccl}
@@ -38973,16 +39032,16 @@ We see the same pattern here, but the
 exponent is not really an exponent,
 but a falling factorial.
 
-Systems that establish a calculus
+A system that establishes a calculus
 that follows the same rules as the
-\term{infinitesimal} calculus, to which
-the derivative belongs, are often called
-\term{umbral calculus}. Most typical for
-umbral calculus are systems of computations
+\term{infinitesimal calculus}, to which
+the derivative belongs, is often called
+\term{umbral calculus}. Most typical 
+\term{umbral calculi} are systems of computations
 based on \term{Bernoulli polynomials} and 
 \term{Bernoulli numbers}.
 But factorial polynomials, too, establish
-an umbral calculus.
+an \term{umbral calculus}.
 
 Here is a Haskell function to compute
 the umbral derivative of the factorial polynomial
@@ -39017,7 +39076,8 @@ we first need to show it for the general case.
 
 To do this, we start as above. We plug in
 the ``value'' $a$ and compute the difference
-$(a+1)^{(n)} - a^{(n)}$. When we expand the
+$\Delta_{a^{(n)}} = (a+1)^{(n)} - a^{(n)}$.
+When we expand the
 formula for the falling factorial, we get
 
 \[
@@ -39026,13 +39086,6 @@ formula for the falling factorial, we get
                  &   & - &       & a(a-1)\dots(a-n+2) & (a-n+1)\\
 \end{array}
 \]
-
-\ignore{
-\begin{align*}
-\Delta_{a^{(n)}} & = & (a+1) & & & a(a-1)\dots(a-n+2) & \\
-                 & - &       & & & a(a-1)\dots(a-n+2) & (a-n+1)\\
-\end{align*}
-}
 
 On the right-hand side of this equation
 we see a middle part that is identical
@@ -39053,7 +39106,7 @@ These terms, hence, cancel out and we are left with
 $\Delta_{a^{(n)}} = nb$.
 But $b$ is $a(a-1)\dots(a-n+2)$, \ie\ the same
 as the second line, but with one factor removed, namely
-$(a-n+1)$. That, in its turn, is $a^{(n-1)}$ and, thus,
+$(a-n+1)$. That, however, is $a^{(n-1)}$ and, thus,
 we have
 
 \begin{equation}
@@ -39209,49 +39262,26 @@ Regrouping we get
 (A_1-B_1)x^{(1)} + (A_2-B_2)x^{(2)} + \dots + (A_n-B_n)x^{(n)} = 0.
 \end{equation}
 
-There are two ways for a sum to become zero.
-Either all terms are zero or, for each term
-that is not zero, the additive inverse
-appears somewhere in the sum, either as
-one term or as the sum of several terms.
-But we are here dealing with a polynomial.
-Whether a term is the additive inverse of another
-depends on the value we fill in for $x$.
-But the formula requires that the left-hand side
+There are two ways for this sum to become zero.
+Either the $A_n-B_n$ parts are all zero or
+the $x^{(n)}$ parts are all zero (or, of course,
+in some cases it is like this and in others
+like that).
+The value of $x^{(n)}$, however,
+depends on the value
+to which we apply the polynomial.
+But the formula requires that the sum
 is zero for any value we may fill in for $x$.
 We are therefore left with the first option:
-all terms must be zero.
-
-We look at the term $(A_n-B_n)x^{(n)}$.
-When does this expression become zero?
-Either when $x^{(n)}$ becomes zero or 
-when $(A_n-B_n)$ becomes zero.
-We know exactly when $x^{(n)}$ is zero
-and when it is not, namely when
-$x=0, x=1, x=2, \dots, x=n-1$.
-In any other case, it is not zero.
-In those cases, $(A_n-B_n)$ must be zero
-to make the term zero. But that can only happen,
-if $A_n = B_n$.
-For this term, the first and the second
-representations must therefore be equal.
-We, thus, have to remove this term from
-the list of candidates of terms
-that make the two representations distinct.
-
-We go on to the last but one term and
-apply the same reasoning.
-In consequence, we need to remove it
-from the list of candidates too.
-We go on to the next term and apply
-the reasoning once again.
-This way, we remove one term after the other,
-until there are no more terms left.
+the $A_n-B_n$ parts must be zero.
+These differences, however, are zero
+only if $A_n = B_n$.
 That shows that the two representations are equal.\qed
 
 We have proved that powers can be represented
 uniquely by factorial polynomials. Here is a list
-of such representations starting from $x^1$:
+of representations of powers (starting with $x^1$
+in the first line) as factorial polynomials:
 
 \begin{center}
 \begin{tabular}{c}
@@ -39265,7 +39295,7 @@ $x^{(7)} + 21x^{(6)} + 140x^{(5)} + 350x^{(4)} + 301x^{(3)} + 63x^{(2)} + x^{(1)
 \end{tabular}
 \end{center}
 
-Those of you that still suffer from triangle paranoia:
+Those of you who still suffer from triangle paranoia:
 you have probably realised that this is already the second
 triangle appearing in this section.
 When you scroll back to certain triangle-intense chapters,
@@ -39288,9 +39318,10 @@ As a reminder, here they are:
 7 &   &   &   & 1 &    & 63 &    & 301 &     & 350 &     & 140 &    & 21 &    & 1 &   &   &   &  
 \end{tabular}
 
-Well, we see for some cases that the coefficients
-of the factorial polynomials that sum up to powers are
-Stirling numbers. Can we prove it?
+Well, we see for some cases that the numbers by which
+we scale factorial polynomials so that
+they sum up to powers are
+Stirling numbers. Can we prove it for all cases?
 
 Let's give it a try with a proof by induction.
 Any of the examples above serves as base case that shows that
@@ -39328,7 +39359,7 @@ On the right-hand side, we, hence, get such a sum for each term:
 \[
 \stirlingTwo{n+1}{n+1}\left(x^{(n+1)} + nx^{(n)}\right) + 
 \stirlingTwo{n+1}{n}\left(x^{(n)} + (n-1)x^{(n-1)}\right) + \dots + 
-\stirlingTwo{n+1}{1}\left(x^{(2)} + 1 x^{(1)}\right)
+\stirlingTwo{n+1}{1}\left(x^{(2)} + x^{(1)}\right)
 \]
 
 We can now regroup the terms, so that the elements with equal
@@ -39338,8 +39369,8 @@ that we generated by multiplying by $x$:
 
 \[
 \begingroup
-\renewcommand{\arraystretch}{1.5}
-\begin{array}{lc}
+\renewcommand{\arraystretch}{2}
+\begin{array}{rc}
 \stirlingTwo{n}{n}x^{(n+1)} & + \\
 n\stirlingTwo{n}{n}x^{(n)}  + 
 \stirlingTwo{n}{n-1}x^{(n)} & + \\
@@ -39364,19 +39395,20 @@ n\stirlingTwo{n}{n}x^{(n)}  +
 }
 
 We regroup a bit more, in particular, we
-factor the $x^{(k)}$ out, so that we obtain
+factor $x^{(k)}$ out, so that we obtain
 factors that consist only of expressions containing
 Stirling numbers in front of the $x$es:
 
 \[
 \begingroup
 \renewcommand{\arraystretch}{2}
-\begin{array}{lc}
-\stirlingTwo{n}{n}x^{(n+1)} & + \\
-\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right)x^{(n)} & + \\
-\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right)x^{(n-1)} & + \\ 
-\dots & + \\
-\stirlingTwo{n}{1}x^{(1)} &
+\begin{array}{rlc}
+\stirlingTwo{n}{n} & x^{(n+1)} & + \\
+\left(n\stirlingTwo{n}{n} + \stirlingTwo{n}{n-1}\right) & x^{(n)} & + \\
+\left((n-1)\stirlingTwo{n}{n-1} + \stirlingTwo{n}{n-2}\right) & x^{(n-1)} & + \\ 
+\dots & & + \\
+\left(2\stirlingTwo{n}{2} + \stirlingTwo{n}{1}\right) & x^{2} & + \\ 
+\stirlingTwo{n}{1} & x^{(1)} &
 \end{array}
 \endgroup
 \]
@@ -39398,8 +39430,9 @@ You might remember the identity
 \end{equation}
 
 which is ``Pascal's rule'' for Stirling numbers of the second kind.
-This is exactly what we see in each group! Just make sure that
-what you see in the factor in front of each $x^{(k)}$ is $k$.
+This is exactly what we see in each group! Compare the factors
+in front of the first Stirling number that read $n$, $n-1$ and so on
+with what you see in the Stirling number in the place of $k$ (\ie\ in the bottom).
 For instance, in the formula
 
 \[
@@ -39565,27 +39598,28 @@ of the original polynomial (\ensuremath{[\mskip1.5mu \mathrm{0}\mathinner{\ldotp
 and multiply the 
 coefficients of the original 
 (\ensuremath{\Varid{cs}})
-with the coefficients
-that tell us how often each factorial polynomials
+and the coefficients
+that tell us how often each factorial polynomial
 occurs in the respective power.
 The latter is done by function $s$ which is mapped
 on the result of \ensuremath{\Varid{fpPowTerms}}.
 The result is a list of lists of pairs $(n,p)$,
 where $n$ is a \ensuremath{\Conid{Natural}} and $p$ a polynomial.
 We concat this list, so we obtain a flat list
-of polynomials.
+of such pairs.
 
 In the next step, we compute $p2$ by sorting
+and then grouping
 this flat list by the degree of the polynomials.
-We then group by the polynomials, so that we
-get a list of lists of equal polynomials with
-different coefficients.
+The result is a list of lists of polynomials 
+of equal degree with
+differing coefficients.
 
 In the final step we sum the coefficients of
 each such groups starting with zero
 \ensuremath{\Varid{p0}\mathrel{=}(\mathrm{0},\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu])}. 
 
-We test test this function by factoring
+We test this function by factoring
 arbitrary polynomials into their terms and
 summing the result together again:
 
@@ -39681,7 +39715,7 @@ why is it missing???
 Meanwhile, you may have guessed or even verified
 that the coefficients of factorial polynomials,
 those appearing in the very first triangle in
-this section are Stirling numbers of the first kind.
+this section, are Stirling numbers of the first kind.
 But they are special: some are negative.
 Indeed, there are two variants of
 the Stirling numbers of the first kind:
@@ -39705,7 +39739,7 @@ of the first kind:
 The recursive formula to compute these numbers is
 
 \begin{equation}
-\stirlingOne{n+1}{k+1} = -n\stirlingOne{n}{k} + \stirlingOne{n}{k-1}.
+\stirlingOne{n+1}{k+1} = -n\stirlingOne{n}{k+1} + \stirlingOne{n}{k}.
 \end{equation}
 
 Note that, when the first Stirling number, $\stirlingOne{n}{k}$,
@@ -39769,21 +39803,32 @@ For each term, we distribute the factors over the sum $x-n$:
 and regroup so that we get pairs of terms 
 with equal $x$es:
 
-\ignore{
-try with array. might be nicer!
-}
- 
-
 \[
 \begingroup
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{2}
 \begin{array}{lclcclc}
   &\stirlingOne{n}{n}  &x^{n+1}& &                    &       & + \\
 -n&\stirlingOne{n}{n}  &x^n    &+&\stirlingOne{n}{n-1}&x^n    & + \\
 -n&\stirlingOne{n}{n-1}&x^{n-1}&+&\stirlingOne{n}{n-2}&x^{n-1}& + \\
-  & \dots              &       & &                    &       & + \\
+  &                    &       & &\dots               &       & + \\
 -n&\stirlingOne{n}{2}  &x^{2}  &+&\stirlingOne{n}{1}  &x^{2}  & + \\
 -n&\stirlingOne{n}{1}  &x      & &                    &       & 
+\end{array}
+\endgroup
+\]
+
+When we factor the $x$es out again, we get
+
+\[
+\begingroup
+\renewcommand{\arraystretch}{2}
+\begin{array}{crlc}
+  &\stirlingOne{n}{n}                                      &x^{n+1}& + \\
+  &\left(-n\stirlingOne{n}{n} + \stirlingOne{n}{n-1}\right)&x^n    & + \\
+  &\left(-n\stirlingOne{n}{n-1}+\stirlingOne{n}{n-2}\right)&x^{n-1}& + \\
+  & \dots                                                  &       & + \\
+  &\left(-n\stirlingOne{n}{2} + \stirlingOne{n}{1}\right)  &x^{2}  & + \\
+  &-n\stirlingOne{n}{1}                                    &x      & 
 \end{array}
 \endgroup
 \]
@@ -39807,7 +39852,7 @@ $\stirlingOne{n}{n} = \stirlingOne{n+1}{n+1} = 1$.
 
 For the last term, we know that 
 $\stirlingOne{n}{1} = \pm(n-1)!$.
-In the last term, we hence see the product 
+We hence see the product 
 $(-n)(\pm((n-1)!))$, which is $-(\pm(n!))$.
 If, for $n$, the factorial was positive,
 it will now be negative. If it was negative,
@@ -39832,8 +39877,8 @@ the binomial coefficients which count
 the number of ways to choose $k$ out of $n$.
 ``The Lord is subtle'' said Einstein,
 ``but he is not plain mean''.
-That is a quantum of solace for feeble minded
-like me. Let us go on to see
+That is a quantum of solace for us mere mortals!
+Let us go on to see
 what is there more to discover.
 
 \ignore{
@@ -39896,9 +39941,10 @@ are transformed into positive values by $x^2$, the smallest value
 that we can reach is the result for $x=0$, which is $0+1=1$.
 
 On the other hand, even polynomials may have negative values,
-namely when they have terms with negative coefficients that, 
-for smaller numbers,
-result in numbers that are greater than those resulting from
+namely when they have terms with coefficients that, 
+for small absolute values,
+result in negative numbers whose absolute value
+is greater than those resulting from
 the term of highest degree. 
 The polynomial $x^2 - 4$, once again, is negative
 in the interval $]-2\dots 2[$. It, therefore, must have two roots:
@@ -39945,13 +39991,10 @@ In the next chapter, when we properly define the term \term{function},
 we will actually see functions with holes and jumps.
 
 The reason that polynomials behave regularily is that we only
-use basic arithmetic functions in their definition: we add, multiply
+use basic arithmetic operations in their definition: we add, multiply
 and raise to powers. 
-Those operations together with the integers form monoids and,
-with rational and real numbers, they form groups.
-Both, monoids and groups, are closed over their base set.
-We can therefore be sure that, for any input value from the base set,
-the result is in the same base set, too.
+All those operations are closed, \ie\ their results lie
+in the same fields as their inputs. 
 
 Furthermore, the form of polynomials guarantees that they develop
 in a certain way. For very large numbers (negative or positive), 
@@ -39965,8 +40008,8 @@ must be understood relative to the coefficients. If the coefficients
 are very large, the values to which the polynomial is applied
 must be even larger to approach the result for the first term.
 
-There are also polynomials with a quite confusing behaviour that
-make it hard to guess the roots, for instance, \term{Wilkinson's polynomial}
+There are polynomials whose behaviour is hard to predict,
+for instance, \term{Wilkinson's polynomial}
 named for James Hardy Wilkinson (1919 -- 1986), an American mathematician
 and computer scientist. The Wilkinson polynomial is defined as
 
@@ -39974,10 +40017,7 @@ and computer scientist. The Wilkinson polynomial is defined as
 w(x) = \prod_{i=1}^{20}{(x-i)}.
 \end{equation}
 
-\ignore{
-this is the factorial polynomial \ensuremath{\Varid{facpoly}\;\mathrm{21}}
-}
-
+It is thus a factorial polynomial, namely $x^{(21)}$.
 We can generate it in terms of our polynomial type as
 
 \begin{minipage}{\textwidth}
@@ -40041,9 +40081,10 @@ expression becomes 0. So, for the value $x=3$, we would have
 2 \times 1 \times 0 \times \dots \times -17 = 0.
 \]
 
-The results when applying the polynomial, however,
+When we look at the coefficients, however,
+the results
 look quite irregular and, on the first sight,
-completely unrelated to the coefficients.
+completely unrelated.
 When we say that polynomials show a regular behaviour,
 that must be taken with a grain of salt.
 Anyway, that they behave like this 
@@ -40059,8 +40100,7 @@ Bracketing methods start with two distinct values
 somewhere on the ``left'' and the ``right'' of
 the root. Bracketing methods, hence, require a
 pre-knowledge about where, more or less, a root
-is located. We then choose two values that limit
-this interval on the lower and on the upper side.
+is located. 
 
 The simplest variant of bracketing is the \term{bisect}
 algorithm. It is very similar to Heron's method
@@ -40222,10 +40262,11 @@ comes up with the result
 which is pretty close to 1 and, hence,
 the correct result.
 
+Open methods need only one value.
 The most widely known open method is Newton's method,
 also called Newton-Raphson method.
 It was first developed by Newton in about 1670
-and, then, by Joseph Raphson in 1690.
+and then, in 1690, again by Joseph Raphson.
 Newton's version was probably not known to Raphson,
 since Newton did not publish his work.
 Raphson's version, on the other hand, is
@@ -40303,7 +40344,9 @@ The natural number \ensuremath{\Varid{m}} is a delimiter.
 It is not guaranteed that the value increases
 in precision with always more repetitions.
 It may get worse at some point.
-It is therefore useful to restrict the number
+It is therefore useful --
+and a lesson learnt from experimenting with
+\ensuremath{\Varid{bisect}} -- to restrict the number
 of iterations.
 
 The function terminates when we have 
@@ -40381,7 +40424,7 @@ of this polynomial.
 Factoring polynomials, however, is an advanced
 problem in its own right and we will dedicate
 some of the next sections to its study. Anyway, what
-algebraists did for centuries was to find
+algebraists did for centuries was searching
 formulas that would yield the roots for any kind
 of polynomials. In some cases they succeeded,
 in particular for polynomials of degrees less
@@ -40391,7 +40434,7 @@ important than the single formulas developed
 over the centuries for polynomials of the first
 four degrees. In fact, the concepts that led
 to the discovery are the foundations of modern
-(and postmodern) algebra. 
+(and \term{postmodern}) algebra. 
 
 But first things first. To understand why there
 cannot be general formulas for solving polynomials
@@ -40470,7 +40513,7 @@ where, here, we have $2\beta x$.
 We, therefore, have $\frac{b}{a} = 2\beta$ 
 and $\beta = \frac{b}{2a}$.
 The missing term, hence, is 
-$(\frac{b}{2a})^2 = \frac{b^2}{4a^2}$.
+$\left(\frac{b}{2a}\right)^2 = \frac{b^2}{4a^2}$.
 We add this term to both sides of the equation:
 
 \begin{equation}
@@ -40545,10 +40588,17 @@ We have already looked at how to extend fields
 in the previous chapter and we will indeed
 do this extension for $\mathbb{R}$ to create
 the \term{complex numbers}, $\mathbb{C}$.
-In that field, polynomials of the second degree
-always have 1 or 2 solutions.
-But, again, first steps first.
+In that field, the root of a negative number
+is indeed defined and we have a valid result
+in both cases.
 
+For instance the polynomial $x^2 + 1$ is never
+negative and, therefore, has no roots in $\mathbb{R}$.
+But when we assume that there is a number, say, $i$,
+for which $i^2=-1$, then this value $i$ would
+make the polynomial zero: $i^2 + 1 = -1 + 1 = 0$.
+
+But, again, first things first.
 The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
 because it determines how many roots
@@ -40673,7 +40723,7 @@ polynomials of the second degree:
 \end{minipage}
 
 When we call \ensuremath{\Varid{solve2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])},
-that is we solve the polynomial $x^2$,
+that is, we solve the polynomial $x^2$,
 we get the root \ensuremath{[\mskip1.5mu \mathrm{0}\mskip1.5mu]}, which is one root
 as predicted.
 
@@ -40739,23 +40789,18 @@ of the form:
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{0}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{1}\mathrel{=}\Varid{solve1}\;\Varid{p}{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{2}\mathrel{=}\Varid{solve2}\;\Varid{p}{}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{3}\mathrel{=}\bot {}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{4}\mathrel{=}\bot {}\<[E]%
 \\
-\>[3]{}\Varid{solve}\;\Varid{p}{}\<[12]%
 \>[12]{}\mid {}\<[12E]%
 \>[15]{}\Varid{degree}\;\Varid{p}\equiv \mathrm{5}\mathrel{=}\bot {}\<[E]%
 \ColumnHook
@@ -40792,7 +40837,7 @@ in the coefficients that turn up
 when multiplying a polynomial (repeatedly) by it itself.
 For the simple case $(a+b)(a+b)$, we get the result
 $(a^2 + 2ab + b^2)$. The linear factors of polynomials
-have a similar structure: sums of two numbers that are
+have a similar structure: sums of numbers that are
 multiplied with each other, \eg:
 
 \begin{equation}
@@ -41019,7 +41064,7 @@ with roots $x_1, x_2, \dots, x_n$.
 The equations \ref{eq:vieta1} are known as
 \term{Vieta's formulas}, after the French lawyer
 and mathematician François Viète (1540 -- 1603)
-whom we already know as author of an elegant
+who we already know as author of an elegant
 formula to express $\pi$.
 
 But what are those constructs on the left-hand
@@ -41149,11 +41194,11 @@ does that:
 \\
 \>[12]{}\Varid{g}{}\<[17]%
 \>[17]{}\mathrel{=}{}\<[17E]%
-\>[20]{}\Varid{groupBy}\;(\lambda \Varid{x}\;\Varid{y}\to \Varid{length}\;\Varid{x}\equiv \Varid{length}\;\Varid{y}){}\<[E]%
+\>[20]{}\Varid{groupBy}\;((\equiv )\mathbin{`\Varid{on}`}\Varid{length}){}\<[E]%
 \\
 \>[12]{}\Varid{s}{}\<[17]%
 \>[17]{}\mathrel{=}{}\<[17E]%
-\>[20]{}\Varid{sortBy}\;(\lambda \Varid{x}\;\Varid{y}\to \Varid{length}\;\Varid{x}\mathbin{`\Varid{compare}`}\Varid{length}\;\Varid{y}){}\<[E]%
+\>[20]{}\Varid{sortOn}\;\Varid{length}{}\<[E]%
 \\
 \>[12]{}\Varid{c}\;\Varid{p}{}\<[17]%
 \>[17]{}\mathrel{=}{}\<[17E]%
@@ -41203,13 +41248,13 @@ To complicate, we check some variants of
 those roots:
 
 \begin{itemize}
-\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \Varid{phi},\mathbin{-}\Varid{psi}\mskip1.5mu]} gives $-\sqrt{5}, 1$ and, hence, the polynomial
+\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \Varid{phi},\mathbin{-}\Varid{psi}\mskip1.5mu]} gives $[-\sqrt{5}, 1]$ and, hence, the polynomial
 $x^2 - \sqrt{5} + 1$, whose roots are indeed $\Phi$ and $-\Psi$.
 
-\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\Varid{psi}\mskip1.5mu]} gives $\sqrt{5}, 1$ and that is the polynomial
+\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\Varid{psi}\mskip1.5mu]} gives $[\sqrt{5}, 1]$ and that is the polynomial
 $x^2 + \sqrt{5} + 1$, whose roots are $-\Phi$ and $\Psi$.
 
-\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \Varid{phi},\Varid{psi}\mskip1.5mu]} gives $-1, -1$, the polynomial
+\item \ensuremath{\Varid{vieta}\;[\mskip1.5mu \Varid{phi},\Varid{psi}\mskip1.5mu]} gives $[-1, -1]$, the polynomial
 $x^2 - x - 1$, whose roots are $\Phi$ and $\Psi$.
 \end{itemize}
 
@@ -41227,6 +41272,10 @@ which is $(x+1)(x+2)(x+3)$ and get
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{11},\mathrm{6},\mathrm{1}\mskip1.5mu]}, which represents the polynomial
 $x^3 + 6x^2 + 11x + 6$.
 We call \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\mathrm{1},\mathbin{-}\mathrm{2},\mathbin{-}\mathrm{3}\mskip1.5mu]} and get \ensuremath{[\mskip1.5mu \mathrm{6},\mathrm{11},\mathrm{6}\mskip1.5mu]}.
+(You may have realised that the coefficients are 
+unsigned Stirling numbers of the first kind and
+now might want to contemplate 
+why those guys show up again\dots)
 
 A fifth-degree polynomial:
 \ensuremath{\Varid{prodp}\;\Varid{mul}\;[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{3},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}:
@@ -41248,7 +41297,7 @@ powerset of the set of roots -- and that cannot be
 efficient at least for large (or better worded perhaps:
 unsmall) numbers.
 Vieta's formulas, instead, are a theoretical device.
-They help to understand the relation between
+They help us understand the relation between
 coefficients and roots and they will play an important
 role in our further investigations.
 
@@ -41293,7 +41342,7 @@ where
 The integers form a unique factorisation domain,
 with the units 1 and -1 and the primes 
 $\pm 2, \pm 3, \pm 5, \pm 7, \dots$
-We can easily verify that 1 and -1 obey to
+We can easily verify that 1 and -1 obey
 the definition of unit, 
 when we assume that each one is its own inverse.
 We can also agree that the primes are primes
@@ -41379,15 +41428,15 @@ method.
 Kronecker's method is a distinct-degree approach. 
 That is, it searches for the factors of a given degree.
 We start by applying the polynomial to $n$ distinct values,
-for $n$ the degree of the polynomial plus 1.
+for $n$ the degree of the factors plus 1.
 That is because, to represent a polynomial of degree $d$,
 we need $d+1$ coefficients, \eg\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} has three
 coefficients and represents the polynomial $x^2$, which is
-of degree two.
+of degree 2.
 
 The rationale of applying the polynomial is the following:
 When the polynomial we want to factor generates
-a given set of values, then the product of the factors
+a certain set of values, then the product of the factors
 of that polynomial must generate the same values.
 Any factor must, hence, consist of divisors of those values. 
 The number of integer divisors
@@ -41451,7 +41500,7 @@ From this we obtain a (potentially very large)
 list of $n$-tuples that we then convert
 into polynomials. From that list,
 we finally filter those polynomials
-for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv \mathrm{0}}, where $p$ is the
+for which \ensuremath{\Varid{p}\mathbin{`\Varid{divp}`}\Varid{k}\equiv (\anonymous ,\mathrm{0})}, where $p$ is the
 input polynomial and $k$ the candidate in 
 the list of polynomials. Here is an implementation
 (using lists instead of $n$-tuples):
@@ -41574,7 +41623,7 @@ and get:
 
 Those are the polynomials $x+3$, $-x+3$, $x-3$ and $-x-3$.
 By convention, we exclude the polynomials starting with
-a negative coefficients by factoring out -1 first.
+a negative coefficient by factoring -1 out.
 However, we can easily see that all of them are actually
 factors of $x^2 - 9$, since
 
@@ -41595,10 +41644,12 @@ so we apply the polynomial to three values, say,
 We run \ensuremath{\Varid{kronecker}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu])\;[\mskip1.5mu \mathrm{2},\mathrm{2},\mathrm{6}\mskip1.5mu]} 
 and, after a short while, we get:
 
+\begin{minipage}{\textwidth}
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1},\mathrm{1}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1},\mathrm{2}\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{1})\mathbin{\%}\mathrm{1}\mskip1.5mu]}\\
 \ensuremath{\Conid{P}\;[\mskip1.5mu (\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1},(\mathbin{-}\mathrm{2})\mathbin{\%}\mathrm{1}\mskip1.5mu]},
+\end{minipage}
 
 which corresponds to the polynomials
 $x^2+x+1$, $2x^2+2x+2$,
@@ -41638,18 +41689,12 @@ Theorems that hold in any ring, hence, hold also
 in a polynomial ring. We, therefore, do not need
 to prove them here again.
 
-We will discuss the methods for factorising
+We will discuss the methods for factoring
 polynomials in a finite field in the next section.
 Let us here assume that we already knew such a method.
 We could then call it to factor a given polynomial
 in a finite field and then reinterpret the result
-for the domain we started with.
-
-\ignore{
-TODO:
-- application to integers: hensel's lemma
-}
-
+in the domain we started with.
 \section{Factoring Polynomials in a finite Field}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -41674,7 +41719,7 @@ developed by the American mathematician
 Elwyn Berlekamp in the late Sixties
 and the \term{Cantor-Zassenhaus algorithm}
 developed in the late Seventies and early Eighties
-by David Cantor, an American methematician,
+by David Cantor, an American mathematician,
 not to be confused with Georg Cantor, and
 Hans Zassenhaus (1912 -- 1991), a German-American
 mathematician.
@@ -41736,26 +41781,22 @@ the following holds:
 f^{\varphi(m)} \equiv 1 \pmod{m}.
 \end{equation}
 
-This is easy to prove.
 The resulting structure $K[x]/(m)$
 has a multiplicative
 group $K_m^*$ (just as the integers $\pmod{n}$).
 The members of this group are all polynomials
 that do not share divisors with $m$ and $\varphi(m)$
 is the cardinality of this group.
-From $gcd(m,f) = 1$, it follows that
-$f_m = f \mod{m} \in K_m^*$.
-We, for sure, have 
-$f_m^{\varphi(m)} \equiv 1 \pmod{m}$, since 
-$\varphi(m)$ is the size of the group.
-This equivalence may hold also for other numbers, $a$,
+The equivalence may hold also for other numbers, $a$,
 such that $f^a \equiv 1 \pmod{m}$, but
 according to Lagrange's theorem 
 (that the cardinality of subgroups of $G$ divides
 the cardinality of $G$), all these numbers $a$
-must divide $\varphi(m)$, the size of the group,
-and we unmistakenly have
-$f^{\varphi(m)} \equiv 1 \pmod{m}\qed$.
+must divide $\varphi(m)$, the size of the group.
+But independent of the possibility that
+other number may fulfil the equivalence,
+we unmistakenly have
+$f^{\varphi(m)} \equiv 1 \pmod{m}$.
 
 From this theorem, Fermat's little theorem
 follows. Let $K$ be a field with $q$ elements; when using
@@ -41805,11 +41846,11 @@ of degree $<d$ there are, namely $r=q^d$.
 For the example $q=2$, we see that there are 16 polynomials
 with degree less than 4, which is $2^4$.
 One of those polynomials, however, is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]},
-which we must exclude, when asking for $\varphi(g)$,
-since, for this polynomial, 
-division is not defined.
+which we must exclude, when asking for $\varphi(g)$
+(since, for this polynomial, 
+division is not defined).
 For the irreducible polynomial $g$, we therefore
-have $r-1$ elements that do not share divisors with $g$,
+have $r-1$ polynomials that do not share divisors with $g$,
 \ie\ $\varphi(g) = r-1$. So, according to Euler's theorem,
 we have 
 
@@ -41888,7 +41929,7 @@ Here is a Haskell implementation:
 \>[23]{}\mathbf{in}\;{}\<[27]%
 \>[27]{}\mathbf{case}\;\Varid{pmmod}\;\Varid{p}\;(\Varid{addp}\;\Varid{p}\;\Varid{z'}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\Varid{p}\mathbin{-}\mathrm{1}\mskip1.5mu]))\;\Varid{u}\;\mathbf{of}{}\<[E]%
 \\
-\>[27]{}\Conid{P}\;[\mskip1.5mu \anonymous \mskip1.5mu]{}\<[34]%
+\>[27]{}\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]{}\<[34]%
 \>[34]{}\to {}\<[38]%
 \>[38]{}\Varid{i}\equiv \Varid{d}{}\<[E]%
 \\
@@ -41920,19 +41961,15 @@ We take the result modulo the input polynomial \ensuremath{\Varid{u}}.
 This corresponds to
 $x^{p^d} - x$ for degree $d=1$.
 
-If the result is a constant polynomial 
+If the result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]}, \ie\ zero,
 and the degree counter $i$ equals $d$,
 then equation \ref{eq:polyFacIrrTest} is fulfilled.
-(Note that we consider any constant polynomial as zero,
-since a constant polynomial is just the content,
-which usually should have been removed before we start
-to search factors.)
 Otherwise, if the degree counter does not equal $d$,
 this polynomial fulfils the equation with a ``wrong'' degree.
 This is possible only if the input was not irreducible
 in the first place.
 
-Finally, if we have a remainder that is not constant,
+Finally, if we have a remainder that is not zero,
 we either continue (if we have not yet reached the degree
 in question) or, if we had already reached the final degree,
 we return with False, since the polynomial 
@@ -41967,7 +42004,7 @@ it will have -1, which is 6 in this case,
 as last but one coefficient.
 Taking this modulo to the random polynomial $g$,
 we get the polynomial \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{3},\mathrm{6}\mskip1.5mu]}, which is 
-$6x^2 + 3x$ and certainly not constant.
+$6x^2 + 3x$ and definitely not constant.
 $g$ is therefore not irreducible.
 
 Let us try another one:
@@ -41985,17 +42022,31 @@ is irreducible.
 The formula, however, is not only interesting
 for testing irreducibility.
 What the formula states is in fact that
-all irreducible polynomials of degree $d$
+all irreducible polynomials up to degree $d$
 are factors of $x^{q^d} - x$.
-Whenever we construct this expression,
-we have created the product of all 
-irreducible polynomials of degree $d$.
 The irreducible factors of the polynomial we want to factor
 are part of this product and we can get them out
 just by asking for the greatest common divisor
 of $x^{p^d} - x$ and the polynomial we want to factor.
 This would give us the product of all factors
 of our polynomial of a given degree.
+
+Consider for example the polynomials modulo 2
+of degree 2 in the table above. There is only
+one irreducible polynomial in this row, namely
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}. We compute $x^4 - x$, which
+is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu]} and now divide this one
+by \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}:
+
+\ensuremath{\Varid{divmp}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])}
+
+The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]},
+yet another polynomial of degree 2.
+This one, however, is not irreducible.
+It can be factored into the polynomials
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu]}. $x^4 - x$, hence,
+can be factored into three irreducible polynomials,
+one of degree 2 and two of degree 1.
 
 We need to add one more qualification however.
 Since we are searching for a \term{unique}
@@ -42019,7 +42070,7 @@ Here is an implementation:
 \column{22}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{26}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{monicp}\mathbin{::}\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}{}\<[E]%
+\>[3]{}\Varid{monicp}\mathbin{::}\Conid{Natural}\to \Conid{Poly}\;\Conid{Natural}\to \Conid{Poly}\;\Conid{Natural}{}\<[E]%
 \\
 \>[3]{}\Varid{monicp}\;\Varid{p}\;\Varid{u}\mathrel{=}{}\<[17]%
 \>[17]{}\mathbf{let}\;{}\<[22]%
@@ -42177,8 +42228,6 @@ into three parts using the equality
 t^{p^d} - t = t(t^{(p^d-1)/2} + 1)(t^{(p^d-1)/2} - 1).
 \end{equation}
 
-Make sure that the equality holds 
-by multiplying the right-hand side out.
 By a careful choice of $t$, we can make sure that the factors
 are likely to be more or less equally distributed among the
 latter two factors. That, indeed, would reduce the problem significantly.
@@ -42205,7 +42254,7 @@ we will hit a common factor.
 There is an issue, however, for $p=2$.
 Because in that case, 
 $t^{(p^d-1)/2} - 1 = t^{(p^d-1)/2} + 1$.
-Consider, to illustrate that, a polynomial modulo 2, for instance
+Consider a polynomial modulo 2, for instance
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]} and $d=3$. Then we have 
 
 \[
@@ -42372,12 +42421,12 @@ $u/\gcd$.
 
 Let us try this for the result \ensuremath{(\mathrm{1},\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])} we obtained
 earlier from applying \ensuremath{\Varid{ddfac}} on \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
-\ensuremath{\Varid{cz}\;\mathrm{7}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])} gives 
+We call \ensuremath{\Varid{cz}\;\mathrm{7}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{2},\mathrm{4},\mathrm{1}\mskip1.5mu])} and see
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{1}\mskip1.5mu]\mskip1.5mu]},
 
 two irreducible polynomials of degree 1.
-The complete factorisation of \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1},\mathrm{1}\mskip1.5mu]}, hence, is
+The complete factorisation of \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{4},\mathrm{3},\mathrm{1},\mathrm{1}\mskip1.5mu]} is therefore
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{5},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{4},\mathrm{1}\mskip1.5mu]\mskip1.5mu]},
 
@@ -42432,39 +42481,51 @@ which just computes $w$ as $t + t^2 + t^4 + \dots t^{2^{d-1}}$.
 Let us try \ensuremath{\Varid{ddfac}} and \ensuremath{\Varid{cz}} with a polynomial modulo 2,
 \eg\ \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}, which is of degree 8 and
 is squarefree (and, per definition, monic).
-The call \ensuremath{\Varid{ddfac}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])} gives
+The call 
+
+\ensuremath{\Varid{ddfac}\;\mathrm{2}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])}
+
+gives
 us three chunks of factors:
 
 \ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu]),(\mathrm{2},\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]),(\mathrm{4},\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu])\mskip1.5mu]}.
 
 We see at once that the second and third polynomials
-are already irreducible, since they already have 
+are already irreducible, since they have 
 the specified degree. The first one, however, is
 of degree 2, but shall contain factors of degree 1.
 So, let us see what \ensuremath{\Varid{cz}\;\mathrm{2}\;\mathrm{1}\;(\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1}\mskip1.5mu])} will yield:
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
 
-The complete factorisation of \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]},
-hence, is
+The complete factorisation of \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}
+is therefore
 
 \ensuremath{[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}.
+
+We can test with
+
+\ensuremath{\Varid{prodp}\;(\Varid{mulmp}\;\mathrm{2})\;[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu],\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]\mskip1.5mu]}
+
+which indeed results in \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1},\mathrm{0},\mathrm{0},\mathrm{1},\mathrm{1},\mathrm{1}\mskip1.5mu]}.
 
 Now, we still have to solve the problem of polynomials
 containing squared factors, \ie\ repeated roots.
 There is in fact a method to find such factors
 adopted from calculus and, again, related to the
-derivative. The point is that a polynomial and
-its derivative share only those divisors that
-appear more than once in the factorisation.
+derivative. It is based on the observation
+that a polynomial $\pi$ and
+its derivative $\pi'$ share only those factors that
+appear more than once in the factorisation
+of $\pi$.
 We have not enough knowledge on derivatives yet to
-prove that here rigorously, but we can give an
+prove that here rigorously, but we can get an
 intuition.
 
 Consider a polynomial with the factorisation
 
 \[
-(x+a)(x+b)\dots
+(x+a)(x+b)
 \]
 
 This is a product and, to find the derivative
@@ -42472,7 +42533,7 @@ of this polynomial, we need to apply the \term{product rule}
 (which we will study in part 3). The product rule states that
 
 \begin{equation}
-(f \times g)' = fg' + f'g,
+(fg)' = fg' + f'g,
 \end{equation}
 
 \ie\ the derivative of the product of $f$ and $g$
@@ -42480,30 +42541,33 @@ is the sum of the product of $f$ and the derivative of $g$
 and the product of the derivative of $f$ and $g$.
 
 The derivatives of the individual factors $(x+a)(x+b)$
-all reduce to 1, since for $f = x^1 + a$,
+in this example all reduce to 1, since for $f = x^1 + a$,
 $f' = 1\times x^0 = 1$. The product of factors, hence,
 turns into a sum of factors:
 
 \[
-1\times(x+a) + 1\times(x+b) = (x+a) + (x+b).
+1\times(x+a) + 1\times(x+b) = (x+a) + (x+b)
+= 2x + a + b.
 \]
 
-Let us compute the polynomial
-with the factors $(x+a)(x+b)$. The polynomial is
-$x^2 + ax + bx + ab$. Its derivative is
-$2x + a + b$. When we apply the product rule to
-the factors, we get $(x+a)+(x+b)= x+a+x+b = 2x+a+b$,
+Let us check this result:
+when we build the product of the factors
+$(x+a)(x+b)$, we get the polynomial
+$x^2 + (a+b)x + ab$. Its derivative is
+$2x + a + b$,
 which is indeed the same result.
 
 It is intuitively clear that the sum of the factors
-is not the same as the product of those same factors
-and, even further, that none of the factors is preserved.
-They all disappear in favour of others they do not
+is not the same as the product of those same factors.
+Furthermore, the factors are irreducible and do not
+share divisors among each other; they are coprime.
+In consequence, the original factors disappear
+in favour of others they also do not
 share divisors with, because, since the factors are
 coprime to each other, they do not share divisors
 with their sum either.
 
-To elaborate on this, consider now polynomials
+Now consider polynomials
 with more than two factors of the form
 
 \[
@@ -42511,7 +42575,7 @@ abc\dots,
 \]
 
 where $a$, $b$ and $c$ stand for irreducible polynomials like
-$(x+\alpha)$, $(x+\beta)$ and so on.
+$(x+\alpha)$, $(x+\beta)$, $(x+\gamma)$ and so on.
 
 We apply the product rule on the first two factors
 and get:
@@ -42532,20 +42596,28 @@ $c'$, with the original $ab$ and get:
 We see that we end up with the sum of the products
 of the original factors, with the current factor $i$
 substituted by something else, namely the derivative
-of this factor. This can be represented nicely as:
+of this factor. For the example above where
+the derivative was 1, we would have:
+
+\[
+bc + ac + ab.
+\]
+
+The general result can be represented by
+the following remarkable formula:
 
 \begin{equation}\label{eq:polyFacProductRule}
 \left(\prod_{i=0}^k{a_i}\right)' = 
 \sum_{i=0}^k{\left(a_i'\prod_{j\neq i}{a_j}\right)}
 \end{equation}
 
-There is a remarkable similarity to the structure
+There is a striking similarity to the structure
 we found in analysing the Chinese remainder theorem,
 when we divided the product of all remainders by
 the current remainder. Just as in the Chinese remainder
 theorem, each of the terms resulting from the product
 rule is coprime to the original factor at the same position,
-since it is the product of irreducible factors 
+since it is the product of all other irreducible factors 
 (which, hence, are coprime to each other) and the derivative
 of that factor, which, for sure, does not share
 divisors with the original factor at that position.
@@ -42559,8 +42631,8 @@ the following polynomial
 
 then this factor is preserved. The product rule
 will create the factor $x+a+x+a=2x+2a$, which
-is a multiple of the original factor, which,
-in its turn, is therefore preserved.
+is the original factor scaled up. This factor
+is therefore preserved.
 
 Suppose we want to compute the factorisation
 of 
@@ -42570,10 +42642,9 @@ f = a_1a_2^2a_3^3\dots a_k^k,
 \end{equation}
 
 where the $a$s represent the products of all
-the factors raised to the indicated exponent,
-then, since the derivative preserves the factors,
-the $\gcd$ of $f$ and its derivative $f'$
-(whatever that looks like) is:
+the factors that are raised to the same exponent,
+then, since the derivative preserves the repeated factors,
+the $\gcd$ of $f$ and its derivative $f'$ is:
 
 \begin{equation}\label{eq:polyFacYun1}
 \gcd(f,f') = a_2^1a_3^2\dots a_k^{k-1},
@@ -42591,7 +42662,7 @@ all the factors reduced to their first power.
 Now, if we continue this scheme using
 the $\gcd(f,f')$ and $f/\gcd(f,f')$ as input,
 we would get \ref{eq:polyFacYun1} 
-reduced one more ($a_3a_4^2\dots$) and
+reduced once more ($a_3a_4^2\dots$) and
 \ref{eq:polyFacYun2} with the head chopped off
 ($a_2a_3\dots$). The quotient of the two
 versions of \ref{eq:polyFacYun2}, \ie\
@@ -42600,8 +42671,12 @@ versions of \ref{eq:polyFacYun2}, \ie\
 \frac{a_1a_2a_3\dots}{a_2a_3\dots},
 \]
 
-would give us the head. The head, however,
-is the product of all factors with a given exponent.
+would give us the head.
+This leads to an iterative algorithm
+where we can process the factors with
+different exponents one by one advancing
+by chopping off the factors that we have already
+treated on each step.
 
 In a finite field, this, unfortunately does not
 work in all cases. Problematic are all coefficients
@@ -42620,7 +42695,7 @@ derivative disappears.
 What we can do, however, is to keep the coefficients
 with exponents that are multiples of the modulus
 separated from those that are not.
-As in the algorithm for infinte fields, we would
+We would still
 iteratively compute two sequences of values,
 namely $T_{k+1} = T_k/V_{k+1}$ with $T_1 = \gcd(f,f')$
 and $V_{k+1} = \gcd(T_k,V_k)$ with $V_1 = f/T_1$.
@@ -42655,7 +42730,7 @@ For the cases $p\mid i$, we will end up, when we have reduced
 $V_k$ to a constant polynomial, with a product of all the powers
 of the $a$s with exponents that are multiples of $p$.
 
-To get these $a$s out, we divide all all exponents by $p$ 
+To get these $a$s out, we divide all exponents by $p$ 
 and repeat the whole algorithm. For the return value, \ie\ the
 factors, we need to remember the original exponent,
 but that is easily done as shown below.
@@ -42872,8 +42947,27 @@ Finally, we are ready to put everything together:
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
 
-Hans Zassenhaus worked most of his life as a computeralgeabrist and
-was important for the development of this area of mathematics and
+The function returns a list of pairs.
+The first of the pair is the exponent of the factor
+that, in its turn, is the second of the pair.
+
+We first test whether the polynomial is irreducible.
+If so, we just return that polynomial as its only factor.
+
+Otherwise, we create a list of exponents and factors
+using \ensuremath{\Varid{squarefactormod}} and pass the factors
+(without the exponents) to  \ensuremath{\Varid{ddfac}} creating pairs
+of exponent and the result of \ensuremath{\Varid{ddfac}}.
+On this list, we map cz performing some acrobatics
+to pass the correct parameters, since the result
+of \ensuremath{\Varid{ddfac}} is a list of pairs itself, namely of pairs
+\ensuremath{(\Varid{degree},\Varid{factor}\;\Varid{product})}.
+Finally, we reassign the exponent per result
+creating the list that we return to the caller
+of \ensuremath{\Varid{cantorzassenhaus}}.
+
+Hans Zassenhaus worked most of his life as computeralgebraist and
+pioneered this area of mathematics and
 computer science. He was born in Germany before the second world war
 and studied mathematics under Emil Artin, one of the founders of
 modern algebra. Zassenhaus' father was strongly influenced by
@@ -42893,8 +42987,6 @@ this position, maintained contact between
 prisioners and helped smuggling medicine, tobacco and food
 into the prisons. For her efforts during and after the war,
 she was nominated for the Nobel Peace Prize in 1974. 
-Unfortunately, the societal engagement of the Zassenhaus siblings
-is hardly remembered today.
 
 \ignore{
 TODO:
@@ -46444,20 +46536,34 @@ Here is a test function that brings all the bits together:
 \section{Quantum Mechanics}
 \section{Hypercomplex Numbers}
 
-\chapter{Quadratics, Cubics and Quartics} % c12
-\section{Quadratic Equations}
-\section{The fundamental Theorem of Algebra}
+\chapter{Galois Theory} % c12
+\section{Where is the Quintic Formula?}
+\section{More on Groups}
+\section{Homomorphisms}
+\section{Famous Groups}
+\section{Automorphisms}
+\section{Field Extensions and Polynomials}
+\section{More on Field Extensions}
+\section{The Galois Group}
+\section{The Galois Correspondence}
+\section{The Galois Group of the Quadratics}
+\section{The Galois Group of the Cubics}
+\section{The Galois Group of the Quartics}
+\section{The Galois Group of the Quintics}
+\section{The Fundamental Theorem of Algebra}
 % see "algebraic proofs" in http://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra
 % \section{Non-algebraic Numbers}
-\section{Cubics and Quartics}
-\section{Quintics}
-\section{Galois Theory}
-\section{Field Theory}
-\section{Postmodern Algebra}
-\section{Category Theory}
-% Riemann's Hypothesis?
 
-\chapter{Euclid and beyond} % c13
+\chapter{Postmodern Algebra} % c13
+\section{Ring Theory}
+\section{Postmodern Algebra}
+\section{Loops}
+\section{Lattice Algebra}
+\section{...}
+\section{Category Theory}
+
+
+\chapter{Euclid and beyond} % c14
 \section{Euclid's Geometry}
 \section{The Parallel Postulate}
 \section{Non-Euclidian Geometries}
@@ -46473,7 +46579,7 @@ Here is a test function that brings all the bits together:
 \part{Analysis}
 % -------------------------------------------------------------------------
 
-\chapter{The Calculus} % c14
+\chapter{The Calculus} % c15
 \section{The Method of Exhaustion}
 \section{Area below a Curve}
 \section{Basic Rules of Integration}

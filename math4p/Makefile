@@ -93,9 +93,10 @@ ALL	 = cmds.tex \
 	   src/c10/ECIES.lhs \
 	   src/c10/ECDSA.lhs \
 	   src/c11/complex.lhs \
-	   src/c12/quadratics.lhs \
-	   src/c13/euclid.lhs \
-	   src/c14/calculus.lhs
+	   src/c12/galois.lhs \
+	   src/c13/postmodern.lhs \
+	   src/c14/euclid.lhs \
+	   src/c15/calculus.lhs
 
 INC = -isrc/c02 \
       -isrc/c03 \
