@@ -6,5 +6,6 @@
 \section{Geometry and Relativity}
 \section{Affine Geometry}
 \section{Projective Geometry}
-\section{Graph Theory}
+\section{The Erlangen Program once again}
 \section{Topology}
+\section{Graph Theory}

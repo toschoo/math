@@ -10,10 +10,12 @@
 %include Umbral.lhs
 \section{Roots}
 %include Roots.lhs
+\section{Cubics and Quartics}
 \section{Vieta's Formulas}
 %include Vieta.lhs
 \section{Factoring Polynomials}
 %include PolyFactor.lhs
+\section{Practical Factoring Techniques}
 \section{Factoring Polynomials in a finite Field}
 %include PolyModFactor.lhs
 \section{Hensel Lifting}
