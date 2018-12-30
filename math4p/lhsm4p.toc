@@ -68,13 +68,12 @@
 \contentsline {section}{\numberline {8.4}Differences and Binomial Coefficients}{393}
 \contentsline {section}{\numberline {8.5}Umbral Calculus}{402}
 \contentsline {section}{\numberline {8.6}Roots}{415}
-\contentsline {section}{\numberline {8.7}Cubics and Quartics}{426}
-\contentsline {section}{\numberline {8.8}Vieta's Formulas}{426}
-\contentsline {section}{\numberline {8.9}Factoring Polynomials}{432}
-\contentsline {section}{\numberline {8.10}Practical Factoring Techniques}{437}
-\contentsline {section}{\numberline {8.11}Factoring Polynomials in a finite Field}{437}
-\contentsline {section}{\numberline {8.12}Hensel Lifting}{451}
-\contentsline {section}{\numberline {8.13}Enumerating the Algebraic Numbers}{451}
+\contentsline {section}{\numberline {8.7}Vieta's Formulas}{426}
+\contentsline {section}{\numberline {8.8}Factoring Polynomials}{432}
+\contentsline {section}{\numberline {8.9}Practical Factoring Techniques}{436}
+\contentsline {section}{\numberline {8.10}Factoring Polynomials in a finite Field}{436}
+\contentsline {section}{\numberline {8.11}Hensel Lifting}{451}
+\contentsline {section}{\numberline {8.12}Enumerating the Algebraic Numbers}{451}
 \contentsline {chapter}{\numberline {9}Relations, Functions and the Cartesian Plane}{453}
 \contentsline {section}{\numberline {9.1}Relations}{453}
 \contentsline {section}{\numberline {9.2}Equivalence Classes}{453}
@@ -125,23 +124,24 @@
 \contentsline {section}{\numberline {12.11}Quantum Mechanics}{493}
 \contentsline {section}{\numberline {12.12}Hypercomplex Numbers}{493}
 \contentsline {chapter}{\numberline {13}Galois Theory}{495}
-\contentsline {section}{\numberline {13.1}Where is the Quintic Formula?}{496}
-\contentsline {section}{\numberline {13.2}The Symmetry of the Roots}{496}
-\contentsline {section}{\numberline {13.3}More on Groups}{496}
-\contentsline {section}{\numberline {13.4}Morphisms}{496}
-\contentsline {section}{\numberline {13.5}Famous Groups}{496}
-\contentsline {section}{\numberline {13.6}The Erlangen Program}{496}
-\contentsline {section}{\numberline {13.7}Field Extensions and Polynomials}{496}
-\contentsline {section}{\numberline {13.8}More on Field Extensions}{496}
-\contentsline {section}{\numberline {13.9}The Galois Group}{496}
-\contentsline {section}{\numberline {13.10}The Galois Correspondence}{496}
-\contentsline {section}{\numberline {13.11}Solvable Groups}{496}
-\contentsline {section}{\numberline {13.12}The Galois Group of the Quadratics}{496}
-\contentsline {section}{\numberline {13.13}The Galois Group of the Cubics}{496}
-\contentsline {section}{\numberline {13.14}The Galois Group of the Quartics}{496}
-\contentsline {section}{\numberline {13.15}The Galois Group of the Quintics}{496}
-\contentsline {section}{\numberline {13.16}The Fundamental Theorem of Algebra}{496}
-\contentsline {section}{\numberline {13.17}Non-algebraic Numbers}{496}
+\contentsline {section}{\numberline {13.1}Cubics and Quartics}{496}
+\contentsline {section}{\numberline {13.2}Where is the Quintic Formula?}{496}
+\contentsline {section}{\numberline {13.3}The Symmetry of the Roots}{496}
+\contentsline {section}{\numberline {13.4}More on Groups}{496}
+\contentsline {section}{\numberline {13.5}Morphisms}{496}
+\contentsline {section}{\numberline {13.6}Famous Groups}{496}
+\contentsline {section}{\numberline {13.7}The Erlangen Program}{496}
+\contentsline {section}{\numberline {13.8}Field Extensions and Polynomials}{496}
+\contentsline {section}{\numberline {13.9}More on Field Extensions}{496}
+\contentsline {section}{\numberline {13.10}The Galois Group}{496}
+\contentsline {section}{\numberline {13.11}The Galois Correspondence}{496}
+\contentsline {section}{\numberline {13.12}Solvable Groups}{496}
+\contentsline {section}{\numberline {13.13}The Galois Group of the Quadratics}{496}
+\contentsline {section}{\numberline {13.14}The Galois Group of the Cubics}{496}
+\contentsline {section}{\numberline {13.15}The Galois Group of the Quartics}{496}
+\contentsline {section}{\numberline {13.16}The Galois Group of the Quintics}{496}
+\contentsline {section}{\numberline {13.17}The Fundamental Theorem of Algebra}{496}
+\contentsline {section}{\numberline {13.18}Non-algebraic Numbers}{496}
 \contentsline {chapter}{\numberline {14}Postmodern Algebra}{497}
 \contentsline {section}{\numberline {14.1}Ring Theory}{497}
 \contentsline {section}{\numberline {14.2}Postmodern Algebra}{497}

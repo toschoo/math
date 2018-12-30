@@ -71,13 +71,15 @@ where
                        regImg   = img,
                        regBase  = (0,0),
                        regSz    = sz,
-                       regColor = white
+                       regColor = black
                      }
 
   stdGraph :: Region -> Graph
   stdGraph reg = Graph {
-                   grpFontDir  = "/usr/share/fonts/truetype/msttcorefonts",
-                   grpFont     = "arial.ttf",
+                   -- grpFontDir  = "/usr/share/fonts/truetype/msttcorefonts",
+                   grpFontDir  = "/usr/share/fonts/truetype/asana-math",
+                   -- grpFont     = "arial.ttf",
+                   grpFont     = "Asana-Math.otf",
                    grpFontSz   = 10,
                    grpRegion   = reg,
                    grpVertices = [],
@@ -139,11 +141,13 @@ where
                      in do
     mapM_ (\e -> GD.drawLine (edgPP1 e) (edgPP2 e) (edgColor e) img) $ grpEdges gr
     mapM_ (\v -> do
-      (p1,_,p3,_) <- GD.measureString f fs 0 (vtxP    v) 
-                                             (vtxText v) black
+      let (x,y) = vtxP v
+      (p1,_,p3,_) <- GD.measureString f fs 0 (x,y)
+                                             (vtxText v) white
+      -- putStrLn(show p1 ++ " -> " ++ show p3 ++ " (" ++ show fs ++ ")")
       GD.drawFilledRectangle p1 p3 (grpBgColor gr) img
       void $ GD.drawString f fs 0 (vtxP    v) 
-                                  (vtxText v) black img) $ grpVertices gr
+                                  (vtxText v) red   img) $ grpVertices gr
 
   savePng :: FilePath -> Graph -> IO ()
   savePng p gr = GD.savePngFile p $ regImg (grpRegion gr)
@@ -173,7 +177,7 @@ where
           go _ [] _  = []
           go _ _ []  = []
           go (n:ns) (p1:xs) (p2:zs) =
-            let e = Edge black p1 p2
+            let e = Edge white p1 p2
              in case n of
                   Node _ []     ->     go ns (p1:xs) (p2:zs)
                   Node _ [k]    -> e : go ns xs zs
@@ -187,5 +191,5 @@ where
 
   dist :: Int -> Int -> GD.Size -> Int
   dist g i (x,_) = let n  = 2^(i-1)
-                    in x `div` n  
+                    in x `div` n
 

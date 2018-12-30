@@ -1,3 +1,4 @@
+\section{Cubics and Quartics}
 \section{Where is the Quintic Formula?}
 \ignore{
 repeat: quadratics/cubics/quartics
@@ -13,7 +14,8 @@ permutations of the roots
 }
 \section{More on Groups}
 \ignore{
-Simple Groups, Quotient Groups, Normal Subgroups
+Simple Groups, Quotient Groups, Conjugates, Normal Subgroups
+Sylow Theorems
 }
 \section{Morphisms}
 \ignore{

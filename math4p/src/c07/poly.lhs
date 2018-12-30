@@ -10,7 +10,6 @@
 %include Umbral.lhs
 \section{Roots}
 %include Roots.lhs
-\section{Cubics and Quartics}
 \section{Vieta's Formulas}
 %include Vieta.lhs
 \section{Factoring Polynomials}

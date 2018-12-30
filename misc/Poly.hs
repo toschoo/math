@@ -844,25 +844,31 @@ where
   solve1 (P [b,a]) = [-b/a]
 
   solve2 :: (Real a, Floating a, Fractional a) => Poly a -> [a]
-  solve2 p@(P [c,b,a]) | dis p < 0 = []
+  solve2 p@(P [c,b,a]) | dis2 p < 0 = []
                        | x1 /= x2  = [x1,x2]
                        | otherwise = [x1]
-    where d  = sqrt (dis p)
+    where d  = sqrt (dis2 p)
           x1 = (-b + d) / 2*a
           x2 = (-b - d) / 2*a
 
-  dis :: (Num a) => Poly a -> a 
-  dis (P [c,b,a]) = b^2 - 4*a*c
+  dis2 :: (Num a) => Poly a -> a 
+  dis2 (P [c,b,a]) = b^2 - 4*a*c
 
-  countRoots :: (Num a, Ord a) => Poly a -> Int
-  countRoots p | dis p > 0 = 2
-               | dis p < 0 = 0
-               | otherwise = 1
+  countRoots2 :: (Num a, Ord a) => Poly a -> Int
+  countRoots2 p | dis2 p > 0 = 2
+                | dis2 p < 0 = 0
+                | otherwise = 1
+
+  dis3 :: (Num a) => Poly a -> a
+  dis3 (P [d,c,b,a]) = 18*a*b*c*d - 
+                       4*b^3*d    +
+                       b^2*c^2    -
+                       4*a*c^3    -
+                       27*a^2*d^2
 
   -- not correct...
-  {-
   solve3 :: Poly Double -> [Double]
-  solve3 (P [a,0,c,d]) | a /= 1    = solve3 (P [1,0,c/a,d/a])
+  solve3 (P [d,c,0,a]) | a /= 1    = solve3 (P [d/a,c/a,0,1])
                        | otherwise =
                          let disc = d^2/4 + c^3/9
                              u3   = -d/2 + sqrt disc
@@ -872,15 +878,15 @@ where
                              v    | v3  < 0    = -(-v3)**(1/3)
                                   | otherwise = v3**(1/3)
                           in if disc < 0 then [] else [u+v]
-  solve3 (P [a,b,c,0]) | a /= 1    = solve3 (P [1,b/a,c/a,0])
+  solve3 (P [0,c,b,a]) | a /= 1    = solve3 (P [0,c/a,b/a,1])
                        | otherwise = 
-                           let xs = solve2 (P [1,b,c])
+                           let xs = solve2 (P [c,b,1])
                             in nub (0:xs)
-  solve3 (P [a,b,c,d]) | a /= 1    = solve3 (P [1,b/a,c/a,d/a])
+  solve3 (P [d,c,b,a]) | a /= 1    = solve3 (P [d/a,c/a,b/a,1])
                        | otherwise = 
                          let p  = -(b^2)/3 + c
                              q  = (2*b^3)/27 - (b*c)/3 + d
-                          in [y-a/3 | y <- solve3 (P [1,0,p,q])]
+                          in [y-a/3 | y <- solve3 (P [q,p,0,1])]
   solve3 _           = error "oops!"
 
   finduv :: Double -> Double -> Double -> Double -> Double -> (Double,Double)
@@ -895,5 +901,4 @@ where
           go x [] = fst x
           go x (z:zs) | snd x < snd z = go x zs
                       | otherwise     = go z zs
-  -}
     

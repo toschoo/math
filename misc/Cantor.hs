@@ -4,11 +4,12 @@ where
   import Data.Ratio
   import Data.List (nub,sort,sortBy,(\\))
   import Data.Tree 
-  import Data.Tree.Pretty (drawVerticalTree)
+  -- import Data.Tree.Pretty (drawVerticalTree)
   import Debug.Trace (trace)
   import Binom
   import Prime
   import Perm
+  import Fib(fi)
   import Numerals
   import ConwayGuy
   import Real
@@ -115,14 +116,14 @@ where
   ------------------------------------------------------------------------
   -- Draw Calwi subtree
   ------------------------------------------------------------------------
-  drawCalwi :: Int -> Rational -> String
-  drawCalwi g = drawVerticalTree . pretty . calwiTree g
+  -- drawCalwi :: Int -> Rational -> String
+  -- drawCalwi g = drawVerticalTree . pretty . calwiTree g
 
   ------------------------------------------------------------------------
   -- Print Calwi subtree
   ------------------------------------------------------------------------
-  printCalwi :: Int -> Rational -> IO ()
-  printCalwi g = putStrLn . drawCalwi g
+  -- printCalwi :: Int -> Rational -> IO ()
+  -- printCalwi g = putStrLn . drawCalwi g
 
   ------------------------------------------------------------------------
   -- Calkin-Wilf Sequence
