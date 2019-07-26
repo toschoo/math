@@ -53,13 +53,32 @@ subtraction. Here is a valid implementation:
   strich :: (Num a, Eq a) => (a -> a -> a) -> Poly a -> Poly a -> Poly a
   strich o (P x) (P y)  = P (strichlist o x y)
 
+  zeros :: Num a => Int -> [a]
+  zeros i = take i (repeat 0)
+
   strichlist :: (Num a, Eq a) => (a -> a -> a) -> [a] -> [a] -> [a]
-  strichlist o xs ys = cleanz (go xs ys)
-    where  go [] bs          =  bs
+  strichlist o xs ys =  let  us  |  xd >= yd = xs
+                                 |  otherwise = xs ++ zeros (yd-xd)
+                             vs  |  yd >= yd = ys 
+                                 |  otherwise = ys ++ zeros (xd-yd)
+                        in cleanz (go us vs)
+    where  xd = length xs
+           yd = length ys
+           go [] bs          =  bs
            go as []          =  as
            go (a:as) (b:bs)  =  a `o` b : go as bs
 \end{code}
 \end{minipage}
+
+A bit tricky might be the use of |zeros|.
+The function generates a sequence of zeros of size |i|.
+We use it to add 0 coefficients at the end of
+the shorter coefficient list (if any). For addition
+this is not relevant (because we would just add
+the coefficients of the longer one to the end of the list).
+For subtraction, however, it is relevant, since we
+need to compute the additive inverse of the extra
+coefficients in the longer list. |zeros| does the trick.
 
 Based on addition, we can also implement |sum|
 for polynomials:
@@ -107,9 +126,6 @@ a monomial over a polynomial:
 \begin{code}
   mul1 :: Num a => (a -> a -> a) -> Int -> [a] -> a -> [a]
   mul1 o i cs x = zeros i ++ [c `o` x | c <- cs]
-
-  zeros :: Num a => Int -> [a]
-  zeros i = take i (repeat 0)
 \end{code}
 \end{minipage}
 
@@ -551,7 +567,7 @@ The first function takes an integer modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  mmod :: Zahl -> Zahl -> Zahl
+  mmod :: (Integral a) => a -> a -> a 
   mmod n p  |  n < 0 && (-n) > p  =  mmod (-(mmod (-n)) p) p
             |  n < 0              =  mmod (p + n) p
             |  otherwise          =  n `rem` p
@@ -562,7 +578,7 @@ Equipped with this function, we can easily implement multiplication:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  modmul :: Zahl -> Zahl -> Zahl -> Zahl
+  modmul :: (Integral a) => a -> a -> a -> a
   modmul p f1 f2 = (f1 * f2) `mmod` p
 \end{code}
 \end{minipage}
@@ -571,7 +587,7 @@ For division, we reuse the |inverse| function:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  modiv :: Zahl -> Zahl -> Zahl -> Zahl
+  modiv :: (Integral a) => a -> a -> a -> a
   modiv p n d = modmul p n d'
     where d' = fromIntegral (M.inverse  (fromIntegral d) 
                                         (fromIntegral p))
@@ -583,7 +599,7 @@ that transforms a polynomial into one modulo $n$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  pmod :: Poly Zahl -> Zahl -> Poly Zahl
+  pmod :: (Integral a) => Poly a -> a -> Poly a
   pmod (P cs) p = P [c `mmod` p | c <- cs]
 \end{code}
 \end{minipage}
@@ -632,9 +648,9 @@ to convert to modular arithmetic:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  addmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  addmp :: (Integral a) => a -> Poly a -> Poly a -> Poly a
   addmp n p1 p2 = strich (+) p1 p2 `pmod` n
-  submp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  submp :: (Integral a) => a -> Poly a -> Poly a -> Poly a
   submp n p1 p2 = strich (-) p1 p2 `pmod` n
 \end{code}
 \end{minipage}
@@ -643,7 +659,7 @@ Multiplication:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  mulmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl 
+  mulmp :: (Integral a)  => a -> Poly a -> Poly a -> Poly a
   mulmp p p1 p2  |  d2 > d1    =  mulmp p p2 p1
                  |  otherwise  =  P [m `mmod` p | m <- strichf (+) ms]
     where  ms  =  [mul1 o i (coeffs p1) c | (i,c) <- zip [0..] (coeffs p2)]
@@ -657,7 +673,7 @@ and product:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  mulmlist :: Zahl -> [Zahl] -> [Zahl] -> [Zahl]
+  mulmp :: (Integral a)  => a -> [a] -> [a] -> [a]
   mulmlist p c1 c2 = coeffs $ mulmp p (P c1) (P c2)
 \end{code}
 \end{minipage}
@@ -686,7 +702,7 @@ Division:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  divmp :: Zahl -> Poly Zahl -> Poly Zahl -> (Poly Zahl,Poly Zahl)
+  divmp :: (Integral a) => a -> Poly a -> Poly a -> (Poly a,Poly a)
   divmp p (P as) (P bs) = let (q,r) = go [0] as in (P q, P r)
     where  db = degree (P bs)
            go q r  |  degree (P r) < db   = (q,r)
@@ -709,7 +725,7 @@ Here is the \acronym{gcd}:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  gcdmp :: Zahl -> Poly Zahl -> Poly Zahl -> Poly Zahl
+  gcdmp :: (Integral a) a -> Poly a -> Poly a -> Poly a 
   gcdmp p a b  |  degree b > degree a = gcdmp p b a
                |  zerop b = a
                |  otherwise = let (_,r) = divmp p a b in gcdmp p b r
@@ -730,11 +746,60 @@ Now, we compute the \acronym{gcd} with |P [1,5,10,10,5,1]| modulo 7:
 
 The result is |P [1,2,1]|, as expected.
 
-Finally, power:
+The \acronym{gcd} is a very useful concept
+with modular arithmetic. Therefore, we should
+also implement the variants,
+|mgcd| ($\gcd$ on a list),
+|xgcd| (the extended Euclidean algorithm) and
+|mxgcd| (the |xgcd| on a list).
+
+As we have already seen in the chapter on arithmetic modulo a prime,
+we can just fold the argument list with $\gcd$:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  powmp :: Zahl -> Zahl -> Poly Zahl -> Poly Zahl
+  mgcdmp :: (Integer a) => a -> [Poly a] -> Poly a
+  mgcdmp _ [] = P [1]
+  mgcdmp _ [a] = a
+  mgcdmp p (a:as) = foldl' (gcdmp p) a as
+\end{code}
+\end{minipage}
+
+Here is the modular extended Euclidean algorithm for polynomials: 
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  xgcdmp :: (Integral a) => a -> Poly a -> Poly a ->  (Poly a, (Poly a, Poly a))
+  xgcdmp p a b = go a b (P [1]) (P [0]) (P [0]) (P [1])
+    where go c d uc vc ud vd  | zerop c    = (d, (ud, vd))
+                              | otherwise  = 
+                                 let (q, r) = divmp p d c 
+                                 in go r c  (subp p ud (mulmp p q uc))
+                                            (subp p vd (mulmp p q vc)) uc vc
+\end{code}
+\end{minipage}
+
+And its variant for lists:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mxgcdmp :: (Integral a) => a -> [Poly a] -> (Poly a, [Poly a])
+  mxgcdmp p []      = (P[1],[])
+  mxgcdmp p [x]     = (x,[P[1]])
+  mxgcdmp p (a:as)  =  let (g, rs) = go [] a as in (g, reverse $ ks rs)
+    where  go rs i [j] =  let (g, (x,y)) = xgcdmp p i j
+                          in (g, [y,x] ++ rs)
+           go rs i is  =  let (g, (x,y)) = xgcdmp p i (head is)
+                          in go ([y,x]++rs) g (tail is)
+           ks = M.distr (mulmp p) (P[1])
+\end{code}
+\end{minipage}
+
+Finally, we implement power:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  powmp :: (Integral a) => a -> a -> Poly a -> Poly a
   powmp p f poly = go f (P [1]) poly
     where  go 0 y _  = y
            go 1 y x  = mulmp p y x

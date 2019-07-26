@@ -6,8 +6,10 @@ where
   import Binom
   import Prime
   import Debug.Trace (trace)
-  import Data.List (nub,sort,delete,(\\))
+  import Data.List (foldl',nub,sort,delete,(\\))
   import Group hiding (mul)
+  import System.Random(randomRIO)
+  import Control.Monad(when,forM_)
 
   ring :: Integer -> [Integer]
   ring p = map (`rem` p) [1..p-1]
@@ -114,7 +116,81 @@ where
           go c d uc vc ud vd = -- trace ("ud = " ++ show ud ++ ", vd = " ++ show vd) $
                                let (q,r) = d `quotRem` c
                                 in go r c (ud - q * uc) 
-                                          (vd - q * vc) uc vc   
+                                          (vd - q * vc) uc vc
+
+  -- fold gcd on list
+  mgcd :: [Integer] -> Integer
+  mgcd [] = 1
+  mgcd (i:is) = foldl' gcd i is
+
+  -- distribute right
+  distr :: (a -> a -> a) -> a -> [a] -> [a]
+  distr f n [] = []
+  distr f n xs = go n xs
+    where go p []  = [p]
+          go p [x] = [f p x]
+          go p (k:ks) = let h = head ks
+                         in (f p k) : go (f p h) (tail ks)
+
+  -- Notice that 𝑔𝑐𝑑(𝑥,𝑦,𝑧)=𝑔𝑐𝑑(𝑥,𝑔𝑐𝑑(𝑦,𝑧)).
+  -- First we find 𝑎, 𝑏 such that 𝑔𝑐𝑑(𝑥,𝑔𝑐𝑑(𝑦,𝑧))=𝑎𝑥+𝑏𝑔𝑐𝑑(𝑦,𝑧),
+  -- then 𝑐, 𝑑 such that 𝑔𝑐𝑑(𝑦,𝑧)=𝑐𝑦+𝑑𝑧.
+  -- Finally we obtain 𝑔𝑐𝑑(𝑥,𝑦,𝑧)=𝑎𝑥+𝑏𝑐𝑦+𝑏𝑑𝑧.
+  mxgcd :: [Integer] -> (Integer, [Integer])
+  mxgcd [] = (1,[])
+  mxgcd [x] = (x,[1])
+  mxgcd (a:as) = let (g, rs) = go [] a as
+                  in (g, reverse $ ks rs)
+    where go rs i [j] = let (g, (x,y)) = xgcd i j
+                         in (g, [y,x]++rs)
+          go rs i is = let (g, (x,y)) = xgcd i (head is)
+                        in go ([y,x]++rs) g (tail is)
+          ks = distr (*) 1
+  
+  -- bad:
+  -- 1) we build an execution tree of size n
+  -- 2) we need to apply result reduction after the gcd algorithm
+  -- 3) it does not look very elegant
+  mxgcd2 :: [Integer] -> (Integer, [Integer])
+  mxgcd2 [] = (1,[])
+  mxgcd2 [x] = (x,[1])
+  mxgcd2 as = let (g, rs) = go as
+               in (g, ks rs)
+    where go [i,j] = let (g, (x,y)) = xgcd i j
+                      in (g, [x,y])
+          go (i:is) = let (g0, rs) = go is
+                          (g,(x,y)) =  xgcd i g0
+                       in (g, [x,y]++rs)
+          ks = distr (*) 1
+
+  tstmxgcd :: IO ()
+  tstmxgcd = do
+    -- test empty list
+    when (mxgcd [] /= (1,[])) $ fail "empty list failed"
+    a <- randomRIO(1,100)
+    when (mxgcd [a] /= (a,[1])) $ fail "singleton failed"
+    b <- randomRIO(1,100)
+    let (g,[x,y]) = mxgcd [a,b]
+    when (g /= gcd a b) $ fail "gcd in tuple failed"
+    when (x*a + y*b /= g) $ fail "formula in tuple failed"
+
+    -- hundred times!
+    forM_ [1..1000] (\_ -> do
+      s <- randomRIO(3,100) -- size
+      -- putStrLn ("running Test with " ++ show s)
+      l <- randomList s
+      let (g, rs) = mxgcd l
+      when (mgcd l /= g) $ fail "gcd in list failed"
+      let t = sum [x*a | (x,a) <- zip rs l]
+      when (t /= g) $ fail "formula in tuple failed")
+
+    where randomList :: Integer -> IO [Integer]
+          randomList s | s == 0 = return []
+                       | otherwise = do
+                           x <- randomRIO(1,100)
+                           l <- randomList (s-1)
+                           return (x:l)
+          
 
   mSum :: Integer -> [Module] -> Module
   mSum i = foldr (+) (tomod i 0)

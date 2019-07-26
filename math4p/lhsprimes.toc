@@ -6,9 +6,9 @@
 \contentsline {section}{\numberline {1.4}Factoring}{13}
 \contentsline {section}{\numberline {1.5}Factoring Factorials}{18}
 \contentsline {section}{\numberline {1.6}Arithmetic modulo a Prime}{20}
-\contentsline {section}{\numberline {1.7}Congruence}{32}
-\contentsline {section}{\numberline {1.8}Quadratic Residues}{38}
-\contentsline {section}{\numberline {1.9}Generators and Subgroups}{50}
-\contentsline {section}{\numberline {1.10}Primality Tests}{57}
-\contentsline {section}{\numberline {1.11}Primes in Cryptography}{66}
-\contentsline {section}{\numberline {1.12}Open Problems}{77}
+\contentsline {section}{\numberline {1.7}Congruence}{35}
+\contentsline {section}{\numberline {1.8}Quadratic Residues}{42}
+\contentsline {section}{\numberline {1.9}Generators and Subgroups}{54}
+\contentsline {section}{\numberline {1.10}Primality Tests}{61}
+\contentsline {section}{\numberline {1.11}Primes in Cryptography}{70}
+\contentsline {section}{\numberline {1.12}Open Problems}{80}

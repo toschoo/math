@@ -6,11 +6,11 @@ module Poly
 where
 
   import           Data.Function (on)
-  import           Data.List (nub,foldl',sortBy,groupBy,sortOn)
+  import           Data.List (nub,foldl',sortBy,groupBy,sortOn,intersect,(\\))
   import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Control.Concurrent
-  import           Control.Monad (when,void)
+  import           Control.Monad (when,void,filterM,forM_)
   import           Debug.Trace (trace)
   import           System.Random (randomRIO)
 
@@ -35,6 +35,12 @@ where
   -------------------------------------------------------------------------
   coeffs :: Poly a -> [a]
   coeffs (P as) = as
+
+  -------------------------------------------------------------------------
+  -- Leading coefficient
+  -------------------------------------------------------------------------
+  lc :: Poly a -> a
+  lc = last . coeffs
 
   -------------------------------------------------------------------------
   -- Print in math notation
@@ -79,6 +85,134 @@ where
   degree :: Poly a -> Int
   degree (P as) = length as - 1
 
+  rational :: Poly Integer -> Poly Rational
+  rational (P cs) = P [c%1 | c <- cs]
+
+  ---------------------------------------------------------------------------
+  -- Content of a polynomial
+  ---------------------------------------------------------------------------
+  content :: Poly Integer -> Integer
+  content (P cs) = if null r then 1 else maximum r
+    where ds = map pdivs $ filter (/= 0) cs
+          is :: [[Integer]] -> [Integer]
+          is [] = []
+          is [l] = l
+          is (a:cs) = a `intersect` (is cs)
+          r = is ds
+
+  ---------------------------------------------------------------------------
+  -- Primitive part of a polynomial
+  ---------------------------------------------------------------------------
+  primitive :: Poly Integer -> Poly Integer
+  primitive p@(P cs) = P (map (`div` c) cs)
+    where c = content p
+
+  ---------------------------------------------------------------------------
+  -- Height of a polynomial over the integers (Cantor)
+  ---------------------------------------------------------------------------
+  height :: Poly Integer -> Integer
+  height p@(P cs) = n-1+csum
+    where n = fromIntegral $ degree p
+          csum = sum (map abs cs)
+
+  ---------------------------------------------------------------------------
+  -- Generate monic polynomials over the integers (up to max coeff)
+  ---------------------------------------------------------------------------
+  polygen :: Int -> Integer -> [Poly Integer]
+  polygen n m | n < 2 = []
+              | otherwise = map poly $ go 2
+     where go i | i == n = coefgen i m
+                | otherwise = coefgen i m ++ go (i+1)
+
+  ---------------------------------------------------------------------------
+  -- Generate all coefficients up to m
+  ---------------------------------------------------------------------------
+  coefgen :: Int -> Integer -> [[Integer]]
+  coefgen i m = filter noconst $ 
+                       coefcountup m ((take (i-1) $ 
+                             repeat (-m)) ++ [1])
+    where noconst p = last p /= 0
+
+  ---------------------------------------------------------------------------
+  -- Count coefficients up to m
+  ---------------------------------------------------------------------------
+  coefcountup :: Integer -> [Integer] -> [[Integer]]
+  coefcountup m cs | cs == ms  = [cs]
+                   | otherwise = cs : (coefcountup m (coefinc m cs)) 
+    where ms = take (length cs) (repeat m)
+
+  ---------------------------------------------------------------------------
+  -- Count coefficients up to m
+  ---------------------------------------------------------------------------
+  coefcountdown :: Integer -> [Integer] -> [[Integer]]
+  coefcountdown m cs | cs == ms  = [cs]
+                     | otherwise = cs : (coefcountdown m (coefdec m cs)) 
+    where ms = take (length cs) (repeat m)
+
+  ---------------------------------------------------------------------------
+  -- Increment coefficients by 1
+  ---------------------------------------------------------------------------
+  coefinc :: Integer -> [Integer] -> [Integer]
+  coefinc m [] = []
+  coefinc m (c:cs) | c == m = 0:(coefinc m cs)
+                   | otherwise = (c+1):cs
+
+  ---------------------------------------------------------------------------
+  -- Decrement coefficients by 1
+  ---------------------------------------------------------------------------
+  coefdec :: Integer -> [Integer] -> [Integer]
+  coefdec m [] = []
+  coefdec m (c:cs) | c == m = 0:(coefdec m cs)
+                   | otherwise = (c-1):cs
+
+  ---------------------------------------------------------------------------
+  -- Filter irreducible polynomials (using kronecker)
+  ---------------------------------------------------------------------------
+  pirre :: [Poly Integer] -> [Poly Integer]
+  pirre ps = filter (null . kron) ps
+    where kron p = kronecker p (rs p)
+          rs p = map (apply p) (samples p)
+          samples p = [0..fromIntegral(degree p)]::[Integer]
+
+  ---------------------------------------------------------------------------
+  -- Filter irreducible polynomials (using cantor-zassenhaus)
+  ---------------------------------------------------------------------------
+  zirre :: [Poly Integer] -> IO [Poly Integer]
+  zirre = filterM irre
+
+  ---------------------------------------------------------------------------
+  -- check irreducible polynomials (using cantor-zassenhaus)
+  ---------------------------------------------------------------------------
+  irre :: Poly Integer -> IO Bool
+  irre q@(P cs) = do
+    let m = maximum (map abs cs)
+    let p = last (takeWhile (<4*m) P.allprimes)
+    f <- cantorzassenhaus p q
+    let ks = map (rational . snd) f
+    let r = rational q
+    let x = [k | k <- ks, snd (r `divp` k) == P [0]]
+    return (null x)
+
+  ---------------------------------------------------------------------------
+  -- Eisenstein
+  ---------------------------------------------------------------------------
+  eisen :: Poly Integer -> Bool
+  eisen p@(P cs) = go pp
+    where pp = take 100 P.allprimes
+          go [] = False
+          go (p:ps) | c1 p && c2 p && c3 p = True
+                    | otherwise            = go ps
+          c1 p = all (\x -> x%p == 0) $ init cs
+          c2 p = (last cs)%p /= 0
+          c3 p = (head cs)%(p^2) /= 0
+
+  ---------------------------------------------------------------------------
+  -- Sort by height
+  ---------------------------------------------------------------------------
+  hsort :: [Poly Integer] -> [Poly Integer]
+  hsort = sortBy h
+   where h a b = compare (height a) (height b)
+  
   -------------------------------------------------------------------------
   -- Addition
   -------------------------------------------------------------------------
@@ -119,8 +253,15 @@ where
   -- Generic Strichrechnung on lists of coefficients
   -------------------------------------------------------------------------
   strichlist :: (Num a, Eq a) => (a -> a -> a) -> [a] -> [a] -> [a]
-  strichlist o xs ys = cleanz (go xs ys)
-    where go [] bs         = bs
+  strichlist o xs ys =
+          let us | xd >= yd = xs
+                 | otherwise = xs ++ zeros (yd-xd)
+              vs | yd >= yd = ys 
+                 | otherwise = ys ++ zeros (xd-yd)
+           in cleanz (go us vs)
+    where xd               = length xs
+          yd               = length ys
+          go [] bs         = bs
           go as []         = as
           go (a:as) (b:bs) = a `o` b : go as bs
 
@@ -245,12 +386,159 @@ where
            | otherwise = let (_,r) = divp a b in gcdp b r
 
   -------------------------------------------------------------------------
+  -- XGCD
+  -------------------------------------------------------------------------
+  xgcdp :: (Show a, Num a, Eq a, Fractional a, Ord a) => 
+           Poly a -> Poly a -> 
+           (Poly a, (Poly a, Poly a))
+  xgcdp a b = go a b (P [1]) (P [0]) (P [0]) (P [1])
+    where go c d uc vc ud vd | zerop c    = (d, (ud, vd))
+                             | otherwise  = 
+                               let (q, r) = divp d c 
+                                in go r c  (sub ud (mul q uc))
+                                           (sub vd (mul q vc)) uc vc
+ 
+  -------------------------------------------------------------------------
   -- GCD (mod p)
   -------------------------------------------------------------------------
   gcdmp :: Integer -> Poly Integer -> Poly Integer -> Poly Integer
   gcdmp p a b | degree b > degree a = gcdmp p b a
               | zerop b = a
               | otherwise = let (_,r) = divmp p a b in gcdmp p b r
+
+  -------------------------------------------------------------------------
+  -- XGCD (mod p)
+  -------------------------------------------------------------------------
+  xgcdmp :: Integer -> Poly Integer -> Poly Integer -> 
+           (Poly Integer, (Poly Integer, Poly Integer))
+  xgcdmp p a b = go a b (P [1]) (P [0]) (P [0]) (P [1])
+    where go c d uc vc ud vd | zerop c    = (d, (ud, vd))
+                             | otherwise  = 
+                               let (q, r) = divmp p d c 
+                                in go r c
+                                   (subp p ud (mulmp p q uc))
+                                   (subp p vd (mulmp p q vc)) uc vc
+ 
+  -------------------------------------------------------------------------
+  -- GCD (mod p) over list
+  -------------------------------------------------------------------------
+  mgcdmp :: Integer -> [Poly Integer] -> Poly Integer
+  mgcdmp _ [] = P [1]
+  mgcdmp _ [a] = a
+  mgcdmp p (a:as) = foldl' (gcdmp p) a as
+
+  -------------------------------------------------------------------------
+  -- XGCD (mod p) over list
+  -------------------------------------------------------------------------
+  mxgcdmp :: Integer -> [Poly Integer] -> (Poly Integer, [Poly Integer])
+  mxgcdmp p [] = (P[0],[])
+  mxgcdmp p [x] = (x,[P[1]])
+  mxgcdmp p (a:as) = let (g, rs) = go [] a as
+                    in (g, reverse $ ks rs)
+    where go rs i [j] = let (g, (x,y)) = xgcdmp p i j
+                         in (g, [y,x] ++ rs)
+          go rs i is = let (g, (x,y)) = xgcdmp p i (head is)
+                        in go ([y,x]++rs) g (tail is)
+          ks = M.distr (mulmp p) (P[1])
+
+  tstmxgcdmp :: IO ()
+  tstmxgcdmp = do
+    p <- randomPrime 4
+    -- test empty list
+    when (mxgcdmp p [] /= (P[0],[])) $ fail "empty list failed"
+    a <- (monicp p) <$> randomPoly p 5
+
+    -- test singleton
+    when (mxgcdmp p [a] /= (a,[P[1]])) $ fail "singleton failed"
+    b <- (monicp p) <$> randomPoly p 4
+
+    -- test pair
+    let (g,[x,y]) = mxgcdmp p [a,b]
+    when (g /= gcdmp p a b) $ fail "gcd in tuple failed"
+    let r = addp p (mulmp p x a) (mulmp p y b)
+    when (r /= g) (do
+         putStrLn ("p " ++ show p ++ ": " ++ show a ++ ", " ++ show b ++ " -> " ++ show g ++ "(" ++ show x ++ ", " ++ show y ++ ")")
+         putStrLn ("g: " ++ show g ++ " | " ++ show r)
+         fail "formula in tuple failed")
+
+    -- hundred times!
+    forM_ [1..100] (\i -> do
+      putStrLn ("running Test " ++ show i)
+      s <- randomRIO(3,100) -- size
+      l <- randomList p s
+      let (g, rs) = mxgcdmp p l
+      when (monicp p (mgcdmp p l) /= monicp p g) $ fail "gcd in list failed"
+      let t = modp p $ sump [mulmp p x a | (x,a) <- zip rs l]
+      when (t /= g) $ fail "formula in tuple failed")
+
+    putStrLn "PASSED!"
+
+    where randomList :: Integer -> Integer -> IO [Poly Integer]
+          randomList p s | s == 0 = return []
+                         | otherwise = do
+                           d <- randomRIO (5,10)
+                           x <- (monicp p) <$> randomPoly p d
+                           l <- randomList p (s-1)
+                           return (x:l)
+
+  -------------------------------------------------------------------------
+  -- Pseudo-remainder
+  -------------------------------------------------------------------------
+  prem :: Poly Integer -> Poly Integer -> Poly Integer
+  prem a b = poly $ map numerator (coeffs $ snd (divp x y))
+    where l = lc b
+          k = l^(da-db+1)
+          da = fromIntegral $ degree a
+          db = fromIntegral $ degree b
+          a' = scale k a
+          x  = P (map (%1) $ coeffs a')
+          y  = P (map (%1) $ coeffs b)
+
+  -------------------------------------------------------------------------
+  -- Pseudo-remainder sequence (general)
+  -------------------------------------------------------------------------
+  pgcd :: (Poly Integer -> Integer) ->
+          Poly Integer -> Poly Integer -> [Poly Integer]
+  pgcd alpha p q | zerop q = [p]
+                 | otherwise = 
+                   let r = prem p q
+                       a = alpha r
+                       t = scale (1%a) (P (map (%1) $ coeffs r))
+                       x = P (map numerator $ coeffs t)
+                    in if zerop x then [] else x : pgcd alpha q x
+
+  -------------------------------------------------------------------------
+  -- Trivial Pseudo-remainder sequence
+  -------------------------------------------------------------------------
+  tpgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
+  tpgcd = pgcd one
+    where one _ = 1
+
+  -------------------------------------------------------------------------
+  -- Primitive Pseudo-remainder sequence
+  -------------------------------------------------------------------------
+  ppgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
+  ppgcd = pgcd one
+    where one p = content p
+
+  -------------------------------------------------------------------------
+  -- Subresultant Pseudo-remainder sequence
+  -------------------------------------------------------------------------
+  spgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
+  spgcd a b = go ((-1)^(d+1)) (-1) a b
+    where d = fromIntegral ((degree a) - (degree b))
+          go b y q r | zerop r = []
+                     | otherwise = 
+                          let r' = prem q r
+                              t  = scale (1%b) (P (map (%1) $ coeffs r'))
+                              x  = P (map numerator $ coeffs t)
+                              b' =  (-l)*(y'^d')
+                              y' = div ((-l')^d) (y^(d-1))
+                              l  = lc r
+                              l' = lc x
+                              d' = fromIntegral ((degree r) - (degree x))
+                           in if zerop x then [] else x : go b' y' r x
+            where d = fromIntegral ((degree q) - (degree r))
  
   -------------------------------------------------------------------------
   -- Null
@@ -262,10 +550,17 @@ where
   -------------------------------------------------------------------------
   -- unity
   -------------------------------------------------------------------------
-  unityp :: Integer -> Poly Integer -> Bool
-  unityp _ (P [1]) = True
-  unityp p (P [x]) = x `mmod` p `elem` [1,p-1]
-  unityp _ _       = False      
+  unityp :: Poly Integer -> Bool
+  unityp (P [1]) = True
+  unityp _       = False
+
+  -------------------------------------------------------------------------
+  -- unity (finite field)
+  -------------------------------------------------------------------------
+  unitymp :: Integer -> Poly Integer -> Bool
+  unitymp _ (P [1]) = True
+  unitymp p (P [x]) = x `mmod` p `elem` [1,p-1]
+  unitymp _ _       = False      
 
   -------------------------------------------------------------------------
   -- Derivatives (generic)
@@ -314,8 +609,8 @@ where
   -- Factoring: Kronecker
   -- receives the polynomial to be factored
   -- a list of integers which are results of applying the polynomial
-  -- (the length of the list determines the degree of the factor,
-  --  where degree = length - 1)
+  -- where the length of the list determines the degree of the factor,
+  --  where degree = length - 1
   -------------------------------------------------------------------------
   kronecker :: Poly Integer -> [Integer] -> [Poly Rational]
   kronecker (P cs) is = nub [a | a <- as, snd (r `divp` a) == P [0]]
@@ -327,7 +622,11 @@ where
   divs :: Integer -> [Integer]
   divs i | i < 0     = divs (-i) 
          | otherwise = ds ++ map negate ds
-    where ds = [d | d <- [1..i], rem i d == 0] 
+    where ds = pdivs i
+
+  pdivs :: Integer -> [Integer]
+  pdivs i | i < 0 = map negate $ pdivs (-i)
+          | otherwise = [d | d <- [1..i], rem i d == 0] 
 
   -------------------------------------------------------------------------
   -- Irreducible mod p
@@ -599,6 +898,15 @@ where
            | otherwise         = n `rem` p
 
   -------------------------------------------------------------------------
+  -- remove divisors
+  -------------------------------------------------------------------------
+  rmdivs :: Integer -> Poly Integer -> Poly Integer
+  rmdivs p (P as) = P (cleanz [div20 a | a <- as])
+    where ds = divs p \\ [1,-1,p,-p,p-1]
+          div20 k | k `elem` ds = 0
+                  | otherwise   = k 
+
+  -------------------------------------------------------------------------
   -- Make polynomial mod p
   -------------------------------------------------------------------------
   modp :: Integer -> Poly Integer -> Poly Integer
@@ -779,6 +1087,51 @@ where
           a  = (apply u' r) `M.inverse` p'
           s  = r - (apply u r) * a 
           p' = p^x
+
+  -------------------------------------------------------------------------
+  -- Bound for Hensel lifting
+  -------------------------------------------------------------------------
+  hbound :: (Num a) => Poly a -> a
+  hbound p@(P cs) = 2^d * h * b
+    where h = sum (map abs $ tail cs)
+          d = degree p
+          b = abs (last cs)
+
+  -------------------------------------------------------------------------
+  -- compute prime power > 2*m0
+  -------------------------------------------------------------------------
+  pbound :: (Num a, Integral a) => a -> a -> a
+  pbound p b = go p 1
+    where go q k | q > b = q
+                 | otherwise = let k' = k+1 in go (q^k')  k'
+
+  -------------------------------------------------------------------------
+  -- compute wang bound
+  -------------------------------------------------------------------------
+  wbound :: (Num a, Integral a) => a -> a -> a -> a
+  wbound p b r = ceiling (m**(1/q))
+     where m = fromIntegral (pbound p b)
+           q = fromIntegral r
+
+  -------------------------------------------------------------------------
+  -- to compute sum (a_i * w_i) = 1 (mod n):
+  -- doubt: the result is a constant polynomial, but not necessarily P [1]
+  -------------------------------------------------------------------------
+  testas :: Integer -> Poly Integer -> IO ()
+  testas p f = do
+    fs <- cantorzassenhaus p f
+    putStrLn ("factors (mod p): " ++ (show fs))
+    let ws = weights [] (map snd fs)
+    putStrLn ("ws: " ++ (show ws))
+    let (g,as) = mxgcdmp p ws
+    putStrLn ("g | as: " ++ show g ++ " | " ++ show as)
+    let wa =  [mulmp p a w | (a,w) <- zip as ws]
+    putStrLn ("wa: " ++ show wa)
+    let r =  modp p (sump wa)
+    putStrLn ("result: " ++ show r)
+    where weights _  [] = []
+          weights l1 l2 = prodp (mulmp p) (l1 ++ (tail l2)) :
+                          (weights ((head l2):l1) (tail l2))
 
   -------------------------------------------------------------------------
   -- Numerical root finding

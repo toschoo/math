@@ -509,6 +509,18 @@ where
   follow b s e | e /= 0 && s >= e = []
                | otherwise        = s : follow b (s+b) e
 
+  ------------------------------------------------------------------------
+  -- Avenues (Spencer-Brown)
+  ------------------------------------------------------------------------
+  nlogn :: Integer -> Double
+  nlogn n = x/(log x)
+    where x = fromIntegral n
+
+  betweenSquares :: Integer -> (Double, Double)
+  betweenSquares n = (a-(b-1),a+(b-1))
+     where a = nlogn n
+           b = a/(log a)
+
   -------------------------------------------------------------------------
   -- computing
   -------------------------------------------------------------------------

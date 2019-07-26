@@ -748,6 +748,9 @@ subtraction. Here is a valid implementation:
 \column{30}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{30E}{@{}l@{}}%
 \column{33}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{34E}{@{}l@{}}%
+\column{37}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{add}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
@@ -762,12 +765,36 @@ subtraction. Here is a valid implementation:
 \>[3]{}\Varid{strich}\;\Varid{o}\;(\Conid{P}\;\Varid{x})\;(\Conid{P}\;\Varid{y}){}\<[25]%
 \>[25]{}\mathrel{=}\Conid{P}\;(\Varid{strichlist}\;\Varid{o}\;\Varid{x}\;\Varid{y}){}\<[E]%
 \\[\blanklineskip]%
+\>[3]{}\Varid{zeros}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\;(\Varid{repeat}\;\mathrm{0}){}\<[E]%
+\\[\blanklineskip]%
 \>[3]{}\Varid{strichlist}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Eq}\;\Varid{a})\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
-\>[3]{}\Varid{strichlist}\;\Varid{o}\;\Varid{xs}\;\Varid{ys}\mathrel{=}\Varid{cleanz}\;(\Varid{go}\;\Varid{xs}\;\Varid{ys}){}\<[E]%
+\>[3]{}\Varid{strichlist}\;\Varid{o}\;\Varid{xs}\;\Varid{ys}\mathrel{=}{}\<[25]%
+\>[25]{}\mathbf{let}\;{}\<[30]%
+\>[30]{}\Varid{us}{}\<[30E]%
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{xd}\geq \Varid{yd}\mathrel{=}\Varid{xs}{}\<[E]%
+\\
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{otherwise}\mathrel{=}\Varid{xs}\plus \Varid{zeros}\;(\Varid{yd}\mathbin{-}\Varid{xd}){}\<[E]%
+\\
+\>[30]{}\Varid{vs}{}\<[30E]%
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{yd}\geq \Varid{yd}\mathrel{=}\Varid{ys}{}\<[E]%
+\\
+\>[34]{}\mid {}\<[34E]%
+\>[37]{}\Varid{otherwise}\mathrel{=}\Varid{ys}\plus \Varid{zeros}\;(\Varid{xd}\mathbin{-}\Varid{yd}){}\<[E]%
+\\
+\>[25]{}\mathbf{in}\;\Varid{cleanz}\;(\Varid{go}\;\Varid{us}\;\Varid{vs}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{xd}\mathrel{=}\Varid{length}\;\Varid{xs}{}\<[E]%
+\\
+\>[12]{}\Varid{yd}\mathrel{=}\Varid{length}\;\Varid{ys}{}\<[E]%
+\\
 \>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{bs}{}\<[30]%
 \>[30]{}\mathrel{=}{}\<[30E]%
 \>[33]{}\Varid{bs}{}\<[E]%
@@ -783,6 +810,16 @@ subtraction. Here is a valid implementation:
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
 \end{minipage}
+
+A bit tricky might be the use of \ensuremath{\Varid{zeros}}.
+The function generates a sequence of zeros of size \ensuremath{\Varid{i}}.
+We use it to add 0 coefficients at the end of
+the shorter coefficient list (if any). For addition
+this is not relevant (because we would just add
+the coefficients of the longer one to the end of the list).
+For subtraction, however, it is relevant, since we
+need to compute the additive inverse of the extra
+coefficients in the longer list. \ensuremath{\Varid{zeros}} does the trick.
 
 Based on addition, we can also implement \ensuremath{\Varid{sum}}
 for polynomials:
@@ -856,10 +893,6 @@ a monomial over a polynomial:
 \>[3]{}\Varid{mul1}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow (\Varid{a}\to \Varid{a}\to \Varid{a})\to \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{mul1}\;\Varid{o}\;\Varid{i}\;\Varid{cs}\;\Varid{x}\mathrel{=}\Varid{zeros}\;\Varid{i}\plus [\mskip1.5mu \Varid{c}\mathbin{`\Varid{o}`}\Varid{x}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
-\\[\blanklineskip]%
-\>[3]{}\Varid{zeros}\mathbin{::}\Conid{Num}\;\Varid{a}\Rightarrow \Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
-\\
-\>[3]{}\Varid{zeros}\;\Varid{i}\mathrel{=}\Varid{take}\;\Varid{i}\;(\Varid{repeat}\;\mathrm{0}){}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -1503,7 +1536,7 @@ The first function takes an integer modulo $n$:
 \column{35E}{@{}l@{}}%
 \column{38}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{mmod}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{mmod}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{mmod}\;\Varid{n}\;\Varid{p}{}\<[13]%
 \>[13]{}\mid {}\<[13E]%
@@ -1533,7 +1566,7 @@ Equipped with this function, we can easily implement multiplication:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{modmul}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{modmul}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{modmul}\;\Varid{p}\;\Varid{f1}\;\Varid{f2}\mathrel{=}(\Varid{f1}\mathbin{*}\Varid{f2})\mathbin{`\Varid{mmod}`}\Varid{p}{}\<[E]%
 \ColumnHook
@@ -1551,7 +1584,7 @@ For division, we reuse the \ensuremath{\Varid{inverse}} function:
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{41}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{modiv}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}\to \Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{modiv}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}\to \Varid{a}\to \Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{modiv}\;\Varid{p}\;\Varid{n}\;\Varid{d}\mathrel{=}\Varid{modmul}\;\Varid{p}\;\Varid{n}\;\Varid{d'}{}\<[E]%
 \\
@@ -1574,7 +1607,7 @@ that transforms a polynomial into one modulo $n$:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{pmod}\mathbin{::}\Conid{Poly}\;\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{pmod}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{pmod}\;(\Conid{P}\;\Varid{cs})\;\Varid{p}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{c}\mathbin{`\Varid{mmod}`}\Varid{p}\mid \Varid{c}\leftarrow \Varid{cs}\mskip1.5mu]{}\<[E]%
 \ColumnHook
@@ -1630,11 +1663,11 @@ to convert to modular arithmetic:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{addmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{addmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{addmp}\;\Varid{n}\;\Varid{p1}\;\Varid{p2}\mathrel{=}\Varid{strich}\;(\mathbin{+})\;\Varid{p1}\;\Varid{p2}\mathbin{`\Varid{pmod}`}\Varid{n}{}\<[E]%
 \\
-\>[3]{}\Varid{submp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{submp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{submp}\;\Varid{n}\;\Varid{p1}\;\Varid{p2}\mathrel{=}\Varid{strich}\;(\mathbin{-})\;\Varid{p1}\;\Varid{p2}\mathbin{`\Varid{pmod}`}\Varid{n}{}\<[E]%
 \ColumnHook
@@ -1657,11 +1690,13 @@ Multiplication:
 \column{18E}{@{}l@{}}%
 \column{19}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{32}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{32E}{@{}l@{}}%
 \column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{mulmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{mulmp}\mathbin{::}(\Conid{Integral}\;\Varid{a}){}\<[26]%
+\>[26]{}\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{mulmp}\;\Varid{p}\;\Varid{p1}\;\Varid{p2}{}\<[18]%
 \>[18]{}\mid {}\<[18E]%
@@ -1703,8 +1738,10 @@ and product:
 \begin{pboxed}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{mulmlist}\mathbin{::}\Conid{Zahl}\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]\to [\mskip1.5mu \Conid{Zahl}\mskip1.5mu]{}\<[E]%
+\>[3]{}\Varid{mulmp}\mathbin{::}(\Conid{Integral}\;\Varid{a}){}\<[26]%
+\>[26]{}\Rightarrow \Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{mulmlist}\;\Varid{p}\;\Varid{c1}\;\Varid{c2}\mathrel{=}\Varid{coeffs}\mathbin{\$}\Varid{mulmp}\;\Varid{p}\;(\Conid{P}\;\Varid{c1})\;(\Conid{P}\;\Varid{c2}){}\<[E]%
 \ColumnHook
@@ -1751,7 +1788,7 @@ Division:
 \column{35}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{43}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{divmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to (\Conid{Poly}\;\Conid{Zahl},\Conid{Poly}\;\Conid{Zahl}){}\<[E]%
+\>[3]{}\Varid{divmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to (\Conid{Poly}\;\Varid{a},\Conid{Poly}\;\Varid{a}){}\<[E]%
 \\
 \>[3]{}\Varid{divmp}\;\Varid{p}\;(\Conid{P}\;\Varid{as})\;(\Conid{P}\;\Varid{bs})\mathrel{=}\mathbf{let}\;(\Varid{q},\Varid{r})\mathrel{=}\Varid{go}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu]\;\Varid{as}\;\mathbf{in}\;(\Conid{P}\;\Varid{q},\Conid{P}\;\Varid{r}){}\<[E]%
 \\
@@ -1813,7 +1850,7 @@ Here is the \acronym{gcd}:
 \column{16E}{@{}l@{}}%
 \column{19}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{gcdmp}\mathbin{::}\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{gcdmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{gcdmp}\;\Varid{p}\;\Varid{a}\;\Varid{b}{}\<[16]%
 \>[16]{}\mid {}\<[16E]%
@@ -1843,7 +1880,119 @@ Now, we compute the \acronym{gcd} with \ensuremath{\Conid{P}\;[\mskip1.5mu \math
 
 The result is \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{1}\mskip1.5mu]}, as expected.
 
-Finally, power:
+The \acronym{gcd} is a very useful concept
+with modular arithmetic. Therefore, we should
+also implement the variants,
+\ensuremath{\Varid{mgcd}} ($\gcd$ on a list),
+\ensuremath{\Varid{xgcd}} (the extended Euclidean algorithm) and
+\ensuremath{\Varid{mxgcd}} (the \ensuremath{\Varid{xgcd}} on a list).
+
+As we have already seen in the chapter on arithmetic modulo a prime,
+we can just fold the argument list with $\gcd$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mgcdmp}\mathbin{::}(\Conid{Integer}\;\Varid{a})\Rightarrow \Varid{a}\to [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{mgcdmp}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{mgcdmp}\;\anonymous \;[\mskip1.5mu \Varid{a}\mskip1.5mu]\mathrel{=}\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{mgcdmp}\;\Varid{p}\;(\Varid{a}\mathbin{:}\Varid{as})\mathrel{=}\Varid{foldl'}\;(\Varid{gcdmp}\;\Varid{p})\;\Varid{a}\;\Varid{as}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here is the modular extended Euclidean algorithm for polynomials: 
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{34}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{44}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{55}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{xgcdmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to {}\<[55]%
+\>[55]{}(\Conid{Poly}\;\Varid{a},(\Conid{Poly}\;\Varid{a},\Conid{Poly}\;\Varid{a})){}\<[E]%
+\\
+\>[3]{}\Varid{xgcdmp}\;\Varid{p}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{go}\;\Varid{a}\;\Varid{b}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{0}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{c}\;\Varid{d}\;\Varid{uc}\;\Varid{vc}\;\Varid{ud}\;\Varid{vd}{}\<[31]%
+\>[31]{}\mid \Varid{zerop}\;\Varid{c}{}\<[44]%
+\>[44]{}\mathrel{=}(\Varid{d},(\Varid{ud},\Varid{vd})){}\<[E]%
+\\
+\>[31]{}\mid \Varid{otherwise}{}\<[44]%
+\>[44]{}\mathrel{=}{}\<[E]%
+\\
+\>[31]{}\hsindent{3}{}\<[34]%
+\>[34]{}\mathbf{let}\;(\Varid{q},\Varid{r})\mathrel{=}\Varid{divmp}\;\Varid{p}\;\Varid{d}\;\Varid{c}{}\<[E]%
+\\
+\>[31]{}\hsindent{3}{}\<[34]%
+\>[34]{}\mathbf{in}\;\Varid{go}\;\Varid{r}\;\Varid{c}\;{}\<[45]%
+\>[45]{}(\Varid{subp}\;\Varid{p}\;\Varid{ud}\;(\Varid{mulmp}\;\Varid{p}\;\Varid{q}\;\Varid{uc}))\;{}\<[E]%
+\\
+\>[45]{}(\Varid{subp}\;\Varid{p}\;\Varid{vd}\;(\Varid{mulmp}\;\Varid{p}\;\Varid{q}\;\Varid{vc}))\;\Varid{uc}\;\Varid{vc}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+And its variant for lists:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mxgcdmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]\to (\Conid{Poly}\;\Varid{a},[\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\Varid{mxgcdmp}\;\Varid{p}\;[\mskip1.5mu \mskip1.5mu]{}\<[21]%
+\>[21]{}\mathrel{=}(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu],[\mskip1.5mu \mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\Varid{mxgcdmp}\;\Varid{p}\;[\mskip1.5mu \Varid{x}\mskip1.5mu]{}\<[21]%
+\>[21]{}\mathrel{=}(\Varid{x},[\mskip1.5mu \Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]\mskip1.5mu]){}\<[E]%
+\\
+\>[3]{}\Varid{mxgcdmp}\;\Varid{p}\;(\Varid{a}\mathbin{:}\Varid{as}){}\<[21]%
+\>[21]{}\mathrel{=}{}\<[24]%
+\>[24]{}\mathbf{let}\;(\Varid{g},\Varid{rs})\mathrel{=}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]\;\Varid{a}\;\Varid{as}\;\mathbf{in}\;(\Varid{g},\Varid{reverse}\mathbin{\$}\Varid{ks}\;\Varid{rs}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\Varid{rs}\;\Varid{i}\;[\mskip1.5mu \Varid{j}\mskip1.5mu]\mathrel{=}{}\<[27]%
+\>[27]{}\mathbf{let}\;(\Varid{g},(\Varid{x},\Varid{y}))\mathrel{=}\Varid{xgcdmp}\;\Varid{p}\;\Varid{i}\;\Varid{j}{}\<[E]%
+\\
+\>[27]{}\mathbf{in}\;(\Varid{g},[\mskip1.5mu \Varid{y},\Varid{x}\mskip1.5mu]\plus \Varid{rs}){}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{rs}\;\Varid{i}\;\Varid{is}{}\<[24]%
+\>[24]{}\mathrel{=}{}\<[27]%
+\>[27]{}\mathbf{let}\;(\Varid{g},(\Varid{x},\Varid{y}))\mathrel{=}\Varid{xgcdmp}\;\Varid{p}\;\Varid{i}\;(\Varid{head}\;\Varid{is}){}\<[E]%
+\\
+\>[27]{}\mathbf{in}\;\Varid{go}\;([\mskip1.5mu \Varid{y},\Varid{x}\mskip1.5mu]\plus \Varid{rs})\;\Varid{g}\;(\Varid{tail}\;\Varid{is}){}\<[E]%
+\\
+\>[12]{}\Varid{ks}\mathrel{=}\Varid{\Conid{M}.distr}\;(\Varid{mulmp}\;\Varid{p})\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu]){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Finally, we implement power:
 
 \begin{minipage}{\textwidth}
 \begingroup\par\noindent\advance\leftskip\mathindent\(
@@ -1858,7 +2007,7 @@ Finally, power:
 \column{38}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{58}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{powmp}\mathbin{::}\Conid{Zahl}\to \Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}\to \Conid{Poly}\;\Conid{Zahl}{}\<[E]%
+\>[3]{}\Varid{powmp}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Varid{a}\to \Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
 \\
 \>[3]{}\Varid{powmp}\;\Varid{p}\;\Varid{f}\;\Varid{poly}\mathrel{=}\Varid{go}\;\Varid{f}\;(\Conid{P}\;[\mskip1.5mu \mathrm{1}\mskip1.5mu])\;\Varid{poly}{}\<[E]%
 \\
@@ -6534,6 +6683,7 @@ Let us here assume that we already knew such a method.
 We could then call it to factor a given polynomial
 in a finite field and then reinterpret the result
 in the domain we started with.
+\section{Practical Factoring Techniques}
 \section{Factoring Polynomials in a finite Field}
 \ignore{
 \begingroup\par\noindent\advance\leftskip\mathindent\(

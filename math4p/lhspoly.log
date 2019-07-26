@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.27)  26 MAR 2018 13:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.14)  26 JUL 2019 17:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1374,12 +1374,13 @@ Class scrreprt Warning: Usage of deprecated font command `\tt'!
 
 \openout3 = `lhspoly.ptb'.
 
-\openout3 = `lhspoly.ptb'.
-
-\openout3 = `lhspoly.ptb'.
-
  [9]
-Overfull \hbox (7.66925pt too wide) in paragraph at lines 916--920
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [10]
+Overfull \hbox (7.66925pt too wide) in paragraph at lines 949--953
 []\OT1/cmr/m/n/10.95 What would we get ap-ply-ing this for-mula on the poly-no-
 mi-als, say, $[ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 
 ; \OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 4 ]$ and $[ 5\OM
@@ -1387,15 +1388,14 @@ L/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 6\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95
  7\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 8 ]$?
  []
 
-[10]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [11] [12]
+[11] [12] [13]
 \openout3 = `lhspoly.ptb'.
 
- [13] [14]
+ [14]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
@@ -1425,29 +1425,38 @@ L/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 6\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95
 
 \openout3 = `lhspoly.ptb'.
 
-\openout3 = `lhspoly.ptb'.
-
- [18] [19]
-\openout3 = `lhspoly.ptb'.
-
-\openout3 = `lhspoly.ptb'.
-
- [20] [21]
+ [18]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [22]
-\openout3 = `lhspoly.ptb'.
-
- [23] [24]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
+ [19]
+\openout3 = `lhspoly.ptb'.
 
-[25]
-Overfull \hbox (16.63568pt too wide) in paragraph at lines 2532--2536
+ [20]
+\openout3 = `lhspoly.ptb'.
+
+ [21] [22]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [23]
+\openout3 = `lhspoly.ptb'.
+
+ [24]
+\openout3 = `lhspoly.ptb'.
+
+ [25]
+\openout3 = `lhspoly.ptb'.
+
+
+[26]
+Overfull \hbox (16.63568pt too wide) in paragraph at lines 2681--2685
 []\OT1/cmr/m/n/10.95 For the se-quence of the un-known poly-no-mial, we ob-tain
  $\OT1/cmr/m/it/10.95 M \OT1/cmr/m/n/10.95 [ [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/
 m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1
@@ -1461,20 +1470,17 @@ n/10.95 [ 1\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; \OT1
 
 \openout3 = `lhspoly.ptb'.
 
-[26] [27]
+[27] [28]
 \openout3 = `lhspoly.ptb'.
 
- [28]
-Overfull \hbox (10.00795pt too wide) in paragraph at lines 2744--2747
+ [29]
+Overfull \hbox (10.00795pt too wide) in paragraph at lines 2893--2896
 []\OT1/cmr/m/n/10.95 What about the sec-ond deriva-tive? We de-fine $[] [] [] [
 ] []$ and get $\OT1/cmr/m/it/10.95 P \OT1/cmr/m/n/10.95 [ []\OML/cmm/m/it/10.95
  ; []; [] \OT1/cmr/m/n/10.95 ]$.
  []
 
-[29] [30]
-\openout3 = `lhspoly.ptb'.
-
- [31]
+[30] [31]
 \openout3 = `lhspoly.ptb'.
 
  [32]
@@ -1483,148 +1489,151 @@ Overfull \hbox (10.00795pt too wide) in paragraph at lines 2744--2747
  [33]
 \openout3 = `lhspoly.ptb'.
 
-\openout3 = `lhspoly.ptb'.
-
-\openout3 = `lhspoly.ptb'.
-
-\openout3 = `lhspoly.ptb'.
-
  [34]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
 \openout3 = `lhspoly.ptb'.
 
  [35]
 \openout3 = `lhspoly.ptb'.
 
  [36]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3503
+\openout3 = `lhspoly.ptb'.
+
+ [37]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3652
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3503.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3652.
 
- [37] [38]
+ [38] [39]
 \openout3 = `lhspoly.ptb'.
 
- [39]
+ [40]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
 
-[40] [41]
+[41] [42]
 \openout3 = `lhspoly.ptb'.
 
- [42] [43] [44] [45]
-Overfull \hbox (2.0886pt too wide) detected at line 4202
+ [43] [44] [45] [46]
+Overfull \hbox (2.0886pt too wide) detected at line 4351
 [] [] \OT1/cmr/m/n/10.95 + [] [] + [] + [] []
  []
 
-[46]
+[47]
 \openout3 = `lhspoly.ptb'.
 
- [47]
+ [48]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [48] [49]
-Overfull \hbox (47.26964pt too wide) in paragraph at lines 4568--4577
+ [49] [50]
+Overfull \hbox (47.26964pt too wide) in paragraph at lines 4717--4726
 [][] 
  []
 
-[50] [51] [52] [53]
+[51] [52] [53] [54]
 \openout3 = `lhspoly.ptb'.
 
- [54]
-Underfull \hbox (badness 10000) in paragraph at lines 4901--4905
+ [55]
+Underfull \hbox (badness 10000) in paragraph at lines 5050--5054
 
  []
 
-[55]
+[56]
 \openout3 = `lhspoly.ptb'.
 
- [56]
+ [57]
 \openout3 = `lhspoly.ptb'.
 
- [57] [58]
+ [58] [59]
 \openout3 = `lhspoly.ptb'.
 
- [59] [60]
+ [60] [61]
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
 )
 \openout3 = `lhspoly.ptb'.
 
- [61]
-\openout3 = `lhspoly.ptb'.
-
-\openout3 = `lhspoly.ptb'.
-
  [62]
 \openout3 = `lhspoly.ptb'.
 
+\openout3 = `lhspoly.ptb'.
+
  [63]
-[64] [65] [66] [67]
+\openout3 = `lhspoly.ptb'.
+
+ [64]
+[65] [66] [67] [68]
 \openout3 = `lhspoly.ptb'.
 
 
-Overfull \hbox (6.7068pt too wide) in paragraph at lines 6100--6103
+Overfull \hbox (6.7068pt too wide) in paragraph at lines 6249--6252
 []\OT1/cmr/m/n/10.95 A sim-pler ex-am-ple that shows the signed-ness of roots a
 nd co-ef-fi-cients is $\OML/cmm/m/it/10.95 x[] \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr
 /m/n/10.95 1$. $[] [ 1\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 1 ]$
  []
 
-[68] [69] [70]
+[69] [70] [71]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [71]
+ [72]
 \openout3 = `lhspoly.ptb'.
 
- [72] [73] [74] [75]
+ [73] [74] [75] [76]
 \openout3 = `lhspoly.ptb'.
 
- [76]
-Underfull \hbox (badness 10000) in paragraph at lines 6831--6832
+ [77]
+Underfull \hbox (badness 10000) in paragraph at lines 6981--6982
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6851--6852
+Underfull \hbox (badness 10000) in paragraph at lines 7001--7002
 
  []
 
-\openout3 = `lhspoly.ptb'.
-
-[77]
-\openout3 = `lhspoly.ptb'.
-
- [78] [79] [80]
-\openout3 = `lhspoly.ptb'.
-
- [81]
-\openout3 = `lhspoly.ptb'.
-
- [82] [83] [84] [85]
-\openout3 = `lhspoly.ptb'.
-
- [86]
+[78]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [87] [88] (./lhspoly.aux) ) 
+ [79] [80] [81]
+\openout3 = `lhspoly.ptb'.
+
+ [82]
+\openout3 = `lhspoly.ptb'.
+
+ [83] [84] [85] [86]
+\openout3 = `lhspoly.ptb'.
+
+ [87]
+\openout3 = `lhspoly.ptb'.
+
+\openout3 = `lhspoly.ptb'.
+
+ [88] [89] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
- 35682 strings out of 493029
- 851016 string characters out of 6136234
- 1031063 words of memory out of 5000000
- 38703 multiletter control sequences out of 15000+600000
+ 35692 strings out of 493029
+ 851160 string characters out of 6136233
+ 1032063 words of memory out of 5000000
+ 38713 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,14n,99p,10373b,649s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1645,10 +1654,10 @@ ts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm10.pfb>
-Output written on lhspoly.pdf (88 pages, 419130 bytes).
+Output written on lhspoly.pdf (89 pages, 422872 bytes).
 PDF statistics:
- 360 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
+ 363 PDF objects out of 1000 (max. 8388607)
+ 252 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -34,7 +34,7 @@ $5  \bmod 12$ is 5,
 $10 \bmod 12$ is 10 and
 $13 \bmod 12$ is again 1,
 $17 \bmod 12$ is 5 and
-$22 \bmod 12$ is just 10 again.
+$22 \bmod 12$ is 10.
 In other words, 
 the numbers modulo a number $n$
 form a finite groupoid (or magma) 
@@ -69,6 +69,7 @@ or:
 $13 \bmod 12 \times 15 \bmod 12 = 1 \times 3 = 3$\\
 $15 \bmod 12 \times 17 \bmod 12 = 3 \times 5 = 15 \bmod 12 = 3.$
 
+\ignore{
 A short note on terminology may be in order here.
 You may have realised that two different
 operators for the modulo are used:
@@ -83,6 +84,7 @@ where the whole operation is taken modulo $n$.
 Since the distinction between ``$\bmod$'' and ``$\mod$'' is quite subtle,
 we will use the convention that, if not obvious from the context
 or indicated otherwise, we usually take operations modulo $n$.
+}
 
 Modular arithmetic looks a bit weired at the beginning,
 for instance $13 + 15 = 4$ definitely looks wrong.
@@ -111,16 +113,16 @@ $\dots$
 It holds of course that for any $a$ divisible by 12:
 
 \[
-a + b \mod n = b 
+a + b \mod 12 = b 
 \]
 
 and
 
 \[
-(a + 1) \times b \mod n = b. 
+(a + 1) \times b \mod 12 = b. 
 \]
 
-Of course, also the distributive law holds:
+The distributive law holds as well:
 
 \[
  a \times (b + c) \mod n = ab + ac \mod n.  
@@ -233,7 +235,7 @@ since $n \bmod{n}$ is just 0.
 We can therefore, when we have a negative number
 in the range $-(n-1)\dots 0$, just add $n$ to the result:
 $a - b = -(b - a) + n = n - (b - a)$.
-For instance for $n = 13$: $3 - 9 + 12 = -6 + 12 = 6$.
+For instance with $n = 12$: $3 - 9 + 12 = -6 + 12 = 6$.
 Note that subtraction handled like this 
 is the inverse of addition:
 $3 - 9 = 6 \mod 12$ and $6 + 9 = 3 \mod 12$.
@@ -241,10 +243,8 @@ The point is that addition modulo $n$ with two numbers already modulo $n$
 is at most $2n - 2$. The remainder of any number
 up to $2n - 2$ is just this number minus $n$: $6 + 9 = 15 - 12 = 3$.
 For subtraction, a similar is true:
-the smallest value, subtraction can produce is $n-1$
+the smallest value, subtraction can produce is $-(n-1)$
 (in the case of $0 - 11$, for instance).
-The inverse of this operation for negative numbers is then just
-adding $n$ instead of subtracting it.
 
 We, hence, can implement subtraction as:
 
@@ -304,8 +304,8 @@ for instance: $2 \bmod 3 = 2$.
 This appears to be a reasonable default value.
 
 Division, as usual, is not so easy.
-We would like to define division in a way
-that it serves as inverse of multiplication,
+We would like to define division such
+that it serves as the inverse of multiplication,
 \eg\: $a \times b / a = b$. That means
 that for any number $a$, we want a number $a'$, such that
 $a \times a' = 1$. 
@@ -321,8 +321,8 @@ $3 \times 5 = 3 \mod 6$.
 This looks strange: any multiplication of 3 modulo 6
 creates either 0 or 3, but not 1,2,4 or 5.
 The point is that 3 divides 6, in particular $2 \times 3 = 6$.
-For this reason, 6 divides every second product of 3 
-greater than 3, \ie\ $6, 12, 18, 24, \dots$
+For this reason, 6 divides every second product of 3,
+\ie\ $0, 6, 12, 18, 24, \dots$
 The other half of multiples are just those
 that leave a remainder of 3 divided by 6.
 
@@ -341,7 +341,7 @@ $6 \times 8 = 3 \mod 9$.
 
 We see more variety, but, still, we have only
 3 numbers out of 9 possible.
-Now, every third multiple of six is divisible by 9.
+Now, every third multiple of $a$ ($=6$) is divisible by $n$ ($=9$).
 This is, of course, because 3 divides 9 and
 also divides 6. In consequence every third multiple
 of 6 is divisible by 9.
@@ -357,8 +357,8 @@ that they have no common factors,
 If we look at an example,
 where $n$ is coprime of all numbers $1\dots n-1$,
 we see that all numbers $0\dots n-1$ actually
-appear as results of multiplications of two
-numbers in the range:
+appear as results of the multiplications of one of them
+by all others in the range:
 
 $3 \times 0 = 0 \mod 5$\\
 $3 \times 1 = 3 \mod 5$\\
@@ -374,9 +374,8 @@ In consquence, no multiple of any number $a$
 from the range $1\dots 4$ will be divisible by 5
 but those that are also multiples of 5.
 For this reason, any multiple of a number in the range
+that is not a multiple of 5
 will again leave a remainder in the range when divided by 5.
-The only exceptions are multiples of the form $ka$
-where $k$ is a multiple of 5.
 At the same time, the results of the multiplications
 of any two remainders must be different,
 that is, for any distinct $a,b,c, \in 1\dots 4$,
@@ -397,8 +396,12 @@ is different from arithmetic modulo a composite.
 
 We find such an algorithm if we go to the 
 heart of the matter.
-It is related to a special property of $\gcd$.
-We know that $\gcd$ proceeds by applying the modulo operation:
+It is related to a special property of the $\gcd$.
+We know that the Euclidean algorithm,
+which computes the $\gcd$,
+proceeds by computing the remainder
+(which, for positive numbers,
+is the same as the modulo operation):
 $\gcd(a,b) = \gcd(b, a \bmod b)$.
 If $c$ is the remainder, \ie\
 $c = a \bmod b$, then we have
@@ -421,7 +424,7 @@ $d = \gcd(a,b)$, there are two integers $k$ and $l$,
 positive or negative, for which holds $d = ka + lb$.
 The base case is equation \ref{eqMod_basegcd}.
 We have to prove that, if \ref{eqMod_basegcd}
-shows the $n^{th}$ recursion step of $\gcd$, 
+shows the $n^{th}$ recursion step of the Euclidean algorithm $\gcd$, 
 then, in the $(n+1)^{th}$ rescursion step,
 it still holds for the remainder of the arguments
 in that iteration, $d$, that there are two integers
@@ -485,7 +488,6 @@ iteration of $\gcd(21,15)$ is
 $-21q_2k - 15(q_2l - 1)$,
 where $k$ and $l$ fulfil the equation
 $21k + 15l = (21 \bmod 15)$ and $l = -q_1$.
-the quotient of 21 and 15, which is 1.
 So we have
 $21k - 15 = 6$, which becomes true if $k=1$.
 
@@ -547,7 +549,6 @@ must equal $p_2$. By continuing this way,
 we establish that every $q$ must be equal a $p$.
 For any given number, there, hence, 
 is only one prime factorisation$\qed$.
-}
 
 Let us come back to our division problem.
 The relevant information
@@ -559,6 +560,7 @@ $\frac{1}{a}$, since $a \times \frac{1}{a} = 1$.
 In other words: $\frac{1}{a}$ is the inverse of $a$.
 A function that would serve as such an inverse for $a$
 would be $f(x) = kx + lb$, for the two integers $k$ and $l$.
+}
 
 If we compute $\gcd(a,n)$, where $n$ is a prime,
 we know we get 1 back and we know there must be
@@ -582,7 +584,7 @@ This algorithm is called the
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  xgcd :: Integer -> Integer -> (Integer, (Integer, Integer))
+  xgcd :: (Num a, Integral a) => a -> a -> (a, (a, a))
   xgcd a b = go a b 1 0 0 1
     where  go c 0  uc  vc _  _   =  (c,(uc,vc))
            go c d  uc  vc ud vd  =  let (q,r) = c `quotRem` d
@@ -791,7 +793,7 @@ we have, for the time being, no good implementation.
 There is an important corollary that follows from the invertibility
 of numbers modulo a prime, namely that any number
 in the range $1\dots p-1$ can be created by multiplication
-of other numbers in this range and for any two number $a$ and $n$,
+of other numbers in this range and for any two numbers $a$ and $n$,
 there is unique number $b$ that fulfils the equation
 
 \begin{equation}
@@ -874,3 +876,284 @@ For the multiplicative group of the field, 0 must be excluded,
 since there is no number $k$ such that $0 \times k = 1$ or,
 stated differently, $1/0$ is undefined.
 This, however, is true for all multiplicative groups.
+
+Before going on, let us look at the $\gcd$ and the $xgcd$ once more.
+It would be interesting to have a function that finds the \acronym{gcd}
+not only for two numbers, but for a list of numbers. For instance,
+the \acronym{gcd} of the numbers $6,9,12$ is 3, while that of
+$6,9,11$ is 1. The implementation for the $\gcd$ algorithm is in fact
+quite simple. We, obviously, have
+
+\begin{equation}
+\gcd(a,b,c) = \gcd(a,\gcd(b,c))
+\end{equation}
+
+and can therefore just fold the list with $\gcd$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mgcd :: (Integral a) => [a] -> a 
+  mgcd [] = 1
+  mgcd (i:is) = foldl' gcd i is
+\end{code}
+\end{minipage}
+
+Note that we define the case with the empty list
+as 1. That is just conventional; one could also
+leave it undefined. But then users would have
+to check explicitly for this case.
+
+The extended $\gcd$ algorithms is a not so simple.
+The issue is the integers which we called $k$ and $l$ above.
+Consider a list of the form |[a,b,c]|.
+We can compute the \acronym{gcd} as $\gcd(a,\gcd(b,c))$;
+but now we have
+
+\begin{equation}\label{eq:mxgcd_1}
+\gcd(a,\gcd(b,c)) = k_1a + k_2\gcd(b,c)
+\end{equation}
+
+for two integers $k_1$ and $k_2$.
+The formula for computing these integers
+continues recursively into the second $\gcd$, \ie:
+
+\begin{equation}
+\gcd(b,c) = k_3b + k_4c
+\end{equation}
+
+Since we multiply $\gcd(b,c)$ by $k_2$ in
+\ref{eq:mxgcd_1} above, we also need to
+multiply the integers within
+the second $\gcd$ by $k_2$,
+so that we finally get
+
+\begin{equation}
+\gcd(a,b,c) = k_1a + k_2k_3b + k_2k_4c.
+\end{equation}
+
+With longer lists the schema continues
+into the following $\gcd$s.
+With one more element in the list we would get
+
+\begin{equation}
+\gcd(a,b,c,d) = k_1a + k_2k_3b + k_2k_4k_5c + k_2k_4k_6d.
+\end{equation}
+
+This leads to the following pattern:
+
+1\\
+2 3\\
+2 4 5\\
+2 4 6 7\\
+2 4 6 8 9\\
+2 4 6 8 10 11 \\
+$\dots$
+
+which corresponds to a binary tree that always branches
+at the right kid like this:
+
+\begin{center}
+\begin{tikzpicture}
+\node(A1) at (6, 0) {1};
+\node(A2) at (4, -1) {2 3};
+\node(A3) at (8, -1) {gcd};
+\node(A4) at (6, -2) {2 4 5};
+\node(A5) at (10, -2) {gcd};
+\node(A6) at (8, -3) {2 4 6 7};
+\node(A7) at (12, -3) {gcd};
+\node(A8) at (10, -4) {2 4 6 8 9};
+\node(A9) at (14, -4) {$\dots$};
+
+\connect {A1} {A2};
+\connect {A1} {A3};
+\connect {A3} {A4};
+\connect {A3} {A5};
+\connect {A5} {A6};
+\connect {A5} {A7};
+\connect {A7} {A8};
+\connect {A7} {A9};
+\end{tikzpicture}
+\end{center}
+
+If we had the $k$s in one list, we could generate
+this structure with a simple fold-like function
+that we call \term{distr} for ``distribute right'':
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  distr :: (a -> a -> a) -> a -> [a] -> [a]
+  distr f n []  = []
+  distr f n xs  = go n xs
+    where  go p []  = [p]
+           go p [k] = [f p k]
+           go p (k:ks) =  let h = head ks
+                          in (f p k) : go (f p h) (tail ks)
+\end{code}
+\end{minipage}
+
+The function has a snag for lists with an odd number
+of elements greater than 3. For 3 elements, say |[1,2,3]|,
+the function called as |distr (*) 1 [1,2,3]| would result in
+
+$[1,2\times 3]$.
+
+That's fine. On four elements (\eg\ |[1,2,3,4]|),
+it would correctly generate
+
+$[1,2\times 3,2\times 4]$.
+
+But for five elements, it would generate
+
+$[1,2\times 3, 2\times 4 \times 5]$.
+
+What we would like to have is, however,
+
+$[1,2\times 3, 2\times 4, 2 \times 5]$,
+
+since the last two elements are both leaves.
+Anyway, we accept this shortcoming in favour
+of generality of the |distr| function. As we will see,
+we simply won't call |distr| with the critical case.
+
+Here is a first approach to implementing the |mxgcd|:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mxgcd2 :: (Integral a) => [a] -> (a, [a])
+  mxgcd2 []   = (1,[])
+  mxgcd2 [x]  = (x,[1])
+  mxgcd2 as   =  let (g, rs) = go as in (g, ks rs)
+    where  go [i,j]   =   let  (g, (x,y)) = xgcd i j
+                          in   (g, [x,y])
+           go (i:is)  =   let  (g0, rs) = go is
+                               (g,(x,y)) =  xgcd i g0
+                          in   (g, [x,y]++rs)
+           ks = distr (*) 1
+\end{code}
+\end{minipage}
+
+The function creates a tuple of the form |(a,[a])|,
+where the first represents the \acronym{gcd} and the
+second represents the list of $k$s.
+If we call |mxgcd| like this
+
+|(g,ks) = mxgcd2 xs|
+
+the following constraint holds:
+
+|g == sum [k*x || (k,x) <- zip ks xs|
+
+The function first handles some trivial cases,
+namely the empty list and a list consisting of
+only one element. It then calls |go| with
+the argument passed in.
+
+There are two cases for |go|, namely
+a list with two elements and a list
+with more than two elements. (Note
+that |go| is never called with only one
+or no element in the list.)
+
+For a list with two elements,
+the |xgcd| is called with those two elements.
+The result is just the result of |xgcd|,
+but with the integers $x$ and $y$ as
+elements of a list, not a tuple, to
+match the type signature of the function.
+
+For a list with more than two elements,
+we first recursively call |go| on the
+tail of the list from which
+we obtain the \acronym{gcd} of the tail (|g0|)
+and a list of integers.  (Note that
+the tail of the list, $is$, always has at least
+two elements, otherwise we would have entered
+the first case. This way it is guaranteed
+that we will never create an unhandled pattern.)
+We then compute
+the |xgcd| on the head and the intermediate |g0|.
+The result is the new \acronym{gcd} and the list
+of integers with the new integers added to it.
+Finally, we apply |distr (*) 1| on this list.
+
+The result list |go| is guaranteed to contain an even
+number of integers because each $\gcd$ generates
+two integers. The number of elements in the result
+list is therefore $2g$ where $g$ is the number
+of $\gcd$ calls and, hence, always even;
+$g$ is $n-1$, for $n$
+the number of elements in the input list.
+The number of elements in the intermediate
+result list is thus $2(n-1)$.
+It is therefore safe to use |distr|:
+the cases with an odd number of elements
+will not arise from this usage.
+
+But the function is not perfect.
+In particular, it is not tail-recursive,
+since most of the work is done after
+the recursive call to |go| leading
+to a deep stack that must be unwound afterwards.
+This is a result of the structure
+we implemented, namely to ``fold''
+to the series of calls of the form:
+
+\[
+\gcd(a, \gcd(b, \gcd(c, \dots)))
+\]
+
+We could do the opposite, \ie,
+compute the $\gcd(a,b)$ and go
+into the recursion with the result.
+We would then get a structure like the following:
+
+\[
+\gcd(\dots, (\gcd(\gcd(a, b), c))
+\]
+
+Here is an implementation:
+
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  mxgcd :: [Integer] -> (Integer, [Integer])
+  mxgcd []  = (1,[])
+  mxgcd [x] = (x,[1])
+  mxgcd (a:as) =  let (g, rs) = go [] a as in (g, reverse (ks rs))
+    where  go rs i [j]  =  let (g, (x,y)) = xgcd i j
+                           in (g, [y,x] ++ rs)
+           go rs i is   =  let (g, (x,y)) = xgcd i (head is)
+                           in go ([y,x]++rs) g (tail is)
+           ks = distr (*) 1
+\end{code}
+\end{minipage}
+
+In this variant, we first compute the |xgcd|
+of the first pair and advance only then into the
+next recursion. Two difficulties arise:
+we need a second element to which
+we can apply the first call of |xgcd| and,
+second, we need to remember the result list
+to which to add the new result when we return
+from the recursion.
+
+To solve the first issue, we split the list
+into head and tail and apply the first |xgcd|
+on the head and the head of the tail.
+We then pass the result of the |xgcd| along,
+\viz\ the \acronym{gcd}. The next |xgcd| will
+then be computed with this \acronym{gcd} and
+the next element in the list.
+
+We further
+pass along the result list (which initially
+was the empty list) with the two integers
+obtained from |xgcd| added to it.
+Note that these elements are added in
+reverse order. We do this because we 
+construct the $\gcd$ calls in reverse order
+compared to the |mxgcd2| implementation
+and must, hence, apply the multiplications
+in reverse order too. Accordingly, the last
+step of the algorithm is to reverse the
+result of |distr (*) 1|.
