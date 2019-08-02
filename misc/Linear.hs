@@ -3,8 +3,11 @@ where
 
   import Data.List (foldl')
   import Data.Ratio
+  import Text.Printf (printf)
 
   import Debug.Trace(trace)
+
+  import qualified Perm as P
 
   ------------------------------------------------------------------------
   -- Test for linear independence
@@ -220,6 +223,73 @@ where
   rolen :: [[a]] -> Int
   rolen []    = 0
   rolen (x:_) = length x
+
+  ------------------------------------------------------------------------
+  -- It's a square matrix
+  ------------------------------------------------------------------------
+  square :: Matrix a -> Bool
+  square (M rs) = colen rs == rolen rs
+
+  ------------------------------------------------------------------------
+  -- Build minor square leaving out p
+  ------------------------------------------------------------------------
+  minor :: Int -> [[a]] -> [[a]]
+  minor p [] = []
+  minor p (r:rs) = copyWithout p r : minor p rs
+
+  ------------------------------------------------------------------------
+  -- Copy ignoring pth element
+  ------------------------------------------------------------------------
+  copyWithout :: Int -> [a] -> [a]
+  copyWithout p rs = go 0 rs
+    where go _ [] = []
+          go i (c:cs) | i == p = go (i+1) cs
+                      | otherwise = c : go (i+1) cs
+
+  ------------------------------------------------------------------------
+  -- minor expansion formula
+  ------------------------------------------------------------------------
+  mef :: (Num a) => [[a]] -> a
+  mef [] = 0
+  mef [[a,b],[c,d]]  = a*d - b*c
+  mef (r:rs) = sum [(-1)^i*c*(go i rs) | (c,i) <- zip r [0..(length r)-1]]
+    where go i = mef . minor i
+
+  ------------------------------------------------------------------------
+  -- Determinant (only for square matrices)
+  -- see: http://mathworld.wolfram.com/Determinant.html
+  --      https://onlinemathtools.com/matrix-determinant
+  ------------------------------------------------------------------------
+  det :: (Num a) => Matrix a -> a
+  det m | not (square m) = error "not a square matrix"
+        | otherwise = mef (rows m)
+
+  sublist :: Int -> [a] -> [[a]]
+  sublist _ [] = []
+  sublist n ls = let (hs,ts) = go n [] ls in hs : sublist n ts
+    where go 0 hs ts = (reverse hs,ts)
+          go i hs ts = go (i-1) (head ts : hs) (tail ts)
+
+  tstdet :: IO Bool
+  tstdet = let m = [1,2,3,4,5,6,7,8,9] in go 100 m
+    where go :: Int -> [Integer] -> IO Bool
+          go 0 _ = return True
+          go j x@[a,b,c,d,e,f,g,h,i] = do
+             let r = det (M $ sublist 3 x)
+             let s = sum [a*(e*i-f*h) - b*(d*i-f*g) + c*(d*h-e*g)]
+             printf "%03d) det %s = %d\n" j (show x) s
+             x' <- P.kshuffle x
+             if s /= r then return False else go (j-1) x'
+
+  ------------------------------------------------------------------------
+  -- centre diagonal
+  ------------------------------------------------------------------------
+  diagonal :: Matrix a -> [a]
+  diagonal (M []) = []
+  diagonal (M rs) = (head (head rs)) : go tail (tail rs)
+    where go _ [] = []
+          go f [r] = [head (f r)]
+          go f rs = (head (f (head rs))) : go (f . tail) (tail rs)
 
   ------------------------------------------------------------------------
   -- Bring a matrix into echelon form
