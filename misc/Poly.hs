@@ -497,8 +497,7 @@ where
                  | otherwise = -- trace (show p ++ "|" ++ show q ++ "-->" ++ show r ++ "\n") $
                    let r = prem p q
                        a = alpha r
-                       t = scale (1%a) (P (map (%1) $ coeffs r))
-                       x = P (map numerator $ coeffs t)
+                       x = P [numerator (c%a) | c <- coeffs r]
                     in if zerop r then [] else x : pgcd alpha q x
 
   -------------------------------------------------------------------------
@@ -514,56 +513,49 @@ where
   ppgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
   ppgcd = pgcd content
 
+  prema :: Poly Integer -> Poly Integer -> Poly Integer
+  prema a b = poly $ map numerator (coeffs $ snd (divp x y))
+    where l = abs (lc b)
+          k = l^(da-db+1)
+          da = fromIntegral $ degree a
+          db = fromIntegral $ degree b
+          a' = scale k a
+          x  = P (map (%1) $ coeffs a')
+          y  = P (map (%1) $ coeffs b)
+
   -------------------------------------------------------------------------
   -- Subresultant Pseudo-remainder sequence
   -- see also: http://mathworld.wolfram.com/Resultant.html
   -- and https://en.wikipedia.org/wiki/Polynomial_greatest_common_divisor#Subresultants
+  -- and https://math.stackexchange.com/questions/696335/
+  --             how-does-one-compute-a-resultant-by-using-euclidean-algorithm/696515
+  -- follows mainly: https://docs.sympy.org/1.0/_modules/sympy/polys/euclidtools.html
+  -- Test case from wikipedia:
+  -- a = P [-5,2,8,-3,-3,0,1,0,1]
+  -- b = P [21,-9,-4,0,5,0,3]
+  -- expected: [[9,0,-3,0,15], [245,125,65], [12300,9326], [260708]]
   -------------------------------------------------------------------------
   spgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
-  spgcd a b = go ((-1)^(d+1)) (-1) d a b
-    where d = fromIntegral ((degree a) - (degree b))
-          go z y d q r | zerop r = []
-                       | otherwise = 
-                          let r' = prem q r
-                              y' = div ((-l')^d) (y^(d-1))
-                              z' = (-l)*(y^d')
-                              l  = lc q
-                              l' = lc r
-                              -- d' = fromIntegral ((degree r) - (degree x))
-                              d'  = fromIntegral ((degree q) - (degree r))
-                              x  = P (map numerator [c%z' | c <- coeffs r'])
-                           in if zerop x then [] else x : go z' y' d r x
+  spgcd a b = let n = degree a
+                  m = degree b
+                  d = n - m
+                  c = scale ((-1)^(d+1)) (prem a b)
+                  l = lc b
+                  z = -(l^d)
+                  k = degree c
+               in c:go z l b c k (m-k)
+    where go c l f g n d | degree(g) == 0 = []
+                         | otherwise = let y = (-l) * c^d
+                                           h = P [x `div` y | x <- coeffs (prem f g)]
+                                           m = degree h
+                                           l' = lc g
+                                           c' | d > 1 = (-l')^d `div` (c^(d-1))
+                                              | otherwise = -l'
+                                        in h:go c' l' g h m (n-m)
 
-  spgcdio :: IO [Poly Integer]
-  spgcdio = go 1 ((-1)^(d+1)) (-1) d a b 
-    where d = fromIntegral ((degree a) - (degree b))
-          a = P [-5,2,8,-3,-3,0,1,0,1]
-          b = P [21,-9,-4,0,5,0,3]
-          go i z y d q r | zerop r = return [] -- z becomes -243 one round too late, why?
-                         | otherwise = do
-                          putStrLn (show i ++ ") z : " ++ show z)
-                          putStrLn (show i ++ ") y : " ++ show y)
-                          putStrLn (show i ++ ") q : " ++ show q)
-                          putStrLn (show i ++ ") r : " ++ show r)
-                          let r' = prem q r
-                          let d'  = fromIntegral ((degree q) - (degree r))
-                          putStrLn (show i ++ ") d : " ++ show d)
-                          putStrLn (show i ++ ") d': " ++ show d')
-                          let l  = lc q
-                          let l' = lc r
-                          let y' = div ((-l')^d) (y^(d-1))
-                          let z' = (-l)*(y^d')
-                          let x  = P (map numerator [c%z' | c <- coeffs r'])
-                          putStrLn (show i ++ ") r': " ++ show r')
-                          putStrLn (show i ++ ") x : " ++ show x)
-                          if zerop x then do
-                             putStrLn ("expected: " ++ show [[9,0,-3,0,15], [-245,125,65], [-12300,9326], [260708]])
-                             return []
-                          else do
-                             rs <- go (i+1) z' y' d' r x
-                             return (x:rs)
-          -- expected: [[9,0,-3,0,15], [245,125,65], [12300,9326], [260708]]
-
+  -------------------------------------------------------------------------
+  -- Slyvester Matrix of two polynomials
+  -------------------------------------------------------------------------
   sylvester :: (Num a) => Poly a -> Poly a -> L.Matrix a
   sylvester a b = L.M (go 0 xs ys)
     where as = reverse $ coeffs a
@@ -578,6 +570,9 @@ where
                      | i >= lb   = l2:go (i+1) [] (0:init l2) 
                      | otherwise = l1:go (i+1) (0:init l1) l2
 
+  -------------------------------------------------------------------------
+  -- Show the slyvester matrix of a and b (test case for wikipedia)
+  -------------------------------------------------------------------------
   sylvestershow :: IO ()
   sylvestershow = let s = sylvester a b
                    in do putStrLn ("Matrix with " ++ show (length $ L.rows s) ++ 
@@ -585,7 +580,6 @@ where
                          putStrLn (show $ sylvester a b)
     where a = P [-5,2,8,-3,-3,0,1,0,1]
           b = P [21,-9,-4,0,5,0,3]
-     
 
   -------------------------------------------------------------------------
   -- Null

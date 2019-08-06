@@ -1,10 +1,24 @@
 import Linear
 import Poly
+import Control.Monad (forM)
 
 main :: IO ()
-main = putStrLn (show $ det (sylvester p q))
-  where p = P [-5,2,8,-3,-3,0,1,0,1]
-        q = P [21,-9,-4,0,5,0,3]
-        -- p = P [-5,2,8,-3,-3]
-        -- q = P [21,-9,-4]
+main = do
+  let m = 100
+  t <- forM [1..m] (\i -> do
+    p <- randomPoly 9 5 
+    q <- randomPoly 9 4
+    let s = sylvester p q
+    putStrLn (show p)
+    putStrLn (show q)
+    putStrLn (show s)
+    let d = det s
+    let x = spgcd p q
+    let r = head (coeffs (last x))
+    putStrLn (show d ++ " = " ++ show r)
+    putStrLn ("gcd " ++ show d ++ ", " ++ show r ++ " = " ++ show (gcd d r))
+    if d == r then return True else return False)
+  let cnt = length (filter (\x -> x) t)
+  putStrLn ("true: " ++ show cnt ++ " | false: " ++ show (m - cnt))
+  if and t then putStrLn "PASSED" else putStrLn "FAILED"
 
