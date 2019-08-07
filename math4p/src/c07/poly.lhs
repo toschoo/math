@@ -12,6 +12,8 @@
 %include Roots.lhs
 \section{Vieta's Formulas}
 %include Vieta.lhs
+\section{Discriminant and Resultant}
+%include Resultant.lhs
 \section{Factoring Polynomials}
 %include PolyFactor.lhs
 \section{Practical Factoring Techniques}

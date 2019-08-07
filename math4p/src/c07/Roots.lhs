@@ -304,7 +304,7 @@ So, we try
 |bisect wilkinson (1%10) (1%2) (3%2)|
 
 and get the correct result |1%1|.
-The function with this parameters
+The function with these parameters
 returns almost instantly. That is
 because the average of 0.5 and 1.5 is already 1.
 The function finds the root in the first step.
@@ -679,7 +679,7 @@ as predicted.
 
 To solve the polynomial $x^2 + 4$, we call
 |solve2 (P [4,0,1])| and get |[]|; as predicted,
-this polynomials has no roots. 
+this polynomial has no roots. 
 It is everywhere positive.
 
 The polynomial $x^2 - 4$, by contrast,
