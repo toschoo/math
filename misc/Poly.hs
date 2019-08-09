@@ -10,7 +10,7 @@ where
   import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Control.Concurrent
-  import           Control.Monad (when,void,filterM,forM_)
+  import           Control.Monad (when,void,filterM,forM_,forM)
   import           Debug.Trace (trace)
   import           System.Random (randomRIO)
 
@@ -435,6 +435,9 @@ where
                         in go ([y,x]++rs) g (tail is)
           ks = M.distr (mulmp p) (P[1])
 
+  -------------------------------------------------------------------------
+  -- Test mxgcdmp
+  -------------------------------------------------------------------------
   tstmxgcdmp :: IO ()
   tstmxgcdmp = do
     p <- randomPrime 4
@@ -513,16 +516,6 @@ where
   ppgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
   ppgcd = pgcd content
 
-  prema :: Poly Integer -> Poly Integer -> Poly Integer
-  prema a b = poly $ map numerator (coeffs $ snd (divp x y))
-    where l = abs (lc b)
-          k = l^(da-db+1)
-          da = fromIntegral $ degree a
-          db = fromIntegral $ degree b
-          a' = scale k a
-          x  = P (map (%1) $ coeffs a')
-          y  = P (map (%1) $ coeffs b)
-
   -------------------------------------------------------------------------
   -- Subresultant Pseudo-remainder sequence
   -- see also: http://mathworld.wolfram.com/Resultant.html
@@ -552,6 +545,57 @@ where
                                            c' | d > 1 = (-l')^d `div` (c^(d-1))
                                               | otherwise = -l'
                                         in h:go c' l' g h m (n-m)
+
+  -------------------------------------------------------------------------
+  -- The resultant of two polynomials
+  -- (which is the last in the subresultant sequence)
+  -------------------------------------------------------------------------
+  res :: Poly Integer -> Poly Integer -> Integer
+  res a b = head $ coeffs $ last $ spgcd a b
+
+  -------------------------------------------------------------------------
+  -- The generalised discriminant
+  -- computed as the resultant^2 * lc^(d(d-1)/2) 
+  -------------------------------------------------------------------------
+  dis :: Poly Integer -> Integer
+  dis p = (-1)^x * (res p p') `div` l
+    where x = d*(d-1) `div` 2
+          d = degree p
+          p' = derivative (*) p
+          l  = lc p
+
+  -------------------------------------------------------------------------
+  -- Compute the discriminant from the roots
+  -------------------------------------------------------------------------
+  disroots :: [Integer] -> Integer
+  disroots [] = -1
+  disroots [r] = 0
+  disroots (r:rs) = undefined
+
+  -------------------------------------------------------------------------
+  -- Test the discriminant for degree 2:
+  -- compare dis2 (b^2 - 4ac), dis and
+  -- the squared product of the roots times lc^2
+  -------------------------------------------------------------------------
+  tstDis2 :: IO ()
+  tstDis2 = do
+     let m = 100
+     t <- forM [1..m] (\i -> do
+          p <- randomPoly 9 3
+          let d1 = dis2 p
+          let d2 = dis  p
+          let rs = solve2 (P [fromIntegral x | x <- coeffs p])
+          let l  = fromIntegral (lc p)
+          let r | null rs = -1
+                | length rs == 1 = head rs
+                | otherwise = l^2 * (head rs - last rs)^2
+          let x | r <= 0 = floor r
+                | otherwise = if floor r >= d1 then floor r else ceiling r
+          putStrLn(show i ++ ") " ++ show p ++ ": " ++ show x ++ " = " ++ show d1 ++ " = " ++ show d2)
+          return ((x <= 0 || x == d1) && d1 == d2))
+     let cnt = length (filter (\x -> x) t)
+     putStrLn ("true: " ++ show cnt ++ " | false: " ++ show (m - cnt))
+     if and t then putStrLn "PASSED" else putStrLn "FAILED"
 
   -------------------------------------------------------------------------
   -- Slyvester Matrix of two polynomials
@@ -1242,8 +1286,8 @@ where
                        | x1 /= x2  = [x1,x2]
                        | otherwise = [x1]
     where d  = sqrt (dis2 p)
-          x1 = (-b + d) / 2*a
-          x2 = (-b - d) / 2*a
+          x1 = (-b + d) / (2*a)
+          x2 = (-b - d) / (2*a)
 
   dis2 :: (Num a) => Poly a -> a 
   dis2 (P [c,b,a]) = b^2 - 4*a*c

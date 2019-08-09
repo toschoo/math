@@ -71,6 +71,26 @@ x^2 + (1-1)x + (-1\times 1) = x^2 - 1.
 \end{equation}
 
 Correct until here.
+Let us express this result as a formula
+that defines the coefficients in terms
+of roots. We have $-\alpha-\beta=b$
+where $b$ is the second coefficient in
+a polynomial of the form
+$x^2+bx+c$.
+We can factor ``$-$'' out and get
+$-(\alpha+\beta)=b$ or nicer even
+(but still wrong!):
+
+\begin{equation}
+\alpha+\beta = -b.
+\end{equation}
+
+Correspondly, we have for $c$:
+
+\begin{equation}
+\alpha\beta = c.
+\end{equation}
+
 What about other examples, for instance: 
 $x^2 + x - 1$.
 We already know the roots are $-\Phi$ and $-\Psi$.
@@ -115,17 +135,28 @@ factorisation of this polynomial is
 -1(x+\Phi)(x+\Psi).
 \]
 
-We have to adjust our formula above to this case,
-\ie:
+We have to adjust our formula above to this case
+-- and that is where we said the formulas given
+above are wrong. The adjustment, however,
+is quite easy. We just divide all coefficients
+by the leading one and get:
+
+\begin{equation}
+\alpha+\beta = -\frac{b}{a}
+\end{equation}
+
+and
+
+\begin{equation}
+\alpha\beta = \frac{c}{a}.
+\end{equation}
+
+Then, in the polynomial formula,
+we need to multiply $a$ to get
+the coefficients back, \eg:
 
 \[
-ax^2 + \frac{-\alpha-\beta}{a}x + \frac{\alpha\beta}{a},
-\]
-
-which can be simplified to
-
-\[
-ax^2 - \frac{\alpha+\beta}{a}x + \frac{\alpha\beta}{a}.
+ax^2 -a(\alpha+\beta)x + a\alpha\beta,
 \]
 
 When we now test with roots $\alpha=-\Phi$ and $\beta=-\Psi$
@@ -133,12 +164,14 @@ and coefficient $a=-1$,
 we get
 
 \[
--x^2 - \frac{-\Phi-\Psi}{-1}x + \frac{(-\Phi)(-\Psi)}{-1} = 
--x^2 - \frac{-1}{-1}x + \frac{-1}{-1} =
--x^2 - x + 1
+\begin{array}{ll}
+  & -x^2 - (-1)(-\Phi-\Psi)x -1(-\Phi)(-\Psi) \\
+= & -x^2 - (-1)(-1)x + (-1)(-1) \\
+= & -x^2 - x + 1
+\end{array}
 \]
 
-and everything appears to be in joint again.
+and everything seems to be in joint again.
 
 When we advance beyond degree 2,
 how should these formulas evolve?
@@ -154,8 +187,10 @@ When we multiply that out, we get combinations
 as products and sums of products
 of the coefficients of the linear factors
 $\alpha, \beta, \gamma, \dots$
-(which are the inverses of the roots 
-of the resulting polynomial):
+which are the additive inverses of the roots 
+of the resulting polynomial
+(so watch out for signs in the following
+formulas!):
 
 \[
 (x^2 + \beta x + \alpha x + \alpha\beta)(x+\gamma),
@@ -212,15 +247,17 @@ and then we see a single quadruple product.
 
 When we now bring the negative sign of the roots in
 (we used their additive inverses) and
-the first coefficient, the we get the following
+the first coefficient, we get the following
 sequence of formulas:
 
 \begin{subequations}\label{eq:vieta1}
 \begin{align}
 x_1 + x_2 + \dots + x_n & = & -\frac{a_{n-1}}{a_n}\\
-(x_1x_2 + \dots + x_1x_n) + 
-(x_2x_3 + \dots + x_2x_n) + \dots + 
+x_1x_2 + \dots + x_1x_n + 
+x_2x_3 + \dots + x_2x_n + \dots + 
 x_{n-1}x_n & = & \frac{a_{n-2}}{a_n}\\
+x_1x_2x_3 + \dots + x_1x_2x_n + \dots +
+x_{n-2}x_{n-1}x_n & = & -\frac{a_{n-3}}{a_n}\\
 \dots & = & \dots\\
 (x_1x_2 \dots x_n) & = & (-1)^n\frac{a_0}{a_n}
 \end{align}
@@ -378,7 +415,7 @@ Since, in the linear factors, we use the
 additive inverses of the roots,
 the effect of the signs of the roots
 must be flipped around.
-Therefore, we turn
+Therefore, we flip
 the sign of every second result, namely
 those with an odd number of factors.
 The negative signs of the roots
@@ -387,7 +424,7 @@ cancel out by themselves.
 
 Let us look at some examples.
 We start with our favourite: $x^2 + x - 1$.
-We call |vieta [-phi, -psi]| and get
+and call |vieta [-phi, -psi]|:
 
 |[1.0,-1.0]|.
 
@@ -420,7 +457,7 @@ which is $(x+1)(x+2)(x+3)$ and get
 |P [6,11,6,1]|, which represents the polynomial
 $x^3 + 6x^2 + 11x + 6$.
 We call |vieta [-1,-2,-3]| and get |[6,11,6]|.
-(You may have realised that the coefficients are 
+(You may realise that the coefficients are 
 unsigned Stirling numbers of the first kind and
 now might want to contemplate 
 why those guys show up again\dots)

@@ -5591,7 +5591,7 @@ The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
 because it determines how many roots
 there are: 2, 1 or (in $\mathbb{R}$) none.
-The discriminant for polynomials
+The discriminant for polynomials of degree 2
 with real coefficients
 may be implemented in Haskell as follows:
 
@@ -5601,9 +5601,9 @@ may be implemented in Haskell as follows:
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[3]{}\Varid{dis}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}{}\<[E]%
+\>[3]{}\Varid{dis2}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}{}\<[E]%
 \\
-\>[3]{}\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}\Varid{b}\mathbin{\uparrow}\mathrm{2}\mathbin{-}\mathrm{4}\mathbin{*}\Varid{a}\mathbin{*}\Varid{c}{}\<[E]%
+\>[3]{}\Varid{dis2}\;(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu])\mathrel{=}\Varid{b}\mathbin{\uparrow}\mathrm{2}\mathbin{-}\mathrm{4}\mathbin{*}\Varid{a}\mathbin{*}\Varid{c}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -5619,22 +5619,22 @@ On top of this we implement a \term{root counter}:
 \column{17}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{17E}{@{}l@{}}%
 \column{20}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{32}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{countRoots}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Ord}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Int}{}\<[E]%
 \\
 \>[3]{}\Varid{countRoots}\;\Varid{p}{}\<[17]%
 \>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{dis}\;\Varid{p}\mathbin{>}\mathrm{0}{}\<[31]%
-\>[31]{}\mathrel{=}\mathrm{2}{}\<[E]%
+\>[20]{}\Varid{dis2}\;\Varid{p}\mathbin{>}\mathrm{0}{}\<[32]%
+\>[32]{}\mathrel{=}\mathrm{2}{}\<[E]%
 \\
 \>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{dis}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[31]%
-\>[31]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\>[20]{}\Varid{dis2}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[32]%
+\>[32]{}\mathrel{=}\mathrm{0}{}\<[E]%
 \\
 \>[17]{}\mid {}\<[17E]%
-\>[20]{}\Varid{otherwise}{}\<[31]%
-\>[31]{}\mathrel{=}\mathrm{1}{}\<[E]%
+\>[20]{}\Varid{otherwise}{}\<[32]%
+\>[32]{}\mathrel{=}\mathrm{1}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -5678,27 +5678,27 @@ polynomials of the second degree:
 \column{25}{@{}>{\hspre}c<{\hspost}@{}}%
 \column{25E}{@{}l@{}}%
 \column{28}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{solve2}\mathbin{::}(\Conid{Floating}\;\Varid{a},\Conid{Fractional}\;\Varid{a},\Conid{Real}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\Varid{solve2}\;\Varid{p}\mathord{@}(\Conid{P}\;[\mskip1.5mu \Varid{c},\Varid{b},\Varid{a}\mskip1.5mu]){}\<[25]%
 \>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{dis}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[39]%
-\>[39]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\>[28]{}\Varid{dis2}\;\Varid{p}\mathbin{<}\mathrm{0}{}\<[40]%
+\>[40]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
 \\
 \>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{x1}\not\equiv \Varid{x2}{}\<[39]%
-\>[39]{}\mathrel{=}[\mskip1.5mu \Varid{x1},\Varid{x2}\mskip1.5mu]{}\<[E]%
+\>[28]{}\Varid{x1}\not\equiv \Varid{x2}{}\<[40]%
+\>[40]{}\mathrel{=}[\mskip1.5mu \Varid{x1},\Varid{x2}\mskip1.5mu]{}\<[E]%
 \\
 \>[25]{}\mid {}\<[25E]%
-\>[28]{}\Varid{otherwise}{}\<[39]%
-\>[39]{}\mathrel{=}[\mskip1.5mu \Varid{x1}\mskip1.5mu]{}\<[E]%
+\>[28]{}\Varid{otherwise}{}\<[40]%
+\>[40]{}\mathrel{=}[\mskip1.5mu \Varid{x1}\mskip1.5mu]{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{d}{}\<[16]%
-\>[16]{}\mathrel{=}\Varid{sqrt}\;(\Varid{dis}\;\Varid{p}){}\<[E]%
+\>[16]{}\mathrel{=}\Varid{sqrt}\;(\Varid{dis2}\;\Varid{p}){}\<[E]%
 \\
 \>[12]{}\Varid{x1}{}\<[16]%
 \>[16]{}\mathrel{=}(\mathbin{-}\Varid{b}\mathbin{+}\Varid{d})\mathbin{/}\mathrm{2}\mathbin{*}\Varid{a}{}\<[E]%
@@ -5885,6 +5885,26 @@ x^2 + (1-1)x + (-1\times 1) = x^2 - 1.
 \end{equation}
 
 Correct until here.
+Let us express this result as a formula
+that defines the coefficients in terms
+of roots. We have $-\alpha-\beta=b$
+where $b$ is the second coefficient in
+a polynomial of the form
+$x^2+bx+c$.
+We can factor ``$-$'' out and get
+$-(\alpha+\beta)=b$ or nicer even
+(but still wrong!):
+
+\begin{equation}
+\alpha+\beta = -b.
+\end{equation}
+
+Correspondly, we have for $c$:
+
+\begin{equation}
+\alpha\beta = c.
+\end{equation}
+
 What about other examples, for instance: 
 $x^2 + x - 1$.
 We already know the roots are $-\Phi$ and $-\Psi$.
@@ -5929,17 +5949,28 @@ factorisation of this polynomial is
 -1(x+\Phi)(x+\Psi).
 \]
 
-We have to adjust our formula above to this case,
-\ie:
+We have to adjust our formula above to this case
+-- and that is where we said the formulas given
+above are wrong. The adjustment, however,
+is quite easy. We just divide all coefficients
+by the leading one and get:
+
+\begin{equation}
+\alpha+\beta = -\frac{b}{a}
+\end{equation}
+
+and
+
+\begin{equation}
+\alpha\beta = \frac{c}{a}.
+\end{equation}
+
+Then, in the polynomial formula,
+we need to multiply $a$ to get
+the coefficients back, \eg:
 
 \[
-ax^2 + \frac{-\alpha-\beta}{a}x + \frac{\alpha\beta}{a},
-\]
-
-which can be simplified to
-
-\[
-ax^2 - \frac{\alpha+\beta}{a}x + \frac{\alpha\beta}{a}.
+ax^2 -a(\alpha+\beta)x + a\alpha\beta,
 \]
 
 When we now test with roots $\alpha=-\Phi$ and $\beta=-\Psi$
@@ -5947,12 +5978,14 @@ and coefficient $a=-1$,
 we get
 
 \[
--x^2 - \frac{-\Phi-\Psi}{-1}x + \frac{(-\Phi)(-\Psi)}{-1} = 
--x^2 - \frac{-1}{-1}x + \frac{-1}{-1} =
--x^2 - x + 1
+\begin{array}{ll}
+  & -x^2 - (-1)(-\Phi-\Psi)x -1(-\Phi)(-\Psi) \\
+= & -x^2 - (-1)(-1)x + (-1)(-1) \\
+= & -x^2 - x + 1
+\end{array}
 \]
 
-and everything appears to be in joint again.
+and everything seems to be in joint again.
 
 When we advance beyond degree 2,
 how should these formulas evolve?
@@ -5968,8 +6001,10 @@ When we multiply that out, we get combinations
 as products and sums of products
 of the coefficients of the linear factors
 $\alpha, \beta, \gamma, \dots$
-(which are the inverses of the roots 
-of the resulting polynomial):
+which are the additive inverses of the roots 
+of the resulting polynomial
+(so watch out for signs in the following
+formulas!):
 
 \[
 (x^2 + \beta x + \alpha x + \alpha\beta)(x+\gamma),
@@ -6026,15 +6061,17 @@ and then we see a single quadruple product.
 
 When we now bring the negative sign of the roots in
 (we used their additive inverses) and
-the first coefficient, the we get the following
+the first coefficient, we get the following
 sequence of formulas:
 
 \begin{subequations}\label{eq:vieta1}
 \begin{align}
 x_1 + x_2 + \dots + x_n & = & -\frac{a_{n-1}}{a_n}\\
-(x_1x_2 + \dots + x_1x_n) + 
-(x_2x_3 + \dots + x_2x_n) + \dots + 
+x_1x_2 + \dots + x_1x_n + 
+x_2x_3 + \dots + x_2x_n + \dots + 
 x_{n-1}x_n & = & \frac{a_{n-2}}{a_n}\\
+x_1x_2x_3 + \dots + x_1x_2x_n + \dots +
+x_{n-2}x_{n-1}x_n & = & -\frac{a_{n-3}}{a_n}\\
 \dots & = & \dots\\
 (x_1x_2 \dots x_n) & = & (-1)^n\frac{a_0}{a_n}
 \end{align}
@@ -6218,7 +6255,7 @@ Since, in the linear factors, we use the
 additive inverses of the roots,
 the effect of the signs of the roots
 must be flipped around.
-Therefore, we turn
+Therefore, we flip
 the sign of every second result, namely
 those with an odd number of factors.
 The negative signs of the roots
@@ -6227,7 +6264,7 @@ cancel out by themselves.
 
 Let us look at some examples.
 We start with our favourite: $x^2 + x - 1$.
-We call \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\mathbin{-}\Varid{psi}\mskip1.5mu]} and get
+and call \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\Varid{phi},\mathbin{-}\Varid{psi}\mskip1.5mu]}:
 
 \ensuremath{[\mskip1.5mu \mathrm{1.0},\mathbin{-}\mathrm{1.0}\mskip1.5mu]}.
 
@@ -6260,7 +6297,7 @@ which is $(x+1)(x+2)(x+3)$ and get
 \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{6},\mathrm{11},\mathrm{6},\mathrm{1}\mskip1.5mu]}, which represents the polynomial
 $x^3 + 6x^2 + 11x + 6$.
 We call \ensuremath{\Varid{vieta}\;[\mskip1.5mu \mathbin{-}\mathrm{1},\mathbin{-}\mathrm{2},\mathbin{-}\mathrm{3}\mskip1.5mu]} and get \ensuremath{[\mskip1.5mu \mathrm{6},\mathrm{11},\mathrm{6}\mskip1.5mu]}.
-(You may have realised that the coefficients are 
+(You may realise that the coefficients are 
 unsigned Stirling numbers of the first kind and
 now might want to contemplate 
 why those guys show up again\dots)
@@ -6291,17 +6328,277 @@ role in our further investigations.
 
 \section{Discriminant and Resultant}
 \ignore{
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{module}\;\Conid{Vieta}{}\<[E]%
+\\
+\>[B]{}\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{import}\;\Conid{Roots}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+}
+
+When we started to discuss roots,
+we mentioned the discriminant for
+polynomials of degree 2,
+
+\[
+b^2 - 4ac,
+\]
+
+which tells us, just looking at the coefficients,
+how many real roots the given polynomial has.
+Wouldn't it be nice to have a discriminant for
+any degree? It turns out, there is such a thing.
+
+At its very heart, it is the product
+of the differences of the roots;
+for instance, if we have the three
+roots $\alpha, \beta, \gamma$, the
+core of the discriminant, $d$, is
+
+\[
+(\alpha - \beta)(\alpha - \gamma)(\beta - \gamma).
+\]
+
+In general we have
+
+\begin{equation}
+\prod_{i<j}{(x_i - x_j)}.
+\end{equation}
+
+Now, when there is a repeated root,
+then one of the factors will be 0 and,
+as such, the whole product will be 0.
+This version of the discriminant, thus, preserves
+the property of the na\"ive discriminant for
+second-degree polynomials that it is 0
+if there a repeated roots.
+
+If at least one of the roots is non-real,
+then the product will be non-real too.
+This corresponds to the fact that, with
+non-real roots, the na\"ive discriminant
+is negative.
+
+But the new discriminant tells us even more:
+if it is irrational, then all roots are real,
+but at least one is irrational. The other way round,
+if it is rational, then all roots are rational.
+
+There is a snag though, which can be clearly seen
+in the generalised formula: we assume a given
+order of the roots -- but there is no such order.
+Imagine a polynomial with the roots
+$-1, 2, -3, 4$, which is
+
+\[
+(x+1)(x-2)(x+3)(x-4) = x^4 - 2x^3 - 13x^2 + 14x + 24.
+\]
+
+When I compute the differences of the roots
+like this (and note that there are
+$\binom{4}{2} = 6$
+factors!)
+
+\[
+(-1-2)(-1+3)(-1-4)(2+3)(2-4)(-3-4),
+\]
+
+I get the result 2100.
+But when I compute, just changing the order
+of the roots to $2,-1,-3,4$,
+
+\[
+(2+1)(2+3)(2-4)(-1+3)(-1-4)(-3-4)
+\]
+
+I get -2100.
+Indeed, of the $4! = 24$ permutations
+of the roots, 12 lead to the positive
+result and 12 to the negative one. 
+That means: the discriminant in this form,
+is not well defined!
+
+We can get rid of the problem
+by squaring the differences like this:
+
+\begin{equation}
+\prod_{i<j}{(x_i - x_j)^2}.
+\end{equation}
+
+We now would have
+
+\[
+(-1-2)^2(-1+3)^2(-1-4)^2(2+3)^2(2-4)^2(-3-4)^2,
+\]
+
+which is 4410000, and
+
+\[
+(2+1)^2(2+3)^2(2-4)^2(-1+3)^2(-1-4)^2(-3-4)^2,
+\]
+
+which is 4410000 as well.
+
+Of course, we have to adopt our principles
+to this new form:
+there are non-real roots, if the discriminant
+is negative and there are irrational roots
+if the discriminant is not a perfect square.
+
+You now may ask: is this discriminant actually
+the same as the na\"ive one? Or in other words
+is the na\"ive discriminant a special case
+of this general form?
+
+Let us look at a second-degree polynomial,
+for example
+
+\[
+(x-2)(x+3) = x^2 + x - 6.
+\]
+
+The na\"ive discriminant ($b2 - 4ac$) is 
+
+\[
+1^2 - 4(-6) = 1 + 24 = 25.
+\]
+
+The new discriminant is 
+
+\[
+(2+3)^2 = (-3-2)^2 = 25.
+\]
+
+This seems to be correct.
+Let's try a non-monic polynomial, \eg\
+
+\[
+3(x-2)(x+3) = 3x^2 + 3x - 18.
+\]
+
+The na\"ive discriminant is
+
+\[
+3^2 - 4\times 3\times(-18) = 225.
+\]
+
+The roots are, of course, still 2 and $-3$.
+So the new discriminant is still 25.
+What are we missing?
+
+Let's be practical and compare the two
+numbers. What is their ratio? It is $225/25 = 9$.
+9, however, is the leading coefficient squared:
+$3^2$. So, if we multiplied the discriminant
+by the square of the leading coefficient,
+the results would be equal again.
+
+Is this just by chance or can we prove it?
+We need to prove, for the case of a second-degree polynomial,
+that
+
+\begin{equation}
+a^2(\alpha-\beta)^2 = b^2 - 4ac,
+\end{equation}
+
+where $a, b, c$ are the coefficients and
+$\alpha, \beta$ are, as usual, the roots
+the polynomial.
+
+First we observe that
+$(\alpha-\beta)^2$
+can be expressed as
+$(\alpha+\beta)^2 - 4\alpha\beta$.
+This is true because, when we multiply
+the latter out, we get
+
+\[
+\alpha^2 + 2\alpha\beta + \beta^2.
+\]
+
+When we subtract $4\alpha\beta$, we obtain
+
+\[
+\alpha^2 - 2\alpha\beta + \beta^2,
+\]
+
+which clearly is $(\alpha-\beta)^2$.
+
+According to Vieta's formulas, however,
+$\alpha+\beta$ is $-\frac{b}{a}$
+and $\alpha\beta$ is $\frac{c}{a}$.
+So, we have
+
+\begin{equation}
+(\alpha+\beta)^2 - 4\alpha\beta = \left(-\frac{b}{a}\right)^2 - 4\frac{c}{a}.
+\end{equation}
+
+Since the right-hand side is $\frac{b^2}{a^2} - 4\frac{c}{a}$,
+we obtain the desired result just by multiplying both sides by $a^2$
+(and bringing the left-hand side back to its original form):
+
+\begin{equation}
+a^2(\alpha-\beta)^2 = b^2 - 4ac.\qed
+\end{equation}
+
+In the general form, the discriminant can be computed as
+
+\begin{equation}
+a^{2d-2}\prod_{i<j}{(x_i - x_j)^2},
+\end{equation}
+
+where $a$ is the leading coefficient and $d$ the degree
+of the polynomial. For $d=2$, this is $2\times 2 - 2 = 2$.
+For higher degrees this must be adapted and the common
+expression is that funny $2d-2$.
+
+Of course, we again have to adapt our principles
+to this new formula. To say anything about
+irrationality of the roots,
+we need to divide the discriminant by $a^{2d-2}$.
+If (and only if) the result is a perfect square,
+the polynomial has only rational roots.
+Note that we do not need to adopt the principle
+to decide whether there are non-real roots.
+Since $2d-2$ is always even, $a$ raised to such a power
+is always positive. It will, hence, not affect
+the sign of the discriminant. Therefore, if (and only if)
+the discriminant is negative, there are non-real roots. 
+
+But now comes the hard question:
+the use of the discriminant is to tell us something
+about the roots. But from what we see here,
+we need to know the roots to compute the discriminant.
+That is not very useful! The so called ``na\"ive''
+discriminant is not too na\"ive at the end! At least,
+it has a function!
+
+Well, here comes the esoteric part of this section.
+There is in fact a way to compute the discriminant
+without knowing the roots. What we need to do it
+is to compute the \term{resultant} of the polynomial
+and its derivative.
+
+\ignore{
 - discriminants in general terms:
 https://www.youtube.com/watch?v=AL5DdIJ9EQU
 - some proofs with Vieta's formulas (see
   https://de.wikipedia.org/wiki/Diskriminante)
 - Resultant
-- how to compute discriminants:
-  RES(f,f')
 - how to compute the resultant?
 - determinant of the sylvester matrix
 - pseudo-remainder sequence
 - subresultant sequence
+- how to compute discriminants:
+  (-1)^(d*(d-1)/2)*RES(f,f') / lc(f)
 }
 \section{Factoring Polynomials}
 \ignore{

@@ -611,14 +611,14 @@ The expression $b^2-4ac$ is called the
 \term{discriminant} of the polynomial,
 because it determines how many roots
 there are: 2, 1 or (in $\mathbb{R}$) none.
-The discriminant for polynomials
+The discriminant for polynomials of degree 2
 with real coefficients
 may be implemented in Haskell as follows:
 
 \begin{minipage}{\textwidth}
 \begin{code}
-  dis :: (Num a) => Poly a -> a
-  dis (P [c,b,a]) = b^2 - 4*a*c
+  dis2 :: (Num a) => Poly a -> a
+  dis2 (P [c,b,a]) = b^2 - 4*a*c
 \end{code}
 \end{minipage}
 
@@ -627,9 +627,9 @@ On top of this we implement a \term{root counter}:
 \begin{minipage}{\textwidth}
 \begin{code}
   countRoots :: (Num a, Ord a) => Poly a -> Int
-  countRoots p  |  dis p > 0  = 2
-                |  dis p < 0  = 0
-                |  otherwise  = 1
+  countRoots p  |  dis2 p > 0  = 2
+                |  dis2 p < 0  = 0
+                |  otherwise   = 1
 \end{code}
 \end{minipage}
 
@@ -663,10 +663,10 @@ polynomials of the second degree:
 \begin{minipage}{\textwidth}
 \begin{code}
   solve2 :: (Floating a, Fractional a, Real a) => Poly a -> [a]
-  solve2 p@(P [c,b,a])  |  dis p < 0  = []
-                        |  x1 /= x2   = [x1,x2]
-                        |  otherwise  = [x1]
-    where  d   = sqrt (dis p)
+  solve2 p@(P [c,b,a])  |  dis2 p < 0  = []
+                        |  x1 /= x2    = [x1,x2]
+                        |  otherwise   = [x1]
+    where  d   = sqrt (dis2 p)
            x1  = (-b + d) / 2*a
            x2  = (-b - d) / 2*a
 \end{code}
