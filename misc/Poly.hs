@@ -602,13 +602,11 @@ where
   -------------------------------------------------------------------------
   sylvester :: (Num a) => Poly a -> Poly a -> L.Matrix a
   sylvester a b = L.M (go 0 xs ys)
-    where as = reverse $ coeffs a
-          bs = reverse $ coeffs b
-          la = degree a
+    where la = degree a
           lb = degree b
           ll = la + lb
-          xs = as ++ zeros (lb-1)
-          ys = bs ++ zeros (la-1)
+          xs = (reverse $ coeffs a) ++ zeros (lb-1)
+          ys = (reverse $ coeffs b) ++ zeros (la-1)
           go _ [] [] = []
           go i l1 l2 | i == ll   = []
                      | i >= lb   = l2:go (i+1) [] (0:init l2) 

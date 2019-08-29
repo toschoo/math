@@ -8,8 +8,8 @@
 \contentsline {section}{\numberline {1.6}Roots}{53}
 \contentsline {section}{\numberline {1.7}Vieta's Formulas}{64}
 \contentsline {section}{\numberline {1.8}Discriminant and Resultant}{71}
-\contentsline {section}{\numberline {1.9}Factoring Polynomials}{75}
-\contentsline {section}{\numberline {1.10}Practical Factoring Techniques}{79}
-\contentsline {section}{\numberline {1.11}Factoring Polynomials in a finite Field}{79}
-\contentsline {section}{\numberline {1.12}Hensel Lifting}{94}
-\contentsline {section}{\numberline {1.13}Enumerating the Algebraic Numbers}{94}
+\contentsline {section}{\numberline {1.9}Factoring Polynomials}{79}
+\contentsline {section}{\numberline {1.10}Practical Factoring Techniques}{84}
+\contentsline {section}{\numberline {1.11}Factoring Polynomials in a finite Field}{84}
+\contentsline {section}{\numberline {1.12}Hensel Lifting}{98}
+\contentsline {section}{\numberline {1.13}Enumerating the Algebraic Numbers}{98}

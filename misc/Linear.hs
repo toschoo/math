@@ -250,7 +250,8 @@ where
   -- minor expansion formula
   ------------------------------------------------------------------------
   mef :: (Num a) => [[a]] -> a
-  mef [] = 0
+  mef []  = 0
+  mef [[a]] = a
   mef [[a,b],[c,d]]  = a*d - b*c
   mef (r:rs) = sum [(-1)^i*c*(go i rs) | (c,i) <- zip r [0..(length r)-1]]
     where go i = mef . minor i
