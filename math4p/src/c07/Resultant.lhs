@@ -38,6 +38,13 @@ In general we have
 \prod_{i<j}{(x_i - x_j)}.
 \end{equation}
 
+Notice that there are $\binom{n}{2}$ factors
+for $n$ the number of roots. For two roots,
+there is only one factor, namely $\alpha - \beta$;
+for three roots, there are three factors,
+namely those given above; for four roots,
+there are six factors and so on.
+
 Now, when there is a repeated root,
 then one of the factors will be 0 and,
 as such, the whole product will be 0.
@@ -127,7 +134,7 @@ Let us look at a second-degree polynomial, \eg:
 The na\"ive discriminant ($b^2 - 4ac$) is 
 
 \[
-1^2 - 4(-6) = 1 + 24 = 25.
+1^2 - 4\times (-6) = 1 + 24 = 25.
 \]
 
 The new discriminant is 
@@ -170,7 +177,7 @@ a^2(\alpha-\beta)^2 = b^2 - 4ac,
 
 where $a, b, c$ are the coefficients and
 $\alpha, \beta$ are, as usual, the roots
-the polynomial.
+of the polynomial.
 
 First we observe that
 $(\alpha-\beta)^2$
@@ -293,12 +300,13 @@ have a common root.
 
 There are two ways to compute the resultant.
 One comes from linear algebra and is very inefficient,
-the other is more related to polynomial arithmetic
-and quite efficient.
+the other is related to polynomial arithmetic
+and pretty efficient.
 We will start with the first one.
 It is inefficient, but the algorithm is quite interesting
-and it introduces some concepts of linear algebra.
-So, this section is also a teaser for one of the next chapters
+and it introduces some concepts from linear algebra.
+This way, the current section is also
+a teaser for one of the next chapters
 to come.
 
 The resultant of two polynomials
@@ -306,7 +314,7 @@ can be computed as the \term{determinant}
 of the \term{Sylvester matrix} of these polynomials.
 Wow! That are two new concepts in one sentence!
 We look at them one by one.
-First, the Sylvester matrix.
+First, the \term{Sylvester matrix}.
 
 We already met the concept of a matrix in the previous
 part: a matrix is just a table of numbers.
@@ -320,17 +328,19 @@ of the polynomials.
 
 It is constructed in the following way:
 \begin{enumerate}
-\item The first line of the matrix consists
+\item The first row of the matrix consists
       of the coefficients of the first polynomial
       and $d_2-1$ zeros on the right.
-\item The next line contains one zero of the left
+\item The next row contains one zero on the left
       followed by the coefficients of the first polynomial
       and $d_2-2$ zeros on the right.
 \item We continue this way, incrementing the number
       of zeros on the left and decrementing it on the right
-      until the last coefficient of the polynomial
+      until the number of zeros on the right is zero, that is,
+      the last coefficient of the polynomial
       (the one of lowest degree) hits the end of the row.
-\item Then we repeat the process with the second polynomial.
+\item Then we repeat the process with the second polynomial
+      starting in the next row.
 \end{enumerate}
 
 Imagine the two polynomials
@@ -385,7 +395,7 @@ can be seen as an encoding of certain \term{linear transformations}
 described by the matrix. Those are all concepts from linear algebra
 and will remain somewhat mysterious in this section.
 However, we just want to compute the determinant and that is
-an interesting recursive (and, hence, inefficient) algorithm.
+an interesting recursive algorithm.
 
 The determinant for a $2\times 2$ square matrix $m$ of the form
 
@@ -402,11 +412,11 @@ also written $||m||$, is defined as
 det(m) = ||m|| = ad - bc.
 \end{equation}
 
-It is, thus, a kind of ``cross difference'', \ie\
+It is, thus, a kind of ``cross product difference'', \ie\
 the difference of the products resulting from
 multiplying the elements in the square matrix
 that share neither row nor column. In terms
-of $row:column$ coordinates we have
+of (row,column)-coordinates we have
 $m[0,0]\times m[1,1] - m[0,1]\times m[1,0]$.
 
 When we have an $n\times n$ square matrix
@@ -416,7 +426,7 @@ with $n>2$, we proceed as follows:
 \item We cut off the first row.
 \item For each element $x_i$ in that row
       (the subscript $i$ representing the column within that row),
-      we compute $(-1)^ix_idet(minor_i(m))$
+      we compute $(-1)^ix_i||minor_i(m)||$
       where $minor_i$ is a square matrix formed
       from the original matrix without the first row
       and with the $i$th column removed.
@@ -436,23 +446,23 @@ g & h & i \\
 would be computed as
 
 \begin{equation}
-det(m) = a\left||\begin{smallmatrix}
+||m|| = a\left||\begin{smallmatrix}
           e & f \\ h & i
           \end{smallmatrix} \right||
-       - b\left||\begin{smallmatrix}
-           d & f \\ g & i
-          \end{smallmatrix}\right||
-       + c\left||\begin{smallmatrix}
-           d & e \\ g & h
-          \end{smallmatrix}\right||
+      - b\left||\begin{smallmatrix}
+          d & f \\ g & i
+         \end{smallmatrix}\right||
+      + c\left||\begin{smallmatrix}
+          d & e \\ g & h
+         \end{smallmatrix}\right||
 \end{equation}
 
 For $n\times n$ matrices with $n>3$,
 the process repeats recursively on each
-sub determinant. The process is 
+sub-determinant. The process is 
 called \term{minor expansion formula} (\acronym{mef}),
 since it expands into always more
-minor tables as it proceeds further.
+minor matrices as it proceeds further.
 
 To clarify how the \acronym{mef} proceeds,
 here is a Haskell implementation.
@@ -511,7 +521,7 @@ Finally, we add a top-level function to compute the determinant:
 \end{code}
 \end{minipage}
 
-It is one of the amazing results of linear algebra
+It is one of the many amazing results of linear algebra
 that the determinant of the Sylvester matrix
 of two polynomials is the resultant
 of these polynomials. Furthermore,
@@ -551,7 +561,7 @@ $-1, 2, -3, 4$, which is $x^4 - 2x^3 - 13x^2 + 14x + 24$.
 Here is a Haskell session:
 
 \begin{minipage}{\textwidth}
-|let p = P [24,14-13,-2,1]|\\
+|let p = P [24,14,-13,-2,1]|\\
 |let p' = derivative (*) p|\\
 |let m = sylvester p p'|\\
 |let d = det m|
@@ -583,16 +593,15 @@ $(x-2)(x+3) = x^2 + x - 6$.
 The determinant $d$, now is -25.
 When we compute the discriminant,
 the exponent will be $2\times 1/2$,
-which is 1 and, hence, odd.
+which is 1 and, as such, odd.
 We will hence multiply the determinant
-by -1 and come to the discriminant 25,
+by -1 and arrive at the discriminant 25,
 which we already computed above.
 
 For the polynomial
 $3(x-2)(x+3) = 3x^2 + 3x - 18$,
 we get, following the same recipe,
--675. The minus sign will appear
-according to the same logic and,
+-675. The minus sign will disappear and,
 when we divide the result by the
 leading coefficient, \ie\ $675/3$,
 we get 225 as expected.
@@ -601,38 +610,195 @@ Well, we computed the determinant
 with a recursive formula that expands
 a minor for each column per recursion step.
 For an $n\times n$ matrix with $n>2$,
-we will compute $n$ minors. In the next recursion
+we will compute $n$ minors in the first recursion step.
+In the next recursion
 step, if $n-1>2$, we will for each of those minors
 compute $n-1$ minors and so on.
-How many minor do we compute?
+How many minors do we compute?
 
 We compute $n$ for the first iteration,
 $n-1$ for the second, $n-2$ for the third
-and so on until $n=2$. We hence have
+and so on until $n=2$. We, hence, have
 $n!/2$ recursion steps for an $n\times n$ square matrix.
 For a degree-5 polynomial, since its derivative has
 degree 4, we have a $9\times 9$ matrix and need
 $9!/2 = 181440$ recursion steps.
 For a degree 6 polynomial, we already have an
-$11\times 11$ matrix and, hence, need
+$11\times 11$ matrix and, thus, need
 $11!/2 = 19958400$ recursion steps.
 That is obviously inefficient already for polynomials
-of moderate degrees.
+of moderate degree.
 The algorithm is cute, but does not scale very well.
 
+So, let us look at the alternative related
+to polynomial arithmetic. It is based on the concept
+of \term{pseudo remainders}. This concept is motivated
+by the fact that, for polynomials over a ring
+(like the integers), there is no Euclidean division,
+\ie\ a division resulting in a quotient and a remainder.
+In fact, when we divide polynomials, the coefficients
+of the polynomials do not lie in the original ring
+anymore. They are now fractional and, as such,
+belong to a field ($\mathbb{Q}$ for the ring of integers)
+and that is quite annoying since the \acronym{gcd}
+does not make much sense in a field.
 
+To deal with this, mathematicians invented pseudo remainders.
+The pseudo remainder of two polynomials $p$ and $q$
+is defined as
 
+\begin{equation}
+prem(p,q) = rem(lc(q)^{deg(p)-deg(q)+1}p, q).
+\end{equation}
+
+In plain English: we scale $p$ by the leading coefficient
+of $q$ raised to the power of the difference of the
+degrees of $p$ and $q$ plus one.
+When you go back to the division formula,
+it should be intuitively clear
+that this guarantees that the coefficients
+of the remainder are all integral and,
+as such, still in the ring over which the polynomials
+were defined.
+
+We can define $prem$ in Haskell like this:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  prem :: (Integral a) => Poly a -> Poly a -> Poly a 
+  prem a b = poly $ map numerator (coeffs $ snd (divp x y))
+    where  l   = lc b
+           k   = l^(da-db+1)
+           da  = fromIntegral $ degree a
+           db  = fromIntegral $ degree b
+           a'  = scale k a
+           x   = P (map (%1) $ coeffs a')
+           y   = P (map (%1) $ coeffs b)
+\end{code}
+\end{minipage}
+
+This appears to be a lot of code for such a simple formula.
+Most of the code, however, is related to convert the coefficients
+back and forth between fractional (for which |divp| is defined)
+and integral.
+
+Of course, these remainders are now too big, since the
+first polynomial has been scaled. Therefore mathematicians
+invented yet another trick, namely to reduce the resulting
+remainder by dividing by some number $\alpha$.
+
+To compute the $\gcd$, once replaces the equation
+$r_{i+1} = rem(r_{i-1},r_i)$ by
+
+\begin{equation}
+r_{i+1} = \frac{prem(r_{i-1}, r_i)}{\alpha}
+\end{equation}
+
+Calling this recursively and preserving the intermediate results
+leads to a \term{pseudo-remainder sequence}:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  pgcd ::  (Integral a) =>
+           (Poly a -> a) -> Poly a -> Poly a -> [Poly a]
+  pgcd alpha p q  | zerop q = [p]
+                  | otherwise =
+                      let  r = prem p q
+                           a = alpha r
+                           x = P [numerator (c%a) | c <- coeffs r]
+                      in if zerop r then [] else x : pgcd alpha q x
+\end{code}
+\end{minipage}
+
+The function |pgcd| accepts, besides two polynomials,
+a function that converts a polynomial
+into an integral.
+On each recursion step, it produces the pseudo remainder |r| and
+an $\alpha$ for the remainder and then divides the coefficients
+of the remainder by that number.
+
+The trivial
+pseudo-remainder sequence, for instance, results from
+setting $\alpha = 1$:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  tpgcd :: (Integral a) => Poly a -> Poly a -> [Poly a]
+  tpgcd = pgcd (\_ -> 1)
+\end{code}
+\end{minipage}
+
+The primitive pseudo-remainder sequence, by contrast,
+uses the content of the polynomial resulting in
+a sequence of primitive polynomials:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  ppgcd :: (Integral a) => Poly a -> Poly a -> [Poly a]
+  ppgcd = pgcd content
+\end{code}
+\end{minipage}
+
+And now there is a pseudo-remainder sequence
+whose final element by some weird magic
+has the resultant of the two polynomials
+as its only coefficient!
+We could implement the sequence using
+a second-order function similar to |pgcd|.
+Unfortunately, we need state, since $\alpha$
+does not only depend on the current remainder polynomial,
+but also on the previous $\alpha$.
+We, therefore, present a completely new implementation
+(which is inspired by \term{sympy}, a Python package
+for symbolic computing):
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  spgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
+  spgcd a b =  let  n = degree a
+                    m = degree b
+                    d = n - m
+                    c = scale ((-1)^(d+1)) (prem a b)
+                    l = lc b
+                    z = -(l^d)
+                    k = degree c
+               in c:go z l b c k (m-k)
+    where go c l f g n d  | degree(g) == 0  = []
+                          | otherwise       =
+                             let  y   = (-l) * c^d
+                                  h   = P [x `div` y | x <- coeffs (prem f g)]
+                                  m   = degree h
+                                  l'  = lc g
+                                  c'  | d > 1      = (-l')^d `div` (c^(d-1))
+                                      | otherwise  = -l'
+                             in h:go c' l' g h m (n-m)
+\end{code}
+\end{minipage}
 
 \ignore{
-- discriminants in general terms:
+discuss this code!
+}
+
+We can now define |res| (which we left out above) as:
+
+\begin{minipage}{\textwidth}
+\begin{code}
+  res :: Poly Integer -> Poly Integer -> Integer
+  res a b = head $ coeffs $ last $ spgcd a b
+\end{code}
+\end{minipage}
+
+Now we can compute the discriminant of our polynomial
+just using the |dis| function, which, in its turn,
+computes the discriminant of the polynomial without
+using the roots:
+
+|dis (P [24,14,-13,-2,1])| yields 4410000,
+
+|dis (P [-6,1,1])| yields 25 and
+
+|dis (P [-18,3,3])| yields 225.
+
+\ignore{
 https://www.youtube.com/watch?v=AL5DdIJ9EQU
-- some proofs with Vieta's formulas (see
-  https://de.wikipedia.org/wiki/Diskriminante)
-- Resultant
-- how to compute the resultant?
-- determinant of the sylvester matrix
-- pseudo-remainder sequence
-- subresultant sequence
-- how to compute discriminants:
-  (-1)^(d*(d-1)/2)*RES(f,f') / lc(f)
 }

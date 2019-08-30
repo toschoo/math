@@ -507,8 +507,7 @@ where
   -- Trivial Pseudo-remainder sequence
   -------------------------------------------------------------------------
   tpgcd :: Poly Integer -> Poly Integer -> [Poly Integer]
-  tpgcd = pgcd one
-    where one _ = 1
+  tpgcd = pgcd one where one _ = 1
 
   -------------------------------------------------------------------------
   -- Primitive Pseudo-remainder sequence
