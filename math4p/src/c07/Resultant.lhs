@@ -591,7 +591,7 @@ $(x-2)(x+3) = x^2 + x - 6$.
 |let d = det m|
 \end{minipage}
 
-The determinant $d$, now is -25.
+The determinant $d$ now is -25.
 When we compute the discriminant,
 the exponent will be $2\times 1/2$,
 which is 1 and, as such, odd.
@@ -749,9 +749,9 @@ a second-order function similar to |pgcd|.
 Unfortunately, we need state, since $\alpha$
 does not only depend on the current remainder polynomial,
 but also on the previous $\alpha$.
-We, therefore, present a completely new implementation
+To keep it simple we present a completely new implementation
 (which is inspired by \term{sympy}, a Python package
-for symbolic computing):
+for symbolic computation):
 
 \begin{minipage}{\textwidth}
 \begin{code}
@@ -776,9 +776,31 @@ for symbolic computing):
 \end{code}
 \end{minipage}
 
-\ignore{
-discuss this code!
-}
+The function has two parts: the first step which is performed
+in the body of the function itself and the recursive part
+which is implemented in |go|.
+The first step computes the degrees
+of the polynomials and their difference ($n$, $m$ and $d$),
+an initial value to compute the first alpha ($z$)
+and the first pseudo remainder ($c$).
+
+The subroutine |go| receives $z$ (named $c$ in |go|),
+$l$, the second polynomial ($b$ named $f$ in |go|),
+the first pseudo remainder ($c$, named $g$ in |go|),
+the degree of $c$ and the difference of the degrees of the two
+polynomials passed in ($m-k$ named $d$ in |go|).
+
+|go| computes $y$ (the alpha), the new pseudo remainder $h$,
+the degree of $h$ ($m$) and the next value to compute alpha ($c'$).
+Then, the process repeats. We terminate when the degree
+of the second pseudo remainder is 0.
+
+The function is certainly somewhat confusing.
+But the outstanding fact is that it allows computing
+the resultant of two polynomials
+at roughly the same cost as the \acronym{gcd}.
+There is in particular nothing special involved
+in computing the alpha. 
 
 We can now define |res| (which we left out above) as:
 
@@ -789,7 +811,8 @@ We can now define |res| (which we left out above) as:
 \end{code}
 \end{minipage}
 
-Now we can compute the discriminant of our polynomial
+With that, the implementation of |dis| is complete.
+We can compute the discriminant of our polynomials
 just using the |dis| function, which, in its turn,
 computes the discriminant of the polynomial without
 using the roots:

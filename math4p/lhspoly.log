@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.14)  31 AUG 2019 11:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.14)  6 SEP 2019 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1667,51 +1667,49 @@ di-ate re-sults leads to a \OT1/cmr/m/it/10.95 pseudo-remainder
  [81]
 \openout3 = `lhspoly.ptb'.
 
- [82] [83]
+ [82] [83] [84]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [84]
 \openout3 = `lhspoly.ptb'.
 
  [85] [86] [87] [88]
 \openout3 = `lhspoly.ptb'.
 
  [89]
-Underfull \hbox (badness 10000) in paragraph at lines 8084--8085
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 8104--8105
+Underfull \hbox (badness 10000) in paragraph at lines 8107--8108
 
  []
 
 [90]
-\openout3 = `lhspoly.ptb'.
+Underfull \hbox (badness 10000) in paragraph at lines 8127--8128
+
+ []
 
 \openout3 = `lhspoly.ptb'.
 
- [91] [92] [93]
+\openout3 = `lhspoly.ptb'.
+
+[91] [92] [93]
 \openout3 = `lhspoly.ptb'.
 
  [94]
 \openout3 = `lhspoly.ptb'.
 
- [95] [96] [97] [98]
+ [95] [96] [97] [98] [99]
 \openout3 = `lhspoly.ptb'.
 
- [99]
+ [100]
 \openout3 = `lhspoly.ptb'.
 
 \openout3 = `lhspoly.ptb'.
 
- [100] [101] (./lhspoly.aux) ) 
+ [101] [102] (./lhspoly.aux) ) 
 Here is how much of TeX's memory you used:
  35702 strings out of 493029
  851309 string characters out of 6136233
- 1034063 words of memory out of 5000000
+ 1032063 words of memory out of 5000000
  38723 multiletter control sequences out of 15000+600000
  13468 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1733,10 +1731,10 @@ onts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols
 /msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
 msbm10.pfb>
-Output written on lhspoly.pdf (101 pages, 455973 bytes).
+Output written on lhspoly.pdf (102 pages, 457120 bytes).
 PDF statistics:
- 401 PDF objects out of 1000 (max. 8388607)
- 278 compressed objects within 3 object streams
+ 404 PDF objects out of 1000 (max. 8388607)
+ 280 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
