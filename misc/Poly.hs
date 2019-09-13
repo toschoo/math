@@ -6,7 +6,10 @@ module Poly
 where
 
   import           Data.Function (on)
-  import           Data.List (nub,foldl',sortBy,groupBy,sortOn,intersect,(\\))
+  import           Data.Maybe (fromJust)
+  import           Data.List (nub,foldl',
+                              sort,sortBy,groupBy,sortOn,
+                              intersect,(\\),findIndex)
   import           Data.Ratio
   import           Control.Applicative ((<$>))
   import           Control.Concurrent
@@ -403,15 +406,42 @@ where
   -------------------------------------------------------------------------
   -- XGCD (mod p)
   -------------------------------------------------------------------------
-  xgcdmp :: Integer -> Poly Integer -> Poly Integer -> 
+  _xgcdmp :: Integer -> Poly Integer -> Poly Integer -> 
            (Poly Integer, (Poly Integer, Poly Integer))
-  xgcdmp p a b = go a b (P [1]) (P [0]) (P [0]) (P [1])
+  _xgcdmp p a b = go a b (P [1]) (P [0]) (P [0]) (P [1])
     where go c d uc vc ud vd | zerop c    = (d, (ud, vd))
                              | otherwise  = 
                                let (q, r) = divmp p d c 
                                 in go r c
                                    (subp p ud (mulmp p q uc))
                                    (subp p vd (mulmp p q vc)) uc vc
+
+  xgcdmp :: Integer -> Poly Integer -> Poly Integer -> 
+            (Poly Integer, (Poly Integer, Poly Integer))
+  xgcdmp p a b | zerop a || zerop b = (P[1],(P[1],P[1]))
+                | otherwise = 
+                    let la = lc a
+                        lb = lc b
+                        a' | la == 1 = a
+                           | otherwise = monicp p a
+                        b' | lb == 1 = b
+                           | otherwise = monicp p b
+                        uc = P [M.inverse la p]
+                        vc = P [0]
+                        ud = P [0]
+                        vd = P [M.inverse lb p]
+                     in go a b uc vc ud vd
+    where go c d uc vc ud vd | zerop c    = (d, (ud, vd))
+                             | otherwise  = 
+                               let (q, r) = divmp p d c
+                                   r'     = monicp p r
+                                   l      = M.inverse (lc r) p
+                                   s      = subp p ud (mulmp p q uc)
+                                   t      = subp p vd (mulmp p q vc)
+                                in if zerop r then (c, (uc, vc))
+                                   else go r' c
+                                           (modp p (scale l s))
+                                           (modp p (scale l t)) uc vc
  
   -------------------------------------------------------------------------
   -- GCD (mod p) over list
@@ -451,7 +481,7 @@ where
 
     -- test pair
     let (g,[x,y]) = mxgcdmp p [a,b]
-    when (g /= gcdmp p a b) $ fail "gcd in tuple failed"
+    when (g /= monicp p( gcdmp p a b)) $ fail ("gcd in tuple failed: " ++ show g ++ " | " ++ show (gcdmp p a b))
     let r = addp p (mulmp p x a) (mulmp p y b)
     when (r /= g) (do
          putStrLn ("p " ++ show p ++ ": " ++ show a ++ ", " ++ show b ++ " -> " ++ show g ++ "(" ++ show x ++ ", " ++ show y ++ ")")
@@ -837,6 +867,38 @@ where
     if squarefree p r then return r else msRandomPoly p d
 
   -------------------------------------------------------------------------
+  -- Produce a random squarefree polynomial (modulo p) 
+  -------------------------------------------------------------------------
+  sqRandomPoly :: Integer -> Int -> IO (Poly Integer)
+  sqRandomPoly p d = do
+    r <- randomPoly p d
+    if squarefree p r then return r else msRandomPoly p d
+
+  -------------------------------------------------------------------------
+  -- Produce n distinct random squarefree polynomials (modulo p) 
+  -------------------------------------------------------------------------
+  nSqRandomPolies :: Int -> Integer -> Int -> IO [Poly Integer]
+  nSqRandomPolies n p d = go [] n p d
+    where go rs n p d | n == 0    = return rs
+                      | otherwise = do
+                          x <- sqRandomPoly p d
+                          case findIndex (==x) rs of
+                            Nothing -> go (x:rs) (n-1) p d
+                            Just _  -> go rs n p d
+
+  -------------------------------------------------------------------------
+  -- Produce n distinct random monic squarefree polynomials (modulo p) 
+  -------------------------------------------------------------------------
+  nMsRandomPolies :: Int -> Integer -> Int -> IO [Poly Integer]
+  nMsRandomPolies n p d = go [] n p d
+    where go rs n p d | n == 0    = return rs
+                      | otherwise = do
+                          x <- msRandomPoly p d
+                          case findIndex (==x) rs of
+                            Nothing -> go (x:rs) (n-1) p d
+                            Just _  -> go rs n p d
+
+  -------------------------------------------------------------------------
   -- Produce a random coefficient (modulo p)
   -------------------------------------------------------------------------
   randomCoeff :: Integer -> IO Integer
@@ -1161,21 +1223,11 @@ where
                     in addp p x $ go (n+1) (derivative (modmul p) f)
 
   -------------------------------------------------------------------------
-  -- Hensel lifting
-  -------------------------------------------------------------------------
-  hlift :: Integer -> Integer -> Poly Integer -> Integer -> (Bool, Integer)
-  hlift p x u r = ((apply u' r) `mmod` p /= 0, s `mmod` p')
-    where u' = derivative (modmul p) u
-          a  = (apply u' r) `M.inverse` p'
-          s  = r - (apply u r) * a 
-          p' = p^x
-
-  -------------------------------------------------------------------------
   -- Bound for Hensel lifting
   -------------------------------------------------------------------------
   hbound :: (Num a) => Poly a -> a
   hbound p@(P cs) = 2^d * h * b
-    where h = sum (map abs $ tail cs)
+    where h = sum (map abs $ init cs)
           d = degree p
           b = abs (last cs)
 
@@ -1185,7 +1237,7 @@ where
   pbound :: (Num a, Integral a) => a -> a -> a
   pbound p b = go p 1
     where go q k | q > b = q
-                 | otherwise = let k' = k+1 in go (q^k')  k'
+                 | otherwise = go (q^2) (k+1)
 
   -------------------------------------------------------------------------
   -- compute wang bound
@@ -1196,24 +1248,105 @@ where
            q = fromIntegral r
 
   -------------------------------------------------------------------------
-  -- to compute sum (a_i * w_i) = 1 (mod n):
-  -- doubt: the result is a constant polynomial, but not necessarily P [1]
+  -- one step of hensel lifting
+  -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
   -------------------------------------------------------------------------
-  testas :: Integer -> Poly Integer -> IO ()
-  testas p f = do
-    fs <- cantorzassenhaus p f
-    putStrLn ("factors (mod p): " ++ (show fs))
-    let ws = weights [] (map snd fs)
-    putStrLn ("ws: " ++ (show ws))
-    let (g,as) = mxgcdmp p ws
-    putStrLn ("g | as: " ++ show g ++ " | " ++ show as)
-    let wa =  [mulmp p a w | (a,w) <- zip as ws]
-    putStrLn ("wa: " ++ show wa)
-    let r =  modp p (sump wa)
-    putStrLn ("result: " ++ show r)
-    where weights _  [] = []
-          weights l1 l2 = prodp (mulmp p) (l1 ++ (tail l2)) :
-                          (weights ((head l2):l1) (tail l2))
+  hstep :: Integer -> Poly Integer -> Poly Integer -> Poly Integer ->
+                      Poly Integer -> Poly Integer ->
+                     (Poly Integer, Poly Integer,
+                      Poly Integer, Poly Integer) 
+  hstep p f g h s t = (g', h', s', t')
+    where m     = p^2
+          e     = subp m f (mulmp m g h)
+          (q,r) = divmp m (mulmp m s e) h
+          u     = addp m (mulmp m t e) (mulmp m q g)
+          g'    = addp m g u
+          h'    = addp m h r
+          v     = addp m (mulmp m s g') (mulmp m t h')
+          b     = subp m v (P [1])
+          (c,d) = divmp m (mulmp m s b) h'
+          w     = addp m (mulmp m t b) (mulmp m c g')
+          s'    = subp m s d
+          t'    = subp m t w
+
+  -------------------------------------------------------------------------
+  -- hensel lifting
+  -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
+  -------------------------------------------------------------------------
+  hlift :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
+  hlift p x f fs | r == 1    = [modp (p^x) $ scale (M.inverse l  p^x) f]
+                 | otherwise = let (g', h', _, _) = go d m g h s t
+                                in hlift p x g' (take k fs) ++
+                                   hlift p x h' (drop k fs)
+    where r = length fs
+          l = lc f
+          m = p
+          k = r `div` 2
+          d = ceiling (logBase 2 (fromIntegral x))
+          g  | r == 0 = modp m (P[l])
+             | otherwise = prodp (mulmp m) [mulmp m (modp m (P[l])) a | a <- take k fs] -- ?
+          h  | k+1 >= r = fs!!k
+             | otherwise = prodp (mulmp m) [mulmp m (modp m (fs!!k)) a | a <- drop (k+1) fs] -- ?
+          (_,(s,t)) = xgcdmp m g h
+          go n m g h s t | n == 0    = (g,h,s,t)
+                         | otherwise = let (g',h',s',t') = hstep m f g h s t
+                                        in go (n-1) (m^2) g' h' s' t'
+
+  -------------------------------------------------------------------------
+  -- find primes for zassenhaus
+  -------------------------------------------------------------------------
+  findzps :: Integer -> Integer -> Poly Integer -> [Integer]
+  findzps q b f = take 5 $ filter zp (takeWhile (<=b) (dropWhile (<=q) P.allprimes))
+    where zp p = (l % p /= 0) && (squarefree p f)
+          l    = lc f
+
+  -------------------------------------------------------------------------
+  -- zassenhaus algorithm for factoring squarefree polynomials
+  -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
+  -------------------------------------------------------------------------
+  zassenhaus :: Poly Integer -> IO [Poly Integer]
+  zassenhaus f | n == 1 = return [f]
+               | otherwise = do
+                    (p,fs) <- baseprime 2
+                    if null fs then return [f] else do
+                      let x = ceiling (logBase (fromIntegral p) (fromIntegral (2*bb+1)))
+                      let g = sortOn degree (nub (hlift p x f $ map (modp p) fs))
+                      let rs = go (p^l) $ tail (Perm.ps g)
+                      if null rs then return [f] else return rs
+    where n  = fromIntegral (degree f)
+          l  = lc f
+          c  = head (coeffs f)
+          aa = maximum (map abs $ coeffs f)
+          bb = 2^n*aa*l*sq
+          sq = ceiling (sqrt (fromIntegral (n+1)))
+          cc = (n+1)^(2*n)*aa*(2*n-1)
+          gm = logBase 2 (fromIntegral cc)
+          bound = ceiling (2*gm*(log gm))
+          baseprime q = let ps = findzps q bb f
+                         in if null ps then return (2,[])
+                            else do
+                              fss <- mapM (\p -> (map snd) <$> cantorzassenhaus p (modp p f)) ps
+                              let lss = dropWhile (<=1) $ sort (map length fss)
+                              if null lss then baseprime (maximum ps) else 
+                                 let m = minimum lss
+                                     i = fromJust (findIndex (==m) lss)
+                                  in return ((ps!!i), (fss!!i))
+          go pl [] = []
+          go pl (k:ks) | prodp mul k == f = k
+                       | otherwise = go pl ks
+       
+  testLift :: IO ()
+  testLift = do
+    t <- forM [1..100] (\i -> do
+      ts <- nMsRandomPolies 3 7 2
+      let p = prodp mul ts
+      fs <- zassenhaus p
+      putStrLn (show p ++ " = " ++ "product(" ++ show fs ++ ")")
+      if p /= prodp mul fs then return False 
+         else if sortOn coeffs fs /= sortOn coeffs ts
+              then return False
+              else return True)
+    if and t then putStrLn "PASSED" else putStrLn "FAILED"
 
   -------------------------------------------------------------------------
   -- Numerical root finding

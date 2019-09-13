@@ -83,7 +83,7 @@ where
   mul (Module a1 n) (Module a2 _) = Module (a1 * a2 `rem` n) n
 
   -- this does work only if u * a1 + v * a2 = 1
-  -- and this does work only if a1 and a2 a coprime
+  -- and this does work only if a1 and a2 are coprime
   -- therefore a prime module is a field!
   -- for instance xgcd 6 12 = (2,(1,0))
   -- 1 * 6 + 0 * 12 =/= gcd 6 12, but
