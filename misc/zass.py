@@ -163,8 +163,12 @@ def dup_zz_hensel_lift(p, f, f_list, l, K):
 
     g = gf_from_int_poly([lc], p)
 
+
     for f_i in f_list[:k]:
+        print("g: %s * %s" % (g,f_i))
         g = gf_mul(g, gf_from_int_poly(f_i, p), p, K)
+
+    print("g: %s" % g)
 
     h = gf_from_int_poly(f_list[k], p)
 
@@ -185,6 +189,7 @@ def dup_zz_hensel_lift(p, f, f_list, l, K):
     for _ in range(1, d + 1):
         print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
         (g, h, s, t), m = dup_zz_hensel_step(m, f, g, h, s, t, K), m**2
+    print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
 
     return dup_zz_hensel_lift(p, g, f_list[:k], l, K) \
         + dup_zz_hensel_lift(p, h, f_list[k:], l, K)
@@ -236,6 +241,8 @@ def dup_zz_zassenhaus(f, K):
     modular = [gf_to_int_poly(ff, p) for ff in fsqf]
 
     g = dup_zz_hensel_lift(p, f, modular, l, K)
+
+    print("HENSEL: %s" % g)
 
     sorted_T = range(len(g))
     T = set(sorted_T)
@@ -304,6 +311,8 @@ def dup_zz_zassenhaus(f, K):
 
 if __name__ == "__main__":
   from sympy.polys import ZZ
+
+  """
   rs = dup_zz_hensel_lift(7, [1,24,191,504], [[1,0], [1,1], [1,2]],2, ZZ)
   print("RESULT (hensel):")
   print(rs)
@@ -315,4 +324,14 @@ if __name__ == "__main__":
   print(dup_zz_zassenhaus([1,9,3,15,0,3],ZZ))
   print(dup_zz_zassenhaus([1,0,9,3,10,7],ZZ))
   print(dup_zz_zassenhaus([1,16,16,6,0,8],ZZ))
-  print(dup_zz_zassenhaus([1,4,5,2],ZZ))
+  # print(dup_zz_zassenhaus([1,4,5,2],ZZ))
+
+  rs = dup_zz_hensel_lift(7, [30,180,150,0], [[1,0], [1,1], [1,5]],2, ZZ)
+  print("RESULT (hensel):")
+  print(rs)
+  """
+
+  # fs = dup_zz_zassenhaus([30,180,150,0],ZZ)
+  fs = dup_zz_zassenhaus([3,5,2,0],ZZ)
+  print("RESULT (zassenhaus):")
+  print(fs)

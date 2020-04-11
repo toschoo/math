@@ -199,9 +199,9 @@ where
           go [] = False
           go (p:ps) | c1 p && c2 p && c3 p = True
                     | otherwise            = go ps
-          c1 p = all (\x -> x%p == 0) $ init cs
-          c2 p = (last cs)%p /= 0
-          c3 p = (head cs)%(p^2) /= 0
+          c1 p = all (\x -> x `mod` p == 0) $ init cs
+          c2 p = (last cs) `mod` p /= 0
+          c3 p = (head cs) `mod` (p^2) /= 0
 
   ---------------------------------------------------------------------------
   -- Sort by height
@@ -419,7 +419,7 @@ where
   xgcdmp :: Integer -> Poly Integer -> Poly Integer -> 
             (Poly Integer, (Poly Integer, Poly Integer))
   xgcdmp p a b | zerop a || zerop b = (P[1],(P[1],P[1]))
-                | otherwise = 
+               | otherwise = 
                     let la = lc a
                         lb = lc b
                         a' | la == 1 = a
@@ -430,7 +430,7 @@ where
                         vc = P [0]
                         ud = P [0]
                         vd = P [M.inverse lb p]
-                     in go a b uc vc ud vd
+                     in go a' b' uc vc ud vd
     where go c d uc vc ud vd | zerop c    = (d, (ud, vd))
                              | otherwise  = 
                                let (q, r) = divmp p d c
@@ -484,8 +484,8 @@ where
     when (g /= monicp p( gcdmp p a b)) $ fail ("gcd in tuple failed: " ++ show g ++ " | " ++ show (gcdmp p a b))
     let r = addp p (mulmp p x a) (mulmp p y b)
     when (r /= g) (do
-         putStrLn ("p " ++ show p ++ ": " ++ show a ++ ", " ++ show b ++ " -> " ++ show g ++ "(" ++ show x ++ ", " ++ show y ++ ")")
-         putStrLn ("g: " ++ show g ++ " | " ++ show r)
+         -- putStrLn ("p " ++ show p ++ ": " ++ show a ++ ", " ++ show b ++ " -> " ++ show g ++ "(" ++ show x ++ ", " ++ show y ++ ")")
+         -- putStrLn ("g: " ++ show g ++ " | " ++ show r)
          fail "formula in tuple failed")
 
     -- hundred times!
@@ -1247,8 +1247,16 @@ where
      where m = fromIntegral (pbound p b)
            q = fromIntegral r
 
+  truncmp :: Integer -> Poly Integer -> Poly Integer
+  truncmp p f = poly (map trunc $ coeffs f)
+    where trunc c = let r = c `mod` p
+                     in if r > p `div` 2 then r - p else r
+
   -------------------------------------------------------------------------
   -- one step of hensel lifting
+  -- computes g',h',s',t', such that
+  --      f = g'*h' (mod p^2) and s'*g' + t'*h' = 1 (mod p^2)
+  -- given g, h, s, t fulfilling the equations mod p.
   -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
   -------------------------------------------------------------------------
   hstep :: Integer -> Poly Integer -> Poly Integer -> Poly Integer ->
@@ -1257,39 +1265,84 @@ where
                       Poly Integer, Poly Integer) 
   hstep p f g h s t = (g', h', s', t')
     where m     = p^2
-          e     = subp m f (mulmp m g h)
-          (q,r) = divmp m (mulmp m s e) h
-          u     = addp m (mulmp m t e) (mulmp m q g)
-          g'    = addp m g u
-          h'    = addp m h r
-          v     = addp m (mulmp m s g') (mulmp m t h')
-          b     = subp m v (P [1])
-          (c,d) = divmp m (mulmp m s b) h'
-          w     = addp m (mulmp m t b) (mulmp m c g')
-          s'    = subp m s d
-          t'    = subp m t w
+          e     = truncmp m (sub f (mul g h))               -- f - gh    (mod m) 
+          (q_,r_) = divmp m (mul s e) h              -- se / h    (mod m)
+          q     = truncmp m q_
+          r     = truncmp m r_
+          u     = add (mul t e) (mul q g)   -- te + qg   (mod m)
+          g'    = truncmp m (add g u)                           -- g + u     (mod m)
+          h'    = truncmp m (add h r)                           -- h + r     (mod m)
+          v     = add (mul s g') (mul t h') -- sg' + th' (mod m)
+          b     = truncmp m (sub v (P [1]))                     -- v - 1     (mod m)
+          (c_,d_) = divmp m (mul s b) h'             -- sb / h'   (mod m)
+          c     = truncmp m c_
+          d     = truncmp m d_
+          w     = truncmp m (add (mul t b) (mul c g'))  -- tb + cg'  (mod m)
+          s'    = truncmp m (sub s d)                           -- s - d     (mod m)
+          t'    = truncmp m (sub t w)                           -- t - w     (mod m)
+
+  hstep2 :: Integer -> Poly Integer -> Poly Integer -> Poly Integer ->
+                       Poly Integer -> Poly Integer ->
+                      (Poly Integer, Poly Integer,
+                       Poly Integer, Poly Integer) 
+  hstep2 p f g h s t = (g', h', s', t')
+    where m     = p^2
+          e     = subp m f (mulmp m g h)               -- f - gh    (mod m) 
+          (q,r) = divmp m (mulmp m s e) h              -- se / h    (mod m)
+          u     = addp m (mulmp m t e) (mulmp m q g)   -- te + qg   (mod m)
+          g'    = addp m g u                           -- g + u     (mod m)
+          h'    = addp m h r                           -- h + r     (mod m)
+          v     = addp m (mulmp m s g') (mulmp m t h') -- sg' + th' (mod m)
+          b     = subp m v (P [1])                     -- v - 1     (mod m)
+          (c,d) = divmp m (mulmp m s b) h'             -- sb / h'   (mod m)
+          w     = addp m (mulmp m t b) (mulmp m c g')  -- tb + cg'  (mod m)
+          s'    = subp m s d                           -- s - d     (mod m)
+          t'    = subp m t w                           -- t - w     (mod m)
 
   -------------------------------------------------------------------------
   -- hensel lifting
   -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
   -------------------------------------------------------------------------
-  hlift :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
-  hlift p x f fs | r == 1    = [modp (p^x) $ scale (M.inverse l  p^x) f]
-                 | otherwise = let (g', h', _, _) = go d m g h s t
+  hlift2 :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
+  hlift2 p x f fs | r == 1    = [modp (p^x) $ scale (M.inverse l  (p^x)) f] -- base case: factor scaled by inverse of lc
+                 | otherwise = let (g', h', _, _) = go d p g h s t       -- hlift
                                 in hlift p x g' (take k fs) ++
                                    hlift p x h' (drop k fs)
     where r = length fs
-          l = lc f
-          m = p
+          l = lc f -- mod p?
           k = r `div` 2
-          d = ceiling (logBase 2 (fromIntegral x))
-          g  | r == 0 = modp m (P[l])
-             | otherwise = prodp (mulmp m) [mulmp m (modp m (P[l])) a | a <- take k fs] -- ?
+          d = floor (logBase 2 (fromIntegral x)) + 1
+          g  | r == 0 = modp p (P[l])
+             | otherwise = prodp (mulmp p) (P[l]:(take k fs)) -- [mulmp p (modp p (P[l])) a | a <- take k fs] -- product (lc * fs[i])
           h  | k+1 >= r = fs!!k
-             | otherwise = prodp (mulmp m) [mulmp m (modp m (fs!!k)) a | a <- drop (k+1) fs] -- ?
-          (_,(s,t)) = xgcdmp m g h
+             | otherwise = prodp (mulmp p) (drop k fs) -- product (fs[k] * fs[k+i])
+          (_,(s,t)) = xgcdmp p g h
           go n m g h s t | n == 0    = (g,h,s,t)
-                         | otherwise = let (g',h',s',t') = hstep m f g h s t
+                         | otherwise = let (g',h',s',t') =
+                                             {- trace ("G: " ++ show g ++ ", H: " ++ show h ++ ", S: " ++ show s ++ ", T: " ++ show t) $ -}
+                                             hstep m f g h s t
+                                        in go (n-1) (m^2) g' h' s' t'
+
+  hlift :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
+  hlift p x f fs | r == 1    = [modp (p^x) $ scale (M.inverse l  (p^x)) f] -- base case: factor scaled by inverse of lc
+                 | otherwise = let (g', h', _, _) = go d p g h s t       -- hlift
+                                in hlift p x g' (take k fs) ++
+                                   hlift p x h' (drop k fs)
+    where r = length fs
+          l = lc f -- mod p?
+          k = r `div` 2
+          d = floor (logBase 2 (fromIntegral x)) + 1
+          g  | r == 0 = truncmp p (P[l])
+             | otherwise = prodp mul $ map (truncmp p) (P[l]:(take k fs)) -- [mulmp p (modp p (P[l])) a | a <- take k fs] -- product (lc * fs[i])
+          h  | k+1 >= r = truncmp p (fs!!k)
+             | otherwise = prodp mul (map (truncmp p) $ drop k fs) -- product (fs[k] * fs[k+i])
+          (_,(s_,t_)) = xgcdmp p g h
+          s = truncmp p s_
+          t = truncmp p t_
+          go n m g h s t | n == 0    = (g,h,s,t)
+                         | otherwise = let (g',h',s',t') =
+                                             {- trace ("G: " ++ show g ++ ", H: " ++ show h ++ ", S: " ++ show s ++ ", T: " ++ show t) $ -}
+                                             hstep m f g h s t
                                         in go (n-1) (m^2) g' h' s' t'
 
   -------------------------------------------------------------------------
@@ -1297,8 +1350,22 @@ where
   -------------------------------------------------------------------------
   findzps :: Integer -> Integer -> Poly Integer -> [Integer]
   findzps q b f = take 5 $ filter zp (takeWhile (<=b) (dropWhile (<=q) P.allprimes))
-    where zp p = (l % p /= 0) && (squarefree p f)
+    where zp p = (l `mod` p /= 0) && (squarefree p f)
           l    = lc f
+
+  -------------------------------------------------------------------------
+  -- filter factors for zassenhaus
+  -- this is not so easy!!!
+  -------------------------------------------------------------------------
+  filterzfs :: Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
+  filterzfs pl f fs = let ps = tail (Perm.ps fs) -- we use the powerset! not working in practice!
+                       in {- trace ("ps: " ++ show ps) $ -} go ps
+    where l = lc f
+          lp = P[l]
+          go [] = []
+          go (k:ks) | prodp mul (filter (not . zerop) k) == f = k -- do we need lc ?
+                    | prodp mul (filter (not . zerop) (lp:k)) == f = lp:k -- do we need lc ?
+                    | otherwise = {- trace ("k: " ++ show ((lp:k)) ++ ", " ++  show (prodp mul (filter (not . zerop) (lp:k)))) $ -} go ks
 
   -------------------------------------------------------------------------
   -- zassenhaus algorithm for factoring squarefree polynomials
@@ -1307,18 +1374,85 @@ where
   zassenhaus :: Poly Integer -> IO [Poly Integer]
   zassenhaus f | n == 1 = return [f]
                | otherwise = do
+                    (p,fs) <- bpfactors 2
+                    -- putStrLn ("smallest set of factors: " ++ show fs)
+                    if null fs then return [f] else 
+                      let x = ceiling (logBase (fromIntegral p) (fromIntegral (2*bb+1)))
+                          g = sortOn degree (nub (hlift p x f fs)) -- $ map (modp p) fs)) -- hensel lifting
+                          h = map primitive g
+                          rs = filterzfs (p^l) f h
+                       in do
+                         -- putStrLn ("g : " ++ show g)
+                         -- putStrLn ("h : " ++ show h)
+                         -- putStrLn ("rs: " ++ show rs)
+                         if null rs then return [f] else return rs
+    where n  = fromIntegral (degree f)
+          l  = lc f                            -- leading coefficient
+          aa = maximum (map abs $ coeffs f)    -- greatest coefficient
+          bb = 2^n*aa*l*sq                     -- bound for base
+          sq = ceiling (sqrt (fromIntegral (n+1))) -- sqrt of number of coefficients
+          bpfactors q = let ps = findzps q bb f    -- baseprime factors
+                         in if null ps then return (2,[])
+                            else {- trace ("primes: " ++ show ps) $ -} do
+                              -- putStrLn ("LC(f): " ++ show l)
+                              fss <- mapM (\p -> (map snd) <$> cantorzassenhaus p (monicp p f)) ps
+                              -- putStrLn ("factors: " ++ show fss)
+                              let lss = dropWhile (<=1) $ sort (map length fss)
+                              if null lss then bpfactors (maximum ps) else 
+                                 let m = minimum lss
+                                     i = fromJust (findIndex (==m) lss)
+                                  in return ((ps!!i), (fss!!i))
+       
+  -------------------------------------------------------------------------
+  -- test zassenhaus algorithm
+  -------------------------------------------------------------------------
+  testLift :: IO ()
+  testLift = do
+    t <- forM [1..100] (\i -> do
+      ts <- nSqRandomPolies 3 7 2
+      let p = prodp mul ts
+      let pc = content p
+      let pp = primitive p
+      fs <- zassenhaus pp
+      showeq p pc fs ts
+      if p /= prodp mul fs then return False 
+         else if sortOn coeffs fs /= sortOn coeffs ts
+              then return False
+              else return True)
+    if and t then putStrLn "PASSED" else putStrLn "FAILED"
+    where showeq p pc fs ts = do
+          -- when (length fs /= 3) $ putStrLn ("NOT FOUND: " ++ show (ts))
+          if pc /= 1 
+             then putStrLn (show p ++ " = " ++ "product(" ++ show (P[pc]:fs) ++ ")")
+             else putStrLn (show p ++ " = " ++ "product(" ++ show fs ++ ")")
+          
+       
+  -------------------------------------------------------------------------
+  -- test zassenhaus algorithm
+  -------------------------------------------------------------------------
+  factorpoly :: Poly Integer -> IO [Poly Integer]
+  factorpoly = zassenhaus
+
+  -------------------------------------------------------------------------
+  -- zassenhaus algorithm before 09/04/2020
+  -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
+  -------------------------------------------------------------------------
+  {-
+  zassenhaus :: Poly Integer -> IO [Poly Integer]
+  zassenhaus f | n == 1 = return [f]
+               | otherwise = do
                     (p,fs) <- baseprime 2
                     if null fs then return [f] else do
                       let x = ceiling (logBase (fromIntegral p) (fromIntegral (2*bb+1)))
                       let g = sortOn degree (nub (hlift p x f $ map (modp p) fs))
-                      let rs = go (p^l) $ tail (Perm.ps g)
+                      let rs = filterzfs (p^l) f g
                       if null rs then return [f] else return rs
     where n  = fromIntegral (degree f)
-          l  = lc f
-          c  = head (coeffs f)
-          aa = maximum (map abs $ coeffs f)
-          bb = 2^n*aa*l*sq
-          sq = ceiling (sqrt (fromIntegral (n+1)))
+          l  = lc f                            -- leading coefficient
+          aa = maximum (map abs $ coeffs f)    -- greatest coefficient
+          bb = 2^n*aa*l*sq                     -- bound for base
+          sq = ceiling (sqrt (fromIntegral (n+1))) -- sqrt of number of coefficients
+          c  = head (coeffs f)                 -- constant coefficient
           cc = (n+1)^(2*n)*aa*(2*n-1)
           gm = logBase 2 (fromIntegral cc)
           bound = ceiling (2*gm*(log gm))
@@ -1331,22 +1465,8 @@ where
                                  let m = minimum lss
                                      i = fromJust (findIndex (==m) lss)
                                   in return ((ps!!i), (fss!!i))
-          go pl [] = []
-          go pl (k:ks) | prodp mul k == f = k
-                       | otherwise = go pl ks
+  -}
        
-  testLift :: IO ()
-  testLift = do
-    t <- forM [1..100] (\i -> do
-      ts <- nMsRandomPolies 3 7 2
-      let p = prodp mul ts
-      fs <- zassenhaus p
-      putStrLn (show p ++ " = " ++ "product(" ++ show fs ++ ")")
-      if p /= prodp mul fs then return False 
-         else if sortOn coeffs fs /= sortOn coeffs ts
-              then return False
-              else return True)
-    if and t then putStrLn "PASSED" else putStrLn "FAILED"
 
   -------------------------------------------------------------------------
   -- Numerical root finding
