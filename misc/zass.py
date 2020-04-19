@@ -335,3 +335,8 @@ if __name__ == "__main__":
   fs = dup_zz_zassenhaus([3,5,2,0],ZZ)
   print("RESULT (zassenhaus):")
   print(fs)
+
+  st = range(len([1,2,3]))
+  T = set(st)
+  print(T)
+  (subsets(T))

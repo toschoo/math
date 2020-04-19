@@ -105,6 +105,12 @@ where
     where c = content p
 
   ---------------------------------------------------------------------------
+  -- Norm
+  ---------------------------------------------------------------------------
+  norm :: Poly Integer -> Integer
+  norm p = sum [abs c | c <- coeffs p]
+
+  ---------------------------------------------------------------------------
   -- Height of a polynomial over the integers (Cantor)
   ---------------------------------------------------------------------------
   height :: Poly Integer -> Integer
@@ -1366,6 +1372,29 @@ where
           go (k:ks) | prodp mul (filter (not . zerop) k) == f = k -- do we need lc ?
                     | prodp mul (filter (not . zerop) (lp:k)) == f = lp:k -- do we need lc ?
                     | otherwise = {- trace ("k: " ++ show ((lp:k)) ++ ", " ++  show (prodp mul (filter (not . zerop) (lp:k)))) $ -} go ks
+
+  extractfs :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
+  extractfs pl bb f fs = go 0 (Perm.ps [0..length fs])
+    where fl = lc f
+          qtest q = let p | q > pl `div` 2 = q - pl
+                          | otherwise = q
+                     in if p == 0 then False else (fl `mod` q) /= 0
+          go k is | k > (length is) `div` 2 = []
+                  | otherwise = let r = ffac f (filter (\i -> k==length i) is)
+                                 in if null r then go (k+1) is else r++go k is
+          ffac _ [] = []
+          ffac x (p:ps) = let l = lc x
+                              fs' = [fs!!i | i <- p]
+                              fp' = [fs!!i | i <- ([0..length fs] \\ p)] 
+                              g = truncmp pl (mul (poly [l]) (prodp mul fs'))
+                              h = truncmp pl (mul (poly [l]) (prodp mul fp'))
+                              q | l == 1    = product (map lc fs) `mod` pl
+                                | otherwise = lc (primitive g)
+                              t | l == 1    = qtest q
+                                | otherwise = q /= 0 && fl `mod` q /= 0
+                           in if t || (norm g) * (norm h) > bb
+                              then ffac x ps
+                              else (primitive g):ffac (primitive h) ps
 
   -------------------------------------------------------------------------
   -- zassenhaus algorithm for factoring squarefree polynomials
