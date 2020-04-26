@@ -1910,7 +1910,7 @@ therefore be:
 \>[3]{}\mathbf{instance}\;\Conid{Show}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\tt \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\ttfamily \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\ttfamily \char34 )\char34}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -2164,7 +2164,7 @@ Now we make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Num}}:
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 subtraction~beyond~zero!\char34}{}\<[E]%
+\>[40]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 subtraction~beyond~zero!\char34}{}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
@@ -3020,7 +3020,7 @@ which can be implemented in Haskell as
 \\
 \>[3]{}\Varid{gammaho}\;\Varid{n}{}\<[14]%
 \>[14]{}\mid \Varid{even}\;\Varid{n}{}\<[27]%
-\>[27]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~an~odd~number!\char34}{}\<[E]%
+\>[27]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~an~odd~number!\char34}{}\<[E]%
 \\
 \>[14]{}\mid \Varid{otherwise}{}\<[27]%
 \>[27]{}\mathrel{=}\Varid{rff}\;(\Varid{n}\mathbin{-}\mathrm{2})\mathbin{/}\mathrm{2}\mathbin{**}\Varid{i}{}\<[E]%
@@ -5183,7 +5183,7 @@ mapping \ensuremath{\Varid{triple}} on \ensuremath{[\mskip1.5mu \mathrm{1}\mathi
 \begin{minipage}{\textwidth}
 \begin{center}
 \begingroup
-\tt
+\ttfamily
 (+00001 +00001 +00002) (+00001 -00001 +00002) (+00000 +00001 +00001)\\
 (+00003 +00001 +00002) (+00003 -00001 +00002) (+00000 +00001 +00001)\\
 (+00002 +00001 +00001) (+00002 -00001 +00001) (+00000 +00002 +00001)\\

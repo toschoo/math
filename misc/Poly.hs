@@ -337,6 +337,36 @@ where
           db = degree (P bs)
 
   -------------------------------------------------------------------------
+  -- Euclidean Division (infinite field)
+  -------------------------------------------------------------------------
+  divpe2 :: (Show a, Num a, Eq a, Integral a, Ord a) => 
+            Poly a -> Poly a -> (Poly a,Poly a)
+  divpe2 a b = let (q,r) = go [] (coeffs a') in (P q, P r)
+    where a' = scale (lc b) a
+          bs = coeffs b
+          db = degree b
+          go q r | degree (P r) < db  = (q,r)
+                 | null r || r == [0] = (q,r)
+                 | otherwise          = trace (show (q,r)) $
+                     let t  = last r `div` last bs
+                         d  = degree (P r) - db
+                         ts = zeros d ++ [t]
+                         m  = mulist ts bs
+                      in go (cleanz $ strichlist (+) q ts)
+                            (cleanz $ strichlist (-) r m)
+
+  divpe :: (Show a, Num a, Eq a, Integral a, Ord a) => 
+            Poly a -> Poly a -> (Poly a,Poly a, a)
+  divpe a b | d <  0 = (P[0], a, 1)
+            | otherwise = trace (show t) $
+                          let (q,r,c) = divpe (scale lb a) (mul t b)
+                           in (add (scale c t) q, r, c*la)
+    where d = degree a - degree b
+          lb = lc b
+          la = lc a
+          t  = P (zeros d ++ [lb])
+
+  -------------------------------------------------------------------------
   -- Division (mod p)
   -------------------------------------------------------------------------
   divmp :: Integer -> 
@@ -387,6 +417,15 @@ where
   gcdp a b | degree b > degree a = gcdp b a
            | zerop b = a
            | otherwise = let (_,r) = divp a b in gcdp b r
+
+  -------------------------------------------------------------------------
+  -- GCD (infinite field, integal)
+  -------------------------------------------------------------------------
+  gcdpe :: (Show a, Num a, Eq a, Integral a, Ord a) => 
+            Poly a -> Poly a -> Poly a
+  gcdpe a b | degree b > degree a = gcdpe b a
+            | zerop b = a
+            | otherwise = let (_,r,_) = divpe a b in gcdpe b r
 
   -------------------------------------------------------------------------
   -- XGCD
@@ -705,6 +744,18 @@ where
   squarefree :: Integer -> Poly Integer -> Bool
   squarefree p u = degree (gcdmp p u (derivative (modmul p) u)) == 0
 
+  -------------------------------------------------------------------------
+  -- Get squarefree part (infinite field)
+  -------------------------------------------------------------------------
+  squarefreepart :: Poly Integer -> Poly Integer
+  squarefreepart f | degree g == 0 = f
+                   | otherwise = let (q,_,_) = divpe a g
+                                  in primitive q
+    where l = lc f
+          a | l < 0 = P [(-c) | c <- coeffs f]
+            | otherwise = f
+          g = gcdpe a (derivative (*) a)
+          
   -------------------------------------------------------------------------
   -- Squared factor
   -------------------------------------------------------------------------
@@ -1374,18 +1425,22 @@ where
                     | otherwise = {- trace ("k: " ++ show ((lp:k)) ++ ", " ++  show (prodp mul (filter (not . zerop) (lp:k)))) $ -} go ks
 
   extractfs :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
-  extractfs pl bb f fs = go 0 (Perm.ps [0..length fs])
+  extractfs pl bb f fs = go 0 (tail $ Perm.ps [0..s])
     where fl = lc f
+          s  = (length fs) - 1
           qtest q = let p | q > pl `div` 2 = q - pl
                           | otherwise = q
                      in if p == 0 then False else (fl `mod` q) /= 0
-          go k is | k > (length is) `div` 2 = []
-                  | otherwise = let r = ffac f (filter (\i -> k==length i) is)
-                                 in if null r then go (k+1) is else r++go k is
-          ffac _ [] = []
-          ffac x (p:ps) = let l = lc x
+          go :: Int -> [[Int]] -> [Poly Integer]
+          go k is | k > (length fs) `div` 2 = []
+                  | otherwise = let (ms,r) = ffac f (filter (\i -> k==length i) is)
+                                 in if null r then go (k+1) is else r++go k (is \\ ms)
+          ffac :: Poly Integer -> [[Int]] -> ([[Int]], [Poly Integer])
+          ffac _ [] = ([],[])
+          ffac x (p:ps) = -- trace ("ffac: " ++ show x ++ ", " ++ show p) $
+                          let l = lc x
                               fs' = [fs!!i | i <- p]
-                              fp' = [fs!!i | i <- ([0..length fs] \\ p)] 
+                              fp' = [fs!!i | i <- ([0..s] \\ p)] 
                               g = truncmp pl (mul (poly [l]) (prodp mul fs'))
                               h = truncmp pl (mul (poly [l]) (prodp mul fp'))
                               q | l == 1    = product (map lc fs) `mod` pl
@@ -1393,9 +1448,10 @@ where
                               t | l == 1    = qtest q
                                 | otherwise = q /= 0 && fl `mod` q /= 0
                            in if t || (norm g) * (norm h) > bb
-                              then ffac x ps
-                              else (primitive g):ffac (primitive h) ps
-
+                              then ffac x ps 
+                              else let (ps',rs) = ffac (primitive h) ps
+                                    in (p:ps', (primitive g):rs)
+                                    
   -------------------------------------------------------------------------
   -- zassenhaus algorithm for factoring squarefree polynomials
   -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
@@ -1409,7 +1465,8 @@ where
                       let x = ceiling (logBase (fromIntegral p) (fromIntegral (2*bb+1)))
                           g = sortOn degree (nub (hlift p x f fs)) -- $ map (modp p) fs)) -- hensel lifting
                           h = map primitive g
-                          rs = filterzfs (p^l) f h
+                          -- rs = filterzfs (p^l) f h
+                          rs = extractfs (p^l) bb f h
                        in do
                          -- putStrLn ("g : " ++ show g)
                          -- putStrLn ("h : " ++ show h)
@@ -1431,6 +1488,33 @@ where
                                  let m = minimum lss
                                      i = fromJust (findIndex (==m) lss)
                                   in return ((ps!!i), (fss!!i))
+
+  -------------------------------------------------------------------------
+  -- Factor polynomials using zassenhaus algorithm
+  -- https://docs.sympy.org/0.7.3/_modules/sympy/polys/factortools.html
+  -------------------------------------------------------------------------
+  factorp :: Poly Integer -> IO [Poly Integer]
+  factorp f | degree f <= 1 = return [P[c], g]
+            | otherwise     = do 
+              fs <- zassenhaus s
+              putStrLn (show fs)
+              let rs = fs -- trialdiv s fs
+              if c /= 1 then return (P[c]:rs) else return rs
+    where c = content f
+          g = primitive f
+          l = lc g
+          h | l < 0 = P [-c | c <- coeffs g]
+            | otherwise = g
+          s = squarefreepart h
+  
+  -------------------------------------------------------------------------
+  -- Trial division
+  -------------------------------------------------------------------------
+  trialdiv :: Poly Integer -> [Poly Integer] -> [Poly Integer]
+  trialdiv _ [] = []
+  trialdiv f (p:ps) = go f p ++ trialdiv f ps
+    where go a d = let (q,r,_) = f `divpe` d
+                    in if zerop r then d:go q d else []
        
   -------------------------------------------------------------------------
   -- test zassenhaus algorithm
@@ -1438,15 +1522,15 @@ where
   testLift :: IO ()
   testLift = do
     t <- forM [1..100] (\i -> do
-      ts <- nSqRandomPolies 3 7 2
+      ts <- nMsRandomPolies 3 7 2
       let p = prodp mul ts
       let pc = content p
       let pp = primitive p
       fs <- zassenhaus pp
       showeq p pc fs ts
-      if p /= prodp mul fs then return False 
+      if p /= prodp mul (P[pc]:fs) then return False 
          else if sortOn coeffs fs /= sortOn coeffs ts
-              then return False
+              then return True --False
               else return True)
     if and t then putStrLn "PASSED" else putStrLn "FAILED"
     where showeq p pc fs ts = do

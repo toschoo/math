@@ -492,7 +492,7 @@ Here is a function to pretty-print polynomials:
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{go}\;{}\<[16]%
-\>[16]{}[\mskip1.5mu \mskip1.5mu]\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[16]{}[\mskip1.5mu \mskip1.5mu]\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[12]{}\Varid{go}\;{}\<[16]%
 \>[16]{}((\Varid{i},\Varid{c})\mathbin{:}\Varid{cs})\mathrel{=}{}\<[30]%
@@ -500,15 +500,15 @@ Here is a function to pretty-print polynomials:
 \>[35]{}\Varid{x}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{i}\equiv \mathrm{0}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{i}\equiv \mathrm{1}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 x\char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 x\char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{otherwise}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 x\char94 \char34}\plus \Varid{show}\;\Varid{i}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 x\char94 \char34}\plus \Varid{show}\;\Varid{i}{}\<[E]%
 \\
 \>[35]{}\Varid{t}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
@@ -522,11 +522,11 @@ Here is a function to pretty-print polynomials:
 \>[35]{}\Varid{o}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{null}\;\Varid{cs}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{otherwise}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 ~+~\char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 ~+~\char34}{}\<[E]%
 \\
 \>[30]{}\mathbf{in}\;\mathbf{if}\;\Varid{c}\equiv \mathrm{0}\;\mathbf{then}\;\Varid{go}\;\Varid{cs}\;\mathbf{else}\;\Varid{t}\plus \Varid{o}\plus \Varid{go}\;\Varid{cs}{}\<[E]%
 \\[\blanklineskip]%
@@ -6965,7 +6965,7 @@ Finally, we add a top-level function to compute the determinant:
 \\
 \>[3]{}\Varid{det}\;\Varid{m}{}\<[10]%
 \>[10]{}\mid \neg \;(\Varid{square}\;\Varid{m}){}\<[28]%
-\>[28]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~a~square~matrix\char34}{}\<[E]%
+\>[28]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~a~square~matrix\char34}{}\<[E]%
 \\
 \>[10]{}\mid \Varid{otherwise}{}\<[28]%
 \>[28]{}\mathrel{=}\Varid{mef}\;(\Varid{rows}\;\Varid{m}){}\<[E]%

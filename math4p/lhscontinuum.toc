@@ -1,4 +1,4 @@
-\select@language {english}
+\babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}The Continuum}{2}
 \contentsline {section}{\numberline {1.1}$\sqrt {2}$}{2}
 \contentsline {section}{\numberline {1.2}$\Phi $}{4}

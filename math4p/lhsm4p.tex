@@ -1734,10 +1734,10 @@ We would define a conversion function of the form
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{toChar}\;\Conid{Zero}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '0'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '0'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{One}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '1'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '1'}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -1751,28 +1751,28 @@ We would define a conversion function of the form
 \column{26}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[12]{}\Varid{toChar}\;\Conid{Two}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '2'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '2'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Three}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '3'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '3'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Four}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '4'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '4'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Five}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '5'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '5'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Six}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '6'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '6'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Seven}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '7'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '7'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Eight}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '8'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '8'}{}\<[E]%
 \\
 \>[12]{}\Varid{toChar}\;\Conid{Nine}{}\<[26]%
-\>[26]{}\mathrel{=}\text{\tt '9'}{}\<[E]%
+\>[26]{}\mathrel{=}\text{\ttfamily '9'}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -2775,7 +2775,7 @@ and increment $q$ by one:
 \>[3]{}\Varid{quotRem}\mathbin{::}\Conid{Number}\to \Conid{Number}\to (\Conid{Number},\Conid{Number}){}\<[E]%
 \\
 \>[3]{}\Varid{quotRem}\;\anonymous \;[\mskip1.5mu \Conid{Zero}\mskip1.5mu]{}\<[21]%
-\>[21]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 division~by~zero\char34}{}\<[E]%
+\>[21]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 division~by~zero\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{quotRem}\;[\mskip1.5mu \Conid{Zero}\mskip1.5mu]\;\anonymous {}\<[21]%
 \>[21]{}\mathrel{=}(\Varid{zero},\Varid{zero}){}\<[E]%
@@ -2838,7 +2838,7 @@ admittedly, scary-looking listing:
 \\
 \>[3]{}\Varid{quotRem2}\;\anonymous \;[\mskip1.5mu \Conid{Zero}\mskip1.5mu]{}\<[24]%
 \>[24]{}\mathrel{=}{}\<[24E]%
-\>[27]{}\Varid{error}\;\text{\tt \char34 division~by~zero\char34}{}\<[E]%
+\>[27]{}\Varid{error}\;\text{\ttfamily \char34 division~by~zero\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{quotRem2}\;[\mskip1.5mu \Conid{Zero}\mskip1.5mu]\;\anonymous {}\<[24]%
 \>[24]{}\mathrel{=}{}\<[24E]%
@@ -4897,7 +4897,7 @@ Here is the code:
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}(\Conid{N}\;\Varid{as})\mathbin{-}(\Conid{N}\;\Varid{bs})\mid \Varid{cmp}\;\Varid{as}\;\Varid{bs}\equiv \Conid{LT}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 subtraction~below~zero\char34}{}\<[E]%
+\>[40]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 subtraction~below~zero\char34}{}\<[E]%
 \\
 \>[5]{}\hsindent{16}{}\<[21]%
 \>[21]{}\mid \Varid{otherwise}{}\<[40]%
@@ -4974,7 +4974,7 @@ and \ensuremath{\Varid{fromEnum}}, the opposite conversion:
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{pred}\;(\Conid{N}\;[\mskip1.5mu \Conid{Zero}\mskip1.5mu]){}\<[22]%
-\>[22]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 zero~has~no~predecessor\char34}{}\<[E]%
+\>[22]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 zero~has~no~predecessor\char34}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{pred}\;(\Conid{N}\;\Varid{n}){}\<[22]%
@@ -5235,27 +5235,27 @@ with the concatenation operation \ensuremath{\plus }.
 First note that \acronym{str} is closed under concatenation,
 since, for any strings $a$ and $b$, it holds that (using Haskell syntax)
 \ensuremath{\Varid{a}\plus \Varid{b}} is again a string, \eg\:
-\ensuremath{\text{\tt \char34 hello~\char34}\plus \text{\tt \char34 world\char34}\equiv \text{\tt \char34 hello~world\char34}}.
+\ensuremath{\text{\ttfamily \char34 hello~\char34}\plus \text{\ttfamily \char34 world\char34}\equiv \text{\ttfamily \char34 hello~world\char34}}.
 
 Then, the associative law holds, since for any three strings,
 $a$, $b$ and $c$:
 \ensuremath{\Varid{a}\plus (\Varid{b}\plus \Varid{c})\equiv (\Varid{a}\plus \Varid{b})\plus \Varid{c}\equiv \Varid{a}\plus \Varid{b}\plus \Varid{c}},
 for instance:
-\ensuremath{\text{\tt \char34 hello\char34}\plus (\text{\tt \char34 ~\char34}\plus \text{\tt \char34 world\char34})\equiv }
-\ensuremath{(\text{\tt \char34 hello\char34}\plus \text{\tt \char34 ~\char34})\plus \text{\tt \char34 world\char34}\equiv } 
-\ensuremath{\text{\tt \char34 hello~world\char34}}.
+\ensuremath{\text{\ttfamily \char34 hello\char34}\plus (\text{\ttfamily \char34 ~\char34}\plus \text{\ttfamily \char34 world\char34})\equiv }
+\ensuremath{(\text{\ttfamily \char34 hello\char34}\plus \text{\ttfamily \char34 ~\char34})\plus \text{\ttfamily \char34 world\char34}\equiv } 
+\ensuremath{\text{\ttfamily \char34 hello~world\char34}}.
 
 Next, there is an identity, \viz\ the empty string "",
 such that:
-\ensuremath{\Varid{a}\plus \text{\tt \char34 \char34}\equiv \text{\tt \char34 \char34}\plus \Varid{a}\equiv \Varid{a}},
+\ensuremath{\Varid{a}\plus \text{\ttfamily \char34 \char34}\equiv \text{\ttfamily \char34 \char34}\plus \Varid{a}\equiv \Varid{a}},
 for instance:
-\ensuremath{\text{\tt \char34 hello~world\char34}\plus \text{\tt \char34 \char34}\equiv \text{\tt \char34 hello~world\char34}}.
+\ensuremath{\text{\ttfamily \char34 hello~world\char34}\plus \text{\ttfamily \char34 \char34}\equiv \text{\ttfamily \char34 hello~world\char34}}.
 
 Note, however, that the \acronym{str} monoid
 is not commutative:
 \ensuremath{\Varid{a}\plus \Varid{b}\not\equiv \Varid{b}\plus \Varid{a}},
 for instance:
-\ensuremath{\text{\tt \char34 hello~\char34}\plus \text{\tt \char34 world\char34}\not\equiv \text{\tt \char34 world\char34}\plus \text{\tt \char34 hello~\char34}}.
+\ensuremath{\text{\ttfamily \char34 hello~\char34}\plus \text{\ttfamily \char34 world\char34}\not\equiv \text{\ttfamily \char34 world\char34}\plus \text{\ttfamily \char34 hello~\char34}}.
 
 The term \term{semigroup} suggests
 that there is also something called a \term{group},
@@ -5904,7 +5904,7 @@ from going through all the additions in the $go$ function?
 When we look at the results of the first $9$ numbers
 calling oddSum1 as  
 
-\begin{tabbing}\tt
+\begin{tabbing}\ttfamily
 ~~~map~oddSum1~\char91{}1\char46{}\char46{}9\char93{}
 \end{tabbing}
 
@@ -14097,7 +14097,7 @@ For this reason, we will use a guard on all operations:
 \>[16]{}\Varid{y}\mathord{@}(\Conid{Module}\;\Varid{n'}\;{}\<[30]%
 \>[30]{}\Varid{b}){}\<[34]%
 \>[34]{}\mid \Varid{n}\not\equiv \Varid{n'}{}\<[47]%
-\>[47]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 different~moduli\char34}{}\<[E]%
+\>[47]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 different~moduli\char34}{}\<[E]%
 \\
 \>[34]{}\mid \Varid{otherwise}{}\<[47]%
 \>[47]{}\mathrel{=}\Varid{x}\mathbin{`\Varid{o}`}\Varid{y}{}\<[E]%
@@ -19371,7 +19371,7 @@ to all involved parties when it is called:
 \>[9]{}\leftarrow \Varid{readChan}\;\Varid{inch}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{unless}\;(\Varid{checkG}\;\Varid{p}\;\Varid{gy})\mathbin{\$}\Varid{error}\;(\text{\tt \char34 suspicious~value:~\char34}\plus \Varid{show}\;\Varid{gy}){}\<[E]%
+\>[5]{}\Varid{unless}\;(\Varid{checkG}\;\Varid{p}\;\Varid{gy})\mathbin{\$}\Varid{error}\;(\text{\ttfamily \char34 suspicious~value:~\char34}\plus \Varid{show}\;\Varid{gy}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{return}\;((\Varid{gy}\mathbin{\uparrow}\Varid{x})\mathbin{\Varid{`rem`}}\Varid{p}){}\<[E]%
@@ -19459,7 +19459,7 @@ Now, we look at the other side of the communication:
 \>[9]{}\leftarrow \Varid{readChan}\;\Varid{inch}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{unless}\;(\Varid{checkG}\;\Varid{p}\;\Varid{gx})\mathbin{\$}\Varid{error}\;(\text{\tt \char34 suspicious~value:~\char34}\plus \Varid{show}\;\Varid{gx}){}\<[E]%
+\>[5]{}\Varid{unless}\;(\Varid{checkG}\;\Varid{p}\;\Varid{gx})\mathbin{\$}\Varid{error}\;(\text{\ttfamily \char34 suspicious~value:~\char34}\plus \Varid{show}\;\Varid{gx}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{y}{}\<[9]%
@@ -20157,11 +20157,11 @@ that equal $n$:
 \>[3]{}\Varid{goldbach}\;\Varid{n}{}\<[15]%
 \>[15]{}\mid {}\<[15E]%
 \>[18]{}\Varid{odd}\;\Varid{n}{}\<[29]%
-\>[29]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~even\char34}{}\<[E]%
+\>[29]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~even\char34}{}\<[E]%
 \\
 \>[15]{}\mid {}\<[15E]%
 \>[18]{}\Varid{n}\equiv \mathrm{2}{}\<[29]%
-\>[29]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~greater~2\char34}{}\<[E]%
+\>[29]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~greater~2\char34}{}\<[E]%
 \\
 \>[15]{}\mid {}\<[15E]%
 \>[18]{}\Varid{otherwise}{}\<[29]%
@@ -20170,11 +20170,11 @@ that equal $n$:
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{go}\;[\mskip1.5mu \mskip1.5mu]{}\<[19]%
-\>[19]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 The~end~is~ny!\char34}{}\<[E]%
+\>[19]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 The~end~is~ny!\char34}{}\<[E]%
 \\
 \>[12]{}\Varid{go}\;(\Varid{p}\mathbin{:}\Varid{ps}){}\<[23]%
 \>[23]{}\mid \Varid{p}\mathbin{>}\Varid{n}\mathbin{-}\mathrm{2}{}\<[36]%
-\>[36]{}\mathrel{=}\Varid{error}\;(\text{\tt \char34 disproved:~\char34}\plus \Varid{show}\;\Varid{n}){}\<[E]%
+\>[36]{}\mathrel{=}\Varid{error}\;(\text{\ttfamily \char34 disproved:~\char34}\plus \Varid{show}\;\Varid{n}){}\<[E]%
 \\
 \>[23]{}\mid \Varid{otherwise}{}\<[36]%
 \>[36]{}\mathrel{=}{}\<[39]%
@@ -20207,7 +20207,7 @@ safe primes: \ensuremath{\Varid{map}\;\Varid{goldbach}\;(\Varid{map}\;(\mathbin{
 $(7,257),(11,337),(7,353),(5,379),(5,463),(13,467),(5,499),(7,557),(11,577),\dots$
 
 or the \acronym{ascii} code of the word ``goldbach'':\\
-\ensuremath{\Varid{goldbach}\mathbin{\$}\Varid{read}\mathbin{\$}\Varid{concatMap}\;(\Varid{show}\mathbin{\circ}\Varid{ord})\;\text{\tt \char34 goldbach\char34}}: $\dots$
+\ensuremath{\Varid{goldbach}\mathbin{\$}\Varid{read}\mathbin{\$}\Varid{concatMap}\;(\Varid{show}\mathbin{\circ}\Varid{ord})\;\text{\ttfamily \char34 goldbach\char34}}: $\dots$
 (This will take a while to compute, so let us continue $\dots$)
 
 There is so much evidence in favour of the correctness
@@ -20365,7 +20365,7 @@ uses this logic to find $t$ for a given $a$:
 \\
 \>[20]{}\mid \Varid{t}\geq \Varid{n}{}\<[39]%
 \>[39]{}\mathrel{=}{}\<[39E]%
-\>[42]{}\Varid{error}\;\text{\tt \char34 group~exhausted\char34}{}\<[E]%
+\>[42]{}\Varid{error}\;\text{\ttfamily \char34 group~exhausted\char34}{}\<[E]%
 \\
 \>[20]{}\mid \Varid{otherwise}{}\<[39]%
 \>[39]{}\mathrel{=}{}\<[39E]%
@@ -22534,7 +22534,7 @@ We could, of course go on by trying out
 this formula with concrete numbers $a$ and $b$.
 It appears much more promising, however, to choose a 
 symbolic approach manipulating strings of the form
-\ensuremath{\text{\tt \char34 a\char34}} and \ensuremath{\text{\tt \char34 b\char34}}.
+\ensuremath{\text{\ttfamily \char34 a\char34}} and \ensuremath{\text{\ttfamily \char34 b\char34}}.
 The idea is to use string operations to simulate
 multiplication and addition.
 We do so in two steps: first we combine strings,
@@ -22620,8 +22620,8 @@ two numbers of equal signedness result in a positive number and
 two numbers of different signedness result in a negative number.
 Multiplication itself is just the concatenation of
 the two strings.
-\ensuremath{\Varid{comb}\;(\Conid{P}\;\text{\tt \char34 a\char34})\;(\Conid{P}\;\text{\tt \char34 b\char34})}, hence, is \ensuremath{\Conid{P}\;\text{\tt \char34 ab\char34}};
-\ensuremath{\Varid{comb}\;(\Conid{N}\;\text{\tt \char34 a\char34})\;(\Conid{P}\;\text{\tt \char34 b\char34})} is \ensuremath{\Conid{N}\;\text{\tt \char34 ab\char34}}.
+\ensuremath{\Varid{comb}\;(\Conid{P}\;\text{\ttfamily \char34 a\char34})\;(\Conid{P}\;\text{\ttfamily \char34 b\char34})}, hence, is \ensuremath{\Conid{P}\;\text{\ttfamily \char34 ab\char34}};
+\ensuremath{\Varid{comb}\;(\Conid{N}\;\text{\ttfamily \char34 a\char34})\;(\Conid{P}\;\text{\ttfamily \char34 b\char34})} is \ensuremath{\Conid{N}\;\text{\ttfamily \char34 ab\char34}}.
 
 We represent addition as lists of strings.
 We then can formulate the distributive law as
@@ -22663,8 +22663,8 @@ of a sums by itself:
 
 Let us look at an example to get a grip on \ensuremath{\Varid{combine}}:
 
-\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{P}\;\text{\tt \char34 a\char34}}\\
-\ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{P}\;\text{\tt \char34 b\char34}}\\
+\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{P}\;\text{\ttfamily \char34 a\char34}}\\
+\ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{P}\;\text{\ttfamily \char34 b\char34}}\\
 \ensuremath{\Varid{combine}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\mathrel{=}\Varid{concat}\;[\mskip1.5mu \Varid{combN}\;\Varid{x}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\mid \Varid{x}\leftarrow [\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\mskip1.5mu]}.
 
 The list comprehension will first apply \ensuremath{\Varid{combN}\;\Varid{a}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]},
@@ -22737,7 +22737,7 @@ is the coefficient $\binom{0}{0}$.
 
 Now we want to simplify results, such that
 \ensuremath{[\mskip1.5mu \Varid{aa},\Varid{ab},\Varid{ba},\Varid{ba}\mskip1.5mu]\mathrel{=}[\mskip1.5mu \Varid{aa},\mathrm{2}\mathbin{*}\Varid{ab},\Varid{ba}\mskip1.5mu]}.
-First, we need to express that \ensuremath{\text{\tt \char34 ab\char34}} and \ensuremath{\text{\tt \char34 ba\char34}}
+First, we need to express that \ensuremath{\text{\ttfamily \char34 ab\char34}} and \ensuremath{\text{\ttfamily \char34 ba\char34}}
 are the same thing.
 Therefore, we sort the string:
 
@@ -22764,8 +22764,8 @@ Therefore, we sort the string:
 \end{minipage}
 
 leading to a canonical form for strings.
-The call \ensuremath{\Varid{sortStr}\;(\Conid{P}\;\text{\tt \char34 ba\char34})} would result in
-\ensuremath{\Conid{P}\;\text{\tt \char34 ab\char34}}.
+The call \ensuremath{\Varid{sortStr}\;(\Conid{P}\;\text{\ttfamily \char34 ba\char34})} would result in
+\ensuremath{\Conid{P}\;\text{\ttfamily \char34 ab\char34}}.
 
 To simplify a complete list, we compare all
 symbols in the lists and consolidate
@@ -22944,15 +22944,15 @@ We do this with the simple function
 
 We now define two variables,
 a positive string $a$ and a negative one $b$:
-\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{P}\;\text{\tt \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{N}\;\text{\tt \char34 b\char34}}
+\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{P}\;\text{\ttfamily \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{N}\;\text{\ttfamily \char34 b\char34}}
 and just apply \ensuremath{\Varid{powsum}} with increasing $n$s:
 
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{1}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\tt \char34 a\char34}),(\mathrm{1},\Conid{N}\;\text{\tt \char34 b\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 a\char34}),(\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 b\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{2}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\tt \char34 aa\char34}),(\mathrm{2},\Conid{N}\;\text{\tt \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\tt \char34 bb\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 aa\char34}),(\mathrm{2},\Conid{N}\;\text{\ttfamily \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 bb\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{3}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\tt \char34 aaa\char34}),(\mathrm{3},\Conid{N}\;\text{\tt \char34 aab\char34}),(\mathrm{3},\Conid{P}\;\text{\tt \char34 abb\char34}),(\mathrm{1},\Conid{N}\;\text{\tt \char34 bbb\char34})\mskip1.5mu]}
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 aaa\char34}),(\mathrm{3},\Conid{N}\;\text{\ttfamily \char34 aab\char34}),(\mathrm{3},\Conid{P}\;\text{\ttfamily \char34 abb\char34}),(\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 bbb\char34})\mskip1.5mu]}
 
 It appears that the absolute values of the coefficients 
 do not change. We have, for instance,
@@ -22961,14 +22961,14 @@ $\binom{3}{1} = -3$,
 $\binom{3}{2} = 3$,
 $\binom{3}{3} = -1$.
 What, if we swap the negative sign:
-\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{N}\;\text{\tt \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{P}\;\text{\tt \char34 b\char34}}?
+\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{N}\;\text{\ttfamily \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{P}\;\text{\ttfamily \char34 b\char34}}?
 
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{1}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\tt \char34 a\char34}),(\mathrm{1},\Conid{P}\;\text{\tt \char34 b\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 a\char34}),(\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 b\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{2}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\tt \char34 aa\char34}),(\mathrm{2},\Conid{N}\;\text{\tt \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\tt \char34 bb\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 aa\char34}),(\mathrm{2},\Conid{N}\;\text{\ttfamily \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 bb\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{3}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\tt \char34 aaa\char34}),(\mathrm{3},\Conid{P}\;\text{\tt \char34 aab\char34}),(\mathrm{3},\Conid{N}\;\text{\tt \char34 abb\char34}),(\mathrm{1},\Conid{P}\;\text{\tt \char34 bbb\char34})\mskip1.5mu]}
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 aaa\char34}),(\mathrm{3},\Conid{P}\;\text{\ttfamily \char34 aab\char34}),(\mathrm{3},\Conid{N}\;\text{\ttfamily \char34 abb\char34}),(\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 bbb\char34})\mskip1.5mu]}
 
 The result is just the same for even exponents.
 For odd exponents, the signs are just exchanged:
@@ -22978,14 +22978,14 @@ $\binom{3}{2} = -3$,
 $\binom{3}{3} = 1$.
 
 What if both terms are negative:
-\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{N}\;\text{\tt \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{N}\;\text{\tt \char34 b\char34}}?
+\ensuremath{\mathbf{let}\;\Varid{a}\mathrel{=}\Conid{N}\;\text{\ttfamily \char34 a\char34}} and \ensuremath{\mathbf{let}\;\Varid{b}\mathrel{=}\Conid{N}\;\text{\ttfamily \char34 b\char34}}?
 
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{1}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\tt \char34 a\char34}),(\mathrm{1},\Conid{N}\;\text{\tt \char34 b\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 a\char34}),(\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 b\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{2}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\tt \char34 aa\char34}),(\mathrm{2},\Conid{P}\;\text{\tt \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\tt \char34 bb\char34})\mskip1.5mu]}\\[12pt]
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 aa\char34}),(\mathrm{2},\Conid{P}\;\text{\ttfamily \char34 ab\char34}),(\mathrm{1},\Conid{P}\;\text{\ttfamily \char34 bb\char34})\mskip1.5mu]}\\[12pt]
 \ensuremath{\Varid{powsum}\;[\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu]\;\mathrm{3}}\\
-\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\tt \char34 aaa\char34}),(\mathrm{3},\Conid{N}\;\text{\tt \char34 aab\char34}),(\mathrm{3},\Conid{N}\;\text{\tt \char34 abb\char34}),(\mathrm{1},\Conid{N}\;\text{\tt \char34 bbb\char34})\mskip1.5mu]}
+\ensuremath{[\mskip1.5mu (\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 aaa\char34}),(\mathrm{3},\Conid{N}\;\text{\ttfamily \char34 aab\char34}),(\mathrm{3},\Conid{N}\;\text{\ttfamily \char34 abb\char34}),(\mathrm{1},\Conid{N}\;\text{\ttfamily \char34 bbb\char34})\mskip1.5mu]}
 
 Now, wonder of wonders,
 even exponents lead to positive coefficients,
@@ -23161,7 +23161,7 @@ This is done by \ensuremath{\Varid{ratio}}:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{ratio}\mathbin{::}\Conid{Natural}\to \Conid{Natural}\to \Conid{Ratio}{}\<[E]%
 \\
-\>[3]{}\Varid{ratio}\;\anonymous \;\mathrm{0}\mathrel{=}\Varid{error}\;\text{\tt \char34 division~by~zero\char34}{}\<[E]%
+\>[3]{}\Varid{ratio}\;\anonymous \;\mathrm{0}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 division~by~zero\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{ratio}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{reduce}\;(\Conid{Q}\;\Varid{a}\;\Varid{b}){}\<[E]%
 \ColumnHook
@@ -23202,7 +23202,7 @@ is defined as follows:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{reduce}\mathbin{::}\Conid{Ratio}\to \Conid{Ratio}{}\<[E]%
 \\
-\>[3]{}\Varid{reduce}\;(\Conid{Q}\;\anonymous \;\mathrm{0})\mathrel{=}\Varid{error}\;\text{\tt \char34 division~by~zero\char34}{}\<[E]%
+\>[3]{}\Varid{reduce}\;(\Conid{Q}\;\anonymous \;\mathrm{0})\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 division~by~zero\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{reduce}\;(\Conid{Q}\;\mathrm{0}\;\anonymous )\mathrel{=}\Conid{Q}\;\mathrm{0}\;\mathrm{1}{}\<[E]%
 \\
@@ -23414,7 +23414,7 @@ making it instance of \ensuremath{\Conid{Num}}:
 \>[56]{}\mathbf{in}\;{}\<[60]%
 \>[60]{}\Varid{x'}\mathbin{-}\Varid{y'}{}\<[E]%
 \\
-\>[32]{}\mid \Varid{otherwise}\mathrel{=}\Varid{error}\;\text{\tt \char34 Subtraction~beyond~zero!\char34}{}\<[E]%
+\>[32]{}\mid \Varid{otherwise}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 Subtraction~beyond~zero!\char34}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}(\Conid{Q}\;\Varid{nx}\;\Varid{dx})\mathbin{*}(\Conid{Q}\;\Varid{ny}\;\Varid{dy})\mathrel{=}(\Varid{nx}\mathbin{*}\Varid{ny})\mathbin{\%}(\Varid{dx}\mathbin{*}\Varid{dy}){}\<[E]%
@@ -26889,7 +26889,7 @@ a variant of \ensuremath{\Varid{tot}} in Haskell:
 \>[25]{}\to \Varid{t}{}\<[E]%
 \\
 \>[18]{}\anonymous {}\<[25]%
-\>[25]{}\to \Varid{error}\;\text{\tt \char34 Totient~not~an~integer\char34}{}\<[E]%
+\>[25]{}\to \Varid{error}\;\text{\ttfamily \char34 Totient~not~an~integer\char34}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -30976,7 +30976,7 @@ therefore be:
 \>[3]{}\mathbf{instance}\;\Conid{Show}\;\Conid{RealN}\;\mathbf{where}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\tt \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\>[5]{}\Varid{show}\;(\Conid{R}\;\Varid{a}\;\Varid{e})\mathrel{=}\Varid{show}\;\Varid{a}\plus \text{\ttfamily \char34 *10\char94 (-\char34}\plus \Varid{show}\;\Varid{e}\plus \text{\ttfamily \char34 )\char34}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -31230,7 +31230,7 @@ Now we make \ensuremath{\Conid{RealN}} instance of \ensuremath{\Conid{Num}}:
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\equiv \Varid{e2}{}\<[40]%
-\>[40]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 subtraction~beyond~zero!\char34}{}\<[E]%
+\>[40]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 subtraction~beyond~zero!\char34}{}\<[E]%
 \\
 \>[26]{}\mid {}\<[26E]%
 \>[29]{}\Varid{e1}\mathbin{>}{}\<[35]%
@@ -32086,7 +32086,7 @@ which can be implemented in Haskell as
 \\
 \>[3]{}\Varid{gammaho}\;\Varid{n}{}\<[14]%
 \>[14]{}\mid \Varid{even}\;\Varid{n}{}\<[27]%
-\>[27]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~an~odd~number!\char34}{}\<[E]%
+\>[27]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~an~odd~number!\char34}{}\<[E]%
 \\
 \>[14]{}\mid \Varid{otherwise}{}\<[27]%
 \>[27]{}\mathrel{=}\Varid{rff}\;(\Varid{n}\mathbin{-}\mathrm{2})\mathbin{/}\mathrm{2}\mathbin{**}\Varid{i}{}\<[E]%
@@ -34249,7 +34249,7 @@ mapping \ensuremath{\Varid{triple}} on \ensuremath{[\mskip1.5mu \mathrm{1}\mathi
 \begin{minipage}{\textwidth}
 \begin{center}
 \begingroup
-\tt
+\ttfamily
 (+00001 +00001 +00002) (+00001 -00001 +00002) (+00000 +00001 +00001)\\
 (+00003 +00001 +00002) (+00003 -00001 +00002) (+00000 +00001 +00001)\\
 (+00002 +00001 +00001) (+00002 -00001 +00001) (+00000 +00002 +00001)\\
@@ -36035,7 +36035,7 @@ Here is a function to pretty-print polynomials:
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{go}\;{}\<[16]%
-\>[16]{}[\mskip1.5mu \mskip1.5mu]\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[16]{}[\mskip1.5mu \mskip1.5mu]\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[12]{}\Varid{go}\;{}\<[16]%
 \>[16]{}((\Varid{i},\Varid{c})\mathbin{:}\Varid{cs})\mathrel{=}{}\<[30]%
@@ -36043,15 +36043,15 @@ Here is a function to pretty-print polynomials:
 \>[35]{}\Varid{x}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{i}\equiv \mathrm{0}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{i}\equiv \mathrm{1}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 x\char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 x\char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{otherwise}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 x\char94 \char34}\plus \Varid{show}\;\Varid{i}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 x\char94 \char34}\plus \Varid{show}\;\Varid{i}{}\<[E]%
 \\
 \>[35]{}\Varid{t}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
@@ -36065,11 +36065,11 @@ Here is a function to pretty-print polynomials:
 \>[35]{}\Varid{o}{}\<[38]%
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{null}\;\Varid{cs}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 \char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 \char34}{}\<[E]%
 \\
 \>[38]{}\mid {}\<[38E]%
 \>[41]{}\Varid{otherwise}{}\<[52]%
-\>[52]{}\mathrel{=}\text{\tt \char34 ~+~\char34}{}\<[E]%
+\>[52]{}\mathrel{=}\text{\ttfamily \char34 ~+~\char34}{}\<[E]%
 \\
 \>[30]{}\mathbf{in}\;\mathbf{if}\;\Varid{c}\equiv \mathrm{0}\;\mathbf{then}\;\Varid{go}\;\Varid{cs}\;\mathbf{else}\;\Varid{t}\plus \Varid{o}\plus \Varid{go}\;\Varid{cs}{}\<[E]%
 \\[\blanklineskip]%
@@ -41876,7 +41876,7 @@ role in our further investigations.
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\mathbf{module}\;\Conid{Vieta}{}\<[E]%
+\>[B]{}\mathbf{module}\;\Conid{Resultant}{}\<[E]%
 \\
 \>[B]{}\mathbf{where}{}\<[E]%
 \\
@@ -41896,15 +41896,19 @@ b^2 - 4ac,
 \]
 
 which tells us, just looking at the coefficients,
-how many real roots the given polynomial has.
-Wouldn't it be nice to have a discriminant for
-any degree? It turns out, there is such a thing.
+how many real roots the polynomial has,
+namely two, if the discriminant is positive,
+one repeated root, if it is 0, and
+none at all, if it is negative.
 
-At its very heart, it is the product
+Wouldn't it be nice to have a discriminant for
+any degree? It turns out, there is.
+At its very heart, this generalised discriminant
+is the product
 of the differences of the roots;
 for instance, if we have the three
 roots $\alpha, \beta, \gamma$, the
-core of the discriminant, $d$, is
+core of the discriminant is
 
 \[
 (\alpha - \beta)(\alpha - \gamma)(\beta - \gamma).
@@ -41916,28 +41920,30 @@ In general we have
 \prod_{i<j}{(x_i - x_j)}.
 \end{equation}
 
+Notice that there are $\binom{n}{2}$ factors
+for $n$ the number of roots. For two roots,
+there is only one factor, namely $\alpha - \beta$;
+for three roots, there are three factors,
+namely those given above; for four roots,
+there are six factors and so on.
+
 Now, when there is a repeated root,
 then one of the factors will be 0 and,
 as such, the whole product will be 0.
-This version of the discriminant, thus, preserves
-the property of the na\"ive discriminant for
-second-degree polynomials that it is 0
-if there a repeated roots.
-
 If at least one of the roots is non-real,
 then the product will be non-real too.
-This corresponds to the fact that, with
-non-real roots, the na\"ive discriminant
-is negative.
+We, hence, can read off the same properties
+from this discriminant as we already could read
+from the old one.
 
 But the new discriminant tells us even more:
 if it is irrational, then all roots are real,
 but at least one is irrational. The other way round,
 if it is rational, then all roots are rational.
 
-There is a snag though, which can be clearly seen
-in the generalised formula: we assume a given
-order of the roots -- but there is no such order.
+There is a snag though.
+In the generalised formula, we assumed a given
+order of the roots -- but there is no such privileged order.
 Imagine a polynomial with the roots
 $-1, 2, -3, 4$, which is
 
@@ -41945,24 +41951,24 @@ $-1, 2, -3, 4$, which is
 (x+1)(x-2)(x+3)(x-4) = x^4 - 2x^3 - 13x^2 + 14x + 24.
 \]
 
-When I compute the differences of the roots
-like this (and note that there are
+When we compute the differences of the roots
+in this order (and note that there are
 $\binom{4}{2} = 6$
-factors!)
+factors), \ie
 
 \[
 (-1-2)(-1+3)(-1-4)(2+3)(2-4)(-3-4),
 \]
 
-I get the result 2100.
-But when I compute, just changing the order
+we get the result 2100.
+But when we compute, just changing the order
 of the roots to $2,-1,-3,4$,
 
 \[
 (2+1)(2+3)(2-4)(-1+3)(-1-4)(-3-4)
 \]
 
-I get -2100.
+we get -2100.
 Indeed, of the $4! = 24$ permutations
 of the roots, 12 lead to the positive
 result and 12 to the negative one. 
@@ -41990,28 +41996,27 @@ which is 4410000, and
 
 which is 4410000 as well.
 
-Of course, we have to adopt our principles
+Of course, we have to adapt our principles
 to this new form:
 there are non-real roots, if the discriminant
 is negative and there are irrational roots
 if the discriminant is not a perfect square.
 
 You now may ask: is this discriminant actually
-the same as the na\"ive one? Or in other words
+the same as the na\"ive one? Or, in other words,
 is the na\"ive discriminant a special case
-of this general form?
+of this general form for second-degree polynomials?
 
-Let us look at a second-degree polynomial,
-for example
+Let us look at a second-degree polynomial, \eg:
 
 \[
 (x-2)(x+3) = x^2 + x - 6.
 \]
 
-The na\"ive discriminant ($b2 - 4ac$) is 
+The na\"ive discriminant ($b^2 - 4ac$) is 
 
 \[
-1^2 - 4(-6) = 1 + 24 = 25.
+1^2 - 4\times (-6) = 1 + 24 = 25.
 \]
 
 The new discriminant is 
@@ -42044,7 +42049,7 @@ $3^2$. So, if we multiplied the discriminant
 by the square of the leading coefficient,
 the results would be equal again.
 
-Is this just by chance or can we prove it?
+Is this just by chance or can we prove that it is always the case?
 We need to prove, for the case of a second-degree polynomial,
 that
 
@@ -42054,14 +42059,14 @@ a^2(\alpha-\beta)^2 = b^2 - 4ac,
 
 where $a, b, c$ are the coefficients and
 $\alpha, \beta$ are, as usual, the roots
-the polynomial.
+of the polynomial.
 
 First we observe that
 $(\alpha-\beta)^2$
 can be expressed as
 $(\alpha+\beta)^2 - 4\alpha\beta$.
 This is true because, when we multiply
-the latter out, we get
+$(\alpha+\beta)^2$ out, we get
 
 \[
 \alpha^2 + 2\alpha\beta + \beta^2.
@@ -42074,74 +42079,884 @@ When we subtract $4\alpha\beta$, we obtain
 \]
 
 which clearly is $(\alpha-\beta)^2$.
-
-According to Vieta's formulas, however,
-$\alpha+\beta$ is $-\frac{b}{a}$
-and $\alpha\beta$ is $\frac{c}{a}$.
-So, we have
+Thus:
 
 \begin{equation}
-(\alpha+\beta)^2 - 4\alpha\beta = \left(-\frac{b}{a}\right)^2 - 4\frac{c}{a}.
+(\alpha-\beta)^2 = (\alpha+\beta)^2 - 4\alpha\beta.
 \end{equation}
 
-Since the right-hand side is $\frac{b^2}{a^2} - 4\frac{c}{a}$,
-we obtain the desired result just by multiplying both sides by $a^2$
-(and bringing the left-hand side back to its original form):
+According to Vieta's formulas,
+which we discussed in the previous section,
+we have:
+
+\begin{equation}
+\alpha+\beta = -\frac{b}{a}
+\end{equation}
+
+and 
+
+\begin{equation}
+\alpha\beta = \frac{c}{a}.
+\end{equation}
+
+We therefore have
+
+\begin{equation}
+(\alpha-\beta)^2 = \left(-\frac{b}{a}\right)^2 - 4\frac{c}{a}.
+\end{equation}
+
+We multiply $a^2$ on both sides and get
+
+\begin{equation}
+a^2(\alpha-\beta)^2 = a^2\left(\left(-\frac{b}{a}\right)^2 - 4\frac{c}{a}\right).
+\end{equation}
+
+The right-hand side is 
+
+\[
+a^2\left(\frac{b^2}{a^2} - 4\frac{c}{a}\right).
+\]
+
+Distributing $a^2$ over the terms, we get
+
+\[
+\frac{a^2b^2}{a^2} - 4\frac{a^2c}{a}.
+\]
+
+and can now simplify to
+
+\[
+b^2 - 4ac,
+\]
+
+which leads to the desired result
 
 \begin{equation}
 a^2(\alpha-\beta)^2 = b^2 - 4ac.\qed
 \end{equation}
 
-In the general form, the discriminant can be computed as
+In the general form,
+which we won't prove here,
+the discriminant can be computed as
 
 \begin{equation}
 a^{2d-2}\prod_{i<j}{(x_i - x_j)^2},
 \end{equation}
 
 where $a$ is the leading coefficient and $d$ the degree
-of the polynomial. For $d=2$, this is $2\times 2 - 2 = 2$.
-For higher degrees this must be adapted and the common
-expression is that funny $2d-2$.
+of the polynomial. For $d=2$, the funny exponent
+$2d-2$ is $2\times 2 - 2 = 2$.
+For $d=3$, it would be $6-2=4$,
+for $d=4$, we have $8-2=6$ and so on.
 
 Of course, we again have to adapt our principles
-to this new formula. To say anything about
+to this new formula. To say something about
 irrationality of the roots,
 we need to divide the discriminant by $a^{2d-2}$.
 If (and only if) the result is a perfect square,
 the polynomial has only rational roots.
-Note that we do not need to adopt the principle
+Note that we do not need to change anything
 to decide whether there are non-real roots.
 Since $2d-2$ is always even, $a$ raised to such a power
 is always positive. It will, hence, not affect
 the sign of the discriminant. Therefore, if (and only if)
 the discriminant is negative, there are non-real roots. 
 
-But now comes the hard question:
-the use of the discriminant is to tell us something
+But isn't there a real issue?
+The discriminant is supposed to tell us something
 about the roots. But from what we see here,
-we need to know the roots to compute the discriminant.
+we need to know the roots to compute the discriminant in the first place.
 That is not very useful! The so called ``na\"ive''
-discriminant is not too na\"ive at the end! At least,
+discriminant is not too na\"ive after all! At least,
 it has a function!
 
 Well, here comes the esoteric part of this section.
 There is in fact a way to compute the discriminant
-without knowing the roots. What we need to do it
-is to compute the \term{resultant} of the polynomial
-and its derivative.
+without knowing the roots.
+The discriminant can be computed from the \term{resultant}
+of the polynomial and its derivative.
+The resultant is a magic number
+computed from two polynomials and
+is often used to decide whether two polynomials
+have a common root.
+
+There are two ways to compute the resultant.
+One comes from linear algebra and is very inefficient,
+the other is related to polynomial arithmetic
+and pretty efficient.
+We will start with the first one.
+It is inefficient, but the algorithm is quite interesting
+and it introduces some concepts from linear algebra.
+This way, the current section is also
+a teaser for one of the next chapters
+to come.
+
+The resultant of two polynomials
+can be computed as the \term{determinant}
+of the \term{Sylvester matrix} of these polynomials.
+Wow! That are two new concepts in one sentence!
+We look at them one by one.
+First, the \term{Sylvester matrix}.
+
+We already met the concept of a matrix in the previous
+part: a matrix is just a table of numbers.
+The Sylvester matrix is a square matrix
+(one with an equal number of rows and columns)
+that contains
+the coefficients of the two polynomials.
+It has $d_1+d_2$ rows and columns,
+where $d_1$ and $d_2$ are the degrees
+of the polynomials.
+
+It is constructed in the following way:
+\begin{enumerate}
+\item The first row of the matrix consists
+      of the coefficients of the first polynomial
+      and $d_2-1$ zeros on the right.
+\item The next row contains one zero on the left
+      followed by the coefficients of the first polynomial
+      and $d_2-2$ zeros on the right.
+\item We continue this way, incrementing the number
+      of zeros on the left and decrementing it on the right
+      until the number of zeros on the right is zero, that is,
+      the last coefficient of the polynomial
+      (the one of lowest degree) hits the end of the row.
+\item Then we repeat the process with the second polynomial
+      starting in the next row.
+\end{enumerate}
+
+Imagine the two polynomials
+\ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu]} and \ensuremath{\Conid{P}\;[\mskip1.5mu \mathrm{7},\mathrm{6},\mathrm{5}\mskip1.5mu]} (in mathematical notation:
+$x^3+2x^2+3x+4$ and $5x^2+6x+7$)
+which are of degree 3 and 2 respectively.
+The Sylvester matrix, hence, is
+the $5\times 5$ square matrix:
+
+\[
+\begin{pmatrix}
+1 & 2 & 3 & 4 & 0 \\
+0 & 1 & 2 & 3 & 4 \\
+5 & 6 & 7 & 0 & 0 \\
+0 & 5 & 6 & 7 & 0 \\
+0 & 0 & 5 & 6 & 7 \\
+\end{pmatrix}
+\]
+
+Here is an Haskell implementation
+using the matrix type from the previous part:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{16E}{@{}l@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{24}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{37}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{37E}{@{}l@{}}%
+\column{40}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{sylvester}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{\Conid{L}.Matrix}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{sylvester}\;\Varid{a}\;\Varid{b}\mathrel{=}\Conid{\Conid{L}.M}\;(\Varid{go}\;\mathrm{0}\;\Varid{xs}\;\Varid{ys}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{la}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{lb}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{degree}\;\Varid{b}{}\<[E]%
+\\
+\>[12]{}\Varid{ll}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}\Varid{la}\mathbin{+}\Varid{lb}{}\<[E]%
+\\
+\>[12]{}\Varid{xs}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}(\Varid{reverse}\mathbin{\$}\Varid{coeffs}\;\Varid{a})\plus \Varid{zeros}\;(\Varid{lb}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[12]{}\Varid{ys}{}\<[16]%
+\>[16]{}\mathrel{=}{}\<[16E]%
+\>[19]{}(\Varid{reverse}\mathbin{\$}\Varid{coeffs}\;\Varid{b})\plus \Varid{zeros}\;(\Varid{la}\mathbin{-}\mathrm{1}){}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]\;[\mskip1.5mu \mskip1.5mu]{}\<[37]%
+\>[37]{}\mathrel{=}{}\<[37E]%
+\>[40]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;\Varid{l1}\;\Varid{l2}{}\<[24]%
+\>[24]{}\mid \Varid{i}\equiv \Varid{ll}{}\<[37]%
+\>[37]{}\mathrel{=}{}\<[37E]%
+\>[40]{}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[24]{}\mid \Varid{i}\geq \Varid{lb}{}\<[37]%
+\>[37]{}\mathrel{=}{}\<[37E]%
+\>[40]{}\Varid{l2}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;[\mskip1.5mu \mskip1.5mu]\;(\mathrm{0}\mathbin{:}\Varid{init}\;\Varid{l2}){}\<[E]%
+\\
+\>[24]{}\mid \Varid{otherwise}{}\<[37]%
+\>[37]{}\mathrel{=}{}\<[37E]%
+\>[40]{}\Varid{l1}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;(\mathrm{0}\mathbin{:}\Varid{init}\;\Varid{l1})\;\Varid{l2}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+When we call \ensuremath{\Varid{sylvester}} like this:
+
+\ensuremath{\Varid{sylvester}\;(\Conid{P}\;[\mskip1.5mu \mathrm{4},\mathrm{3},\mathrm{2},\mathrm{1}\mskip1.5mu])\;(\Conid{P}\;[\mskip1.5mu \mathrm{7},\mathrm{6},\mathrm{5}\mskip1.5mu])}
+
+we get
+
+\ensuremath{\Conid{M}\;[\mskip1.5mu [\mskip1.5mu \mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4},\mathrm{0}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{1},\mathrm{2},\mathrm{3},\mathrm{4}\mskip1.5mu],[\mskip1.5mu \mathrm{5},\mathrm{6},\mathrm{7},\mathrm{0},\mathrm{0}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{5},\mathrm{6},\mathrm{7},\mathrm{0}\mskip1.5mu],[\mskip1.5mu \mathrm{0},\mathrm{0},\mathrm{5},\mathrm{6},\mathrm{7}\mskip1.5mu]\mskip1.5mu]}
+
+which corresponds to the matrix above.
+
+The other concept mentioned above is the determinant of a matrix.
+The determinant is defined only for square matrices and
+can be seen as an encoding of certain \term{linear transformations}
+described by the matrix. Those are all concepts from linear algebra
+and will remain somewhat mysterious in this section.
+However, we just want to compute the determinant and that is
+an interesting recursive algorithm.
+
+The determinant for a $2\times 2$ square matrix $m$ of the form
+
+\[
+\begin{pmatrix}
+a & b \\
+c & d \\
+\end{pmatrix}
+\]
+
+also written $|m|$, is defined as
+
+\begin{equation}
+det(m) = |m| = ad - bc.
+\end{equation}
+
+It is, thus, a kind of ``cross product difference'', \ie\
+the difference of the products resulting from
+multiplying the elements in the square matrix
+that share neither row nor column. In terms
+of (row,column)-coordinates we have
+$m[0,0]\times m[1,1] - m[0,1]\times m[1,0]$.
+
+When we have an $n\times n$ square matrix
+with $n>2$, we proceed as follows:
+
+\begin{enumerate}
+\item We cut off the first row.
+\item For each element $x_i$ in that row
+      (the subscript $i$ representing the column within that row),
+      we compute $(-1)^ix_i|minor_i(m)|$
+      where $minor_i$ is a square matrix formed
+      from the original matrix without the first row
+      and with the $i$th column removed.
+\item We sum up the results.
+\end{enumerate}
+
+The determinant of the $3\times 3$ matrix $m$
+
+\[
+\begin{pmatrix}
+a & b & c \\
+d & e & f \\
+g & h & i \\
+\end{pmatrix}
+\]
+
+would be computed as
+
+\begin{equation}
+|m| = a\left|\begin{smallmatrix}
+          e & f \\ h & i
+          \end{smallmatrix} \right|
+      - b\left|\begin{smallmatrix}
+          d & f \\ g & i
+         \end{smallmatrix}\right|
+      + c\left|\begin{smallmatrix}
+          d & e \\ g & h
+         \end{smallmatrix}\right|
+\end{equation}
+
+For $n\times n$ matrices with $n>3$,
+the process repeats recursively on each
+sub-determinant. The process is 
+called \term{minor expansion formula} (\acronym{mef}),
+since it expands into always more
+minor matrices as it proceeds further.
+
+To clarify how the \acronym{mef} proceeds,
+here is a Haskell implementation.
+We start with a simple function to
+copy the columns of a matrix
+cutting one column out:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{25}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{38}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{copyWithout}\mathbin{::}\Conid{Int}\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{copyWithout}\;\Varid{p}\;\Varid{rs}\mathrel{=}\Varid{go}\;\mathrm{0}\;\Varid{rs}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{go}\;\anonymous \;[\mskip1.5mu \mskip1.5mu]{}\<[38]%
+\>[38]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[12]{}\Varid{go}\;\Varid{i}\;(\Varid{c}\mathbin{:}\Varid{cs}){}\<[25]%
+\>[25]{}\mid \Varid{i}\equiv \Varid{p}{}\<[38]%
+\>[38]{}\mathrel{=}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\\
+\>[25]{}\mid \Varid{otherwise}{}\<[38]%
+\>[38]{}\mathrel{=}\Varid{c}\mathbin{:}\Varid{go}\;(\Varid{i}\mathbin{+}\mathrm{1})\;\Varid{cs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+which we use to create the rows and columns
+of a minor matrix
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{20}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{minor}\mathbin{::}\Conid{Int}\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{minor}\;{}\<[10]%
+\>[10]{}\Varid{p}\;[\mskip1.5mu \mskip1.5mu]{}\<[20]%
+\>[20]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{minor}\;{}\<[10]%
+\>[10]{}\Varid{p}\;(\Varid{r}\mathbin{:}\Varid{rs}){}\<[20]%
+\>[20]{}\mathrel{=}\Varid{copyWithout}\;\Varid{p}\;\Varid{r}\mathbin{:}\Varid{minor}\;\Varid{p}\;\Varid{rs}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Here is the \acronym{mef}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{22}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{31}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{mef}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow [\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{mef}\;[\mskip1.5mu \mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\mathrm{0}{}\<[E]%
+\\
+\>[3]{}\Varid{mef}\;[\mskip1.5mu [\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{mef}\;[\mskip1.5mu [\mskip1.5mu \Varid{a},\Varid{b}\mskip1.5mu],[\mskip1.5mu \Varid{c},\Varid{d}\mskip1.5mu]\mskip1.5mu]{}\<[22]%
+\>[22]{}\mathrel{=}\Varid{a}\mathbin{*}\Varid{d}\mathbin{-}\Varid{b}\mathbin{*}\Varid{c}{}\<[E]%
+\\
+\>[3]{}\Varid{mef}\;(\Varid{r}\mathbin{:}\Varid{rs}){}\<[22]%
+\>[22]{}\mathrel{=}\Varid{sum}\;[\mskip1.5mu {}\<[31]%
+\>[31]{}(\mathbin{-}\mathrm{1})\mathbin{\uparrow}\Varid{i}\mathbin{*}\Varid{c}\mathbin{*}(\Varid{go}\;\Varid{i}\;\Varid{rs})\mid (\Varid{c},\Varid{i}){}\<[E]%
+\\
+\>[31]{}\leftarrow \Varid{zip}\;\Varid{r}\;[\mskip1.5mu \mathrm{0}\mathinner{\ldotp\ldotp}(\Varid{length}\;\Varid{r})\mathbin{-}\mathrm{1}\mskip1.5mu]\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{i}\mathrel{=}\Varid{mef}\mathbin{\circ}\Varid{minor}\;\Varid{i}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Notice that we already cut out the first row in \ensuremath{\Varid{mef}}
+and, this way, call \ensuremath{\Varid{minor}} with an $(n-1)\times n$ matrix,
+which, in its turn, creates an $(n-1)\times (n-1)$ matrix.
+The recursion enters in the \ensuremath{\Varid{go}} function,
+which is called for each element in the sum.
+
+Finally, we add a top-level function to compute the determinant:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{det}\mathbin{::}(\Conid{Num}\;\Varid{a})\Rightarrow \Conid{Matrix}\;\Varid{a}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{det}\;\Varid{m}{}\<[10]%
+\>[10]{}\mid \neg \;(\Varid{square}\;\Varid{m}){}\<[28]%
+\>[28]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~a~square~matrix\char34}{}\<[E]%
+\\
+\>[10]{}\mid \Varid{otherwise}{}\<[28]%
+\>[28]{}\mathrel{=}\Varid{mef}\;(\Varid{rows}\;\Varid{m}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+It is one of the many amazing results of linear algebra
+that the determinant of the Sylvester matrix
+of two polynomials is the resultant
+of these polynomials. Furthermore,
+the discriminant of a polynomial
+can be computed from the resultant of this polynomial
+and its derivative. Concretely, it can be computed
+as
+
+\begin{equation}
+dis(p) = (-1)^{d(d-1)/2}\times\frac{res(p,p')}{lc(p)},
+\end{equation}
+
+where $d$ is the degree of the polynomial
+and $lc$ is the leading coefficient.
+Here is an implementation:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{dis}\mathbin{::}(\Conid{Num}\;\Varid{a},\Conid{Integral}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{dis}\;\Varid{p}\mathrel{=}(\mathbin{-}\mathrm{1})\mathbin{\uparrow}\Varid{x}\mathbin{*}(\Varid{res}\;\Varid{p}\;\Varid{p'})\mathbin{\Varid{`div`}}\Varid{l}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{x}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{d}\mathbin{*}(\Varid{d}\mathbin{-}\mathrm{1})\mathbin{\Varid{`div`}}\mathrm{2}{}\<[E]%
+\\
+\>[12]{}\Varid{d}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{degree}\;\Varid{p}{}\<[E]%
+\\
+\>[12]{}\Varid{p'}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{derivative}\;(\mathbin{*})\;\Varid{p}{}\<[E]%
+\\
+\>[12]{}\Varid{l}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{lc}\;\Varid{p}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+Notice that we have not yet defined \ensuremath{\Varid{res}}.
+We assume for the moment that \ensuremath{\Varid{res}} is
+the determinant of the Sylvester Matrix.
+We will implement it differently, however,
+for reasons that we will understand in a minute.
+
+But let us first test our implementation.
+We start with our polynomial with the four roots
+$-1, 2, -3, 4$, which is $x^4 - 2x^3 - 13x^2 + 14x + 24$.
+Here is a Haskell session:
+
+\begin{minipage}{\textwidth}
+\ensuremath{\mathbf{let}\;\Varid{p}\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathrm{24},\mathrm{14},\mathbin{-}\mathrm{13},\mathbin{-}\mathrm{2},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\mathbf{let}\;\Varid{p'}\mathrel{=}\Varid{derivative}\;(\mathbin{*})\;\Varid{p}}\\
+\ensuremath{\mathbf{let}\;\Varid{m}\mathrel{=}\Varid{sylvester}\;\Varid{p}\;\Varid{p'}}\\
+\ensuremath{\mathbf{let}\;\Varid{d}\mathrel{=}\Varid{det}\;\Varid{m}}
+\end{minipage}
+
+What is $d$ right now?
+Note that the degree of $p$ is 4.
+The exponent of -1 in the computation of \ensuremath{\Varid{dis}}
+above, hence, is $4\times3/2$, which is 6 and even.
+The minus sign, therefore, disappears;
+furthermore, the leading coefficient is 1.
+The computation of the discriminant, this way,
+reduces to the determinant:
+$d$, therefore, shall be \num{4410000},
+the discriminant of this polynomial.
+Try it out!
+
+Let us look at the second-degree polynomial
+we already used above, namely
+$(x-2)(x+3) = x^2 + x - 6$.
+
+\begin{minipage}{\textwidth}
+\ensuremath{\mathbf{let}\;\Varid{p}\mathrel{=}\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{6},\mathrm{1},\mathrm{1}\mskip1.5mu]}\\
+\ensuremath{\mathbf{let}\;\Varid{p'}\mathrel{=}\Varid{derivative}\;(\mathbin{*})\;\Varid{p}}\\
+\ensuremath{\mathbf{let}\;\Varid{m}\mathrel{=}\Varid{sylvester}\;\Varid{p}\;\Varid{p'}}\\
+\ensuremath{\mathbf{let}\;\Varid{d}\mathrel{=}\Varid{det}\;\Varid{m}}
+\end{minipage}
+
+The determinant $d$ now is -25.
+When we compute the discriminant,
+the exponent will be $2\times 1/2$,
+which is 1 and, as such, odd.
+We will hence multiply the determinant
+by -1 and arrive at the discriminant 25,
+which we already computed above.
+
+For the polynomial
+$3(x-2)(x+3) = 3x^2 + 3x - 18$,
+we get, following the same recipe,
+-675. The minus sign will disappear and,
+when we divide the result by the
+leading coefficient, \ie\ $675/3$,
+we get 225 as expected.
+
+Well, we computed the determinant
+with a recursive formula that expands
+a minor for each column per recursion step.
+For an $n\times n$ matrix with $n>2$,
+we will compute $n$ minors in the first recursion step.
+In the next recursion
+step, if $n-1>2$, we will for each of those minors
+compute $n-1$ minors and so on.
+How many minors do we compute?
+
+We compute $n$ for the first iteration,
+$n-1$ for the second, $n-2$ for the third
+and so on until $n=2$. We, hence, have
+$n!/2$ recursion steps for an $n\times n$ square matrix.
+For a degree-5 polynomial, since its derivative has
+degree 4, we have a $9\times 9$ matrix and need
+$9!/2 = 181440$ recursion steps.
+For a degree-6 polynomial, we already have an
+$11\times 11$ matrix and, thus, need
+$11!/2 = 19958400$ recursion steps.
+That is obviously inefficient already for polynomials
+of moderate degree.
+The algorithm is cute, but does not scale very well.
+
+So, let us look at the alternative related
+to polynomial arithmetic. It is based on the concept
+of \term{pseudo remainders}. This concept is motivated
+by the fact that, for polynomials over a ring
+(like the integers), there is no Euclidean division,
+\ie\ a division resulting in a quotient and a remainder.
+In fact, when we divide polynomials, the coefficients
+of the polynomials do not lie in the original ring
+anymore. They are now fractional and, as such,
+belong to a field ($\mathbb{Q}$ for the ring of integers)
+and that is quite annoying since the \acronym{gcd}
+does not make much sense in a field.
+
+To deal with this, mathematicians invented pseudo remainders.
+The pseudo remainder of two polynomials $p$ and $q$
+is defined as
+
+\begin{equation}
+prem(p,q) = rem(lc(q)^{deg(p)-deg(q)+1}p, q).
+\end{equation}
+
+In plain English: we scale $p$ by the leading coefficient
+of $q$ raised to the power of the difference of the
+degrees of $p$ and $q$ plus one.
+When you go back to the division formula,
+it should be intuitively clear
+that this guarantees that the coefficients
+of the remainder are all integral and,
+thus, still in the ring over which the polynomials
+were defined.
+
+We can define $prem$ in Haskell like this:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{prem}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}{}\<[E]%
+\\
+\>[3]{}\Varid{prem}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{poly}\mathbin{\$}\Varid{map}\;\Varid{numerator}\;(\Varid{coeffs}\mathbin{\$}\Varid{snd}\;(\Varid{divp}\;\Varid{x}\;\Varid{y})){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;{}\<[12]%
+\>[12]{}\Varid{l}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{lc}\;\Varid{b}{}\<[E]%
+\\
+\>[12]{}\Varid{k}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{l}\mathbin{\uparrow}(\Varid{da}\mathbin{-}\Varid{db}\mathbin{+}\mathrm{1}){}\<[E]%
+\\
+\>[12]{}\Varid{da}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\$}\Varid{degree}\;\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{db}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{fromIntegral}\mathbin{\$}\Varid{degree}\;\Varid{b}{}\<[E]%
+\\
+\>[12]{}\Varid{a'}{}\<[16]%
+\>[16]{}\mathrel{=}\Varid{scale}\;\Varid{k}\;\Varid{a}{}\<[E]%
+\\
+\>[12]{}\Varid{x}{}\<[16]%
+\>[16]{}\mathrel{=}\Conid{P}\;(\Varid{map}\;(\mathbin{\%}\mathrm{1})\mathbin{\$}\Varid{coeffs}\;\Varid{a'}){}\<[E]%
+\\
+\>[12]{}\Varid{y}{}\<[16]%
+\>[16]{}\mathrel{=}\Conid{P}\;(\Varid{map}\;(\mathbin{\%}\mathrm{1})\mathbin{\$}\Varid{coeffs}\;\Varid{b}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+This appears to be a lot of code for such a simple formula.
+Most of the code, however, is related to convert the coefficients
+back and forth between fractional (for which \ensuremath{\Varid{divp}} is defined)
+and integral.
+
+Of course, these remainders are now too big, since the
+first polynomial has been scaled. Therefore mathematicians
+invented yet another trick, namely to reduce the resulting
+remainder by dividing by some number $\alpha$.
+
+To compute the \acronym{gcd}, one replaces the equation
+$r_{i+1} = rem(r_{i-1},r_i)$ by
+
+\begin{equation}
+r_{i+1} = \frac{prem(r_{i-1}, r_i)}{\alpha}
+\end{equation}
+
+Calling this recursively and preserving the intermediate results
+leads to a \term{pseudo-remainder sequence}:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{12}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{19}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{23}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{pgcd}\mathbin{::}{}\<[12]%
+\>[12]{}(\Conid{Integral}\;\Varid{a})\Rightarrow {}\<[E]%
+\\
+\>[12]{}(\Conid{Poly}\;\Varid{a}\to \Varid{a})\to \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{pgcd}\;\Varid{alpha}\;\Varid{p}\;\Varid{q}{}\<[19]%
+\>[19]{}\mid \Varid{zerop}\;\Varid{q}\mathrel{=}[\mskip1.5mu \Varid{p}\mskip1.5mu]{}\<[E]%
+\\
+\>[19]{}\mid \Varid{otherwise}\mathrel{=}{}\<[E]%
+\\
+\>[19]{}\hsindent{4}{}\<[23]%
+\>[23]{}\mathbf{let}\;{}\<[28]%
+\>[28]{}\Varid{r}\mathrel{=}\Varid{prem}\;\Varid{p}\;\Varid{q}{}\<[E]%
+\\
+\>[28]{}\Varid{a}\mathrel{=}\Varid{alpha}\;\Varid{r}{}\<[E]%
+\\
+\>[28]{}\Varid{x}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{numerator}\;(\Varid{c}\mathbin{\%}\Varid{a})\mid \Varid{c}\leftarrow \Varid{coeffs}\;\Varid{r}\mskip1.5mu]{}\<[E]%
+\\
+\>[19]{}\hsindent{4}{}\<[23]%
+\>[23]{}\mathbf{in}\;\mathbf{if}\;\Varid{zerop}\;\Varid{r}\;\mathbf{then}\;[\mskip1.5mu \mskip1.5mu]\;\mathbf{else}\;\Varid{x}\mathbin{:}\Varid{pgcd}\;\Varid{alpha}\;\Varid{q}\;\Varid{x}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function \ensuremath{\Varid{pgcd}} accepts, besides two polynomials,
+a function that converts a polynomial
+into an integral.
+On each recursion step, it produces the pseudo remainder \ensuremath{\Varid{r}} and
+an $\alpha$ for the remainder and then divides the coefficients
+of the remainder by that number.
+
+The trivial
+pseudo-remainder sequence, for instance, results from
+setting $\alpha = 1$:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{tpgcd}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{tpgcd}\mathrel{=}\Varid{pgcd}\;(\mathbin{\char92 \char95 }\to \mathrm{1}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The primitive pseudo-remainder sequence, by contrast,
+uses the content of the polynomial resulting in
+a sequence of primitive polynomials:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{ppgcd}\mathbin{::}(\Conid{Integral}\;\Varid{a})\Rightarrow \Conid{Poly}\;\Varid{a}\to \Conid{Poly}\;\Varid{a}\to [\mskip1.5mu \Conid{Poly}\;\Varid{a}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{ppgcd}\mathrel{=}\Varid{pgcd}\;\Varid{content}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+And now there is a pseudo-remainder sequence
+whose final element by some weird magic
+has the resultant of the two polynomials
+as its only coefficient!
+We could implement the sequence using
+a second-order function similar to \ensuremath{\Varid{pgcd}}.
+Unfortunately, we need state, since $\alpha$
+does not only depend on the current remainder polynomial,
+but also on the previous $\alpha$.
+To keep it simple we present a completely new implementation
+(which is inspired by \term{sympy}, a Python package
+for symbolic computation):
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{16}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{21}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{35}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{39}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{45}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{52}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{spgcd}\mathbin{::}\Conid{Poly}\;\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to [\mskip1.5mu \Conid{Poly}\;\Conid{Integer}\mskip1.5mu]{}\<[E]%
+\\
+\>[3]{}\Varid{spgcd}\;\Varid{a}\;\Varid{b}\mathrel{=}{}\<[16]%
+\>[16]{}\mathbf{let}\;{}\<[21]%
+\>[21]{}\Varid{n}\mathrel{=}\Varid{degree}\;\Varid{a}{}\<[E]%
+\\
+\>[21]{}\Varid{m}\mathrel{=}\Varid{degree}\;\Varid{b}{}\<[E]%
+\\
+\>[21]{}\Varid{d}\mathrel{=}\Varid{n}\mathbin{-}\Varid{m}{}\<[E]%
+\\
+\>[21]{}\Varid{c}\mathrel{=}\Varid{scale}\;((\mathbin{-}\mathrm{1})\mathbin{\uparrow}(\Varid{d}\mathbin{+}\mathrm{1}))\;(\Varid{prem}\;\Varid{a}\;\Varid{b}){}\<[E]%
+\\
+\>[21]{}\Varid{l}\mathrel{=}\Varid{lc}\;\Varid{b}{}\<[E]%
+\\
+\>[21]{}\Varid{z}\mathrel{=}\mathbin{-}(\Varid{l}\mathbin{\uparrow}\Varid{d}){}\<[E]%
+\\
+\>[21]{}\Varid{k}\mathrel{=}\Varid{degree}\;\Varid{c}{}\<[E]%
+\\
+\>[16]{}\mathbf{in}\;\Varid{c}\mathbin{:}\Varid{go}\;\Varid{z}\;\Varid{l}\;\Varid{b}\;\Varid{c}\;\Varid{k}\;(\Varid{m}\mathbin{-}\Varid{k}){}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\mathbf{where}\;\Varid{go}\;\Varid{c}\;\Varid{l}\;\Varid{f}\;\Varid{g}\;\Varid{n}\;\Varid{d}{}\<[27]%
+\>[27]{}\mid \Varid{degree}\;(\Varid{g})\equiv \mathrm{0}{}\<[45]%
+\>[45]{}\mathrel{=}[\mskip1.5mu \mskip1.5mu]{}\<[E]%
+\\
+\>[27]{}\mid \Varid{otherwise}{}\<[45]%
+\>[45]{}\mathrel{=}{}\<[E]%
+\\
+\>[27]{}\hsindent{3}{}\<[30]%
+\>[30]{}\mathbf{let}\;{}\<[35]%
+\>[35]{}\Varid{y}{}\<[39]%
+\>[39]{}\mathrel{=}(\mathbin{-}\Varid{l})\mathbin{*}\Varid{c}\mathbin{\uparrow}\Varid{d}{}\<[E]%
+\\
+\>[35]{}\Varid{h}{}\<[39]%
+\>[39]{}\mathrel{=}\Conid{P}\;[\mskip1.5mu \Varid{x}\mathbin{\Varid{`div`}}\Varid{y}\mid \Varid{x}\leftarrow \Varid{coeffs}\;(\Varid{prem}\;\Varid{f}\;\Varid{g})\mskip1.5mu]{}\<[E]%
+\\
+\>[35]{}\Varid{m}{}\<[39]%
+\>[39]{}\mathrel{=}\Varid{degree}\;\Varid{h}{}\<[E]%
+\\
+\>[35]{}\Varid{l'}{}\<[39]%
+\>[39]{}\mathrel{=}\Varid{lc}\;\Varid{g}{}\<[E]%
+\\
+\>[35]{}\Varid{c'}{}\<[39]%
+\>[39]{}\mid \Varid{d}\mathbin{>}\mathrm{1}{}\<[52]%
+\>[52]{}\mathrel{=}(\mathbin{-}\Varid{l'})\mathbin{\uparrow}\Varid{d}\mathbin{\Varid{`div`}}(\Varid{c}\mathbin{\uparrow}(\Varid{d}\mathbin{-}\mathrm{1})){}\<[E]%
+\\
+\>[39]{}\mid \Varid{otherwise}{}\<[52]%
+\>[52]{}\mathrel{=}\mathbin{-}\Varid{l'}{}\<[E]%
+\\
+\>[27]{}\hsindent{3}{}\<[30]%
+\>[30]{}\mathbf{in}\;\Varid{h}\mathbin{:}\Varid{go}\;\Varid{c'}\;\Varid{l'}\;\Varid{g}\;\Varid{h}\;\Varid{m}\;(\Varid{n}\mathbin{-}\Varid{m}){}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+The function has two parts: the first step which is performed
+in the body of the function itself and the recursive part
+which is implemented in \ensuremath{\Varid{go}}.
+The first step computes the degrees
+of the polynomials and their difference ($n$, $m$ and $d$),
+an initial value to compute the first alpha ($z$)
+and the first pseudo remainder ($c$).
+
+The subroutine \ensuremath{\Varid{go}} receives $z$ (named $c$ in \ensuremath{\Varid{go}}),
+$l$, the second polynomial ($b$ named $f$ in \ensuremath{\Varid{go}}),
+the first pseudo remainder ($c$, named $g$ in \ensuremath{\Varid{go}}),
+the degree of $c$ and the difference of the degrees of the two
+polynomials passed in ($m-k$ named $d$ in \ensuremath{\Varid{go}}).
+
+\ensuremath{\Varid{go}} computes $y$ (the alpha), the new pseudo remainder $h$,
+the degree of $h$ ($m$) and the next value to compute alpha ($c'$).
+Then, the process repeats. We terminate when the degree
+of the second pseudo remainder is 0.
+
+The function is certainly somewhat confusing.
+But the outstanding fact is that it allows computing
+the resultant of two polynomials
+at roughly the same cost as the \acronym{gcd}.
+There is in particular nothing special involved
+in computing the alpha. 
+
+We can now define \ensuremath{\Varid{res}} (which we left out above) as:
+
+\begin{minipage}{\textwidth}
+\begingroup\par\noindent\advance\leftskip\mathindent\(
+\begin{pboxed}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[3]{}\Varid{res}\mathbin{::}\Conid{Poly}\;\Conid{Integer}\to \Conid{Poly}\;\Conid{Integer}\to \Conid{Integer}{}\<[E]%
+\\
+\>[3]{}\Varid{res}\;\Varid{a}\;\Varid{b}\mathrel{=}\Varid{head}\mathbin{\$}\Varid{coeffs}\mathbin{\$}\Varid{last}\mathbin{\$}\Varid{spgcd}\;\Varid{a}\;\Varid{b}{}\<[E]%
+\ColumnHook
+\end{pboxed}
+\)\par\noindent\endgroup\resethooks
+\end{minipage}
+
+With that, the implementation of \ensuremath{\Varid{dis}} is complete.
+We can compute the discriminant of our polynomials
+just using the \ensuremath{\Varid{dis}} function, which, in its turn,
+computes the discriminant of the polynomial without
+using the roots:
+
+\ensuremath{\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \mathrm{24},\mathrm{14},\mathbin{-}\mathrm{13},\mathbin{-}\mathrm{2},\mathrm{1}\mskip1.5mu])} yields 4410000,
+
+\ensuremath{\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{6},\mathrm{1},\mathrm{1}\mskip1.5mu])} yields 25 and
+
+\ensuremath{\Varid{dis}\;(\Conid{P}\;[\mskip1.5mu \mathbin{-}\mathrm{18},\mathrm{3},\mathrm{3}\mskip1.5mu])} yields 225.
 
 \ignore{
-- discriminants in general terms:
 https://www.youtube.com/watch?v=AL5DdIJ9EQU
-- some proofs with Vieta's formulas (see
-  https://de.wikipedia.org/wiki/Diskriminante)
-- Resultant
-- how to compute the resultant?
-- determinant of the sylvester matrix
-- pseudo-remainder sequence
-- subresultant sequence
-- how to compute discriminants:
-  (-1)^(d*(d-1)/2)*RES(f,f') / lc(f)
 }
 \section{Factoring Polynomials}
 \ignore{
@@ -43894,6 +44709,7 @@ http://www.digizeitschriften.de/dms/img/?PID=GDZPPN002155583&physid=phys268#navi
 \section{Clustering}
 \section{Linear Maps and Operators}
 \section{The Matrix}
+\section{Matrix Formulation of the Assignment Problem}
 \section{Eigenvalues}
 \section{Inner Products and their Operators}
 \section{Polynomials and Vector Spaces}
@@ -44929,10 +45745,10 @@ pleasant visualiation:
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{show}\;\Conid{O}{}\<[18]%
-\>[18]{}\mathrel{=}\text{\tt \char34 O\char34}{}\<[E]%
+\>[18]{}\mathrel{=}\text{\ttfamily \char34 O\char34}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{show}\;(\Conid{P}\;\Varid{x}\;\Varid{y})\mathrel{=}\text{\tt \char34 (\char34}\plus \Varid{show}\;\Varid{x}\plus \text{\tt \char34 ,\char34}\plus \Varid{show}\;\Varid{y}\plus \text{\tt \char34 )\char34}{}\<[E]%
+\>[5]{}\Varid{show}\;(\Conid{P}\;\Varid{x}\;\Varid{y})\mathrel{=}\text{\ttfamily \char34 (\char34}\plus \Varid{show}\;\Varid{x}\plus \text{\ttfamily \char34 ,\char34}\plus \Varid{show}\;\Varid{y}\plus \text{\ttfamily \char34 )\char34}{}\<[E]%
 \ColumnHook
 \end{pboxed}
 \)\par\noindent\endgroup\resethooks
@@ -44955,14 +45771,14 @@ point coordinates:
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[3]{}\Varid{xco}\mathbin{::}\Conid{Point}\to \Conid{Natural}{}\<[E]%
 \\
-\>[3]{}\Varid{xco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\tt \char34 O~has~no~coordinates\char34}{}\<[E]%
+\>[3]{}\Varid{xco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 O~has~no~coordinates\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{xco}\;(\Conid{P}\;{}\<[11]%
 \>[11]{}\Varid{x}\;\anonymous )\mathrel{=}\Varid{x}{}\<[E]%
 \\[\blanklineskip]%
 \>[3]{}\Varid{yco}\mathbin{::}\Conid{Point}\to \Conid{Natural}{}\<[E]%
 \\
-\>[3]{}\Varid{yco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\tt \char34 O~has~no~coordinates\char34}{}\<[E]%
+\>[3]{}\Varid{yco}\;\Conid{O}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 O~has~no~coordinates\char34}{}\<[E]%
 \\
 \>[3]{}\Varid{yco}\;(\Conid{P}\;\anonymous \;\Varid{y})\mathrel{=}\Varid{y}{}\<[E]%
 \ColumnHook
@@ -45105,7 +45921,7 @@ practice:
 \>[5]{}\mathbf{where}\;{}\<[12]%
 \>[12]{}\Varid{go}\;\Varid{x}{}\<[18]%
 \>[18]{}\mid \Varid{x}\mathbin{>}\Varid{p}{}\<[39]%
-\>[39]{}\mathrel{=}\Varid{error}\;\text{\tt \char34 not~found!\char34}{}\<[E]%
+\>[39]{}\mathrel{=}\Varid{error}\;\text{\ttfamily \char34 not~found!\char34}{}\<[E]%
 \\
 \>[18]{}\mid (\Varid{x}\mathbin{\uparrow}\mathrm{2})\mathbin{\Varid{`mod`}}\Varid{p}\equiv \Varid{q}\mathrel{=}\Varid{x}{}\<[E]%
 \\
@@ -46321,7 +47137,7 @@ initiates the protocol:
 \>[5]{}(\Varid{d},\Varid{qa})\leftarrow \Varid{ecdhInit}\;\Varid{ps}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Alice:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{writeChan}\;\Varid{och}\;\Varid{qa}{}\<[E]%
@@ -46333,13 +47149,13 @@ initiates the protocol:
 \>[5]{}\mathbf{let}\;\Varid{k}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{d}\;\Varid{qb}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Alice:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{m}\leftarrow \Varid{randomNat}\;(\mathrm{1},\Varid{o}\mathbin{-}\mathrm{1})\mathbin{::}\Conid{IO}\;\Conid{Natural}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Alice:~sending~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Alice:~sending~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{sfSend}\;\Varid{och}\;\Varid{k}\;\Varid{m}{}\<[E]%
@@ -46400,7 +47216,7 @@ Here is what Bob does:
 \>[5]{}(\Varid{d},\Varid{qb})\leftarrow \Varid{ecdhInit}\;\Varid{ps}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Bob~~:~private~key~is~\char34}\plus \Varid{show}\;\Varid{d}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{qa}{}\<[12]%
@@ -46413,13 +47229,13 @@ Here is what Bob does:
 \>[5]{}\mathbf{let}\;\Varid{k}\mathrel{=}\Varid{mul}\;\Varid{c}\;\Varid{d}\;\Varid{qa}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Bob~~:~common~key~is~\char34}\plus \Varid{show}\;\Varid{k}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{m}\leftarrow \Varid{sfRead}\;\Varid{ich}\;\Varid{k}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Bob~~:~received:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Bob~~:~received:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{threadDelay}\;\mathrm{1000000}{}\<[E]%
@@ -46464,7 +47280,7 @@ Of course, we also need the evesdropper Eve:
 \>[5]{}\Varid{a}\leftarrow \Varid{readChan}\;\Varid{aoch}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{a}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{a}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{writeChan}\;\Varid{bich}\;\Varid{a}{}\<[E]%
@@ -46473,7 +47289,7 @@ Of course, we also need the evesdropper Eve:
 \>[5]{}\Varid{b}\leftarrow \Varid{readChan}\;\Varid{boch}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Bob~to~Alice:~\char34}\plus \Varid{show}\;\Varid{b}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Eve~~:~Bob~to~Alice:~\char34}\plus \Varid{show}\;\Varid{b}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{writeChan}\;\Varid{aich}\;\Varid{b}{}\<[E]%
@@ -46482,7 +47298,7 @@ Of course, we also need the evesdropper Eve:
 \>[5]{}\Varid{m}\leftarrow \Varid{readChan}\;\Varid{aoch}{}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
-\>[5]{}\Varid{sfp}\;(\text{\tt \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
+\>[5]{}\Varid{sfp}\;(\text{\ttfamily \char34 Eve~~:~Alice~to~Bob:~\char34}\plus \Varid{show}\;\Varid{m}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{writeChan}\;\Varid{bich}\;\Varid{m}{}\<[E]%
@@ -46594,16 +47410,16 @@ but uses random numbers, the output of this program
 will vary between calls.
 A possible output is:
 
-\begin{tabbing}\tt
+\begin{tabbing}\ttfamily
 ~Alice\char58{}~private~key~is~13\\
-\tt ~Bob~~\char58{}~private~key~is~2\\
-\tt ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}16\char44{}4\char41{}\\
-\tt ~Bob~~\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
-\tt ~Eve~~\char58{}~Bob~to~Alice\char58{}~\char40{}6\char44{}3\char41{}\\
-\tt ~Alice\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
-\tt ~Alice\char58{}~sending~11\\
-\tt ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}13\char44{}0\char41{}\\
-\tt ~Bob~~\char58{}~received\char58{}~11
+\ttfamily ~Bob~~\char58{}~private~key~is~2\\
+\ttfamily ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}16\char44{}4\char41{}\\
+\ttfamily ~Bob~~\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
+\ttfamily ~Eve~~\char58{}~Bob~to~Alice\char58{}~\char40{}6\char44{}3\char41{}\\
+\ttfamily ~Alice\char58{}~common~key~is~\char40{}0\char44{}6\char41{}\\
+\ttfamily ~Alice\char58{}~sending~11\\
+\ttfamily ~Eve~~\char58{}~Alice~to~Bob\char58{}~\char40{}13\char44{}0\char41{}\\
+\ttfamily ~Bob~~\char58{}~received\char58{}~11
 \end{tabbing}
 
 The first line is Alice to reveal her secret key to us,
@@ -46973,10 +47789,10 @@ $c1$ with generator $p1$:
 \>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 private:~\char34}\plus \Varid{show}\;\Varid{pri}{}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 private:~\char34}\plus \Varid{show}\;\Varid{pri}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 public~:~\char34}\plus \Varid{show}\;\Varid{pub}){}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 public~:~\char34}\plus \Varid{show}\;\Varid{pub}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}(\Varid{p},\Varid{cipher})\leftarrow \Varid{eciesEncrypt}\;\Varid{ps}\;\Varid{m}{}\<[E]%
@@ -46985,10 +47801,10 @@ $c1$ with generator $p1$:
 \>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 cipher~:~\char34}\plus \Varid{show}\;\Varid{cipher}{}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 cipher~:~\char34}\plus \Varid{show}\;\Varid{cipher}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 p~~~~~~:~\char34}\plus \Varid{show}\;\Varid{p}){}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 p~~~~~~:~\char34}\plus \Varid{show}\;\Varid{p}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{return}\;(\Varid{eciesDecrypt}\;\Varid{ps}\;\Varid{pri}\;(\Varid{p},\Varid{cipher})\equiv \Varid{m}){}\<[E]%
@@ -47340,10 +48156,10 @@ Here is a test function that brings all the bits together:
 \>[5]{}\Varid{when}\;\Varid{verbose}\;(\mathbf{do}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 private:~\char34}\plus \Varid{show}\;\Varid{k}{}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 private:~\char34}\plus \Varid{show}\;\Varid{k}{}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 public~:~\char34}\plus \Varid{show}\;\Varid{q}){}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 public~:~\char34}\plus \Varid{show}\;\Varid{q}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{sig}{}\<[10]%
@@ -47353,7 +48169,7 @@ Here is a test function that brings all the bits together:
 \>[5]{}\Varid{when}\;\Varid{verbose}\;({}\<[E]%
 \\
 \>[5]{}\hsindent{2}{}\<[7]%
-\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\tt \char34 sig~~~~:~\char34}\plus \Varid{show}\;\Varid{sig}){}\<[E]%
+\>[7]{}\Varid{putStrLn}\mathbin{\$}\text{\ttfamily \char34 sig~~~~:~\char34}\plus \Varid{show}\;\Varid{sig}){}\<[E]%
 \\
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{return}\;(\Varid{ecdsaVerify}\;\Varid{ps}\;\Varid{sig}\;\Varid{m}){}\<[E]%
