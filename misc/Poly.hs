@@ -339,27 +339,29 @@ where
   -------------------------------------------------------------------------
   -- Euclidean Division (infinite field)
   -------------------------------------------------------------------------
-  divpe2 :: (Show a, Num a, Eq a, Integral a, Ord a) => 
+  divpe :: (Show a, Num a, Eq a, Integral a, Ord a) => 
             Poly a -> Poly a -> (Poly a,Poly a)
-  divpe2 a b = let (q,r) = go [] (coeffs a') in (P q, P r)
+  divpe a b = let (q,r) = go [] (coeffs a') in (P q, P r)
     where a' = scale (lc b) a
           bs = coeffs b
           db = degree b
           go q r | degree (P r) < db  = (q,r)
                  | null r || r == [0] = (q,r)
-                 | otherwise          = trace (show (q,r)) $
+                 | otherwise          = -- trace (show (q,r)) $
                      let t  = last r `div` last bs
                          d  = degree (P r) - db
                          ts = zeros d ++ [t]
                          m  = mulist ts bs
-                      in go (cleanz $ strichlist (+) q ts)
-                            (cleanz $ strichlist (-) r m)
+                         u  = cleanz $ strichlist (+) q ts
+                         v  = cleanz $ strichlist (-) r m
+                      in go [x*(last v) | x <- u]
+                            [x*(last u) | x <- v]
 
-  divpe :: (Show a, Num a, Eq a, Integral a, Ord a) => 
+  divpe2 :: (Show a, Num a, Eq a, Integral a, Ord a) => 
             Poly a -> Poly a -> (Poly a,Poly a, a)
-  divpe a b | d <  0 = (P[0], a, 1)
+  divpe2 a b | d <  0 = (P[0], a, 1)
             | otherwise = trace (show t) $
-                          let (q,r,c) = divpe (scale lb a) (mul t b)
+                          let (q,r,c) = divpe2 (scale lb a) (mul t b)
                            in (add (scale c t) q, r, c*la)
     where d = degree a - degree b
           lb = lc b
@@ -425,7 +427,7 @@ where
             Poly a -> Poly a -> Poly a
   gcdpe a b | degree b > degree a = gcdpe b a
             | zerop b = a
-            | otherwise = let (_,r,_) = divpe a b in gcdpe b r
+            | otherwise = let (_,r) = divpe a b in gcdpe b r
 
   -------------------------------------------------------------------------
   -- XGCD
@@ -749,7 +751,7 @@ where
   -------------------------------------------------------------------------
   squarefreepart :: Poly Integer -> Poly Integer
   squarefreepart f | degree g == 0 = f
-                   | otherwise = let (q,_,_) = divpe a g
+                   | otherwise = let (q,_) = divpe a g
                                   in primitive q
     where l = lc f
           a | l < 0 = P [(-c) | c <- coeffs f]
@@ -1425,16 +1427,16 @@ where
                     | otherwise = {- trace ("k: " ++ show ((lp:k)) ++ ", " ++  show (prodp mul (filter (not . zerop) (lp:k)))) $ -} go ks
 
   extractfs :: Integer -> Integer -> Poly Integer -> [Poly Integer] -> [Poly Integer]
-  extractfs pl bb f fs = go 0 (tail $ Perm.ps [0..s])
+  extractfs pl bb f fs = go (length fs `div` 2) (tail $ Perm.ps [0..s])
     where fl = lc f
           s  = (length fs) - 1
           qtest q = let p | q > pl `div` 2 = q - pl
                           | otherwise = q
                      in if p == 0 then False else (fl `mod` q) /= 0
           go :: Int -> [[Int]] -> [Poly Integer]
-          go k is | k > (length fs) `div` 2 = []
+          go k is | k < 0 = [] -- (length fs) `div` 2 = []
                   | otherwise = let (ms,r) = ffac f (filter (\i -> k==length i) is)
-                                 in if null r then go (k+1) is else r++go k (is \\ ms)
+                                 in if null r then go (k-1) is else r++go k (is \\ ms)
           ffac :: Poly Integer -> [[Int]] -> ([[Int]], [Poly Integer])
           ffac _ [] = ([],[])
           ffac x (p:ps) = -- trace ("ffac: " ++ show x ++ ", " ++ show p) $
@@ -1442,12 +1444,15 @@ where
                               fs' = [fs!!i | i <- p]
                               fp' = [fs!!i | i <- ([0..s] \\ p)] 
                               g = truncmp pl (mul (poly [l]) (prodp mul fs'))
-                              h = truncmp pl (mul (poly [l]) (prodp mul fp'))
+                              tmp = (mul (poly [l]) (prodp mul fp'))
+                              h = -- trace("h untrunked: " ++ show tmp ++ "(" ++ show pl ++ ")") $
+                                  truncmp pl (mul (poly [l]) (prodp mul fp'))
                               q | l == 1    = product (map lc fs) `mod` pl
                                 | otherwise = lc (primitive g)
                               t | l == 1    = qtest q
                                 | otherwise = q /= 0 && fl `mod` q /= 0
-                           in if t || (norm g) * (norm h) > bb
+                           in -- trace("g,h: " ++ show g ++ ", " ++ show h) $ 
+                             if t || (norm g) * (norm h) > bb
                               then ffac x ps 
                               else let (ps',rs) = ffac (primitive h) ps
                                     in (p:ps', (primitive g):rs)
@@ -1463,10 +1468,11 @@ where
                     -- putStrLn ("smallest set of factors: " ++ show fs)
                     if null fs then return [f] else 
                       let x = ceiling (logBase (fromIntegral p) (fromIntegral (2*bb+1)))
+                          pl = trace("BOUNDS: " ++ show aa ++ ", " ++ show bb ++ ", " ++ show cc ++ ", " ++ show gma ++ ", " ++ show pb ++ ", " ++ show x) p^x
                           g = sortOn degree (nub (hlift p x f fs)) -- $ map (modp p) fs)) -- hensel lifting
                           h = map primitive g
                           -- rs = filterzfs (p^l) f h
-                          rs = extractfs (p^l) bb f h
+                          rs = extractfs (pl) bb f h
                        in do
                          -- putStrLn ("g : " ++ show g)
                          -- putStrLn ("h : " ++ show h)
@@ -1475,9 +1481,12 @@ where
     where n  = fromIntegral (degree f)
           l  = lc f                            -- leading coefficient
           aa = maximum (map abs $ coeffs f)    -- greatest coefficient
-          bb = 2^n*aa*l*sq                     -- bound for base
-          sq = ceiling (sqrt (fromIntegral (n+1))) -- sqrt of number of coefficients
-          bpfactors q = let ps = findzps q bb f    -- baseprime factors
+          bb = abs((2^n*aa*l)*floor(sqrt(fromIntegral(n+1))))              -- bound for base
+          cc = (n+1)^(2*n)*aa^(2*n-1)
+          gma = ceiling(2*(logBase 2 (fromInteger cc)))
+          pb = floor((fromIntegral (2*gma))*(log (fromIntegral gma)))
+          sq = trace (show n ++ " " ++ show aa ++ " " ++ show l) $ ceiling (sqrt (fromIntegral (n+1))) -- sqrt of number of coefficients
+          bpfactors q = let ps = findzps q pb f    -- baseprime factors
                          in if null ps then return (2,[])
                             else {- trace ("primes: " ++ show ps) $ -} do
                               -- putStrLn ("LC(f): " ++ show l)
@@ -1513,8 +1522,19 @@ where
   trialdiv :: Poly Integer -> [Poly Integer] -> [Poly Integer]
   trialdiv _ [] = []
   trialdiv f (p:ps) = go f p ++ trialdiv f ps
-    where go a d = let (q,r,_) = f `divpe` d
+    where go a d | d == P[1] = []
+                 | otherwise = 
+                    let (q,r) = a `divpe` d
                     in if zerop r then d:go q d else []
+
+  -------------------------------------------------------------------------
+  -- combination
+  -------------------------------------------------------------------------
+  filterfacts :: Poly Integer -> [Poly Integer] -> [Poly Integer]
+  filterfacts f fs = go (reverse $ tail (sortOn length $ Perm.ps fs))
+    where go [] = []
+          go (c:cs) | prodp mul c == f = c
+                    | otherwise    = go cs
        
   -------------------------------------------------------------------------
   -- test zassenhaus algorithm
@@ -1522,13 +1542,18 @@ where
   testLift :: IO ()
   testLift = do
     t <- forM [1..100] (\i -> do
-      ts <- nMsRandomPolies 3 7 2
+      ts <- nMsRandomPolies 4 11 2
       let p = prodp mul ts
       let pc = content p
       let pp = primitive p
+      -- fs <- (filterfacts pp) <$> zassenhaus pp
       fs <- zassenhaus pp
-      showeq p pc fs ts
-      if p /= prodp mul (P[pc]:fs) then return False 
+      -- showeq p pc fs ts
+      -- if p /= prodp mul (P[pc]:fs) then return False 
+      if pp /= prodp mul fs
+         then do
+           showeq pp pc fs ts
+           return False 
          else if sortOn coeffs fs /= sortOn coeffs ts
               then return True --False
               else return True)
@@ -1536,8 +1561,8 @@ where
     where showeq p pc fs ts = do
           -- when (length fs /= 3) $ putStrLn ("NOT FOUND: " ++ show (ts))
           if pc /= 1 
-             then putStrLn (show p ++ " = " ++ "product(" ++ show (P[pc]:fs) ++ ")")
-             else putStrLn (show p ++ " = " ++ "product(" ++ show fs ++ ")")
+             then putStrLn (show p ++ " = " ++ "prodp mul [" ++ show (P[pc]:fs) ++ "]")
+             else putStrLn (show p ++ " = " ++ "prodp mul [" ++ show fs ++ "]")
           
        
   -------------------------------------------------------------------------

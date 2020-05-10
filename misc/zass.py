@@ -165,10 +165,10 @@ def dup_zz_hensel_lift(p, f, f_list, l, K):
 
 
     for f_i in f_list[:k]:
-        print("g: %s * %s" % (g,f_i))
+        # print("g: %s * %s" % (g,f_i))
         g = gf_mul(g, gf_from_int_poly(f_i, p), p, K)
 
-    print("g: %s" % g)
+    # print("g: %s" % g)
 
     h = gf_from_int_poly(f_list[k], p)
 
@@ -177,19 +177,19 @@ def dup_zz_hensel_lift(p, f, f_list, l, K):
 
     s, t, q = gf_gcdex(g, h, p, K)
 
-    print("gcdex %s %s %d = %s %s %s)" % (g,h,p,q,s,t))
+    # print("gcdex %s %s %d = %s %s %s)" % (g,h,p,q,s,t))
 
     g = gf_to_int_poly(g, p)
     h = gf_to_int_poly(h, p)
     s = gf_to_int_poly(s, p)
     t = gf_to_int_poly(t, p)
 
-    print("h: %s" % f_list[k])
+    # print("h: %s" % f_list[k])
 
     for _ in range(1, d + 1):
-        print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
+        # print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
         (g, h, s, t), m = dup_zz_hensel_step(m, f, g, h, s, t, K), m**2
-    print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
+    # print("go %d %s %s %s %s %s" % (m, f, g, h, s, t))
 
     return dup_zz_hensel_lift(p, g, f_list[:k], l, K) \
         + dup_zz_hensel_lift(p, h, f_list[k:], l, K)
@@ -215,8 +215,9 @@ def dup_zz_zassenhaus(f, K):
     C = int((n + 1)**(2*n)*A**(2*n - 1))
     gamma = int(_ceil(2*_log(C, 2)))
     bound = int(2*gamma*_log(gamma))
-    print("BOUND: %d" % bound)
     a = []
+    print("%d %d %d" % (n, A, b))
+    print("%d %f %d" % (2**n*A*b, K.sqrt(5), K(n+1)))
     # choose a prime number `p` such that `f` be square free in Z_p
     # if there are many factors in Z_p, choose among a few different `p`
     # the one with fewer factors
@@ -238,11 +239,14 @@ def dup_zz_zassenhaus(f, K):
 
     l = int(_ceil(_log(2*B + 1, p)))
 
+    print("BOUNDs: %d %d %d %d %d %d %d" % (A, b, B, C, gamma, bound, l))
+
     modular = [gf_to_int_poly(ff, p) for ff in fsqf]
 
+    # print("modular: %s" % modular)
     g = dup_zz_hensel_lift(p, f, modular, l, K)
 
-    print("HENSEL: %s" % g)
+    # print("HENSEL: %s" % g)
 
     sorted_T = range(len(g))
     T = set(sorted_T)
@@ -254,6 +258,8 @@ def dup_zz_zassenhaus(f, K):
             # lift the constant coefficient of the product `G` of the factors
             # in the subset `S`; if it is does not divide `fc`, `G` does
             # not divide the input polynomial
+
+            # print("ffac: %s, %s" % (f, S))
 
 
             if b == 1:
@@ -277,7 +283,7 @@ def dup_zz_zassenhaus(f, K):
             S = set(S)
             T_S = T - S
 
-            print("%s = %s - %s" % (T_S, T, S)) 
+            # print("%s = %s - %s" % (T_S, T, S)) 
 
             if b == 1:
                 G = [b]
@@ -288,6 +294,7 @@ def dup_zz_zassenhaus(f, K):
             for i in T_S:
                 H = dup_mul(H, g[i], K)
 
+            # print("H untrunked: %s (%s)" % (H, pl))
             H = dup_trunc(H, pl, K)
 
             G_norm = dup_l1_norm(G, K)  # sum(map abs coeffs)
@@ -297,8 +304,10 @@ def dup_zz_zassenhaus(f, K):
                 T = T_S
                 sorted_T = [i for i in sorted_T if i not in S]
 
+                tmp = H
                 G = dup_primitive(G, K)[1]
                 f = dup_primitive(H, K)[1]
+                # print("PRIMITIVE H: %s (%s)" % (H, tmp))
 
                 factors.append(G)
                 b = dup_LC(f, K)
@@ -336,7 +345,11 @@ if __name__ == "__main__":
   print("RESULT (zassenhaus):")
   print(fs)
 
-  st = range(len([1,2,3]))
-  T = set(st)
-  print(T)
-  (subsets(T))
+  fs = dup_zz_zassenhaus([1,3,2,0],ZZ)
+  print("RESULT (zassenhaus):")
+  print(fs)
+
+  fs = dup_zz_zassenhaus([1,20,127,288,180],ZZ)
+  print("RESULT (zassenhaus):")
+  print(fs)
+
